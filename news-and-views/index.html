@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Real World Data Science - Explainers</title>
+<title>Real World Data Science - News and views</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -30,9 +30,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../contributor-docs/exercises.html" rel="next">
-<link href="../contributor-docs/case-studies.html" rel="prev">
+<link href="../news-and-views/editors-blog/index.html" rel="next">
 <link href="../rss-white-BG.png" rel="icon" type="image/png">
+<script src="../site_libs/quarto-listing/list.min.js"></script>
+<script src="../site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -63,14 +64,44 @@ ul.task-list li input[type="checkbox"] {
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script>
 
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-date','listing-title','listing-author','listing-subtitle','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-subtitle","listing-image","listing-description","listing-categories"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
 <link rel="stylesheet" href="../styles.css">
-<meta property="og:title" content="Real World Data Science - Explainers">
-<meta property="og:description" content="Notes for contributors">
+<meta property="og:title" content="Real World Data Science - News and views">
+<meta property="og:description" content="Blogs, columns and opinion from our contributors and editors">
 <meta property="og:site-name" content="Real World Data Science">
-<meta name="twitter:title" content="Real World Data Science - Explainers">
-<meta name="twitter:description" content="Notes for contributors">
+<meta name="twitter:title" content="Real World Data Science - News and views">
+<meta name="twitter:description" content="Blogs, columns and opinion from our contributors and editors">
 <meta name="twitter:card" content="summary">
 </head>
 
@@ -98,7 +129,7 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Overview</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link active" href="../contributor-docs/call-for-contributions.html" aria-current="page">
+    <a class="nav-link" href="../contributor-docs/call-for-contributions.html">
  <span class="menu-text">Call for contributions</span></a>
   </li>  
   <li class="nav-item">
@@ -106,7 +137,7 @@ ul.task-list li input[type="checkbox"] {
  <span class="menu-text">Meet the team</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../news-and-views/index.html">
+    <a class="nav-link active" href="../news-and-views/index.html" aria-current="page">
  <span class="menu-text">News and views</span></a>
   </li>  
 </ul>
@@ -131,7 +162,7 @@ ul.task-list li input[type="checkbox"] {
     </nav>
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">Explainers</h1>
+      <h1 class="quarto-secondary-nav-title">News and views</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -139,55 +170,19 @@ ul.task-list li input[type="checkbox"] {
   </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-full page-navbar">
 <!-- sidebar -->
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="sidebar-menu-container"> 
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contributor-docs/call-for-contributions.html" class="sidebar-item-text sidebar-link"><strong>Call for contributions</strong></a>
+  <a href="../news-and-views/index.html" class="sidebar-item-text sidebar-link active"><strong>In this section</strong></a>
   </div>
 </li>
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../contributor-docs/case-studies.html" class="sidebar-item-text sidebar-link">Case studies</a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../contributor-docs/explainers.html" class="sidebar-item-text sidebar-link active">Explainers</a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../contributor-docs/exercises.html" class="sidebar-item-text sidebar-link">Exercises</a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../contributor-docs/datasets.html" class="sidebar-item-text sidebar-link">Datasets</a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../contributor-docs/training-guides.html" class="sidebar-item-text sidebar-link">Training guides</a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../contributor-docs/recommender.html" class="sidebar-item-text sidebar-link">Recommenders</a>
-  </div>
-</li>
-        <li class="px-0"><hr class="sidebar-divider hi "></li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../contributor-docs/contributor-guidelines.html" class="sidebar-item-text sidebar-link">Contributor guidelines</a>
-  </div>
-</li>
-        <li class="sidebar-item">
-  <div class="sidebar-item-container"> 
-  <a href="../contributor-docs/style-guide.html" class="sidebar-item-text sidebar-link">Style guide</a>
+  <a href="../news-and-views/editors-blog/index.html" class="sidebar-item-text sidebar-link">Editors’ blog</a>
   </div>
 </li>
     </ul>
@@ -195,22 +190,15 @@ ul.task-list li input[type="checkbox"] {
 </nav>
 <!-- margin-sidebar -->
     <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#structure" id="toc-structure" class="nav-link active" data-scroll-target="#structure">Structure</a></li>
-  <li><a href="#advice-and-recommendations" id="toc-advice-and-recommendations" class="nav-link" data-scroll-target="#advice-and-recommendations">Advice and recommendations</a></li>
-  </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/contributor-docs/explainers.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
-    </div>
+        
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Biographies">Biographies <span class="quarto-category-count">(1)</span></div><div class="category" data-category="People">People <span class="quarto-category-count">(1)</span></div></div></div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
+<main class="content column-body" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">Explainers</h1>
-<p class="subtitle lead">Notes for contributors</p>
+<h1 class="title d-none d-lg-block">News and views</h1>
+<p class="subtitle lead">Blogs, columns and opinion from our contributors and editors</p>
 </div>
 
 
@@ -225,70 +213,55 @@ ul.task-list li input[type="checkbox"] {
 
 </header>
 
-<p>On Real World Data Science, <strong>Explainers</strong> are the stories behind the stories of data science in action. They are deep-dive explorations of the ideas, concepts, tools, and methods that make data science projects possible. In particular, we are keen to explore and explain the statistical underpinnings of modern data science techniques.</p>
-<p>A good Explainer will lead audiences through the what, when, how, and why of its chosen topic. The ultimate goal is to equip data scientists with the information and insight they need to make smarter, more informed analytical choices.</p>
-<p>There are many different but effective ways of structuring an explainer and plentiful written examples in major media outlets like <a href="https://www.theguardian.com/tone/explainers">The Guardian</a> and <a href="https://www.vox.com/explainers">Vox</a>, but these are generally written for a non-technical audience. Examples of technical explainers (with interactive elements) can be found on Amazon’s <a href="https://mlu-explain.github.io/">Machine Learning University</a>.</p>
-<section id="structure" class="level2">
-<h2 class="anchored" data-anchor-id="structure">Structure</h2>
-<p>The following outline is a basic guide to structuring an Explainer:</p>
-<ul>
-<li><dl>
-<dt>Hook</dt>
-<dd>
-Introduce your topic, and explain why audiences should pay attention. For example, does your Explainer link to one of our published <a href="../contributor-docs/case-studies.html">case studies</a>? Does it focus on a tool or method that has been the subject of recent attention? Is it a foundational idea that is relevant to all sorts of data science applications?
-</dd>
-</dl></li>
-<li><dl>
-<dt>High-level summary</dt>
-<dd>
-A short, largely non-technical explanation of your topic. A good way to view this section is as an accessible condensed version of your complete Explainer. In thinking of it in this way, you can subtly signpost to audiences the areas you’ll be covering and the questions you’ll be answering throughout the remainder of your contribution.
-</dd>
-</dl></li>
-<li><dl>
-<dt>History and background</dt>
-<dd>
-It can be useful from a practical perspective to explain how ideas, concepts, tools, and methods have developed over time. Applications may have become more complex in recent years, so exploring the origins of data science techniques might lead you to discover simpler use cases that can help support and illustrate your high-level summary.
-</dd>
-</dl></li>
-<li><dl>
-<dt>The how, the when, the why</dt>
-<dd>
-This section of your Explainer will likely be split into multiple subsections as you seek to build up your audience’s understanding of your chosen topic. It can be helpful to think about the sorts of questions an audience member might ask and to structure your contribution so that it directly addresses those questions (Q&amp;A/FAQ formats are commonly used in explainer-type articles). If the focus of your Explainer is a data science method, for example, you’ll want to address the following:
-</dd>
-</dl>
-<ul>
-<li>How does it work and how is it applied (perhaps with an example or simulation)?</li>
-<li>What are the underlying assumptions?</li>
-<li>How is performance checked and assessed?</li>
-<li>How should outputs be interpreted?</li>
-<li>What are the pros and cons, the strengths and limitations of the approach?</li>
-<li>What are the optimal use cases, and when should the method be avoided altogether?</li>
-<li>Are there alternatives that people should know about?</li>
-</ul></li>
-<li><dl>
-<dt>Key takeaways</dt>
-<dd>
-This serves as your final summary: a chance to remind your audience of what they’ve learned from your Explainer and the main points they should keep in mind.
-</dd>
-</dl></li>
-<li><dl>
-<dt>Tell me more</dt>
-<dd>
-It’s sensible to assume that some of your audience will have further questions and will want to learn more about the topic. If you have additional sources of information to recommend, make sure to share them here.
-</dd>
-</dl></li>
-</ul>
-</section>
-<section id="advice-and-recommendations" class="level2">
-<h2 class="anchored" data-anchor-id="advice-and-recommendations">Advice and recommendations</h2>
-<p><em>Focus on what’s important.</em> Your Explainer can’t hope to explain everything, so you need to be clear about what’s essential for your audience to know and what isn’t. Make good use of links and references to point audiences to other valuable sources of information that can enrich their understanding of your topic.</p>
-<p><em>Be clear about your target audience and their expected prior level of knowledge.</em> In keeping with the point above, you need to be clear in your own mind about how much you expect your audience to know already about the general topic or subject matter. You can then structure your contribution accordingly. It might also be helpful to state explicitly, at the outset of your contribution, what assumptions you’ve made about your audience and highlight any background reading that might be beneficial.</p>
-<p><em>Plan out your route.</em> To help you decide what to cover in your Explainer, we recommend first writing out your high-level summary of the topic and also your key takeaways. This provides you with a start point (A) and an end point (B) for your contribution. The challenge then is to figure out the main points or questions you will need to address to help your audience progress from point A to point B in a way that’s logical and intuitive for them to follow.</p>
 
 
-</section>
 
-</main> <!-- /main -->
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="People,Biographies" data-listing-date-sort="1666051200000" data-listing-file-modified-sort="1668525935458" data-listing-reading-time-sort="11.045">
+<div class="thumbnail">
+<p><a href="../news-and-views/editors-blog/posts/2022-10-18-meet-the-team/meet-the-team.html"> <img src="../news-and-views/editors-blog/posts/2022-10-18-meet-the-team/images/team.png" class="thumnail-image" alt="Portrait photos of 12 members of the Real World Data Science Editorial team"> </a></p>
+</div>
+<div class="body">
+<a href="../news-and-views/editors-blog/posts/2022-10-18-meet-the-team/meet-the-team.html">
+<h3 class="no-anchor listing-title">
+Meet the team
+</h3>
+<div class="listing-subtitle">
+Introducing the editors of Real World Data Science
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('People'); return false;">
+People
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Biographies'); return false;">
+Biographies
+</div>
+</div>
+<a href="../news-and-views/editors-blog/posts/2022-10-18-meet-the-team/meet-the-team.html">
+<div class="listing-description">
+<p>Brief biographies of the project team</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="../news-and-views/editors-blog/posts/2022-10-18-meet-the-team/meet-the-team.html">
+<div class="listing-date">
+Oct 18, 2022
+</div>
+<div class="listing-author">
+Editorial Board
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -537,15 +510,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   }
 });
 </script>
-<nav class="page-navigation">
+<nav class="page-navigation column-body">
   <div class="nav-page nav-page-previous">
-      <a href="../contributor-docs/case-studies.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Case studies</span>
-      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../contributor-docs/exercises.html" class="pagination-link">
-        <span class="nav-page-text">Exercises</span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../news-and-views/editors-blog/index.html" class="pagination-link">
+        <span class="nav-page-text">Editors’ blog</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
