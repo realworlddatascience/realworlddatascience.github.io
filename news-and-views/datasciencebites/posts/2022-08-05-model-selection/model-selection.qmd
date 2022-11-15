@@ -1,9 +1,10 @@
 ---
 title: "Navigating the 'black hole of statistics': model selection"
-# subtitle: Introducing the editors of Real World Data Science
-# description: Brief biographies of the project team
+description: |
+  A statistical toolbox in some ways is like an endless buffet. But researchers inevitably must face this daunting question: what method do you choose and why? Annie Xie summarises a new paper that seeks to address this issue.
 categories:
   - Model selection
+  - Statistics
   - Ecology
 author: Annie Xie
 date: 08/05/2022
@@ -26,7 +27,7 @@ A statistical toolbox in some ways is like an endless buffet. There are tons of 
 **Journal:** *Ecology*, open access: [HTML](https://esajournals.onlinelibrary.wiley.com/doi/10.1002/ecy.3336), [ePDF](https://esajournals.onlinelibrary.wiley.com/doi/epdf/10.1002/ecy.3336). 
 :::
 
-In their paper, Tredennick *et al.* claim that there are three primary goals for statistical modeling in ecology: **exploration**, **inference**, and **prediction**. Exploration is the process of finding patterns in data and creating scientific hypotheses. Inference is the process of assessing whether data supports a hypothesis, and prediction refers to the ability to make accurate predictions for future data. You may be wondering, “Aren’t all of these goals related?” The answer is yes. However, conducting a statistically-sound analysis that accomplishes all three tasks is no easy feat. Tredennick et al. present a case study that highlights how even when using the same data set, each goal involves a nuanced analysis that can lead to different models and results.
+In their paper, Tredennick *et al.* claim that there are three primary goals for statistical modeling in ecology: **exploration**, **inference**, and **prediction**. Exploration is the process of finding patterns in data and creating scientific hypotheses. Inference is the process of assessing whether data supports a hypothesis, and prediction refers to the ability to make accurate predictions for future data. You may be wondering, “Aren’t all of these goals related?” The answer is yes. However, conducting a statistically-sound analysis that accomplishes all three tasks is no easy feat. Tredennick *et al.* present a case study that highlights how even when using the same data set, each goal involves a nuanced analysis that can lead to different models and results.
 
 ## The case study
 
@@ -40,9 +41,13 @@ The authors first explored which weather-related variables show a significant as
 
 Next, the authors chose to investigate the following hypothesis: extremely high temperatures in winter affect the population growth rate in years of low snowfall. Here, we pretend that we do not know the results from the previous analysis. The authors first built a model that incorporated four main covariates: level of snowfall, the average maximum temperature in winter, the population size in the previous year, and an interaction term that multiplies snowfall by the average maximum temperature in winter. Because the null hypothesis is about the effect of temperature, paired with low snowfall, on the population growth rate, the authors were primarily interested in the interaction term which utilizes both pieces of information. More specifically, they wanted to test if the interaction term was important to include in the model. Like before, they performed a likelihood ratio test to compare the model with the interaction term to the model without and found that the term was significant. Thus, the results suggest that there is a relationship between snowfall, extremely high winter temperatures, and population growth rate. Comparing this analysis to the previous one, note that here, the authors do not make any conclusions on the significance of spring temperatures. In fact, they do not consider them at all!
 
-<!-- Chart, line chart -->
+::: {.column-body}
+![](images/fig1.png)
+:::
 
-<!-- Figure 1: This is a plot of mean maximum temperature in early winter vs. population size during low and high snowfall years. Since the relationship between the mean maximum temperature and the population size differs depending on whether there is a high level of snowfall vs. a low level of snowfall, this plot suggests that there could be an interaction effect between the mean maximum temperature and level of snowfall that leads to different trends in population size. Figure 5 in the paper. Figure used under CC BY NC. -->
+::: {.column-margin}
+**Figure 1:** This is a plot of mean maximum temperature in early winter vs. population size during low and high snowfall years. Since the relationship between the mean maximum temperature and the population size differs depending on whether there is a high level of snowfall vs. a low level of snowfall, this plot suggests that there could be an interaction effect between the mean maximum temperature and level of snowfall that leads to different trends in population size. Figure 5 in the paper. Figure used under [CC BY NC](https://creativecommons.org/licenses/by-nc/4.0/).
+:::
 
 ### Analysis 3: Prediction
 
@@ -52,10 +57,23 @@ To evaluate predictive performance, the authors used a method called validation.
 
 The authors created an optimal Ridge regression model and compared it to another model that only included the four covariates from the inference analysis. When comparing the predictive performance between the two, the authors found that the former model performed much better, despite the latter’s use of information gained through inference. This highlights that our “best” model in inference is not always our “best” model in prediction. 
 
-<!-- Chart, scatter chart
+::: {.column-screen-inset-left}
+![](images/fig2.png)
+:::
 
-Figure 2: These are scatter plots of predicted population size vs. observed population size. The closer the points are to the black line, the closer the prediction is to the observed value. The plot on the left-hand side plots predictions generated by a model that does not have any weather-related variables. The plot on the right-hand side plots predictions generated by a Ridge regression model that incorporates eight weather-related covariates. Figure 6 in the paper. Figure used under CC BY NC. -->
+
+::: {.column-margin}
+**Figure 2:** These are scatter plots of predicted population size vs. observed population size. The closer the points are to the black line, the closer the prediction is to the observed value. The plot on the left-hand side plots predictions generated by a model that does not have any weather-related variables. The plot on the right-hand side plots predictions generated by a Ridge regression model that incorporates eight weather-related covariates. Figure 6 in the paper. Figure used under [CC BY NC](https://creativecommons.org/licenses/by-nc/4.0/).
+:::
 
 ## The takeaway
 
 So what is the takeaway? Researchers need to specify the goal of their analysis and the critical thinking behind all their choices. Each data set is a unique snowflake with its own characteristics. In addition, not all statistical techniques are appropriate for each goal. While it is tempting to use one data set to simultaneously investigate all three of the previously stated goals, one must proceed with caution to avoid misinterpreting results and/or reporting false discoveries. By encouraging the best practices laid out in their paper, the authors hope to clear up the confusion surrounding the model selection and bring some transparency to this “black box” process.
+
+---
+
+## About the author
+**Annie Xie** is a PhD student in statistics at the University of Chicago. Currently, she is interested in statistical genetics research. In her free time, she enjoys hiking, painting, and exploring Chicago.
+
+## About DataScienceBites
+**DataScienceBites** is written by graduate students and early career researchers in data science (and related subjects) at universities throughout the world, as well as industry researchers. We publish digestible, engaging summaries of interesting new pre-print and peer-reviewed publications in the data science space, with the goal of making scientific papers more accessible. DataScienceBites is published by Real World Data Science, and is part of the [Science Bites](https://sciencebites.org/) [network of sites](https://sciencebites.org/sciencebites-sites-galaxy/). Find out how to [become a contributor](/contributor-docs/call-for-contributions.qmd)
