@@ -17,7 +17,79 @@
 <width>144</width>
 </image>
 <generator>quarto-1.2.313</generator>
-<lastBuildDate>Wed, 18 Jan 2023 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 24 Jan 2023 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Pulling patterns out of data with a graph</title>
+  <dc:creator>Andrew Saydjari</dc:creator>
+  <link>https://realworlddatascience.net/news-and-views/datasciencebites/posts/2023/01/24/pulling-patterns.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+About the paper and this post
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p><strong>Title:</strong> Extracting the main trend in a data set: The Sequencer algorithm</p>
+<p><strong>Author(s) and year:</strong> Dalya Baron and Brice Ménard (2021)</p>
+<p><strong>Status:</strong> Published in <em>The Astrophysical Journal</em>, open access: <a href="https://iopscience.iop.org/article/10.3847/1538-4357/abfc4d">HTML</a>, <a href="https://iopscience.iop.org/article/10.3847/1538-4357/abfc4d/pdf">PDF</a>.</p>
+<p><strong>Editor’s note:</strong> This post is republished with permission from <a href="https://mathstatbites.org/pulling-patterns-out-of-data-with-a-graph/">MathStatBites</a> to demonstrate the Bites concept. For more information about Bites articles and how to contribute to DataScienceBites, see our <a href="../../../../../../contributor-docs/datasciencebites.html" aria-label="Contributor notes for the Data Science Bites blog">notes for contributors</a>.</p>
+</div>
+</div>
+</div>
+<p>Large volumes of data are pouring in every day from scientific experiments like <a href="https://home.cern/">CERN</a> and the <a href="https://www.sdss5.org/">Sloan Digital Sky Survey</a>. Data is coming in so fast that researchers struggle to keep pace with the analysis and are increasingly developing automated analysis methods to aid in this herculean task. As a first step, it is now commonplace to perform dimension reduction in order to reduce a large number of measurements to a set of key values that are easier to visualize and interpret.</p>
+<p>When working on the cutting edge, another problem scientists often face is that “we don’t know what we don’t know”. For this reason, we often want to simply ask the data, “What is interesting about you?” This is the realm of <a href="https://en.wikipedia.org/wiki/Unsupervised_learning">“unsupervised” methods</a>, where the data itself drives the analysis, with little to no guidance or human labeling of the data.</p>
+<p>Many physical processes depend continuously on some driving parameter. For example, the evaporation rate of water increases with temperature. We call these continuous variations in datasets “trends”. Describing a dataset by a single trend reduces it to one dimension - an ordered list. Finding such a trend within a high-dimensional dataset is the aim of a method called “The Sequencer” introduced by Baron and Ménard.</p>
+<section id="key-insight-a-tree" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="key-insight-a-tree">Key insight: A tree</h2>
+<p>The key insight of Baron and Ménard was to relate trends in data to an object from graph theory called a <a href="https://en.wikipedia.org/wiki/Minimum_spanning_tree">minimum spanning tree</a>. Given a measure of distance between two data points, for example the usual (Euclidean) distance between two points, we can visualize a dataset as a graph. This graph consists of a node (a dot) for each data point. These nodes are then connected by an edge (a line), labeled by the distance between the two data points. The minimum spanning tree is a reduction of this graph to include only enough of the smallest distance edges so that no node is isolated.</p>
+<p>What Baron and Ménard realized is that datasets that are “trendy” have elongated and narrow minimum spanning trees. As shown in Figure 1, a totally random dataset results in a graph with many branches while a perfect sequence results in a perfect linear graph. Then, they use connectivity of the nodes in the minimum spanning tree to return an ordering of the data that follows the main trend in the dataset. However, a sequence is all you get. It is up to us to understand and interpret what this trend represents.</p>
+<div class="column-page">
+<p><img src="https://realworlddatascience.net/news-and-views/datasciencebites/posts/2023/01/24/images/fig1.png" class="img-fluid" alt="Three examples - labelled 'random data', 'noisy sequence', and 'perfect sequence' - demonstrating that data with stronger trends ('noisy' and 'perfect sequence') have more narrow and elongated minimum spanning trees (adapted from Baron and Ménard, Figure 1)."></p>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><strong>Figure 1:</strong> Examples demonstrating that data with stronger trends have more narrow and elongated minimum spanning trees. Adapted from <a href="https://iopscience.iop.org/article/10.3847/1538-4357/abfc4d" aria-label="Link to Baron and Ménard's 2021 paper, 'Extracting the main trend in a data set: The Sequencer algorithm'">Baron and Ménard (2021)</a>, Figure 1. Figure used under <a href="https://creativecommons.org/licenses/by/4.0/" aria-label="Link to Creative Commons licence">CC BY 4.0</a>.</p>
+</div></div><p>Sometimes, the ordering of observations within a data point matters, like in time series data. Measurements taken close in time are more likely to be correlated than measurements taken after a long time delay. Baron and Ménard were careful to include a measure of distance that takes this ordering into account, unlike our usual notion of distance. They argue that this gives them an edge over other common dimension reduction techniques such as <a href="https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding">t-SNE</a> and <a href="https://umap-learn.readthedocs.io/en/latest/how_umap_works.html">UMAP</a>, and even go so far as to use The Sequencer to optimize the hyperparameters used by these other methods!</p>
+</section>
+<section id="when-does-it-fail" class="level2">
+<h2 class="anchored" data-anchor-id="when-does-it-fail">When does it fail?</h2>
+<p>It is important to acknowledge that no statistical or machine-learning tool is a cure-all. And, the authors themselves are quick to point out several limitations that can hinder the application of their method. The Sequencer can struggle when the data has a large dynamic range, a variety of signal strengths relative to noise, or there are multiple trends present in the data. In each case, Baron and Ménard propose ways to mitigate these problems, but practitioners still need to be wary when applying The Sequencer in those instances.</p>
+</section>
+<section id="what-discoveries-await" class="level2">
+<h2 class="anchored" data-anchor-id="what-discoveries-await">What discoveries await?</h2>
+<p>To demonstrate the power of their method, Baron and Ménard apply The Sequencer to several real datasets where a pattern was already known and show that The Sequencer recovers that pattern. Examples include ordering spectral measurements of stars by their temperature and <a href="https://en.wikipedia.org/wiki/Quasar">quasars</a> by their <a href="https://en.wikipedia.org/wiki/Redshift_survey">redshift</a>, a measure of their distance from us on Earth.</p>
+<p>But, what about new patterns? The team has already applied The Sequencer to mine seismographic data and discover previously unknown formations deep within the earth, at the boundary between the core and <a href="https://en.wikipedia.org/wiki/Core%E2%80%93mantle_boundary">mantle</a>. By sequencing the seismic waves, they realized that the main trend was the amplitude of diffraction off of these structures, which they were then able to localize beneath Hawaii and the Marquesas (DOI: <a href="https://doi.org/10.1126/science.aba8972" aria-label="Link to article, 'Sequencing seismograms: A panoptic view of scattering in the core-mantle boundary region'">10.1126/science.aba8972</a>).</p>
+<p>For more demonstrations and discoveries, or even to upload your own data for sequencing, <a href="http://sequencer.org/">check out the project website</a>. Data sleuths can also download all of the code directly from <a href="https://github.com/dalya/Sequencer">GitHub</a> and sequence to their hearts’ content!</p>
+</section>
+<section id="about-the-author" class="level2">
+<h2 class="anchored" data-anchor-id="about-the-author">About the author</h2>
+<p><strong>Andrew Saydjari</strong> is a graduate student in physics at Harvard researching the spatial and chemical variations of dust in the interstellar medium. He favors using interpretable statistics and large photometric and spectroscopic surveys.</p>
+</section>
+<section id="about-datasciencebites" class="level2">
+<h2 class="anchored" data-anchor-id="about-datasciencebites">About DataScienceBites</h2>
+<p><a href="../../../../../../news-and-views/datasciencebites/index.html"><strong>DataScienceBites</strong></a> is written by graduate students and early career researchers in data science (and related subjects) at universities throughout the world, as well as industry researchers. We publish digestible, engaging summaries of interesting new pre-print and peer-reviewed publications in the data science space, with the goal of making scientific papers more accessible. Find out how to <a href="../../../../../../contributor-docs/datasciencebites.html">become a contributor</a>.</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Data management</category>
+  <category>Dimension reduction</category>
+  <category>Graph theory</category>
+  <guid>https://realworlddatascience.net/news-and-views/datasciencebites/posts/2023/01/24/pulling-patterns.html</guid>
+  <pubDate>Tue, 24 Jan 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/news-and-views/datasciencebites/posts/2023/01/24/images/signal-from-noise.png" medium="image" type="image/png" height="115" width="144"/>
+</item>
 <item>
   <title>We’re taking Real World Data Science on the road</title>
   <dc:creator>Brian Tarran</dc:creator>
@@ -184,80 +256,6 @@ About the paper and this post
   <media:content url="https://realworlddatascience.net/news-and-views/datasciencebites/posts/2022-12-13-ridesharing/images/paul-hanaoka-D-qq7W751vs-unsplash.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
-  <title>LLMs in the news: hype, tripe, and everything in between</title>
-  <dc:creator>Brian Tarran</dc:creator>
-  <link>https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/LLM-news.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>Two weeks ago, I posted a <a href="../../../../news-and-views/editors-blog/posts/2022-11-23-LLMs-content-warning/LLM-content-warning.html">Q&amp;A with our editorial board member Detlef Nauck about large language models</a> (LLMs), their drawbacks and risks. And since then we’ve had several big new announcements in this space. First came news from Meta (the company that owns Facebook) about <a href="https://galactica.org/mission/">Galactica, an LLM trained on scientific papers</a>. This was followed by another Meta announcement, about <a href="https://ai.facebook.com/research/cicero/">Cicero</a>, an AI agent that is apparently very good at playing the game Diplomacy. And then came perhaps the biggest launch of them all: <a href="https://openai.com/blog/chatgpt/">ChatGPT from OpenAI</a>, an LLM-based chatbot that millions of people have already started talking to.</p>
-<p>Following these stories and the surrounding commentaries has been something of a rollercoaster ride. ChatGPT, for example, has been greeted in some quarters as if artificial general intelligence has finally arrived, while others point out that – impressive though it is – the technology is as prone to spout nonsense as all LLMs before it (including Galactica, <a href="https://thenextweb.com/news/meta-takes-new-ai-system-offline-because-twitter-users-mean">the demo of which was quickly taken offline</a> for this reason). Cicero, meanwhile, has impressed with its ability to play a game that is (a) very difficult and (b) relies on dialogue, cooperation, and negotiation between players. It blends a language model with planning and reinforcement learning algorithms, meaning that it is trained not only on the rules of the game and how to win, but how to communicate with other players to achieve victory.</p>
-<p>To help me make sense of all these new developments, and the myriad implications, I reached out to <a href="../../../../news-and-views/editors-blog/posts/2022-10-18-meet-the-team/meet-the-team.html">Harvey Lewis</a>, another of our editorial board members and a partner in EY’s tax and law practice.</p>
-<section id="qa" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="qa">Q&amp;A</h2>
-<p><strong>Harvey, when I spoke with Detlef, he mentioned that one of the reasons we’re seeing investment in LLMs is because there’s this belief that they are somehow the route to artificial general intelligence (AGI). And there were headlines in some places that would perhaps convince a casual reader that AGI had been achieved following the release of ChatGPT. For example, the Telegraph described it as a <a href="https://www.telegraph.co.uk/business/2022/12/05/meet-scarily-intelligent-robot-who-can-do-job-better/">“scarily intelligent robot who can do your job better than you”</a>. What do you make of all that?</strong></p>
-<p><strong>Harvey Lewis (HL):</strong> My personal view is that you won’t get to artificial general intelligence using just one technique like deep learning, because of the problematic nature of these models and the limitations of the data used in their training. I’m convinced that more general intelligence will come from a combination of different systems.</p>
-<p>The challenge with many LLMs, as we’ve seen repeatedly, is that they’ve no real understanding of language or concepts represented within language. They’re good at finding patterns in semantics and grammatical rules that people use in writing, and then they use those patterns to create new expressions given a prompt. But they’ve no idea whether these outputs are factual, inaccurate or completely fabricated. As a consequence, they can produce outputs that are unreliable, but which sound authoritative, because they’re just repeating a style that we expect to see.</p>
-<p><strong>Over the past couple of weeks, Twitter has been full of people either showing off astoundingly impressive outputs from LLMs, or examples of truly worrying nonsense. One example of the latter is when ChatGPT was asked to <a href="https://twitter.com/GaryMarcus/status/1599584310633594881">“describe how crushed porcelain added to breast milk can support the infant digestive system”</a>. This made me think of a recent headline from <a href="https://venturebeat.com/ai/is-ai-moving-too-fast-for-ethics-the-ai-beat/">VentureBeat</a>, which asked whether AI is moving too fast for ethics to catch up. Do you think that it is?</strong></p>
-<p><strong>HL:</strong> I find that to be an interesting philosophical question, because ethics does move very slowly, for good reason. When you think of issues of bias and discrimination and prejudice, or misinformation and other problems that we might have with AI systems, it shouldn’t be a surprise that these can occur. We’re aware of them. We’re aware of the ethical issues. So, why do they always seem to catch us by surprise? Is it because we have teams of people who simply aren’t aware of ethical issues or don’t have any appreciation of them? This points – for me, at least – in the direction of needing to have philosophers, ethicists, theologians, lawyers working <em>in</em> the technical teams that are developing and working on these systems, rather than having them on the periphery and talking about these issues but not directly involved themselves. I think it’s hugely important to ensure that you’ve got trust, responsibility, and ethics embedded in technical teams, because that’s the only way it seems that you can avoid some of these “surprises”.</p>
-<p><strong>When situations like these occur, I’m always reminded of Dr.&nbsp;Ian Malcolm’s line from Jurassic Park: “…your scientists were so preoccupied with whether or not they could that they didn’t stop to think if they should.” The mindset seems to be, let’s push the boundaries and see what we can do, rather than stop and think deeply about what the implications might be.</strong></p>
-<p><strong>HL:</strong> There’s a balance to be struck between these things, though, right? Firstly, show consideration for some of the issues at the outset, and secondly, have checks and balances and safeguards built into the process by which you design, develop and implement these systems. That’s the only way to create the proper safeguards around the systems. I don’t think that there’s any lack of appreciation of what needs to be done; people have been talking about this now for quite a long time. But it’s about making sure organisationally that it is done, and that you’ve got an operating model which bakes these things into it; that the kinds of principles and governance that you want to have around these systems are written, publicised, and properly policed. There should be no fear of making advances in that kind of a context.</p>
-<p>Also, I think open sourcing these models provides a way forward. A lot of large language models are open for use and for research, but aren’t themselves open sourced, so it’s very difficult to get underneath the surface and figure out exactly how they work. But with open source, you have opportunities for researchers, whether they’re technical or in the field of ethics, to go and investigate and find out exactly what’s going on. I think that would be a fantastic step forward. It doesn’t take you all the way, of course, because a large amount of the data that these systems use is never open sourced, so while you might get an understanding of the mechanics, you have no idea of what exactly went into them in the first place. But open sourcing is a very good way of getting some external scrutiny. It’s about being transparent, which is a core principle of AI ethics and responsible AI.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/images/jigsaw-words.jpg" class="img-fluid figure-img" alt="An image created by the Stable Diffusion 2.1 Demo. The model was asked to produce an image with the prompt, 'Text from an old book cut up like a jigsaw puzzle with pieces missing'." width="500"></p>
-</figure>
-</div>
-
-<div class="no-row-height column-margin column-container"><div class="">
-<p>An image created by the <a href="https://huggingface.co/spaces/stabilityai/stable-diffusion">Stable Diffusion 2.1 Demo</a>. The model was asked to produce an image with the prompt, “Text from an old book cut up like a jigsaw puzzle with pieces missing”.</p>
-</div></div><p><strong>Thinking about LLMs and their questionable outputs, should there not be ways for users to help the models produce better, more accurate outputs?</strong></p>
-<p><strong>HL:</strong> There are, but there are also problems here too. I’ve been having an interesting dialogue with ChatGPT this morning, asking it about quantum computing.<sup>1</sup> For each response to a prompt, users are encouraged to provide feedback on whether or not an output is good. But you’re only provided with the usual thumbs-up/thumbs-down ratings; there’s nothing nuanced about it. So, for example, I asked ChatGPT to provide me with good analogies that help to explain quantum computing in simple terms. The first analogy was a combination lock, which is not a good analogy. The chatbot suggested that quantum computing is like a combination lock in which you can test all of the combinations at the same time, but I don’t know any combination locks where you can do this – being able to check only one combination at a time is the principal security mechanism of a combination lock! I asked it again for another analogy, and it suggested a coin toss where, when the coin is spinning in the air, you can see both heads and tails simultaneously but it isn’t until you catch the coin and then show its face that one of the states of the coin is resolved. That is a good analogy – it’s one I’ve also used myself. Now, the challenge I can see with a lot of these feedback approaches is that unless I know enough about quantum computing to understand that a combination lock is not a good analogy whereas a coin toss is, how am I to provide that kind of feedback? They’re relying to an extent on the user being able to make a distinction between what is correct and what is potentially incorrect or flawed, and I think that’s not a good way of approaching the problem.</p>
-<p><strong>Final question for you, Harvey. There’s a lot of excitement around GPT-4, which is apparently coming soon. The rumour mill says it will bring <a href="https://thealgorithmicbridge.substack.com/p/gpt-4-rumors-from-silicon-valley">a leap forward in performance</a>. But what do you expect we’ll see – particularly with regards to the issues we’ve talked about today?</strong></p>
-<p><strong>HL:</strong> I’ve likened some of the large language models and their approach of “bigger is better” to the story of the Tower of Babel – trying to reach heaven by building a bigger and bigger tower, basically. That is not going to achieve the objective of artificial general intelligence, no matter how sophisticated an LLM might appear. That said, language is a fascinating area. I’m not a linguist, but I spend a lot of my time on natural language processing using AI systems. Language responds very well to AI because it is pattern-based. We speak using patterns, we write using patterns, and these can be inferred by machines from many examples. The addition of more parameters in the models allows them to understand patterns that extend further into the text, and I suspect that outputs from these kinds of models are going to be largely indistinguishable from the sorts of things that you or I might write.</p>
-<p>But, I also think that increasing the number of parameters runs a real risk – and we’re starting to see this in other generative models – where prompts become so specific that the models aren’t actually picking up on patterns, they are picking up on specific instances of training data and text they’ve seen before. So, buried amongst these fantastically written articles on all kinds of subjects are going to be more examples of plagiarism, which is a problem; more examples of spelling mistakes and other kinds of issues, because these are also patterns which are going to possibly be observed.</p>
-<p>This introduces potentially a whole new breed of problems that the community has to deal with – as long as they don’t get fixated upon the height of the tower and the quality of some of the examples that are shown, and realise that there are some genuine underlying difficulties and challenges that need to be solved.</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Have you got news for us?
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Is there a recent data science story you’d like our team to discuss? Do you have your own thoughts to share on a hot topic, or a burning question to put to the community? If so, either comment below or <a href="../../../../contact.html">contact us</a>.</p>
-</div>
-</div>
-<section id="back-to-editors-blog" class="level6">
-<h6 class="anchored" data-anchor-id="back-to-editors-blog"><strong>← Back to <a href="../../../../news-and-views/editors-blog/index.html">Editors’ blog</a></strong></h6>
-<hr>
-<p xmlns:cc="http://creativecommons.org/ns#">
-This work is licensed under <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/https:/mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/https:/mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a>
-</p>
-
-
-</section>
-</section>
-
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>I also had a conversation with ChatGPT. <a href="../../../../news-and-views/editors-blog/posts/2022-12-09-LLM-news/A-chat-with-ChatGPT.html">Read the transcript</a>.↩︎</p></li>
-</ol>
-</section></div> ]]></description>
-  <category>Machine learning</category>
-  <category>Large language models</category>
-  <category>AI</category>
-  <guid>https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/LLM-news.html</guid>
-  <pubDate>Fri, 09 Dec 2022 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/images/jigsaw-words.jpg" medium="image" type="image/jpeg"/>
-</item>
-<item>
   <title>A chat with ChatGPT</title>
   <dc:creator>Brian Tarran</dc:creator>
   <link>https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/A-chat-with-ChatGPT.html</link>
@@ -339,6 +337,80 @@ This work is licensed under <a href="http://creativecommons.org/licenses/by/4.0/
   <guid>https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/A-chat-with-ChatGPT.html</guid>
   <pubDate>Fri, 09 Dec 2022 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/images/chatgpt1.png" medium="image" type="image/png" height="156" width="144"/>
+</item>
+<item>
+  <title>LLMs in the news: hype, tripe, and everything in between</title>
+  <dc:creator>Brian Tarran</dc:creator>
+  <link>https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/LLM-news.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>Two weeks ago, I posted a <a href="../../../../news-and-views/editors-blog/posts/2022-11-23-LLMs-content-warning/LLM-content-warning.html">Q&amp;A with our editorial board member Detlef Nauck about large language models</a> (LLMs), their drawbacks and risks. And since then we’ve had several big new announcements in this space. First came news from Meta (the company that owns Facebook) about <a href="https://galactica.org/mission/">Galactica, an LLM trained on scientific papers</a>. This was followed by another Meta announcement, about <a href="https://ai.facebook.com/research/cicero/">Cicero</a>, an AI agent that is apparently very good at playing the game Diplomacy. And then came perhaps the biggest launch of them all: <a href="https://openai.com/blog/chatgpt/">ChatGPT from OpenAI</a>, an LLM-based chatbot that millions of people have already started talking to.</p>
+<p>Following these stories and the surrounding commentaries has been something of a rollercoaster ride. ChatGPT, for example, has been greeted in some quarters as if artificial general intelligence has finally arrived, while others point out that – impressive though it is – the technology is as prone to spout nonsense as all LLMs before it (including Galactica, <a href="https://thenextweb.com/news/meta-takes-new-ai-system-offline-because-twitter-users-mean">the demo of which was quickly taken offline</a> for this reason). Cicero, meanwhile, has impressed with its ability to play a game that is (a) very difficult and (b) relies on dialogue, cooperation, and negotiation between players. It blends a language model with planning and reinforcement learning algorithms, meaning that it is trained not only on the rules of the game and how to win, but how to communicate with other players to achieve victory.</p>
+<p>To help me make sense of all these new developments, and the myriad implications, I reached out to <a href="../../../../news-and-views/editors-blog/posts/2022-10-18-meet-the-team/meet-the-team.html">Harvey Lewis</a>, another of our editorial board members and a partner in EY’s tax and law practice.</p>
+<section id="qa" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="qa">Q&amp;A</h2>
+<p><strong>Harvey, when I spoke with Detlef, he mentioned that one of the reasons we’re seeing investment in LLMs is because there’s this belief that they are somehow the route to artificial general intelligence (AGI). And there were headlines in some places that would perhaps convince a casual reader that AGI had been achieved following the release of ChatGPT. For example, the Telegraph described it as a <a href="https://www.telegraph.co.uk/business/2022/12/05/meet-scarily-intelligent-robot-who-can-do-job-better/">“scarily intelligent robot who can do your job better than you”</a>. What do you make of all that?</strong></p>
+<p><strong>Harvey Lewis (HL):</strong> My personal view is that you won’t get to artificial general intelligence using just one technique like deep learning, because of the problematic nature of these models and the limitations of the data used in their training. I’m convinced that more general intelligence will come from a combination of different systems.</p>
+<p>The challenge with many LLMs, as we’ve seen repeatedly, is that they’ve no real understanding of language or concepts represented within language. They’re good at finding patterns in semantics and grammatical rules that people use in writing, and then they use those patterns to create new expressions given a prompt. But they’ve no idea whether these outputs are factual, inaccurate or completely fabricated. As a consequence, they can produce outputs that are unreliable, but which sound authoritative, because they’re just repeating a style that we expect to see.</p>
+<p><strong>Over the past couple of weeks, Twitter has been full of people either showing off astoundingly impressive outputs from LLMs, or examples of truly worrying nonsense. One example of the latter is when ChatGPT was asked to <a href="https://twitter.com/GaryMarcus/status/1599584310633594881">“describe how crushed porcelain added to breast milk can support the infant digestive system”</a>. This made me think of a recent headline from <a href="https://venturebeat.com/ai/is-ai-moving-too-fast-for-ethics-the-ai-beat/">VentureBeat</a>, which asked whether AI is moving too fast for ethics to catch up. Do you think that it is?</strong></p>
+<p><strong>HL:</strong> I find that to be an interesting philosophical question, because ethics does move very slowly, for good reason. When you think of issues of bias and discrimination and prejudice, or misinformation and other problems that we might have with AI systems, it shouldn’t be a surprise that these can occur. We’re aware of them. We’re aware of the ethical issues. So, why do they always seem to catch us by surprise? Is it because we have teams of people who simply aren’t aware of ethical issues or don’t have any appreciation of them? This points – for me, at least – in the direction of needing to have philosophers, ethicists, theologians, lawyers working <em>in</em> the technical teams that are developing and working on these systems, rather than having them on the periphery and talking about these issues but not directly involved themselves. I think it’s hugely important to ensure that you’ve got trust, responsibility, and ethics embedded in technical teams, because that’s the only way it seems that you can avoid some of these “surprises”.</p>
+<p><strong>When situations like these occur, I’m always reminded of Dr.&nbsp;Ian Malcolm’s line from Jurassic Park: “…your scientists were so preoccupied with whether or not they could that they didn’t stop to think if they should.” The mindset seems to be, let’s push the boundaries and see what we can do, rather than stop and think deeply about what the implications might be.</strong></p>
+<p><strong>HL:</strong> There’s a balance to be struck between these things, though, right? Firstly, show consideration for some of the issues at the outset, and secondly, have checks and balances and safeguards built into the process by which you design, develop and implement these systems. That’s the only way to create the proper safeguards around the systems. I don’t think that there’s any lack of appreciation of what needs to be done; people have been talking about this now for quite a long time. But it’s about making sure organisationally that it is done, and that you’ve got an operating model which bakes these things into it; that the kinds of principles and governance that you want to have around these systems are written, publicised, and properly policed. There should be no fear of making advances in that kind of a context.</p>
+<p>Also, I think open sourcing these models provides a way forward. A lot of large language models are open for use and for research, but aren’t themselves open sourced, so it’s very difficult to get underneath the surface and figure out exactly how they work. But with open source, you have opportunities for researchers, whether they’re technical or in the field of ethics, to go and investigate and find out exactly what’s going on. I think that would be a fantastic step forward. It doesn’t take you all the way, of course, because a large amount of the data that these systems use is never open sourced, so while you might get an understanding of the mechanics, you have no idea of what exactly went into them in the first place. But open sourcing is a very good way of getting some external scrutiny. It’s about being transparent, which is a core principle of AI ethics and responsible AI.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/images/jigsaw-words.jpg" class="img-fluid figure-img" alt="An image created by the Stable Diffusion 2.1 Demo. The model was asked to produce an image with the prompt, 'Text from an old book cut up like a jigsaw puzzle with pieces missing'." width="500"></p>
+</figure>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>An image created by the <a href="https://huggingface.co/spaces/stabilityai/stable-diffusion">Stable Diffusion 2.1 Demo</a>. The model was asked to produce an image with the prompt, “Text from an old book cut up like a jigsaw puzzle with pieces missing”.</p>
+</div></div><p><strong>Thinking about LLMs and their questionable outputs, should there not be ways for users to help the models produce better, more accurate outputs?</strong></p>
+<p><strong>HL:</strong> There are, but there are also problems here too. I’ve been having an interesting dialogue with ChatGPT this morning, asking it about quantum computing.<sup>1</sup> For each response to a prompt, users are encouraged to provide feedback on whether or not an output is good. But you’re only provided with the usual thumbs-up/thumbs-down ratings; there’s nothing nuanced about it. So, for example, I asked ChatGPT to provide me with good analogies that help to explain quantum computing in simple terms. The first analogy was a combination lock, which is not a good analogy. The chatbot suggested that quantum computing is like a combination lock in which you can test all of the combinations at the same time, but I don’t know any combination locks where you can do this – being able to check only one combination at a time is the principal security mechanism of a combination lock! I asked it again for another analogy, and it suggested a coin toss where, when the coin is spinning in the air, you can see both heads and tails simultaneously but it isn’t until you catch the coin and then show its face that one of the states of the coin is resolved. That is a good analogy – it’s one I’ve also used myself. Now, the challenge I can see with a lot of these feedback approaches is that unless I know enough about quantum computing to understand that a combination lock is not a good analogy whereas a coin toss is, how am I to provide that kind of feedback? They’re relying to an extent on the user being able to make a distinction between what is correct and what is potentially incorrect or flawed, and I think that’s not a good way of approaching the problem.</p>
+<p><strong>Final question for you, Harvey. There’s a lot of excitement around GPT-4, which is apparently coming soon. The rumour mill says it will bring <a href="https://thealgorithmicbridge.substack.com/p/gpt-4-rumors-from-silicon-valley">a leap forward in performance</a>. But what do you expect we’ll see – particularly with regards to the issues we’ve talked about today?</strong></p>
+<p><strong>HL:</strong> I’ve likened some of the large language models and their approach of “bigger is better” to the story of the Tower of Babel – trying to reach heaven by building a bigger and bigger tower, basically. That is not going to achieve the objective of artificial general intelligence, no matter how sophisticated an LLM might appear. That said, language is a fascinating area. I’m not a linguist, but I spend a lot of my time on natural language processing using AI systems. Language responds very well to AI because it is pattern-based. We speak using patterns, we write using patterns, and these can be inferred by machines from many examples. The addition of more parameters in the models allows them to understand patterns that extend further into the text, and I suspect that outputs from these kinds of models are going to be largely indistinguishable from the sorts of things that you or I might write.</p>
+<p>But, I also think that increasing the number of parameters runs a real risk – and we’re starting to see this in other generative models – where prompts become so specific that the models aren’t actually picking up on patterns, they are picking up on specific instances of training data and text they’ve seen before. So, buried amongst these fantastically written articles on all kinds of subjects are going to be more examples of plagiarism, which is a problem; more examples of spelling mistakes and other kinds of issues, because these are also patterns which are going to possibly be observed.</p>
+<p>This introduces potentially a whole new breed of problems that the community has to deal with – as long as they don’t get fixated upon the height of the tower and the quality of some of the examples that are shown, and realise that there are some genuine underlying difficulties and challenges that need to be solved.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Have you got news for us?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Is there a recent data science story you’d like our team to discuss? Do you have your own thoughts to share on a hot topic, or a burning question to put to the community? If so, either comment below or <a href="../../../../contact.html">contact us</a>.</p>
+</div>
+</div>
+<section id="back-to-editors-blog" class="level6">
+<h6 class="anchored" data-anchor-id="back-to-editors-blog"><strong>← Back to <a href="../../../../news-and-views/editors-blog/index.html">Editors’ blog</a></strong></h6>
+<hr>
+<p xmlns:cc="http://creativecommons.org/ns#">
+This work is licensed under <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/https:/mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/https:/mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a>
+</p>
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>I also had a conversation with ChatGPT. <a href="../../../../news-and-views/editors-blog/posts/2022-12-09-LLM-news/A-chat-with-ChatGPT.html">Read the transcript</a>.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>Machine learning</category>
+  <category>Large language models</category>
+  <category>AI</category>
+  <guid>https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/LLM-news.html</guid>
+  <pubDate>Fri, 09 Dec 2022 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/images/jigsaw-words.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Four themes for potential contributors to think about</title>
