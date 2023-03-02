@@ -1,7 +1,7 @@
 ---
 title: "Using ‘basket complementarity’ to make product recommendations"
-# description: |
-#   Large volumes of data are pouring in every day from scientific experiments, so much so that it is now commonplace to perform dimension reduction in order to reduce a large number of measurements to a set of key values that are easier to visualize and interpret. Enter 'The Sequencer', a proposed method to find trends within high-dimensional datasets.  
+description: |
+  Purchase suggestions -- e.g., "if you are buying that, you might also want this" -- are, to a large extent, informed by the concept of complementarity: that certain products are often bought and/or used together. A journal paper by Puka and Jedrusik sheds light on how these product recommendations can be derived, as Moinak Bhaduri explains.  
 categories:
   - Market basket analysis
   - Recommendation systems
@@ -15,7 +15,7 @@ toc: true
 ---
 Anyone who has ever worked in a retail store will be familiar with the concept of cross-selling. A customer wants a can of paint? Try to sell them some paintbrushes. That new cellphone they’ve just decided to buy? They’ll probably need a case to protect it. Online retailers (and digital services of all sorts) have taken this idea and run with it, to great success. Sophisticated algorithms sort through data on a customer’s past transactions, and those of similar-looking customers, to identify and recommend other products a customer might be interested in.  
 
-A large amount of cross-selling, whether attempted in store by a sales assistant or online by an algorithm, relies on the concept of complementarity: that certain products are often bought and/or used together. Relationships between products might be obvious -- paint and paintbrushes, for example -- or they may be obscure and only revealed through the analysis of large datasets. In a 2021 paper that highlights complementarity's relevance to association analysis, Puka and Jedrusik put forward “[a new measure of complementarity in market basket data](https://www.mdpi.com/0718-1876/16/4/39)”, which sheds light on how product recommendations can be derived. 
+A large amount of cross-selling, whether attempted in store by a sales assistant or online by an algorithm, relies on the concept of *complementarity*: that certain products are often bought and/or used together. Relationships between products might be obvious -- paint and paintbrushes, for example -- or they may be obscure and only revealed through the analysis of large datasets. In a 2021 paper that highlights complementarity's relevance to association analysis, Puka and Jedrusik put forward “[a new measure of complementarity in market basket data](https://www.mdpi.com/0718-1876/16/4/39)”, which sheds light on how product recommendations can be derived. 
 
 :::{.callout-note collapse="false"}
 ## About the paper
@@ -27,7 +27,7 @@ A large amount of cross-selling, whether attempted in store by a sales assistant
 **Status:** Published in the *Journal of Theoretical and Applied Electronic Commerce Research*, open access: [HTML](https://www.mdpi.com/0718-1876/16/4/39), [PDF](https://www.mdpi.com/0718-1876/16/4/39/pdf?version=1609984879). 
 :::
 
-Inspired by complementarity-based ideas prevalent in microeconomics, Puka and Jedrusik begin by collecting some established ideas from traditional market basket analysis, the key one being “confidence”. In this case, we’re talking about the confidence that item A leads (in a way) to item B (which we can express in notation as: *conf*({A} → {B})). Take a look at Table 1 (below), which presents a numbered list of 18 shopping trips, each from a different person, with details of what was purchased on each trip. Notice how two of the trips (1 and 3) resulted in sales of both milk (B) and cornflakes (A), while five trips (1, 3, 7, 17, and 18) had cornflakes (A). Under the assumption that someone already has cornflakes (A) in their trolley, the probability that they will buy milk (B) is 2/5 = 0.4. So, *conf*({cornflakes} → {milk}) = 0.4. The closer this number gets to one, the more automatic the cornflakes--milk connection becomes. This number can therefore be used to recommend an item that is related in some way to another already bought.
+Inspired by complementarity-based ideas prevalent in microeconomics, Puka and Jedrusik begin by collecting some established ideas from traditional market basket analysis, the key one being “confidence”. In this case, we’re talking about the confidence that item A leads (in a way) to item B (which we can express in notation as *conf*({A} → {B})). Take a look at Table 1 (below), which presents a numbered list of 18 shopping trips, with details of what was purchased on each trip. Notice how two of the trips (1 and 3) resulted in sales of both milk (B) and cornflakes (A), while five trips (1, 3, 7, 17, and 18) had cornflakes. Under the assumption that someone already has cornflakes in their trolley, the probability that they will buy milk is 2/5 = 0.4. So, *conf*({cornflakes} → {milk}) = 0.4. The closer this number gets to one, the more automatic the cornflakes--milk connection becomes. This number can therefore be used to recommend an item that is related in some way to another already bought.
 
 ![](images/tab-1-fig-1.jpg)
 
