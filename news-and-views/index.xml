@@ -17,7 +17,107 @@
 <width>144</width>
 </image>
 <generator>quarto-1.2.335</generator>
-<lastBuildDate>Tue, 14 Feb 2023 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 02 Mar 2023 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Using ‘basket complementarity’ to make product recommendations</title>
+  <dc:creator>Moinak Bhaduri</dc:creator>
+  <link>https://realworlddatascience.net/news-and-views/datasciencebites/posts/2023/03/02/basket-complementarity.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>Anyone who has ever worked in a retail store will be familiar with the concept of cross-selling. A customer wants a can of paint? Try to sell them some paintbrushes. That new cellphone they’ve just decided to buy? They’ll probably need a case to protect it. Online retailers (and digital services of all sorts) have taken this idea and run with it, to great success. Sophisticated algorithms sort through data on a customer’s past transactions, and those of similar-looking customers, to identify and recommend other products a customer might be interested in.</p>
+<p>A large amount of cross-selling, whether attempted in store by a sales assistant or online by an algorithm, relies on the concept of <em>complementarity</em>: that certain products are often bought and/or used together. Relationships between products might be obvious – paint and paintbrushes, for example – or they may be obscure and only revealed through the analysis of large datasets. In a 2021 paper that highlights complementarity’s relevance to association analysis, Puka and Jedrusik put forward “<a href="https://www.mdpi.com/0718-1876/16/4/39">a new measure of complementarity in market basket data</a>”, which sheds light on how product recommendations can be derived.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+About the paper
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p><strong>Title:</strong> A new measure of complementarity in market basket data</p>
+<p><strong>Author(s) and year:</strong> Radosław Puka and Stanislaw Jedrusik (2021)</p>
+<p><strong>Status:</strong> Published in the <em>Journal of Theoretical and Applied Electronic Commerce Research</em>, open access: <a href="https://www.mdpi.com/0718-1876/16/4/39">HTML</a>, <a href="https://www.mdpi.com/0718-1876/16/4/39/pdf?version=1609984879">PDF</a>.</p>
+</div>
+</div>
+</div>
+<p>Inspired by complementarity-based ideas prevalent in microeconomics, Puka and Jedrusik begin by collecting some established ideas from traditional market basket analysis, the key one being “confidence”. In this case, we’re talking about the confidence that item A leads (in a way) to item B (which we can express in notation as <em>conf</em>({A} → {B})). Take a look at Table 1 (below), which presents a numbered list of 18 shopping trips, with details of what was purchased on each trip. Notice how two of the trips (1 and 3) resulted in sales of both milk (B) and cornflakes (A), while five trips (1, 3, 7, 17, and 18) had cornflakes. Under the assumption that someone already has cornflakes in their trolley, the probability that they will buy milk is 2/5 = 0.4. So, <em>conf</em>({cornflakes} → {milk}) = 0.4. The closer this number gets to one, the more automatic the cornflakes–milk connection becomes. This number can therefore be used to recommend an item that is related in some way to another already bought.</p>
+<p><img src="https://realworlddatascience.net/news-and-views/datasciencebites/posts/2023/03/02/images/tab-1-fig-1.jpg" class="img-fluid"></p>
+<div class="grid">
+<div class="g-col-12 g-col-md-4">
+<p><strong>Table 1:</strong> A list (with each row representing a trip to a grocery store) that can be seen in one of two ways: (a) a record of what 18 different people bought, or (b) a history of one person’s purchases over 18 trips. The list is similar to the one examined by Puka and Jedrusik, except for the last three rows. These trips, under interpretation (b) may help us develop an understanding of a single shopper’s preferences.</p>
+</div>
+<div class="g-col-12 g-col-md-8">
+<p><strong>Figure 1:</strong> The horizontal axis reports the probability that someone will buy item B under the assumption that A is already in their shopping trolley (i.e., <em>conf</em>({A} → {B})). The vertical axis reports the opposite: the chance that someone will go for A given that B is already in the cart (i.e., <em>conf</em>({B} → {A})). For any pair of items, these two probabilities can be found and, when plotted in 2D, a pair of items generates a single point. The more similar the two probabilities are for each pair, the closer the point comes to the line of equality (the red dashed line that runs diagonally through the origin), and the more complementary the items become. It’s rare that a dot will land exactly on the line of equality, so the green and orange lines parallel to the red line mark how far off a dot is from this ideal setting, using different levels of tolerance. From this we may say, for example, that cornflakes and milk are more complementary to each other than bread rolls and butter, as the first pairing lies closer to the line of equality.</p>
+</div>
+</div>
+<section id="asymmetry-and-tolerance" class="level2">
+<h2 class="anchored" data-anchor-id="asymmetry-and-tolerance">Asymmetry and tolerance</h2>
+<p>Milk and cornflakes are reasonably complementary, and we can see from Figure 1 above that, regardless of whether you start by picking up milk or cornflakes, the probabilities of a shopper buying the other item are broadly similar: <em>conf</em>({cornflakes} → {milk}) = 0.4, while <em>conf</em>({milk} → {cornflakes}) = 0.33. There is a small amount of asymmetry in the probabilities in this particular example, but asymmetry can be more extreme for other pairs of items. This leads to the idea of one- and two-sided complementarity. Two items sharing a smallish asymmetry – like milk and cornflakes – will be connected through two-sided complementarity, while large asymmetries indicate one-sided complementarity. Such imbalances will be quite common when, for instance, items of hugely different prices are involved. When someone buys a house, for example, they may want to buy a bookcase, but buying a bookcase doesn’t mean someone wants to buy a house: this would be an instance of one-sided complementarity.</p>
+<p>Puka and Jedrusik capitalize on this observation. They define two items to be “basket complementary” if the two probabilities – the normal and its opposite – remain close and reasonably high. The items need to share a bond that is blind to the direction: seeing you bought one, no matter which, means you are (almost equally) likely to buy the other.</p>
+<p>It is rare that the two probabilities should be exactly the same, of course, and the authors allow some deviation. Along the red diagonal line of perfect equality (Figure 1) we may lay tolerance bands marking degrees of product inseparability. This, if need be, may lead to the notion of being complementary at such-and-such a tolerance level – 0%, 1%, 5%, etc. – generating a score of sorts. In cases where a dot representing the two-way dependencies between two items falls within a narrow band – corresponding to a smaller tolerance – the more inseparable the items are, and the more sensible a cross-selling recommendation may become.</p>
+</section>
+<section id="in-conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="in-conclusion">In conclusion</h2>
+<p>A large part of the world we inhabit, particularly the economy, is powered by recommendations: from strangers, friends and algorithms. That applies not only to the things we buy but also to the things we watch or read. (Perhaps you arrived at this article because of a tweet that Twitter thought you might like, or maybe it was suggested to you by Google News because of your past reading habits.) Whatever the intent of these recommendations, the key challenge is in knowing which two things are functionally or thematically intertwined. Which item or product is, by default, synonymous with which? Puka and Jedrusik deliver an answer: two items that are basket complementary to each other, preferably at a slim tolerance, are inextricably linked. One may be safely offered – perhaps always – whenever the other is already in the shopping basket.</p>
+<p>The relative simplicity and interpretability of basket complementary may provide small-scale retailers, starved of analytical wherewithal, a sane and safe strategy for developing their product offer. It might also serve as a benchmark to keep other, more sophisticated recommendation algorithms in check. (In weather forecasting, for example, it is often seen that <a href="https://www.sciencedirect.com/science/article/pii/S0022169415000414">naive benchmarks</a> – such as using today’s temperature to predict tomorrow’s – frequently outperform more advanced models.)</p>
+<p>Basket complementarity could also be used to help individuals understand their own shopping habits and the links between the things they buy. I’ve built <a href="https://moinak.shinyapps.io/MarketBasketDashboard/">an interactive dashboard</a> where you can enter your own receipt lists and filter associations based on various confidence thresholds. The <a href="https://github.com/moinakbhaduri/MarketBasketAnalysis">underlying code</a> is also available.</p>
+ <iframe src="https://moinak.shinyapps.io/MarketBasketDashboard/" style="border: none; width: 100%; height: 500px" frameborder="0"></iframe>
+<hr>
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>About the author</dt>
+<dd>
+<strong>Moinak Bhaduri</strong> is assistant professor in the Department of Mathematical Sciences, Bentley University. He studies spatio-temporal Poisson processes and others like the self-exciting Hawkes or log-Gaussian Cox processes that are natural generalizations. His primary interest includes developing change-detection algorithms in systems modeled by these stochastic processes, especially through trend permutations.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>About DataScienceBites</dt>
+<dd>
+<a href="../../../../../../news-and-views/datasciencebites/index.html"><strong>DataScienceBites</strong></a> is written by graduate students and early career researchers in data science (and related subjects) at universities throughout the world, as well as industry researchers. We publish digestible, engaging summaries of interesting new pre-print and peer-reviewed publications in the data science space, with the goal of making scientific papers more accessible. Find out how to <a href="../../../../../../contributor-docs/datasciencebites.html">become a contributor</a>.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Moinak Bhaduri
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://realworlddatascience.net/news-and-views/datasciencebites/posts/2023/03/02/https:/mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/news-and-views/datasciencebites/posts/2023/03/02/https:/mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This work is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>, except where otherwise noted.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Bhaduri, Moinak. 2023. “Using ‘basket complementarity’ to make product recommendations.” Real World Data Science, March 2, 2023. https://realworlddatascience.net/news-and-views/datasciencebites/posts/2023/03/02/basket-complementarity.html
+</dd>
+</dl>
+</div>
+</div>
+<hr>
+
+
+</section>
+
+ ]]></description>
+  <category>Market basket analysis</category>
+  <category>Recommendation systems</category>
+  <category>Complementarity</category>
+  <guid>https://realworlddatascience.net/news-and-views/datasciencebites/posts/2023/03/02/basket-complementarity.html</guid>
+  <pubDate>Thu, 02 Mar 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/news-and-views/datasciencebites/posts/2023/03/02/images/marjan-blan-marjanblan-3nURJV_L7-8-unsplash.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>Data science can help close the ‘digital skills’ gap, or so it seems</title>
   <dc:creator>Brian Tarran</dc:creator>
@@ -615,7 +715,7 @@ This work is licensed under <a href="http://creativecommons.org/licenses/by/4.0/
 
 <p>I’m absolutely thrilled today to announce the launch of our new blog, <a href="../../../../news-and-views/datasciencebites/index.html">DataScienceBites</a>. The blog is not only a new addition to Real World Data Science, but also the latest proud member of the ScienceBites family of sites.</p>
 <p><a href="https://sciencebites.org/sciencebites-sites-galaxy/">ScienceBites sites</a> all share the same <a href="https://sciencebites.org/about/">concept</a>: we publish “short digestible <em>bites posts</em> about individual research papers” in an effort to make cutting-edge science accessible to a wide audience, and our posts are written by graduate students and early career researchers.</p>
-<p>For <a href="../../../../news-and-views/datasciencebites/index.html">DataScienceBites</a>, our focus will of course be on new publications in the data science space. Contributors are invited to write about papers that are of particular interest to them and to pitch their summaries at an undergraduate level. For an example of what we’re looking for, see our first post on <a href="../../../../news-and-views/datasciencebites/posts/2022-12-13-ridesharing/ridesharing.html">“Determining the best way to route drivers for ridesharing via reinforcement learning”</a>.</p>
+<p>For <a href="../../../../news-and-views/datasciencebites/index.html">DataScienceBites</a>, our focus will of course be on new publications in the data science space. Contributors are invited to write about papers that are of particular interest to them and to pitch their summaries at an undergraduate level. For an example of what we’re looking for, see our first post on <a href="../../../../news-and-views/datasciencebites/posts/2022-12-13-ridesharing/ridesharing.qmd">“Determining the best way to route drivers for ridesharing via reinforcement learning”</a>.</p>
 <p>This launch post is written by Brian King and is republished with permission from <a href="https://mathstatbites.org">MathStatBites</a>, so I want to say a big thank you to Brian and editors Sadie Witkowski and Sara Stoudt for allowing us to repost it. Sadie and Sara have been fantastically supportive of the DataScienceBites idea, and I am grateful for all their behind-the-scenes efforts.</p>
 <p>Brian’s post is a great demonstration of the Bites concept, and we hope that it will inspire others to follow suit. If you are a graduate student or early career researcher in data science (or related subjects) with a passion for science communication and an interest in writing about new data science research, please do <a href="../../../../contact.html">get in touch</a>. See our <a href="../../../../contributor-docs/datasciencebites.html">notes for contributors</a> for further details.</p>
 <p>To everyone else, we do hope you enjoy sinking your teeth into the data science literature with <a href="../../../../news-and-views/datasciencebites/index.html">DataScienceBites</a>. Happy reading!</p>
@@ -645,7 +745,7 @@ This work is licensed under <a href="http://creativecommons.org/licenses/by/4.0/
 <item>
   <title>Determining the best way to route drivers for ridesharing via reinforcement learning</title>
   <dc:creator>Brian King</dc:creator>
-  <link>https://realworlddatascience.net/news-and-views/datasciencebites/posts/2022-12-13-ridesharing/ridesharing.html</link>
+  <link>https://realworlddatascience.net/news-and-views/datasciencebites/posts/2022/12/13/ridesharing.html</link>
   <description><![CDATA[ 
 
 
@@ -666,7 +766,7 @@ About the paper and this post
 <p><strong>Title:</strong> Dynamic causal effects evaluation in A/B testing with a reinforcement learning framework</p>
 <p><strong>Author(s) and year:</strong> Chengchun Shi, Xiaoyu Wang, Shikai Luo, Hongtu Zhu, Jieping Ye, Rui Song (2022)</p>
 <p><strong>Status:</strong> Published in <em>Journal of the American Statistical Association, Theory and Methods</em>, open access: <a href="https://www.tandfonline.com/doi/full/10.1080/01621459.2022.2027776">HTML</a>, <a href="https://www.tandfonline.com/doi/epdf/10.1080/01621459.2022.2027776?needAccess=true&amp;role=button">PDF</a>, <a href="https://www.tandfonline.com/doi/epub/10.1080/01621459.2022.2027776?needAccess=true&amp;role=button">EPUB</a>.</p>
-<p><strong>Editor’s note:</strong> This post is republished with permission from <a href="https://mathstatbites.org/determining-the-best-way-to-route-drivers-for-ridesharing-via-reinforcement-learning/">MathStatBites</a> to demonstrate the Bites concept. See <a href="../../../../contributor-docs/datasciencebites.html">here</a> for more information.</p>
+<p><strong>Editor’s note:</strong> This post is republished with permission from <a href="https://mathstatbites.org/determining-the-best-way-to-route-drivers-for-ridesharing-via-reinforcement-learning/">MathStatBites</a> to demonstrate the Bites concept. See <a href="../../../../../../contributor-docs/datasciencebites.html">here</a> for more information.</p>
 </div>
 </div>
 </div>
@@ -674,7 +774,7 @@ About the paper and this post
 <p>One such situation is that of ridesharing companies (Uber, Lyft, etc.) and how they determine which drivers are sent to which riders (the dispatch problem). Simply put, when a driver is assigned to a rider, this decision impacts the spatial distribution of drivers in the future. Hence the dispatch strategy (our treatment) at the present time will influence riders and drivers in the future, which violates SUTVA and hence invalidates many traditional methods for A/B testing. To tackle this problem, a group of researchers have recently employed a reinforcement learning (RL) framework which can accurately measure the treatment effect in such a scenario. Furthermore, their proposed approach allows for companies to terminate A/B tests earlier if the proposed version B is found to be clearly better. This early stopping can save time and money.</p>
 <p>To better understand RL and how it can contribute to tackling the issue at hand, it’s first helpful to set some context. In typical RL problems, including the one in this paper, the scenario is modeled with something known as a Markov Decision Process (MDP). A MDP links three sets of variables across time: the state or environment, the treatment or action (the reaction to the environment), and the outcome (the response produced by the environment due to the action). These outcomes can be thought of as rewards which depend on the action taken and the state observed. Over time, the machine learns which actions produce more positive rewards and which bring about worse outcomes. Hence, the actions leading to higher rewards are positively reinforced, thus the name reinforcement learning. A causal diagram of an MDP is shown in Figure 1, where <em>S</em><sub><em>t</em></sub>, <em>A</em><sub><em>t</em></sub>, and <em>Y</em><sub><em>t</em></sub> are the <strong>state</strong>, <strong>action</strong>, and <strong>outcome</strong> at time <em>t</em>. As one can see, past treatments influence future outcomes by altering the state variables at the present (the so-called “carryover effect” which violates SUTVA).</p>
 <div class="column-page">
-<p><img src="https://realworlddatascience.net/news-and-views/datasciencebites/posts/2022-12-13-ridesharing/images/ridesharing-fig1.png" class="img-fluid" alt="A causal diagram of a Markov Decision Process is shown in this figure. Green circles represent states, with arrows leading to red diamonds and blue squares representing, respectively, actions and outcomes. Actions are linked to new states by arrows, and prior states are linked to new states by curved arrows. This illustration conveys how past treatments influence future outcomes by altering the state variables at the present (the so-called “carryover effect” which violates the stable unit treatment value assumption)."></p>
+<p><img src="https://realworlddatascience.net/news-and-views/datasciencebites/posts/2022/12/13/images/ridesharing-fig1.png" class="img-fluid" alt="A causal diagram of a Markov Decision Process is shown in this figure. Green circles represent states, with arrows leading to red diamonds and blue squares representing, respectively, actions and outcomes. Actions are linked to new states by arrows, and prior states are linked to new states by curved arrows. This illustration conveys how past treatments influence future outcomes by altering the state variables at the present (the so-called “carryover effect” which violates the stable unit treatment value assumption)."></p>
 </div>
 
 <div class="no-row-height column-margin column-container"><div class="">
@@ -690,7 +790,7 @@ About the paper and this post
 </section>
 <section id="about-datasciencebites" class="level2">
 <h2 class="anchored" data-anchor-id="about-datasciencebites">About DataScienceBites</h2>
-<p><a href="../../../../news-and-views/datasciencebites/index.html"><strong>DataScienceBites</strong></a> is written by graduate students and early career researchers in data science (and related subjects) at universities throughout the world, as well as industry researchers. We publish digestible, engaging summaries of interesting new pre-print and peer-reviewed publications in the data science space, with the goal of making scientific papers more accessible. Find out how to <a href="../../../../contributor-docs/datasciencebites.html">become a contributor</a>.</p>
+<p><a href="../../../../../../news-and-views/datasciencebites/index.html"><strong>DataScienceBites</strong></a> is written by graduate students and early career researchers in data science (and related subjects) at universities throughout the world, as well as industry researchers. We publish digestible, engaging summaries of interesting new pre-print and peer-reviewed publications in the data science space, with the goal of making scientific papers more accessible. Find out how to <a href="../../../../../../contributor-docs/datasciencebites.html">become a contributor</a>.</p>
 
 
 </section>
@@ -699,9 +799,83 @@ About the paper and this post
   <category>A/B testing</category>
   <category>Reinforcement learning</category>
   <category>Statistics</category>
-  <guid>https://realworlddatascience.net/news-and-views/datasciencebites/posts/2022-12-13-ridesharing/ridesharing.html</guid>
+  <guid>https://realworlddatascience.net/news-and-views/datasciencebites/posts/2022/12/13/ridesharing.html</guid>
   <pubDate>Tue, 13 Dec 2022 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/news-and-views/datasciencebites/posts/2022-12-13-ridesharing/images/paul-hanaoka-D-qq7W751vs-unsplash.jpg" medium="image" type="image/jpeg"/>
+  <media:content url="https://realworlddatascience.net/news-and-views/datasciencebites/posts/2022/12/13/images/paul-hanaoka-D-qq7W751vs-unsplash.jpg" medium="image" type="image/jpeg"/>
+</item>
+<item>
+  <title>LLMs in the news: hype, tripe, and everything in between</title>
+  <dc:creator>Brian Tarran</dc:creator>
+  <link>https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/LLM-news.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>Two weeks ago, I posted a <a href="../../../../news-and-views/editors-blog/posts/2022-11-23-LLMs-content-warning/LLM-content-warning.html">Q&amp;A with our editorial board member Detlef Nauck about large language models</a> (LLMs), their drawbacks and risks. And since then we’ve had several big new announcements in this space. First came news from Meta (the company that owns Facebook) about <a href="https://galactica.org/mission/">Galactica, an LLM trained on scientific papers</a>. This was followed by another Meta announcement, about <a href="https://ai.facebook.com/research/cicero/">Cicero</a>, an AI agent that is apparently very good at playing the game Diplomacy. And then came perhaps the biggest launch of them all: <a href="https://openai.com/blog/chatgpt/">ChatGPT from OpenAI</a>, an LLM-based chatbot that millions of people have already started talking to.</p>
+<p>Following these stories and the surrounding commentaries has been something of a rollercoaster ride. ChatGPT, for example, has been greeted in some quarters as if artificial general intelligence has finally arrived, while others point out that – impressive though it is – the technology is as prone to spout nonsense as all LLMs before it (including Galactica, <a href="https://thenextweb.com/news/meta-takes-new-ai-system-offline-because-twitter-users-mean">the demo of which was quickly taken offline</a> for this reason). Cicero, meanwhile, has impressed with its ability to play a game that is (a) very difficult and (b) relies on dialogue, cooperation, and negotiation between players. It blends a language model with planning and reinforcement learning algorithms, meaning that it is trained not only on the rules of the game and how to win, but how to communicate with other players to achieve victory.</p>
+<p>To help me make sense of all these new developments, and the myriad implications, I reached out to <a href="../../../../news-and-views/editors-blog/posts/2022-10-18-meet-the-team/meet-the-team.html">Harvey Lewis</a>, another of our editorial board members and a partner in EY’s tax and law practice.</p>
+<section id="qa" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="qa">Q&amp;A</h2>
+<p><strong>Harvey, when I spoke with Detlef, he mentioned that one of the reasons we’re seeing investment in LLMs is because there’s this belief that they are somehow the route to artificial general intelligence (AGI). And there were headlines in some places that would perhaps convince a casual reader that AGI had been achieved following the release of ChatGPT. For example, the Telegraph described it as a <a href="https://www.telegraph.co.uk/business/2022/12/05/meet-scarily-intelligent-robot-who-can-do-job-better/">“scarily intelligent robot who can do your job better than you”</a>. What do you make of all that?</strong></p>
+<p><strong>Harvey Lewis (HL):</strong> My personal view is that you won’t get to artificial general intelligence using just one technique like deep learning, because of the problematic nature of these models and the limitations of the data used in their training. I’m convinced that more general intelligence will come from a combination of different systems.</p>
+<p>The challenge with many LLMs, as we’ve seen repeatedly, is that they’ve no real understanding of language or concepts represented within language. They’re good at finding patterns in semantics and grammatical rules that people use in writing, and then they use those patterns to create new expressions given a prompt. But they’ve no idea whether these outputs are factual, inaccurate or completely fabricated. As a consequence, they can produce outputs that are unreliable, but which sound authoritative, because they’re just repeating a style that we expect to see.</p>
+<p><strong>Over the past couple of weeks, Twitter has been full of people either showing off astoundingly impressive outputs from LLMs, or examples of truly worrying nonsense. One example of the latter is when ChatGPT was asked to <a href="https://twitter.com/GaryMarcus/status/1599584310633594881">“describe how crushed porcelain added to breast milk can support the infant digestive system”</a>. This made me think of a recent headline from <a href="https://venturebeat.com/ai/is-ai-moving-too-fast-for-ethics-the-ai-beat/">VentureBeat</a>, which asked whether AI is moving too fast for ethics to catch up. Do you think that it is?</strong></p>
+<p><strong>HL:</strong> I find that to be an interesting philosophical question, because ethics does move very slowly, for good reason. When you think of issues of bias and discrimination and prejudice, or misinformation and other problems that we might have with AI systems, it shouldn’t be a surprise that these can occur. We’re aware of them. We’re aware of the ethical issues. So, why do they always seem to catch us by surprise? Is it because we have teams of people who simply aren’t aware of ethical issues or don’t have any appreciation of them? This points – for me, at least – in the direction of needing to have philosophers, ethicists, theologians, lawyers working <em>in</em> the technical teams that are developing and working on these systems, rather than having them on the periphery and talking about these issues but not directly involved themselves. I think it’s hugely important to ensure that you’ve got trust, responsibility, and ethics embedded in technical teams, because that’s the only way it seems that you can avoid some of these “surprises”.</p>
+<p><strong>When situations like these occur, I’m always reminded of Dr.&nbsp;Ian Malcolm’s line from Jurassic Park: “…your scientists were so preoccupied with whether or not they could that they didn’t stop to think if they should.” The mindset seems to be, let’s push the boundaries and see what we can do, rather than stop and think deeply about what the implications might be.</strong></p>
+<p><strong>HL:</strong> There’s a balance to be struck between these things, though, right? Firstly, show consideration for some of the issues at the outset, and secondly, have checks and balances and safeguards built into the process by which you design, develop and implement these systems. That’s the only way to create the proper safeguards around the systems. I don’t think that there’s any lack of appreciation of what needs to be done; people have been talking about this now for quite a long time. But it’s about making sure organisationally that it is done, and that you’ve got an operating model which bakes these things into it; that the kinds of principles and governance that you want to have around these systems are written, publicised, and properly policed. There should be no fear of making advances in that kind of a context.</p>
+<p>Also, I think open sourcing these models provides a way forward. A lot of large language models are open for use and for research, but aren’t themselves open sourced, so it’s very difficult to get underneath the surface and figure out exactly how they work. But with open source, you have opportunities for researchers, whether they’re technical or in the field of ethics, to go and investigate and find out exactly what’s going on. I think that would be a fantastic step forward. It doesn’t take you all the way, of course, because a large amount of the data that these systems use is never open sourced, so while you might get an understanding of the mechanics, you have no idea of what exactly went into them in the first place. But open sourcing is a very good way of getting some external scrutiny. It’s about being transparent, which is a core principle of AI ethics and responsible AI.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/images/jigsaw-words.jpg" class="img-fluid figure-img" alt="An image created by the Stable Diffusion 2.1 Demo. The model was asked to produce an image with the prompt, 'Text from an old book cut up like a jigsaw puzzle with pieces missing'." width="500"></p>
+</figure>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p>An image created by the <a href="https://huggingface.co/spaces/stabilityai/stable-diffusion">Stable Diffusion 2.1 Demo</a>. The model was asked to produce an image with the prompt, “Text from an old book cut up like a jigsaw puzzle with pieces missing”.</p>
+</div></div><p><strong>Thinking about LLMs and their questionable outputs, should there not be ways for users to help the models produce better, more accurate outputs?</strong></p>
+<p><strong>HL:</strong> There are, but there are also problems here too. I’ve been having an interesting dialogue with ChatGPT this morning, asking it about quantum computing.<sup>1</sup> For each response to a prompt, users are encouraged to provide feedback on whether or not an output is good. But you’re only provided with the usual thumbs-up/thumbs-down ratings; there’s nothing nuanced about it. So, for example, I asked ChatGPT to provide me with good analogies that help to explain quantum computing in simple terms. The first analogy was a combination lock, which is not a good analogy. The chatbot suggested that quantum computing is like a combination lock in which you can test all of the combinations at the same time, but I don’t know any combination locks where you can do this – being able to check only one combination at a time is the principal security mechanism of a combination lock! I asked it again for another analogy, and it suggested a coin toss where, when the coin is spinning in the air, you can see both heads and tails simultaneously but it isn’t until you catch the coin and then show its face that one of the states of the coin is resolved. That is a good analogy – it’s one I’ve also used myself. Now, the challenge I can see with a lot of these feedback approaches is that unless I know enough about quantum computing to understand that a combination lock is not a good analogy whereas a coin toss is, how am I to provide that kind of feedback? They’re relying to an extent on the user being able to make a distinction between what is correct and what is potentially incorrect or flawed, and I think that’s not a good way of approaching the problem.</p>
+<p><strong>Final question for you, Harvey. There’s a lot of excitement around GPT-4, which is apparently coming soon. The rumour mill says it will bring <a href="https://thealgorithmicbridge.substack.com/p/gpt-4-rumors-from-silicon-valley">a leap forward in performance</a>. But what do you expect we’ll see – particularly with regards to the issues we’ve talked about today?</strong></p>
+<p><strong>HL:</strong> I’ve likened some of the large language models and their approach of “bigger is better” to the story of the Tower of Babel – trying to reach heaven by building a bigger and bigger tower, basically. That is not going to achieve the objective of artificial general intelligence, no matter how sophisticated an LLM might appear. That said, language is a fascinating area. I’m not a linguist, but I spend a lot of my time on natural language processing using AI systems. Language responds very well to AI because it is pattern-based. We speak using patterns, we write using patterns, and these can be inferred by machines from many examples. The addition of more parameters in the models allows them to understand patterns that extend further into the text, and I suspect that outputs from these kinds of models are going to be largely indistinguishable from the sorts of things that you or I might write.</p>
+<p>But, I also think that increasing the number of parameters runs a real risk – and we’re starting to see this in other generative models – where prompts become so specific that the models aren’t actually picking up on patterns, they are picking up on specific instances of training data and text they’ve seen before. So, buried amongst these fantastically written articles on all kinds of subjects are going to be more examples of plagiarism, which is a problem; more examples of spelling mistakes and other kinds of issues, because these are also patterns which are going to possibly be observed.</p>
+<p>This introduces potentially a whole new breed of problems that the community has to deal with – as long as they don’t get fixated upon the height of the tower and the quality of some of the examples that are shown, and realise that there are some genuine underlying difficulties and challenges that need to be solved.</p>
+<div class="callout-tip callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Have you got news for us?
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Is there a recent data science story you’d like our team to discuss? Do you have your own thoughts to share on a hot topic, or a burning question to put to the community? If so, either comment below or <a href="../../../../contact.html">contact us</a>.</p>
+</div>
+</div>
+<section id="back-to-editors-blog" class="level6">
+<h6 class="anchored" data-anchor-id="back-to-editors-blog"><strong>← Back to <a href="../../../../news-and-views/editors-blog/index.html">Editors’ blog</a></strong></h6>
+<hr>
+<p xmlns:cc="http://creativecommons.org/ns#">
+This work is licensed under <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/https:/mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/https:/mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a>
+</p>
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>I also had a conversation with ChatGPT. <a href="../../../../news-and-views/editors-blog/posts/2022-12-09-LLM-news/A-chat-with-ChatGPT.html">Read the transcript</a>.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>Machine learning</category>
+  <category>Large language models</category>
+  <category>AI</category>
+  <guid>https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/LLM-news.html</guid>
+  <pubDate>Fri, 09 Dec 2022 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/images/jigsaw-words.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>A chat with ChatGPT</title>
@@ -785,80 +959,6 @@ This work is licensed under <a href="http://creativecommons.org/licenses/by/4.0/
   <guid>https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/A-chat-with-ChatGPT.html</guid>
   <pubDate>Fri, 09 Dec 2022 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/images/chatgpt1.png" medium="image" type="image/png" height="156" width="144"/>
-</item>
-<item>
-  <title>LLMs in the news: hype, tripe, and everything in between</title>
-  <dc:creator>Brian Tarran</dc:creator>
-  <link>https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/LLM-news.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>Two weeks ago, I posted a <a href="../../../../news-and-views/editors-blog/posts/2022-11-23-LLMs-content-warning/LLM-content-warning.html">Q&amp;A with our editorial board member Detlef Nauck about large language models</a> (LLMs), their drawbacks and risks. And since then we’ve had several big new announcements in this space. First came news from Meta (the company that owns Facebook) about <a href="https://galactica.org/mission/">Galactica, an LLM trained on scientific papers</a>. This was followed by another Meta announcement, about <a href="https://ai.facebook.com/research/cicero/">Cicero</a>, an AI agent that is apparently very good at playing the game Diplomacy. And then came perhaps the biggest launch of them all: <a href="https://openai.com/blog/chatgpt/">ChatGPT from OpenAI</a>, an LLM-based chatbot that millions of people have already started talking to.</p>
-<p>Following these stories and the surrounding commentaries has been something of a rollercoaster ride. ChatGPT, for example, has been greeted in some quarters as if artificial general intelligence has finally arrived, while others point out that – impressive though it is – the technology is as prone to spout nonsense as all LLMs before it (including Galactica, <a href="https://thenextweb.com/news/meta-takes-new-ai-system-offline-because-twitter-users-mean">the demo of which was quickly taken offline</a> for this reason). Cicero, meanwhile, has impressed with its ability to play a game that is (a) very difficult and (b) relies on dialogue, cooperation, and negotiation between players. It blends a language model with planning and reinforcement learning algorithms, meaning that it is trained not only on the rules of the game and how to win, but how to communicate with other players to achieve victory.</p>
-<p>To help me make sense of all these new developments, and the myriad implications, I reached out to <a href="../../../../news-and-views/editors-blog/posts/2022-10-18-meet-the-team/meet-the-team.html">Harvey Lewis</a>, another of our editorial board members and a partner in EY’s tax and law practice.</p>
-<section id="qa" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="qa">Q&amp;A</h2>
-<p><strong>Harvey, when I spoke with Detlef, he mentioned that one of the reasons we’re seeing investment in LLMs is because there’s this belief that they are somehow the route to artificial general intelligence (AGI). And there were headlines in some places that would perhaps convince a casual reader that AGI had been achieved following the release of ChatGPT. For example, the Telegraph described it as a <a href="https://www.telegraph.co.uk/business/2022/12/05/meet-scarily-intelligent-robot-who-can-do-job-better/">“scarily intelligent robot who can do your job better than you”</a>. What do you make of all that?</strong></p>
-<p><strong>Harvey Lewis (HL):</strong> My personal view is that you won’t get to artificial general intelligence using just one technique like deep learning, because of the problematic nature of these models and the limitations of the data used in their training. I’m convinced that more general intelligence will come from a combination of different systems.</p>
-<p>The challenge with many LLMs, as we’ve seen repeatedly, is that they’ve no real understanding of language or concepts represented within language. They’re good at finding patterns in semantics and grammatical rules that people use in writing, and then they use those patterns to create new expressions given a prompt. But they’ve no idea whether these outputs are factual, inaccurate or completely fabricated. As a consequence, they can produce outputs that are unreliable, but which sound authoritative, because they’re just repeating a style that we expect to see.</p>
-<p><strong>Over the past couple of weeks, Twitter has been full of people either showing off astoundingly impressive outputs from LLMs, or examples of truly worrying nonsense. One example of the latter is when ChatGPT was asked to <a href="https://twitter.com/GaryMarcus/status/1599584310633594881">“describe how crushed porcelain added to breast milk can support the infant digestive system”</a>. This made me think of a recent headline from <a href="https://venturebeat.com/ai/is-ai-moving-too-fast-for-ethics-the-ai-beat/">VentureBeat</a>, which asked whether AI is moving too fast for ethics to catch up. Do you think that it is?</strong></p>
-<p><strong>HL:</strong> I find that to be an interesting philosophical question, because ethics does move very slowly, for good reason. When you think of issues of bias and discrimination and prejudice, or misinformation and other problems that we might have with AI systems, it shouldn’t be a surprise that these can occur. We’re aware of them. We’re aware of the ethical issues. So, why do they always seem to catch us by surprise? Is it because we have teams of people who simply aren’t aware of ethical issues or don’t have any appreciation of them? This points – for me, at least – in the direction of needing to have philosophers, ethicists, theologians, lawyers working <em>in</em> the technical teams that are developing and working on these systems, rather than having them on the periphery and talking about these issues but not directly involved themselves. I think it’s hugely important to ensure that you’ve got trust, responsibility, and ethics embedded in technical teams, because that’s the only way it seems that you can avoid some of these “surprises”.</p>
-<p><strong>When situations like these occur, I’m always reminded of Dr.&nbsp;Ian Malcolm’s line from Jurassic Park: “…your scientists were so preoccupied with whether or not they could that they didn’t stop to think if they should.” The mindset seems to be, let’s push the boundaries and see what we can do, rather than stop and think deeply about what the implications might be.</strong></p>
-<p><strong>HL:</strong> There’s a balance to be struck between these things, though, right? Firstly, show consideration for some of the issues at the outset, and secondly, have checks and balances and safeguards built into the process by which you design, develop and implement these systems. That’s the only way to create the proper safeguards around the systems. I don’t think that there’s any lack of appreciation of what needs to be done; people have been talking about this now for quite a long time. But it’s about making sure organisationally that it is done, and that you’ve got an operating model which bakes these things into it; that the kinds of principles and governance that you want to have around these systems are written, publicised, and properly policed. There should be no fear of making advances in that kind of a context.</p>
-<p>Also, I think open sourcing these models provides a way forward. A lot of large language models are open for use and for research, but aren’t themselves open sourced, so it’s very difficult to get underneath the surface and figure out exactly how they work. But with open source, you have opportunities for researchers, whether they’re technical or in the field of ethics, to go and investigate and find out exactly what’s going on. I think that would be a fantastic step forward. It doesn’t take you all the way, of course, because a large amount of the data that these systems use is never open sourced, so while you might get an understanding of the mechanics, you have no idea of what exactly went into them in the first place. But open sourcing is a very good way of getting some external scrutiny. It’s about being transparent, which is a core principle of AI ethics and responsible AI.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/images/jigsaw-words.jpg" class="img-fluid figure-img" alt="An image created by the Stable Diffusion 2.1 Demo. The model was asked to produce an image with the prompt, 'Text from an old book cut up like a jigsaw puzzle with pieces missing'." width="500"></p>
-</figure>
-</div>
-
-<div class="no-row-height column-margin column-container"><div class="">
-<p>An image created by the <a href="https://huggingface.co/spaces/stabilityai/stable-diffusion">Stable Diffusion 2.1 Demo</a>. The model was asked to produce an image with the prompt, “Text from an old book cut up like a jigsaw puzzle with pieces missing”.</p>
-</div></div><p><strong>Thinking about LLMs and their questionable outputs, should there not be ways for users to help the models produce better, more accurate outputs?</strong></p>
-<p><strong>HL:</strong> There are, but there are also problems here too. I’ve been having an interesting dialogue with ChatGPT this morning, asking it about quantum computing.<sup>1</sup> For each response to a prompt, users are encouraged to provide feedback on whether or not an output is good. But you’re only provided with the usual thumbs-up/thumbs-down ratings; there’s nothing nuanced about it. So, for example, I asked ChatGPT to provide me with good analogies that help to explain quantum computing in simple terms. The first analogy was a combination lock, which is not a good analogy. The chatbot suggested that quantum computing is like a combination lock in which you can test all of the combinations at the same time, but I don’t know any combination locks where you can do this – being able to check only one combination at a time is the principal security mechanism of a combination lock! I asked it again for another analogy, and it suggested a coin toss where, when the coin is spinning in the air, you can see both heads and tails simultaneously but it isn’t until you catch the coin and then show its face that one of the states of the coin is resolved. That is a good analogy – it’s one I’ve also used myself. Now, the challenge I can see with a lot of these feedback approaches is that unless I know enough about quantum computing to understand that a combination lock is not a good analogy whereas a coin toss is, how am I to provide that kind of feedback? They’re relying to an extent on the user being able to make a distinction between what is correct and what is potentially incorrect or flawed, and I think that’s not a good way of approaching the problem.</p>
-<p><strong>Final question for you, Harvey. There’s a lot of excitement around GPT-4, which is apparently coming soon. The rumour mill says it will bring <a href="https://thealgorithmicbridge.substack.com/p/gpt-4-rumors-from-silicon-valley">a leap forward in performance</a>. But what do you expect we’ll see – particularly with regards to the issues we’ve talked about today?</strong></p>
-<p><strong>HL:</strong> I’ve likened some of the large language models and their approach of “bigger is better” to the story of the Tower of Babel – trying to reach heaven by building a bigger and bigger tower, basically. That is not going to achieve the objective of artificial general intelligence, no matter how sophisticated an LLM might appear. That said, language is a fascinating area. I’m not a linguist, but I spend a lot of my time on natural language processing using AI systems. Language responds very well to AI because it is pattern-based. We speak using patterns, we write using patterns, and these can be inferred by machines from many examples. The addition of more parameters in the models allows them to understand patterns that extend further into the text, and I suspect that outputs from these kinds of models are going to be largely indistinguishable from the sorts of things that you or I might write.</p>
-<p>But, I also think that increasing the number of parameters runs a real risk – and we’re starting to see this in other generative models – where prompts become so specific that the models aren’t actually picking up on patterns, they are picking up on specific instances of training data and text they’ve seen before. So, buried amongst these fantastically written articles on all kinds of subjects are going to be more examples of plagiarism, which is a problem; more examples of spelling mistakes and other kinds of issues, because these are also patterns which are going to possibly be observed.</p>
-<p>This introduces potentially a whole new breed of problems that the community has to deal with – as long as they don’t get fixated upon the height of the tower and the quality of some of the examples that are shown, and realise that there are some genuine underlying difficulties and challenges that need to be solved.</p>
-<div class="callout-tip callout callout-style-default callout-captioned">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Have you got news for us?
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Is there a recent data science story you’d like our team to discuss? Do you have your own thoughts to share on a hot topic, or a burning question to put to the community? If so, either comment below or <a href="../../../../contact.html">contact us</a>.</p>
-</div>
-</div>
-<section id="back-to-editors-blog" class="level6">
-<h6 class="anchored" data-anchor-id="back-to-editors-blog"><strong>← Back to <a href="../../../../news-and-views/editors-blog/index.html">Editors’ blog</a></strong></h6>
-<hr>
-<p xmlns:cc="http://creativecommons.org/ns#">
-This work is licensed under <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">CC BY 4.0<img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/https:/mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/https:/mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a>
-</p>
-
-
-</section>
-</section>
-
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>I also had a conversation with ChatGPT. <a href="../../../../news-and-views/editors-blog/posts/2022-12-09-LLM-news/A-chat-with-ChatGPT.html">Read the transcript</a>.↩︎</p></li>
-</ol>
-</section></div> ]]></description>
-  <category>Machine learning</category>
-  <category>Large language models</category>
-  <category>AI</category>
-  <guid>https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/LLM-news.html</guid>
-  <pubDate>Fri, 09 Dec 2022 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-12-09-LLM-news/images/jigsaw-words.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Four themes for potential contributors to think about</title>
