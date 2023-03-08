@@ -15,6 +15,8 @@ website:
     background: "#f0eeeb"
     logo: "RWDS Main Logo_Boxed Black_RGB.png"
     logo-alt: "Real World Data Science brand"
+    title: false
+    collapse-below: xl
     left:
       - href: index.qmd
         text: "Home"
@@ -22,7 +24,17 @@ website:
         text: "Call for contributions"
       - href: news-and-views/editors-blog/posts/2022-10-18-meet-the-team/meet-the-team.qmd
         text: "Meet the team"
-      - href: news-and-views/index.qmd
+      - text: News and views
+        menu:         
+          - href: news-and-views/index.qmd
+            text: Latest
+          - news-and-views/interviews/index.qmd
+          - href: news-and-views/datasciencebites/index.qmd
+            text: DataScienceBites
+          - news-and-views/editors-blog/index.qmd
+          - href: news-and-views/newsletter/index.qmd
+            text: Newsletter
+
     # right:
     #   - href: https://github.com/realworlddatascience
     #     icon: github
@@ -37,7 +49,9 @@ website:
   sidebar: 
     - title: "Call for contributions"
       style: "floating"
-      background: "#FFFFFF"
+      background: "#f0eeeb"
+      collapse-level: 2
+      align: left
       contents:
         - href: contributor-docs/call-for-contributions.qmd
           text: "**Call for contributions**"
@@ -52,9 +66,12 @@ website:
         - contributor-docs/contributor-guidelines.qmd
         - contributor-docs/style-guide.qmd
     - title: "News and views"
+      style: "floating"
+      background: "#f0eeeb"
+      collapse-level: 2
+      align: left
       contents: 
-        - href: news-and-views/index.qmd
-          text: "**In this section**"
+        - news-and-views/index.qmd
         - news-and-views/interviews/index.qmd
         - news-and-views/datasciencebites/index.qmd
         - news-and-views/editors-blog/index.qmd
@@ -63,6 +80,8 @@ website:
           text: Newsletter
 
   page-navigation: true
+
+  back-to-top-navigation: false
 
   page-footer:
     background: "#000000"
@@ -88,6 +107,10 @@ format:
     theme: [lux, rwds.scss]
     css: styles.css
     toc: true
+    grid:
+      sidebar-width: 250px
+      body-width: 825px
+      margin-width: 250px
 
 execute: 
   freeze: auto
