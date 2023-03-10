@@ -2,42 +2,56 @@ project:
   type: website
 
 website:
-  title: "Real World Data Science"
-  image: "rss-white-logo.png"
-  favicon: "rss-white-BG.png"
+  image: "RWDS Main Logo_Boxed Black_RGB.png"
+  favicon: "RWDS Main Logo_Boxed Black_RGB.png"
   twitter-card:
     site: "@rwdatasci"
   open-graph: true
   site-url: https://realworlddatascience.net/
   repo-url: https://github.com/realworlddatascience/realworlddatascience.github.io
   repo-actions: [edit, issue]
-  google-analytics: "G-1TTWB7YTR6"
+  # google-analytics: "G-1TTWB7YTR6"
   navbar:
-    logo: "rss-white-logo.png"
-    logo-alt: "RSS logo"
+    background: "#f0eeeb"
+    logo: "RWDS Main Logo_Boxed Black_RGB.png"
+    logo-alt: "Real World Data Science brand"
+    title: false
+    collapse-below: xl
     left:
       - href: index.qmd
-        text: Overview
+        text: "Home"
       - href: contributor-docs/call-for-contributions.qmd
         text: "Call for contributions"
       - href: news-and-views/editors-blog/posts/2022-10-18-meet-the-team/meet-the-team.qmd
         text: "Meet the team"
-      - href: news-and-views/index.qmd
-    right:
-      - href: https://github.com/realworlddatascience
-        icon: github
-        aria-label: GitHub
-      - href: https://twitter.com/rwdatasci
-        icon: twitter
-        aria-label: Twitter
-      - href: https://realworlddatascience.net/news-and-views/index.xml
-        icon: rss
-        aria-label: RSS feed
+      - text: News and views
+        menu:         
+          - href: news-and-views/index.qmd
+            text: Latest
+          - news-and-views/interviews/index.qmd
+          - href: news-and-views/datasciencebites/index.qmd
+            text: DataScienceBites
+          - news-and-views/editors-blog/index.qmd
+          - href: news-and-views/newsletter/index.qmd
+            text: Newsletter
+
+    # right:
+    #   - href: https://github.com/realworlddatascience
+    #     icon: github
+    #     aria-label: GitHub
+    #   - href: https://twitter.com/rwdatasci
+    #     icon: twitter
+    #     aria-label: Twitter
+    #   - href: https://realworlddatascience.net/news-and-views/index.xml
+    #     icon: rss
+    #     aria-label: RSS feed
 
   sidebar: 
     - title: "Call for contributions"
       style: "floating"
-      background: "#FFFFFF"
+      background: "#f0eeeb"
+      collapse-level: 2
+      align: left
       contents:
         - href: contributor-docs/call-for-contributions.qmd
           text: "**Call for contributions**"
@@ -52,20 +66,24 @@ website:
         - contributor-docs/contributor-guidelines.qmd
         - contributor-docs/style-guide.qmd
     - title: "News and views"
+      style: "floating"
+      background: "#f0eeeb"
+      collapse-level: 2
+      align: left
       contents: 
-        - href: news-and-views/index.qmd
-          text: "**In this section**"
+        - news-and-views/index.qmd
         - news-and-views/interviews/index.qmd
         - news-and-views/datasciencebites/index.qmd
         - news-and-views/editors-blog/index.qmd
-        - text: "---"
         - href: news-and-views/newsletter/index.qmd
           text: Newsletter
 
   page-navigation: true
 
+  back-to-top-navigation: false
+
   page-footer:
-    background: light
+    background: "#000000"
     left: "Built by the [RSS](https://rss.org.uk/) using [Quarto](https://quarto.org/)" 
     # center:
     right:
@@ -85,11 +103,13 @@ website:
 
 format:
   html:
-    theme: 
-      light: flatly
-      dark: darkly
-    css: styles.css
+    theme: [lux, rwds.scss]
+    css: rwds.css
     toc: true
+    grid:
+      sidebar-width: 250px
+      body-width: 825px
+      margin-width: 250px
 
 execute: 
   freeze: auto
