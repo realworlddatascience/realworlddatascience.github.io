@@ -23,6 +23,25 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+}
+.hanging div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}
 </style>
 
 
@@ -394,10 +413,14 @@ The proportion of patients without the condition being screened for that are cor
 <div class="no-row-height column-margin column-container"><div class="">
 <p><strong>Figure 3b:</strong> Classifier test results as a percentage of all positive tests, assuming 30% prevalence of AI-written homework.</p>
 </div></div></section>
-<section id="determining-guilt" class="level2">
+<section id="determining-guilt" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="determining-guilt">Determining ‘guilt’</h2>
-<p>If a test has a positive predictive value of just over 50% (at an assumed prevalence rate of 30%), does that provide a reasonable basis on which to accuse someone of getting ChatGPT to do their homework? That depends on who you ask. If we look to the legal system for guidance, in civil cases like personal injury claims or contact disputes judges typically make decisions on the so-called “balance of probabilities”. This is generally assumed to mean if we are more than 50% sure of someone’s “guilt” in this context, that might be sufficient to find against them. However, in criminal law, a higher standard applies: “beyond reasonable doubt”. Legal scholars have long wrestled with how to quantify this in probabilistic terms, and surveys of judges put “beyond reasonable doubt” somewhere in the range of being 80% to 99% certain of guilt.</p>
-<p>It is at this standard of evidence that OpenAI’s classifier shows its limitations. For example, if we flip Bayes’ theorem around, we find that to achieve a positive predictive value of at least 80%, the prevalence rate needs to be at least 58%. For a positive predictive value of 90%, prevalence needs to be 76%. (Verify these figures for yourself: Python code and functions are available from this <a href="https://github.com/fatso-jetson/screening-tests">GitHub repository</a>).</p>
+<p>If a test has a positive predictive value of just over 50% (at an assumed prevalence rate of 30%), does that provide a reasonable basis on which to accuse someone of getting ChatGPT to do their homework? That depends on who you ask. If we look to the legal system for guidance, in civil cases like personal injury claims or contact disputes judges typically make decisions on the so-called “balance of probabilities”. This is generally assumed to mean if we are more than 50% sure of someone’s “guilt” in this context, that might be sufficient to find against them. However, in criminal law, a higher standard applies: “beyond reasonable doubt”. Legal scholars have long wrestled with how to quantify this in probabilistic terms, and surveys of judges put “beyond reasonable doubt” somewhere in the range of being 80% to 99% certain of guilt – see, for example <span class="citation" data-cites="mccauliff1982burdens">McCauliff (<a href="#ref-mccauliff1982burdens" role="doc-biblioref">1982</a>)</span> and <span class="citation" data-cites="solan1999refocusing">Solan (<a href="#ref-solan1999refocusing" role="doc-biblioref">1999</a>)</span>.</p>
+<div class="no-row-height column-margin column-container"><div id="ref-mccauliff1982burdens" class="csl-entry" role="doc-biblioentry">
+McCauliff, Catherine MA. 1982. <span>“Burdens of Proof: Degrees of Belief, Quanta of Evidence, or Constitutional Guarantees.”</span> <em>Vand. L. Rev.</em> 35: 1293.
+</div><div id="ref-solan1999refocusing" class="csl-entry" role="doc-biblioentry">
+Solan, Lawrence M. 1999. <span>“Refocusing the Burden of Proof in Criminal Cases: Some Doubt about Resaonable Doubt.”</span> <em>Tex. L. Rev.</em> 78: 105.
+</div></div><p>It is at this standard of evidence that OpenAI’s classifier shows its limitations. For example, if we flip Bayes’ theorem around, we find that to achieve a positive predictive value of at least 80%, the prevalence rate needs to be at least 58%. For a positive predictive value of 90%, prevalence needs to be 76%. (Verify these figures for yourself: Python code and functions are available from this <a href="https://github.com/fatso-jetson/screening-tests">GitHub repository</a>).</p>
 <p>Thus far in our calculations, we’ve set prevalence according to estimates of the percentage of students who use ChatGPT for their homework. But, according to statistician and science writer Robert Matthews, individual students could justifiably complain about having their guilt decided on this basis. “It’s like deciding someone is guilty of a crime just because they happen to live in an area notorious for criminal gangs,” he says. Instead, the guilt of individual students should be decided using an estimate of the chances that <em>they</em> would use ChatGPT for <em>that particular</em> homework assignment.</p>
 <p>Looked at in this way, Matthews says, “You already have to be pretty convinced of a person’s ‘guilt’ even before applying the classifier if you want to put the evidence ‘beyond reasonable doubt’. Bayes’ theorem highlights the need to be really clear about what you mean by the ‘accuracy’ of a test, and about what question you want the test to answer.”</p>
 <p>So, here’s a question that teachers will be asking if they are worried about ChatGPT-generated homework: “Has the piece of text I’m marking been written by AI?” If those same teachers use the OpenAI classifier to try to answer that question, they will no doubt expect that something classified as “likely AI-written” is more likely to be AI-written than not. However, as it stands now – and as our examples above have shown – users can’t be confident that’s the case. In education terms, this particular ‘test’ is a long way from scoring top marks.</p>
@@ -424,6 +447,7 @@ Tarran, Brian. 2023. “OpenAI’s text classifier won’t calm fears about AI-w
 </div>
 </div>
 </div>
+
 
 
 </section>
