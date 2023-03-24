@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.287">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Brian King">
+<meta name="dcterms.date" content="2022-12-13">
+<meta name="description" content="A/B testing is often used to evaluate the impact of design ‘treatments’ — for example, are people who see advert A more likely to buy something than those who see advert B? Classical methods typically assume that changing one person’s treatment will not affect others, but what if that’s not the case? A paper by Shi et al.&nbsp;aims to address this problem.">
+
+<title>Real World Data Science - Determining the best way to route drivers for ridesharing via reinforcement learning</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../../">
+<link href="../../../../../../images/rwds-logo-150px.png" rel="icon" type="image/png">
+<script src="../../../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../../rwds.css">
+<meta property="og:title" content="Real World Data Science - Determining the best way to route drivers for ridesharing via reinforcement learning">
+<meta property="og:description" content="A/B testing is often used to evaluate the impact of design ‘treatments’ — for example, are people who see advert A more likely to buy something than those who see advert B? Classical methods typically assume that changing one person’s treatment will not affect others, but what if that’s not the case? A paper by Shi et al.&nbsp;aims to address this problem.">
+<meta property="og:image" content="https://realworlddatascience.net/ideas/datasciencebites/posts/2022/12/13/images/paul-hanaoka-D-qq7W751vs-unsplash.jpg">
+<meta property="og:site-name" content="Real World Data Science">
+<meta property="og:image:alt" content="Photo taken from the backseat of a Lyft vehicle. Driver is seen in profile to the left of the picture. Phone is mounted on the dash and displays a maps app that is tracking the route to the passenger's destination. Photo by Paul Hanaoka on Unsplash.">
+<meta name="twitter:title" content="Real World Data Science - Determining the best way to route drivers for ridesharing via reinforcement learning">
+<meta name="twitter:description" content="A/B testing is often used to evaluate the impact of design ‘treatments’ — for example, are people who see advert A more likely to buy something than those who see advert B? Classical methods typically assume that changing one person’s treatment will not affect others, but what if that’s not the case? A paper by Shi et al.&nbsp;aims to address this problem.">
+<meta name="twitter:image" content="https://realworlddatascience.net/ideas/datasciencebites/posts/2022/12/13/images/paul-hanaoka-D-qq7W751vs-unsplash.jpg">
+<meta name="twitter:site" content="@rwdatasci">
+<meta name="twitter:image:alt" content="Photo taken from the backseat of a Lyft vehicle. Driver is seen in profile to the left of the picture. Phone is mounted on the dash and displays a maps app that is tracking the route to the passenger's destination. Photo by Paul Hanaoka on Unsplash.">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../case-studies/index.html" rel="" target="">
+ <span class="menu-text">Case studies</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../ideas/index.html" rel="" target="">
+ <span class="menu-text">Ideas</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../careers/index.html" rel="" target="">
+ <span class="menu-text">Careers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../viewpoints/index.html" rel="" target="">
+ <span class="menu-text">Viewpoints</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">About RWDS</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
+        <li>
+    <a class="dropdown-item" href="../../../../../../about-rwds.html" rel="" target="">
+ <span class="dropdown-text">Who we are</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../../contributor-docs/call-for-contributions.html" rel="" target="">
+ <span class="dropdown-text">How to contribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../../contact.html" rel="" target="">
+ <span class="dropdown-text">Contact us</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Determining the best way to route drivers for ridesharing via reinforcement learning</h1>
+                  <div>
+        <div class="description">
+          <p>A/B testing is often used to evaluate the impact of design ‘treatments’ — for example, are people who see advert A more likely to buy something than those who see advert B? Classical methods typically assume that changing one person’s treatment will not affect others, but what if that’s not the case? A paper by Shi et al.&nbsp;aims to address this problem.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">A/B testing</div>
+                <div class="quarto-category">Reinforcement learning</div>
+                <div class="quarto-category">Statistics</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Brian King </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 13, 2022</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block page-columns page-full" id="quarto-document-content">
+
+
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+About the paper and this post
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p><strong>Title:</strong> Dynamic causal effects evaluation in A/B testing with a reinforcement learning framework</p>
+<p><strong>Author(s) and year:</strong> Chengchun Shi, Xiaoyu Wang, Shikai Luo, Hongtu Zhu, Jieping Ye, Rui Song (2022)</p>
+<p><strong>Status:</strong> Published in <em>Journal of the American Statistical Association, Theory and Methods</em>, open access: <a href="https://www.tandfonline.com/doi/full/10.1080/01621459.2022.2027776">HTML</a>, <a href="https://www.tandfonline.com/doi/epdf/10.1080/01621459.2022.2027776?needAccess=true&amp;role=button">PDF</a>, <a href="https://www.tandfonline.com/doi/epub/10.1080/01621459.2022.2027776?needAccess=true&amp;role=button">EPUB</a>.</p>
+<p><strong>Editor’s note:</strong> This post is republished with permission from <a href="https://mathstatbites.org/determining-the-best-way-to-route-drivers-for-ridesharing-via-reinforcement-learning/">MathStatBites</a> to demonstrate the Bites concept. See <a href="../../../../../../contributor-docs/datasciencebites.html">here</a> for more information.</p>
+</div>
+</div>
+</div>
+<p>Companies often want to test the impact of one design decision over another, for example Google might want to compare the current ranking of search results (version A) with an alternative ranking (version B) and evaluate how the modification would affect users’ decisions and click behavior. An experiment to determine this impact on users is known as an A/B test, and many methods have been designed to measure the “treatment” effect of the proposed change. However, these classical methods typically assume that changing one person’s treatment will not affect others (known as the Stable Unit Treatment Value Assumption or SUTVA). In the Google example, this is typically a valid assumption — showing one user different search results shouldn’t impact another user’s click behavior. But in some situations, SUTVA is violated, and new methods must be introduced to properly measure the effect of design changes.</p>
+<p>One such situation is that of ridesharing companies (Uber, Lyft, etc.) and how they determine which drivers are sent to which riders (the dispatch problem). Simply put, when a driver is assigned to a rider, this decision impacts the spatial distribution of drivers in the future. Hence the dispatch strategy (our treatment) at the present time will influence riders and drivers in the future, which violates SUTVA and hence invalidates many traditional methods for A/B testing. To tackle this problem, a group of researchers have recently employed a reinforcement learning (RL) framework which can accurately measure the treatment effect in such a scenario. Furthermore, their proposed approach allows for companies to terminate A/B tests earlier if the proposed version B is found to be clearly better. This early stopping can save time and money.</p>
+<p>To better understand RL and how it can contribute to tackling the issue at hand, it’s first helpful to set some context. In typical RL problems, including the one in this paper, the scenario is modeled with something known as a Markov Decision Process (MDP). A MDP links three sets of variables across time: the state or environment, the treatment or action (the reaction to the environment), and the outcome (the response produced by the environment due to the action). These outcomes can be thought of as rewards which depend on the action taken and the state observed. Over time, the machine learns which actions produce more positive rewards and which bring about worse outcomes. Hence, the actions leading to higher rewards are positively reinforced, thus the name reinforcement learning. A causal diagram of an MDP is shown in Figure 1, where <em>S</em><sub><em>t</em></sub>, <em>A</em><sub><em>t</em></sub>, and <em>Y</em><sub><em>t</em></sub> are the <strong>state</strong>, <strong>action</strong>, and <strong>outcome</strong> at time <em>t</em>. As one can see, past treatments influence future outcomes by altering the state variables at the present (the so-called “carryover effect” which violates SUTVA).</p>
+<div class="column-page">
+<p><img src="images/ridesharing-fig1.png" class="quarto-discovered-preview-image img-fluid" alt="A causal diagram of a Markov Decision Process is shown in this figure. Green circles represent states, with arrows leading to red diamonds and blue squares representing, respectively, actions and outcomes. Actions are linked to new states by arrows, and prior states are linked to new states by curved arrows. This illustration conveys how past treatments influence future outcomes by altering the state variables at the present (the so-called “carryover effect” which violates the stable unit treatment value assumption)."></p>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><strong>Figure 1:</strong> Causal diagram of MDP, where the solid lines represent causal relationships.</p>
+</div></div><p>Making this more concrete, consider an example where the decision-maker is a ridesharing company. The environment or <strong>state</strong> is whatever variables the decision-maker can measure about the world, like the spatial distribution of drivers, number of pickup requests, traffic, and weather. The company then makes some <strong>action</strong> on how to dispatch drivers. The combination of the state and action leads to an <strong>outcome</strong> that can be measured, for example passenger waiting time or driver’s income. The strategy which is used to determine an action is known as a policy. This policy could be designed to take the state into account or simply be fixed regardless of what environment is encountered. Much of the reinforcement learning literature focuses on the former (policies that depend on the state), but the authors argue that fixed designs are the de facto approach in industry A/B testing and hence they focus on that setting. In particular, a common treatment allocation design is the switchback design, where there are two policies of interest (the current dispatching strategy vs a proposed strategy) determined ahead of time and they are employed in alternating time intervals during the A/B test.</p>
+<p>So how are policies compared to determine the treatment effect? The answer lies in what is known as the value function, which measures the total outcome that would have amassed had the decision-maker followed a given policy. The value function can put more value on short-term gain in outcome or long-term benefits. The two policies in an A/B test each have their own value functions, and a proposed policy is determined to be better if its value is (statistically) significantly higher. In the ridesharing setting, one possible outcome of interest is driver income. An A/B test in that scenario would thus look to see if a proposed policy had greater expected driver income vs the current policy.</p>
+<p>A natural question is when to end the experiment and test for a difference in value. In practice, companies will often simply run the test for a prespecified amount of time, such as two weeks, and then perform an analysis. But if one policy is clearly better than another, that difference could be detectable much earlier and the company is wasting valuable resources by continuing the experiment. To address this issue, the authors take an idea from clinical trials, the “alpha-spending” approach, and adapt it to their framework. Alpha-spending is one way to distribute over time the prespecified “budget” of Type 1 error (the probability of falsely detecting that a new policy is better). In the article’s real-data example, the authors test once a day for each day after one week and are able to detect a significant difference on Day 12. Waiting until Day 14 would have resulted in poorer outcomes since a suboptimal policy would be implemented half the time for two more days.</p>
+<p>Overall, the framework introduced allows for handling of carryover effects, is capable of modeling treatment allocation like the switchback design, and furthermore, allows for possible early stopping. With these three features, the authors argue their approach is highly applicable to the current practice of ridesharing companies (and possibly other industries as well). For interested readers wanting to dive deeper into the methodology presented, you can check out the <a href="https://www.tandfonline.com/doi/full/10.1080/01621459.2022.2027776">full article</a>, listen to the first author discuss the material at the <a href="https://www.youtube.com/watch?v=Zor1CmRyycw">Online Causal Inference Seminar</a> (embedded below), or explore the <a href="https://github.com/callmespring/CausalRL">Python implementation</a> available on GitHub.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Zor1CmRyycw" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>About the author</dt>
+<dd>
+<strong>Brian King</strong> is a PhD candidate in the Department of Statistics at Rice University and a current NSF Graduate Research Fellow, with research focused on Bayesian modeling and forecasting for time series of counts. Prior to Rice, he graduated from Baylor University with a B.S. in Mathematics and Statistics alongside a secondary major in Spanish and a minor in Computer Science.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>About DataScienceBites</dt>
+<dd>
+<a href="../../../../../../ideas/datasciencebites/index.html"><strong>DataScienceBites</strong></a> is written by graduate students and early career researchers in data science (and related subjects) at universities throughout the world, as well as industry researchers. We publish digestible, engaging summaries of interesting new pre-print and peer-reviewed publications in the data science space, with the goal of making scientific papers more accessible. Find out how to <a href="../../../../../../contributor-docs/datasciencebites.html">become a contributor</a>.
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
+<a href="../../../../../../ideas/datasciencebites/index.html"> <img src="../../../../../../ideas/datasciencebites/datasciencebites-logo.png" alt="DataScienceBites logo. A dark grey circle with bite marks cut out. Overlaid text says, Import grad_students as writers, import new_research_papers as nrp, print(writers + nrp) and the title DataScienceBites." class="dsb"></a>
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="realworlddatascience/realworlddatascience.github.io" data-repo-id="R_kgDOILnnig" data-category="General" data-category-id="DIC_kwDOILnnis4CSt2s" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright © 2023 <a href="https://rss.org.uk/">Royal Statistical Society</a></div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/realworlddatascience">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/rwdatasci">
+      <i class="bi bi-twitter" role="img" aria-label="Twitter">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@rwdatasci">
+      <i class="bi bi-mastodon" role="img" aria-label="Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+</ul>
+    <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/ideas/datasciencebites/posts/2022/12/13/ridesharing.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action">Report an issue</a></p></div></div></div>
+    <div class="nav-footer-right"><a href="../../../../../../ts-and-cs.html">Terms &amp; Conditions</a></div>
+  </div>
+</footer>
+
+
+
+</body></html>

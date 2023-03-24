@@ -1,0 +1,952 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.287">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Editors’ Blog | Viewpoints | Real World Data Science</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../viewpoints/interviews/index.html" rel="next">
+<link href="../../viewpoints/index.html" rel="prev">
+<link href="../../images/rwds-logo-150px.png" rel="icon" type="image/png">
+<script src="../../site_libs/quarto-listing/list.min.js"></script>
+<script src="../../site_libs/quarto-listing/quarto-listing.js"></script>
+<script src="../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script>
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-listing .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description','listing-categories',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description","listing-categories"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-listing'] = new List('listing-listing', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  </script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
+</script>
+
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
+
+<link rel="stylesheet" href="../../rwds.css">
+<meta property="og:title" content="Editors’ Blog | Viewpoints | Real World Data Science">
+<meta property="og:description" content="News, updates, and discussions from the Editorial Board">
+<meta property="og:site-name" content="Real World Data Science">
+<meta name="twitter:title" content="Editors’ Blog | Viewpoints | Real World Data Science">
+<meta name="twitter:description" content="News, updates, and discussions from the Editorial Board">
+<meta name="twitter:site" content="@rwdatasci">
+<meta name="twitter:card" content="summary">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="false"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../case-studies/index.html" rel="" target="">
+ <span class="menu-text">Case studies</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../ideas/index.html" rel="" target="">
+ <span class="menu-text">Ideas</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../careers/index.html" rel="" target="">
+ <span class="menu-text">Careers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../viewpoints/index.html" rel="" target="">
+ <span class="menu-text">Viewpoints</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">About RWDS</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
+        <li>
+    <a class="dropdown-item" href="../../about-rwds.html" rel="" target="">
+ <span class="dropdown-text">Who we are</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../contributor-docs/call-for-contributions.html" rel="" target="">
+ <span class="dropdown-text">How to contribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../contact.html" rel="" target="">
+ <span class="dropdown-text">Contact us</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Editors’ blog</h1>
+            <p class="subtitle lead">News, updates, and discussions from the Editorial Board</p>
+                      </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        
+    <h5 class="quarto-listing-category-title">Categories</h5><div class="quarto-listing-category category-default"><div class="category" data-category="">All <span class="quarto-category-count">(11)</span></div><div class="category" data-category="AI">AI <span class="quarto-category-count">(6)</span></div><div class="category" data-category="Biographies">Biographies <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Call for contributions">Call for contributions <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Classifiers">Classifiers <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Content ideas">Content ideas <span class="quarto-category-count">(2)</span></div><div class="category" data-category="Data analytics">Data analytics <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Events">Events <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Key themes">Key themes <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Large language models">Large language models <span class="quarto-category-count">(5)</span></div><div class="category" data-category="Machine learning">Machine learning <span class="quarto-category-count">(5)</span></div><div class="category" data-category="Newsletters">Newsletters <span class="quarto-category-count">(1)</span></div><div class="category" data-category="People">People <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Screening tests">Screening tests <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Skills">Skills <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Training">Training <span class="quarto-category-count">(1)</span></div><div class="category" data-category="Updates">Updates <span class="quarto-category-count">(4)</span></div></div></div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+
+
+
+<div class="quarto-listing quarto-listing-container-default" id="listing-listing">
+<div class="list quarto-listing-default">
+<div class="quarto-post image-right" data-index="0" data-categories="AI,Large language models,Classifiers,Screening tests" data-listing-date-sort="1678838400000" data-listing-file-modified-sort="1679675673729" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
+<div class="thumbnail">
+<p><a href="../../viewpoints/editors-blog/posts/2023/03/15/AI-screening.html"> <img src="../../viewpoints/editors-blog/posts/2023/03/15/images/teacher-marking-homework.png" class="thumbnail-image" alt="A teacher is marking homework and trying to decide whether a written piece of text has been created by a student or by a large language model, digital art. Created by DALL·E, prompt by Real World Data Science."> </a></p>
+</div>
+<div class="body">
+<a href="../../viewpoints/editors-blog/posts/2023/03/15/AI-screening.html">
+<h3 class="no-anchor listing-title">
+OpenAI’s text classifier won’t calm fears about AI-written homework
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
+AI
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Large language models'); return false;">
+Large language models
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Classifiers'); return false;">
+Classifiers
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Screening tests'); return false;">
+Screening tests
+</div>
+</div>
+<a href="../../viewpoints/editors-blog/posts/2023/03/15/AI-screening.html">
+<div class="listing-description">
+<p>Educators are worried about ChatGPT being using by students for homework assignments, so OpenAI has released a tool to classify whether text is human- or AI-written. But relying on the classifier’s results is ill-advised, as some basic statistics shows.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="../../viewpoints/editors-blog/posts/2023/03/15/AI-screening.html">
+<div class="listing-date">
+Mar 15, 2023
+</div>
+<div class="listing-author">
+Brian Tarran
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="1" data-categories="Skills,Training,AI,Machine learning,Data analytics" data-listing-date-sort="1676332800000" data-listing-file-modified-sort="1679675673729" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<div class="thumbnail">
+<p><a href="../../viewpoints/editors-blog/posts/2023/02/14/digital-skills.html"> <img src="../../viewpoints/editors-blog/posts/2023/02/14/images/billetto-editorial-YvLd3xbo0ac-unsplash.jpg" class="thumbnail-image" alt="Woman painting while wearing virtual reality headset. Photo by Billetto Editorial on Unsplash."> </a></p>
+</div>
+<div class="body">
+<a href="../../viewpoints/editors-blog/posts/2023/02/14/digital-skills.html">
+<h3 class="no-anchor listing-title">
+Data science can help close the ‘digital skills’ gap, or so it seems
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Skills'); return false;">
+Skills
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Training'); return false;">
+Training
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
+AI
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Machine learning'); return false;">
+Machine learning
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Data analytics'); return false;">
+Data analytics
+</div>
+</div>
+<a href="../../viewpoints/editors-blog/posts/2023/02/14/digital-skills.html">
+<div class="listing-description">
+<p>A ‘digital skills’ gap is harming employer productivity and growth, according to a survey by engineering body IET. But the ‘digital skills’ that are needed sound a lot like data science skills: statistical understanding, data analytics, AI and machine learning.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="../../viewpoints/editors-blog/posts/2023/02/14/digital-skills.html">
+<div class="listing-date">
+Feb 14, 2023
+</div>
+<div class="listing-author">
+Brian Tarran
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="2" data-categories="Machine learning,Large language models,AI" data-listing-date-sort="1674777600000" data-listing-file-modified-sort="1679675673729" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18">
+<div class="thumbnail">
+<p><a href="../../viewpoints/editors-blog/posts/2023/01/27/talking-chatgpt.html"> <img src="../../viewpoints/editors-blog/posts/2023/01/27/images/Detlef.png" class="thumbnail-image" alt="Photo of Detlef Nauck"> </a></p>
+</div>
+<div class="body">
+<a href="../../viewpoints/editors-blog/posts/2023/01/27/talking-chatgpt.html">
+<h3 class="no-anchor listing-title">
+ChatGPT can hold a conversation, but lacks knowledge representation and original sources for verification
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Machine learning'); return false;">
+Machine learning
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Large language models'); return false;">
+Large language models
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
+AI
+</div>
+</div>
+<a href="../../viewpoints/editors-blog/posts/2023/01/27/talking-chatgpt.html">
+<div class="listing-description">
+<p>ChatGPT represents a next step in the evolution of large language models, says Detlef Nauck. However, there are still major challenges - and concerns - to overcome.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="../../viewpoints/editors-blog/posts/2023/01/27/talking-chatgpt.html">
+<div class="listing-date">
+Jan 27, 2023
+</div>
+<div class="listing-author">
+Brian Tarran
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="3" data-categories="Updates,Events" data-listing-date-sort="1674000000000" data-listing-file-modified-sort="1679675673729" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="thumbnail">
+<p><a href="../../viewpoints/editors-blog/posts/2023/01/18/rwds-at-rss-conference.html"> <img src="../../viewpoints/editors-blog/posts/2023/01/18/images/rss-conf23.png" class="thumbnail-image" alt="Flyer for RSS International Conference 2023, for all statisticians and data scientists. Taking place in Harrogate, 4-7 September 2023."> </a></p>
+</div>
+<div class="body">
+<a href="../../viewpoints/editors-blog/posts/2023/01/18/rwds-at-rss-conference.html">
+<h3 class="no-anchor listing-title">
+We’re taking Real World Data Science on the road
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Updates'); return false;">
+Updates
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Events'); return false;">
+Events
+</div>
+</div>
+<a href="../../viewpoints/editors-blog/posts/2023/01/18/rwds-at-rss-conference.html">
+<div class="listing-description">
+<p>Join us at the RSS International Conference 2023 in Harrogate, 4-7 September.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="../../viewpoints/editors-blog/posts/2023/01/18/rwds-at-rss-conference.html">
+<div class="listing-date">
+Jan 18, 2023
+</div>
+<div class="listing-author">
+Brian Tarran
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="4" data-categories="Updates,Newsletters" data-listing-date-sort="1672876800000" data-listing-file-modified-sort="1679675673729" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="thumbnail">
+<p><a href="../../viewpoints/editors-blog/posts/2023/01/05/newsletter.html"> <img src="../../viewpoints/editors-blog/posts/2023/01/05/images/brett-jordan-LPZy4da9aRo-unsplash.jpg" class="thumbnail-image" alt="Photo of an email app on a mobile device screen, showing 2 unread notifications. Photo by Brett Jordan on Unsplash."> </a></p>
+</div>
+<div class="body">
+<a href="../../viewpoints/editors-blog/posts/2023/01/05/newsletter.html">
+<h3 class="no-anchor listing-title">
+Explore the RSS Data Science &amp; AI Section newsletter, right here!
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Updates'); return false;">
+Updates
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Newsletters'); return false;">
+Newsletters
+</div>
+</div>
+<a href="../../viewpoints/editors-blog/posts/2023/01/05/newsletter.html">
+<div class="listing-description">
+<p>We’re starting the year with a new addition to the site: a page dedicated to the excellent RSS Data Science &amp; AI Section newsletter.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="../../viewpoints/editors-blog/posts/2023/01/05/newsletter.html">
+<div class="listing-date">
+Jan 5, 2023
+</div>
+<div class="listing-author">
+Brian Tarran
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="5" data-categories="Updates,Content ideas,Call for contributions" data-listing-date-sort="1670889600000" data-listing-file-modified-sort="1679675673725" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="thumbnail">
+<p><a href="../../viewpoints/editors-blog/posts/2022/12/13/dsb-launch.html"> <img src="../../viewpoints/editors-blog/posts/2022/12/13/images/datasciencebites-logo.png" class="thumbnail-image" alt="DataScienceBites logo. A dark grey circle with bite marks cut out. Overlaid text says, Import grad_students as writers, import new_research_papers as nrp, print(writers + nrp) and the title DataScienceBites."> </a></p>
+</div>
+<div class="body">
+<a href="../../viewpoints/editors-blog/posts/2022/12/13/dsb-launch.html">
+<h3 class="no-anchor listing-title">
+Sink your teeth into some data science papers with our brand new blog
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Updates'); return false;">
+Updates
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Content ideas'); return false;">
+Content ideas
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Call for contributions'); return false;">
+Call for contributions
+</div>
+</div>
+<a href="../../viewpoints/editors-blog/posts/2022/12/13/dsb-launch.html">
+<div class="listing-description">
+<p>Today we’re launching DataScienceBites – a new member of the ScienceBites family – offering bite-sized summaries of data science papers.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="../../viewpoints/editors-blog/posts/2022/12/13/dsb-launch.html">
+<div class="listing-date">
+Dec 13, 2022
+</div>
+<div class="listing-author">
+Brian Tarran
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="6" data-categories="Machine learning,Large language models,AI" data-listing-date-sort="1670544000000" data-listing-file-modified-sort="1679675673725" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
+<div class="thumbnail">
+<p><a href="../../viewpoints/editors-blog/posts/2022/12/09/LLM-news.html"> <img src="../../viewpoints/editors-blog/posts/2022/12/09/images/jigsaw-words.jpg" class="thumbnail-image" alt="An image created by the Stable Diffusion 2.1 Demo. The model was asked to produce an image with the prompt, &amp;#039;Text from an old book cut up like a jigsaw puzzle with pieces missing'."> </a></p>
+</div>
+<div class="body">
+<a href="../../viewpoints/editors-blog/posts/2022/12/09/LLM-news.html">
+<h3 class="no-anchor listing-title">
+LLMs in the news: hype, tripe, and everything in between
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Machine learning'); return false;">
+Machine learning
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Large language models'); return false;">
+Large language models
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
+AI
+</div>
+</div>
+<a href="../../viewpoints/editors-blog/posts/2022/12/09/LLM-news.html">
+<div class="listing-description">
+<p>We’re back discussing large language models after two weeks of ‘breakthrough’ announcements, excitable headlines, and some all-too-familiar ethical concerns.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="../../viewpoints/editors-blog/posts/2022/12/09/LLM-news.html">
+<div class="listing-date">
+Dec 9, 2022
+</div>
+<div class="listing-author">
+Brian Tarran
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="7" data-categories="Machine learning,Large language models,AI" data-listing-date-sort="1670544000000" data-listing-file-modified-sort="1679675673725" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
+<div class="thumbnail">
+<p><a href="../../viewpoints/editors-blog/posts/2022/12/09/A-chat-with-ChatGPT.html"> <img src="../../viewpoints/editors-blog/posts/2022/12/09/images/chatgpt1.png" class="thumbnail-image" alt="A screenshot of an exchange between Real World Data Science editor Brian Tarran and ChatGPT."> </a></p>
+</div>
+<div class="body">
+<a href="../../viewpoints/editors-blog/posts/2022/12/09/A-chat-with-ChatGPT.html">
+<h3 class="no-anchor listing-title">
+A chat with ChatGPT
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Machine learning'); return false;">
+Machine learning
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Large language models'); return false;">
+Large language models
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
+AI
+</div>
+</div>
+<a href="../../viewpoints/editors-blog/posts/2022/12/09/A-chat-with-ChatGPT.html">
+<div class="listing-description">
+<p>‘Hello there! I’m a large language model trained by OpenAI, so I don’t have the ability to experience emotions or have a physical presence. I’m here to provide information and answer questions to the best of my ability. Is there something specific you would like to know?’</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="../../viewpoints/editors-blog/posts/2022/12/09/A-chat-with-ChatGPT.html">
+<div class="listing-date">
+Dec 9, 2022
+</div>
+<div class="listing-author">
+Brian Tarran
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="8" data-categories="Updates,Key themes,Content ideas" data-listing-date-sort="1669852800000" data-listing-file-modified-sort="1679675673725" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
+<div class="thumbnail">
+<p><a href="../../viewpoints/editors-blog/posts/2022/12/01/themes.html"> <img src="../../viewpoints/editors-blog/posts/2022/12/01/images/kelly-sikkema-vSNy_bWa5AE-unsplash-crop.jpg" class="thumbnail-image" alt="A photo of a black stencilled number 4 on a white brick wall. Photo by Kelly Sikkema on Unsplash."> </a></p>
+</div>
+<div class="body">
+<a href="../../viewpoints/editors-blog/posts/2022/12/01/themes.html">
+<h3 class="no-anchor listing-title">
+Four themes for potential contributors to think about
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Updates'); return false;">
+Updates
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Key themes'); return false;">
+Key themes
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Content ideas'); return false;">
+Content ideas
+</div>
+</div>
+<a href="../../viewpoints/editors-blog/posts/2022/12/01/themes.html">
+<div class="listing-description">
+<p>Can data science save the world? What is a data scientist? What statistical ideas do data scientists need to know? And, what’s happening in the world of data science?</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="../../viewpoints/editors-blog/posts/2022/12/01/themes.html">
+<div class="listing-date">
+Dec 1, 2022
+</div>
+<div class="listing-author">
+Brian Tarran
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="9" data-categories="Machine learning,Large language models,AI" data-listing-date-sort="1669161600000" data-listing-file-modified-sort="1679675673709" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9">
+<div class="thumbnail">
+<p><a href="../../viewpoints/editors-blog/posts/2022/11/23/LLM-content-warning.html"> <img src="../../viewpoints/editors-blog/posts/2022/11/23/images/TeresaBerndtsson-LetterWord-Text-Taxonomy-1000x1333.jpg" class="thumbnail-image" alt="A black keyboard at the bottom of the picture has an open book on it, with red words in labels floating on top, with a letter A balanced on top of them. The perspective makes the composition form a kind of triangle from the keyboard to the capital A. The AI filter makes it look like a messy, with a kind of cartoon style."> </a></p>
+</div>
+<div class="body">
+<a href="../../viewpoints/editors-blog/posts/2022/11/23/LLM-content-warning.html">
+<h3 class="no-anchor listing-title">
+Why large language models should come with a content warning
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('Machine learning'); return false;">
+Machine learning
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Large language models'); return false;">
+Large language models
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
+AI
+</div>
+</div>
+<a href="../../viewpoints/editors-blog/posts/2022/11/23/LLM-content-warning.html">
+<div class="listing-description">
+<p>The outputs of LLMs seem impressive, but users need to be wary of possible bias, plagiarism and model ‘hallucinations’.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="../../viewpoints/editors-blog/posts/2022/11/23/LLM-content-warning.html">
+<div class="listing-date">
+Nov 23, 2022
+</div>
+<div class="listing-author">
+Brian Tarran
+</div>
+</a>
+</div>
+</div>
+<div class="quarto-post image-right" data-index="10" data-categories="People,Biographies" data-listing-date-sort="1666051200000" data-listing-file-modified-sort="1679675673709" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12">
+<div class="thumbnail">
+<p><a href="../../viewpoints/editors-blog/posts/2022/10/18/meet-the-team.html"> <img src="../../viewpoints/editors-blog/posts/2022/10/18/images/team.png" class="thumbnail-image" alt="Portrait photos of 12 members of the Real World Data Science Editorial team"> </a></p>
+</div>
+<div class="body">
+<a href="../../viewpoints/editors-blog/posts/2022/10/18/meet-the-team.html">
+<h3 class="no-anchor listing-title">
+Meet the team
+</h3>
+<div class="listing-subtitle">
+
+</div>
+</a>
+<div class="listing-categories">
+<div class="listing-category" onclick="window.quartoListingCategory('People'); return false;">
+People
+</div>
+<div class="listing-category" onclick="window.quartoListingCategory('Biographies'); return false;">
+Biographies
+</div>
+</div>
+<a href="../../viewpoints/editors-blog/posts/2022/10/18/meet-the-team.html">
+<div class="listing-description">
+<p>Introducing the editors of Real World Data Science.</p>
+</div>
+</a>
+</div>
+<div class="metadata">
+<a href="../../viewpoints/editors-blog/posts/2022/10/18/meet-the-team.html">
+<div class="listing-date">
+Oct 18, 2022
+</div>
+<div class="listing-author">
+Editorial Board
+</div>
+</a>
+</div>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../viewpoints/index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Viewpoints</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../viewpoints/interviews/index.html" class="pagination-link">
+        <span class="nav-page-text">Interviews</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright © 2023 <a href="https://rss.org.uk/">Royal Statistical Society</a></div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/realworlddatascience">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/rwdatasci">
+      <i class="bi bi-twitter" role="img" aria-label="Twitter">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@rwdatasci">
+      <i class="bi bi-mastodon" role="img" aria-label="Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+</ul>
+    <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/viewpoints/editors-blog/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action">Report an issue</a></p></div></div></div>
+    <div class="nav-footer-right"><a href="../../ts-and-cs.html">Terms &amp; Conditions</a></div>
+  </div>
+</footer>
+
+
+
+</body></html>

@@ -1,0 +1,289 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<rss  xmlns:atom="http://www.w3.org/2005/Atom" 
+      xmlns:media="http://search.yahoo.com/mrss/" 
+      xmlns:content="http://purl.org/rss/1.0/modules/content/" 
+      xmlns:dc="http://purl.org/dc/elements/1.1/" 
+      version="2.0">
+<channel>
+<title>Real World Data Science</title>
+<link>https://realworlddatascience.net/ideas/index.html</link>
+<atom:link href="https://realworlddatascience.net/ideas/index.xml" rel="self" type="application/rss+xml"/>
+<description></description>
+<image>
+<url>https://realworlddatascience.net/images/rwds-logo-150px.png</url>
+<title>Real World Data Science</title>
+<link>https://realworlddatascience.net/ideas/index.html</link>
+<height>83</height>
+<width>144</width>
+</image>
+<generator>quarto-1.3.287</generator>
+<lastBuildDate>Thu, 02 Mar 2023 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Using ‘basket complementarity’ to make product recommendations</title>
+  <dc:creator>Moinak Bhaduri</dc:creator>
+  <link>https://realworlddatascience.net/ideas/datasciencebites/posts/2023/03/02/basket-complementarity.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>Anyone who has ever worked in a retail store will be familiar with the concept of cross-selling. A customer wants a can of paint? Try to sell them some paintbrushes. That new cellphone they’ve just decided to buy? They’ll probably need a case to protect it. Online retailers (and digital services of all sorts) have taken this idea and run with it, to great success. Sophisticated algorithms sort through data on a customer’s past transactions, and those of similar-looking customers, to identify and recommend other products a customer might be interested in.</p>
+<p>A large amount of cross-selling, whether attempted in store by a sales assistant or online by an algorithm, relies on the concept of <em>complementarity</em>: that certain products are often bought and/or used together. Relationships between products might be obvious – paint and paintbrushes, for example – or they may be obscure and only revealed through the analysis of large datasets. In a 2021 paper that highlights complementarity’s relevance to association analysis, Puka and Jedrusik put forward “<a href="https://www.mdpi.com/0718-1876/16/4/39">a new measure of complementarity in market basket data</a>”, which sheds light on how product recommendations can be derived.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+About the paper
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p><strong>Title:</strong> A new measure of complementarity in market basket data</p>
+<p><strong>Author(s) and year:</strong> Radosław Puka and Stanislaw Jedrusik (2021)</p>
+<p><strong>Status:</strong> Published in the <em>Journal of Theoretical and Applied Electronic Commerce Research</em>, open access: <a href="https://www.mdpi.com/0718-1876/16/4/39">HTML</a>, <a href="https://www.mdpi.com/0718-1876/16/4/39/pdf?version=1609984879">PDF</a>.</p>
+</div>
+</div>
+</div>
+<p>Inspired by complementarity-based ideas prevalent in microeconomics, Puka and Jedrusik begin by collecting some established ideas from traditional market basket analysis, the key one being “confidence”. In this case, we’re talking about the confidence that item A leads (in a way) to item B (which we can express in notation as <em>conf</em>({A} → {B})). Take a look at Table 1 (below), which presents a numbered list of 18 shopping trips, with details of what was purchased on each trip. Notice how two of the trips (1 and 3) resulted in sales of both milk (B) and cornflakes (A), while five trips (1, 3, 7, 17, and 18) had cornflakes. Under the assumption that someone already has cornflakes in their trolley, the probability that they will buy milk is 2/5 = 0.4. So, <em>conf</em>({cornflakes} → {milk}) = 0.4. The closer this number gets to one, the more automatic the cornflakes–milk connection becomes. This number can therefore be used to recommend an item that is related in some way to another already bought.</p>
+<div class="column-body-outset">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/tab1-fig1.png"><img src="https://realworlddatascience.net/ideas/datasciencebites/posts/2023/03/02/images/tab1-fig1.png" class="quarto-discovered-preview-image img-fluid figure-img"></a></p>
+</figure>
+</div>
+</div>
+<div class="figure-caption">
+<div class="grid">
+<div class="g-col-12 g-col-md-4">
+<p><strong>Table 1:</strong> A list (with each row representing a trip to a grocery store) that can be seen in one of two ways: (a) a record of what 18 different people bought, or (b) a history of one person’s purchases over 18 trips. The list is similar to the one examined by Puka and Jedrusik, except for the last three rows. These trips, under interpretation (b) may help us develop an understanding of a single shopper’s preferences.</p>
+</div>
+<div class="g-col-12 g-col-md-8">
+<p><strong>Figure 1:</strong> Basket complementarity under varying tolerance. The horizontal axis reports the probability that someone will buy item B under the assumption that A is already in their shopping trolley (i.e., <em>conf</em>({A} → {B})). The vertical axis reports the opposite: the chance that someone will go for A given that B is already in the cart (i.e., <em>conf</em>({B} → {A})). For any pair of items, these two probabilities can be found and, when plotted in 2D, a pair of items generates a single point. The more similar the two probabilities are for each pair, the closer the point comes to the line of equality (the red dashed line that runs diagonally through the origin), and the more complementary the items become. It’s rare that a dot will land exactly on the line of equality, so the green and orange lines parallel to the red line mark how far off a dot is from this ideal setting, using different levels of tolerance. From this we may say, for example, that cornflakes and milk are more complementary to each other than bread rolls and butter, as the first pairing lies closer to the line of equality.</p>
+</div>
+</div>
+</div>
+<section id="asymmetry-and-tolerance" class="level2">
+<h2 class="anchored" data-anchor-id="asymmetry-and-tolerance">Asymmetry and tolerance</h2>
+<p>Milk and cornflakes are reasonably complementary, and we can see from Figure 1 above that, regardless of whether you start by picking up milk or cornflakes, the probabilities of a shopper buying the other item are broadly similar: <em>conf</em>({cornflakes} → {milk}) = 0.4, while <em>conf</em>({milk} → {cornflakes}) = 0.33. There is a small amount of asymmetry in the probabilities in this particular example, but asymmetry can be more extreme for other pairs of items. This leads to the idea of one- and two-sided complementarity. Two items sharing a smallish asymmetry – like milk and cornflakes – will be connected through two-sided complementarity, while large asymmetries indicate one-sided complementarity. Such imbalances will be quite common when, for instance, items of hugely different prices are involved. When someone buys a house, for example, they may want to buy a bookcase, but buying a bookcase doesn’t mean someone wants to buy a house: this would be an instance of one-sided complementarity.</p>
+<p>Puka and Jedrusik capitalize on this observation. They define two items to be “basket complementary” if the two probabilities – the normal and its opposite – remain close and reasonably high. The items need to share a bond that is blind to the direction: seeing you bought one, no matter which, means you are (almost equally) likely to buy the other.</p>
+<p>It is rare that the two probabilities should be exactly the same, of course, and the authors allow some deviation. Along the red diagonal line of perfect equality (Figure 1) we may lay tolerance bands marking degrees of product inseparability. This, if need be, may lead to the notion of being complementary at such-and-such a tolerance level – 0%, 1%, 5%, etc. – generating a score of sorts. In cases where a dot representing the two-way dependencies between two items falls within a narrow band – corresponding to a smaller tolerance – the more inseparable the items are, and the more sensible a cross-selling recommendation may become.</p>
+</section>
+<section id="in-conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="in-conclusion">In conclusion</h2>
+<p>A large part of the world we inhabit, particularly the economy, is powered by recommendations: from strangers, friends and algorithms. That applies not only to the things we buy but also to the things we watch or read. (Perhaps you arrived at this article because of a tweet that Twitter thought you might like, or maybe it was suggested to you by Google News because of your past reading habits.) Whatever the intent of these recommendations, the key challenge is in knowing which two things are functionally or thematically intertwined. Which item or product is, by default, synonymous with which? Puka and Jedrusik deliver an answer: two items that are basket complementary to each other, preferably at a slim tolerance, are inextricably linked. One may be safely offered – perhaps always – whenever the other is already in the shopping basket.</p>
+<p>The relative simplicity and interpretability of basket complementary may provide small-scale retailers, starved of analytical wherewithal, a sane and safe strategy for developing their product offer. It might also serve as a benchmark to keep other, more sophisticated recommendation algorithms in check. (In weather forecasting, for example, it is often seen that <a href="https://www.sciencedirect.com/science/article/pii/S0022169415000414">naive benchmarks</a> – such as using today’s temperature to predict tomorrow’s – frequently outperform more advanced models.)</p>
+<p>Basket complementarity could also be used to help individuals understand their own shopping habits and the links between the things they buy. I’ve built <a href="https://moinak.shinyapps.io/MarketBasketDashboard/">an interactive dashboard</a> where you can enter your own receipt lists and filter associations based on various confidence thresholds. The <a href="https://github.com/moinakbhaduri/MarketBasketAnalysis">underlying code</a> is also available.</p>
+ <iframe src="https://moinak.shinyapps.io/MarketBasketDashboard/" style="border: none; width: 100%; height: 500px" frameborder="0"></iframe>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>About the author</dt>
+<dd>
+<strong>Moinak Bhaduri</strong> is assistant professor in the Department of Mathematical Sciences, Bentley University. He studies spatio-temporal Poisson processes and others like the self-exciting Hawkes or log-Gaussian Cox processes that are natural generalizations. His primary interest includes developing change-detection algorithms in systems modeled by these stochastic processes, especially through trend permutations.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>About DataScienceBites</dt>
+<dd>
+<a href="../../../../../../ideas/datasciencebites/index.html"><strong>DataScienceBites</strong></a> is written by graduate students and early career researchers in data science (and related subjects) at universities throughout the world, as well as industry researchers. We publish digestible, engaging summaries of interesting new pre-print and peer-reviewed publications in the data science space, with the goal of making scientific papers more accessible. Find out how to <a href="../../../../../../contributor-docs/datasciencebites.html">become a contributor</a>.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Moinak Bhaduri
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://realworlddatascience.net/ideas/datasciencebites/posts/2023/03/02/https:/mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/ideas/datasciencebites/posts/2023/03/02/https:/mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This work is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>, except where otherwise noted.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Bhaduri, Moinak. 2023. “Using ‘basket complementarity’ to make product recommendations.” Real World Data Science, March 2, 2023. <a href="https://realworlddatascience.net/news-and-views/datasciencebites/posts/2023/03/02/basket-complementarity.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <category>Market basket analysis</category>
+  <category>Recommendation systems</category>
+  <category>Complementarity</category>
+  <guid>https://realworlddatascience.net/ideas/datasciencebites/posts/2023/03/02/basket-complementarity.html</guid>
+  <pubDate>Thu, 02 Mar 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/ideas/datasciencebites/posts/2023/03/02/images/marjan-blan-marjanblan-3nURJV_L7-8-unsplash.jpg" medium="image" type="image/jpeg"/>
+</item>
+<item>
+  <title>Pulling patterns out of data with a graph</title>
+  <dc:creator>Andrew Saydjari</dc:creator>
+  <link>https://realworlddatascience.net/ideas/datasciencebites/posts/2023/01/24/pulling-patterns.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+About the paper and this post
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p><strong>Title:</strong> Extracting the main trend in a data set: The Sequencer algorithm</p>
+<p><strong>Author(s) and year:</strong> Dalya Baron and Brice Ménard (2021)</p>
+<p><strong>Status:</strong> Published in <em>The Astrophysical Journal</em>, open access: <a href="https://iopscience.iop.org/article/10.3847/1538-4357/abfc4d">HTML</a>, <a href="https://iopscience.iop.org/article/10.3847/1538-4357/abfc4d/pdf">PDF</a>.</p>
+<p><strong>Editor’s note:</strong> This post is republished with permission from <a href="https://mathstatbites.org/pulling-patterns-out-of-data-with-a-graph/">MathStatBites</a> to demonstrate the Bites concept. For more information about Bites articles and how to contribute to DataScienceBites, see our <a href="../../../../../../contributor-docs/datasciencebites.html" aria-label="Contributor notes for the Data Science Bites blog">notes for contributors</a>.</p>
+</div>
+</div>
+</div>
+<p>Large volumes of data are pouring in every day from scientific experiments like <a href="https://home.cern/">CERN</a> and the <a href="https://www.sdss5.org/">Sloan Digital Sky Survey</a>. Data is coming in so fast that researchers struggle to keep pace with the analysis and are increasingly developing automated analysis methods to aid in this herculean task. As a first step, it is now commonplace to perform dimension reduction in order to reduce a large number of measurements to a set of key values that are easier to visualize and interpret.</p>
+<p>When working on the cutting edge, another problem scientists often face is that “we don’t know what we don’t know”. For this reason, we often want to simply ask the data, “What is interesting about you?” This is the realm of <a href="https://en.wikipedia.org/wiki/Unsupervised_learning">“unsupervised” methods</a>, where the data itself drives the analysis, with little to no guidance or human labeling of the data.</p>
+<p>Many physical processes depend continuously on some driving parameter. For example, the evaporation rate of water increases with temperature. We call these continuous variations in datasets “trends”. Describing a dataset by a single trend reduces it to one dimension - an ordered list. Finding such a trend within a high-dimensional dataset is the aim of a method called “The Sequencer” introduced by Baron and Ménard.</p>
+<section id="key-insight-a-tree" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="key-insight-a-tree">Key insight: A tree</h2>
+<p>The key insight of Baron and Ménard was to relate trends in data to an object from graph theory called a <a href="https://en.wikipedia.org/wiki/Minimum_spanning_tree">minimum spanning tree</a>. Given a measure of distance between two data points, for example the usual (Euclidean) distance between two points, we can visualize a dataset as a graph. This graph consists of a node (a dot) for each data point. These nodes are then connected by an edge (a line), labeled by the distance between the two data points. The minimum spanning tree is a reduction of this graph to include only enough of the smallest distance edges so that no node is isolated.</p>
+<p>What Baron and Ménard realized is that datasets that are “trendy” have elongated and narrow minimum spanning trees. As shown in Figure 1, a totally random dataset results in a graph with many branches while a perfect sequence results in a perfect linear graph. Then, they use connectivity of the nodes in the minimum spanning tree to return an ordering of the data that follows the main trend in the dataset. However, a sequence is all you get. It is up to us to understand and interpret what this trend represents.</p>
+<div class="column-page">
+<p><img src="https://realworlddatascience.net/ideas/datasciencebites/posts/2023/01/24/images/fig1.png" class="quarto-discovered-preview-image img-fluid" alt="Three examples - labelled 'random data', 'noisy sequence', and 'perfect sequence' - demonstrating that data with stronger trends ('noisy' and 'perfect sequence') have more narrow and elongated minimum spanning trees (adapted from Baron and Ménard, Figure 1)."></p>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><strong>Figure 1:</strong> Examples demonstrating that data with stronger trends have more narrow and elongated minimum spanning trees. Adapted from <a href="https://iopscience.iop.org/article/10.3847/1538-4357/abfc4d" aria-label="Link to Baron and Ménard's 2021 paper, 'Extracting the main trend in a data set: The Sequencer algorithm'">Baron and Ménard (2021)</a>, Figure 1. Figure used under <a href="https://creativecommons.org/licenses/by/4.0/" aria-label="Link to Creative Commons licence">CC BY 4.0</a>.</p>
+</div></div><p>Sometimes, the ordering of observations within a data point matters, like in time series data. Measurements taken close in time are more likely to be correlated than measurements taken after a long time delay. Baron and Ménard were careful to include a measure of distance that takes this ordering into account, unlike our usual notion of distance. They argue that this gives them an edge over other common dimension reduction techniques such as <a href="https://en.wikipedia.org/wiki/T-distributed_stochastic_neighbor_embedding">t-SNE</a> and <a href="https://umap-learn.readthedocs.io/en/latest/how_umap_works.html">UMAP</a>, and even go so far as to use The Sequencer to optimize the hyperparameters used by these other methods!</p>
+</section>
+<section id="when-does-it-fail" class="level2">
+<h2 class="anchored" data-anchor-id="when-does-it-fail">When does it fail?</h2>
+<p>It is important to acknowledge that no statistical or machine-learning tool is a cure-all. And, the authors themselves are quick to point out several limitations that can hinder the application of their method. The Sequencer can struggle when the data has a large dynamic range, a variety of signal strengths relative to noise, or there are multiple trends present in the data. In each case, Baron and Ménard propose ways to mitigate these problems, but practitioners still need to be wary when applying The Sequencer in those instances.</p>
+</section>
+<section id="what-discoveries-await" class="level2">
+<h2 class="anchored" data-anchor-id="what-discoveries-await">What discoveries await?</h2>
+<p>To demonstrate the power of their method, Baron and Ménard apply The Sequencer to several real datasets where a pattern was already known and show that The Sequencer recovers that pattern. Examples include ordering spectral measurements of stars by their temperature and <a href="https://en.wikipedia.org/wiki/Quasar">quasars</a> by their <a href="https://en.wikipedia.org/wiki/Redshift_survey">redshift</a>, a measure of their distance from us on Earth.</p>
+<p>But, what about new patterns? The team has already applied The Sequencer to mine seismographic data and discover previously unknown formations deep within the earth, at the boundary between the core and <a href="https://en.wikipedia.org/wiki/Core%E2%80%93mantle_boundary">mantle</a>. By sequencing the seismic waves, they realized that the main trend was the amplitude of diffraction off of these structures, which they were then able to localize beneath Hawaii and the Marquesas (DOI: <a href="https://doi.org/10.1126/science.aba8972" aria-label="Link to article, 'Sequencing seismograms: A panoptic view of scattering in the core-mantle boundary region'">10.1126/science.aba8972</a>).</p>
+<p>For more demonstrations and discoveries, or even to upload your own data for sequencing, <a href="http://sequencer.org/">check out the project website</a>. Data sleuths can also download all of the code directly from <a href="https://github.com/dalya/Sequencer">GitHub</a> and sequence to their hearts’ content!<br>
+<br>
+</p>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>About the author</dt>
+<dd>
+<strong>Andrew Saydjari</strong> is a graduate student in physics at Harvard researching the spatial and chemical variations of dust in the interstellar medium. He favors using interpretable statistics and large photometric and spectroscopic surveys.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>About DataScienceBites</dt>
+<dd>
+<a href="../../../../../../ideas/datasciencebites/index.html"><strong>DataScienceBites</strong></a> is written by graduate students and early career researchers in data science (and related subjects) at universities throughout the world, as well as industry researchers. We publish digestible, engaging summaries of interesting new pre-print and peer-reviewed publications in the data science space, with the goal of making scientific papers more accessible. Find out how to <a href="../../../../../../contributor-docs/datasciencebites.html">become a contributor</a>.
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <category>Data management</category>
+  <category>Dimension reduction</category>
+  <category>Graph theory</category>
+  <guid>https://realworlddatascience.net/ideas/datasciencebites/posts/2023/01/24/pulling-patterns.html</guid>
+  <pubDate>Tue, 24 Jan 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/ideas/datasciencebites/posts/2023/01/24/images/signal-from-noise.png" medium="image" type="image/png" height="115" width="144"/>
+</item>
+<item>
+  <title>Determining the best way to route drivers for ridesharing via reinforcement learning</title>
+  <dc:creator>Brian King</dc:creator>
+  <link>https://realworlddatascience.net/ideas/datasciencebites/posts/2022/12/13/ridesharing.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+About the paper and this post
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p><strong>Title:</strong> Dynamic causal effects evaluation in A/B testing with a reinforcement learning framework</p>
+<p><strong>Author(s) and year:</strong> Chengchun Shi, Xiaoyu Wang, Shikai Luo, Hongtu Zhu, Jieping Ye, Rui Song (2022)</p>
+<p><strong>Status:</strong> Published in <em>Journal of the American Statistical Association, Theory and Methods</em>, open access: <a href="https://www.tandfonline.com/doi/full/10.1080/01621459.2022.2027776">HTML</a>, <a href="https://www.tandfonline.com/doi/epdf/10.1080/01621459.2022.2027776?needAccess=true&amp;role=button">PDF</a>, <a href="https://www.tandfonline.com/doi/epub/10.1080/01621459.2022.2027776?needAccess=true&amp;role=button">EPUB</a>.</p>
+<p><strong>Editor’s note:</strong> This post is republished with permission from <a href="https://mathstatbites.org/determining-the-best-way-to-route-drivers-for-ridesharing-via-reinforcement-learning/">MathStatBites</a> to demonstrate the Bites concept. See <a href="../../../../../../contributor-docs/datasciencebites.html">here</a> for more information.</p>
+</div>
+</div>
+</div>
+<p>Companies often want to test the impact of one design decision over another, for example Google might want to compare the current ranking of search results (version A) with an alternative ranking (version B) and evaluate how the modification would affect users’ decisions and click behavior. An experiment to determine this impact on users is known as an A/B test, and many methods have been designed to measure the “treatment” effect of the proposed change. However, these classical methods typically assume that changing one person’s treatment will not affect others (known as the Stable Unit Treatment Value Assumption or SUTVA). In the Google example, this is typically a valid assumption — showing one user different search results shouldn’t impact another user’s click behavior. But in some situations, SUTVA is violated, and new methods must be introduced to properly measure the effect of design changes.</p>
+<p>One such situation is that of ridesharing companies (Uber, Lyft, etc.) and how they determine which drivers are sent to which riders (the dispatch problem). Simply put, when a driver is assigned to a rider, this decision impacts the spatial distribution of drivers in the future. Hence the dispatch strategy (our treatment) at the present time will influence riders and drivers in the future, which violates SUTVA and hence invalidates many traditional methods for A/B testing. To tackle this problem, a group of researchers have recently employed a reinforcement learning (RL) framework which can accurately measure the treatment effect in such a scenario. Furthermore, their proposed approach allows for companies to terminate A/B tests earlier if the proposed version B is found to be clearly better. This early stopping can save time and money.</p>
+<p>To better understand RL and how it can contribute to tackling the issue at hand, it’s first helpful to set some context. In typical RL problems, including the one in this paper, the scenario is modeled with something known as a Markov Decision Process (MDP). A MDP links three sets of variables across time: the state or environment, the treatment or action (the reaction to the environment), and the outcome (the response produced by the environment due to the action). These outcomes can be thought of as rewards which depend on the action taken and the state observed. Over time, the machine learns which actions produce more positive rewards and which bring about worse outcomes. Hence, the actions leading to higher rewards are positively reinforced, thus the name reinforcement learning. A causal diagram of an MDP is shown in Figure 1, where <em>S</em><sub><em>t</em></sub>, <em>A</em><sub><em>t</em></sub>, and <em>Y</em><sub><em>t</em></sub> are the <strong>state</strong>, <strong>action</strong>, and <strong>outcome</strong> at time <em>t</em>. As one can see, past treatments influence future outcomes by altering the state variables at the present (the so-called “carryover effect” which violates SUTVA).</p>
+<div class="column-page">
+<p><img src="https://realworlddatascience.net/ideas/datasciencebites/posts/2022/12/13/images/ridesharing-fig1.png" class="quarto-discovered-preview-image img-fluid" alt="A causal diagram of a Markov Decision Process is shown in this figure. Green circles represent states, with arrows leading to red diamonds and blue squares representing, respectively, actions and outcomes. Actions are linked to new states by arrows, and prior states are linked to new states by curved arrows. This illustration conveys how past treatments influence future outcomes by altering the state variables at the present (the so-called “carryover effect” which violates the stable unit treatment value assumption)."></p>
+</div>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><strong>Figure 1:</strong> Causal diagram of MDP, where the solid lines represent causal relationships.</p>
+</div></div><p>Making this more concrete, consider an example where the decision-maker is a ridesharing company. The environment or <strong>state</strong> is whatever variables the decision-maker can measure about the world, like the spatial distribution of drivers, number of pickup requests, traffic, and weather. The company then makes some <strong>action</strong> on how to dispatch drivers. The combination of the state and action leads to an <strong>outcome</strong> that can be measured, for example passenger waiting time or driver’s income. The strategy which is used to determine an action is known as a policy. This policy could be designed to take the state into account or simply be fixed regardless of what environment is encountered. Much of the reinforcement learning literature focuses on the former (policies that depend on the state), but the authors argue that fixed designs are the de facto approach in industry A/B testing and hence they focus on that setting. In particular, a common treatment allocation design is the switchback design, where there are two policies of interest (the current dispatching strategy vs a proposed strategy) determined ahead of time and they are employed in alternating time intervals during the A/B test.</p>
+<p>So how are policies compared to determine the treatment effect? The answer lies in what is known as the value function, which measures the total outcome that would have amassed had the decision-maker followed a given policy. The value function can put more value on short-term gain in outcome or long-term benefits. The two policies in an A/B test each have their own value functions, and a proposed policy is determined to be better if its value is (statistically) significantly higher. In the ridesharing setting, one possible outcome of interest is driver income. An A/B test in that scenario would thus look to see if a proposed policy had greater expected driver income vs the current policy.</p>
+<p>A natural question is when to end the experiment and test for a difference in value. In practice, companies will often simply run the test for a prespecified amount of time, such as two weeks, and then perform an analysis. But if one policy is clearly better than another, that difference could be detectable much earlier and the company is wasting valuable resources by continuing the experiment. To address this issue, the authors take an idea from clinical trials, the “alpha-spending” approach, and adapt it to their framework. Alpha-spending is one way to distribute over time the prespecified “budget” of Type 1 error (the probability of falsely detecting that a new policy is better). In the article’s real-data example, the authors test once a day for each day after one week and are able to detect a significant difference on Day 12. Waiting until Day 14 would have resulted in poorer outcomes since a suboptimal policy would be implemented half the time for two more days.</p>
+<p>Overall, the framework introduced allows for handling of carryover effects, is capable of modeling treatment allocation like the switchback design, and furthermore, allows for possible early stopping. With these three features, the authors argue their approach is highly applicable to the current practice of ridesharing companies (and possibly other industries as well). For interested readers wanting to dive deeper into the methodology presented, you can check out the <a href="https://www.tandfonline.com/doi/full/10.1080/01621459.2022.2027776">full article</a>, listen to the first author discuss the material at the <a href="https://www.youtube.com/watch?v=Zor1CmRyycw">Online Causal Inference Seminar</a> (embedded below), or explore the <a href="https://github.com/callmespring/CausalRL">Python implementation</a> available on GitHub.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/Zor1CmRyycw" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>About the author</dt>
+<dd>
+<strong>Brian King</strong> is a PhD candidate in the Department of Statistics at Rice University and a current NSF Graduate Research Fellow, with research focused on Bayesian modeling and forecasting for time series of counts. Prior to Rice, he graduated from Baylor University with a B.S. in Mathematics and Statistics alongside a secondary major in Spanish and a minor in Computer Science.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>About DataScienceBites</dt>
+<dd>
+<a href="../../../../../../ideas/datasciencebites/index.html"><strong>DataScienceBites</strong></a> is written by graduate students and early career researchers in data science (and related subjects) at universities throughout the world, as well as industry researchers. We publish digestible, engaging summaries of interesting new pre-print and peer-reviewed publications in the data science space, with the goal of making scientific papers more accessible. Find out how to <a href="../../../../../../contributor-docs/datasciencebites.html">become a contributor</a>.
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+
+ ]]></description>
+  <category>A/B testing</category>
+  <category>Reinforcement learning</category>
+  <category>Statistics</category>
+  <guid>https://realworlddatascience.net/ideas/datasciencebites/posts/2022/12/13/ridesharing.html</guid>
+  <pubDate>Tue, 13 Dec 2022 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/ideas/datasciencebites/posts/2022/12/13/images/paul-hanaoka-D-qq7W751vs-unsplash.jpg" medium="image" type="image/jpeg"/>
+</item>
+</channel>
+</rss>

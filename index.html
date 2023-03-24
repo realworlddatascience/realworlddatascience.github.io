@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.335">
+<meta name="generator" content="quarto-1.3.287">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Real World Data Science - A showcase for data science in action</title>
+<title>Real World Data Science</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -17,7 +17,7 @@ div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
 ul.task-list{list-style: none;}
 ul.task-list li input[type="checkbox"] {
   width: 0.8em;
-  margin: 0 0.8em 0.2em -1.6em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
 </style>
@@ -30,7 +30,7 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-search/fuse.min.js"></script>
 <script src="site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="./">
-<link href="./rss-white-BG.png" rel="icon" type="image/png">
+<link href="./images/rwds-logo-150px.png" rel="icon" type="image/png">
 <script src="site_libs/quarto-listing/list.min.js"></script>
 <script src="site_libs/quarto-listing/quarto-listing.js"></script>
 <script src="site_libs/quarto-html/quarto.js"></script>
@@ -38,12 +38,10 @@ ul.task-list li input[type="checkbox"] {
 <script src="site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="site_libs/quarto-html/anchor.min.js"></script>
 <link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -66,20 +64,104 @@ ul.task-list li input[type="checkbox"] {
 <script>
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-blogs .list');
+    const listingTargetEl = window.document.querySelector('#listing-latest-content .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
       return; 
     }
 
     const options = {
-      valueNames: ['listing-date','listing-title','listing-author','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
       
-      searchColumns: ["listing-date","listing-title","listing-author","listing-image","listing-description"],
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-blogs'] = new List('listing-blogs', options);
+    window['quarto-listings']['listing-latest-content'] = new List('listing-latest-content', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-editors-blog .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-editors-blog'] = new List('listing-editors-blog', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-datasciencebites .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-datasciencebites'] = new List('listing-datasciencebites', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-interviews .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-interviews'] = new List('listing-interviews', options);
 
     if (window['quarto-listing-loaded']) {
       window['quarto-listing-loaded']();
@@ -102,19 +184,24 @@ gtag('js', new Date());
 gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 </script>
 
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
-<link rel="stylesheet" href="styles.css">
-<meta property="og:title" content="Real World Data Science - A showcase for data science in action">
-<meta property="og:description" content="Welcome to the home of Real World Data Science, a new project from the Royal Statistical Society.">
+<link rel="stylesheet" href="rwds.css">
+<meta property="og:title" content="Real World Data Science">
+<meta property="og:image" content="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/03/15/images/teacher-marking-homework.png">
 <meta property="og:site-name" content="Real World Data Science">
-<meta name="twitter:title" content="Real World Data Science - A showcase for data science in action">
-<meta name="twitter:description" content="Welcome to the home of Real World Data Science, a new project from the Royal Statistical Society.">
+<meta property="og:image:height" content="748">
+<meta property="og:image:width" content="1024">
+<meta name="twitter:title" content="Real World Data Science">
+<meta name="twitter:image" content="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/03/15/images/teacher-marking-homework.png">
 <meta name="twitter:site" content="@rwdatasci">
-<meta name="twitter:card" content="summary">
+<meta name="twitter:image-height" content="748">
+<meta name="twitter:image-width" content="1024">
+<meta name="twitter:card" content="summary_large_image">
 </head>
 
-<body class="nav-fixed">
+<body class="nav-fixed fullcontent">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -122,192 +209,171 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container">
     <a href="./index.html" class="navbar-brand navbar-brand-logo">
-    <img src="./rss-white-logo.png" alt="RSS logo" class="navbar-logo">
-    </a>
-    <a class="navbar-brand" href="./index.html">
-    <span class="navbar-title">Real World Data Science</span>
+    <img src="./images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
     </a>
   </div>
+            <div id="quarto-search" class="" title="false"></div>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
-            <ul class="navbar-nav navbar-nav-scroll me-auto">
-  <li class="nav-item">
-    <a class="nav-link active" href="./index.html" aria-current="page">
- <span class="menu-text">Overview</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./contributor-docs/call-for-contributions.html">
- <span class="menu-text">Call for contributions</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./news-and-views/editors-blog/posts/2022-10-18-meet-the-team/meet-the-team.html">
- <span class="menu-text">Meet the team</span></a>
-  </li>  
-  <li class="nav-item">
-    <a class="nav-link" href="./news-and-views/index.html">
- <span class="menu-text">News and views</span></a>
-  </li>  
-</ul>
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://github.com/realworlddatascience"><i class="bi bi-github" role="img" aria-label="GitHub">
-</i> 
- <span class="menu-text"></span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="./case-studies/index.html" rel="" target="">
+ <span class="menu-text">Case studies</span></a>
   </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://twitter.com/rwdatasci"><i class="bi bi-twitter" role="img" aria-label="Twitter">
-</i> 
- <span class="menu-text"></span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="./ideas/index.html" rel="" target="">
+ <span class="menu-text">Ideas</span></a>
   </li>  
-  <li class="nav-item compact">
-    <a class="nav-link" href="https://realworlddatascience.net/news-and-views/index.xml"><i class="bi bi-rss" role="img" aria-label="RSS feed">
-</i> 
- <span class="menu-text"></span></a>
+  <li class="nav-item">
+    <a class="nav-link" href="./careers/index.html" rel="" target="">
+ <span class="menu-text">Careers</span></a>
   </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="./viewpoints/index.html" rel="" target="">
+ <span class="menu-text">Viewpoints</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">About RWDS</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
+        <li>
+    <a class="dropdown-item" href="./about-rwds.html" rel="" target="">
+ <span class="dropdown-text">Who we are</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./contributor-docs/call-for-contributions.html" rel="" target="">
+ <span class="dropdown-text">How to contribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="./contact.html" rel="" target="">
+ <span class="dropdown-text">Contact us</span></a>
+  </li>  
+    </ul>
+  </li>
 </ul>
-              <div class="quarto-toggle-container">
-                  <a href="" class="quarto-color-scheme-toggle nav-link" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
-              </div>
-              <div id="quarto-search" class="" title="Search"></div>
+            <div class="quarto-navbar-tools">
+</div>
           </div> <!-- /navcollapse -->
       </div> <!-- /container-fluid -->
     </nav>
 </header>
 <!-- content -->
-<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<div id="quarto-content" class="quarto-container page-layout-custom page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
-        <nav id="TOC" role="doc-toc" class="toc-active">
-    <h2 id="toc-title">On this page</h2>
-   
-  <ul>
-  <li><a href="#what-are-our-aims" id="toc-what-are-our-aims" class="nav-link active" data-scroll-target="#what-are-our-aims">What are our aims?</a></li>
-  <li><a href="#what-will-we-provide" id="toc-what-will-we-provide" class="nav-link" data-scroll-target="#what-will-we-provide">What will we provide?</a></li>
-  <li><a href="#how-you-can-get-involved" id="toc-how-you-can-get-involved" class="nav-link" data-scroll-target="#how-you-can-get-involved">How you can get involved</a></li>
-  </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
-    </div>
 <!-- main -->
-<main class="content" id="quarto-document-content">
-
-<header id="title-block-header" class="quarto-title-block default">
-<div class="quarto-title">
-<h1 class="title">A showcase for data science in action</h1>
-</div>
 
 
 
-<div class="quarto-title-meta">
-
-    
-  
-    
-  </div>
-  
-
-</header>
-
-<p>Welcome to the home of <strong>Real World Data Science</strong>, a new project from the <a href="https://rss.org.uk/">Royal Statistical Society</a>. This site and its content are being created and curated by data science practitioners and leaders with a single goal in mind: to help you deliver high quality, ethical, impactful data science in your workplace.</p>
-<div class="callout-note callout callout-style-simple callout-captioned">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-caption-container flex-fill">
-Latest updates
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<div id="listing-blogs" class="quarto-listing quarto-listing-container-default">
-<div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="AI,Large language models,Classifiers,Screening tests" data-listing-date-sort="1678838400000" data-listing-file-modified-sort="1678964497309" data-listing-reading-time-sort="10.46">
-<div class="thumbnail">
-<p><a href="./news-and-views/editors-blog/posts/2023/03/15/AI-screening.html"> <img src="./news-and-views/editors-blog/posts/2023/03/15/images/teacher-marking-homework.png" class="thumnail-image" alt="A teacher is marking homework and trying to decide whether a written piece of text has been created by a student or by a large language model, digital art. Created by DALL·E, prompt by Real World Data Science."> </a></p>
-</div>
-<div class="body">
-<a href="./news-and-views/editors-blog/posts/2023/03/15/AI-screening.html">
-<h3 class="no-anchor listing-title">
-OpenAI’s text classifier won’t calm fears about AI-written homework
-</h3>
-<div class="listing-subtitle">
-
-</div>
-<div class="listing-description">
+<div class="content-container">
+<div class="top-story purple-background">
+<p><a href="./viewpoints/editors-blog/posts/2023/03/15/AI-screening.html"></a></p><a href="./viewpoints/editors-blog/posts/2023/03/15/AI-screening.html">
+<div class="grid">
+<section id="openais-text-classifier-wont-calm-fears-about-ai-written-homework" class="g-col-12 g-col-lg-4 top-story-text">
+<h2>OpenAI’s text classifier won’t calm fears about AI-written homework</h2>
 <p>Educators are worried about ChatGPT being using by students for homework assignments, so OpenAI has released a tool to classify whether text is human- or AI-written. But relying on the classifier’s results is ill-advised, as some basic statistics shows.</p>
+</section>
+<div class="g-col-12 g-col-lg-8 top-story-img">
+<p><img src="viewpoints/editors-blog/posts/2023/03/15/images/teacher-marking-homework.png" class="quarto-discovered-preview-image img-fluid"></p>
 </div>
-</a>
 </div>
-<div class="metadata">
-<a href="./news-and-views/editors-blog/posts/2023/03/15/AI-screening.html">
-<div class="listing-date">
-Mar 15, 2023
+</a><p><a href="./viewpoints/editors-blog/posts/2023/03/15/AI-screening.html"></a></p>
 </div>
+</div>
+<!-- ::: {.header-banner .header-image}
+![](images/nasa-Q1p7bh3SHj8-unsplash-crop.png)
+::: -->
+<div class="header-text">
+<div class="content-container">
+<div class="header-block">
+<p>Welcome to the home of <strong>Real World Data Science</strong>, a new project from the <a href="https://rss.org.uk/">Royal Statistical Society</a>. This site and its content are being created and curated by data science practitioners and leaders with a single goal in mind: to help you deliver high quality, ethical, impactful data science in your workplace.</p>
+</div>
+</div>
+</div>
+<div class="content-container">
+<div class="listing-block">
+<p><a href="./latest-content.html"></a></p><a href="./latest-content.html">
+<h2 id="latest-content">Latest content</h2>
+</a><p><a href="./latest-content.html"></a></p>
+<div id="listing-latest-content" class="quarto-listing quarto-listing-container-grid">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-categories="Data science education,Data literacy,Policy" data-listing-date-sort="1678060800000" data-listing-file-modified-sort="1679675673737" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="41">
+<a href="./viewpoints/interviews/posts/03/06/data-science-act.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./viewpoints/interviews/posts/03/06/images/andy-feliciotti-isg8AL7-6uk-unsplash.png" class="thumbnail-image card-img" style="height: 150px;" alt="Bikers in front of the United States Capitol in Washington DC. Photo by Andy Feliciotti on Unsplash.">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+US legislators get their data science act together
+</h5>
+<div class="card-text listing-description">
+A bill introduced in the US Congress wants to make funds available to develop data science and data literacy education across the United States. We sit down with education…
+</div>
+<div class="card-attribution card-text-small justify">
 <div class="listing-author">
 Brian Tarran
 </div>
-</a>
-</div>
-</div>
-<div class="quarto-post image-right" data-index="1" data-categories="Data science education,Data literacy,Policy" data-listing-date-sort="1678060800000" data-listing-file-modified-sort="1678964497309" data-listing-reading-time-sort="40.415">
-<div class="thumbnail">
-<p><a href="./news-and-views/editors-blog/posts/2023/03/06/data-science-act.html"> <img src="./news-and-views/editors-blog/posts/2023/03/06/images/andy-feliciotti-isg8AL7-6uk-unsplash.png" class="thumnail-image" alt="Bikers in front of the United States Capitol in Washington DC. Photo by Andy Feliciotti on Unsplash."> </a></p>
-</div>
-<div class="body">
-<a href="./news-and-views/editors-blog/posts/2023/03/06/data-science-act.html">
-<h3 class="no-anchor listing-title">
-US legislators get their data science act together
-</h3>
-<div class="listing-subtitle">
-
-</div>
-<div class="listing-description">
-<p>A bill introduced in the US Congress wants to make funds available to develop data science and data literacy education across the United States. We sit down with education and policy experts to discuss the challenges and opportunities ahead.</p>
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./news-and-views/editors-blog/posts/2023/03/06/data-science-act.html">
 <div class="listing-date">
 Mar 6, 2023
 </div>
-<div class="listing-author">
-Brian Tarran
+</div>
+</div>
 </div>
 </a>
 </div>
-</div>
-<div class="quarto-post image-right" data-index="2" data-categories="Market basket analysis,Recommendation systems,Complementarity" data-listing-date-sort="1677715200000" data-listing-file-modified-sort="1678964497273" data-listing-reading-time-sort="7.285">
-<div class="thumbnail">
-<p><a href="./news-and-views/datasciencebites/posts/2023/03/02/basket-complementarity.html"> <img src="./news-and-views/datasciencebites/posts/2023/03/02/images/marjan-blan-marjanblan-3nURJV_L7-8-unsplash.jpg" class="thumnail-image" alt="A shopping trolley being pushed around a supermarket. Photo by Marjan Blan | @marjanblan on Unsplash."> </a></p>
-</div>
-<div class="body">
-<a href="./news-and-views/datasciencebites/posts/2023/03/02/basket-complementarity.html">
-<h3 class="no-anchor listing-title">
+<div class="g-col-1" data-index="1" data-categories="Market basket analysis,Recommendation systems,Complementarity" data-listing-date-sort="1677715200000" data-listing-file-modified-sort="1679675673697" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
+<a href="./ideas/datasciencebites/posts/2023/03/02/basket-complementarity.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./ideas/datasciencebites/posts/2023/03/02/images/marjan-blan-marjanblan-3nURJV_L7-8-unsplash.jpg" class="thumbnail-image card-img" style="height: 150px;" alt="A shopping trolley being pushed around a supermarket. Photo by Marjan Blan | @marjanblan on Unsplash.">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
 Using ‘basket complementarity’ to make product recommendations
-</h3>
-<div class="listing-subtitle">
-
+</h5>
+<div class="card-text listing-description">
+Purchase suggestions – e.g., “if you are buying that, you might also want this” – are, to a large extent, informed by the concept of complementarity: that certain products…
 </div>
-<div class="listing-description">
-<p>Purchase suggestions – e.g., “if you are buying that, you might also want this” – are, to a large extent, informed by the concept of complementarity: that certain products are often bought and/or used together. A journal paper by Puka and Jedrusik sheds light on how these product recommendations can be derived, as Moinak Bhaduri explains.</p>
-</div>
-</a>
-</div>
-<div class="metadata">
-<a href="./news-and-views/datasciencebites/posts/2023/03/02/basket-complementarity.html">
-<div class="listing-date">
-Mar 2, 2023
-</div>
+<div class="card-attribution card-text-small justify">
 <div class="listing-author">
 Moinak Bhaduri
 </div>
+<div class="listing-date">
+Mar 2, 2023
+</div>
+</div>
+</div>
+</div>
 </a>
 </div>
+<div class="g-col-1" data-index="2" data-categories="Skills,Training,AI,Machine learning,Data analytics" data-listing-date-sort="1676332800000" data-listing-file-modified-sort="1679675673729" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<a href="./viewpoints/editors-blog/posts/2023/02/14/digital-skills.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./viewpoints/editors-blog/posts/2023/02/14/images/billetto-editorial-YvLd3xbo0ac-unsplash.jpg" class="thumbnail-image card-img" style="height: 150px;" alt="Woman painting while wearing virtual reality headset. Photo by Billetto Editorial on Unsplash.">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Data science can help close the ‘digital skills’ gap, or so it seems
+</h5>
+<div class="card-text listing-description">
+A ‘digital skills’ gap is harming employer productivity and growth, according to a survey by engineering body IET. But the ‘digital skills’ that are needed sound a lot like…
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Brian Tarran
+</div>
+<div class="listing-date">
+Feb 14, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
 </div>
 </div>
 <div class="listing-no-matching d-none">
@@ -316,46 +382,343 @@ No matching items
 </div>
 </div>
 </div>
+<div class="pullout-text">
+<div class="pullout-container">
+<div class="pullout-block black-background">
+<p><img src="images/quote-purple.png" class="img-fluid" width="100"></p>
+<h2 id="it-is-arbitrary-how-we-choose-to-model-a-situation.-there-are-infinitely-many-different-ways-that-you-could-choose-to-simplify-reality-this-huge-messy-complex-thing-in-front-of-us.">It is arbitrary how we choose to model a situation. There are infinitely many different ways that you could choose to simplify reality – this huge, messy, complex thing in front of us.</h2>
+<p>Erica Thompson on the ethics of modelling</p>
+<div class="button button1">
+<p><a href="./viewpoints/interviews/posts/01/25/erica-thompson.html">Watch the interview</a></p>
 </div>
-<section id="what-are-our-aims" class="level2">
-<h2 class="anchored" data-anchor-id="what-are-our-aims">What are our aims?</h2>
-<p>Real World Data Science aims to be a trusted, go-to source for high-quality, engaging and inspiring content which helps data science students, practitioners and leaders to:</p>
-<ul>
-<li>discover and learn more efficiently;<br>
-</li>
-<li>acquire practical problem-solving skills;<br>
-</li>
-<li>share their knowledge and accomplishments publicly;<br>
-</li>
-<li>work smarter, ethically, and more effectively.</li>
-</ul>
+</div>
+</div>
+</div>
+<div class="content-container">
+<div class="listing-block">
+<p><a href="./ideas/datasciencebites/index.html"></a></p><a href="./ideas/datasciencebites/index.html">
+<h2 id="data-science-bites">Data Science Bites</h2>
+</a><p><a href="./ideas/datasciencebites/index.html"></a></p>
+<div id="listing-datasciencebites" class="quarto-listing quarto-listing-container-grid">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-categories="Market basket analysis,Recommendation systems,Complementarity" data-listing-date-sort="1677715200000" data-listing-file-modified-sort="1679675673697" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
+<a href="./ideas/datasciencebites/posts/2023/03/02/basket-complementarity.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./ideas/datasciencebites/posts/2023/03/02/images/marjan-blan-marjanblan-3nURJV_L7-8-unsplash.jpg" class="thumbnail-image card-img" style="height: 150px;" alt="A shopping trolley being pushed around a supermarket. Photo by Marjan Blan | @marjanblan on Unsplash.">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Using ‘basket complementarity’ to make product recommendations
+</h5>
+<div class="card-text listing-description">
+Purchase suggestions – e.g., “if you are buying that, you might also want this” – are, to a large extent, informed by the concept of complementarity: that certain products…
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Moinak Bhaduri
+</div>
+<div class="listing-date">
+Mar 2, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="1" data-categories="Data management,Dimension reduction,Graph theory" data-listing-date-sort="1674518400000" data-listing-file-modified-sort="1679675673697" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
+<a href="./ideas/datasciencebites/posts/2023/01/24/pulling-patterns.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./ideas/datasciencebites/posts/2023/01/24/images/signal-from-noise.png" class="thumbnail-image card-img" style="height: 150px;" alt="A researcher in a field shines a light on stylised waves of noise, as if attempting to identify or extract a signal. Image generated by DALL.E 2 from prompts provided by Real World Data Science.">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Pulling patterns out of data with a graph
+</h5>
+<div class="card-text listing-description">
+Large volumes of data are pouring in every day from scientific experiments, so much so that it is now commonplace to perform dimension reduction in order to reduce a large…
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Andrew Saydjari
+</div>
+<div class="listing-date">
+Jan 24, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="2" data-categories="A/B testing,Reinforcement learning,Statistics" data-listing-date-sort="1670889600000" data-listing-file-modified-sort="1679675673693" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
+<a href="./ideas/datasciencebites/posts/2022/12/13/ridesharing.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./ideas/datasciencebites/posts/2022/12/13/images/paul-hanaoka-D-qq7W751vs-unsplash.jpg" class="thumbnail-image card-img" style="height: 150px;" alt="Photo taken from the backseat of a Lyft vehicle. Driver is seen in profile to the left of the picture. Phone is mounted on the dash and displays a maps app that is tracking the route to the passenger&amp;#039;s destination. Photo by Paul Hanaoka on Unsplash.">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Determining the best way to route drivers for ridesharing via reinforcement learning
+</h5>
+<div class="card-text listing-description">
+A/B testing is often used to evaluate the impact of design ‘treatments’ — for example, are people who see advert A more likely to buy something than those who see advert B?…
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Brian King
+</div>
+<div class="listing-date">
+Dec 13, 2022
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div>
+</div>
+</div>
+<div class="content-container">
+<div class="listing-block">
+<p><a href="./viewpoints/editors-blog/index.html"></a></p><a href="./viewpoints/editors-blog/index.html">
+<h2 id="editors-blog">Editors’ Blog</h2>
+</a><p><a href="./viewpoints/editors-blog/index.html"></a></p>
+<div id="listing-editors-blog" class="quarto-listing quarto-listing-container-grid">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-categories="AI,Large language models,Classifiers,Screening tests" data-listing-date-sort="1678838400000" data-listing-file-modified-sort="1679675673729" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
+<a href="./viewpoints/editors-blog/posts/2023/03/15/AI-screening.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./viewpoints/editors-blog/posts/2023/03/15/images/teacher-marking-homework.png" class="thumbnail-image card-img" style="height: 150px;" alt="A teacher is marking homework and trying to decide whether a written piece of text has been created by a student or by a large language model, digital art. Created by DALL·E, prompt by Real World Data Science.">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+OpenAI’s text classifier won’t calm fears about AI-written homework
+</h5>
+<div class="card-text listing-description">
+Educators are worried about ChatGPT being using by students for homework assignments, so OpenAI has released a tool to classify whether text is human- or AI-written. But…
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Brian Tarran
+</div>
+<div class="listing-date">
+Mar 15, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="1" data-categories="Skills,Training,AI,Machine learning,Data analytics" data-listing-date-sort="1676332800000" data-listing-file-modified-sort="1679675673729" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<a href="./viewpoints/editors-blog/posts/2023/02/14/digital-skills.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./viewpoints/editors-blog/posts/2023/02/14/images/billetto-editorial-YvLd3xbo0ac-unsplash.jpg" class="thumbnail-image card-img" style="height: 150px;" alt="Woman painting while wearing virtual reality headset. Photo by Billetto Editorial on Unsplash.">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Data science can help close the ‘digital skills’ gap, or so it seems
+</h5>
+<div class="card-text listing-description">
+A ‘digital skills’ gap is harming employer productivity and growth, according to a survey by engineering body IET. But the ‘digital skills’ that are needed sound a lot like…
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Brian Tarran
+</div>
+<div class="listing-date">
+Feb 14, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="2" data-categories="Machine learning,Large language models,AI" data-listing-date-sort="1674777600000" data-listing-file-modified-sort="1679675673729" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18">
+<a href="./viewpoints/editors-blog/posts/2023/01/27/talking-chatgpt.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./viewpoints/editors-blog/posts/2023/01/27/images/Detlef.png" class="thumbnail-image card-img" style="height: 150px;" alt="Photo of Detlef Nauck">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+ChatGPT can hold a conversation, but lacks knowledge representation and original sources for verification
+</h5>
+<div class="card-text listing-description">
+<p>ChatGPT represents a next step in the evolution of large language models, says Detlef Nauck. However, there are still major challenges - and concerns - to overcome.</p>
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Brian Tarran
+</div>
+<div class="listing-date">
+Jan 27, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div>
+</div>
+</div>
+<div class="pullout-text">
+<div class="pullout-container">
+<div class="pullout-block black-background">
+<p><img src="images/quote-purple.png" class="img-fluid" width="100"></p>
+<h2 id="data-tell-our-stories-and-they-reflect-whats-happening-in-our-world-today.-a-way-to-think-about-data-science-education-is-to-think-about-what-we-need-our-data-understanding-to-be-at-each-point-in-time-in-our-educational-career-or-in-our-lives.">Data tell our stories, and they reflect what’s happening in our world today. A way to think about data science education is to think about what we need our data understanding to be at each point in time in our educational career, or in our lives.</h2>
+<p>Anna Bargagliotti on the US Data Science and Literacy Act</p>
+<div class="button button1">
+<p><a href="./viewpoints/interviews/posts/03/06/data-science-act.html">Watch the interview</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="content-container">
+<div class="listing-block">
+<p><a href="./viewpoints/interviews/index.html"></a></p><a href="./viewpoints/interviews/index.html">
+<h2 id="interviews">Interviews</h2>
+</a><p><a href="./viewpoints/interviews/index.html"></a></p>
+<div id="listing-interviews" class="quarto-listing quarto-listing-container-grid">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-categories="Data science education,Data literacy,Policy" data-listing-date-sort="1678060800000" data-listing-file-modified-sort="1679675673737" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="41">
+<a href="./viewpoints/interviews/posts/03/06/data-science-act.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./viewpoints/interviews/posts/03/06/images/andy-feliciotti-isg8AL7-6uk-unsplash.png" class="thumbnail-image card-img" style="height: 150px;" alt="Bikers in front of the United States Capitol in Washington DC. Photo by Andy Feliciotti on Unsplash.">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+US legislators get their data science act together
+</h5>
+<div class="card-text listing-description">
+A bill introduced in the US Congress wants to make funds available to develop data science and data literacy education across the United States. We sit down with education…
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Brian Tarran
+</div>
+<div class="listing-date">
+Mar 6, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="1" data-categories="Open science,Reproducible research" data-listing-date-sort="1675382400000" data-listing-file-modified-sort="1679675673733" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="23">
+<a href="./viewpoints/interviews/posts/02/03/heidi-seibold.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./viewpoints/interviews/posts/02/03/images/heidi-seibold.png" class="thumbnail-image card-img" style="height: 150px;" alt="Photo of Heidi Seibold">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Why open science is ‘just good science in a digital era’
+</h5>
+<div class="card-text listing-description">
+<p>Real World Data Science speaks with statistician and data scientist Heidi Seibold about open science: what it means, the benefits of it, and how to move towards it.</p>
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Brian Tarran
+</div>
+<div class="listing-date">
+Feb 3, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="2" data-categories="Modelling,Ethics" data-listing-date-sort="1674604800000" data-listing-file-modified-sort="1679675673733" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="39">
+<a href="./viewpoints/interviews/posts/01/25/erica-thompson.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./viewpoints/interviews/posts/01/25/images/erica-thompson.png" class="thumbnail-image card-img" style="height: 150px;" alt="Photo of Erica Thompson">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+How to ‘Escape from Model Land’: an interview with Erica Thompson
+</h5>
+<div class="card-text listing-description">
+<p>Author Erica Thompson talks to Real World Data Science about the ‘social element’ of mathematical modelling, how it manifests, and what to do about it.</p>
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Brian Tarran
+</div>
+<div class="listing-date">
+Jan 25, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div>
+</div>
+</div>
+<div class="footer-text">
+<div class="footer-container black-background">
+<div class="footer-block">
+<div class="grid">
+<section id="published-by" class="g-col-12 g-col-md-6">
+<h3>Published by</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="https://rss.org.uk/"><img src="images/rss-logo-footer.png" class="img-fluid figure-img"></a></p>
+</figure>
+</div>
 </section>
-<section id="what-will-we-provide" class="level2">
-<h2 class="anchored" data-anchor-id="what-will-we-provide">What will we provide?</h2>
-<p>Resources will be <em>created</em> to meet the needs of our target audiences. These include:</p>
-<ul>
-<li><strong>Case studies</strong> – showing how data science is used to solve real-world problems in business, public policy and beyond.</li>
-<li><strong>Explainers</strong> – interrogating the underlying assumptions and limitations of data science tools and methods, to help data scientists make smarter, more informed analytical choices.</li>
-<li><strong>Exercises</strong> – to challenge and develop the analytical mindset that all data scientists need to succeed.<br>
-</li>
-<li><strong>Advice</strong> – interviews, Q&amp;As, and FAQs on such topics as data science ethics, career paths, and communication, to support professional development.</li>
-</ul>
-<p>Resources will also be <em>curated</em> to help data scientists identify trustworthy, high-quality content. These include:</p>
-<ul>
-<li><strong>Training guides</strong> – step-by-step approaches and recommended sources for learning new skills and methods.</li>
-<li><strong>Datasets</strong> – tagged and sorted to help educators and practitioners find data to meet their teaching and training needs.</li>
-<li><strong>Feeds</strong> – who and what to follow to keep up with new ideas and developments.</li>
-</ul>
+<section id="about-us" class="g-col-12 g-col-md-2">
+<h3>About us</h3>
+<p><a href="./about-rwds.html">Our aims</a><br>
+<a href="./viewpoints/editors-blog/posts/2022/10/18/meet-the-team.html">Our team</a><br>
+<a href="./rwds-partners.html">Partners and funders</a><br>
+<a href="./contact.html">Contact us</a></p>
 </section>
-<section id="how-you-can-get-involved" class="level2">
-<h2 class="anchored" data-anchor-id="how-you-can-get-involved">How you can get involved</h2>
-<p>See our open <a href="./contributor-docs/call-for-contributions.html">call for contributions</a>.</p>
-
-
-
+<section id="contribute" class="g-col-12 g-col-md-2">
+<h3>Contribute</h3>
+<p><a href="./contributor-docs/call-for-contributions.html">Call for contributions</a><br>
+<a href="./contributor-docs/contributor-guidelines.html">Contributor guidelines</a><br>
+<a href="./contributor-docs/style-guide.html">Style guide</a></p>
 </section>
+<section id="follow-us" class="g-col-12 g-col-md-2">
+<h3>Follow us</h3>
+<p><a href="https://github.com/realworlddatascience">GitHub</a><br>
+<a href="https://twitter.com/rwdatasci">Twitter</a><br>
+<a href="https://www.linkedin.com/showcase/rss-real-world-data-science">LinkedIn</a><br>
+<a href="https://fosstodon.org/@rwdatasci">Mastodon</a><br>
+</p>
+</section>
+<!-- ::: {.g-col-12 .g-col-md-12}
+### Our partners
+logos to go here
+::: -->
+</div>
+</div>
+</div>
+</div>
 
-</main> <!-- /main -->
+
+
+
+
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -376,121 +739,6 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
   }
   toggleBodyColorPrimary();  
-  const disableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'prefetch';
-    }
-  }
-  const enableStylesheet = (stylesheets) => {
-    for (let i=0; i < stylesheets.length; i++) {
-      const stylesheet = stylesheets[i];
-      stylesheet.rel = 'stylesheet';
-    }
-  }
-  const manageTransitions = (selector, allowTransitions) => {
-    const els = window.document.querySelectorAll(selector);
-    for (let i=0; i < els.length; i++) {
-      const el = els[i];
-      if (allowTransitions) {
-        el.classList.remove('notransition');
-      } else {
-        el.classList.add('notransition');
-      }
-    }
-  }
-  const toggleColorMode = (alternate) => {
-    // Switch the stylesheets
-    const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
-    manageTransitions('#quarto-margin-sidebar .nav-link', false);
-    if (alternate) {
-      enableStylesheet(alternateStylesheets);
-      for (const sheetNode of alternateStylesheets) {
-        if (sheetNode.id === "quarto-bootstrap") {
-          toggleBodyColorMode(sheetNode);
-        }
-      }
-    } else {
-      disableStylesheet(alternateStylesheets);
-      toggleBodyColorPrimary();
-    }
-    manageTransitions('#quarto-margin-sidebar .nav-link', true);
-    // Switch the toggles
-    const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
-    for (let i=0; i < toggles.length; i++) {
-      const toggle = toggles[i];
-      if (toggle) {
-        if (alternate) {
-          toggle.classList.add("alternate");     
-        } else {
-          toggle.classList.remove("alternate");
-        }
-      }
-    }
-    // Hack to workaround the fact that safari doesn't
-    // properly recolor the scrollbar when toggling (#1455)
-    if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
-      manageTransitions("body", false);
-      window.scrollTo(0, 1);
-      setTimeout(() => {
-        window.scrollTo(0, 0);
-        manageTransitions("body", true);
-      }, 40);  
-    }
-  }
-  const isFileUrl = () => { 
-    return window.location.protocol === 'file:';
-  }
-  const hasAlternateSentinel = () => {  
-    let styleSentinel = getColorSchemeSentinel();
-    if (styleSentinel !== null) {
-      return styleSentinel === "alternate";
-    } else {
-      return false;
-    }
-  }
-  const setStyleSentinel = (alternate) => {
-    const value = alternate ? "alternate" : "default";
-    if (!isFileUrl()) {
-      window.localStorage.setItem("quarto-color-scheme", value);
-    } else {
-      localAlternateSentinel = value;
-    }
-  }
-  const getColorSchemeSentinel = () => {
-    if (!isFileUrl()) {
-      const storageValue = window.localStorage.getItem("quarto-color-scheme");
-      return storageValue != null ? storageValue : localAlternateSentinel;
-    } else {
-      return localAlternateSentinel;
-    }
-  }
-  let localAlternateSentinel = 'default';
-  // Dark / light mode switch
-  window.quartoToggleColorScheme = () => {
-    // Read the current dark / light value 
-    let toAlternate = !hasAlternateSentinel();
-    toggleColorMode(toAlternate);
-    setStyleSentinel(toAlternate);
-  };
-  // Ensure there is a toggle, if there isn't float one in the top right
-  if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
-    const a = window.document.createElement('a');
-    a.classList.add('top-right');
-    a.classList.add('quarto-color-scheme-toggle');
-    a.href = "";
-    a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
-    const i = window.document.createElement("i");
-    i.classList.add('bi');
-    a.appendChild(i);
-    window.document.body.appendChild(a);
-  }
-  // Switch to dark mode if need be
-  if (hasAlternateSentinel()) {
-    toggleColorMode(true);
-  } else {
-    toggleColorMode(false);
-  }
   const icon = "";
   const anchorJS = new window.AnchorJS();
   anchorJS.options = {
@@ -498,9 +746,23 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     icon: icon
   };
   anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
   const clipboard = new window.ClipboardJS('.code-copy-button', {
-    target: function(trigger) {
-      return trigger.previousElementSibling;
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
     }
   });
   clipboard.on('success', function(e) {
@@ -565,6 +827,92 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
   const findCites = (el) => {
     const parentEl = el.parentElement;
     if (parentEl) {
@@ -607,12 +955,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">Built by the <a href="https://rss.org.uk/">RSS</a> using <a href="https://quarto.org/">Quarto</a></div>   
-    <div class="nav-footer-right">
+    <div class="nav-footer-left">Copyright © 2023 <a href="https://rss.org.uk/">Royal Statistical Society</a></div>   
+    <div class="nav-footer-center">
       <ul class="footer-items list-unstyled">
-    <li class="nav-item">
-    <a class="nav-link" href="./contact.html">Contact us</a>
-  </li>  
     <li class="nav-item compact">
     <a class="nav-link" href="https://github.com/realworlddatascience">
       <i class="bi bi-github" role="img" aria-label="GitHub">
@@ -638,7 +983,8 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </a>
   </li>  
 </ul>
-    </div>
+    <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action">Report an issue</a></p></div></div></div>
+    <div class="nav-footer-right"><a href="./ts-and-cs.html">Terms &amp; Conditions</a></div>
   </div>
 </footer>
 
