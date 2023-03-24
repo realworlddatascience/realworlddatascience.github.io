@@ -3,8 +3,8 @@ project:
 
 website:
   title: "Real World Data Science"
-  image: "rss-white-logo.png"
-  favicon: "rss-white-BG.png"
+  image: images/rwds-logo-150px.png
+  favicon: images/rwds-logo-150px.png
   twitter-card:
     site: "@rwdatasci"
   open-graph: true
@@ -13,31 +13,33 @@ website:
   repo-actions: [edit, issue]
   google-analytics: "G-1TTWB7YTR6"
   navbar:
-    logo: "rss-white-logo.png"
-    logo-alt: "RSS logo"
-    left:
-      - href: index.qmd
-        text: Overview
-      - href: contributor-docs/call-for-contributions.qmd
-        text: "Call for contributions"
-      - href: news-and-views/editors-blog/posts/2022-10-18-meet-the-team/meet-the-team.qmd
-        text: "Meet the team"
-      - href: news-and-views/index.qmd
+    background: "#f0eeeb"
+    logo: images/rwds-logo-150px.png
+    logo-alt: "Real World Data Science brand"
+    title: false
+    collapse-below: lg
     right:
-      - href: https://github.com/realworlddatascience
-        icon: github
-        aria-label: GitHub
-      - href: https://twitter.com/rwdatasci
-        icon: twitter
-        aria-label: Twitter
-      - href: https://realworlddatascience.net/news-and-views/index.xml
-        icon: rss
-        aria-label: RSS feed
-
+      - case-studies/index.qmd
+      - ideas/index.qmd
+      - careers/index.qmd
+      - viewpoints/index.qmd
+      - text: "About RWDS"
+        menu: 
+        - text: "Who we are"
+          href: about-rwds.qmd
+        - text: "How to contribute"
+          href: contributor-docs/call-for-contributions.qmd
+        - text: "Contact us"
+          href: contact.qmd
   sidebar: 
+    - title: "About us"
+      contents:
+        - about-rwds.qmd
+        - viewpoints/editors-blog/posts/2022/10/18/meet-the-team.qmd
+        - rwds-partners.qmd
+        - contact.qmd
+        - ts-and-cs.qmd
     - title: "Call for contributions"
-      style: "floating"
-      background: "#FFFFFF"
       contents:
         - contributor-docs/call-for-contributions.qmd
         - contributor-docs/case-studies.qmd
@@ -47,27 +49,29 @@ website:
         - contributor-docs/training-guides.qmd
         - contributor-docs/recommender.qmd
         - contributor-docs/datasciencebites.qmd
-        - text: "---"
         - contributor-docs/contributor-guidelines.qmd
         - contributor-docs/style-guide.qmd
-    - title: "News and views"
+    - title: "Ideas"
+      contents:
+        - ideas/index.qmd
+        - ideas/datasciencebites/index.qmd
+    - title: "Viewpoints"
       contents: 
-        - news-and-views/index.qmd
-        - news-and-views/interviews/index.qmd
-        - news-and-views/datasciencebites/index.qmd
-        - news-and-views/editors-blog/index.qmd
-        - text: "---"
-        - href: news-and-views/newsletter/index.qmd
+        - viewpoints/index.qmd
+        - viewpoints/editors-blog/index.qmd
+        - viewpoints/interviews/index.qmd
+        - href: viewpoints/newsletter/index.qmd
           text: Newsletter
 
   page-navigation: true
 
+  back-to-top-navigation: false
+
   page-footer:
-    background: light
-    left: "Built by the [RSS](https://rss.org.uk/) using [Quarto](https://quarto.org/)" 
-    # center:
-    right:
-      - contact.qmd 
+    background: "#000000"
+    left: |
+      Copyright &copy; 2023 [Royal Statistical Society](https://rss.org.uk/)
+    center:  
       - href: https://github.com/realworlddatascience
         icon: github
         aria-label: GitHub
@@ -80,14 +84,18 @@ website:
       - href: https://www.linkedin.com/showcase/rss-real-world-data-science
         icon: linkedin
         aria-label: LinkedIn
+    right: |
+      [Terms & Conditions](/ts-and-cs.qmd)
 
 format:
   html:
-    theme: 
-      light: flatly
-      dark: darkly
-    css: styles.css
+    theme: [lux, rwds.scss]
+    css: rwds.css
     toc: true
+    grid:
+      sidebar-width: 0px
+      body-width: 1000px
+      margin-width: 250px
 
 execute: 
   freeze: auto
