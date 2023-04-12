@@ -7,7 +7,7 @@ categories:
   - History of data science
   - Statistics
 author: Jonathan Auerbach
-date: 03/28/2023
+date: 04/13/2023
 bibliography: references.bib
 citation-location: margin
 # image:
@@ -29,7 +29,7 @@ We present the law of the flowering plants as it was stated by Adolphe Quetelet,
 4. Predict the day the lilac will bloom in Brussels in 2023 with weather forecasts from AccuWeather.
 5. Describe how the USA National Phenology Network uses the bloom dates of lilacs to monitor the start of spring.
 
-We use the `R` programming language. In particular, our code relies on the following packages:
+At the end of the tutorial, we challenge you to design an algorithm that beats our predictions. The tutorial uses the `R` programming language. In particular, the code relies on the following packages:
 
 ```{{r}}
 library("knitr")
@@ -64,7 +64,7 @@ Quetelet was also not the first to study the relationship between temperature an
 ![](images/quetelet_bloom.png){width="600" fig-align="left" description="Bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852. Source: [Gallica](https://gallica.bnf.fr/ark:/12148/bpt6k95028d)"}
 
 ::: {.figure-caption}
-**Figure 2:** Bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852. Source: [Gallica](https://gallica.bnf.fr/ark:/12148/bpt6k95028d).
+**Figure 2:** Bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852. Source: [Gallica](https://gallica.bnf.fr/ark:/12148/bpt6k95028d)
 :::
 
 ## Reproducing Quetelet's law of the flowering plants
@@ -704,7 +704,7 @@ If Quetelet's law of the flowering plants is correct, Table 3 has the following 
 **Figure 4:** According to Quetelet's law, the lilacs bloom when exposed to 4264°C² following the last frost.
 :::
 
-We now have all the ingredients necessary to reproduce Quetelet's findings. Our reproduction is greatly simplified by using the `nest` function from the `tidyr` package, another member of the "tidyverse". We will group the data by year, nest, calculate the cumulative squared temperature from the frost date to the bloom date within each year, and then unnest. We ignore temperatures below 0°C. That is, temperatures below 0°C are set to 0°C. We do this because it is clear from Quetelet's derivation of the law that only positive temperatures should be squared. See the next section for details.
+We now have all the ingredients necessary to reproduce Quetelet's findings. Our reproduction is greatly simplified by using the `nest` function from the `tidyr` package, another member of the "tidyverse". For an overview of `nest`, see the ["Nested data" section](https://r4ds.had.co.nz/many-models.html?q=nest#nested-data) of @grolemund2017r. We will group the data by year, nest, calculate the cumulative squared temperature from the frost date to the bloom date within each year, and then unnest. We ignore temperatures below 0°C. That is, temperatures below 0°C are set to 0°C. We do this because it is clear from Quetelet's derivation of the law that only positive temperatures should be squared. See the next section for details.
 
 ```{{r}}
 quetelet <- 
@@ -865,11 +865,11 @@ root mean squared error (days)
 
 :::
 
-## Deriving Quetelet's law of the flowering plants
+## Quetelet's derivation of the law of the flowering plants
 
 Quetelet believed that, as in physics, universal laws govern social and biological phenomenon. Quetelet was not only inspired by physics to describe social and biological patterns using mathematical formulas. He often took his formulas directly from physics. In fact, you may have already recognized similarities between his law and Newton's second law of motion.
 
-Quetelet reasoned that temperature exerts a force on plants in the same way that gravity exerts a force on a falling object. Newton's second law states that acceleration is proportional to force. It follows that an object initially at rest and subject to a constant force will travel a distance proportional to time squared. Quetelet simply substituted temperature for time.
+Quetelet reasoned that temperature exerts a "force" on plants in the same way that gravity exerts a force on a falling object. Newton's second law states that acceleration is proportional to force. It follows that an object initially at rest and subject to a constant force will travel a distance proportional to time squared. Quetelet simply substituted temperature for time.
 
 We briefly elaborate. Let $d(t)$ denote the distance an object travels after time $t$. Let $v(t) = d'(t)$ denote its speed and $a(t) = v'(t)$ its acceleration. If acceleration is constant, i.e. $a(t) = c$,
 
@@ -885,7 +885,7 @@ $d(t) = \int_0^t v(s) \, ds = \int_0^t c s \, ds = \tfrac{c}{2} t^2$
 
 Quetelet imagined plants experience time in temperature and bloom after "traveling" distance $d_*$. If a plant is exposed to temperature $t_i$ on day $i = 1, 2, \ldots$, then the bloom date, $n_*$, is the first day $\sum_{i=1}^{n_*} \tfrac{c}{2} t_i^2 \geq d_*$. Multiplying both sides of the inequality by $\tfrac{2}{c}$, yields Quetelet's law: the bloom is the first day, $n_*$, that $\sum_{i=1}^{n_*} t_i^2 \geq \tfrac{2}{c} d_*$.
 
-The derivation of laws like the law of the flowering plants was popular in the nineteenth century. But any similarities between the force of temperature and the force of gravity are likely coincidental. We are not aware of any biological mechanisms that justify Quetelet's application of Newton's law.
+The derivation of laws like the law of the flowering plants was popular in the nineteenth century. But any similarities between the "force" of temperature and the force of gravity are likely coincidental. We are not aware of any biological mechanisms that justify Quetelet's application of Newton's law.
 
 Today, the law of the flowering plants is considered a heuristic, or rule of thumb, that approximates complicated biological mechanisms. Like Quetelet, scientists model plants as experiencing time in temperature instead of calendar time. These temperature units are typically called "growing degree days". Scientists often find that plants may only be sensitive to temperatures in specific ranges or "modified growing degree days". Although modern statistical methods can greatly improve the accuracy of predictions, laws like Quetelet's remain popular because they are simple to communicate and easy to replicate, as we demonstrate in the next section.
 
@@ -2000,7 +2000,39 @@ In recent years, the observations collected through phenology networks have beco
 **Figure 7:** The Spring Bloom Index Return Interval measures whether spring is typical when compared to recent decades. Source: [USA National Phenology Network](https://www.usanpn.org/files/npn/maps/six-bloom-return-interval-2020.png)
 :::
 
-Quetelet's emphasis on discovering the universal laws he believed govern social and biological phenomenon has not endured. But data scientists continue to appropriate laws from one area of science to study another. For example, data scientists use neural networks and genetic algorithms to study a wide variety of phenomenon unrelated to neuroscience or genetics. Perhaps Quetelet's appropriation of Newton's law, in addition to his careful use of data, make him among the first data scientists.
+Quetelet's emphasis on discovering the universal laws he believed govern social and biological phenomenon has not endured. But data scientists continue to appropriate laws from one area of science to study another. For example, data scientists use neural networks and genetic algorithms to study a wide variety of phenomenon unrelated to neuroscience or genetics. Perhaps Quetelet's appropriation of Newton's law, in addition to his careful use of data, make him among the first data scientists?
+
+## Your turn: Do you have what it takes to beat Quetelet’s law? 
+
+Quetelet reported that a plant flowers when the sum of the daily temperatures squared exceeds a specific quantity. His prediction rule was state of the art in 1833. But surely you, a twenty-first century data scientist, can do better. Here are some ideas to get you started. 
+
+1. Quetelet squared the temperature before calculating the sum. Would another function of temperature produce a more accurate prediction?
+  
+    i. Remove the square so that a plant flowers once the sum of the daily temperatures exceeds a (different) specific quantity. Does this version of the law produce more accurate predictions? What if you use the daily temperatures cubed? (Beginner)  
+  
+    ii. Suppose a lilac only registers temperatures between 0°C and 10°C. That is, a lilac experiences temperature below the lower limit, 0°C, as 0°C, and above the upper limit, 10°C, as 10°C. Does the accuracy of the predictions improve if you use the temperature the lilac experienced instead of the ambient temperature measured by a weather station? Write a program that finds the lower and upper limits that produce the most accurate predictions. (Intermediate)  
+  
+    iii. Quetelet used mean absolute error to evaluate the accuracy of his predictions. But his estimate of the specific quantity of heat needed to bloom, 4264°C², does not actually minimize mean absolute error. Write a program that finds the specific quantity that minimizes mean absolute error. Redo part i. and ii. using this function. (Advanced)  
+
+ 
+
+2. Quetelet calculated the sum of the daily temperature squared between the day of last frost and the bloom date. Would another time interval produce more accurate predictions? 
+
+    i. We estimated the day of last frost using the last day the maximum temperature was below 0°C. Try estimating the day of last frost by the last day the midrange temperature was below 0°C? Which estimate yields the most accurate predictions? What if you ignore the day of last frost and simply calculate the sum of the daily temperatures squared between February 1 and the bloom date? When you change the time interval, be sure to calculate the new specific quantity of heat needed to bloom. (Beginner) 
+
+    ii. Write a program that finds the time interval which yields the best predictions. (Intermediate) 
+
+    iii. Write a program that calculates the prediction rule for many different time intervals. Use cross-validation to combine these prediction rules into a single prediction rule. (Advanced) 
+
+3. Quetelet’s law only considers the temperature. Would additional information provide more accurate predictions? 
+
+    i. Is the specific quantity of heat needed to bloom different in years with abnormally cold winters? Would the predictions be more accurate if you use one quantity of heat for years with cold winters and a different quantity of heat for years with warm winters? (Beginner) 
+
+    ii. Is the estimated quantity of heat needed to bloom similar for locations close in space and time? Write a program that leverages spatial and temporal correlation to improve the accuracy of the predictions. (Intermediate) 
+
+    iii. Some biologists report that a plant must be exposed to a fixed amount of cold temperature in the winter -- in addition to a fixed amount of warm temperature in the spring -- before it can bloom. Augment the law of the flowering plants to require the accumulation of a specific quantity of cold temperature before the accumulation of a specific quantity of warm temperature. Write a program that uses this new law to predict the day the lilac blooms. (Advanced) 
+
+Feeling good about your prediction algorithm? Show it off at the annual [Cherry Blossom Prediction Competition](https://competition.statistics.gmu.edu/)! 
 
 ## Appendix: Preparing USA NPN Data
 ```{{r}}
@@ -2087,7 +2119,7 @@ Copyright and licence
 
 ::: {.g-col-12 .g-col-md-6}
 How to cite
-: Auerbach, Jonathan. 2023. "A demonstration of the law of the flowering plants." Real World Data Science, March XX, 2023. [URL](https://realworlddatascience.net/ideas/tutorials/posts/03/XX-flowers/flowers.html)
+: Auerbach, Jonathan. 2023. "A demonstration of the law of the flowering plants." Real World Data Science, April 13, 2023. [URL](https://realworlddatascience.net/ideas/tutorials/posts/03/XX-flowers/flowers.html)
 :::
 :::
 :::
