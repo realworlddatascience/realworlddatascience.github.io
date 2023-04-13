@@ -11,7 +11,7 @@ date: 04/13/2023
 bibliography: references.bib
 citation-location: margin
 image: images/quetelet-flowers.png
-image-alt: Portrait of Adolphe Quetelet, superimposed on a photo of blooming purple lilacs.
+image-alt: Portrait of Adolphe Quetelet, superimposed on a photo of blooming purple lilacs. Quetelet portrait from Wikimedia Commons, Public Domain. Lilacs photo by Arina Bogachyova/iStock.
 toc: true
 filters:
   - lightbox
@@ -48,38 +48,38 @@ We begin by reviewing the law of the flowering plants as it was stated by Adolph
 He communicated this law in his *Letters addressed to HRH the grand duke of Saxe-Coburg and Gotha* [Number 33, -@quetelet1846lettres; translated -@quetelet_1849] and in his reporting *On the climate of Belgium* [Chapter 4, Part 4, -@observatoire1834annales; data updated in Part 7, -@quetelet_1857]. A picture of Quetelet and the title page of On the climate of Belgium (1857) are displayed in Figure 1.
 
 :::{layout-ncol=2}
-![](images/quetelet_1875400.jpg){description="Adolphe Quetelet. Source: [Wikipedia](https://en.wikipedia.org/wiki/Adolphe_Quetelet#/media/File:Adolphe_Qu%C3%A9telet_by_Joseph-Arnold_Demannez.jpg)" height=400px group="Quetelet"}
+![](images/quetelet_1875400.jpg){description="Adolphe Quetelet. Source: [Wikimedia Commons](https://en.wikipedia.org/wiki/Adolphe_Quetelet#/media/File:Adolphe_Qu%C3%A9telet_by_Joseph-Arnold_Demannez.jpg)." height=400px group="Quetelet"}
 
-![](images/sur_le_climat400.jpeg){description="Title page of *On the climate of Belgium.* Source: [Gallica](https://gallica.bnf.fr/ark:/12148/bpt6k95028d)" height=400px group="Quetelet"}
+![](images/sur_le_climat400.jpeg){description="Title page of *On the climate of Belgium.* Source: [Gallica](https://gallica.bnf.fr/ark:/12148/bpt6k95028d)." height=400px group="Quetelet"}
 :::
 
 :::{.figure-caption}
-**Figure 1:** Quetelet reported on the law of the flowering plants in *On the climate of Belgium* (1857). Source: [Wikipedia](https://en.wikipedia.org/wiki/Adolphe_Quetelet#/media/File:Adolphe_Qu%C3%A9telet_by_Joseph-Arnold_Demannez.jpg), [Gallica](https://gallica.bnf.fr/ark:/12148/bpt6k95028d)
+**Figure 1:** Quetelet reported on the law of the flowering plants in *On the climate of Belgium* (1857). Sources: [Wikimedia Commons](https://en.wikipedia.org/wiki/Adolphe_Quetelet#/media/File:Adolphe_Qu%C3%A9telet_by_Joseph-Arnold_Demannez.jpg), [Gallica](https://gallica.bnf.fr/ark:/12148/bpt6k95028d).
 :::
 
 Quetelet was not the first to study bloom dates. Anthophiles have recorded the dates that flowers bloom for centuries. Written records of cherry trees go back as far as 812 AD in Japan and peach and plum trees as far as 1308 AD in China. Systematic record keeping began a century before Quetelet with Robert Marsham's *Indications of Spring* [-@marsham_1789].
 
 Quetelet was also not the first to study the relationship between temperature and bloom dates. René Réaumur [-@deréaumur_1735], an early adopter of the thermometer, noted the relationship before Marsham published his *Indications*. But Quetelet was the first to systematically study the relationship across a wide variety of plants and derive the amount of heat needed to bloom. An example of Quetelet's careful record keeping can be seen in Figure 2, one of many tables he reported in his publications.
 
-![](images/quetelet_bloom.png){width="600" fig-align="left" description="Bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852. Source: [Gallica](https://gallica.bnf.fr/ark:/12148/bpt6k95028d)"}
+![](images/quetelet_bloom.png){width="600" fig-align="center" description="Bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852. Source: [Gallica](https://gallica.bnf.fr/ark:/12148/bpt6k95028d)."}
 
 ::: {.figure-caption}
-**Figure 2:** Bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852. Source: [Gallica](https://gallica.bnf.fr/ark:/12148/bpt6k95028d)
+**Figure 2:** Bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852. Source: [Gallica](https://gallica.bnf.fr/ark:/12148/bpt6k95028d).
 :::
 
 ## Reproducing Quetelet's law of the flowering plants
 To reproduce Quetelet's law, we combine the data in Figure 2 with additional observations from his *Letters*. We focus on Quetelet's primary example, the bloom date of the common lilac, *Syringa vulgaris*, row 18 of Figure 2. We do this because Quetelet carefully describes his methodology for measuring the bloom date of lilacs. For example, Quetelet considers a lilac to have bloomed when "the first corolla opens and shows the stamina." That event is closest to what the USA Phenology Network describes as "open flowers", depicted in the center image of Figure 3 below. This detail will become relevant when we attempt to replicate Quetelet's law in a later section. Note that although we focus on lilacs in this tutorial, the `R` code is easily edited to predict the day that other plants will bloom.
 
 :::{layout-ncol=3}
-![](images/buds250.jpg){height=250px group="flowers" description="Flower buds. Source: [USA National Phenology Network](https://www.usanpn.org/nn/TrackaLilac)"}
+![](images/buds250.jpg){height=250px group="flowers" description="Flower buds. Source: [USA National Phenology Network](https://www.usanpn.org/nn/TrackaLilac)."}
 
-![](images/open_flowers250.jpg){height=250px group="flowers" description="Open flowers. Source: [USA National Phenology Network](https://www.usanpn.org/nn/TrackaLilac)"}
+![](images/open_flowers250.jpg){height=250px group="flowers" description="Open flowers. Source: [USA National Phenology Network](https://www.usanpn.org/nn/TrackaLilac)."}
 
-![](images/full_flowers250.jpg){height=250px group="flowers" description="Full flowers. Source: [USA National Phenology Network](https://www.usanpn.org/nn/TrackaLilac)"}
+![](images/full_flowers250.jpg){height=250px group="flowers" description="Full flowers. Source: [USA National Phenology Network](https://www.usanpn.org/nn/TrackaLilac)."}
 :::
 
 :::{.figure-caption}
-**Figure 3:** The bloom date occurs when the first corolla opens and shows the stamina (center image). Source: [USA National Phenology Network](https://www.usanpn.org/nn/TrackaLilac)
+**Figure 3:** The bloom date occurs when the first corolla opens and shows the stamina (center image). Source: [USA National Phenology Network](https://www.usanpn.org/nn/TrackaLilac).
 :::
 
 In the `R` code below, the five-column tibble `lilac` contains the date each year that Quetelet observed the lilacs bloom at Brussels Observatory. The first three columns are the month, day, and year the lilacs bloomed between 1839 and 1852. These columns are combined to form the fourth column, the full date the lilacs bloomed. The last column converts the date to the day of the year the lilacs bloomed, abbreviated "doy." That is, "doy" is the number of days it took for the lilacs bloom following January 1. Both "date" and "doy" representations of Quetelet's observations will be useful throughout this tutorial.
@@ -698,10 +698,10 @@ If Quetelet's law of the flowering plants is correct, Table 3 has the following 
   config(displaylogo = FALSE)
 ```
 
-![](images/fig4.png){description="**Figure 4:** According to Quetelet's law, the lilacs bloom when exposed to 4264°C² following the last frost."}
+![](images/fig4.png){description="**Figure 4:** According to Quetelet's law, the lilacs bloom when exposed to 4264°C² following the last frost. Author provided, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)."}
 
 :::{.figure-caption}
-**Figure 4:** According to Quetelet's law, the lilacs bloom when exposed to 4264°C² following the last frost.
+**Figure 4:** According to Quetelet's law, the lilacs bloom when exposed to 4264°C² following the last frost. Author provided, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 :::
 
 We now have all the ingredients necessary to reproduce Quetelet's findings. Our reproduction is greatly simplified by using the `nest` function from the `tidyr` package, another member of the "tidyverse". For an overview of `nest`, see the ["Nested data" section](https://r4ds.had.co.nz/many-models.html?q=nest#nested-data) of @grolemund2017r. We will group the data by year, nest, calculate the cumulative squared temperature from the frost date to the bloom date within each year, and then unnest. We ignore temperatures below 0°C. That is, temperatures below 0°C are set to 0°C. We do this because it is clear from Quetelet's derivation of the law that only positive temperatures should be squared. See the next section for details.
@@ -1578,10 +1578,10 @@ Although the accuracy of the predictions made using Quetelet's law is lower when
   config(displaylogo = FALSE)
 ```
 
-![](images/fig5.png){description="**Figure 5:** Predictions using Quetelet's law are accurate within about two weeks on average."}
+![](images/fig5.png){description="**Figure 5:** Predictions using Quetelet's law are accurate within about two weeks on average. Author provided, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)."}
 
 :::{.figure-caption}
-**Figure 5:** Predictions using Quetelet's law are accurate within about two weeks on average.
+**Figure 5:** Predictions using Quetelet's law are accurate within about two weeks on average. Author provided, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 :::
 
 The contours are easy to interpret. The blue lines are much like a mountain range observed from above. The inner circles are peaks of high elevation in which many prediction-observation pairs co-occur. The outer circles are areas of low elevation in which few prediction-observation pairs co-occur.
@@ -1978,10 +1978,10 @@ We visualize the predictions in Figure 6, which has the same interpretation as F
   config(displaylogo = FALSE)
 ```
 
-![](images/fig6.png){description="**Figure 6:** According to Quetelet's law, the lilacs will bloom once exposed to 4264°C² following the last frost."}
+![](images/fig6.png){description="**Figure 6:** According to Quetelet's law, the lilacs will bloom once exposed to 4264°C² following the last frost. Author provided, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)."}
 
 :::{.figure-caption}
-**Figure 6:** According to Quetelet's law, the lilacs will bloom once exposed to 4264°C² following the last frost.
+**Figure 6:** According to Quetelet's law, the lilacs will bloom once exposed to 4264°C² following the last frost. Author provided, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/).
 :::
 
 ## Quetelet's legacy: advocate, mentor, and perhaps data scientist
@@ -1994,10 +1994,10 @@ Although Quetelet did not discover the law, he did much to advance it. Quetelet 
 
 In recent years, the observations collected through phenology networks have become an important resource for understanding the impacts of climate change. For example, the USA National Phenology Network calculates the Spring Bloom Index, which measures the "first day of spring" using the days lilacs are observed to bloom at locations across the United States. The index is then compared to previous years. Figure 7 shows one comparison, called the Return Interval. The Return Interval is much like a p-value, calculating how frequently more extreme spring indices were observed in previous decades. Bloom dates that are uncommonly early (green) or late (purple) may indicate environments stressed by changing climate. Scientists exploit the relationship between temperature and bloom date to extrapolate the index to areas with few observations.
 
-![](images/six-bloom-return-interval-2020.png){description="**Figure 7:** The Spring Bloom Index Return Interval measures whether spring is typical when compared to recent decades. Source: [USA National Phenology Network](https://www.usanpn.org/files/npn/maps/six-bloom-return-interval-2020.png)"}
+![](images/six-bloom-return-interval-2020.png){description="**Figure 7:** The Spring Bloom Index Return Interval measures whether spring is typical when compared to recent decades. Source: [USA National Phenology Network](https://www.usanpn.org/files/npn/maps/six-bloom-return-interval-2020.png)."}
 
 :::{.figure-caption}
-**Figure 7:** The Spring Bloom Index Return Interval measures whether spring is typical when compared to recent decades. Source: [USA National Phenology Network](https://www.usanpn.org/files/npn/maps/six-bloom-return-interval-2020.png)
+**Figure 7:** The Spring Bloom Index Return Interval measures whether spring is typical when compared to recent decades. Source: [USA National Phenology Network](https://www.usanpn.org/files/npn/maps/six-bloom-return-interval-2020.png).
 :::
 
 Quetelet's emphasis on discovering the universal laws he believed govern social and biological phenomenon has not endured. But data scientists continue to appropriate laws from one area of science to study another. For example, data scientists use neural networks and genetic algorithms to study a wide variety of phenomenon unrelated to neuroscience or genetics. Perhaps Quetelet's appropriation of Newton's law, in addition to his careful use of data, make him among the first data scientists?
@@ -2113,13 +2113,13 @@ About the author
 Copyright and licence
 : &copy; 2023 Jonathan Auerbach
 
-<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This work is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>, except where otherwise noted.
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> Text and code are licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Images are not covered by this licence, except where otherwise noted.  
 
 :::
 
 ::: {.g-col-12 .g-col-md-6}
 How to cite
-: Auerbach, Jonathan. 2023. "A demonstration of the law of the flowering plants." Real World Data Science, April 13, 2023. [URL](https://realworlddatascience.net/ideas/tutorials/posts/03/XX-flowers/flowers.html)
+: Auerbach, Jonathan. 2023. "A demonstration of the law of the flowering plants." Real World Data Science, April 13, 2023. [URL](https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/flowers.html)
 :::
 :::
 :::
