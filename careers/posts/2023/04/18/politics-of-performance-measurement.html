@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.330">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Noah Wright">
+<meta name="dcterms.date" content="2023-04-18">
+<meta name="description" content="Funding decisions, particularly for projects in the public sector, should be informed by data on what works and what doesn’t. But performance assessment is rarely straightforward – especially when people’s lives and livelihoods may be impacted by the decisions that are made. Data scientist Noah Wright recounts the trials and tribulations of managing and meeting stakeholder expectations in developing a performance measurement program for specialty courts in Texas.">
+
+<title>Real World Data Science - The politics of performance measurement</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../">
+<link href="../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
+<script src="../../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../rwds.css">
+<meta property="og:title" content="Real World Data Science - The politics of performance measurement">
+<meta property="og:description" content="Funding decisions, particularly for projects in the public sector, should be informed by data on what works and what doesn’t. But performance assessment is rarely straightforward – especially when people’s lives and livelihoods may be impacted by the decisions that are made. Data scientist Noah Wright recounts the trials and tribulations of managing and meeting stakeholder expectations in developing a performance measurement program for specialty courts in Texas.">
+<meta property="og:image" content="https://realworlddatascience.net/careers/posts/2023/04/18/images/crowd-of-voices.png">
+<meta property="og:site-name" content="Real World Data Science">
+<meta property="og:image:height" content="511">
+<meta property="og:image:width" content="700">
+<meta property="og:image:alt" content="A crowd of people talking, with speech bubbles representing the different voices, digital art. Image created by Real World Data Science using Microsoft Bing Image Creator.">
+<meta name="twitter:title" content="Real World Data Science - The politics of performance measurement">
+<meta name="twitter:description" content="Funding decisions, particularly for projects in the public sector, should be informed by data on what works and what doesn’t. But performance assessment is rarely straightforward – especially when people’s lives and livelihoods may be impacted by the decisions that are made. Data scientist Noah Wright recounts the trials and tribulations of managing and meeting stakeholder expectations in developing a performance measurement program for specialty courts in Texas.">
+<meta name="twitter:image" content="https://realworlddatascience.net/careers/posts/2023/04/18/images/crowd-of-voices.png">
+<meta name="twitter:site" content="@rwdatasci">
+<meta name="twitter:image-height" content="511">
+<meta name="twitter:image-width" content="700">
+<meta name="twitter:image:alt" content="A crowd of people talking, with speech bubbles representing the different voices, digital art. Image created by Real World Data Science using Microsoft Bing Image Creator.">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../case-studies/index.html" rel="" target="">
+ <span class="menu-text">Case studies</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../ideas/index.html" rel="" target="">
+ <span class="menu-text">Ideas</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../careers/index.html" rel="" target="">
+ <span class="menu-text">Careers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../viewpoints/index.html" rel="" target="">
+ <span class="menu-text">Viewpoints</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">About RWDS</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
+        <li>
+    <a class="dropdown-item" href="../../../../../about-rwds.html" rel="" target="">
+ <span class="dropdown-text">Who we are</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../contributor-docs/call-for-contributions.html" rel="" target="">
+ <span class="dropdown-text">How to contribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../contact.html" rel="" target="">
+ <span class="dropdown-text">Contact us</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">The politics of performance measurement</h1>
+                  <div>
+        <div class="description">
+          <p>Funding decisions, particularly for projects in the public sector, should be informed by data on what works and what doesn’t. But performance assessment is rarely straightforward – especially when people’s lives and livelihoods may be impacted by the decisions that are made. Data scientist Noah Wright recounts the trials and tribulations of managing and meeting stakeholder expectations in developing a performance measurement program for specialty courts in Texas.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Problem definition</div>
+                <div class="quarto-category">Stakeholder communication</div>
+                <div class="quarto-category">Relationship management</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Noah Wright </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 18, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#step-1-consider-your-options" id="toc-step-1-consider-your-options" class="nav-link active" data-scroll-target="#step-1-consider-your-options">Step 1: Consider your options</a></li>
+  <li><a href="#step-2-engage-stakeholders-and-define-performance" id="toc-step-2-engage-stakeholders-and-define-performance" class="nav-link" data-scroll-target="#step-2-engage-stakeholders-and-define-performance">Step 2: Engage stakeholders and define performance</a></li>
+  <li><a href="#step-3-update-processes-and-collect-data" id="toc-step-3-update-processes-and-collect-data" class="nav-link" data-scroll-target="#step-3-update-processes-and-collect-data">Step 3: Update processes and collect data</a></li>
+  <li><a href="#step-4-analyze-and-report-findings" id="toc-step-4-analyze-and-report-findings" class="nav-link" data-scroll-target="#step-4-analyze-and-report-findings">Step 4: Analyze and report findings</a></li>
+  <li><a href="#factors-for-success" id="toc-factors-for-success" class="nav-link" data-scroll-target="#factors-for-success">Factors for success</a></li>
+  <li><a href="#coda-why-knowledge-transfer-is-vital" id="toc-coda-why-knowledge-transfer-is-vital" class="nav-link" data-scroll-target="#coda-why-knowledge-transfer-is-vital">Coda: Why knowledge transfer is vital</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/careers/posts/2023/04/18/politics-of-performance-measurement.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>At the beginning of 2016, the Criminal Justice Division (CJD) of the Texas Governor’s Office received news all government agencies dread: budgets were to be cut. CJD oversaw a grant program that funded specialty courts throughout the state, however it was now being told that the program’s budget of $10.6m would be reduced 20% to $8.5m by 2018.</p>
+<p>How should these cuts be distributed among grant holders? CJD had no meaningful performance data on which to base its decisions, and I would know: I was hired by the agency just a few months before to analyze grant performance. Still, decisions needed to be made. We had to come up with a plan of action, and the clock was ticking…</p>
+<p>This is a story of making opportunity out of crisis, of the interaction between not just theory of change and technical implementation, but the “political” process of negotiating these changes with stakeholders in a manner that led to better decisions. Through careful outreach and continuous communication, we developed a data collection and performance assessment process that enabled us to allocate budget cuts in a manner widely accepted.</p>
+<p>The story ends on a bittersweet note. But, along the way, there are lessons to be learned about how to find common ground, manage expectations, forge productive working partnerships, and sustain a data science project longer term.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/crowd-of-voices.png" class="img-fluid figure-img" alt="A crowd of people talking, with speech bubbles representing the different voices, digital art. Image created by Real World Data Science using Microsoft Bing Image Creator" width="500"></p>
+</figure>
+</div>
+<section id="step-1-consider-your-options" class="level2">
+<h2 class="anchored" data-anchor-id="step-1-consider-your-options">Step 1: Consider your options</h2>
+<p>Texas had over 150 specialty courts in 2016, providing a program of specialized services – usually drug treatment – to offenders as an alternative to incarceration. About half of the state’s specialty courts received CJD grant funds (and about half of grantees received 100% of their program budget from our grants). Funding cuts of the size we needed to make would not go over well with them. Any changes to the program would have to run a gauntlet of decision-makers including advisory boards, interest groups, and professional associations, most with contacts in the legislature.</p>
+<p>Complicating this situation further, CJD didn’t even make the final funding decisions. We administered the grants, but the merit review process fell to the Specialty Courts Advisory Council, an appointed group of specialty courts staff and related experts who annually scored the grant applications we received. We needed to get them onboard.</p>
+<p>The way our Executive Director saw it, we had three options to implement the cut in a way that could get us buy-in from stakeholders and the Advisory Council:</p>
+<ol type="1">
+<li><strong>Cut across the board.</strong> The Advisory Council would employ the same scoring method as the previous year but reduce each grant amount by 20%.</li>
+</ol>
+<p>This option would leave long-running grantees scrambling to make up for this shortfall by reducing services, laying off staff, or spending more of their limited local funds. Worse, it would punish all grantees equally – our most successful programs would be arbitrarily defunded.</p>
+<ol start="2" type="1">
+<li><strong>Fewer grants.</strong> Grants were scored based on the quality of their application and all grants that passed a certain threshold got funded. The Advisory Council would employ the same scoring method as the previous year but instead of funding the top $10.6m worth of grants, they would fund the top $8.5m worth.</li>
+</ol>
+<p>This seemed a less bad option than cutting across the board, but we would still run into the problem of arbitrarily defunding successful programs. Grants near the bottom of the Advisory Council’s cutoff that got funded the previous year would be denied renewal only because the goalposts had moved.</p>
+<ol start="3" type="1">
+<li><strong>Targeted funding.</strong> The Advisory Council would incorporate performance data and statewide strategic plan alignment into their scoring method and make cuts accordingly.</li>
+</ol>
+<p>At the time, the Advisory Council did not take performance into consideration when scoring grant applications. They agreed in theory that a grant requesting its tenth annual renewal should perhaps at some point be assessed on its outcomes, but they had never seen CJD commit to a rigorous performance assessment process before. We administered the grants, not them, so without our commitment to develop a performance assessment process, and their trust in that commitment, this would not be a viable option.</p>
+<p>After due consideration, option 3 emerged as the favorite of our Executive Director. On the face of it, this seemed the most “objective” approach to take. We would let the data decide who gets funded and who doesn’t, rather than cutting arbitrarily. But that would be a fallacious argument. Data does not decide. It might inform our decisions, but it would be up to us to choose the structure of the performance measurement process: what aspects to focus on, what data to collect, what benchmarks to set – all of which would later help determine funding decisions. And in any funding decision, politics inevitably plays a role.</p>
+<p>Politics is, in its broadest sense, the negotiated decision-making between groups with opposing interests. And in developing our performance measurement process we would encounter a variety of interests – from the Advisory Council down to the grantees themselves. Success would require us to acknowledge stakeholder perspectives and address or manage them appropriately. Planning decisions made in the early phases of a project as a result of political processes directly influence the type and scope of analysis a data scientist will eventually be able to perform, so it behooves the data scientist to participate in these processes!</p>
+</section>
+<section id="step-2-engage-stakeholders-and-define-performance" class="level2">
+<h2 class="anchored" data-anchor-id="step-2-engage-stakeholders-and-define-performance">Step 2: Engage stakeholders and define performance</h2>
+<p>Having settled on our preferred option, our Executive Director convened a strategy session with the Advisory Council to discuss how to proceed as part of a broader strategic plan. The session began by achieving consensus on high-level goals such as “fund strategically”, “focus on success”, “build capacity”, etc. The session also helped the Advisory Council and CJD alike to clarify our conception of how we ought to fit into the specialty courts field going forward. CJD would develop its performance assessment system to help the Advisory Council target funding, but that would come as part of a larger plan that included capacity building, training and technical assistance, helping courts obtain non-CJD sources of funding, and steering grantees toward established best practice.</p>
+<p>We left the meeting with a very basic plan that looked good on paper. Our Executive Director set to work persuading our external stakeholders of the wisdom of this new strategic direction. Meanwhile, I had to build a performance assessment process that people could trust.</p>
+<p>CJD had no formally designated standards to measure performance data against. However, drug courts have been around for decades and there existed a large body of research supporting the program model.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Offering supervised drug treatment instead of incarceration had been repeatedly shown to cost less money and lower recidivism rates. I performed a literature review and spoke with numerous subject matter experts to get started on defining program-specific performance metrics.</p>
+<p>I was conscious that imposing metrics without any feedback or input from affected parties would all but guarantee bad-faith engagement, especially if these metrics are tied to funding. A problem inherent to any performance measurement is that once something gets measured as a performance outcome, it warps the very processes it is intended to measure. This phenomenon happens so frequently that the phrase “Campbell’s Law” was coined to describe it in 1979.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> Think of standardized testing at schools: once the government ties test performance to school funding it creates powerful incentives for schools to improve test scores at any cost. Even in the absence of outright cheating, struggling schools feel massive pressure to adjust their curriculum, to the point where they teach test score optimization strategies more than math, language, history, and science.</p>
+<p>I consistently heard from specialty court scholars and practitioners alike that arrest recidivism would be the ideal outcome measure. On paper, recidivism was a direct expression of long-term program success and could also be used as an outcome variable for classification modeling. And, in practice, a court could do little to affect recidivism by way of manipulation. Courts do not make arrests – police make arrests. Once a specialty court participant finished a program, the court itself no longer intervened in their lives. If a participant got arrested within 1-3 years of completion, the program had no say in the matter.</p>
+<p>This, however, presented an implementation problem: one-year recidivism data would, by definition, take a year past the point of implementation to collect, i.e., not soon enough to inform our cuts. And while recidivism was the best measure of success, it could not be the only measure. Recidivism was, after all, a stochastic process not within the court’s control – a crime wave or other systemic factors could move recidivism up and make it look like a successful court had actually failed. We would have to use something else as well.</p>
+<p>The National Association of Drug Court Professionals (NADCP) publishes a book of best practice standards, and our stakeholders identified a court’s adherence to these standards as another strong performance assessment standard. These criteria, unlike recidivism, were directly under the program’s control. Does your program have the recommended staff? Does your program drug test participants frequently enough to guarantee sobriety? Does your program meet with participants regularly enough? Do you offer a continuum of services instead of a “one-size-fits-all” approach?</p>
+<p>In addition to being much easier to measure than recidivism, best practice adherence also resists Campbell’s Law by avoiding outcome measurement. In our school metaphor, this would be like measuring school performance based on student-to-teacher ratio, variety of course offerings, attendance rates, and teacher qualifications. Far from perfect, but measuring a variety of elements that predict success and taking them as a whole represents a vast improvement over a single, easily-gamed outcome measure.</p>
+<p>But to operationalize these standards, we would have to have good data.</p>
+</section>
+<section id="step-3-update-processes-and-collect-data" class="level2">
+<h2 class="anchored" data-anchor-id="step-3-update-processes-and-collect-data">Step 3: Update processes and collect data</h2>
+<p>We inherited a longstanding process in which grantees had to fill out a form every six months asking them to report performance data. This is a screenshot of what that form looked like:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/screenshot.png" class="img-fluid figure-img" alt="A screenshot of a data table containing example data collected from grantees in the Texas speciality courts funding program, prior to the development of a new performance measurement process."></p>
+</figure>
+</div>
+<p>No additional definitions or instructions were provided, leaving grantees with many questions: Does the request for “annual data” mean as of fiscal year or calendar year? What counts as a person being “assessed for eligibility”? And so on. Grantees did not know the answers, and neither did we. And these were the more straightforward measures. The form went on for 10 pages, most of which asked grantees to report extensively on information they had already provided as part their application.</p>
+<p>This disaster of an assessment process did have a silver lining. When we announced we were throwing out these forms entirely we faced almost no pushback from grantees.</p>
+<p>We knew from the start that our new assessment process would need to collect individual-level participant data instead of aggregated measures. Even with clear definitions, 75 grants would mean 75 different aggregations at work. Asking the grantees to report their individual-level participant data in a consistent format and doing the aggregations ourselves meant a single aggregation at work.</p>
+<p>But we needed to establish trust with grantees before making this request. Strictly speaking, we could mandate the reporting of this data. However, if that angered enough of our grantees, they or their contacts might take it up with our bosses at the Governor’s Office, and our bosses could cancel any plan we came up with if they thought it was not worth the fuss. So, from day one we communicated clearly to all grantees that we would maintain total transparency when it came to definitions and calculations. Before we used any calculated metric to assess performance we would send it to the grantees themselves to review for accuracy.</p>
+<p>To avoid the vagueness and inscrutability that characterized the old reporting process, every piece of data we asked for in the new process had a clear written definition and specific reason for being asked. These reasons usually amounted to some combination of best practices, Advisory Council recommendations, and grantee suggestions.</p>
+<p>Implementing the new process was far from easy, however. We faced numerous administrative and technical barriers. Texas courts at this time did not share a common case management system, so we couldn’t just get a data export from everybody. Meanwhile, the Governor’s Office banned all of its divisions from all usage of the cloud. This forced us to build a more labor-intensive reporting process, in which courts would obtain blank Excel templates with required data fields. Courts had either to fill out these templates by hand or export their case management data and reconfigure it to template specifications. Then, courts submitted their data for review and we sent back any bad formatting.</p>
+<p>We collected preliminary data at the six-month mark and made another adjustment based on these results, which we would not count toward performance measurement. A majority of courts had some kind of data error in this first case. Specific definitions of data fields had to be written and rewritten using grantee feedback over the course of the year, leading to significant changes between the six-month reports and the year-end reports.</p>
+<p>Importantly, we had developed reporting requirements iteratively with participation from grantees and the Advisory Council from the start. By mid-2017 we had so successfully achieved buy-in that only one grantee court’s judge refused to give us data (the court’s grant manager later sent it to us).</p>
+</section>
+<section id="step-4-analyze-and-report-findings" class="level2">
+<h2 class="anchored" data-anchor-id="step-4-analyze-and-report-findings">Step 4: Analyze and report findings</h2>
+<p>In the course of this process, we established the benchmarks in Table 1 based on best practices and justification for funding. Because this was our initial rollout, we set the specific values low to function more as minimum standards than targets.</p>
+<div class="figure-caption">
+<p><strong>Table 1:</strong> Specialty court best practices translated into quantitative measures.</p>
+</div>
+<table class="table">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 19%">
+<col style="width: 46%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Benchmark</th>
+<th style="text-align: center;">Best practice</th>
+<th>Rationale</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>1. Number of participants</td>
+<td style="text-align: center;">10+</td>
+<td>CJD decision: programs should be of sufficient size to justify a grant</td>
+</tr>
+<tr class="even">
+<td>2. Number of graduates</td>
+<td style="text-align: center;">5+</td>
+<td>CJD decision: programs should be of sufficient size to justify a grant</td>
+</tr>
+<tr class="odd">
+<td>3. Graduation rate</td>
+<td style="text-align: center;">20%-90%</td>
+<td>CJD decision: 0% and 100% success rates are both red flags</td>
+</tr>
+<tr class="even">
+<td>4. Average amount of time graduates spent in program (in months)</td>
+<td style="text-align: center;">12-24</td>
+<td>NADCP best practice recommended program lengths of 1-2 years</td>
+</tr>
+<tr class="odd">
+<td>5. Percent of graduates employed, seeking education, or supported through family, partner, SSI, etc.</td>
+<td style="text-align: center;">100%</td>
+<td>NADCP best practice recommended against releasing participants without financial support, which all but guarantees relapse or rearrest.</td>
+</tr>
+<tr class="even">
+<td>6. Percent of participants with “low-risk” assessment score</td>
+<td style="text-align: center;">0%</td>
+<td>NADCP best practice recommended moderate- or high-risk participants. Research had shown that low-risk participants get little benefit.</td>
+</tr>
+<tr class="odd">
+<td>7. Average sessions per participant per month</td>
+<td style="text-align: center;">1+</td>
+<td>NADCP best practice recommended sessions be held at least monthly.</td>
+</tr>
+</tbody>
+</table>
+<p>Grantee performance data for each benchmark would be generated from the individual level data that courts sent us. Crucially, we sent our aggregations back to grantees for confirmation prior to using them in any kind of evaluation, alongside the program-wide average and the best practice values for comparison (example in the table below). If something didn’t look right, they had the chance to let us know before we took their numbers as final.</p>
+<div class="figure-caption">
+<p><strong>Table 2:</strong> Specialty court best practices compared with program-wide averages and grantee reported values.</p>
+</div>
+<table class="table">
+<colgroup>
+<col style="width: 47%">
+<col style="width: 17%">
+<col style="width: 17%">
+<col style="width: 17%">
+</colgroup>
+<tbody>
+<tr class="odd">
+<td><strong>Benchmark</strong></td>
+<td style="text-align: center;"><strong>Best practice</strong></td>
+<td style="text-align: center;"><strong>Program-wide average</strong></td>
+<td style="text-align: center;"><strong>Grantee reported values</strong></td>
+</tr>
+<tr class="even">
+<td>1. Number of participants</td>
+<td style="text-align: center;">10+</td>
+<td style="text-align: center;">89</td>
+<td style="text-align: center;">96</td>
+</tr>
+<tr class="odd">
+<td>2. Number of graduates</td>
+<td style="text-align: center;">5+</td>
+<td style="text-align: center;">25</td>
+<td style="text-align: center;">27</td>
+</tr>
+<tr class="even">
+<td>3. Graduation rate</td>
+<td style="text-align: center;">20%-90%</td>
+<td style="text-align: center;">71%</td>
+<td style="text-align: center;">56%</td>
+</tr>
+<tr class="odd">
+<td>4. Average amount of time graduates spent in program (in months)</td>
+<td style="text-align: center;">12-24</td>
+<td style="text-align: center;">17</td>
+<td style="text-align: center;">14</td>
+</tr>
+<tr class="even">
+<td>5. Percent of graduates employed, seeking education, or supported through family, partner, SSI, etc.</td>
+<td style="text-align: center;">100%</td>
+<td style="text-align: center;">95%</td>
+<td style="text-align: center;">100%</td>
+</tr>
+<tr class="odd">
+<td>6. Percent of participants with “low-risk” assessment score</td>
+<td style="text-align: center;">0%</td>
+<td style="text-align: center;">18%</td>
+<td style="text-align: center;">2%</td>
+</tr>
+<tr class="even">
+<td>7. Average sessions per participant per month</td>
+<td style="text-align: center;">1+</td>
+<td style="text-align: center;">2</td>
+<td style="text-align: center;">3.7</td>
+</tr>
+</tbody>
+</table>
+<p>In the end, we found seven grants that we could unequivocally recommend be cut. Two of the seven had effectively never gotten off the ground, and served almost no participants the entire year. The other five served mostly low-risk participants, the type of people that research had shown do not benefit from specialty court programs. Some of these grantees were inevitably disappointed at the decision, but we had so actively worked within the field to develop and justify our processes that they understood why the decision had been made.</p>
+</section>
+<section id="factors-for-success" class="level2">
+<h2 class="anchored" data-anchor-id="factors-for-success">Factors for success</h2>
+<p>In the span of one year, CJD went from collecting a large volume of useless data to a specific, targeted collection of data informed by best practices. The new collection process had high grantee compliance and stakeholder buy-in.</p>
+<p>The following factors proved essential to getting to a place where we had useful, reliable data upon which to base future data science efforts:</p>
+<ol type="1">
+<li><dl>
+<dt>Discontent with status quo</dt>
+<dd>
+<p>The Advisory Council wanted CJD to play a more active support role in the field. Meanwhile, everyone disliked the existing performance assessment process. As a result, most of the challenges we faced along the way related to implementation rather than defending the status quo on its merits.</p>
+</dd>
+</dl></li>
+<li><dl>
+<dt>A catalyst for change</dt>
+<dd>
+<p>Despite existing discontent, it took a funding shortfall to kickstart the process of change. It would have been unlikely for us to be able to create this system <em>a priori</em>.</p>
+</dd>
+</dl></li>
+<li><dl>
+<dt>Continuous, high-quality communication</dt>
+<dd>
+<p>We could impose rules and requirements all day long, but without good faith engagement from the grantees we could never collect the quality of data we needed. Note that “continuous communication” does not mean “tell them everything you do at every point”. People become overwhelmed by torrents of information.</p>
+</dd>
+</dl></li>
+<li><dl>
+<dt>Humility and flexibility</dt>
+<dd>
+<p>Had we begun this process assuming we had all of the answers, we would have been dead in the water. Continuous outreach and willingness to take criticism and suggestions shaped the process as it progressed, ultimately producing a better end-product than we could have devised on our own.</p>
+</dd>
+</dl></li>
+<li><dl>
+<dt>An established program model</dt>
+<dd>
+<p>Drug courts have been around for decades, with a vast body of supporting research and a community of practitioners and scholars we could speak to. That meant we could focus on implementation and execution instead of determining if the model worked or not.</p>
+</dd>
+</dl></li>
+<li><dl>
+<dt>Strong leadership support</dt>
+<dd>
+<p>From the very beginning, we could not have accomplished what we did without the full support and advocacy of our Executive Director.</p>
+</dd>
+</dl></li>
+</ol>
+</section>
+<section id="coda-why-knowledge-transfer-is-vital" class="level2">
+<h2 class="anchored" data-anchor-id="coda-why-knowledge-transfer-is-vital">Coda: Why knowledge transfer is vital</h2>
+<p>I wish I could write a follow-up article about how we started using classification modeling to identify the most successful programs and to promote better approaches and practices; about how we iterated the process through multiple funding cycles, tuning and perfecting it to better meet stakeholder needs. But I cannot.</p>
+<p>The performance assessment system we built had some major weaknesses from the outset. It was labor intensive, not required by law, produced no immediate benefit to the agency itself, and was so new it had yet to be entrenched in agency practice. In other words, no institutional incentives worked in its favor. Only the continual push of our Executive Director and myself kept this new performance assessment system going, and once we left the agency, it foundered.</p>
+<p>Still, the experience taught me much. I learned first and foremost that programs do not sustain themselves. Most of our attention had been focused on building up the best process we could. Only a minimal effort had been spent on institutionalizing and sustaining it. We had written documentation but no fundamental changes in policy or rule. We had undertaken groundbreaking efforts and built relationships, but had not planned for any meaningful knowledge transfer to other staff. While we had intended to eventually do these things, fate took us away before we could get them in place.</p>
+<p>For any kind of change to last, sustainability must be built in from the start. In the moment, these actions can seem low-priority. Policy and rule changes can be arduous and time-consuming. Knowledge transfer from one stably employed staff to another feels redundant and wasteful. But without embedding sustainability, no success will outlast the individual people pushing for it.</p>
+<div class="article-btn">
+<p><a href="../../../../../careers/index.html">Back to Careers</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author</dt>
+<dd>
+<strong>Noah Wright</strong> is a data scientist with the Texas Juvenile Justice Department. He is interested in the applications of data science to public policy in the context of real-world constraints, and the ethics thereof (ethics being highly relevant in his line of work). He can be reached on <a href="https://www.linkedin.com/in/noahdwright/">LinkedIn</a>.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Noah Wright
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Wright, Noah. 2023. “The politics of performance measurement.” Real World Data Science, April 18, 2023. <a href="https://realworlddatascience.net/careers/posts/2023/04/18/politics-of-performance-measurement.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Some newer types of courts (Commercial Sexual Exploitation, Mental Health, Veterans) had a much more limited body of research and had to be accommodated separately. For the sake of keeping this narrative coherent I’m focusing on drug courts, which were the majority of our programs.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Rodamar, Jeffery. 2018. “There ought to be a law! Campbell versus Goodhart.” <em>Significance</em> 15 (6): 9. <a href="https://doi.org/10.1111/j.1740-9713.2018.01205.x" class="uri">https://doi.org/10.1111/j.1740-9713.2018.01205.x</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright © 2023 <a href="https://rss.org.uk/">Royal Statistical Society</a></div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/realworlddatascience">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/rwdatasci">
+      <i class="bi bi-twitter" role="img" aria-label="Twitter">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@rwdatasci">
+      <i class="bi bi-mastodon" role="img" aria-label="Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="../../../../../feeds.html">
+      <i class="bi bi-rss" role="img" aria-label="RWDS rss">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right"><a href="../../../../../ts-and-cs.html">Terms &amp; Conditions</a></div>
+  </div>
+</footer>
+
+
+
+</body></html>
