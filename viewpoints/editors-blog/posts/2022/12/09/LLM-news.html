@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.336">
+<meta name="generator" content="quarto-1.4.6">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -213,7 +213,7 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 <p>The challenge with many LLMs, as we’ve seen repeatedly, is that they’ve no real understanding of language or concepts represented within language. They’re good at finding patterns in semantics and grammatical rules that people use in writing, and then they use those patterns to create new expressions given a prompt. But they’ve no idea whether these outputs are factual, inaccurate or completely fabricated. As a consequence, they can produce outputs that are unreliable, but which sound authoritative, because they’re just repeating a style that we expect to see.</p>
 <p><strong>Over the past couple of weeks, Twitter has been full of people either showing off astoundingly impressive outputs from LLMs, or examples of truly worrying nonsense. One example of the latter is when ChatGPT was asked to <a href="https://twitter.com/GaryMarcus/status/1599584310633594881">“describe how crushed porcelain added to breast milk can support the infant digestive system”</a>. This made me think of a recent headline from <a href="https://venturebeat.com/ai/is-ai-moving-too-fast-for-ethics-the-ai-beat/">VentureBeat</a>, which asked whether AI is moving too fast for ethics to catch up. Do you think that it is?</strong></p>
 <p><strong>HL:</strong> I find that to be an interesting philosophical question, because ethics does move very slowly, for good reason. When you think of issues of bias and discrimination and prejudice, or misinformation and other problems that we might have with AI systems, it shouldn’t be a surprise that these can occur. We’re aware of them. We’re aware of the ethical issues. So, why do they always seem to catch us by surprise? Is it because we have teams of people who simply aren’t aware of ethical issues or don’t have any appreciation of them? This points – for me, at least – in the direction of needing to have philosophers, ethicists, theologians, lawyers working <em>in</em> the technical teams that are developing and working on these systems, rather than having them on the periphery and talking about these issues but not directly involved themselves. I think it’s hugely important to ensure that you’ve got trust, responsibility, and ethics embedded in technical teams, because that’s the only way it seems that you can avoid some of these “surprises”.</p>
-<p><strong>When situations like these occur, I’m always reminded of Dr.&nbsp;Ian Malcolm’s line from Jurassic Park: “…your scientists were so preoccupied with whether or not they could that they didn’t stop to think if they should.” The mindset seems to be, let’s push the boundaries and see what we can do, rather than stop and think deeply about what the implications might be.</strong></p>
+<p><strong>When situations like these occur, I’m always reminded of Dr Ian Malcolm’s line from Jurassic Park: “…your scientists were so preoccupied with whether or not they could that they didn’t stop to think if they should.” The mindset seems to be, let’s push the boundaries and see what we can do, rather than stop and think deeply about what the implications might be.</strong></p>
 <p><strong>HL:</strong> There’s a balance to be struck between these things, though, right? Firstly, show consideration for some of the issues at the outset, and secondly, have checks and balances and safeguards built into the process by which you design, develop and implement these systems. That’s the only way to create the proper safeguards around the systems. I don’t think that there’s any lack of appreciation of what needs to be done; people have been talking about this now for quite a long time. But it’s about making sure organisationally that it is done, and that you’ve got an operating model which bakes these things into it; that the kinds of principles and governance that you want to have around these systems are written, publicised, and properly policed. There should be no fear of making advances in that kind of a context.</p>
 <p>Also, I think open sourcing these models provides a way forward. A lot of large language models are open for use and for research, but aren’t themselves open sourced, so it’s very difficult to get underneath the surface and figure out exactly how they work. But with open source, you have opportunities for researchers, whether they’re technical or in the field of ethics, to go and investigate and find out exactly what’s going on. I think that would be a fantastic step forward. It doesn’t take you all the way, of course, because a large amount of the data that these systems use is never open sourced, so while you might get an understanding of the mechanics, you have no idea of what exactly went into them in the first place. But open sourcing is a very good way of getting some external scrutiny. It’s about being transparent, which is a core principle of AI ethics and responsible AI.</p>
 <div class="quarto-figure quarto-figure-center">
@@ -384,6 +384,30 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, function() {
+      let href = xref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children.length > 2) {
+          for (let i = 0; i < 2; i++) {
+            container.appendChild(note.children[i].cloneNode(true));
+          }
+          return container.innerHTML
+        } else {
+          return note.innerHTML;
+        }
+      } else {
+        return note.innerHTML;
+      }
     });
   }
       let selectedAnnoteEl;
