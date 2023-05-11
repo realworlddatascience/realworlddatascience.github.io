@@ -1,0 +1,32 @@
+---
+title: "Food for Thought: The importance of the Purchase to Plate Suite"
+# description: |
+#   Stephanie Hare, author of 'Technology is Not Neutral', talks to Real World Data Science about the 'wicked problem' of technology and AI ethics, and why laws and regulations are 'necessary but insufficient' to minimise harms. 'We’re going to have to inculcate an entire new mindset,' she argues.        
+categories:
+  # - Technology ethics
+  # - AI ethics
+  # - Culture
+  # - Regulation
+author: Zheyuan Zhang and Uyen Le
+date: 05/XX/2023
+toc: true
+# image: images/stephanie-hare-bw.png
+# image-alt: Photo of Stephanie Hare by Mitzi de Margary. Photo supplied by Stephanie Hare, used with permission.  
+---
+Since 2014, the professional services firm Westat has been developing the Purchase to Plate Crosswalk (PPC) for the United States Department of Agriculture (USDA) Economic Research Service (ERS). The PPC links the retail food transactions database from IRI’s InfoScan service and the USDA Food and Nutrient Database for Dietary Studies (FNDDS). However, the current linkage process uses only partly automated data matching, meaning it is resource intensive, time consuming, and requires manual review.  
+
+With sponsorship from ERS, Westat partnered with the Coleridge Initiative to host the Food for Thought competition to challenge researchers and data scientists to use machine learning and natural language processing to find accurate and efficient methods for creating the PPC. Figure 1 provides a visual overview of the challenge set by the competition.
+
+![](pt2-fig1.png)
+
+:::{.figure-caption}
+**Figure 1:** Overview of the Food for Thought Competition Challenge. 
+:::
+
+The one-to-many matching task that is central to the competition throws up many challenges for researchers to wrestle with. Because IRI data contains food transactions collected from partnered retail establishments for over 850,000 items, the matchings need be made based on limited data features, including categories, providers, and semantically inconsistent descriptions that consist of short phrases. Consider this hypothetical example: IRI product-related information about a (fictional) “Cheesy Hashbrowns Hamburger Helper, 5.5 Oz Box” needs to be linked to FNDDS nutrition-related information found under “Mixed dishes – meat, poultry, seafood: Mixed meat dishes”. Figure 2 demonstrates how the two databases are linked with each other to create the PPC. As can be seen, there is no common word that easily indicates that “Cheesy Hashbrowns Hamburger Helper...” should be matched with “Mixed dishes...”, and such cases exist in all IRI tables used for the challenge, from 2012 through 2018.
+
+![](pt2-fig2.png)
+
+:::{.figure-caption}
+**Figure 2:** Each universal product code (UPC) from the IRI data could match only one ensemble code (EC) from the FNDDS data, whereas one EC code could match multiple UPCs.  
+:::
