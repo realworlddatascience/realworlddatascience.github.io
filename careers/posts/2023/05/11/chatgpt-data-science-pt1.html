@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.340">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Brian Tarran">
+<meta name="dcterms.date" content="2023-05-11">
+<meta name="description" content="We sit down with the Royal Statistical Society’s Data Science and AI Section to hear how large language models are becoming part of the data science toolkit, and to consider what this new development means for data science teams and skillsets.">
+
+<title>Real World Data Science - How is ChatGPT changing data science?</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../">
+<link href="../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
+<script src="../../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../rwds.css">
+<meta property="og:title" content="Real World Data Science - How is ChatGPT changing data science?">
+<meta property="og:description" content="We sit down with the Royal Statistical Society’s Data Science and AI Section to hear how large language models are becoming part of the data science toolkit, and to consider what this new development means for data science teams and skillsets.">
+<meta property="og:image" content="https://realworlddatascience.net/careers/posts/2023/05/11/images/chatgpt-homescreen.png">
+<meta property="og:site-name" content="Real World Data Science">
+<meta property="og:image:height" content="724">
+<meta property="og:image:width" content="991">
+<meta property="og:image:alt" content="Photo of ChatGPT homescreen, by Levart_Photographer on Unsplash.">
+<meta name="twitter:title" content="Real World Data Science - How is ChatGPT changing data science?">
+<meta name="twitter:description" content="We sit down with the Royal Statistical Society’s Data Science and AI Section to hear how large language models are becoming part of the data science toolkit, and to consider what this new development means for data science teams and skillsets.">
+<meta name="twitter:image" content="https://realworlddatascience.net/careers/posts/2023/05/11/images/chatgpt-homescreen.png">
+<meta name="twitter:site" content="@rwdatasci">
+<meta name="twitter:image-height" content="724">
+<meta name="twitter:image-width" content="991">
+<meta name="twitter:image:alt" content="Photo of ChatGPT homescreen, by Levart_Photographer on Unsplash.">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed fullcontent">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../case-studies/index.html" rel="" target="">
+ <span class="menu-text">Case studies</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../ideas/index.html" rel="" target="">
+ <span class="menu-text">Ideas</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../careers/index.html" rel="" target="">
+ <span class="menu-text">Careers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../viewpoints/index.html" rel="" target="">
+ <span class="menu-text">Viewpoints</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">About RWDS</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
+        <li>
+    <a class="dropdown-item" href="../../../../../about-rwds.html" rel="" target="">
+ <span class="dropdown-text">Who we are</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../contributor-docs/call-for-contributions.html" rel="" target="">
+ <span class="dropdown-text">How to contribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../contact.html" rel="" target="">
+ <span class="dropdown-text">Contact us</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">How is ChatGPT changing data science?</h1>
+                  <div>
+        <div class="description">
+          <p>We sit down with the Royal Statistical Society’s Data Science and AI Section to hear how large language models are becoming part of the data science toolkit, and to consider what this new development means for data science teams and skillsets.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Large language models</div>
+                <div class="quarto-category">AI</div>
+                <div class="quarto-category">Skills</div>
+                <div class="quarto-category">People</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Brian Tarran </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 11, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>For many people, it starts with a question. Something simple, something they already know the answer to. A test, in other words, to see what these AI-powered chatbots are all about. But spend any amount of time with ChatGPT and other such tools and you’ll quickly start to wonder what else they might do, and how useful they might be in your day-to-day working life.</p>
+<p>Data scientists certainly have been thinking along these lines, and to find out more about current use cases, proofs of concepts and potential applications, Real World Data Science got together with members of the <a href="https://rss.org.uk/membership/rss-groups-and-committees/sections/data-science-section/">Royal Statistical Society’s Data Science and AI Section</a> (DS&amp;AI) for a group discussion.</p>
+<p>Our interviewees, in order of appearance, are:</p>
+<ul>
+<li><strong>Piers Stobbs</strong>, VP science at Deliveroo, and DS&amp;AI committee member.</li>
+<li><strong>Detlef Nauck</strong>, head of AI and data science research at BT, and editorial board member, Real World Data Science.</li>
+<li><strong>Adam Davison</strong>, head of data science at the Advertising Standards Authority, and DS&amp;AI committee member.</li>
+<li><strong>Trevor Duguid Farrant</strong>, senior principal statistician at Mondelez International, and DS&amp;AI committee member.</li>
+<li><strong>Giles Pavey</strong>, global director for data science at Unilever, and DS&amp;AI vice-chair.</li>
+<li><strong>Martin Goodson</strong>, CEO and chief scientist at Evolution AI, and DS&amp;AI committee member.</li>
+</ul>
+<p>The first part of our discussion focuses on how large language models are becoming part of the data science toolkit, and what this new development means for data science teams and skillsets. Stay tuned for part two, which we’ll be publishing soon!</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/chatgpt-homescreen.png" class="img-fluid figure-img" alt="Photo of ChatGPT homescreen, by Levart_Photographer on Unsplash." width="500"></p>
+</figure>
+</div>
+<p><strong>As data scientists, how has ChatGPT – and other tools built on large language models (LLMs) – changed your working lives?</strong></p>
+<p><strong>Piers Stobbs:</strong> Up to about a year ago, although I was really impressed with the developments in deep learning and the improvements in computer vision and natural language models, it felt in line with general improvements in machine learning. And then, probably about six months ago, with things like DALL·E and ChatGPT, it felt like something changed – properly ground-breaking capabilities. And I still can’t quite get my head around the fact that you can basically have a model that tries to predict the next token, and it comes up with outputs that really feel quite sensible and human-like – if prone to <a href="https://realworlddatascience.net/viewpoints/editors-blog/posts/2022/11/23/LLM-content-warning.html">hallucination</a>.</p>
+<p>The way I think about it is, this feels like a brand-new capability that we’ve just not really had before. It’s almost like an interface with unstructured information. Historically, you sort of have to turn text into something, and then turn something back into text, if you want to have this interface with humans. Now, we’ve got this really quite elegant way of plugging the gaps, which feels full of opportunities.</p>
+<p>I’m having great fun playing around with the code co-pilots – GitHub’s Copilot is amazing and, productivity wise, is helping me a lot. I am now a much faster coder because there’s all those Stack Exchange lookups that I don’t have to do anymore. Again, from a personal productivity perspective, I’m using [ChatGPT] for initial drafts of documents and other things. And then I use it almost for validating things. For instance, I had a random discussion the other night with ChatGPT about logistic algorithms. It’s not going to solve problems for you, but I asked it to give some pointers of things I could be thinking about – some of which I had, some of which I hadn’t. So, it’s almost like a brainstorming helper, somehow.</p>
+<p>But probably the thing I’m most excited about is the knowledge sharing side of it – plugging it into, or on top of, private information, and surfacing all that knowledge that is locked away in documents and intranet pages.</p>
+<div class="pullquote-container">
+<div class="grid">
+<div class="g-col-12 g-col-lg-4">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/piers-stobbs.png" class="img-fluid figure-img" alt="Portrait photo of Piers Stobbs"></p>
+<figcaption class="figure-caption">Piers Stobbs</figcaption>
+</figure>
+</div>
+</div>
+<div class="g-col-12 g-col-lg-8 pullquote-grid pullquote">
+<p><img src="../../../../../images/pullquote-purple.png" class="img-fluid" width="50"></p>
+<p>This feels like a brand-new capability – an interface with unstructured information. Historically, you have to turn text into something, and then turn something back into text, if you want to have this interface with humans. Now, we’ve got this elegant way of plugging the gaps.</p>
+</div>
+</div>
+</div>
+<p><strong>Detlef Nauck:</strong> We’re looking into running proof of concepts to see whether LLMs do bring value. Software engineering is the most obvious one, and easiest to set up and run. And then we want to look at making use of internal documents – so, either summarization or creation of internal documents in appropriate language. The latter use cases are trickier to evaluate. We want to know whether the outputs produced are any good. With software engineering you can track GitHub statistics, for example. But if you give ChatGPT to somebody to write marketing material, or to get information out of a document, how do you know that the results are good? We need to get our head around metrics for evaluation.</p>
+<p><strong>Adam Davison:</strong> I’ve been using it for basically anything where I don’t remember the API very well or it’s a bit confusing. <a href="https://pandas.pydata.org/">Pandas</a> is the key, right? We all use pandas, but you don’t really remember how to do some complicated thing with <code>apply()</code>, say, so you just ask GPT-4 to give you the answer, and it saves you that hassle. Also, I read some insightful tweet that said these chat systems are really good for things where generating the solution is hard, but verifying it is easy. And I think that’s true for some of these things. You know, you get a short piece of Python code, you can basically look at that and you can tell if it’s right.</p>
+<p>In data science, you’re a bit of a jack-of-all-trades. You need to do little bits of everything, but you’re not a specialist in anything. And so, I think for software development, it’s been really helpful. For example, right now, I’m doing a bit of frontend development in a project to visualise something. I’m never going to be a professional frontend developer, but GPT-4 can help deal with the oddities of JavaScript much more easily than it would be for me to trawl through Stack Overflow posts.</p>
+<p>But the thing that we’re using it for, practically, is natural language processing (NLP) and classification. We have this particular problem at the Advertising Standards Authority (ASA) where we are running lots of different models that are completely unconnected to each other because every project is a different topic. So, one week we’re looking at, “Do these gambling ads appeal to young people?” and then the week after it’s, “Are these cryptocurrency ads being clear about the risks involved?” It’s very disparate, we don’t have a lot of time to iterate on models, and we don’t have huge amounts of training data. Ten years ago, when you were doing sentiment classification, you were on Mechanical Turk getting 10,000 examples, and even then it didn’t work very well after these really complicated models. Now, you’ve got a couple of hundred examples and with the embeddings [from LLMs] you can get to a pretty decent classifier quite quickly. We’re also starting to experiment with using OpenAI’s fine-tuning tools, and the performance that we’ve seen from that is very impressive, to the extent that it’s making us rethink whether we bother doing anything else in some of our classifiers.</p>
+<div class="pullquote-container">
+<div class="grid">
+<div class="g-col-12 g-col-lg-4">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/adam-davison.png" class="img-fluid figure-img" alt="Portrait photo of Adam Davison"></p>
+<figcaption class="figure-caption">Adam Davison</figcaption>
+</figure>
+</div>
+</div>
+<div class="g-col-12 g-col-lg-8 pullquote-grid pullquote">
+<p><img src="../../../../../images/pullquote-purple.png" class="img-fluid" width="50"></p>
+<p>Five years ago, if you had a sophisticated problem involving text or images, you’d need a big research team with a big budget to tackle it. But increasingly we find, like many other people, that you can take models off the shelf and repurpose them for quite diverse tasks.</p>
+</div>
+</div>
+</div>
+<p><strong>Trevor Duguid Farrant:</strong> My organisation is not as far forward as the rest of you. I’ve introduced it to the leadership team, and the digital services team – what was IT – are looking to make a decision on whether we can use it or not. I think there’ll be so much pressure they’ll have to use it, but there’s still a feeling of discomfort with it, whereas I think it’s really good and have started using it. Everyone else on the call seems to have started using it. So, can organisations like the Royal Statistical Society help companies to embrace this and start using it, and then everyone can benefit from it?</p>
+<p><strong>Giles Pavey:</strong> I wish I could be with Piers and Adam – actually using it – but my life has been taken over as the guy who goes and explains it to the business. Unilever is a massive business, and we are concerned about privacy, confidentiality and trustworthiness. We’ve now built an initial GPT instance on Azure and fed it with some of our own documents, and a lot of my time has been working with legal to convince ourselves that that’s okay. Now we are really trying to work out just how we manage the amazing demand for proofs of concepts and use cases – and what we’re just about to uncover, I think, is the unknown but potentially massive expense of running it.</p>
+<p>In pure proofs of concepts, departments that have large knowledge banks are using it: research and development, and marketing, for example. And one of the big technical things that we’re working on – and, because of the size that we are, we’re doing a lot of work with OpenAI and Microsoft on this – is how to stop the models from hallucinating.</p>
+<p><strong>Have your experiences with ChatGPT and other tools changed your thinking about the skillsets required of data scientists and data science teams?</strong></p>
+<p><strong>AD:</strong> A little bit. As someone at a small organisation, I think it’s quite exciting because, five years ago, maybe you were in a world where if you had a sophisticated problem involving text or images, you’d need a big research team with a big budget to tackle it. But increasingly we find, like many other people, that you can take models off the shelf and repurpose them for quite diverse tasks. So, I think it’s becoming increasingly viable to have a small team of people who are implementers, who aren’t necessarily backed up by a big research organisation, doing increasingly sophisticated stuff.</p>
+<p>I don’t think it does away with the sort of things that we always bang on about in the Data Science and AI Section, like the need for an understanding of statistics and how the underlying systems really work, because I think you still need to understand what you’re doing with LLMs, as with any other machine learning technique. But, if I had to guess, what we’re going to be seeing now is that for a lot of problems, you’re going to have more of a division – so, you’re either in one of a small number of very large labs doing research on very cutting-edge big models, or you can be an implementer who is taking things off the shelf and applying them. And maybe that space in between is going to get a little bit squeezed – that would be my guess, but obviously it’s very unpredictable.</p>
+<div class="pullquote-container">
+<div class="grid">
+<div class="g-col-12 g-col-lg-4">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/giles-pavey.png" class="img-fluid figure-img" alt="Portrait photo of Giles Pavey"></p>
+<figcaption class="figure-caption">Giles Pavey</figcaption>
+</figure>
+</div>
+</div>
+<div class="g-col-12 g-col-lg-8 pullquote-grid pullquote">
+<p><img src="../../../../../images/pullquote-purple.png" class="img-fluid" width="50"></p>
+<p>We’ve built an initial GPT instance on Azure. Now we are really trying to work out just how we manage the amazing demand for proofs of concepts and use cases – and what we’re just about to uncover, I think, is the unknown but potentially massive expense of running it.</p>
+</div>
+</div>
+</div>
+<p><strong>PS:</strong> That’s exactly my view. When I first started hiring data scientists, a long time ago, you basically had to write stuff from scratch, and you needed PhDs – people who really understood, at a deep level, how the maths all works. But I think there’s been a steady progression towards valuing software engineering skills, and I think, in some ways, this is another step along that path. If I think now about implementing a chatbot over your own knowledge base, it’s basically like plugging APIs together with some Python. Adam’s point is still hugely important, though, because I think we still need the background knowledge about what’s actually going on – OK, I’m creating embeddings here, and that’s allowing this search to work so I can surface the right docs – that whole process, which an average software engineer is maybe not going to know. But I think it’s definitely blurring the lines.</p>
+<p><strong>Martin Goodson:</strong> It’s just as important now to understand how to evaluate performance. The difference is, it used to be that you were trying to figure out whether it’s 80% accurate, or 85%. Now, it’s like 99.9%. But you still need to figure it out. You still need to understand what the failure modes are, what caused it; how is it actually working, and is it doing what you need it to do for the product? Is it actually satisfying our needs as users or as customers of the products.</p>
+<p><strong>DN:</strong> I think in the future, the skills we will need are people who can run and build these models. Giles made the point about how expensive it is to run these things. Right now, you have two options: subscribe to an API, and then you are limited in how you can modify these models; or build your own – take an open-source LLM and modify it. But then you need people who know how to build a high-performance computing environment and operate this efficiently. You need to know how to actually train the models, how to curate the data, how to set the model parameters. And I always think there’s too much alchemy still going on in this field, right? It’s not proper science. People build these things and then are surprised at what they can do; they didn’t know such things would be possible. A lot of these capabilities only emerge when you make the models really, really big and, essentially, you also have no control over them – you can’t stop them hallucinating. So, these are the kinds of issues we need to get under control if we want to get any value out of them.</p>
+<p>Prompt engineering is another one – you really need to understand how these models work and how to prompt them. If you want to give them to, say, a marketer to generate copywriting, they may not have the right ideas of how to prompt the machine. So, I could see roles developing out of data science that understand how to influence these models and make them do what we want them to do.</p>
+<p><strong>MG:</strong> The other angle to this is junior engineers. Now, the bar for being a useful junior engineer is that you’re better than GitHub Copilot. Why do you need a really junior person if you can just use a large language model to be the junior developer?</p>
+<p><strong>DN:</strong> I’m not thinking about the data science person who needs to write some code for a project here, but if you have a large software team in an organisation that produces production code, they will become more efficient by using these tools. But still, with all this overhead of testing and putting it all together, there will be a lot of manual work that needs to be done. But the teams will get more efficient and junior people will get up to speed quicker. That’s probably another advantage.</p>
+<div class="pullquote-container">
+<div class="grid">
+<div class="g-col-12 g-col-lg-4">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/trevor-duguid-farrant.png" class="img-fluid figure-img" alt="Portrait photo of Trevor Duguid Farrant"></p>
+<figcaption class="figure-caption">Trevor Duguid Farrant</figcaption>
+</figure>
+</div>
+</div>
+<div class="g-col-12 g-col-lg-8 pullquote-grid pullquote">
+<p><img src="../../../../../images/pullquote-purple.png" class="img-fluid" width="50"></p>
+<p>Can the Royal Statistical Society help non-tech companies embrace large language models, extolling their virtues and dispelling the myths?</p>
+</div>
+</div>
+</div>
+<p><strong>PS:</strong> I think Detlef’s point about understanding is an interesting one. It definitely feels like there’s been this sort of continuum from, you know, “OK, it’s a linear regression, we know what’s going on” to complex models to ensemble models where, again, you’re combining these things you can individually understand. Even with big ImageNet architectures, billions of parameters, at least conceptually you can understand how these work and build out tools where you can understand the layers. To me, what’s different now is you’ve got this reinforcement learning layer on top, or diffusion layer, or some other additional approach– this combination of really complicated things. I honestly don’t know where to start with trying to understand why a specific output is generated, and I think that is a proper concern. That’s definitely an area of research, because I think we need to understand this.</p>
+<p><strong>GP:</strong> I think there’s also a question in large companies of just who owns these things. Up until this point, everybody’s been happy that AI is the realm of data science. And, suddenly, generative AI looks like it might be the realm of the IT team – that it’s a service that you get off the shelf. It’s going to be interesting to see how that plays out. I really liked the point that Martin was making about being able to tell what the systems are actually doing, what they are supposed to do and how to check them, because if you don’t have a background in that area, you might just assume they work. Now, nobody knows exactly how these things work – not even the people who build them. But having a background in how you test things, for potential causes for things not working, is actually going to be incredibly powerful or useful.</p>
+<p><strong>TDF:</strong> Will experts like us actually be able to check it because of the speed that new versions are coming out and the developments that are happening? Is it going to take us six months to check that GPT-3.5 works? Well, too late, a month later GPT-4’s out! I just think that pace is going to keep accelerating.</p>
+<div class="callout callout-style-simple callout-note" style="margin-top: 2.25rem;">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Part two of our conversation with the Royal Statistical Society’s Data Science and AI Section will be published soon. Stay tuned!</p>
+</div>
+</div>
+</div>
+<div class="article-btn">
+<p><a href="../../../../../careers/index.html">Back to Careers</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Royal Statistical Society
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This interview is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Photos are not covered by this licence. Portrait photos are supplied by interviewees and used with permission. ChatGPT homescreen photo by <a href="https://unsplash.com/@siva_photography?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Levart_Photographer</a> on <a href="https://unsplash.com/photos/drwpcjkvxuU?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Tarran, Brian. 2023. “How is ChatGPT changing data science?” Real World Data Science, May 11, 2023. <a href="https://realworlddatascience.net/careers/posts/2023/05/11/chatgpt-data-science-pt1.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright © 2023 <a href="https://rss.org.uk/">Royal Statistical Society</a></div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/realworlddatascience">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/rwdatasci">
+      <i class="bi bi-twitter" role="img" aria-label="Twitter">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@rwdatasci">
+      <i class="bi bi-mastodon" role="img" aria-label="Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="../../../../../feeds.html">
+      <i class="bi bi-rss" role="img" aria-label="RWDS rss">
+</i> 
+    </a>
+  </li>  
+</ul>
+    <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/careers/posts/2023/05/11/chatgpt-data-science-pt1.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action">Report an issue</a></p></div></div></div>
+    <div class="nav-footer-right"><a href="../../../../../ts-and-cs.html">Terms &amp; Conditions</a></div>
+  </div>
+</footer>
+
+
+
+</body></html>
