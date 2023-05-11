@@ -1,5 +1,5 @@
 ---
-title: "Food for Thought: First place winners -- Auburn Big Data"
+title: "Food for Thought: Second place winners -- DeepFFTLink"
 # description: |
 #   Stephanie Hare, author of 'Technology is Not Neutral', talks to Real World Data Science about the 'wicked problem' of technology and AI ethics, and why laws and regulations are 'necessary but insufficient' to minimise harms. 'We’re going to have to inculcate an entire new mindset,' she argues.        
 categories:
@@ -7,9 +7,76 @@ categories:
   # - AI ethics
   # - Culture
   # - Regulation
-author: Wenying Li, Jingyi Zheng, Shubhra Kanti Karmaker, Naman Bansal, and Alex Knipper 
+author: Yang Wu, Aishwarya Budhkar, Kai Zhang, Xuhong Zhang, and Xiaozhong Liu 
 date: 05/XX/2023
 toc: true
 # image: images/stephanie-hare-bw.png
 # image-alt: Photo of Stephanie Hare by Mitzi de Margary. Photo supplied by Stephanie Hare, used with permission.  
 ---
+DeepFFTLink team members: Yang Wu and Kai Zhang are PhD students at Worcester Polytechnic Institute. Aishwarya Budhkar is a PhD student at Indiana University Bloomington. Xuhong Zhang is an assistant professor at Indiana University Bloomington. Xiaozhong Liu is an associate professor at Worcester Polytechnic Institute.
+
+## Perspective on the challenge 
+Text matching is an essential task in natural language processing (NLP) **[1]**, while record linkage across different sources is an essential task in data science. Machine learning techniques allow people to combine data faster and cheaper than using manual linkage. However, in the context of the Food for Thought challenge, existing methods for matching universal product codes (UPCs) to ensemble codes (ECs) require every UPC to be compared with every EC code (Figure 1a). Such approaches can be computationally expensive in the training process when data is noisy. Here, we propose an ensemble model with a category-based adapter to tackle this problem. The category-based adapter allows UPCs to be first matched with only a small and reliable set of ECs (Figure 1b). Then, an ensemble model will be deployed to make predictions for UPC-EC matching. Our proposed approach can achieve competitive performance compared with state-of-art models.
+
+:::{layout-ncol=2 style="padding-top: 1em; margin-bottom: 0;"}
+[![(a)](images/pt4-fig1a.png)](images/pt4-fig1a.png)
+
+[![(b)](images/pt4-fig1b.png)](images/pt4-fig1b.png)
+:::
+
+:::{.figure-caption}
+**Figure 1:** A toy example of our method. Panel (a) shows the traditional matching method, while (b) is our proposed ensemble model with category-based adapter. With the help of the adapter, UPC 1 only needs to be matched with EC 1 and EC 3.
+:::
+
+## Our approach 
+We propose a two-step framework to address this problem. To begin with, we use a category-based adapter to get reliable candidate ECs for each UPC. Then, an ensemble model **[2]** is deployed to make a prediction for each UPC-EC pair. 
+
+##### Category-based adapter 
+By using 2015--2016 UPC-EC data, we created a knowledge base, which is a UPC category--EC pair-wised table for generating candidate ECs. Within this setting, each UPC category is, on average, related to only 32 ECs. This knowledge base is then used as context to further filter the candidate ECs. Note that there are some new ECs generated year by year, which can also be part of the potential ECs in the UPC-EC matching task, since the contextual information of new ECs does not exist in our knowledge base. 
+
+##### Ensembled model
+We ensemble the base-string match and BERT **[3]** models. BERT is a deep learning model for natural language processing. In the base-string match model, we used the Term Frequency-Inverse Document Frequency (TFIDF) of each UPC and EC description as features to calculate a pairwise cosine similarity, which is a distance between instances. Meanwhile, we used features extracted from UPC and EC descriptions to fine-tune the BERT base model and calculated the cosine similarity of embeddings between each UPC and EC. Then we rank ECs based on the their similarity scores with the UPC.
+
+[![](images/pt4-fig2.png)](images/pt4-fig2.png)
+
+:::{.figure-caption}
+**Figure 2:** The framework of our proposed model. A two-step strategy is used to make the final prediction.
+:::
+
+## Our results 
+We randomly selected 500 samples from the 2017--2018 UPC-EC data to train the ensembled weight for each model. Two functions were adapted (*a* and *b* are model weights) to make a fusion of base-string and BERT models: 
+
+\(1) *Confidence* = *a* * *base_string_similarity_score* + *b* * *BERT_similarity_score*
+
+\(2) *Confidence* = *a* * *log(base_string_similarity_score)* + *b* * *log(BERT_similarity_score)* 
+ 
+A better model performance is achieved with function (1). The ensembled weights for the base-string model and BERT model are 0.738 and 0.262, respectively. The experiment result indicates that the base-string model contributes more than the BERT model when the ensemble model makes predictions. The prediction result for the 2017--2018 data is:  
+
+- Success@5 = 0.727 
+- NDCG@5 = 0.528  
+
+Computation time is 6 hours. 
+
+## Future work 
+Our next step will focus on adding the newly generated EC data into our knowledge base, which allows the model to be more stable to make predictions for UPC-EC matching. Our model is an unsupervised method, which does not need labels for each instance. We use cosine similarity to rank the matches, so no labels are needed in the training process. However, our future work will try to label some instances to handle the UPC-EC matching task in a supervised manner. 
+
+## Lessons learned 
+1. **If the data is not complex, simple models may outperform complex models.** For example, in our experiment, we found that the base-string model outperforms single RoBERTa **[4]** or BERT models. However, our ensemble model can outperform each individual model since model fusion allows information aggregation from multiple models. 
+
+2. **Multi-label models may not work well on UPC-EC data.** In our early work, we tried to consider the UPC-EC matching task as a multi-label problem, e.g., we labeled each EC as a binary label which indicated whether the EC was an appropriate match or not. We mapped UPC and EC pairs into a multi-label table. However, we find that the UPC and EC keeps a one-to-one relation for most UPCs. The model performance of a multi-label model, i.e., Label-Specific Attention Network (LSAN) **[5]**, is lower than base-string model on both Success@5 and NDCG@5 metrics.  
+
+3. **Effective communication** with the tech team would be very helpful for environment setting during early stages.  
+
+
+
+## References 
+
+1. Pang, L., Lan, Y., Guo, J., Xu, J., Wan, S., & Cheng, X. (2016, March). Text matching as image recognition. In Proceedings of the AAAI Conference on Artificial Intelligence (Vol. 30, No. 1). 
+
+2. Dietterich, T. G. (2000, June). Ensemble methods in machine learning. In International workshop on multiple classifier systems (pp. 1-15). Springer, Berlin, Heidelberg. 
+
+3. Devlin, J., Chang, M. W., Lee, K., & Toutanova, K. (2018). Bert: Pre-training of deep bidirectional transformers for language understanding. arXiv preprint arXiv:1810.04805. 
+
+4. Liu, Y., Ott, M., Goyal, N., Du, J., Joshi, M., Chen, D., ... & Stoyanov, V. (2019). Roberta: A robustly optimized bert pretraining approach. arXiv preprint arXiv:1907.11692. 
+
+5. Xiao, L., Huang, X., Chen, B., & Jing, L. (2019, November). Label-specific document representation for multi-label text classification. In Proceedings of the 2019 conference on empirical methods in natural language processing and the 9th international joint conference on natural language processing (EMNLP-IJCNLP) (pp. 466-475).
