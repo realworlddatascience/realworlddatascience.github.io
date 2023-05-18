@@ -12,8 +12,62 @@ date: 05/XX/2023
 toc: true
 # image: images/google-deepmind-52afknBiUk4-unsplash.png
 # image-alt: 3D render of a conceptual visualisation of large language models by artist Tim West. Photo by Google DeepMind on Unsplash.
+code-fold: true
 ---
 :::{layout-ncol=3}
 ![](images/header-1.png)
+
 ![](images/header-2.png)
-![](images/header-3.png)
+
+![](images/header-3.jpg)
+:::
+
+Reproducibility, or “[the ability of a researcher to duplicate the results of a prior study using the same materials as the original investigator](https://www.nsf.gov/sbe/AC_Materials/SBE_Robust_and_Reliable_Research_Report.pdf)”, is critical for sharing and building upon scientific findings. Reproducibility not only verifies the correctness of processes leading to results but also serves as a prerequisite for assessing generalizability to other datasets or contexts. This we refer to as replicability, or “[the ability of a researcher to duplicate the results of a prior study if the same procedures are followed but new data are collected](https://www.nsf.gov/sbe/AC_Materials/SBE_Robust_and_Reliable_Research_Report.pdf)”. Reproducibility, which is the focus of our work here, can be challenging -- especially in the context of deep learning. This article, and associated material, aims to provide practical advice for overcoming these challenges. 
+
+Our story begins with Davit Svanidze, a Master's degree student in economics at the London School of Economics (LSE). Davit's efforts to make his bachelor's thesis reproducible is what inspires this article, and we hope that other students will be able to learn from Davit's experience and apply those learnings to their own work. Davit will demonstrate the use of Jupyter notebooks, GitHub, and other relevant tools to ensure reproducibility. He will walk us through code documentation, data management, and version control with Git. And, he will share best practices for collaboration, peer review, and dissemination of results.
+
+Davit's story starts here, but there is much more for the interested reader to discover. At certain points in this article, we will direct readers to other resources, namely a [Jupyter notebook](http://c100-159.cloud.gwdg.de:9009/lab/workspaces/auto-8/tree/notebooks/main.ipynb) and [GitHub repository](https://github.com/dsvanidze/replicability) which contain all the instructions, data and code necessary to reproduce Davit's research. Together, these components offer a comprehensive overview of the thought process and technical implementation required for reproducibility. While there is no one-size-fits-all approach, the principles remain consistent.
+
+## Davit’s journey towards reproducibility
+### More power, please
+
+The focus of my bachelor thesis was to better understand the initial spread of Covid-19 in China using deep learning algorithms. I was concerned about making my work reproducible, but not only for my own sake. The "reproducibility crisis" is a well-documented problem in science as a whole [1, 2](link), with studies suggesting that around one-third of social science studies published between the years 2010 and 2015 in top journals like *Nature* and *Science* could not be reproduced. [4](link) Results that cannot be reproduced are not necessarily “wrong”. But, if findings cannot be reproduced, we cannot be sure of their validity.
+
+For [my own research project](http://c100-159.cloud.gwdg.de:9009/lab/workspaces/auto-G/tree/notebooks/main.ipynb), I gathered all data and started working on my computer. After I built the algorithms to train the data, my first challenge to reproducibility was computational. I realized that training models on my local computer was taking far too long, and I needed a faster, more powerful solution to be able to submit my thesis in time. Fortunately, I could access the university server to train the algorithms. Once the training was complete, I could generate the results on my local computer, since producing maps and tables was not so demanding. However...
+
+### Bloody paths!
+In switching between machines and computing environments, I soon encountered another issue. The [paths](https://en.wikipedia.org/wiki/Path_(computing)), or file directory locations, for the trained algorithms were hardcoded. As I quickly discovered, hardcoding a path can lead to issues when the code is run in a different environment, as the path might not exist in the new environment.
+
+As my code became longer, I overlooked the path names linked to algorithms that were generating the results. This mistake -- which would have been easily corrected if pointed out earlier -- resulted in incorrect outputs. Such errors could have enormous (negative) implications in a public health context, where evidence-based decisions have real impacts on human lives. It was at this point that I realized that my code is the fundamental pillar of the validity of my empirical work. How can someone trust my work if they are not able to verify it?
+
+The following dummy code demonstrates the hardcoding issue:
+
+```{{python}}
+# Hardcoded path
+file_path = "/user/notebooks/toydata.csv"
+try:
+    with open(file_path) as file:
+        data = file.read()
+        print(data)
+except FileNotFoundError:
+    print("File not found")
+```
+![](images/hardcoded-paths-1.gif)
+
+If the hardcoded file path -- `"/user/notebooks/toydata.csv"` -- exists on your machine, the code will run just fine. But, when run in a different environment without said path, the code will result in a `"File not found error"`. Better code that uses relative paths can be written as:
+
+```{{python}}
+# Relative path
+import os
+
+file_path = os.path.join(os.getcwd(), "toydata.csv")
+try:
+    with open(file_path) as file:
+        data = file.read()
+        print(data)
+except FileNotFoundError:
+    print("File not found")
+```
+
+![](images/hardcoded-paths-2.gif)
+
