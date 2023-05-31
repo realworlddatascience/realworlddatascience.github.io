@@ -12,9 +12,9 @@ date: 05/XX/2023
 toc: true
 # image: images/google-deepmind-52afknBiUk4-unsplash.png
 # image-alt: 3D render of a conceptual visualisation of large language models by artist Tim West. Photo by Google DeepMind on Unsplash.
-format:
-  html:
-    embed-resources: true
+# format:
+#   html:
+#     embed-resources: true
 ---
 :::{layout-ncol=3}
 ![](images/header-1.png)
@@ -109,9 +109,9 @@ else:
 
 ![](images/hardcoded-paths-3.gif)
 
-Everything looks fine at a glance. But, if you examine the code carefully, you may spot the problem. Initially, when I coded the procedure (training the model, saving and loading the results), I hardcoded the paths and had to change them for each tested model. First I trained `“model2”`, a complex model, and tested it against the benchmark (70 > 50 &rarr; accepted). I repeated the procedure for `“model1”` (a simple model). Its result was identical to `“model2”`, therefore I kept `“model1”`following the [parsimony principle](https://www.sciencedirect.com/topics/computer-science/parsimony-principle).
+Everything looks fine at a glance. But, if you examine the code carefully, you may spot the problem. Initially, when I coded the procedure (training the model, saving and loading the results), I hardcoded the paths and had to change them for each tested model. First, I trained `“model2”`, a complex model, and tested it against the benchmark (70 > 50 &rarr; accepted). I repeated the procedure for `“model1”` (a simple model). Its result was identical to `“model2”`, therefore I kept `“model1”` following the [parsimony principle](https://www.sciencedirect.com/topics/computer-science/parsimony-principle).
 
-However, for the code line loading the result for the current model (line 5, second cell), I forgot to amend the path corresponding to the results of `“model1”`. So I mistakenly loaded the result of `“model2”`. As a result, I accepted a model which should have been rejected. These wrong results were then spread further in the code, including all charts and maps and the conclusions of my analysis.
+However, for the code line loading the result for the current model (line 5, second cell), I forgot to amend the path corresponding to the results of `“model1”`. So, I mistakenly loaded the result of `“model2”`. As a result, I accepted a model which should have been rejected. These wrong results were then spread further in the code, including all charts and maps and the conclusions of my analysis.
 
 A small coding error like this can therefore be fatal to an analysis. Below is the corrected code:
 
@@ -149,7 +149,7 @@ else:
 
 ![](images/hardcoded-paths-4.gif)
 
-Here, the paths are stored with other model details (line 5--6, first cell). Therefore we can use them as variables when we need them (e.g. line 15, first cell, and line 6, second cell). Now, when the current model is set to `“model1”`, everything is automatically adjusted. Also, if the path details need to be changed, we only need to change them once and everything else is automatically adjusted and updated. The code now correctly states that `“model1”` performs worse than the benchmark and is therefore rejected and we should keep `“model2”`, which performs best. 
+Here, the paths are stored with other model details (line 5--6, first cell). Therefore, we can use them as variables when we need them (e.g. line 15, first cell, and line 6, second cell). Now, when the current model is set to `“model1”`, everything is automatically adjusted. Also, if the path details need to be changed, we only need to change them once and everything else is automatically adjusted and updated. The code now correctly states that `“model1”` performs worse than the benchmark and is therefore rejected and we should keep `“model2”`, which performs best. 
 
 I managed to catch this error in time, but it often can be difficult to spot our own mistakes. That is why making code available to others is crucial. A code review by a second (or third) pair of eyes can save everyone a lot of time and avoid spreading incorrect results and conclusions.
 
@@ -171,9 +171,9 @@ In this example, by downloading the project, including the Dockerfile, anyone ca
 ### Why does nobody check your code?
 Even after implementing Docker, I still faced another challenge to reproducibility: making the verification process for my code easy enough that it could be done by anyone, without them needing a degree in computer science! Increasingly, there is an expectation for researchers to share their code so that results can be reproduced, but there are, as yet, no widely accepted or enforced standards on how to make code readable and reusable. However, if we are to embrace the concept of reproducibility, we must write and publish code under the assumption that someone, somewhere -- boss, team member, journal reviewer, reader -- will want to rerun our code. And, if we expect that someone will want to rerun our code (and hopefully check it), we should ensure that the code is readable and does not take too long to run.
 
-If your code *does* takes too long to run, some operations can often be accelerated -- for example, by reducing the size of the datasets or by implementing computationally efficient data processing approaches (e.g., using [PyTorch](https://pytorch.org/)). Aim for a running time of a few minutes -- or about as long as it takes to make a cup of tea or coffee. Of course, if data needs to be reduced to save computational time, the person rerunning your code won’t generate the same results as in your original analysis. This therefore will not lead to reproducibility, *sensu stricto*. However, as long as you state clearly what are the expected results from the reduced dataset, your peers can at least inspect your code and offer feedback, and this marks a step towards reproducibility. 
+If your code *does* take too long to run, some operations can often be accelerated -- for example, by reducing the size of the datasets or by implementing computationally efficient data processing approaches (e.g., using [PyTorch](https://pytorch.org/)). Aim for a running time of a few minutes -- or about as long as it takes to make a cup of tea or coffee. Of course, if data needs to be reduced to save computational time, the person rerunning your code won’t generate the same results as in your original analysis. This therefore will not lead to reproducibility, *sensu stricto*. However, as long as you state clearly what are the expected results from the reduced dataset, your peers can at least inspect your code and offer feedback, and this marks a step towards reproducibility. 
 
-We should also make sure our code is free from bugs -- both the kind that might lead to errors in analysis and also those that stop the code running to completion. Bugs can occur for various reasons. For example, some code chunks written on a Windows machine may not properly execute on a macOS machine because the former uses `/` for file paths, while the later uses `\`:
+We should also make sure our code is free from bugs -- both the kind that might lead to errors in analysis and also those that stop the code running to completion. Bugs can occur for various reasons. For example, some code chunks written on a Windows machine may not properly execute on a macOS machine because the former uses `/` for file paths, while the latter uses `\`:
 
 ```{{python}}
 # Path works on macOS/Linux
@@ -218,7 +218,7 @@ While creating my notebook, I was able to experiment with my code and iterate qu
 ### Version control with Git and GitHub
 My Jupyter notebook and associated folders and files are all available via [GitHub](https://github.com/dsvanidze/replicability/tree/master). [Git](https://git-scm.com/) is a version control system that allows you to keep track of changes to your code over time, while GitHub is a web-based platform that provides a central repository for storing and sharing code. With Git and GitHub, I was able to version my code and collaborate with others without risking losing any work. I really couldn’t afford to re-do the entire year I spent on my dissertation!
 
-Git and GitHub are great for reproducibility. By sharing code via these platforms, others can access your work, verify it and reproduce your results without risking changing or, worse, destroying your work -- whether partially or completely. These tools also makes it easy for others to build on your work if they want to further develop your research. You can also use Git and GitHub to share or promote your results across a wider community. The ability to easily store and share your code also makes it easy to keep track of the different versions of your code and to see how your work has evolved.
+Git and GitHub are great for reproducibility. By sharing code via these platforms, others can access your work, verify it and reproduce your results without risking changing or, worse, destroying your work -- whether partially or completely. These tools also make it easy for others to build on your work if they want to further develop your research. You can also use Git and GitHub to share or promote your results across a wider community. The ability to easily store and share your code also makes it easy to keep track of the different versions of your code and to see how your work has evolved.
 
 The following illustration shows the tracking of very simple changes in a Python file. The previous version of the code is shown on the left; the new version is shown on the right. Additions and deletions are highlighted in green and red, and with `+` and `-` symbols, respectively.
 
@@ -300,7 +300,7 @@ The graphic below provides a visual overview of the different components of our 
 
 We use (A) the version control system, Git, and its hosting service, GitHub, which enables a team to share code with peers, efficiently track and synchronize code changes between local and server machines, and reset the project to a working state in case something breaks. Docker containers (B) include all necessary objects (engine, data, and scripts). Docker needs to be installed (plain-line arrows) by all users (project leader, collaborator(s), reviewer(s), and public user(s)) on their local machines (C); and (D) we use a user-friendly interface (JupyterLab) deployed from a local machine to facilitate the operations required to reproduce the work. The project leader and collaborators can edit (upload/download) the project files stored on the GitHub server (plain-line arrows) while reviewers and public users can only read the files (dotted-line arrows).
 
-Now, it is over to you. Our [Jupyter notebook](http://c100-159.cloud.gwdg.de:9009/lab/tree/notebooks/main.ipynb) provides a walkthough of our research. Our [GitHub repository](https://github.com/dsvanidze/replicability/tree/master) has all the data, code and other files you need to reproduce our work, and this [README file](https://github.com/dsvanidze/replicability/blob/master/README.md) will help you get started.
+Now, it is over to you. Our [Jupyter notebook](http://c100-159.cloud.gwdg.de:9009/lab/tree/notebooks/main.ipynb) provides a walkthrough of our research. Our [GitHub repository](https://github.com/dsvanidze/replicability/tree/master) has all the data, code and other files you need to reproduce our work, and this [README file](https://github.com/dsvanidze/replicability/blob/master/README.md) will help you get started.
 
 And, with that, we wish you all the best on your own quest for reproducibility!
 
