@@ -95,6 +95,62 @@ ul.task-list li input[type="checkbox"] {
   
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-ideas .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-ideas'] = new List('listing-ideas', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-careers .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-careers'] = new List('listing-careers', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
     const listingTargetEl = window.document.querySelector('#listing-editors-blog .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
@@ -123,34 +179,6 @@ ul.task-list li input[type="checkbox"] {
   
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-datasciencebites .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-datasciencebites'] = new List('listing-datasciencebites', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
     const listingTargetEl = window.document.querySelector('#listing-interviews .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
@@ -165,34 +193,6 @@ ul.task-list li input[type="checkbox"] {
 
     window['quarto-listings'] = window['quarto-listings'] || {};
     window['quarto-listings']['listing-interviews'] = new List('listing-interviews', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-career-profiles .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-career-profiles'] = new List('listing-career-profiles', options);
 
     if (window['quarto-listing-loaded']) {
       window['quarto-listing-loaded']();
@@ -303,17 +303,17 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 
 <div class="content-container">
 <div class="top-story purple-background">
-<p><a href="./viewpoints/posts/2023/06/05/no-AI-probably-wont-kill-us.html"></a></p><a href="./viewpoints/posts/2023/06/05/no-AI-probably-wont-kill-us.html">
+<p><a href="./viewpoints/interviews/posts/2023/06/08/london-data-week.html"></a></p><a href="./viewpoints/interviews/posts/2023/06/08/london-data-week.html">
 <div class="grid">
-<section id="no-ai-probably-wont-kill-us-all-and-theres-more-to-this-fear-campaign-than-meets-the-eye" class="g-col-12 g-col-lg-4 top-story-text">
-<h2>No, AI probably won’t kill us all – and there’s more to this fear campaign than meets the&nbsp;eye</h2>
-<p>Last week, outlets around the world were plastered with news of yet another open letter claiming AI poses an existential threat to humankind. Michael Timothy Bennett argues that a healthy dose of scepticism is warranted when considering the ‘AI doomsayer’ narrative.</p>
+<section id="london-data-week-is-almost-here.-whats-it-all-about" class="g-col-12 g-col-lg-4 top-story-text">
+<h2>London Data Week is almost here. What’s it all about?</h2>
+<p>The first ever London Data Week runs from 3–9 July 2023. Real World Data Science meets with organisers Sam Nutt and Jennifer Ding to hear about their vision and plans for the week, and a selection of activities to look forward to.</p>
 </section>
 <div class="g-col-12 g-col-lg-8 top-story-img">
-<p><img src="viewpoints/posts/2023/06/05/images/AlanWarburton-SocialMedia.png" class="img-fluid"></p>
+<p><img src="viewpoints/interviews/posts/2023/06/08/images/arthur-yao-HTicW9-i4xY-unsplash.png" class="img-fluid"></p>
 </div>
 </div>
-</a><p><a href="./viewpoints/posts/2023/06/05/no-AI-probably-wont-kill-us.html"></a></p>
+</a><p><a href="./viewpoints/interviews/posts/2023/06/08/london-data-week.html"></a></p>
 </div>
 </div>
 <!-- ::: {.header-banner .header-image}
@@ -333,7 +333,32 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 </a><p><a href="./latest-content.html"></a></p>
 <div id="listing-latest-content" class="quarto-listing quarto-listing-container-grid">
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="Large language models,Skills,Tools,Ethics,People" data-listing-date-sort="1685059200000" data-listing-file-modified-sort="1686141855606" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
+<div class="g-col-1" data-index="0" data-categories="AI,Large language models,Regulation" data-listing-date-sort="1685923200000" data-listing-file-modified-sort="1686234900566" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
+<a href="./viewpoints/posts/2023/06/05/no-AI-probably-wont-kill-us.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./viewpoints/posts/2023/06/05/images/AlanWarburton-SocialMedia.png" class="thumbnail-image card-img" style="height: 150px;" alt="A photographic rendering of a smiling face emoji seen through a refractive glass grid, overlaid with a diagram of a neural network.">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+No, AI probably won’t kill us all – and there’s more to this fear campaign than meets the&nbsp;eye
+</h5>
+<div class="card-text listing-description">
+Last week, outlets around the world were plastered with news of yet another open letter claiming AI poses an existential threat to humankind. Michael Timothy Bennett argues…
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Michael Timothy Bennett
+</div>
+<div class="listing-date">
+Jun 5, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="1" data-categories="Large language models,Skills,Tools,Ethics,People" data-listing-date-sort="1685059200000" data-listing-file-modified-sort="1686234900554" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <a href="./viewpoints/editors-blog/posts/2023/05/26/future.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -358,7 +383,7 @@ May 26, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="Data analysis,SQL,R,Bootcamps,Education" data-listing-date-sort="1684886400000" data-listing-file-modified-sort="1686141855530" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13">
+<div class="g-col-1" data-index="2" data-categories="Data analysis,SQL,R,Bootcamps,Education" data-listing-date-sort="1684886400000" data-listing-file-modified-sort="1686234900494" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13">
 <a href="./careers/career-profiles/posts/2023/05/24/jasmine-holdsworth.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -383,31 +408,6 @@ May 24, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="2" data-categories="Large language models,AI,Communication,Regulation" data-listing-date-sort="1684368000000" data-listing-file-modified-sort="1686141855542" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13">
-<a href="./careers/posts/2023/05/18/chatgpt-data-science-pt2.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./careers/posts/2023/05/18/images/google-deepmind-52afknBiUk4-unsplash.png" class="thumbnail-image card-img" style="height: 150px;" alt="3D render of a conceptual visualisation of large language models by artist Tim West. Photo by Google DeepMind on Unsplash.">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Large language models: Do we need to understand the maths, or simply recognise the limitations?
-</h5>
-<div class="card-text listing-description">
-Do we need to understand the inner workings of large language models before we use them? Or, is it enough to simply teach people to recognise that model outputs can’t always…
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Brian Tarran
-</div>
-<div class="listing-date">
-May 18, 2023
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
 </div>
 <div class="listing-no-matching d-none">
 No matching items
@@ -422,111 +422,47 @@ No matching items
 <div class="pullout-container">
 <div class="pullout-block black-background">
 <p><img src="images/quote-purple.png" class="img-fluid" width="100"></p>
-<h2 id="laws-and-regulations-are-important-theyre-necessary-but-theyre-insufficient.-you-can-act-a-lot-faster-if-you-can-get-people-preventing-stuff-from-being-built-in-the-first-place-and-that-means-you-need-to-have-a-culture-of-people-who-can-see-something-and-sound-the-alarm-and-go-wait-a-minute-hang-on.-thats-not-okay.">[Laws and regulations] are important, they’re necessary, but they’re insufficient. You can act a lot faster if you can get people preventing stuff from being built in the first place, and that means you need to have a culture of people who can see something and sound the alarm and go, ‘Wait a minute, hang on. That’s not okay.’</h2>
-<p>Stephanie Hare on why we need a culture of technology ethics</p>
+<h2 id="this-feels-like-a-brand-new-capability-an-interface-with-unstructured-information.-historically-you-have-to-turn-text-into-something-and-then-turn-something-back-into-text-if-you-want-to-have-this-interface-with-humans.-now-weve-got-this-elegant-way-of-plugging-the-gaps.">This feels like a brand-new capability – an interface with unstructured information. Historically, you have to turn text into something, and then turn something back into text, if you want to have this interface with humans. Now, we’ve got this elegant way of plugging the gaps.</h2>
+<p>Data science leaders on the transformative impact of ChatGPT</p>
 <div class="button">
-<p><a href="./viewpoints/interviews/posts/04/28/stephanie-hare.html">Listen to the interview</a></p>
+<p><a href="./careers/posts/2023/05/11/chatgpt-data-science-pt1.html">Join the discussion</a></p>
 </div>
 </div>
 </div>
 </div>
 <div class="content-container">
 <div class="listing-block">
-<p><a href="./viewpoints/interviews/index.html"></a></p><a href="./viewpoints/interviews/index.html">
-<h2 id="interviews">Interviews</h2>
-</a><p><a href="./viewpoints/interviews/index.html"></a></p>
-<div id="listing-interviews" class="quarto-listing quarto-listing-container-grid">
+<p><a href="./ideas/index.html"></a></p><a href="./ideas/index.html">
+<h2 id="data-science-ideas">Data Science Ideas</h2>
+</a><p><a href="./ideas/index.html"></a></p>
+<div id="listing-ideas" class="quarto-listing quarto-listing-container-grid">
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="Technology ethics,AI ethics,Culture,Regulation" data-listing-date-sort="1682640000000" data-listing-file-modified-sort="1686141855610" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="39">
-<a href="./viewpoints/interviews/posts/04/28/stephanie-hare.html" class="quarto-grid-link">
+<div class="g-col-1" data-index="0" data-categories="Prediction,History of data science,Statistics" data-listing-date-sort="1681344000000" data-listing-file-modified-sort="1686234900518" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="45">
+<a href="./ideas/tutorials/posts/2023/04/13/flowers.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
-<img src="./viewpoints/interviews/posts/04/28/images/stephanie-hare-bw.png" class="thumbnail-image card-img" style="height: 150px;" alt="Photo of Stephanie Hare by Mitzi de Margary. Photo supplied by Stephanie Hare, used with permission.">
+<img src="./ideas/tutorials/posts/2023/04/13/images/quetelet-flowers.png" class="thumbnail-image card-img" style="height: 150px;" alt="Portrait of Adolphe Quetelet, superimposed on a photo of blooming purple lilacs. Quetelet portrait from Wikimedia Commons, Public Domain. Lilacs photo by Arina Bogachyova/iStock.">
 </p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
-‘I’m way more into prevention than cure’: Stephanie Hare on why we need a culture of technology ethics
+A demonstration of the law of the flowering plants
 </h5>
 <div class="card-text listing-description">
-Stephanie Hare, author of ‘Technology is Not Neutral’, talks to Real World Data Science about the ‘wicked problem’ of technology and AI ethics, and why laws and regulations…
+The day a flower blooms is one of the earliest phenomena studied with systematic data collection and analysis. The prediction rule developed nearly three centuries ago is…
 </div>
 <div class="card-attribution card-text-small justify">
 <div class="listing-author">
-Brian Tarran
+Jonathan Auerbach
 </div>
 <div class="listing-date">
-Apr 28, 2023
+Apr 13, 2023
 </div>
 </div>
 </div>
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="Data science education,Data literacy,Policy" data-listing-date-sort="1678060800000" data-listing-file-modified-sort="1686141855610" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="41">
-<a href="./viewpoints/interviews/posts/03/06/data-science-act.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./viewpoints/interviews/posts/03/06/images/andy-feliciotti-isg8AL7-6uk-unsplash.png" class="thumbnail-image card-img" style="height: 150px;" alt="Bikers in front of the United States Capitol in Washington DC. Photo by Andy Feliciotti on Unsplash.">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-US legislators get their data science act together
-</h5>
-<div class="card-text listing-description">
-A bill introduced in the US Congress wants to make funds available to develop data science and data literacy education across the United States. We sit down with education…
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Brian Tarran
-</div>
-<div class="listing-date">
-Mar 6, 2023
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="2" data-categories="Open science,Reproducible research" data-listing-date-sort="1675382400000" data-listing-file-modified-sort="1686141855610" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="23">
-<a href="./viewpoints/interviews/posts/02/03/heidi-seibold.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./viewpoints/interviews/posts/02/03/images/heidi-seibold.png" class="thumbnail-image card-img" style="height: 150px;" alt="Photo of Heidi Seibold">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Why open science is ‘just good science in a digital era’
-</h5>
-<div class="card-text listing-description">
-<p>Real World Data Science speaks with statistician and data scientist Heidi Seibold about open science: what it means, the benefits of it, and how to move towards it.</p>
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Brian Tarran
-</div>
-<div class="listing-date">
-Feb 3, 2023
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div>
-</div>
-</div>
-<div class="content-container">
-<div class="listing-block">
-<p><a href="./ideas/datasciencebites/index.html"></a></p><a href="./ideas/datasciencebites/index.html">
-<h2 id="data-science-bites">Data Science Bites</h2>
-</a><p><a href="./ideas/datasciencebites/index.html"></a></p>
-<div id="listing-datasciencebites" class="quarto-listing quarto-listing-container-grid">
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="Market basket analysis,Recommendation systems,Complementarity" data-listing-date-sort="1677715200000" data-listing-file-modified-sort="1686141855550" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
+<div class="g-col-1" data-index="1" data-categories="Market basket analysis,Recommendation systems,Complementarity" data-listing-date-sort="1677715200000" data-listing-file-modified-sort="1686234900506" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
 <a href="./ideas/datasciencebites/posts/2023/03/02/basket-complementarity.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -551,7 +487,7 @@ Mar 2, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="Data management,Dimension reduction,Graph theory" data-listing-date-sort="1674518400000" data-listing-file-modified-sort="1686141855546" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
+<div class="g-col-1" data-index="2" data-categories="Data management,Dimension reduction,Graph theory" data-listing-date-sort="1674518400000" data-listing-file-modified-sort="1686234900506" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
 <a href="./ideas/datasciencebites/posts/2023/01/24/pulling-patterns.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -576,31 +512,6 @@ Jan 24, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="2" data-categories="A/B testing,Reinforcement learning,Statistics" data-listing-date-sort="1670889600000" data-listing-file-modified-sort="1686141855546" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
-<a href="./ideas/datasciencebites/posts/2022/12/13/ridesharing.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./ideas/datasciencebites/posts/2022/12/13/images/paul-hanaoka-D-qq7W751vs-unsplash.jpg" class="thumbnail-image card-img" style="height: 150px;" alt="Photo taken from the backseat of a Lyft vehicle. Driver is seen in profile to the left of the picture. Phone is mounted on the dash and displays a maps app that is tracking the route to the passenger&amp;#039;s destination. Photo by Paul Hanaoka on Unsplash.">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Determining the best way to route drivers for ridesharing via reinforcement learning
-</h5>
-<div class="card-text listing-description">
-A/B testing is often used to evaluate the impact of design ‘treatments’ — for example, are people who see advert A more likely to buy something than those who see advert B?…
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Brian King
-</div>
-<div class="listing-date">
-Dec 13, 2022
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
 </div>
 <div class="listing-no-matching d-none">
 No matching items
@@ -608,26 +519,14 @@ No matching items
 </div>
 </div>
 </div>
-<div class="pullout-text">
-<div class="pullout-container">
-<div class="pullout-block black-background">
-<p><img src="images/quote-purple.png" class="img-fluid" width="100"></p>
-<h2 id="as-ive-transitioned-into-management-maintaining-my-coding-prowess-is-an-ongoing-challenge.-i-stay-sharp-by-doing-data-science-and-infrastructure-development-for-fun-leveraging-tools-like-chatgpt-and-airops-where-im-rusty.">As I’ve transitioned into management, maintaining my coding prowess is an ongoing challenge. I stay sharp by doing data science and infrastructure development for fun, leveraging tools like ChatGPT and AirOps where I’m rusty.</h2>
-<p>Sami Rahman, head of data engineering and data platform at Penguin Random House</p>
-<div class="button">
-<p><a href="./careers/career-profiles/posts/2023/04/24/sami-rahman.html">Read Sami’s career profile</a></p>
-</div>
-</div>
-</div>
-</div>
 <div class="content-container">
 <div class="listing-block">
-<p><a href="./careers/career-profiles/index.html"></a></p><a href="./careers/career-profiles/index.html">
-<h2 id="career-profiles">Career profiles</h2>
-</a><p><a href="./careers/career-profiles/index.html"></a></p>
-<div id="listing-career-profiles" class="quarto-listing quarto-listing-container-grid">
+<p><a href="./careers/index.html"></a></p><a href="./careers/index.html">
+<h2 id="data-science-careers">Data Science Careers</h2>
+</a><p><a href="./careers/index.html"></a></p>
+<div id="listing-careers" class="quarto-listing quarto-listing-container-grid">
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="Data analysis,SQL,R,Bootcamps,Education" data-listing-date-sort="1684886400000" data-listing-file-modified-sort="1686141855530" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13">
+<div class="g-col-1" data-index="0" data-categories="Data analysis,SQL,R,Bootcamps,Education" data-listing-date-sort="1684886400000" data-listing-file-modified-sort="1686234900494" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13">
 <a href="./careers/career-profiles/posts/2023/05/24/jasmine-holdsworth.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -652,50 +551,151 @@ May 24, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="Publishing,Data engineering,Data strategy,Machine learning" data-listing-date-sort="1682294400000" data-listing-file-modified-sort="1686141855530" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
-<a href="./careers/career-profiles/posts/2023/04/24/sami-rahman.html" class="quarto-grid-link">
+<div class="g-col-1" data-index="1" data-categories="Large language models,AI,Communication,Regulation" data-listing-date-sort="1684368000000" data-listing-file-modified-sort="1686234900502" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13">
+<a href="./careers/posts/2023/05/18/chatgpt-data-science-pt2.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
-<img src="./careers/career-profiles/posts/2023/04/24/images/sami-rahman-bw.png" class="thumbnail-image card-img" style="height: 150px;" alt="Black and white portrait photo of Sami Rahman. Photo supplied by Sami Rahman, used with permission.">
+<img src="./careers/posts/2023/05/18/images/google-deepmind-52afknBiUk4-unsplash.png" class="thumbnail-image card-img" style="height: 150px;" alt="3D render of a conceptual visualisation of large language models by artist Tim West. Photo by Google DeepMind on Unsplash.">
 </p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
-‘I always thought someone like me couldn’t work in data, let alone data science’
+Large language models: Do we need to understand the maths, or simply recognise the limitations?
 </h5>
 <div class="card-text listing-description">
-Sami Rahman, head of data engineering and data platform at Penguin Random House, parlayed a psychology degree into a data science career – inspired by a talk on machine…
+Do we need to understand the inner workings of large language models before we use them? Or, is it enough to simply teach people to recognise that model outputs can’t always…
 </div>
 <div class="card-attribution card-text-small justify">
 <div class="listing-author">
 Brian Tarran
 </div>
 <div class="listing-date">
-Apr 24, 2023
+May 18, 2023
 </div>
 </div>
 </div>
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="2" data-categories="Automotive,Analytics,Leadership,Machine learning" data-listing-date-sort="1679961600000" data-listing-file-modified-sort="1686141855526" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
-<a href="./careers/career-profiles/posts/2023/03/28/tamanna-haque.html" class="quarto-grid-link">
+<div class="g-col-1" data-index="2" data-categories="Large language models,AI,Skills,People" data-listing-date-sort="1683763200000" data-listing-file-modified-sort="1686234900498" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16">
+<a href="./careers/posts/2023/05/11/chatgpt-data-science-pt1.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
-<img src="./careers/career-profiles/posts/2023/03/28/images/tamanna-haque-crop.png" class="thumbnail-image card-img" style="height: 150px;" alt="Black and white portrait photo of Tamanna Haque.">
+<img src="./careers/posts/2023/05/11/images/chatgpt-homescreen.png" class="thumbnail-image card-img" style="height: 150px;" alt="Photo of ChatGPT homescreen, by Levart_Photographer on Unsplash.">
 </p>
 <div class="card-body post-contents">
 <h5 class="no-anchor card-title listing-title">
-‘Data science challenges you to keep learning – there’ll always be new advances in the field’
+How is ChatGPT changing data science?
 </h5>
 <div class="card-text listing-description">
-Tamanna Haque, lead data scientist at Jaguar Land Rover, shares her route into data science: from pursuing a maths degree at Manchester to analysing vehicle data for a major…
+We sit down with the Royal Statistical Society’s Data Science and AI Section to hear how large language models are becoming part of the data science toolkit, and to consider…
 </div>
 <div class="card-attribution card-text-small justify">
 <div class="listing-author">
 Brian Tarran
 </div>
 <div class="listing-date">
-Mar 28, 2023
+May 11, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+</div>
+</div>
+</div>
+<div class="pullout-text">
+<div class="pullout-container">
+<div class="pullout-block black-background">
+<p><img src="images/quote-purple.png" class="img-fluid" width="100"></p>
+<h2 id="laws-and-regulations-are-important-theyre-necessary-but-theyre-insufficient.-you-can-act-a-lot-faster-if-you-can-get-people-preventing-stuff-from-being-built-in-the-first-place-and-that-means-you-need-to-have-a-culture-of-people-who-can-see-something-and-sound-the-alarm-and-go-wait-a-minute-hang-on.-thats-not-okay.">[Laws and regulations] are important, they’re necessary, but they’re insufficient. You can act a lot faster if you can get people preventing stuff from being built in the first place, and that means you need to have a culture of people who can see something and sound the alarm and go, ‘Wait a minute, hang on. That’s not okay.’</h2>
+<p>Stephanie Hare on why we need a culture of technology ethics</p>
+<div class="button">
+<p><a href="./viewpoints/interviews/posts/2023/04/28/stephanie-hare.html">Listen to the interview</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="content-container">
+<div class="listing-block">
+<p><a href="./viewpoints/interviews/index.html"></a></p><a href="./viewpoints/interviews/index.html">
+<h2 id="interviews">Interviews</h2>
+</a><p><a href="./viewpoints/interviews/index.html"></a></p>
+<div id="listing-interviews" class="quarto-listing quarto-listing-container-grid">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-categories="Data,Innovation,Events,Communities" data-listing-date-sort="1686182400000" data-listing-file-modified-sort="1686234900562" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15">
+<a href="./viewpoints/interviews/posts/2023/06/08/london-data-week.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./viewpoints/interviews/posts/2023/06/08/images/arthur-yao-HTicW9-i4xY-unsplash.png" class="thumbnail-image card-img" style="height: 150px;" alt="Photo of London at night, with Big Ben clock tower towering over the city. Photo by Arthur Yao on Unsplash.">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+London Data Week is almost here. What’s it all about?
+</h5>
+<div class="card-text listing-description">
+The first ever London Data Week runs from 3–9 July 2023. Real World Data Science meets with organisers Sam Nutt and Jennifer Ding to hear about their vision and plans for…
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Brian Tarran
+</div>
+<div class="listing-date">
+Jun 8, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="1" data-categories="Technology ethics,AI ethics,Culture,Regulation" data-listing-date-sort="1682640000000" data-listing-file-modified-sort="1686234900562" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="39">
+<a href="./viewpoints/interviews/posts/2023/04/28/stephanie-hare.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./viewpoints/interviews/posts/2023/04/28/images/stephanie-hare-bw.png" class="thumbnail-image card-img" style="height: 150px;" alt="Photo of Stephanie Hare by Mitzi de Margary. Photo supplied by Stephanie Hare, used with permission.">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+‘I’m way more into prevention than cure’: Stephanie Hare on why we need a culture of technology ethics
+</h5>
+<div class="card-text listing-description">
+Stephanie Hare, author of ‘Technology is Not Neutral’, talks to Real World Data Science about the ‘wicked problem’ of technology and AI ethics, and why laws and regulations…
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Brian Tarran
+</div>
+<div class="listing-date">
+Apr 28, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="2" data-categories="Data science education,Data literacy,Policy" data-listing-date-sort="1678060800000" data-listing-file-modified-sort="1686234900558" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="41">
+<a href="./viewpoints/interviews/posts/2023/03/06/data-science-act.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./viewpoints/interviews/posts/2023/03/06/images/andy-feliciotti-isg8AL7-6uk-unsplash.png" class="thumbnail-image card-img" style="height: 150px;" alt="Bikers in front of the United States Capitol in Washington DC. Photo by Andy Feliciotti on Unsplash.">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+US legislators get their data science act together
+</h5>
+<div class="card-text listing-description">
+A bill introduced in the US Congress wants to make funds available to develop data science and data literacy education across the United States. We sit down with education…
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Brian Tarran
+</div>
+<div class="listing-date">
+Mar 6, 2023
 </div>
 </div>
 </div>
@@ -716,7 +716,7 @@ No matching items
 </a><p><a href="./viewpoints/editors-blog/index.html"></a></p>
 <div id="listing-editors-blog" class="quarto-listing quarto-listing-container-grid">
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="Large language models,Skills,Tools,Ethics,People" data-listing-date-sort="1685059200000" data-listing-file-modified-sort="1686141855606" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
+<div class="g-col-1" data-index="0" data-categories="Large language models,Skills,Tools,Ethics,People" data-listing-date-sort="1685059200000" data-listing-file-modified-sort="1686234900554" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <a href="./viewpoints/editors-blog/posts/2023/05/26/future.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -741,7 +741,7 @@ May 26, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="Updates,Themes,People" data-listing-date-sort="1680048000000" data-listing-file-modified-sort="1686141855602" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
+<div class="g-col-1" data-index="1" data-categories="Updates,Themes,People" data-listing-date-sort="1680048000000" data-listing-file-modified-sort="1686234900554" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
 <a href="./viewpoints/editors-blog/posts/2023/03/29/defining-DS.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -766,7 +766,7 @@ Mar 29, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="2" data-categories="AI,Large language models,Classifiers,Screening tests" data-listing-date-sort="1678838400000" data-listing-file-modified-sort="1686141855598" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
+<div class="g-col-1" data-index="2" data-categories="AI,Large language models,Classifiers,Screening tests" data-listing-date-sort="1678838400000" data-listing-file-modified-sort="1686234900550" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
 <a href="./viewpoints/editors-blog/posts/2023/03/15/AI-screening.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
