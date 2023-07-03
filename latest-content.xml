@@ -17,7 +17,214 @@
 <width>144</width>
 </image>
 <generator>quarto-1.3.433</generator>
-<lastBuildDate>Wed, 28 Jun 2023 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 03 Jul 2023 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Trusted AI: translating AI ethics from theory into practice</title>
+  <dc:creator>Maxine Setiawan and Mira Pijselman</dc:creator>
+  <link>https://realworlddatascience.net/ideas/posts/2023/07/03/trusted-AI.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>With artificial intelligence (AI) becoming increasingly prevalent across sectors, so too have conversations about AI ethics. AI ethics provides a repeatable and comprehensive way to assess what we should and should not be doing with AI, and sets out how we ought to design, use, and govern AI products in accordance with key principles. Ethical frameworks are essential to derive sustainable value from AI products and services and build trust.</p>
+<p>A myriad of AI tools that leverage automated or semi-automated decision-making processes have raised important questions that have become foundational in the AI ethics community, such as ‘What does it mean for an algorithm to be fair?’ As an example, AI tools that are used in recruitment may perpetuate biases arising from historical training data. If a model used to generate a shortlist of applicants has been trained on data from past candidates, say, and those candidates – both successful and unsuccessful – are predominantly men, historical patterns that contain various biases will perpetuate to become algorithmic biases that form the model’s decisions. Thus, the model may algorithmically discriminate against women or gender minorities, as individuals from these groups are not well represented in the training data.</p>
+<p>To ensure the safe and responsible use of AI, the focus moving forward needs to be on the operationalisation of AI ethics into the day-to-day development lifecycle. But, what does this look like in practice? And how might you get started as an ethical AI practitioner? In this article, we unpack these questions and give you, the data scientist, a foundation to begin your journey towards trusted AI. Read along to get an overview of key principles that you should be aware of, what they mean, their underlying technical grounding, and what implementation might look like practically.</p>
+<section id="ethical-ai-principles" class="level2">
+<h2 class="anchored" data-anchor-id="ethical-ai-principles">Ethical AI principles</h2>
+<p>You have likely heard of several principles in relation to ethical AI, such as fairness or transparency. The context in which you’ve encountered such principles is most probably due to their inclusion in a broader ethical framework. Some of the most popular ethical AI frameworks include the <a href="https://www.nist.gov/itl/ai-risk-management-framework">National Institute of Standards and Technology’s AI Risk Management Framework</a>, the <a href="https://www.gov.uk/government/publications/data-ethics-framework/data-ethics-framework-2020">UK Data Ethics Framework</a>, and the <a href="https://digital-strategy.ec.europa.eu/en/library/ethics-guidelines-trustworthy-ai">European Commission’s Ethics Guidelines for Trustworthy AI</a>. Among these and many other frameworks, we can run into what <a href="https://dx.doi.org/10.2139/ssrn.3831321">Floridi and Cowls (2019)</a> call “principle proliferation,” whereby it becomes overwhelming for those contributing to AI programmes to know where to begin with ethics due to an excess of choice (p.&nbsp;2).</p>
+<p>At the time of writing, there is no single universally accepted standard that dictates which essential ethical AI values or principles should be adhered to during AI development and deployment. However, there are common themes that emerge. In our organisation, EY, we’ve learned from the variety of principles, frameworks, and white papers in the AI ethics community and developed our own Trusted AI Framework comprising five key attributes that we believe assure the trustworthiness of AI:</p>
+<ul>
+<li>Transparent</li>
+<li>Explainable</li>
+<li>Unbiased</li>
+<li>Resilient</li>
+<li>High-performing</li>
+</ul>
+<p>In this article, we take a deeper dive into the first three attributes – transparency, explainability, and unbiasedness (or fairness). These are areas where data scientists can act as critical enablers of ethical AI when they have the right knowledge and toolkits at their disposal.</p>
+<section id="transparency" class="level3">
+<h3 class="anchored" data-anchor-id="transparency">Transparency</h3>
+<p>Transparency is the ability to provide meaningful information to foster awareness and understanding of an AI system. It starts with documenting AI systems in a way that is accessible for a broad audience with a spectrum of technical abilities. It is a simple yet powerful way to build trust in AI. It empowers non-technical stakeholders to critically evaluate AI development decisions, thereby unlocking multi-disciplinary insights that can mitigate reputational or performance risks. Further, it also builds trust with society, as it can enable everyday users to interrogate AI design decisions, product capabilities, and system limitations, thereby permitting users to make informed judgements about technology. Unfortunately, transparency is often misunderstood as disclosing trade secrets or proprietary information, such as source code and datasets. However, transparency can be achieved without disclosing such technically complex information. Instead, it can be as simple as disclosing where and when an AI system is being used, or for what purposes a model should be employed.</p>
+<p>But what exactly does “documenting AI systems” look like? Documentation should consist of a mix of technical components (system architecture, dataset selection determination, model selection techniques, etc.) and non-technical components (business case, product purpose of use, alignment to overall AI strategy, etc.). The research community has recommended AI documentation standards, such as <a href="https://arxiv.org/pdf/1803.09010.pdf">datasheets for datasets</a> and <a href="https://arxiv.org/pdf/1810.03993.pdf">model cards for model reporting</a>. You can liken datasheets or model cards to the importance placed upon commenting your code – the more information there is available around decisions throughout model development, the greater the certainty that these artefacts will be understood and used as intended moving forward. Proper documentation and governance will help ensure accountability, improve internal and external oversight, and initiate discussions around model optimisation goals and their trade-offs, such as including fairness and accuracy in optimisation objectives.</p>
+<p>With upcoming AI regulations, transparency requirements will become more integral. For example, the <a href="https://artificialintelligenceact.eu/">European Union (EU) AI Act</a> introduces specific transparency obligations, such as bot disclosures, for both users and providers of AI systems, which would allow users to opt out of interacting with an AI system. Furthermore, in higher risk use cases, specific technical documentation is needed, which would include details of a system’s intended purpose and descriptions of its development process.</p>
+</section>
+<section id="explainability" class="level3">
+<h3 class="anchored" data-anchor-id="explainability">Explainability</h3>
+<p>Once transparency is enabled, explainability is a natural next step, especially when an AI product is implemented in a more regulated or high-risk environment. Explainability is the ability to express why an AI system reached a particular decision or understand the features that affect model behaviour. Explainability is a key concern within the field of explainable AI, which, as a discipline, strives to improve trustworthiness by enabling a better understanding of a system’s underlying logic via a suite of technical methods.</p>
+<p>Fundamentally, different model architectures mean that some models are more interpretable than others, as the steps used to evaluate their predictions are easier for humans to comprehend. Decision trees, for example, have more human-interpretable characteristics than deep learning models. Different model architectures also mean that there are interpretation tools that are only applicable to certain models, such as regression weights in a linear model.</p>
+<p>Another approach to consider, then, is model-agnostic interpretation, which encompasses both global interpretability (explanation of an entire model’s behaviour) and local interpretability (explanation of a single prediction). While there are fast-developing techniques and tools for model-agnostic interpretability, let’s take a look at two of the more popular methods available:</p>
+<ul>
+<li><dl>
+<dt><a href="https://dl.acm.org/doi/10.1145/2939672.2939778">Local interpretable model-agnostic explanations (LIME)</a></dt>
+<dd>
+This is an explanation technique that trains local surrogate models, using explainable models such as Lasso or decision trees, to approximate the predictions of a model that is not interpretable by design in order to explain individual model predictions. The idea is to use interpretable features from the surrogate models to create human-friendly explanations where the underlying model cannot. For example, in an image classification model that detects a flower in an image, LIME is able to highlight the parts of the image that explain why the model classifies the image as a flower (see illustration below). This provides an interpretable explanation between the input variable and prediction, which is an essential part of interpretability.
+</dd>
+</dl></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/lime.png"><img src="https://realworlddatascience.net/ideas/posts/2023/07/03/images/lime.png" class="img-fluid figure-img" alt="Illustration of explainable AI processes using LIME on an image classification AI system. In this example, an image classification system receives an image of a sunflower and classifies it as a flower with 70% likelihood. The LIME approach then sees parts of the input image perturbed, or masked, leading to different classification likelihoods from the AI system. From this, a model is able to determine the parts of the input image that best explain the initial classification of 'flower'."></a></p>
+<figcaption class="figure-caption">Illustration of explainable AI processes using LIME on an image classification AI system. Adapted from “Local Interpretable Model-Agnostic Explanations (LIME): An Introduction” and <a href="https://www.oreilly.com/content/introduction-to-local-interpretable-model-agnostic-explanations-lime/">O’Reilly</a>.</figcaption>
+</figure>
+</div>
+<ul>
+<li><dl>
+<dt><a href="https://papers.nips.cc/paper/2017/hash/8a20a8621978632d76c43dfd28b67767-Abstract.html">Shapley Additive Explanations (SHAP)</a></dt>
+<dd>
+SHAP (<a href="https://github.com/slundberg/shap">GitHub repo</a>) uses tools and theoretical foundations from game theory, one of which is Shapley values. It works by assigning each feature an importance value for a particular prediction to numerically explain the contribution of various features to a model’s output. For example, in a model that predicts flu, SHAP calculates the importance of sneezing as a feature by removing and adding the subset of other features, leading to different combinations of features that contribute to the prediction. This method provides interpretable solutions for more complex models similar to the equivalent of “weights” in linear models.
+</dd>
+</dl></li>
+</ul>
+</section>
+<section id="fairness" class="level3">
+<h3 class="anchored" data-anchor-id="fairness">Fairness</h3>
+<p>The area of AI ethics that is central to impending AI regulations, such as the EU AI Act and the New York City AI Law,<sup>1</sup> is fairness. AI models are inherently biased because of their underlying training data.<sup>2</sup> Thus, when we speak of fairness in the context of AI ethics, we are referring to a combination of technical and non-technical ways to minimise the impacts of algorithmic bias.</p>
+<p>Let’s begin with the technical approaches to fairness. To achieve equitable, reliable, and fair decisions, a diverse and balanced set of examples is needed in training datasets. However, data often contains disparities that, if left unchecked, can perpetuate algorithmic biases and harms. There are various approaches to detect sources of bias, guarantee fairness, or “debias” models. To strive for algorithmic fairness, many papers have proposed various quantitative measures of fairness, with some based on unstated assumptions about fairness in society. Unfortunately, <a href="https://arxiv.org/pdf/1609.07236.pdf">these assumptions are often mutually incompatible</a>, making it difficult to compare fairness metrics to one another – consider, for example, the longstanding debate between equality of outcome and equality of treatment.</p>
+<p>Although metrics incompatibilities exist, fairness broadly focuses on equality of opportunity (group fairness), and equality of outcome (individual fairness) to prevent discrimination against certain attributes. Drawing definitions from legal frameworks, the term “protected attribute” refers to the characteristics that are often protected under anti-discrimination laws, such as gender or race. Mathematically, the following metrics are often used to demonstrate scores that support fairness:</p>
+<ul>
+<li><dl>
+<dt>Statistical parity</dt>
+<dd>
+This measure seeks to uncover whether a model is fair towards protected attributes by measuring the difference between the majority and protected class in receiving a favourable outcome. A value of 0 demonstrates the model to be fair.
+</dd>
+</dl></li>
+<li><dl>
+<dt>Disparate impact</dt>
+<dd>
+This compares the percentage of favourable outcomes for the monitored group to the percentage of favourable outcomes for a reference group. The groups compared can be the majority group and minority group, and this score will highlight in whose direction decisions are biased. For example, if a model grants loans to 60% of people in a middle-aged group and only 50% for those of other age cohorts, then the disparate impact is 0.8, which indicates a positive bias towards the middle-aged group and an adverse impact on the remaining cohorts.
+</dd>
+</dl></li>
+<li><dl>
+<dt>Equality of odds</dt>
+<dd>
+This measures the balance of the true positive rate and false positive rate between protected and unprotected groups, which seeks to uncover whether a model performs similarly for the two groups.
+</dd>
+</dl></li>
+</ul>
+<p>It is important to remember that statistics are only one side of the fairness problem for machine learning, and one that treats the symptoms of bias as opposed to the underlying causes. In addition to the aforementioned technical approaches, there are a variety of non-technical measures that teams developing AI systems can adopt to augment fairness and inclusion:</p>
+<ul>
+<li><dl>
+<dt>Definition of fairness</dt>
+<dd>
+Organisations that develop or use AI systems need to define, practically, what it means to be fair. Although there are various quantitative fairness measures, these are based on assumptions of fairness in society, which could be defined for each specific use case.
+</dd>
+</dl></li>
+<li><dl>
+<dt>Diversity on teams</dt>
+<dd>
+There’s been a sharpened focus on the value of team diversity to areas such as productivity and creativity. The same is true for ethics. Ensuring that product teams are composed of a broad cross-section of identities can help to organically drive fairness through diversity of thought and experience.
+</dd>
+</dl></li>
+<li><dl>
+<dt>Education and self-reflection</dt>
+<dd>
+Developing knowledge within individuals and teams about the socio-technical aspects of AI – that is, the ways in which AI shapes our social, political, economic, and environmental lives. The more critical a person can be as a data scientist in questioning why something is being built, the more likely they are to proactively recognise risks surrounding fairness.
+</dd>
+</dl></li>
+<li><dl>
+<dt>Consider the end user</dt>
+<dd>
+Imagine that you are on a development team building an AI solution for a problem in the agricultural sector pertaining to livestock health. Who is best suited to solving the problem: a data scientist or a farmer? As a data scientist, you may have the tools to develop a solution, but given your distance from the end user, you are unlikely to intimately understand the problem in the same way a farmer would. If you cannot understand the problem, you cannot hope to find a solution, much less an ethical one. Recognising the importance of consulting individuals that are representative of end users is key to ensure that your design is fair.
+</dd>
+</dl></li>
+<li><dl>
+<dt>AI ethics review boards</dt>
+<dd>
+Data science teams should not operate in isolation. Increasingly, organisations are establishing AI ethics review boards or similar forums that are intended to act as checks on the design decisions made throughout AI development. Does your organisation have one?
+</dd>
+</dl></li>
+</ul>
+</section>
+</section>
+<section id="in-conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="in-conclusion">In conclusion</h2>
+<p>These three areas – transparency, explainability, and fairness – are the starting points to embed and operationalise AI ethics in technical development. Transparency relies on both technical and non-technical documentation to facilitate discussions with non-technical stakeholders, as well as to create and enforce accountabilities. Explainability helps to build trust in AI output by vesting us with an ability to explain “why”. Finally, adopting both technical and non-technical measures of fairness can ensure that AI products in development do not adversely impact certain groups.</p>
+<p>In addition to these three areas of AI ethics, within EY we have two other focus areas – resilience and high-performance – that form part of our Trusted AI Framework. We will discuss these in a future article. We’re also keen to explore topics such as generating trust in generative AI! Until then, please share your stories of developing ethical AI projects in the comments below. How are you translating AI ethics from theory into practice?</p>
+<div class="callout callout-style-simple callout-note callout-titled" style="margin-top: 2.25rem;">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Further reading
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>For further technical reading, we suggest:</p>
+<ul>
+<li><a href="https://christophm.github.io/interpretable-ml-book/">Interpretable Machine Learning</a>, by Christoph Molnar</li>
+<li><a href="https://fairmlbook.org/">Fairness and Machine Learning</a>, by Solon Barocas, Moritz Hardt, and Arvind Narayanan</li>
+</ul>
+<p>For further socio-technical reading on AI and data ethics, we suggest:</p>
+<ul>
+<li><em>The Age of Surveillance Capitalism</em>, by Shoshana Zuboff</li>
+<li><em>Invisible Women</em>, by Caroline Criado Pérez</li>
+<li><em>Race after Technology</em>, by Ruha Benjamin</li>
+<li><em>Algorithms of Oppression</em>, by Safiya Noble</li>
+<li><em>Atlas of AI</em>, by Kate Crawford</li>
+<li><em>Weapons of Math Destruction</em>, by Cathy O’Neil</li>
+<li><em>Data Feminism</em>, by Catherine D’Ignazio and Lauren Klein</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="article-btn">
+<p><a href="../../../../../ideas/index.html">Explore more data science ideas</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+<a href="https://www.ey.com/en_uk/people/maxine-setiawan">Maxine Setiawan</a> is a social data scientist specialising in trusted AI, and AI and data risk in EY UK&amp;I. With her multi-disciplinary background, she works to help clients understand and manage risks from their data and AI systems, and to ensure AI governance that is fair, accountable, and trustworthy. Maxine holds an MSc in social data science from the University of Oxford.
+</dd>
+<dd>
+<p><a href="https://www.ey.com/en_uk/people/mira-pijselman">Mira Pijselman</a> is the digital ethics lead for EY UK&amp;I, where she focuses on the responsible governance of key emerging technologies, including artificial intelligence, quantum technologies, and the metaverse. A social scientist and philosopher by training, she helps clients to map, understand, secure, and capitalise on their data and technology potential safely. Mira holds an MSc in the social science of the internet from the University of Oxford.</p>
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Maxine Setiawan and Mira Pijselman
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://realworlddatascience.net/ideas/posts/2023/07/03/https:/mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/ideas/posts/2023/07/03/https:/mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.</p>
+<p>Thumbnail image by <a href="https://www.burg-halle.de/en/xlab">Alexa Steinbrück</a> / <a href="https://www.betterimagesofai.org">Better Images of AI</a> / Explainable AI / <a href="https://creativecommons.org/licenses/by/4.0/">Licenced by CC-BY 4.0</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Setiawan, Maxine and Mira Pijselman. 2023. “Trusted AI: translating AI ethics from theory into practice.” Real World Data Science, July 3, 2023. <a href="https://realworlddatascience.net/ideas/posts/2023/07/03/trusted-AI.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>New York City Local Law 144.↩︎</p></li>
+<li id="fn2"><p>Not statistical bias (usually known as bias-variance trade-off), which compares the training data and target value to approximate errors.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>AI ethics</category>
+  <category>Principles</category>
+  <category>Regulation</category>
+  <guid>https://realworlddatascience.net/ideas/posts/2023/07/03/trusted-AI.html</guid>
+  <pubDate>Mon, 03 Jul 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/ideas/posts/2023/07/03/images/explainable-AI.png" medium="image" type="image/png" height="102" width="144"/>
+</item>
 <item>
   <title>‘I was inspired by the power that numerical data have to tell stories and promote policy change’</title>
   <dc:creator>Brian Tarran</dc:creator>
@@ -326,7 +533,7 @@ Generative AI’s latest breakthroughs have made AI capabilities accessible to t
 <dl>
 <dt>How to cite</dt>
 <dd>
-Tarran, Brian. 2023. “‘Once I started to see what was possible with data science, there was no going back’” Real World Data Science, June 20, 2023. <a href="https://realworlddatascience.net/careers/career-profiles/posts/2023/06/20/chanuki-seresinhe.html">URL</a>
+Tarran, Brian. 2023. “‘Once I started to see what was possible with data science, there was no going back.’” Real World Data Science, June 20, 2023. <a href="https://realworlddatascience.net/careers/career-profiles/posts/2023/06/20/chanuki-seresinhe.html">URL</a>
 </dd>
 </dl>
 </div>
@@ -1103,7 +1310,7 @@ Andre Python has been funded by the National Natural Science Foundation of China
 <dl>
 <dt>How to cite</dt>
 <dd>
-Svanidze, Davit, Andre Python, Christoph Weisser, Benjamin Säfken, Thomas Kneib, and Junfen Fu. 2023. “The road to reproducibility: hazards to avoid and tools to get you there safely.” Real World Data Science, June 15, 2023. <a href="https://realworlddatascience.net/case-studies/posts/2023/06/15/road-to-reproducible-research.html">URL</a>
+Svanidze, Davit, Andre Python, Christoph Weisser, Benjamin Säfken, Thomas Kneib, and Junfen Fu. 2023. “The road to reproducible research: hazards to avoid and tools to get you there safely.” Real World Data Science, June 15, 2023. <a href="https://realworlddatascience.net/case-studies/posts/2023/06/15/road-to-reproducible-research.html">URL</a>
 </dd>
 </dl>
 </div>
@@ -7346,114 +7553,6 @@ Tarran, Brian. 2023. “US legislators get their data science act together.” R
   <guid>https://realworlddatascience.net/viewpoints/interviews/posts/2023/03/06/data-science-act.html</guid>
   <pubDate>Mon, 06 Mar 2023 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/viewpoints/interviews/posts/2023/03/06/images/andy-feliciotti-isg8AL7-6uk-unsplash.png" medium="image" type="image/png" height="93" width="144"/>
-</item>
-<item>
-  <title>Using ‘basket complementarity’ to make product recommendations</title>
-  <dc:creator>Moinak Bhaduri</dc:creator>
-  <link>https://realworlddatascience.net/ideas/datasciencebites/posts/2023/03/02/basket-complementarity.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>Anyone who has ever worked in a retail store will be familiar with the concept of cross-selling. A customer wants a can of paint? Try to sell them some paintbrushes. That new cellphone they’ve just decided to buy? They’ll probably need a case to protect it. Online retailers (and digital services of all sorts) have taken this idea and run with it, to great success. Sophisticated algorithms sort through data on a customer’s past transactions, and those of similar-looking customers, to identify and recommend other products a customer might be interested in.</p>
-<p>A large amount of cross-selling, whether attempted in store by a sales assistant or online by an algorithm, relies on the concept of <em>complementarity</em>: that certain products are often bought and/or used together. Relationships between products might be obvious – paint and paintbrushes, for example – or they may be obscure and only revealed through the analysis of large datasets. In a 2021 paper that highlights complementarity’s relevance to association analysis, Puka and Jedrusik put forward “<a href="https://www.mdpi.com/0718-1876/16/4/39">a new measure of complementarity in market basket data</a>”, which sheds light on how product recommendations can be derived.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-About the paper
-</div>
-<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
-</div>
-<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
-<div class="callout-body-container callout-body">
-<p><strong>Title:</strong> A new measure of complementarity in market basket data</p>
-<p><strong>Author(s) and year:</strong> Radosław Puka and Stanislaw Jedrusik (2021)</p>
-<p><strong>Status:</strong> Published in the <em>Journal of Theoretical and Applied Electronic Commerce Research</em>, open access: <a href="https://www.mdpi.com/0718-1876/16/4/39">HTML</a>, <a href="https://www.mdpi.com/0718-1876/16/4/39/pdf?version=1609984879">PDF</a>.</p>
-</div>
-</div>
-</div>
-<p>Inspired by complementarity-based ideas prevalent in microeconomics, Puka and Jedrusik begin by collecting some established ideas from traditional market basket analysis, the key one being “confidence”. In this case, we’re talking about the confidence that item A leads (in a way) to item B (which we can express in notation as <em>conf</em>({A} → {B})). Take a look at Table 1 (below), which presents a numbered list of 18 shopping trips, with details of what was purchased on each trip. Notice how two of the trips (1 and 3) resulted in sales of both milk (B) and cornflakes (A), while five trips (1, 3, 7, 17, and 18) had cornflakes. Under the assumption that someone already has cornflakes in their trolley, the probability that they will buy milk is 2/5 = 0.4. So, <em>conf</em>({cornflakes} → {milk}) = 0.4. The closer this number gets to one, the more automatic the cornflakes–milk connection becomes. This number can therefore be used to recommend an item that is related in some way to another already bought.</p>
-<div class="column-body-outset">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/tab1-fig1.png"><img src="https://realworlddatascience.net/ideas/datasciencebites/posts/2023/03/02/images/tab1-fig1.png" class="img-fluid figure-img"></a></p>
-</figure>
-</div>
-</div>
-<div class="figure-caption">
-<div class="grid">
-<div class="g-col-12 g-col-md-4">
-<p><strong>Table 1:</strong> A list (with each row representing a trip to a grocery store) that can be seen in one of two ways: (a) a record of what 18 different people bought, or (b) a history of one person’s purchases over 18 trips. The list is similar to the one examined by Puka and Jedrusik, except for the last three rows. These trips, under interpretation (b) may help us develop an understanding of a single shopper’s preferences.</p>
-</div>
-<div class="g-col-12 g-col-md-8">
-<p><strong>Figure 1:</strong> Basket complementarity under varying tolerance. The horizontal axis reports the probability that someone will buy item B under the assumption that A is already in their shopping trolley (i.e., <em>conf</em>({A} → {B})). The vertical axis reports the opposite: the chance that someone will go for A given that B is already in the cart (i.e., <em>conf</em>({B} → {A})). For any pair of items, these two probabilities can be found and, when plotted in 2D, a pair of items generates a single point. The more similar the two probabilities are for each pair, the closer the point comes to the line of equality (the red dashed line that runs diagonally through the origin), and the more complementary the items become. It’s rare that a dot will land exactly on the line of equality, so the green and orange lines parallel to the red line mark how far off a dot is from this ideal setting, using different levels of tolerance. From this we may say, for example, that cornflakes and milk are more complementary to each other than bread rolls and butter, as the first pairing lies closer to the line of equality.</p>
-</div>
-</div>
-</div>
-<section id="asymmetry-and-tolerance" class="level2">
-<h2 class="anchored" data-anchor-id="asymmetry-and-tolerance">Asymmetry and tolerance</h2>
-<p>Milk and cornflakes are reasonably complementary, and we can see from Figure 1 above that, regardless of whether you start by picking up milk or cornflakes, the probabilities of a shopper buying the other item are broadly similar: <em>conf</em>({cornflakes} → {milk}) = 0.4, while <em>conf</em>({milk} → {cornflakes}) = 0.33. There is a small amount of asymmetry in the probabilities in this particular example, but asymmetry can be more extreme for other pairs of items. This leads to the idea of one- and two-sided complementarity. Two items sharing a smallish asymmetry – like milk and cornflakes – will be connected through two-sided complementarity, while large asymmetries indicate one-sided complementarity. Such imbalances will be quite common when, for instance, items of hugely different prices are involved. When someone buys a house, for example, they may want to buy a bookcase, but buying a bookcase doesn’t mean someone wants to buy a house: this would be an instance of one-sided complementarity.</p>
-<p>Puka and Jedrusik capitalize on this observation. They define two items to be “basket complementary” if the two probabilities – the normal and its opposite – remain close and reasonably high. The items need to share a bond that is blind to the direction: seeing you bought one, no matter which, means you are (almost equally) likely to buy the other.</p>
-<p>It is rare that the two probabilities should be exactly the same, of course, and the authors allow some deviation. Along the red diagonal line of perfect equality (Figure 1) we may lay tolerance bands marking degrees of product inseparability. This, if need be, may lead to the notion of being complementary at such-and-such a tolerance level – 0%, 1%, 5%, etc. – generating a score of sorts. In cases where a dot representing the two-way dependencies between two items falls within a narrow band – corresponding to a smaller tolerance – the more inseparable the items are, and the more sensible a cross-selling recommendation may become.</p>
-</section>
-<section id="in-conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="in-conclusion">In conclusion</h2>
-<p>A large part of the world we inhabit, particularly the economy, is powered by recommendations: from strangers, friends and algorithms. That applies not only to the things we buy but also to the things we watch or read. (Perhaps you arrived at this article because of a tweet that Twitter thought you might like, or maybe it was suggested to you by Google News because of your past reading habits.) Whatever the intent of these recommendations, the key challenge is in knowing which two things are functionally or thematically intertwined. Which item or product is, by default, synonymous with which? Puka and Jedrusik deliver an answer: two items that are basket complementary to each other, preferably at a slim tolerance, are inextricably linked. One may be safely offered – perhaps always – whenever the other is already in the shopping basket.</p>
-<p>The relative simplicity and interpretability of basket complementary may provide small-scale retailers, starved of analytical wherewithal, a sane and safe strategy for developing their product offer. It might also serve as a benchmark to keep other, more sophisticated recommendation algorithms in check. (In weather forecasting, for example, it is often seen that <a href="https://www.sciencedirect.com/science/article/pii/S0022169415000414">naive benchmarks</a> – such as using today’s temperature to predict tomorrow’s – frequently outperform more advanced models.)</p>
-<p>Basket complementarity could also be used to help individuals understand their own shopping habits and the links between the things they buy. I’ve built <a href="https://moinak.shinyapps.io/MarketBasketDashboard/">an interactive dashboard</a> where you can enter your own receipt lists and filter associations based on various confidence thresholds. The <a href="https://github.com/moinakbhaduri/MarketBasketAnalysis">underlying code</a> is also available.</p>
- <iframe src="https://moinak.shinyapps.io/MarketBasketDashboard/" style="border: none; width: 100%; height: 500px" frameborder="0"></iframe>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>About the author</dt>
-<dd>
-<strong>Moinak Bhaduri</strong> is assistant professor in the Department of Mathematical Sciences, Bentley University. He studies spatio-temporal Poisson processes and others like the self-exciting Hawkes or log-Gaussian Cox processes that are natural generalizations. His primary interest includes developing change-detection algorithms in systems modeled by these stochastic processes, especially through trend permutations.
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>About DataScienceBites</dt>
-<dd>
-<a href="../../../../../../ideas/datasciencebites/index.html"><strong>DataScienceBites</strong></a> is written by graduate students and early career researchers in data science (and related subjects) at universities throughout the world, as well as industry researchers. We publish digestible, engaging summaries of interesting new pre-print and peer-reviewed publications in the data science space, with the goal of making scientific papers more accessible. Find out how to <a href="../../../../../../contributor-docs/datasciencebites.html">become a contributor</a>.
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Moinak Bhaduri
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://realworlddatascience.net/ideas/datasciencebites/posts/2023/03/02/https:/mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/ideas/datasciencebites/posts/2023/03/02/https:/mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This work is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>, except where otherwise noted.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Bhaduri, Moinak. 2023. “Using ‘basket complementarity’ to make product recommendations.” Real World Data Science, March 2, 2023. <a href="https://realworlddatascience.net/news-and-views/datasciencebites/posts/2023/03/02/basket-complementarity.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-</section>
-
- ]]></description>
-  <category>Market basket analysis</category>
-  <category>Recommendation systems</category>
-  <category>Complementarity</category>
-  <guid>https://realworlddatascience.net/ideas/datasciencebites/posts/2023/03/02/basket-complementarity.html</guid>
-  <pubDate>Thu, 02 Mar 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/ideas/datasciencebites/posts/2023/03/02/images/marjan-blan-marjanblan-3nURJV_L7-8-unsplash.jpg" medium="image" type="image/jpeg"/>
 </item>
 </channel>
 </rss>
