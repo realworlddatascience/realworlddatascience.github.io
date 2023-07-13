@@ -17,7 +17,96 @@
 <width>144</width>
 </image>
 <generator>quarto-1.3.433</generator>
-<lastBuildDate>Mon, 03 Jul 2023 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 13 Jul 2023 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Choosing the right forecast</title>
+  <dc:creator>Brian King</dc:creator>
+  <link>https://realworlddatascience.net/ideas/datasciencebites/posts/2023/07/13/choosing-right-forecast.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>Nobel laureate Niels Bohr is famously quoted as saying, “Prediction is very difficult, especially if it’s about the future.” The science (or perhaps the art) of forecasting is no easy task and lends itself to a large amount of uncertainty. For this reason, practitioners interested in prediction have increasingly migrated to probabilistic forecasting, where an entire distribution is given as the forecast instead of a single number, thus fully quantifying the inherent uncertainty. In such a setting, traditional metrics of assessing and comparing predictive performance, such as mean squared error (MSE), are no longer appropriate. Instead, proper scoring rules are utilized to evaluate and rank forecast methods. A scoring rule is a function that takes a predictive distribution along with an observed value and outputs a real number called the score. Such a rule is said to be proper if the expected score is maximized when the predictive distribution is the same as the distribution from which the observation was drawn.</p>
+<p>Many proper scoring rules exist, such as the continuous ranked probability score (CRPS) and the logarithmic score. Choosing which rule to use is not necessarily straightforward. Furthermore, forecast methods are often selected not based on a single score, but rather averages of scores from many probabilistic forecasts, which can introduce new challenges affecting how one might rank competing forecasts. In the paper under discussion, <a href="https://projecteuclid.org/journals/statistical-science/volume-38/issue-1/Local-scale-invariance-and-robustness-of-proper-scoring-rules/10.1214/22-STS864.short">Bolin and Wallin</a> define several properties of scoring rules that help clarify how the rules behave when multiple forecast scores are averaged. Additionally, they introduce a new class of proper rules that aims to overcome some of the deficiencies of other common scoring rules.</p>
+<div class="callout callout-style-default callout-note callout-titled" style="margin-top: 0rem;">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+About the paper
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse show">
+<div class="callout-body-container callout-body">
+<p><strong>Title:</strong> Local scale invariance and robustness of proper scoring rules</p>
+<p><strong>Author(s) and year:</strong> David Bolin and Jonas Wallin (2023)</p>
+<p><strong>Status:</strong> Published in <em>Statistical Science</em>, DOI: <a href="https://projecteuclid.org/journals/statistical-science/volume-38/issue-1/Local-scale-invariance-and-robustness-of-proper-scoring-rules/10.1214/22-STS864.short">10.1214/22-STS864</a>.</p>
+</div>
+</div>
+</div>
+<p>The authors argue that situations are often encountered where forecasts are derived and subsequently averaged for observations with different inherent variability. One example might be financial data, such as stock returns, where there are commonly periods with much higher variance (known as volatility in the financial setting). Such processes can be represented using a model known as stochastic volatility, where the variance of observed data evolves randomly over time. Figure 1 plots an example path of the data-generating process under such a model. When data exhibits this varying uncertainty, many proper scoring rules will assign a score whose magnitude changes for those observations with more variability, a characteristic the authors term scale dependence. Some rules will ‘punish’ observations with higher uncertainty, and others may ‘reward’ such observations. Hence, when averaging multiple scores, observations will not be treated symmetrically, which the authors argue can “lead to unintuitive forecast rankings.”</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://realworlddatascience.net/ideas/datasciencebites/posts/2023/07/13/images/fig1.png" class="img-fluid figure-img" alt="Left panel of figure shows a time series of volatility, rendered as a line chart. Right panel shows the resulting observations under a standard stochastic volatility model, in scatter plot form."></p>
+</figure>
+</div>
+<div class="figure-caption" style="text-align: center;">
+<p><strong>Figure 1:</strong> Left, a time series of volatility, and right, the resulting observations under a standard stochastic volatility model.</p>
+</div>
+<p>Thus, an ideal scoring rule will not suffer from scale dependence. The lack of scale dependence is a property that the authors term local scale invariance. The logarithmic score possesses this attribute, but the CRPS and other scoring rules, like the Hyvärinen score, do not. To address this issue, the authors propose a new class of scoring rules which exhibits local scale invariance. Among this class is a scoring rule dubbed the scaled CRPS (SCRPS), which features many of the desirable qualities of the CRPS but overcomes the scale dependence issue.</p>
+<p>Of course, if local scale invariance is all that matters, then we could just use the logarithmic score in all scenarios. But there is another issue to consider when averaging forecast scores – the presence of outliers. In many scenarios, we might encounter observations that are very far outside the normal range, and we don’t want our average forecast performance measure to be greatly thrown off if such an oddity is observed. In other words, we want our proper scoring rules to be robust. In their article, Bolin and Wallin formalize the concept of robustness for scoring rules and show that, in many cases, the logarithmic score is not robust. Yet they also prove their proposed class of scaled scoring rules is not generally robust, although they show that the scoring rules can be modified to be robust (a new scoring rule they term robust SCRPS). Under such a modification, however, the scoring rule would no longer be local scale invariant in the strict sense. Indeed, under the proposed definitions of local scale invariance and robustness, finding a scoring rule that can simultaneously satisfy both criteria seems difficult. The authors conjecture that it may even be impossible.</p>
+<p>Hence, this paper raises many questions for future consideration but achieves its goal of showing that evaluating probabilistic forecasts by averaging proper scoring rules is not necessarily a simple matter. Different scoring rules will lead to different rankings of forecasting methods, and the underlying properties of each scoring rule must be considered on a case-by-case basis. Although not discussed in this summary, the authors also compare scoring rules in several scenarios and present the theory behind the ideas examined here. For interested readers who want to dig more into these ideas, check out <a href="https://projecteuclid.org/journals/statistical-science/volume-38/issue-1/Local-scale-invariance-and-robustness-of-proper-scoring-rules/10.1214/22-STS864.short">the full paper published in <em>Statistical Science</em></a>.</p>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>About the author</dt>
+<dd>
+<strong>Brian King</strong> is a PhD candidate in the Department of Statistics at Rice University and a current NSF Graduate Research Fellow, with research focused on Bayesian modeling and forecasting for time series of counts. Prior to Rice, he graduated from Baylor University with a BS in mathematics and statistics alongside a secondary major in Spanish and a minor in computer science.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>About DataScienceBites</dt>
+<dd>
+<a href="../../../../../../ideas/datasciencebites/index.html"><strong>DataScienceBites</strong></a> is written by graduate students and early career researchers in data science (and related subjects) at universities throughout the world, as well as industry researchers. We publish digestible, engaging summaries of interesting new pre-print and peer-reviewed publications in the data science space, with the goal of making scientific papers more accessible. Find out how to <a href="../../../../../../contributor-docs/datasciencebites.html">become a contributor</a>.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Brian King
+</dd>
+</dl>
+<p>This post is republished with permission from <a href="https://mathstatbites.org/determining-the-best-way-to-route-drivers-for-ridesharing-via-reinforcement-learning/">MathStatBites</a>. Thumbnail image by <a href="https://unsplash.com/@bdchu614?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Brendan Church</a> on <a href="https://unsplash.com/photos/pKeF6Tt3c08?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+King, Brian. 2023. “Choosing the right forecast.” Real World Data Science, July 13, 2023. <a href="https://realworlddatascience.net/news-and-views/datasciencebites/posts/2023/07/13/choosing-right-forecast.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+
+ ]]></description>
+  <category>Forecasting</category>
+  <category>Prediction</category>
+  <category>Robustness</category>
+  <guid>https://realworlddatascience.net/ideas/datasciencebites/posts/2023/07/13/choosing-right-forecast.html</guid>
+  <pubDate>Thu, 13 Jul 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/ideas/datasciencebites/posts/2023/07/13/images/brendan-church-pKeF6Tt3c08-unsplash.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
 <item>
   <title>Trusted AI: translating AI ethics from theory into practice</title>
   <dc:creator>Maxine Setiawan and Mira Pijselman</dc:creator>
@@ -302,18 +391,18 @@ Observatoire royal de Bruxelles. 1848. <em>Annales de l’observatoire Royal de 
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="quarto-figure quarto-figure-center" style="flex-basis: 50.0%;justify-content: center;">
 <figure class="figure">
-<p><a href="images/quetelet_1875400.jpg" class="lightbox" data-description="Source:
+<p><a href="images/quetelet_1875400.jpg" class="lightbox" data-gallery="Quetelet" title="Portrait of Adolphe Quetelet." data-description="Source:
 
 <a
 href=&quot;https://en.wikipedia.org/wiki/Adolphe_Quetelet#/media/File:Adolphe_Qu%C3%A9telet_by_Joseph-Arnold_Demannez.jpg&quot;>Wikimedia
-Commons</a>" title="Portrait of Adolphe Quetelet." data-gallery="Quetelet"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/quetelet_1875400.jpg" class="img-fluid figure-img" alt="Portrait of Adolphe Quetelet."></a></p>
+Commons</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/quetelet_1875400.jpg" class="img-fluid figure-img" alt="Portrait of Adolphe Quetelet."></a></p>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center" style="flex-basis: 50.0%;justify-content: center;">
 <figure class="figure">
-<p><a href="images/sur_le_climat400.jpeg" class="lightbox" data-description="Source:
+<p><a href="images/sur_le_climat400.jpeg" class="lightbox" data-gallery="Quetelet" title="Title page of Adolphe Quetelet's 'On the climate of Belgium'." data-description="Source:
 
-<a href=&quot;https://gallica.bnf.fr/ark:/12148/bpt6k95028d&quot;>Gallica</a>" title="Title page of Adolphe Quetelet's 'On the climate of Belgium'." data-gallery="Quetelet"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/sur_le_climat400.jpeg" class="img-fluid figure-img" alt="Title page of Adolphe Quetelet's 'On the climate of Belgium'."></a></p>
+<a href=&quot;https://gallica.bnf.fr/ark:/12148/bpt6k95028d&quot;>Gallica</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/sur_le_climat400.jpeg" class="img-fluid figure-img" alt="Title page of Adolphe Quetelet's 'On the climate of Belgium'."></a></p>
 </figure>
 </div>
 </div>
@@ -329,9 +418,9 @@ De Réaumur, René. 1735. <span>“Observations Du Thermometre, Faites a Paris P
 </div></div><p>Quetelet was also not the first to study the relationship between temperature and bloom dates. René Réaumur <span class="citation" data-cites="deréaumur_1735">(1735)</span>, an early adopter of the thermometer, noted the relationship before Marsham published his <em>Indications</em>. But Quetelet was the first to systematically study the relationship across a wide variety of plants and derive the amount of heat needed to bloom. An example of Quetelet’s careful record keeping can be seen in Figure 2, one of many tables he reported in his publications.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/quetelet_bloom.png" class="lightbox" data-description="Source:
+<p><a href="images/quetelet_bloom.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="A table of bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852." data-description="Source:
 
-<a href=&quot;https://gallica.bnf.fr/ark:/12148/bpt6k95028d&quot;>Gallica</a>" title="A table of bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852." data-gallery="quarto-lightbox-gallery-3"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/quetelet_bloom.png" class="img-fluid figure-img" alt="A table of bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852." width="600"></a></p>
+<a href=&quot;https://gallica.bnf.fr/ark:/12148/bpt6k95028d&quot;>Gallica</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/quetelet_bloom.png" class="img-fluid figure-img" alt="A table of bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852." width="600"></a></p>
 </figure>
 </div>
 <div class="figure-caption">
@@ -345,26 +434,26 @@ De Réaumur, René. 1735. <span>“Observations Du Thermometre, Faites a Paris P
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="quarto-figure quarto-figure-center" style="flex-basis: 33.3%;justify-content: center;">
 <figure class="figure">
-<p><a href="images/buds250.jpg" class="lightbox" data-description="Source:
+<p><a href="images/buds250.jpg" class="lightbox" data-gallery="flowers" title="Photo of lilac flower buds." data-description="Source:
 
 <a href=&quot;https://www.usanpn.org/nn/TrackaLilac&quot;>USA National Phenology
-Network</a>" title="Photo of lilac flower buds." data-gallery="flowers"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/buds250.jpg" class="img-fluid figure-img" alt="Photo of lilac flower buds."></a></p>
+Network</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/buds250.jpg" class="img-fluid figure-img" alt="Photo of lilac flower buds."></a></p>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center" style="flex-basis: 33.3%;justify-content: center;">
 <figure class="figure">
-<p><a href="images/open_flowers250.jpg" class="lightbox" data-description="Source:
+<p><a href="images/open_flowers250.jpg" class="lightbox" data-gallery="flowers" title="Photo of open lilac flowers." data-description="Source:
 
 <a href=&quot;https://www.usanpn.org/nn/TrackaLilac&quot;>USA National Phenology
-Network</a>" title="Photo of open lilac flowers." data-gallery="flowers"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/open_flowers250.jpg" class="img-fluid figure-img" alt="Photo of open lilac flowers."></a></p>
+Network</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/open_flowers250.jpg" class="img-fluid figure-img" alt="Photo of open lilac flowers."></a></p>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center" style="flex-basis: 33.3%;justify-content: center;">
 <figure class="figure">
-<p><a href="images/full_flowers250.jpg" class="lightbox" data-description="Source:
+<p><a href="images/full_flowers250.jpg" class="lightbox" data-gallery="flowers" title="Photo of full lilac flowers." data-description="Source:
 
 <a href=&quot;https://www.usanpn.org/nn/TrackaLilac&quot;>USA National Phenology
-Network</a>" title="Photo of full lilac flowers." data-gallery="flowers"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/full_flowers250.jpg" class="img-fluid figure-img" alt="Photo of full lilac flowers."></a></p>
+Network</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/full_flowers250.jpg" class="img-fluid figure-img" alt="Photo of full lilac flowers."></a></p>
 </figure>
 </div>
 </div>
@@ -1466,11 +1555,11 @@ background-color: null;
 font-style: inherit;">```</span></span></code></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/fig4.png" class="lightbox" data-description="Author
+<p><a href="images/fig4.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="A line graph of midrange temperature by day, for January to June 1839, with day of last frost (March 8) and day of first bloom (May 11) marked by vertical dashed lines." data-description="Author
 
 provided,
 
-<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>" title="A line graph of midrange temperature by day, for January to June 1839, with day of last frost (March 8) and day of first bloom (May 11) marked by vertical dashed lines." data-gallery="quarto-lightbox-gallery-7"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig4.png" class="img-fluid figure-img" alt="A line graph of midrange temperature by day, for January to June 1839, with day of last frost (March 8) and day of first bloom (May 11) marked by vertical dashed lines."></a></p>
+<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig4.png" class="img-fluid figure-img" alt="A line graph of midrange temperature by day, for January to June 1839, with day of last frost (March 8) and day of first bloom (May 11) marked by vertical dashed lines."></a></p>
 </figure>
 </div>
 <div class="figure-caption">
@@ -3134,11 +3223,11 @@ background-color: null;
 font-style: inherit;">```</span></span></code></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/fig5.png" class="lightbox" data-description="Author
+<p><a href="images/fig5.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="This figure plots the predictions made by Quetelet's law against the actual bloom dates scientists observed from US lilac data. Data are represented using blue contours, and a dotted line of equality is drawn through the graph. The dotted line intersects the blue contours at their peak, suggesting that the law derived from Quetelet’s data accurately predicts the typical bloom date of the USA data." data-description="Author
 
 provided,
 
-<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>" title="This figure plots the predictions made by Quetelet's law against the actual bloom dates scientists observed from US lilac data. Data are represented using blue contours, and a dotted line of equality is drawn through the graph. The dotted line intersects the blue contours at their peak, suggesting that the law derived from Quetelet’s data accurately predicts the typical bloom date of the USA data." data-gallery="quarto-lightbox-gallery-8"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig5.png" class="img-fluid figure-img" alt="This figure plots the predictions made by Quetelet's law against the actual bloom dates scientists observed from US lilac data. Data are represented using blue contours, and a dotted line of equality is drawn through the graph. The dotted line intersects the blue contours at their peak, suggesting that the law derived from Quetelet’s data accurately predicts the typical bloom date of the USA data."></a></p>
+<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig5.png" class="img-fluid figure-img" alt="This figure plots the predictions made by Quetelet's law against the actual bloom dates scientists observed from US lilac data. Data are represented using blue contours, and a dotted line of equality is drawn through the graph. The dotted line intersects the blue contours at their peak, suggesting that the law derived from Quetelet’s data accurately predicts the typical bloom date of the USA data."></a></p>
 </figure>
 </div>
 <div class="figure-caption">
@@ -4046,11 +4135,11 @@ background-color: null;
 font-style: inherit;">```</span></span></code></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/fig6.png" class="lightbox" data-description="Author
+<p><a href="images/fig6.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="A line graph of midrange temperature by day in Brussels for January 1 to February 18 (observed) and February 19 to May 20 (forecast), 2023, with day of last frost (January 27) and predicted day of first bloom (April 19) marked by vertical dashed lines." data-description="Author
 
 provided,
 
-<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>" title="A line graph of midrange temperature by day in Brussels for January 1 to February 18 (observed) and February 19 to May 20 (forecast), 2023, with day of last frost (January 27) and predicted day of first bloom (April 19) marked by vertical dashed lines." data-gallery="quarto-lightbox-gallery-9"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig6.png" class="img-fluid figure-img" alt="A line graph of midrange temperature by day in Brussels for January 1 to February 18 (observed) and February 19 to May 20 (forecast), 2023, with day of last frost (January 27) and predicted day of first bloom (April 19) marked by vertical dashed lines."></a></p>
+<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig6.png" class="img-fluid figure-img" alt="A line graph of midrange temperature by day in Brussels for January 1 to February 18 (observed) and February 19 to May 20 (forecast), 2023, with day of last frost (January 27) and predicted day of first bloom (April 19) marked by vertical dashed lines."></a></p>
 </figure>
 </div>
 <div class="figure-caption">
@@ -4067,11 +4156,11 @@ Demarée, Gaston R., and This Rutishauser. 2011. <span>“From <span>‘Periodic
 </div></div><p>In recent years, the observations collected through phenology networks have become an important resource for understanding the impacts of climate change. For example, the USA National Phenology Network calculates the Spring Bloom Index, which measures the “first day of spring” using the days lilacs are observed to bloom at locations across the United States. The index is then compared to previous years. Figure 7 shows one comparison, called the Return Interval. The Return Interval is much like a p-value, calculating how frequently more extreme spring indices were observed in previous decades. Bloom dates that are uncommonly early (green) or late (purple) may indicate environments stressed by changing climate. Scientists exploit the relationship between temperature and bloom date to extrapolate the index to areas with few observations.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/six-bloom-return-interval-2020.png" class="lightbox" data-description="Source:
+<p><a href="images/six-bloom-return-interval-2020.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="A map of the United States showing the Spring Bloom Index Return Interval 2020, which measures whether spring is typical when compared to recent decades." data-description="Source:
 
 <a
 href=&quot;https://www.usanpn.org/files/npn/maps/six-bloom-return-interval-2020.png&quot;>USA
-National Phenology Network</a>" title="A map of the United States showing the Spring Bloom Index Return Interval 2020, which measures whether spring is typical when compared to recent decades." data-gallery="quarto-lightbox-gallery-10"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/six-bloom-return-interval-2020.png" class="img-fluid figure-img" alt="A map of the United States showing the Spring Bloom Index Return Interval 2020, which measures whether spring is typical when compared to recent decades."></a></p>
+National Phenology Network</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/six-bloom-return-interval-2020.png" class="img-fluid figure-img" alt="A map of the United States showing the Spring Bloom Index Return Interval 2020, which measures whether spring is typical when compared to recent decades."></a></p>
 </figure>
 </div>
 <div class="figure-caption">
@@ -4586,7 +4675,7 @@ Auerbach, Jonathan. 2023. “A demonstration of the law of the flowering plants.
 
 <p>Anyone who has ever worked in a retail store will be familiar with the concept of cross-selling. A customer wants a can of paint? Try to sell them some paintbrushes. That new cellphone they’ve just decided to buy? They’ll probably need a case to protect it. Online retailers (and digital services of all sorts) have taken this idea and run with it, to great success. Sophisticated algorithms sort through data on a customer’s past transactions, and those of similar-looking customers, to identify and recommend other products a customer might be interested in.</p>
 <p>A large amount of cross-selling, whether attempted in store by a sales assistant or online by an algorithm, relies on the concept of <em>complementarity</em>: that certain products are often bought and/or used together. Relationships between products might be obvious – paint and paintbrushes, for example – or they may be obscure and only revealed through the analysis of large datasets. In a 2021 paper that highlights complementarity’s relevance to association analysis, Puka and Jedrusik put forward “<a href="https://www.mdpi.com/0718-1876/16/4/39">a new measure of complementarity in market basket data</a>”, which sheds light on how product recommendations can be derived.</p>
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-default callout-note callout-titled" style="margin-top: 0rem;">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -4692,7 +4781,7 @@ Bhaduri, Moinak. 2023. “Using ‘basket complementarity’ to make product rec
 
 
 
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-default callout-note callout-titled" style="margin-top: 0rem;">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
@@ -4778,7 +4867,7 @@ About the paper and this post
 
 
 
-<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout callout-style-default callout-note callout-titled" style="margin-top: 0rem;">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
