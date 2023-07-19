@@ -17,7 +17,150 @@
 <width>144</width>
 </image>
 <generator>quarto-1.3.433</generator>
-<lastBuildDate>Mon, 17 Jul 2023 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 19 Jul 2023 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Testing out ChatGPT’s new Code Interpreter</title>
+  <dc:creator>Lee Clewley</dc:creator>
+  <link>https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/code-interpreter.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>On July 6, 2023, <a href="https://twitter.com/OpenAI/status/1677015057316872192?s=20">OpenAI began rolling out the Code Interpreter plugin</a> to users of its ChatGPT Plus service. But what exactly is this, and what functionality does it offer?</p>
+<p>Code Interpreter runs code and allows for uploading data so you can use ChatGPT for data cleaning, preprocessing, analysis, visualisation and predictive modelling tasks, among other things. This tool holds great promise for programmers and analysts alike, with the potential to streamline coding workflows as well as having an automated data analyst at your fingertips.</p>
+<p>To use Code Interpreter, you need to enable it in the ChatGPT settings (at time of writing this only works with a paid ChatGPT Plus subscription).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pic1.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic1.png" class="img-fluid figure-img" alt="Screenshot of ChatGPT Plus setting, showing Code Interpreter plugin option." width="700"></a></p>
+</figure>
+</div>
+<p>Now, let’s take it for a bit of a spin by uploading the <a href="https://www.kaggle.com/datasets/fedesoriano/stroke-prediction-dataset">stroke prediction dataset from Kaggle</a>.</p>
+<section id="the-stroke-prediction-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="the-stroke-prediction-dataset">The stroke prediction dataset</h2>
+<p>The World Health Organization (WHO) identifies stroke as the second leading cause of death worldwide, accounting for roughly 11% of all fatalities.</p>
+<p>Kaggle’s stroke prediction dataset is used to forecast the likelihood of a patient suffering a stroke, taking into account various input parameters such as age, gender, presence of certain diseases, and smoking habits. Each row in the dataset offers pertinent information about an individual patient.</p>
+<p>Loading this dataset into ChatGPT Code Interpreter, one is treated with:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pic2.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic2.png" class="img-fluid figure-img" alt="Screenshot from ChatGPT, showing Code Interpreter's initial review of an uploaded stroke prediction dataset." width="700"></a></p>
+</figure>
+</div>
+<p>The user is asked: “Please let me know what analysis or operations you’d like to perform on this dataset. For instance, we can perform exploratory data analysis, data cleaning, data visualization, or predictive modelling.”</p>
+<p>It seems quite a bold claim. So, I asked it to do all of the above.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pic3.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic3.png" class="img-fluid figure-img" alt="Screenshot from ChatGPT, showing Code Interpreter's overview explanation of planned analysis steps." width="700"></a></p>
+</figure>
+</div>
+<section id="exploratory-data-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="exploratory-data-analysis">Exploratory Data Analysis</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pic4.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic4.png" class="img-fluid figure-img" alt="Screenshot of ChatGPT Code Interpreter's exploratory data analysis outputs." width="700"></a></p>
+</figure>
+</div>
+<p>This is a good, useful summary. The missing values in <code>bmi</code> are set to the median, which the user can later decide to change for themselves as the code is available to do so.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pic5.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic5.png" class="img-fluid figure-img" alt="Screenshot of code output from ChatGPT Code Interpreter, showing how to set missing values in dataset to the median value." width="700"></a></p>
+</figure>
+</div>
+</section>
+<section id="data-visualisation" class="level3">
+<h3 class="anchored" data-anchor-id="data-visualisation">Data visualisation</h3>
+<p>Next, the visualisations of the variables are shown along with a correlation heatmap. Users can toggle between the visualisations and the code. The outputs are pretty useful, except for one mistake: <code>id</code> shouldn’t be included as part of the heatmap.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pic6.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic6.png" class="img-fluid figure-img" alt="Screenshot of ChatGPT Code Interpreter's description of visualisations it will create, along with partial code for doing so." width="700"></a></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pic7.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic7.png" class="img-fluid figure-img" alt="Histograms and bar plots created by ChatGPT Code Interpreter for variables in the Kaggle stroke prediction dataset." width="700"></a></p>
+</figure>
+</div>
+<div class="figure-caption" style="text-align: center;">
+<p>Histograms and bar plots created by ChatGPT Code Interpreter for variables in the Kaggle stroke prediction dataset.</p>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pic8.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic8.png" class="img-fluid figure-img" alt="Correlation heatmap for variables in the Kaggle stroke prediction dataset." width="700"></a></p>
+</figure>
+</div>
+<div class="figure-caption" style="text-align: center;">
+<p>Correlation heatmap for variables in the Kaggle stroke prediction dataset.</p>
+</div>
+<p>Things start to go seriously awry when Code Interpreter tries to create a predictive model.</p>
+</section>
+<section id="the-predictive-model-is-garbage" class="level3">
+<h3 class="anchored" data-anchor-id="the-predictive-model-is-garbage">The predictive model is garbage</h3>
+<p>From the screenshot below, you can see that lumping all the data into a predictive model creates some highly spurious results. Age is a factor, as it should be, as is hypertension – indeed, those with hypertension in this dataset are around three times more likely to have a stroke than those without. In reality, there are also significant effects from glucose level and smoking, and also a slight BMI effect in this small, unbalanced dataset. However, <code>work_type_children</code> having a large positive effect is alarming and plainly wrong.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pic9.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic9.png" class="img-fluid figure-img" alt="Screenshot showing ChatGPT Code Interpreter's most important features for predicting stroke. The inclusion of 'work_type_children' is wrong: it says that 'individuals who are children are more likely to have a stroke', but goes on to explain that 'this might be the result of an imbalance in the dataset or noise, as in reality, children generally have a lower risk of stroke." width="700"></a></p>
+</figure>
+</div>
+<p>It is very evident from the table below that the positive coefficient on children is spurious.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pic10.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic10.png" class="img-fluid figure-img" alt="Screenshot of table from ChatGPT code interpreter, showing 'number of individuals' and 'number of strokes' for each 'work type'. Figures for children are 687 individuals and 2 strokes." width="700"></a></p>
+</figure>
+</div>
+<p>So, where does this leave our thinking about Code Interpreter?</p>
+</section>
+</section>
+<section id="discussion" class="level2">
+<h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
+<p>My test case is possibly an unfair one. The sort of study presented to Code Interpreter is one that requires careful analysis, and it uses a relatively small, tricky dataset whose difficulties are compounded by missing data. It’s therefore not surprising that, in this context, an automated analysis fails to shine in all respects.</p>
+<p>To be fair, OpenAI themselves describe the plugin as an “<a href="https://openai.com/blog/chatgpt-plugins">eager junior programmer</a>”. And as would be the case with a real junior programmer or junior data scientist, you’d expect a more experienced hand to be guiding an analysis like the one I asked for – someone who can sense-check results, point out errors, and offer suggestions for fixes and improvements.</p>
+<p>Despite some stumbles in this demo, OpenAI’s “junior programmer” presents a real step forward in the ChatGPT offering, and it is particularly impressive that one can toggle between code and charts without having to worry about coding at all.</p>
+<p>At this stage, I would argue that Code Interpreter may be useful for quick summaries, visualisations and a little basic data cleaning and some preliminary investigations. However, based on what I’ve seen so far, it is clear to me that highly trained statisticians won’t be replaced anytime soon.</p>
+<div class="article-btn">
+<p><a href="../../../../../../viewpoints/editors-blog/index.html">Back to Editors’ blog</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author</dt>
+<dd>
+<strong>Lee Clewley</strong> is a member of the <a href="https://realworlddatascience.net/viewpoints/editors-blog/posts/2022/10/18/meet-the-team.html">editorial board of Real World Data Science</a> and head of applied AI in GSK’s AI and Machine Learning Group, R&amp;D.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Lee Clewley
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/https:/mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/https:/mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail image by <a href="https://unsplash.com/@charlesdeluvio?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">charlesdeluvio</a> on <a href="https://unsplash.com/photos/pjAH2Ax4uWk?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Clewley, Lee. 2023. “Testing out ChatGPT’s new Code Interpreter.” Real World Data Science, July 19, 2023. <a href="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/code-interpreter.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <category>AI</category>
+  <category>Large language models</category>
+  <category>Coding</category>
+  <category>Data analysis</category>
+  <guid>https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/code-interpreter.html</guid>
+  <pubDate>Wed, 19 Jul 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/charlesdeluvio-pjAH2Ax4uWk-unsplash.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
 <item>
   <title>Heading to a conference this summer? Share your learnings here</title>
   <dc:creator>Brian Tarran</dc:creator>
@@ -2917,18 +3060,18 @@ Observatoire royal de Bruxelles. 1848. <em>Annales de l’observatoire Royal de 
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="quarto-figure quarto-figure-center" style="flex-basis: 50.0%;justify-content: center;">
 <figure class="figure">
-<p><a href="images/quetelet_1875400.jpg" class="lightbox" title="Portrait of Adolphe Quetelet." data-description="Source:
+<p><a href="images/quetelet_1875400.jpg" class="lightbox" data-description="Source:
 
 <a
 href=&quot;https://en.wikipedia.org/wiki/Adolphe_Quetelet#/media/File:Adolphe_Qu%C3%A9telet_by_Joseph-Arnold_Demannez.jpg&quot;>Wikimedia
-Commons</a>" data-gallery="Quetelet"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/quetelet_1875400.jpg" class="img-fluid figure-img" alt="Portrait of Adolphe Quetelet."></a></p>
+Commons</a>" data-gallery="Quetelet" title="Portrait of Adolphe Quetelet."><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/quetelet_1875400.jpg" class="img-fluid figure-img" alt="Portrait of Adolphe Quetelet."></a></p>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center" style="flex-basis: 50.0%;justify-content: center;">
 <figure class="figure">
-<p><a href="images/sur_le_climat400.jpeg" class="lightbox" title="Title page of Adolphe Quetelet's 'On the climate of Belgium'." data-description="Source:
+<p><a href="images/sur_le_climat400.jpeg" class="lightbox" data-description="Source:
 
-<a href=&quot;https://gallica.bnf.fr/ark:/12148/bpt6k95028d&quot;>Gallica</a>" data-gallery="Quetelet"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/sur_le_climat400.jpeg" class="img-fluid figure-img" alt="Title page of Adolphe Quetelet's 'On the climate of Belgium'."></a></p>
+<a href=&quot;https://gallica.bnf.fr/ark:/12148/bpt6k95028d&quot;>Gallica</a>" data-gallery="Quetelet" title="Title page of Adolphe Quetelet's 'On the climate of Belgium'."><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/sur_le_climat400.jpeg" class="img-fluid figure-img" alt="Title page of Adolphe Quetelet's 'On the climate of Belgium'."></a></p>
 </figure>
 </div>
 </div>
@@ -2944,9 +3087,9 @@ De Réaumur, René. 1735. <span>“Observations Du Thermometre, Faites a Paris P
 </div></div><p>Quetelet was also not the first to study the relationship between temperature and bloom dates. René Réaumur <span class="citation" data-cites="deréaumur_1735">(1735)</span>, an early adopter of the thermometer, noted the relationship before Marsham published his <em>Indications</em>. But Quetelet was the first to systematically study the relationship across a wide variety of plants and derive the amount of heat needed to bloom. An example of Quetelet’s careful record keeping can be seen in Figure 2, one of many tables he reported in his publications.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/quetelet_bloom.png" class="lightbox" title="A table of bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852." data-description="Source:
+<p><a href="images/quetelet_bloom.png" class="lightbox" data-description="Source:
 
-<a href=&quot;https://gallica.bnf.fr/ark:/12148/bpt6k95028d&quot;>Gallica</a>" data-gallery="quarto-lightbox-gallery-3"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/quetelet_bloom.png" class="img-fluid figure-img" alt="A table of bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852." width="600"></a></p>
+<a href=&quot;https://gallica.bnf.fr/ark:/12148/bpt6k95028d&quot;>Gallica</a>" data-gallery="quarto-lightbox-gallery-3" title="A table of bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852."><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/quetelet_bloom.png" class="img-fluid figure-img" alt="A table of bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852." width="600"></a></p>
 </figure>
 </div>
 <div class="figure-caption">
@@ -2960,26 +3103,26 @@ De Réaumur, René. 1735. <span>“Observations Du Thermometre, Faites a Paris P
 <div class="quarto-layout-row quarto-layout-valign-top">
 <div class="quarto-figure quarto-figure-center" style="flex-basis: 33.3%;justify-content: center;">
 <figure class="figure">
-<p><a href="images/buds250.jpg" class="lightbox" title="Photo of lilac flower buds." data-description="Source:
+<p><a href="images/buds250.jpg" class="lightbox" data-description="Source:
 
 <a href=&quot;https://www.usanpn.org/nn/TrackaLilac&quot;>USA National Phenology
-Network</a>" data-gallery="flowers"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/buds250.jpg" class="img-fluid figure-img" alt="Photo of lilac flower buds."></a></p>
+Network</a>" data-gallery="flowers" title="Photo of lilac flower buds."><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/buds250.jpg" class="img-fluid figure-img" alt="Photo of lilac flower buds."></a></p>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center" style="flex-basis: 33.3%;justify-content: center;">
 <figure class="figure">
-<p><a href="images/open_flowers250.jpg" class="lightbox" title="Photo of open lilac flowers." data-description="Source:
+<p><a href="images/open_flowers250.jpg" class="lightbox" data-description="Source:
 
 <a href=&quot;https://www.usanpn.org/nn/TrackaLilac&quot;>USA National Phenology
-Network</a>" data-gallery="flowers"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/open_flowers250.jpg" class="img-fluid figure-img" alt="Photo of open lilac flowers."></a></p>
+Network</a>" data-gallery="flowers" title="Photo of open lilac flowers."><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/open_flowers250.jpg" class="img-fluid figure-img" alt="Photo of open lilac flowers."></a></p>
 </figure>
 </div>
 <div class="quarto-figure quarto-figure-center" style="flex-basis: 33.3%;justify-content: center;">
 <figure class="figure">
-<p><a href="images/full_flowers250.jpg" class="lightbox" title="Photo of full lilac flowers." data-description="Source:
+<p><a href="images/full_flowers250.jpg" class="lightbox" data-description="Source:
 
 <a href=&quot;https://www.usanpn.org/nn/TrackaLilac&quot;>USA National Phenology
-Network</a>" data-gallery="flowers"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/full_flowers250.jpg" class="img-fluid figure-img" alt="Photo of full lilac flowers."></a></p>
+Network</a>" data-gallery="flowers" title="Photo of full lilac flowers."><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/full_flowers250.jpg" class="img-fluid figure-img" alt="Photo of full lilac flowers."></a></p>
 </figure>
 </div>
 </div>
@@ -4081,11 +4224,11 @@ background-color: null;
 font-style: inherit;">```</span></span></code></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/fig4.png" class="lightbox" title="A line graph of midrange temperature by day, for January to June 1839, with day of last frost (March 8) and day of first bloom (May 11) marked by vertical dashed lines." data-description="Author
+<p><a href="images/fig4.png" class="lightbox" data-description="Author
 
 provided,
 
-<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>" data-gallery="quarto-lightbox-gallery-7"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig4.png" class="img-fluid figure-img" alt="A line graph of midrange temperature by day, for January to June 1839, with day of last frost (March 8) and day of first bloom (May 11) marked by vertical dashed lines."></a></p>
+<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>" data-gallery="quarto-lightbox-gallery-7" title="A line graph of midrange temperature by day, for January to June 1839, with day of last frost (March 8) and day of first bloom (May 11) marked by vertical dashed lines."><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig4.png" class="img-fluid figure-img" alt="A line graph of midrange temperature by day, for January to June 1839, with day of last frost (March 8) and day of first bloom (May 11) marked by vertical dashed lines."></a></p>
 </figure>
 </div>
 <div class="figure-caption">
@@ -5749,11 +5892,11 @@ background-color: null;
 font-style: inherit;">```</span></span></code></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/fig5.png" class="lightbox" title="This figure plots the predictions made by Quetelet's law against the actual bloom dates scientists observed from US lilac data. Data are represented using blue contours, and a dotted line of equality is drawn through the graph. The dotted line intersects the blue contours at their peak, suggesting that the law derived from Quetelet’s data accurately predicts the typical bloom date of the USA data." data-description="Author
+<p><a href="images/fig5.png" class="lightbox" data-description="Author
 
 provided,
 
-<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>" data-gallery="quarto-lightbox-gallery-8"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig5.png" class="img-fluid figure-img" alt="This figure plots the predictions made by Quetelet's law against the actual bloom dates scientists observed from US lilac data. Data are represented using blue contours, and a dotted line of equality is drawn through the graph. The dotted line intersects the blue contours at their peak, suggesting that the law derived from Quetelet’s data accurately predicts the typical bloom date of the USA data."></a></p>
+<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>" data-gallery="quarto-lightbox-gallery-8" title="This figure plots the predictions made by Quetelet's law against the actual bloom dates scientists observed from US lilac data. Data are represented using blue contours, and a dotted line of equality is drawn through the graph. The dotted line intersects the blue contours at their peak, suggesting that the law derived from Quetelet’s data accurately predicts the typical bloom date of the USA data."><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig5.png" class="img-fluid figure-img" alt="This figure plots the predictions made by Quetelet's law against the actual bloom dates scientists observed from US lilac data. Data are represented using blue contours, and a dotted line of equality is drawn through the graph. The dotted line intersects the blue contours at their peak, suggesting that the law derived from Quetelet’s data accurately predicts the typical bloom date of the USA data."></a></p>
 </figure>
 </div>
 <div class="figure-caption">
@@ -6661,11 +6804,11 @@ background-color: null;
 font-style: inherit;">```</span></span></code></pre></div>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/fig6.png" class="lightbox" title="A line graph of midrange temperature by day in Brussels for January 1 to February 18 (observed) and February 19 to May 20 (forecast), 2023, with day of last frost (January 27) and predicted day of first bloom (April 19) marked by vertical dashed lines." data-description="Author
+<p><a href="images/fig6.png" class="lightbox" data-description="Author
 
 provided,
 
-<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>" data-gallery="quarto-lightbox-gallery-9"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig6.png" class="img-fluid figure-img" alt="A line graph of midrange temperature by day in Brussels for January 1 to February 18 (observed) and February 19 to May 20 (forecast), 2023, with day of last frost (January 27) and predicted day of first bloom (April 19) marked by vertical dashed lines."></a></p>
+<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>" data-gallery="quarto-lightbox-gallery-9" title="A line graph of midrange temperature by day in Brussels for January 1 to February 18 (observed) and February 19 to May 20 (forecast), 2023, with day of last frost (January 27) and predicted day of first bloom (April 19) marked by vertical dashed lines."><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig6.png" class="img-fluid figure-img" alt="A line graph of midrange temperature by day in Brussels for January 1 to February 18 (observed) and February 19 to May 20 (forecast), 2023, with day of last frost (January 27) and predicted day of first bloom (April 19) marked by vertical dashed lines."></a></p>
 </figure>
 </div>
 <div class="figure-caption">
@@ -6682,11 +6825,11 @@ Demarée, Gaston R., and This Rutishauser. 2011. <span>“From <span>‘Periodic
 </div></div><p>In recent years, the observations collected through phenology networks have become an important resource for understanding the impacts of climate change. For example, the USA National Phenology Network calculates the Spring Bloom Index, which measures the “first day of spring” using the days lilacs are observed to bloom at locations across the United States. The index is then compared to previous years. Figure 7 shows one comparison, called the Return Interval. The Return Interval is much like a p-value, calculating how frequently more extreme spring indices were observed in previous decades. Bloom dates that are uncommonly early (green) or late (purple) may indicate environments stressed by changing climate. Scientists exploit the relationship between temperature and bloom date to extrapolate the index to areas with few observations.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/six-bloom-return-interval-2020.png" class="lightbox" title="A map of the United States showing the Spring Bloom Index Return Interval 2020, which measures whether spring is typical when compared to recent decades." data-description="Source:
+<p><a href="images/six-bloom-return-interval-2020.png" class="lightbox" data-description="Source:
 
 <a
 href=&quot;https://www.usanpn.org/files/npn/maps/six-bloom-return-interval-2020.png&quot;>USA
-National Phenology Network</a>" data-gallery="quarto-lightbox-gallery-10"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/six-bloom-return-interval-2020.png" class="img-fluid figure-img" alt="A map of the United States showing the Spring Bloom Index Return Interval 2020, which measures whether spring is typical when compared to recent decades."></a></p>
+National Phenology Network</a>" data-gallery="quarto-lightbox-gallery-10" title="A map of the United States showing the Spring Bloom Index Return Interval 2020, which measures whether spring is typical when compared to recent decades."><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/six-bloom-return-interval-2020.png" class="img-fluid figure-img" alt="A map of the United States showing the Spring Bloom Index Return Interval 2020, which measures whether spring is typical when compared to recent decades."></a></p>
 </figure>
 </div>
 <div class="figure-caption">
@@ -7189,62 +7332,6 @@ Auerbach, Jonathan. 2023. “A demonstration of the law of the flowering plants.
   <guid>https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/flowers.html</guid>
   <pubDate>Thu, 13 Apr 2023 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/quetelet-flowers.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>Data science as ‘a rainbow’, and other definitions</title>
-  <dc:creator>Brian Tarran</dc:creator>
-  <link>https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/03/29/defining-DS.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>What does “data science” mean to you? That’s a question we’ve been asking a lot in recent weeks as part of our <a href="https://realworlddatascience.net/careers/career-profiles/">career profiles</a> series of interviews – the first of which, featuring <a href="https://realworlddatascience.net/careers/career-profiles/posts/03/28/tamanna-haque.html">Jaguar Land Rover’s Tamanna Haque</a>, was published yesterday.</p>
-<p>It’s also a question that was asked recently of Sylvia Richardson, emeritus director of the Medical Research Council Biostatistics Unit at the University of Cambridge and immediate past president of the Royal Statistical Society (RSS).</p>
-<p>Richardson was interviewed by Francesca Dominici, interim co-editor-in-chief of the Harvard Data Science Review. In response to the question “What’s data science for you?”, Richardson said:</p>
-<blockquote class="blockquote">
-<p>It’s hard to be original, but I was racking my brain for a good metaphor, and came up with the metaphor of a rainbow of interconnected disciplines, sharing the common aim of making the best use of data-rich environments we live in to solve problems in society. So, like in a rainbow, data scientists have to work together to draw out information from data. And the colors must match, [though] they are different. Similarly, there are different but intersecting data science tasks, taking different shapes and forms. As data scientists, we recognize and enjoy diversity, we’re not doing all the same tasks. Nevertheless, there is a backbone, a shape to the rainbow. And for us, this backbone is probability theory, study design, and quantifying uncertainty using statistical thinking. We also know that rainbows change all the time. They don’t last, but they keep reappearing. Data science is also evolving constantly because new questions and new types of data keep arising. In a similar way to the rainbow which is strongly influenced by the atmosphere, one key aspect of data science is that we have a strong link to practice. So, we work together to solve problems from different perspectives, we evolve, we try to be relevant to science and society, and make the best use of the data. [<a href="https://hdsr.mitpress.mit.edu/pub/v27yux58/release/2?from=2089&amp;to=3374">Source</a>]</p>
-</blockquote>
-<p>Richardson’s view on the meaning and importance of data science has special resonance to me, as editor of Real World Data Science. While president of RSS, Richardson set up the <a href="https://rss.org.uk/policy-campaigns/policy-groups/data-science-task-force/">Data Science Task Force</a> out of which this website emerged. As she explains to Dominici:</p>
-<blockquote class="blockquote">
-<p>… while I was president, I felt a sense of urgency to encourage the RSS to revisit its engagement with data science, and I created a data science task force right at the beginning of my presidency. It didn’t get going earlier because there was COVID to keep us busy! Nevertheless, the Data Science Task Force got underway in 2021 and came up with two major recommendations. One was to give more resources to the practitioners’ community, which led the RSS to create a Real World Data Science online platform. A second direction was to brainstorm on what is still needed for the discipline to thrive. [<a href="https://hdsr.mitpress.mit.edu/pub/v27yux58/release/2?from=17202&amp;to=17799">Source</a>]</p>
-</blockquote>
-<p>You can read (or listen) to Richardson and Dominici’s conversation in full on the <a href="https://hdsr.mitpress.mit.edu/pub/v27yux58/release/2">Harvard Data Science Review website</a>.</p>
-<p>And we’ll have more <a href="https://realworlddatascience.net/careers/career-profiles/">career profiles</a> – and more personal definitions of data science – to share soon. In the meantime, why not tell us what “data science” means to you?</p>
-<div class="article-btn">
-<p><a href="../../../../../../viewpoints/editors-blog/index.html">Back to Editors’ blog</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Royal Statistical Society
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/03/29/https:/mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/03/29/https:/mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This work is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>, except where otherwise noted.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Tarran, Brian. 2023. “Data science as ‘a rainbow’, and other definitions.” Real World Data Science, March 29, 2023. <a href="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/03/29/defining-DS.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-
- ]]></description>
-  <category>Updates</category>
-  <category>Themes</category>
-  <category>People</category>
-  <guid>https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/03/29/defining-DS.html</guid>
-  <pubDate>Wed, 29 Mar 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/03/29/images/rainbow.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 </channel>
 </rss>

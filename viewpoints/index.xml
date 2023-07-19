@@ -17,7 +17,150 @@
 <width>144</width>
 </image>
 <generator>quarto-1.3.433</generator>
-<lastBuildDate>Fri, 07 Jul 2023 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 19 Jul 2023 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Testing out ChatGPT’s new Code Interpreter</title>
+  <dc:creator>Lee Clewley</dc:creator>
+  <link>https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/code-interpreter.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>On July 6, 2023, <a href="https://twitter.com/OpenAI/status/1677015057316872192?s=20">OpenAI began rolling out the Code Interpreter plugin</a> to users of its ChatGPT Plus service. But what exactly is this, and what functionality does it offer?</p>
+<p>Code Interpreter runs code and allows for uploading data so you can use ChatGPT for data cleaning, preprocessing, analysis, visualisation and predictive modelling tasks, among other things. This tool holds great promise for programmers and analysts alike, with the potential to streamline coding workflows as well as having an automated data analyst at your fingertips.</p>
+<p>To use Code Interpreter, you need to enable it in the ChatGPT settings (at time of writing this only works with a paid ChatGPT Plus subscription).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pic1.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic1.png" class="img-fluid figure-img" alt="Screenshot of ChatGPT Plus setting, showing Code Interpreter plugin option." width="700"></a></p>
+</figure>
+</div>
+<p>Now, let’s take it for a bit of a spin by uploading the <a href="https://www.kaggle.com/datasets/fedesoriano/stroke-prediction-dataset">stroke prediction dataset from Kaggle</a>.</p>
+<section id="the-stroke-prediction-dataset" class="level2">
+<h2 class="anchored" data-anchor-id="the-stroke-prediction-dataset">The stroke prediction dataset</h2>
+<p>The World Health Organization (WHO) identifies stroke as the second leading cause of death worldwide, accounting for roughly 11% of all fatalities.</p>
+<p>Kaggle’s stroke prediction dataset is used to forecast the likelihood of a patient suffering a stroke, taking into account various input parameters such as age, gender, presence of certain diseases, and smoking habits. Each row in the dataset offers pertinent information about an individual patient.</p>
+<p>Loading this dataset into ChatGPT Code Interpreter, one is treated with:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pic2.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic2.png" class="img-fluid figure-img" alt="Screenshot from ChatGPT, showing Code Interpreter's initial review of an uploaded stroke prediction dataset." width="700"></a></p>
+</figure>
+</div>
+<p>The user is asked: “Please let me know what analysis or operations you’d like to perform on this dataset. For instance, we can perform exploratory data analysis, data cleaning, data visualization, or predictive modelling.”</p>
+<p>It seems quite a bold claim. So, I asked it to do all of the above.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pic3.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic3.png" class="img-fluid figure-img" alt="Screenshot from ChatGPT, showing Code Interpreter's overview explanation of planned analysis steps." width="700"></a></p>
+</figure>
+</div>
+<section id="exploratory-data-analysis" class="level3">
+<h3 class="anchored" data-anchor-id="exploratory-data-analysis">Exploratory Data Analysis</h3>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pic4.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic4.png" class="img-fluid figure-img" alt="Screenshot of ChatGPT Code Interpreter's exploratory data analysis outputs." width="700"></a></p>
+</figure>
+</div>
+<p>This is a good, useful summary. The missing values in <code>bmi</code> are set to the median, which the user can later decide to change for themselves as the code is available to do so.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pic5.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic5.png" class="img-fluid figure-img" alt="Screenshot of code output from ChatGPT Code Interpreter, showing how to set missing values in dataset to the median value." width="700"></a></p>
+</figure>
+</div>
+</section>
+<section id="data-visualisation" class="level3">
+<h3 class="anchored" data-anchor-id="data-visualisation">Data visualisation</h3>
+<p>Next, the visualisations of the variables are shown along with a correlation heatmap. Users can toggle between the visualisations and the code. The outputs are pretty useful, except for one mistake: <code>id</code> shouldn’t be included as part of the heatmap.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pic6.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic6.png" class="img-fluid figure-img" alt="Screenshot of ChatGPT Code Interpreter's description of visualisations it will create, along with partial code for doing so." width="700"></a></p>
+</figure>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pic7.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic7.png" class="img-fluid figure-img" alt="Histograms and bar plots created by ChatGPT Code Interpreter for variables in the Kaggle stroke prediction dataset." width="700"></a></p>
+</figure>
+</div>
+<div class="figure-caption" style="text-align: center;">
+<p>Histograms and bar plots created by ChatGPT Code Interpreter for variables in the Kaggle stroke prediction dataset.</p>
+</div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pic8.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic8.png" class="img-fluid figure-img" alt="Correlation heatmap for variables in the Kaggle stroke prediction dataset." width="700"></a></p>
+</figure>
+</div>
+<div class="figure-caption" style="text-align: center;">
+<p>Correlation heatmap for variables in the Kaggle stroke prediction dataset.</p>
+</div>
+<p>Things start to go seriously awry when Code Interpreter tries to create a predictive model.</p>
+</section>
+<section id="the-predictive-model-is-garbage" class="level3">
+<h3 class="anchored" data-anchor-id="the-predictive-model-is-garbage">The predictive model is garbage</h3>
+<p>From the screenshot below, you can see that lumping all the data into a predictive model creates some highly spurious results. Age is a factor, as it should be, as is hypertension – indeed, those with hypertension in this dataset are around three times more likely to have a stroke than those without. In reality, there are also significant effects from glucose level and smoking, and also a slight BMI effect in this small, unbalanced dataset. However, <code>work_type_children</code> having a large positive effect is alarming and plainly wrong.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pic9.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic9.png" class="img-fluid figure-img" alt="Screenshot showing ChatGPT Code Interpreter's most important features for predicting stroke. The inclusion of 'work_type_children' is wrong: it says that 'individuals who are children are more likely to have a stroke', but goes on to explain that 'this might be the result of an imbalance in the dataset or noise, as in reality, children generally have a lower risk of stroke." width="700"></a></p>
+</figure>
+</div>
+<p>It is very evident from the table below that the positive coefficient on children is spurious.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pic10.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic10.png" class="img-fluid figure-img" alt="Screenshot of table from ChatGPT code interpreter, showing 'number of individuals' and 'number of strokes' for each 'work type'. Figures for children are 687 individuals and 2 strokes." width="700"></a></p>
+</figure>
+</div>
+<p>So, where does this leave our thinking about Code Interpreter?</p>
+</section>
+</section>
+<section id="discussion" class="level2">
+<h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
+<p>My test case is possibly an unfair one. The sort of study presented to Code Interpreter is one that requires careful analysis, and it uses a relatively small, tricky dataset whose difficulties are compounded by missing data. It’s therefore not surprising that, in this context, an automated analysis fails to shine in all respects.</p>
+<p>To be fair, OpenAI themselves describe the plugin as an “<a href="https://openai.com/blog/chatgpt-plugins">eager junior programmer</a>”. And as would be the case with a real junior programmer or junior data scientist, you’d expect a more experienced hand to be guiding an analysis like the one I asked for – someone who can sense-check results, point out errors, and offer suggestions for fixes and improvements.</p>
+<p>Despite some stumbles in this demo, OpenAI’s “junior programmer” presents a real step forward in the ChatGPT offering, and it is particularly impressive that one can toggle between code and charts without having to worry about coding at all.</p>
+<p>At this stage, I would argue that Code Interpreter may be useful for quick summaries, visualisations and a little basic data cleaning and some preliminary investigations. However, based on what I’ve seen so far, it is clear to me that highly trained statisticians won’t be replaced anytime soon.</p>
+<div class="article-btn">
+<p><a href="../../../../../../viewpoints/editors-blog/index.html">Back to Editors’ blog</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author</dt>
+<dd>
+<strong>Lee Clewley</strong> is a member of the <a href="https://realworlddatascience.net/viewpoints/editors-blog/posts/2022/10/18/meet-the-team.html">editorial board of Real World Data Science</a> and head of applied AI in GSK’s AI and Machine Learning Group, R&amp;D.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Lee Clewley
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/https:/mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/https:/mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail image by <a href="https://unsplash.com/@charlesdeluvio?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">charlesdeluvio</a> on <a href="https://unsplash.com/photos/pjAH2Ax4uWk?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Clewley, Lee. 2023. “Testing out ChatGPT’s new Code Interpreter.” Real World Data Science, July 19, 2023. <a href="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/code-interpreter.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <category>AI</category>
+  <category>Large language models</category>
+  <category>Coding</category>
+  <category>Data analysis</category>
+  <guid>https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/code-interpreter.html</guid>
+  <pubDate>Wed, 19 Jul 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/charlesdeluvio-pjAH2Ax4uWk-unsplash.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
 <item>
   <title>Teaching a chatbot about love, and other adventures from London Data Week</title>
   <dc:creator>Brian Tarran</dc:creator>
@@ -1972,102 +2115,6 @@ Tarran, Brian. 2022. “Four themes for potential contributors to think about.�
   <guid>https://realworlddatascience.net/viewpoints/editors-blog/posts/2022/12/01/themes.html</guid>
   <pubDate>Thu, 01 Dec 2022 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/viewpoints/editors-blog/posts/2022/12/01/images/kelly-sikkema-vSNy_bWa5AE-unsplash-crop.jpg" medium="image" type="image/jpeg"/>
-</item>
-<item>
-  <title>Why large language models should come with a content warning</title>
-  <dc:creator>Brian Tarran</dc:creator>
-  <link>https://realworlddatascience.net/viewpoints/editors-blog/posts/2022/11/23/LLM-content-warning.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>Anyone who has ever been set a writing task will probably have wished at some point that somebody else could write it for them. As a journalist of 20-plus years, the thought has certainly crossed my mind more than a few times. Which probably explains why a recent headline in Nature caught my attention: <a href="https://www.nature.com/articles/d41586-022-03479-w">“Could AI help you to write your next paper?”</a></p>
-<p>The article, by Matthew Hutson, looks at how researchers are using artificial intelligence (AI) tools built on large language models (LLMs) as “assistants”. Starting with a prompt, such as “Write a headline for a blog post about large language models being used by academic researchers as research assistants”, an LLM will produce a text output. For example, using the same prompt with <a href="https://openai.com/api/">OpenAI’s GPT-3</a>, I got:</p>
-<blockquote class="blockquote">
-<p>“New research assistants: large language models”</p>
-</blockquote>
-<p>Asked to “Write a headline for a blog post that critiques academic researchers’ use of large language models as research assistants”, GPT-3 produced:</p>
-<blockquote class="blockquote">
-<p>“Too much reliance on large language models can hinder research”</p>
-</blockquote>
-<p>And when I asked “Why can too much reliance on large language models hinder research?”, GPT-3 wrote:</p>
-<blockquote class="blockquote">
-<p>“If academic researchers rely too heavily on large language models as research assistants, they may become reliant on the models and may not be able to conduct research without them. This can hinder research because the researchers may not be able to think for themselves and may not be able to come up with new ideas.”</p>
-</blockquote>
-<p>A fair point, I suppose. But I sense there’s more to this story, and rather than continue quizzing GPT-3, I sat down with Detlef Nauck, a member of the <a href="../../../../../../news-and-views/editors-blog/posts/2022-10-18-meet-the-team/meet-the-team.html">Real World Data Science Editorial Board</a> and head of AI and data science research for BT’s Applied Research Division, to ask a few more questions.</p>
-<section id="qa" class="level2 page-columns page-full">
-<h2 class="anchored" data-anchor-id="qa">Q&amp;A</h2>
-<p><strong>Thanks for joining me today, Detlef. To start, could you give a brief overview of these large language models, what they are, and how they work?</strong></p>
-<p><strong>Detlef Nauck (DN):</strong> Essentially, LLMs match sequences to sequences. Language is treated as a sequence of patterns, and this is based on word context similarity. The way these things work is that they either reuse or create a word vector space, where a word is mapped to something like a 300-dimensional vector based on the context it’s normally found in. In these vector spaces, words like “king” and “queen”, for example, would be very similar to each other, because they appear in similar contexts in the written texts that are used to train these models. Based on this, LLMs can produce coherent sequences of words.</p>
-<p>But the drawback of this approach is that these models have bias, because they are trained with biased language. If you talk about “women”, for example, and you look at which job roles are similar to “women” in a vector space, you find the stereotypically “female” professions but not technical professions, and that is a problem. Let’s say you take the word vector for “man” and the word vector for “king”, and you subtract “man” and then add this to “woman”, then you end up with “queen”. But if you do the same with “man”, “computer scientist”, and “woman”, then you end up maybe at “nurse” or “human resources manager” or something. These models embed the typical bias in society that is expressed through language.</p>
-<p>The other issue is that LLMs are massive. GPT-3 has something like 75 billion parameters, and it cost millions to train it from scratch. It’s not energy efficient at all. It’s not sustainable. It’s not something that normal companies can afford. You might need something like a couple of hundred GPUs [graphics processing units] running for a month or so to train an LLM, and this is going to cost millions in cloud environments if you don’t own the hardware yourself. Large tech companies do own the hardware, so for them it’s not a problem. But the carbon that you burn by doing this, you could probably fly around the globe once. So it’s not a sustainable approach to building models.</p>
-<p>Also, LLMs are quite expensive to use. If you wanted to use one of these large language models in a contact centre, for example, then you would have to run maybe a few hundred of them in parallel because you get that many requests from customers. But to provide this capacity, the amount of memory needed would be massive, so it is probably still cheaper to use humans – with the added benefit that humans actually understand questions and know what they are talking about.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2022/11/23/images/TeresaBerndtsson-LetterWord-Text-Taxonomy-1000x1333.jpg" class="img-fluid figure-img" alt="A black keyboard at the bottom of the picture has an open book on it, with red words in labels floating on top, with a letter A balanced on top of them. The perspective makes the composition form a kind of triangle from the keyboard to the capital A. The AI filter makes it look like a messy, with a kind of cartoon style." width="500"></p>
-</figure>
-</div>
-
-<div class="no-row-height column-margin column-container"><div class="">
-<p>Letter Word Text Taxonomy by <a href="https://www.linkedin.com/in/teresa-berndtsson/">Teresa Berndtsson</a> / <a href="https://www.betterimagesofai.org">Better Images of AI</a> / <a href="https://creativecommons.org/licenses/by/4.0/">CC-BY 4.0</a></p>
-</div></div><p><strong>Researchers are obviously quite interested in LLMs, though, and they are asking scientific questions of these models to see what kinds of answers they get.</strong></p>
-<p><strong>DN:</strong> Yes, they are. But you don’t really know what is going to come out of an LLM when you prompt it. And you may need to craft the input to get something out that is useful. Also, LLMs sometimes make up stuff – what the Nature article refers to as “hallucinations”.</p>
-<p>These tools have copyright issues, too. For example, they can generate computer code because code has been part of their training input, but various people have looked into it and found that <a href="https://analyticsindiamag.com/github-copilot-the-latest-in-the-list-of-ai-generative-models-facing-copyright-allegations/">some models generate code verbatim</a> from what others have posted to GitHub. So, it’s not guaranteed that what you get out is actually new text. It might be just regurgitated text. A student might find themselves in a pickle where they think that they have created a text that seems new, but actually it has plagiarism in some of the passages.</p>
-<p>There’s an article in <a href="https://www.technologyreview.com/2020/08/22/1007539/gpt3-openai-language-generator-artificial-intelligence-ai-opinion/">Technology Review</a> that gives some examples of how these systems might fail. People believe these things know what they’re talking about, but they don’t. For them, it’s just pattern recognition. They don’t have actual knowledge representation; they don’t have any concepts embedded.</p>
-<p><strong>To summarise, then: LLMs are expensive. They sometimes produce nonsense outputs. And there’s a risk that you’ll be accused of plagiarism if you use the text that’s produced. So, what should our response be to stories like this recent Nature article? How should we calibrate our excitement for LLMs?</strong></p>
-<p><strong>DN:</strong> You have to treat them as a tool, and you have to make sure that you check what they produce. Some people believe if you just make LLMs big enough, we’ll be able to achieve artificial general intelligence. But I don’t believe that, and other people like Geoffrey Hinton and Yann LeCun, they say there’s no way that you get artificial general intelligence through these models, that it’s not going to happen. I’m of the same opinion. These models will be forever limited by the pattern recognition approach that they use.</p>
-<p><strong>But, still, is this a technology that you have an eye on in your professional capacity? Are you thinking about how these might be useful somewhere down the line?</strong></p>
-<p><strong>DN:</strong> Absolutely, but we are mainly interested in smaller, more energy efficient, more computationally efficient models that are built on curated language, that can actually hold a conversation, and where you can represent concepts and topics and context explicitly. At the moment, LLMs can only pick up on context by accident – if it is sufficiently expressed in the language that they process – but they might lose track of it if things go on for too long. Essentially, they have a short-term memory: if you prompt them with some text, and they generate text, this stays in their short term memory. But if you prompt them with a long, convoluted sentence, they might not have the capacity to remember what was said at the beginning of the sentence, and so then they lose track of the context. And this is because they don’t explicitly represent context and concepts.</p>
-<p>The other thing is, if you use these systems for dialogues, then you have to script the dialogue. They don’t sustain a dialogue by themselves. You create a dialogue tree, and what they do is they parse the text that comes from the user and then generate a response to it. And the response is then guided by the dialogue tree. But this is quite brittle; it can break. If you run out of dialogue tree, you need to pass the conversation over to a person. Systems like Siri and Alexa are like that, right? They break very quickly. So, you want these systems to be able to sustain conversations based on the correct context.</p>
-<div class="callout callout-style-default callout-tip callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-Have you got news for us?
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>Is there a recent data science story you’d like our team to discuss? Do you have your own thoughts to share on a hot topic, or a burning question to put to the community? If so, either comment below or <a href="../../../../../../contact.html">contact us</a>.</p>
-</div>
-</div>
-<div class="article-btn">
-<p><a href="../../../../../../viewpoints/editors-blog/index.html">Back to Editors’ blog</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2022 Royal Statistical Society
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2022/11/23/https:/mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2022/11/23/https:/mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This work is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>, except where otherwise noted.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Tarran, Brian. 2022. “Why large language models should come with a content warning.” Real World Data Science, November, 23 2022. <a href="https://realworlddatascience.net/news-and-views/editors-blog/posts/2022-11-23-LLMs-content-warning/LLM-content-warning.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-</section>
-
- ]]></description>
-  <category>Machine learning</category>
-  <category>Large language models</category>
-  <category>AI</category>
-  <guid>https://realworlddatascience.net/viewpoints/editors-blog/posts/2022/11/23/LLM-content-warning.html</guid>
-  <pubDate>Wed, 23 Nov 2022 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/viewpoints/editors-blog/posts/2022/11/23/images/TeresaBerndtsson-LetterWord-Text-Taxonomy-1000x1333.jpg" medium="image" type="image/jpeg"/>
 </item>
 </channel>
 </rss>
