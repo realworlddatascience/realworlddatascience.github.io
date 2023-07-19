@@ -1,0 +1,125 @@
+---
+title: "Testing out ChatGPT’s new Code Interpreter"
+description: |
+  Some have hailed it 'the new data scientist', but is ChatGPT’s latest addition all it’s cracked up to be? We take Code Interpreter for a test drive. 
+categories:
+  - AI
+  - Large language models
+  - Coding
+  - Data analysis
+author: Lee Clewley
+date: 07/19/2023
+toc: true
+# image: images/benjamin-davies-Oja2ty_9ZLM-unsplash.png
+# image-alt: An aerial view of London and the River Thames, taken from The Shard, London, United Kingdom.
+---
+On July 6, 2023, [OpenAI began rolling out the Code Interpreter plugin](https://twitter.com/OpenAI/status/1677015057316872192?s=20) to users of its ChatGPT Plus service.  But what exactly is this, and what functionality does it offer?
+
+Code Interpreter runs code and allows for uploading data so you can use ChatGPT for data cleaning, preprocessing, analysis, visualisation and predictive modelling tasks, among other things. This tool holds great promise for programmers and analysts alike, with the potential to streamline coding workflows as well as having an automated data analyst at your fingertips.
+
+To use Code Interpreter, you need to enable it in the ChatGPT settings (at time of writing this only works with a paid ChatGPT Plus subscription).
+
+![](images/pic1.png){fig-alt="Screenshot of ChatGPT Plus setting, showing Code Interpreter plugin option"}
+
+Now, let’s take it for a bit of a spin by uploading the stroke prediction dataset in Kaggle. 
+
+
+ 
+
+
+The stroke prediction dataset
+
+The World Health Organization (WHO) identifies stroke as the second leading cause of death worldwide, accounting for roughly 11% of all fatalities. 
+
+The stroke prediction dataset in Kaggle is used to forecast the likelihood of a patient suffering a stroke, taking into account various input parameters such as age, gender, presence of certain diseases, and smoking habits. Each row in the dataset offers pertinent information about an individual patient.
+
+Loading this dataset into ChatGPT Code Interpreter, one is treated with:
+
+
+
+ 
+
+The user is asked: “Please let me know what analysis or operations you'd like to perform on this dataset. For instance, we can perform exploratory data analysis, data cleaning, data visualization, or predictive modelling.”
+
+It seems quite a bold claim. So I asked it to do all of the above. 
+
+ 
+
+
+
+
+
+Exploratory Data Analysis
+
+ 
+
+This is a good, useful summary. The missing values in `bmi` are set to the median, which the user can later decide to change for themselves as the code is available to do so. 
+
+ 
+
+
+Data visualisation
+
+Next the visualisation of the variables are shown along with a correlation heatmap. Users can toggle between the visualisations and the code. The outputs are pretty useful, except for one mistake: ID shouldn’t be included as part of the heatmap.  
+
+ 
+ 
+
+
+
+ 
+
+
+Things start to go seriously awry when Code Interpreter tries to create a predictive model. 
+
+
+The predictive model is garbage
+
+Look at the screenshot below, and you can see that lumping all the data into a predictive model creates some highly spurious results. Age is a factor, as it should be, as is hypertension – indeed, those with hypertension in this dataset are around three times more likely to have a stroke than those without. In reality, there are also significant effects from glucose level and smoking, and also a slight BMI effect in this small unbalanced dataset. 
+
+However, the `work_type_children` having a large positive effect is alarming and plainly wrong: 
+
+ 
+
+It is very evident from the table below that the positive coefficient on children is spurious. 
+
+ 
+
+So, where does this leave our thinking about Code Interpreter?
+Discussion
+
+My test case is possibly an unfair one. The sort of study presented to Code Interpreter is one that requires careful analysis, and it uses a relatively small, tricky dataset whose difficulties are compounded by missing data. It’s therefore not surprising that in this context, an automated analysis fails to shine in all respects. 
+
+To be fair, OpenAI themselves describe the plugin as an “eager junior programmer”. And as would be the case with a real junior programmer or junior data scientist, you’d expect a more experienced hand to be guiding an analysis like the one I asked for; someone who can sense-check results, point out errors, and offer suggestions for fixes and improvements. 
+
+Despite some stumbles in this demo, OpenAI’s “junior programmer” presents a real step forward in the ChatGPT offering, and it is particularly impressive that one can toggle between code and charts without having to worry about coding at all. 
+
+At this stage, I would argue that Code Interpreter may be useful for quick summaries, visualisations and a little basic data cleaning and some preliminary investigations. However, based on what I’ve seen so far, it is clear to me that highly trained statisticians won’t be replaced anytime soon. 
+
+
+::: {.article-btn}
+[Back to Editors' blog](/viewpoints/editors-blog/index.qmd)
+:::
+
+::: {.further-info}
+::: grid
+::: {.g-col-12 .g-col-md-12}
+About the author
+: **Lee Clewley** is a member of the [editorial board of Real World Data Science](https://realworlddatascience.net/viewpoints/editors-blog/posts/2022/10/18/meet-the-team.html) and head of applied AI in GSK’s AI and Machine Learning Group, R&D. 
+:::
+
+::: {.g-col-12 .g-col-md-6}
+Copyright and licence
+: &copy; 2023 Lee Clewley
+
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail image by <a href="https://unsplash.com/it/@bendavisual?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Benjamin Davies</a> on <a href="https://unsplash.com/photos/Oja2ty_9ZLM?utm_source=unsplash&utm_medium=referral&utm_content=creditCopyText">Unsplash</a>.
+  
+
+:::
+
+::: {.g-col-12 .g-col-md-6}
+How to cite
+: Clewley, Lee. 2023. "Testing out ChatGPT’s new Code Interpreter." Real World Data Science, July 19, 2023. [URL](https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/code-interpreter.html)
+:::
+:::
+:::
