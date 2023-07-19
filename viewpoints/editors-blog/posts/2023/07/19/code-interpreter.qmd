@@ -13,7 +13,7 @@ toc: true
 # image: images/benjamin-davies-Oja2ty_9ZLM-unsplash.png
 # image-alt: An aerial view of London and the River Thames, taken from The Shard, London, United Kingdom.
 ---
-On July 6, 2023, [OpenAI began rolling out the Code Interpreter plugin](https://twitter.com/OpenAI/status/1677015057316872192?s=20) to users of its ChatGPT Plus service.  But what exactly is this, and what functionality does it offer?
+On July 6, 2023, [OpenAI began rolling out the Code Interpreter plugin](https://twitter.com/OpenAI/status/1677015057316872192?s=20) to users of its ChatGPT Plus service. But what exactly is this, and what functionality does it offer?
 
 Code Interpreter runs code and allows for uploading data so you can use ChatGPT for data cleaning, preprocessing, analysis, visualisation and predictive modelling tasks, among other things. This tool holds great promise for programmers and analysts alike, with the potential to streamline coding workflows as well as having an automated data analyst at your fingertips.
 
@@ -21,81 +21,65 @@ To use Code Interpreter, you need to enable it in the ChatGPT settings (at time 
 
 ![](images/pic1.png){fig-alt="Screenshot of ChatGPT Plus setting, showing Code Interpreter plugin option"}
 
-Now, let’s take it for a bit of a spin by uploading the stroke prediction dataset in Kaggle. 
+Now, let’s take it for a bit of a spin by uploading the [stroke prediction dataset from Kaggle](https://www.kaggle.com/datasets/fedesoriano/stroke-prediction-dataset). 
 
-
- 
-
-
-The stroke prediction dataset
+## The stroke prediction dataset
 
 The World Health Organization (WHO) identifies stroke as the second leading cause of death worldwide, accounting for roughly 11% of all fatalities. 
 
-The stroke prediction dataset in Kaggle is used to forecast the likelihood of a patient suffering a stroke, taking into account various input parameters such as age, gender, presence of certain diseases, and smoking habits. Each row in the dataset offers pertinent information about an individual patient.
+Kaggle's stroke prediction dataset is used to forecast the likelihood of a patient suffering a stroke, taking into account various input parameters such as age, gender, presence of certain diseases, and smoking habits. Each row in the dataset offers pertinent information about an individual patient.
 
 Loading this dataset into ChatGPT Code Interpreter, one is treated with:
 
-
-
- 
+![](images/pic2.png){fig-alt="Screenshot from ChatGPT, showing Code Interpreter's initial review of an uploaded stroke prediction dataset"}
 
 The user is asked: “Please let me know what analysis or operations you'd like to perform on this dataset. For instance, we can perform exploratory data analysis, data cleaning, data visualization, or predictive modelling.”
 
-It seems quite a bold claim. So I asked it to do all of the above. 
+It seems quite a bold claim. So, I asked it to do all of the above. 
 
- 
+![](images/pic3.png){fig-alt="Screenshot from ChatGPT, showing Code Interpreter's overview explanation of planned analysis steps"}
 
+### Exploratory Data Analysis
 
-
-
-
-Exploratory Data Analysis
-
- 
+![](images/pic4.png){fig-alt="Screenshot of ChatGPT Code Interpreter's exploratory data analysis outputs"}
 
 This is a good, useful summary. The missing values in `bmi` are set to the median, which the user can later decide to change for themselves as the code is available to do so. 
 
+![](images/pic5.png){fig-alt="Screenshot of code output from ChatGPT Code Interpreter, showing how to set missing values in dataset to the median value"}
+
+### Data visualisation
+
+Next, the visualisations of the variables are shown along with a correlation heatmap. Users can toggle between the visualisations and the code. The outputs are pretty useful, except for one mistake: `id` shouldn’t be included as part of the heatmap.
+
+![](images/pic6.png){fig-alt="Screenshot of ChatGPT Code Interpreter's description of visualisations it will create, along with partial code for doing so"}
  
+![Histograms and bar plots created by ChatGPT Code Interpreter for variables in the Kaggle stroke prediction dataset.](images/pic7.png){fig-alt="Histograms and bar plots created by ChatGPT Code Interpreter for variables in the Kaggle stroke prediction dataset"}
 
-
-Data visualisation
-
-Next the visualisation of the variables are shown along with a correlation heatmap. Users can toggle between the visualisations and the code. The outputs are pretty useful, except for one mistake: ID shouldn’t be included as part of the heatmap.  
-
- 
- 
-
-
-
- 
-
+![Correlation heatmap for variables in the Kaggle stroke prediction dataset.](images/pic8.png){fig-alt="Correlation heatmap for variables in the Kaggle stroke prediction dataset"}
 
 Things start to go seriously awry when Code Interpreter tries to create a predictive model. 
 
+### The predictive model is garbage
 
-The predictive model is garbage
+From the screenshot below, you can see that lumping all the data into a predictive model creates some highly spurious results. Age is a factor, as it should be, as is hypertension – indeed, those with hypertension in this dataset are around three times more likely to have a stroke than those without. In reality, there are also significant effects from glucose level and smoking, and also a slight BMI effect in this small, unbalanced dataset. However, `work_type_children` having a large positive effect is alarming and plainly wrong: 
 
-Look at the screenshot below, and you can see that lumping all the data into a predictive model creates some highly spurious results. Age is a factor, as it should be, as is hypertension – indeed, those with hypertension in this dataset are around three times more likely to have a stroke than those without. In reality, there are also significant effects from glucose level and smoking, and also a slight BMI effect in this small unbalanced dataset. 
-
-However, the `work_type_children` having a large positive effect is alarming and plainly wrong: 
-
- 
+![](images/pic9.png){fig-alt="Screenshot showing ChatGPT Code Interpreter's most important features for predicting stroke. The inclusion of 'work_type_children' is wrong: it says that 'individuals who are children are more likely to have a stroke'"}
 
 It is very evident from the table below that the positive coefficient on children is spurious. 
 
- 
+![](images/pic10.png){fig-alt="Screenshot of table from ChatGPT code interpreter, showing 'number of individuals' and 'number of strokes' for each 'work type'. Figures for children are 687 individuals and 2 strokes."}
 
 So, where does this leave our thinking about Code Interpreter?
-Discussion
 
-My test case is possibly an unfair one. The sort of study presented to Code Interpreter is one that requires careful analysis, and it uses a relatively small, tricky dataset whose difficulties are compounded by missing data. It’s therefore not surprising that in this context, an automated analysis fails to shine in all respects. 
+## Discussion
 
-To be fair, OpenAI themselves describe the plugin as an “eager junior programmer”. And as would be the case with a real junior programmer or junior data scientist, you’d expect a more experienced hand to be guiding an analysis like the one I asked for; someone who can sense-check results, point out errors, and offer suggestions for fixes and improvements. 
+My test case is possibly an unfair one. The sort of study presented to Code Interpreter is one that requires careful analysis, and it uses a relatively small, tricky dataset whose difficulties are compounded by missing data. It’s therefore not surprising that, in this context, an automated analysis fails to shine in all respects. 
+
+To be fair, OpenAI themselves describe the plugin as an “[eager junior programmer](https://openai.com/blog/chatgpt-plugins)”. And as would be the case with a real junior programmer or junior data scientist, you’d expect a more experienced hand to be guiding an analysis like the one I asked for -- someone who can sense-check results, point out errors, and offer suggestions for fixes and improvements. 
 
 Despite some stumbles in this demo, OpenAI’s “junior programmer” presents a real step forward in the ChatGPT offering, and it is particularly impressive that one can toggle between code and charts without having to worry about coding at all. 
 
 At this stage, I would argue that Code Interpreter may be useful for quick summaries, visualisations and a little basic data cleaning and some preliminary investigations. However, based on what I’ve seen so far, it is clear to me that highly trained statisticians won’t be replaced anytime soon. 
-
 
 ::: {.article-btn}
 [Back to Editors' blog](/viewpoints/editors-blog/index.qmd)
