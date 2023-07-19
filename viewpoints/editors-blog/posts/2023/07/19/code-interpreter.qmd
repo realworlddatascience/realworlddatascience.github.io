@@ -19,7 +19,7 @@ Code Interpreter runs code and allows for uploading data so you can use ChatGPT 
 
 To use Code Interpreter, you need to enable it in the ChatGPT settings (at time of writing this only works with a paid ChatGPT Plus subscription).
 
-[![](images/pic1.png){width="700px" fig-align="center" fig-alt="Screenshot of ChatGPT Plus setting, showing Code Interpreter plugin option"}](images/pic1.png)
+[![](images/pic1.png){width="700px" fig-align="center" fig-alt="Screenshot of ChatGPT Plus setting, showing Code Interpreter plugin option."}](images/pic1.png)
 
 Now, let’s take it for a bit of a spin by uploading the [stroke prediction dataset from Kaggle](https://www.kaggle.com/datasets/fedesoriano/stroke-prediction-dataset). 
 
@@ -31,35 +31,35 @@ Kaggle's stroke prediction dataset is used to forecast the likelihood of a patie
 
 Loading this dataset into ChatGPT Code Interpreter, one is treated with:
 
-[![](images/pic2.png){width="700px" fig-align="center" fig-alt="Screenshot from ChatGPT, showing Code Interpreter's initial review of an uploaded stroke prediction dataset"}](images/pic2.png)
+[![](images/pic2.png){width="700px" fig-align="center" fig-alt="Screenshot from ChatGPT, showing Code Interpreter's initial review of an uploaded stroke prediction dataset."}](images/pic2.png)
 
 The user is asked: “Please let me know what analysis or operations you'd like to perform on this dataset. For instance, we can perform exploratory data analysis, data cleaning, data visualization, or predictive modelling.”
 
 It seems quite a bold claim. So, I asked it to do all of the above. 
 
-[![](images/pic3.png){width="700px" fig-align="center" fig-alt="Screenshot from ChatGPT, showing Code Interpreter's overview explanation of planned analysis steps"}](images/pic3.png)
+[![](images/pic3.png){width="700px" fig-align="center" fig-alt="Screenshot from ChatGPT, showing Code Interpreter's overview explanation of planned analysis steps."}](images/pic3.png)
 
 ### Exploratory Data Analysis
 
-[![](images/pic4.png){width="700px" fig-align="center" fig-alt="Screenshot of ChatGPT Code Interpreter's exploratory data analysis outputs"}](images/pic4.png)
+[![](images/pic4.png){width="700px" fig-align="center" fig-alt="Screenshot of ChatGPT Code Interpreter's exploratory data analysis outputs."}](images/pic4.png)
 
 This is a good, useful summary. The missing values in `bmi` are set to the median, which the user can later decide to change for themselves as the code is available to do so. 
 
-[![](images/pic5.png){width="700px" fig-align="center" fig-alt="Screenshot of code output from ChatGPT Code Interpreter, showing how to set missing values in dataset to the median value"}](images/pic5.png)
+[![](images/pic5.png){width="700px" fig-align="center" fig-alt="Screenshot of code output from ChatGPT Code Interpreter, showing how to set missing values in dataset to the median value."}](images/pic5.png)
 
 ### Data visualisation
 
 Next, the visualisations of the variables are shown along with a correlation heatmap. Users can toggle between the visualisations and the code. The outputs are pretty useful, except for one mistake: `id` shouldn’t be included as part of the heatmap.
 
-[![](images/pic6.png){width="700px" fig-align="center" fig-alt="Screenshot of ChatGPT Code Interpreter's description of visualisations it will create, along with partial code for doing so"}](images/pic6.png)
+[![](images/pic6.png){width="700px" fig-align="center" fig-alt="Screenshot of ChatGPT Code Interpreter's description of visualisations it will create, along with partial code for doing so."}](images/pic6.png)
  
-[![](images/pic7.png){width="700px" fig-align="center" fig-alt="Histograms and bar plots created by ChatGPT Code Interpreter for variables in the Kaggle stroke prediction dataset"}](images/pic7.png)
+[![](images/pic7.png){width="700px" fig-align="center" fig-alt="Histograms and bar plots created by ChatGPT Code Interpreter for variables in the Kaggle stroke prediction dataset."}](images/pic7.png)
 
 ::: {.figure-caption style="text-align: center;"}
 Histograms and bar plots created by ChatGPT Code Interpreter for variables in the Kaggle stroke prediction dataset.
 :::
 
-[![](images/pic8.png){width="700px" fig-align="center" fig-alt="Correlation heatmap for variables in the Kaggle stroke prediction dataset"}](images/pic8.png)
+[![](images/pic8.png){width="700px" fig-align="center" fig-alt="Correlation heatmap for variables in the Kaggle stroke prediction dataset."}](images/pic8.png)
 
 ::: {.figure-caption style="text-align: center;"}
 Correlation heatmap for variables in the Kaggle stroke prediction dataset.
@@ -69,9 +69,9 @@ Things start to go seriously awry when Code Interpreter tries to create a predic
 
 ### The predictive model is garbage
 
-From the screenshot below, you can see that lumping all the data into a predictive model creates some highly spurious results. Age is a factor, as it should be, as is hypertension – indeed, those with hypertension in this dataset are around three times more likely to have a stroke than those without. In reality, there are also significant effects from glucose level and smoking, and also a slight BMI effect in this small, unbalanced dataset. However, `work_type_children` having a large positive effect is alarming and plainly wrong: 
+From the screenshot below, you can see that lumping all the data into a predictive model creates some highly spurious results. Age is a factor, as it should be, as is hypertension – indeed, those with hypertension in this dataset are around three times more likely to have a stroke than those without. In reality, there are also significant effects from glucose level and smoking, and also a slight BMI effect in this small, unbalanced dataset. However, `work_type_children` having a large positive effect is alarming and plainly wrong. 
 
-[![](images/pic9.png){width="700px" fig-align="center" fig-alt="Screenshot showing ChatGPT Code Interpreter's most important features for predicting stroke. The inclusion of 'work_type_children' is wrong: it says that 'individuals who are children are more likely to have a stroke'"}](images/pic9.png)
+[![](images/pic9.png){width="700px" fig-align="center" fig-alt="Screenshot showing ChatGPT Code Interpreter's most important features for predicting stroke. The inclusion of 'work_type_children' is wrong: it says that 'individuals who are children are more likely to have a stroke', but goes on to explain that 'this might be the result of an imbalance in the dataset or noise, as in reality, children generally have a lower risk of stroke."}](images/pic9.png)
 
 It is very evident from the table below that the positive coefficient on children is spurious. 
 
