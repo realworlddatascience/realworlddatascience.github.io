@@ -15,6 +15,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <table>
   <tbody>
     <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/enndubbs"><img src="https://avatars.githubusercontent.com/u/76266181?v=4?s=100" width="100px;" alt="Noah DeGrange"/><br /><sub><b>Noah DeGrange</b></sub></a><br /><a href="#content-enndubbs" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/andrepython"><img src="https://avatars.githubusercontent.com/u/15249611?v=4?s=100" width="100px;" alt="Andre Python"/><br /><sub><b>Andre Python</b></sub></a><br /><a href="#content-andrepython" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/dsvanidze"><img src="https://avatars.githubusercontent.com/u/14854973?v=4?s=100" width="100px;" alt="Davit Svanidze"/><br /><sub><b>Davit Svanidze</b></sub></a><br /><a href="#content-dsvanidze" title="Content">🖋</a></td>
     </tr>
