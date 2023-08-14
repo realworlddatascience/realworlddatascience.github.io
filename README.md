@@ -1,12 +1,11 @@
 # A showcase for data science in action
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/github/all-contributors/realworlddatascience/realworlddatascience.github.io?color=ee8449)](#contributors)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 Welcome to the home of **Real World Data Science**, a new project from the [Royal Statistical Society](https://rss.org.uk/). This repository contains all the source files and code for our website. The site and its content are being created and curated by data science practitioners and leaders with a single goal in mind: to help you deliver high quality, ethical, impactful data science in your workplace.
 
 See [realworlddatascience.net](https://realworlddatascience.net/) for further details and information on [becoming a contributor](https://realworlddatascience.net/contributor-docs/call-for-contributions.html).
 ## Contributors ✨
-
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/github/all-contributors/realworlddatascience/realworlddatascience.github.io?color=ee8449)](#contributors)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
