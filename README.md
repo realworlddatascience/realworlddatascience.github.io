@@ -1,12 +1,12 @@
 # A showcase for data science in action
-<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-1-orange.svg?style=flat-square)](#contributors-)
-<!-- ALL-CONTRIBUTORS-BADGE:END -->
 Welcome to the home of **Real World Data Science**, a new project from the [Royal Statistical Society](https://rss.org.uk/). This repository contains all the source files and code for our website. The site and its content are being created and curated by data science practitioners and leaders with a single goal in mind: to help you deliver high quality, ethical, impactful data science in your workplace.
 
 See [realworlddatascience.net](https://realworlddatascience.net/) for further details and information on [becoming a contributor](https://realworlddatascience.net/contributor-docs/call-for-contributions.html).
-## Contributors ✨
 
+## Contributors ✨
+<!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
+[![All Contributors](https://img.shields.io/github/all-contributors/realworlddatascience/realworlddatascience.github.io?color=ee8449)](#contributors)
+<!-- ALL-CONTRIBUTORS-BADGE:END -->
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
@@ -16,6 +16,10 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
   <tbody>
     <tr>
       <td align="center" valign="top" width="14.28%"><a href="https://philosopher-analyst.netlify.app/"><img src="https://avatars.githubusercontent.com/u/39963221?v=4?s=100" width="100px;" alt="Zoë Turner"/><br /><sub><b>Zoë Turner</b></sub></a><br /><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues?q=author%3ALextuga007" title="Bug reports">🐛</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="http://jauerbach.github.io"><img src="https://avatars.githubusercontent.com/u/4665257?v=4?s=100" width="100px;" alt="Jonathan Auerbach"/><br /><sub><b>Jonathan Auerbach</b></sub></a><br /><a href="#content-jauerbach" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/enndubbs"><img src="https://avatars.githubusercontent.com/u/76266181?v=4?s=100" width="100px;" alt="Noah DeGrange"/><br /><sub><b>Noah DeGrange</b></sub></a><br /><a href="#content-enndubbs" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/andrepython"><img src="https://avatars.githubusercontent.com/u/15249611?v=4?s=100" width="100px;" alt="Andre Python"/><br /><sub><b>Andre Python</b></sub></a><br /><a href="#content-andrepython" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/dsvanidze"><img src="https://avatars.githubusercontent.com/u/14854973?v=4?s=100" width="100px;" alt="Davit Svanidze"/><br /><sub><b>Davit Svanidze</b></sub></a><br /><a href="#content-dsvanidze" title="Content">🖋</a></td>
     </tr>
   </tbody>
 </table>
