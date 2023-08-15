@@ -8,8 +8,8 @@ categories:
 author: Brian Tarran
 date: last-modified
 toc: true
-image: images/data-hazards.png
-image-alt: A person is illustrated in a warm, cartoon-like style in green. They are looking up thoughtfully from the bottom left at a large hazard symbol in the middle of the image. The hazard symbol is a bright orange square tilted 45 degrees, with a black and white illustration of an exclamation mark in the middle where the exclamation mark shape is made up of tiny 1s and 0s like binary code. To the right-hand side of the image a small character made of lines and circles (like nodes and edges on a graph) is standing with its ‘arms’ and ‘legs’ stretched out, and two antenna sticking up. It faces off to the right-hand side of the image.
+image: images/google-sign.png
+image-alt: Google logo on top of building, against a blue sky.
 ---
 ## Sunday, August 6
 ### Use of color in statistical charts
@@ -71,7 +71,7 @@ But does this mean that an AI singularity is near? Not according to Donoho. The 
 
 These three initiatives, as Donoho described, are: datafication and data sharing; adherence to the "challenge problem" paradigm; and documentation and sharing of code. These are solid achievements that came out of the last decade, said Donoho, and they are "truly revolutionary" when they come together to form what he refers to as "frictionless reproducibility."
 
-[![Photo of David Donoho's slide, describing the scientific revolution of the "data science decade". Photo by Brian Tarran, licenced under CC BY 4.0](images/donoho-talk.png)](images/donoho-talk.png){fig-alt="Slide text reads: Today's data scientists: typical interactions: What's your package name? What's your URL? QR Code? What's your stack? Today's data scientists: implicit demands: Data sharing, Specific numerical performance measures, Code sharing, Single-click access. Frictionless replications." width="500px"}
+[![Photo of David Donoho's slide, describing the scientific revolution of the "data science decade". Photo by Brian Tarran, licenced under CC BY 4.0](images/donoho-talk.png){fig-alt="Slide text reads: Today's data scientists: typical interactions: What's your package name? What's your URL? QR Code? What's your stack? Today's data scientists: implicit demands: Data sharing, Specific numerical performance measures, Code sharing, Single-click access. Frictionless replications." width="500px"}](images/donoho-talk.png)
 
 Frictionless reproducibility, when achieved, leads to a "reproducibility singularity" -- the moment where it takes almost no time at all for an idea to spread. "If there is an AI singularity," said Donoho, "it will be because this came first."
 
@@ -83,11 +83,32 @@ Yu began by explaining how machine learning algorithms require a lot of data for
 
 But, he said, when researchers download this cheap data, they are bound to worry about the quality of it. Drawing an analogy to food poisoning, Yu asked: What if the data we "feed" to algorithms is not clean? What is the impact of that?
 
+![Illustration by Yasmin Dwiputri & Data Hazards Project / Better Images of AI / Managing Data Hazards / Licenced by CC-BY 4.0](images/data-hazards.png){fig-alt="A person is illustrated in a warm, cartoon-like style in green. They are looking up thoughtfully from the bottom left at a large hazard symbol in the middle of the image. The hazard symbol is a bright orange square tilted 45 degrees, with a black and white illustration of an exclamation mark in the middle where the exclamation mark shape is made up of tiny 1s and 0s like binary code. To the right-hand side of the image a small character made of lines and circles (like nodes and edges on a graph) is standing with its ‘arms’ and ‘legs’ stretched out, and two antenna sticking up. It faces off to the right-hand side of the image." width="500px"}
+
 As a real-world example of a data poisoning attack, Yu pointed to TayTweets, the Microsoft Twitter chatbot that spewed racism within hours of launch [after Twitter users began engaging with it](https://www.theverge.com/2016/3/24/11297050/tay-microsoft-chatbot-racist).
 
 Yu then walked delegates through some experiments showing how, generally, indiscriminate data poisoning attacks are ineffective when the ratio of poisoned data to clean data is small. A poisoning rate of 3%, for example, leads to model accuracy drops of 1.5%--2%, Yu said.
 
 However, he then put forward the idea of "parameter corruption" -- an attack that seeks to modify a model directly. Yu showed that this would be more effective in terms of accuracy loss, though -- fortunately -- perhaps less practical to implement.
+
+### Data Science and Product Analysis at Google
+Our final session at JSM 2023, before heading home, was a whistle-stop tour of various data science projects at Google, covering YouTube, Google Maps, and Google Search.
+
+Jacopo Soriano kicked us off with a brief intro to the role and responsibilities of statisticians and data scientists at Google, and within YouTube specifically -- the main task being to make good decisions based on uncertain data.
+
+Soriano also spoke about the key role randomised experiments play in product development -- harking back to [Nathaniel Stevens' earlier talk on this subject](#teaching-statistics-in-higher-education-with-active-learning). YouTube runs hundreds, if not thousands, of concurrent experiments, Soriano said; statisticians can't, therefore, be involved in each one. As Soriano's colleague, Angela Schoergendorfer, explained later in the session, the role of the data scientist is to build methodology and metrics that others in the business can use to run their own experiments.
+
+![Photo by Pawel Czerwinski on Unsplash.](images/google-sign.png){fig-alt="Google logo on top of building, against a blue sky." width="500px"}
+
+For every experiment YouTube runs, a portion of its voluminous daily traffic will be assigned to control arms and treatment arms, with traffic able to be diverted to different groups based on user type, creators, videos, advertisers, etc. Once experiments are running, metrics such as search clickthrough rates, watch time using specific devices, or daily active user numbers are monitored. Teams tend to look at percentage change as the scale to measure whether something is working or not, said Soriano, rather than comparing treatment to control group.
+
+Next up was Lee Richardson, who spoke about the use of proxy metrics. Technology companies like Google are often guided by so-called "[north star metrics](https://www.forbes.com/sites/forbesbusinesscouncil/2022/11/11/what-is-your-startups-north-star-metric/)", which executive leadership use to guide the overall strategy and priorities of an organisation. However, Richardson said, these can be hard to design experiments around, and so proxy metrics stand in for the north star metrics. Proxies need to be sensitive, he said, and move in the same direction as, e.g., a long-term positive user experience.
+
+On the subject of user experience, Christopher Haulk then explained how YouTube measures user satisfaction through single-question surveys -- typically asking a YouTube user to rate the video they just watched. The company doesn't send out that many surveys, Haulk said, and response rates are in the single-digit percentage range, so it can be hard to evaluate whether changes YouTube makes to, e.g., its video recommendation algorithm are working to improve user satisfaction. Haulk then went on to explain a modelling approach the company uses to predict how users are likely to respond in order to "fill in" for missing responses.
+
+Over at Google Search, user feedback is also regularly sought to help support the evolution of the product. Angela Schoergendorfer explained how, with so many people already using Google Search, statistically significant changes in top-line metrics like daily active users can take months to see. Decision metics should ideally capture user value quickly, said Schoergendorfer -- within days. For this, Google has 10,000 trained "search quality" raters they can call on. Random samples of user search queries and results are sent to these raters, who are asked to evaluate the quality of the search results. Users can also be asked in the moment, or offline through the Google Rewards app.
+
+In 2021, Schoergendorfer said, Google conducted approximately 800,000 experiments and quality tests. But perhaps the most impressive statistic of the day came from Sam Morris, who works on Google Maps. Something, somewhere, is always changing in the world, said Morris -- be it a road closure or a change to business hours. The Maps team cannot evaluate every single piece of data -- a lot of changes are automated or algorithmic, he explained. "So far this year, we have probably processed 16 billion changes to the map," said Morris -- a staggering figure!
 
 ::: {.article-btn}
 [Back to Editors' blog](/viewpoints/editors-blog/index.qmd)
@@ -99,13 +120,13 @@ However, he then put forward the idea of "parameter corruption" -- an attack tha
 Copyright and licence
 : &copy; 2023 Royal Statistical Society
 
-<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail image by <a href="yasmindwiputri.com">Yasmin Dwiputri</a> & <a href="Datahazards.com">Data Hazards Project</a> / <a href="https://www.betterimagesofai.org">Better Images of AI</a> / Managing Data Hazards / <a href="https://creativecommons.org/licenses/by/4.0/">Licenced by CC-BY 4.0</a>.
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.
   
 :::
 
 ::: {.g-col-12 .g-col-md-6}
 How to cite
-: Tarran, Brian. 2023. "Live from Toronto: Real World Data Science at the Joint Statistical Meetings." Real World Data Science, August 6, 2023, updated August 9, 2023. [URL](https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/08/06/jsm-blog.html)
+: Tarran, Brian. 2023. "Live from Toronto: Real World Data Science at the Joint Statistical Meetings." Real World Data Science, August 6, 2023, updated August 15, 2023. [URL](https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/08/06/jsm-blog.html)
 :::
 :::
 :::
