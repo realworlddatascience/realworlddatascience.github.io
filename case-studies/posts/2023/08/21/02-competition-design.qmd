@@ -3,18 +3,16 @@ title: "Food for Thought: Competition and challenge design"
 # description: |
 #   Stephanie Hare, author of 'Technology is Not Neutral', talks to Real World Data Science about the 'wicked problem' of technology and AI ethics, and why laws and regulations are 'necessary but insufficient' to minimise harms. 'We’re going to have to inculcate an entire new mindset,' she argues.        
 categories:
-  # - Technology ethics
-  # - AI ethics
-  # - Culture
-  # - Regulation
+  - Machine learning
+  - Natural language processing
+  - Public policy
+  - Health and wellbeing
 author: Zheyuan Zhang and Uyen Le
-date: 05/XX/2023
+date: 08/21/2023
 toc: true
-# image: images/stephanie-hare-bw.png
-# image-alt: Photo of Stephanie Hare by Mitzi de Margary. Photo supplied by Stephanie Hare, used with permission.
-# format:
-#   html:
-#     embed-resources: true   
+bibliography: references.bib
+image: images/pt2-intro.png
+image-alt: Section of article's Figure 1 graphic, illustrating the challenge of linking retail scanner data to nutrition information.  
 ---
 Since 2014, the professional services firm Westat, Inc. has been developing the Purchase to Plate Crosswalk (PPC) for the United States Department of Agriculture (USDA) Economic Research Service (ERS). The PPC links the retail food transactions database from IRI’s InfoScan service and the USDA Food and Nutrient Database for Dietary Studies (FNDDS). However, the current linkage process uses only partly automated data matching, meaning it is resource intensive, time consuming, and requires manual review.  
 
@@ -26,12 +24,12 @@ With sponsorship from ERS, Westat partnered with the Coleridge Initiative to hos
 **Figure 1:** Overview of the Food for Thought Competition Challenge. 
 :::
 
-The one-to-many matching task that is central to the competition throws up many challenges for researchers to wrestle with. Because IRI data contains food transactions collected from partnered retail establishments for over 850,000 items, the matchings need be made based on limited data features, including categories, providers, and semantically inconsistent descriptions that consist of short phrases. Consider this hypothetical example: IRI product-related information about a (fictional) “Cheesy Hashbrowns Hamburger Helper, 5.5 Oz Box” needs to be linked to FNDDS nutrition-related information found under “Mixed dishes – meat, poultry, seafood: Mixed meat dishes”. Figure 2 demonstrates how the two databases are linked with each other to create the PPC. As can be seen, there is no common word that easily indicates that “Cheesy Hashbrowns Hamburger Helper...” should be matched with “Mixed dishes...”, and such cases exist in all IRI tables used for the challenge, from 2012 through 2018.
+The one-to-many matching task that is central to the competition throws up many challenges for researchers to wrestle with. Because IRI data contains food transactions collected from partnered retail establishments for over 350,000 items, the matchings need to be made based on limited data features, including categories, providers, and semantically inconsistent descriptions that consist of short phrases. Consider this hypothetical example: IRI product-related information about a (fictional) “Cheesy Hashbrowns Hamburger Helper, 5.5 Oz Box” needs to be linked to FNDDS nutrition-related information found under “Mixed dishes – meat, poultry, seafood: Mixed meat dishes”. Figure 2 demonstrates how the two databases are linked with each other to create the PPC. As can be seen, there is no common word that easily indicates that “Cheesy Hashbrowns Hamburger Helper...” should be matched with “Mixed dishes...”, and such cases exist in all IRI tables used for the challenge, from 2012 through 2018.
 
 [![](images/pt2-fig2.png){width="700px"}](images/pt2-fig2.png)
 
 :::{.figure-caption}
-**Figure 2:** Each universal product code (UPC) from the IRI data could match only one ensemble code (EC) from the FNDDS data, whereas one EC code could match multiple UPCs.  
+**Figure 2:** Each universal product code (UPC) from the IRI data could match to only one ensemble code (EC) from the FNDDS data, whereas one EC code could match to multiple UPCs.  
 :::
 
 Also, because nutritionists or food scientists will always need to review the matching, regardless of the matching method used, it was important that our evaluation of proposed matching methods focused both on the accuracy of prediction models and also on metrics that would lead participants to develop models that facilitate qualified reviewers to reduce their workloads. 
@@ -39,17 +37,11 @@ Also, because nutritionists or food scientists will always need to review the ma
 Organising the competition was also a challenge in its own right, for data privacy reasons. IRI scanner data contains sensitive information, such as store name, location, unit price, and weekly quantity sold for each item. This ruled out using existing online platforms like Kaggle, DrivenData or AIcrowd to host the competition, and instead required a private secure data enclave to ensure the safe use of sensitive and confidential data assets. The need for such an environment imposed capacity constraints on the competition, meaning only dozens of teams could be invited to take part, whereas on open platforms it is common to have thousands of teams competing and sharing ideas and code.  
 
 ## Competition structure 
-The competition ran over 10 months and consisted of three separate challenges: two interim, one final. Applications opened in September 2021, and the competition started in January 2022. Submission deadlines for the first and second interim challenges were in July and September 2022, respectively. For these rounds, participants submitted preliminary solutions for evaluation based solely on quantitative metrics, and two awards of $10,000 were given to the highest-scoring teams. Deadline for the final challenge was in October 2022. Here, solutions were evaluated based on [three judging criteria](#metrics): quantitative metrics, transferability, and innovation. First, second, and third place winners received awards of $30,000, $1,500, and $1,000 respectively. Final presentations were given at the Food for Thought symposium in December 2022.  
+The competition ran over 10 months and consisted of three separate challenges: two interim, one final. Applications opened in September 2021, and the competition started in January 2022. Submission deadlines for the first and second interim challenges were in July and September 2022, respectively. For these rounds, participants submitted preliminary solutions for evaluation based solely on quantitative metrics, and two awards of $10,000 were given to the highest-scoring teams. The deadline for the final challenge was in October 2022. Here, solutions were evaluated by the scientific review board based on [three judging criteria](#metrics): quantitative metrics, transferability, and innovation. First, second, and third place winners received awards of $30,000, $1,500, and $1,000 respectively. Final presentations were given at the Food for Thought symposium in December 2022.  
 
-The competition was run entirely within the Coleridge Initiative’s Administrative Data Research Facility (ADRF), which was established by the United States Census Bureau to inform the decision-making of the Commission on Evidence-Based Policy under the Evidence Act. ADRF follows the Five Safes Framework: safe projects, safe people, safe data, safe settings, and safe outputs. Figure 3 presents a diagrammatic overview of how this Five Safes Framework is applied.
+The competition was run entirely within the Coleridge Initiative’s Administrative Data Research Facility (ADRF), which was established by the United States Census Bureau to inform the decision-making of the Commission on Evidence-Based Policy under the Evidence Act. ADRF follows the Five Safes Framework: safe projects, safe people, safe data, safe settings, and safe outputs. 
 
-[![](images/pt2-fig3.png){width="700px"}](images/pt2-fig3.png)
-
-:::{.figure-caption}
-**Figure 3:** Five Safes Framework. Source: https://coleridgeinitiative.org/adrf/   
-:::
-
-In keeping with this framework, participants were provided with ADRF login credentials after signing the relevant data use agreements during the onboarding process. All participants were required to agree to the ADRF terms of use, to complete security training, and to pass a security training assessment prior to accessing the challenge data. Participants’ access within ADRF was limited to the challenge environment and data only. Internet access is restricted, so Coleridge Initiative ensured that any packages requested by teams were available for use within the environment after passing security review. All codes and documentation were only allowed to be exported outside ADRF after export reviews from both Coleridge Initiative and USDA. At the end of each challenge, the teams submitted write-ups and supporting files by placing all the necessary submission files in their ADRF team folder. Detailed submission instructions are available via the [Real World Data Science GitHub repo](link).  
+In keeping with this framework, participants were provided with ADRF login credentials after signing the relevant data use agreements during the onboarding process. All participants were required to agree to the ADRF terms of use, to complete security training, and to pass a security training assessment prior to accessing the challenge data. Participants’ access within ADRF was limited to the challenge environment and data only. There was no internet access, so Coleridge Initiative ensured that any packages requested by teams were available for use within the environment after passing security review. All codes and documentation were only allowed to be exported outside ADRF after export reviews from both Coleridge Initiative and USDA staff. At the end of each challenge, the teams submitted write-ups and supporting files by placing all the necessary submission files in their ADRF team folder. Detailed submission instructions are available via the [Real World Data Science GitHub repository](link).  
 
 ## Metrics 
 Submissions were evaluated by Coleridge Initiative and technical review and subject review boards based on the following criteria:  
@@ -66,21 +58,21 @@ The metrics were applied as follows: models proposed by each team were tasked wi
 
 ## Technical description 
 ### Environment setup 
-Coleridge Initiative solicited technical requirements from participants at the challenge application stage to prepare the ADRF environment as much as possible before the competition began. Each team was asked to share anticipated workspace specifications and software library requests in their application package. From this we identified 15 Python and R packages and libraries and three library components (e.g., pre-trained models, training data) that were not yet available within ADRF.  
+Coleridge Initiative solicited technical requirements from participants at the challenge application stage to prepare the ADRF environment as much as possible before the competition began. Each team was asked to share anticipated workspace specifications and software library requests in their application package. From this we identified, reviewed, and installed the requested Python and R packages, libraries, and library components (e.g., pre-trained models, training data) that were not yet available within ADRF.  
 
-The setup of graphics processing units (GPUs) was also a critical part of competition preparation. We created an environment with 16 gibibyte (GiB) of GPU memory for each team. Our technology team met with multiple teams several times to discuss computing environment configurations to ensure the GPU could work properly. None of these efforts was wasted: without GPU access, it would be impossible for teams to use state-of-the-art pre-trained models such as the Bidirectional Encoder Representations from Transformers (BERT).**[1]**  
+The setup of graphics processing units (GPUs) was also a critical part of competition preparation. We created an environment with 16 gibibyte (GiB) of GPU memory for each team. Our technology team met with multiple teams several times to discuss computing environment configurations to ensure the GPU could work properly. None of these efforts was wasted: without GPU access, it would be impossible for teams to use state-of-the-art pre-trained models such as the Bidirectional Encoder Representations from Transformers (BERT) [@DBLP:journals/corr/abs-1810-04805]. 
 
-We completed the setup of new team workspaces, each customized to the individual team’s resource and library requirements, including GPU configuration. The isolation and customization of workspaces was vital because teams may request different versions of libraries that potentially have version conflict with other libraries. We ensured the configurations were all set before the challenge began because such data challenges are bursty in nature **[2]**, and handling support requests in the private data enclave risked causing delays. We hoped to avoid receiving too many requests in the beginning phase of the competition in order to give participants a better experience, though we did of course provide participants with instructions on how to request additional libraries during the challenge period.  
+We completed the setup of new team workspaces, each customized to the individual team’s resource and library requirements, including GPU configuration. The isolation and customization of workspaces was vital because teams may request different versions of libraries that potentially have version conflict with other libraries. We ensured the configurations were all set before the challenge began because such data challenges are bursty in nature [@macavaney_et_al_2021], and handling support requests in the private data enclave risked causing delays. We hoped to avoid receiving too many requests in the beginning phase of the competition in order to give participants a better experience, though we did of course provide participants with instructions on how to request additional libraries during the challenge period.  
 
 ### Supporting materials 
 In addition to environment preparation, we made available a list of supporting documentation, including IRI, PPC, and FNDDS codebooks, technical reports, and related publications that could help teams understand the challenge datasets. The FNDDS codebook pooled information on variable availability, coding, and descriptions across dataset files and years. It also included internal Westat food category coding difficulty ratings and notes on created PPC codes and provided UPC code, EC code, and general dataset remarks and observations that may take time for analysts to discover on their own.  
 
 We developed a baseline model to demonstrate the challenge task and the expected outputs -- both outside of ADRF using FNDDS and fictitious data in place of IRI data, and an analogous model using FNDDS and IRI data within the ADRF secure environment. Moreover, we provided the teams with an evaluation script to read in their submissions and evaluate them for predictive accuracy against the public test set using S@5 and NDCG@5 challenge metrics. Finally, we held multiple webinars during the course of the challenge to explain next steps, address participant questions, solicit feedback, and provide general support. Multiple teams also met with our technology team to clarify ADRF-related questions or troubleshoot technical issues.  
 
-(Baseline model, toolkits, and evaluation script are available from the [Real World Data Science GitHub repo](link).)  
+(Baseline model, toolkits, and evaluation script are available from the [Real World Data Science GitHub repository](link).)  
 
 ### Data splitting  
-To mimic the real-world scenario, the competition used 2012--2016 IRI data as the training set, and the 2017--2018 IRI data as the test set, since the data change over time and USDA could provide the most recent data available. To make sure that models were generalizable and not just overfit to the test set, we split the test set into private and public test sets. In this way, we guaranteed that the models were evaluated on completely hidden data. In order to keep the similar distribution of the two sets, we first divided the data into five quintiles based on EC code frequencies and then randomly sampled 40% of records in each group without repetition for placement into the private test set. Later in the competition, because of the computation limit, we further shrank the private test set to 40% of its original size using the same data-splitting method.  
+To mimic the real-world scenario, the competition used 2012--2016 IRI data as the training set, and the 2017--2018 IRI data as the test set, since the data change over time and USDA could provide the most recent data available. To make sure that models were generalizable and not just overfit to the test set, we split the test set into private and public test sets. In this way, we guaranteed that the models were evaluated on completely hidden data. In order to keep the similar distribution of the two sets, we first divided the data into five quintiles based on EC code frequencies and then randomly sampled 80% of records in each group without repetition for placement into the private test set. Later in the competition, because of the computation limit, we further shrank the private test set to 40% of its original size using the same data-splitting method.  
 
 ### Judging 
 In the first two rounds, submissions were evaluated based on the quantitative metrics, as previously mentioned above. Coleridge Initiative was responsible for running the evaluation script, making sure not to re-train the model or modify the configs in any way, and only applying the model to predict the private test set. Prediction results were then compared against ground truth to get the private scores.  
@@ -107,16 +99,18 @@ It was undoubtedly challenging for teams to work with highly secured data in a p
 
 - **Supporting code:** Although the initial baseline model we provided was extremely simple, we found this helped participants a lot in the initial phase -- yet there is space to improve. To be specific, supporting codes should be constructed so that all relevant data tables are used and specify the main function to run the code, especially how the model should be tested. The teams only used the main table, which was the only table that was used in the baseline model, for training and did not touch the other supporting table. If we included the other table in the baseline model, it could help participants to have a better use of this data as well. In addition, a baseline model should be intuitive for the participants to follow, allowing evaluators to easily replace the public test set with the private test set without any programming modifications. 
 
+::: nav-btn-container
 ::: grid
-::: {.g-col-12 .g-col-md-6}
-::: article-btn
-[&larr; Part 1: Purchase to Plate](/case-studies/posts/2023/05/XX/01-purchase-to-plate.qmd)
+::: {.g-col-12 .g-col-sm-6}
+::: {.nav-btn}
+[&larr; Part 1: Purchase to Plate](/case-studies/posts/2023/08/21/01-purchase-to-plate.qmd)
 :::
 :::
 
-::: {.g-col-12 .g-col-md-6}
-::: article-btn
-[Part 3: First place winners &rarr;](/case-studies/posts/2023/05/XX/03-first-place-winners.qmd)
+::: {.g-col-12 .g-col-sm-6}
+::: {.nav-btn}
+[Part 3: First place winners &rarr;](/case-studies/posts/2023/08/21/03-first-place-winners.qmd)
+:::
 :::
 :::
 :::
@@ -130,20 +124,14 @@ About the authors
 :::
 ::: {.g-col-12 .g-col-md-6}
 Copyright and licence
-:   © 2023 Zheyuan Zhang and Uyen Le
+: © 2023 Zheyuan Zhang and Uyen Le
 
 <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"/><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"/></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.
 
 :::
-
 ::: {.g-col-12 .g-col-md-6}
 How to cite
-:   Zhang, Zheyuan, and Uyen Le. 2023. "Food for Thought: Competition and challenge design." Real World Data Science, May XX, 2023. [URL](https://realworlddatascience.net/viewpoints/case-studies/posts/2023/05/XX/02-competition-design.html)
+:   Zhang, Zheyuan, and Uyen Le. 2023. "Food for Thought: Competition and challenge design." Real World Data Science, August 21, 2023. [URL](https://realworlddatascience.net/viewpoints/case-studies/posts/2023/08/21/02-competition-design.html)
 :::
 :::
 :::
-
-## References 
-1. Devlin, J., Chang, M. W., Lee, K., & Toutanova, K. (2018). Bert: Pre-training of deep bidirectional transformers for language understanding. arXiv preprint arXiv:1810.04805. 
-
-2. Macavaney, S., Mittu, A., Coppersmith, G., Leintz, J., & Resnik, P. (2021). Community-level research on suicidality prediction in a secure environment: Overview of the CLPsych 2021 shared task. In Proceedings of the Seventh Workshop on Computational Linguistics and Clinical Psychology: Improving Access (pp. 70-80). 
