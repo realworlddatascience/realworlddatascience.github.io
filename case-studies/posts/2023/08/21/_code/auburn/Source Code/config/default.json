@@ -1,0 +1,56 @@
+{
+  "general": {
+    "num_threads": 8
+  },
+  "data": {
+    "path": "./data/",
+    "reacquire": false
+  },
+  "method": {
+    "active_method": "random_forest",
+    "model_loc": "./model/",
+    "prep_data": false,
+    "tune_hyperparameters": false,
+    "train_model": false,
+    "run_inference": true,
+    "train_size": 0.6,
+    "test_size": 0.4,
+    "inference_data": "./data/formatted/test.csv",
+    "method_list": {
+      "random_forest": {
+        "n_estimators": 85,
+        "max_features": "auto",
+        "max_depth": 60,
+        "min_samples_split": 2,
+        "min_samples_leaf": 2
+      },
+      "ann": {
+        "hidden_sizes": [9360, 3120],
+        "max_epochs": 200,
+        "lr": 0.01,
+        "weight_decay": 0.1,
+        "gpus": 0,
+        "num_sanity_val_steps": 0,
+        "detect_anomaly": true,
+        "stochastic_weight_avg": true,
+        "enable_progress_bar": false,
+        "val_check_interval": 1.0,
+        "precision": 16,
+        "logger": false,
+        "log_every_n_steps": 1,
+        "train_batch_size": 20000,
+        "eval_batch_size": 20000,
+        "check_val_every_n_epoch": 25
+      }
+    }
+  },
+  "embedding": {
+    "active_embedding": "glove",
+    "embedding_list": {
+      "glove": {},
+      "bert": {
+        "model_location": ""
+      }
+    }
+  }
+}
