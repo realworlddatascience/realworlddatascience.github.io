@@ -42,11 +42,7 @@ After exploring alternate methods to no avail, our team then decided to focus ag
 
 Overall, our primary method -- the random forest -- gave us an approximate training time (including data pre-processing) of 4 hours 30 minutes for our ~38,000 IRI item training set, and an approximate inference time of 15 minutes on our testing set of ~15,000 IRI items. Furthermore, our method gave us a Success@5 score of .789 and an NDCG@5 score of .705 on our testing set.
 
-::: {.callout-note appearance="simple"}
-Find the code in the [Real World Data Science GitHub repository](link).
-:::
-
-### Key features 
+##### Key features 
 Here is a list of the key features we utilize, along with what type of data we treat it as. 
 
 - FNDDS 
@@ -68,10 +64,10 @@ Here is a list of the key features we utilize, along with what type of data we t
 
 The intuition behind using these particular features is that the text-based descriptions provide the majority of the “meaning” of the item. By converting each description to a numerical representation [-@mikolov2013efficient; -@pennington-etal-2014-glove], we can then calculate the similarity between each “meaning” to determine which FNDDS label is most similar to the IRI item provided. However, that alone is not enough. The categorical features on the IRI item help to further enhance the model's classifications using the logic and categories people use in places like grocery stores. For example, if given an item whose aisle was “fruit” and brand was “Dole”, the item could be reasonably expected to be something like “peaches” over something like “broccoli”. 
 
-### Feature selection 
+##### Feature selection 
 Aforementioned intuition aside, our feature selection was rather naive, in that we manually examined the data and removed any redundant text features before doing anything else. After that, we decided to use description fields as “text” data to comprise the main “meaning” of the item, represented numerically after converting the text using a word embedding [-@mikolov2013efficient; -@pennington-etal-2014-glove]. We also decided to use the non-description fields (aisle, category, etc.) as “categorical” data that would be turned into its own numerical representation, allowing our model to more easily discern between items using similar systems to people. 
 
-### Feature transformations 
+##### Feature transformations 
 Our feature transformations are also relatively simple. First, we combine all description fields for each item to make one large description, and then use a word embedding method (like GloVe [-@pennington-etal-2014-glove] or BERT [-@DBLP:journals/corr/abs-1810-04805]) to convert the description into a numerical representation, resulting in a 300-dimensional GloVe or 768-dimensional BERT vector of numbers for each description. Then, for each IRI item, we calculate the cosine and Euclidean distances from each FNDDS item, resulting in two vectors, both equal in length to the original FNDDS data (in this case, two vectors of length ~7,300). The intuition behind this is that while cosine and Euclidean distances can tell us similar things, providing both of these sets of distances to the model should allow it to pick up on a more nuanced set of relationships between the IRI and FNDDS items. 
 
 For categorical data, we take all unique values in each field and assign them an ID number. While that is often not the best practice for making a numerical representation out of categorical data [@10.5120/ijca2017915495], it seemed to work for the downstream model. 
@@ -85,7 +81,7 @@ It should be noted that processing the data is by far the most time-consuming pa
 
 Due to BERT both taking so long to process data and performing lower than our GloVe embeddings on the classification task, we opt to use GloVe embeddings for our primary method. Our only theoretical explanation here is that since BERT is better at context-dependent tasks [@10.1145/3443279.3443304], it likely will expect something similar to well-structured sentences as input, which is not what the IRI/FNDDS descriptions are. Rather, GloVe -- being a method that depends less on context [-@mikolov2013efficient; -@pennington-etal-2014-glove] -- should excel better when the input text is not a well-formed sentence. 
 
-### Training methods 
+##### Training methods 
 Once the data has been processed, we collect the following data for each IRI item: 
 
 - UPC code 
@@ -102,24 +98,28 @@ This part of training takes much less time than preparing the data, since calcul
 
 Despite the neural network taking far less time to train than the random forest, it still scores lower on the scoring metrics than the random forest, so we opt to continue using the random forest model as our primary method. 
 
-### General approach to developing the model 
+##### General approach to developing the model 
 Since the linkage problem involves mapping tens of thousands of items to a smaller category set of a few thousand items, we decided to frame this problem as a multi-class classification problem [@aly2005survey], where we then rank the top “k” most probable class mappings, as requested by the competition ruleset. 
 
 Most of the usable data available to us is text data, so we need a method that can use that text-based information to accurately map classes based on the aforementioned text information. To best accomplish this, we opt to use word embedding techniques to calculate an average numerical representation for each text description (both IRI and FNDDS), so we can calculate distances between each description, giving our model a sense of how similar each description is. 
 
-### The key “trick” to the model 
+##### The key “trick” to the model 
 Since text descriptions hold the most information that can be used to link between an IRI item and an FNDDS item, finding a way to calculate the similarity between each description is paramount to making this method work. 
 
 Both distance calculation methods used in this work, cosine and Euclidean distance, are very similar in the type of information encoded, the only major difference being that cosine distance is implicitly normalized and Euclidean distance is not [@10.1145/967900.968151]. 
 
-### Notable observations 
+##### Notable observations 
 Just by building the ranking using the cosine similarities between each IRI item and all FNDDS items, we can achieve a Success@5 performance of 0.234 and an NDCG@5 performance of 0.312. The other features are provided and the random forest classifier is used to add some extra discriminative power to the model. 
 
-### Data disclaimer 
-Our current method only uses the data readily available from the 2017--2018 dataset, which we acknowledge is intended for testing. To remedy this, we further split this dataset into train/test sets and report results on our unseen test subset for our primary performance metrics. This gives a decent look into how the model will perform on unseen data. 
+##### Data disclaimer 
+Our current method only uses the data readily available from the 2017--2018 dataset, which we acknowledge is intended for testing. To remedy this, we further split this dataset into train/test sets and report results on our unseen test subset for our primary performance metrics. This gives a decent look into how the model will perform on unseen data.
+
+::: {.callout-note appearance="simple"}
+Find the code in the [Real World Data Science GitHub repository](link).
+:::
 
 ## Our results 
-### Approximate training time 
+##### Approximate training time 
 Overall, our approximate training time for our primary method is 4 hours 30 minutes broken down (approximately) as follows: 
 
 1. Reading data from database: 30 seconds 
@@ -128,10 +128,10 @@ Overall, our approximate training time for our primary method is 4 hours 30 minu
 4. Formatting calculated data for the random forest classifier: 35 minutes 
 5. Training the random forest classifier: 1 hour 15 minutes 
 
-### Approximate inference time 
+##### Approximate inference time 
 Our approximate inference time for our primary method is 15 minutes to make inferences for ~15,000 IRI items. 
 
-### S@5 & NDCG@5 performance 
+##### S@5 & NDCG@5 performance 
 This is how our best-performing model (GloVe + random forest) performs at the current time on the testing set: 
 
 - NDCG@5: 0.705 

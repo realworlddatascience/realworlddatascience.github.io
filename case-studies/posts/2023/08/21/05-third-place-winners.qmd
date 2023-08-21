@@ -26,8 +26,7 @@ The goal of this challenge is to use machine learning and natural language proce
 Our approach is to fine-tune a large pre-trained BERT language model on the food data. BERT was originally trained on a massive amount of text for a language modelling task (i.e., predicting which word should come next in a sentence). It relies on a Transformer model, which uses an "attention" mechanism to identify which words the model should pay the most "attention" to. We are specifically using BERT for binary sequence classification, which refers to predicting a label (i.e., classification) for a sequence of words. In our case, during fine-tuning (i.e., training the model further on our own dataset) we will feed the model pairs of sentences (where one sentence is the UPC description of a food item and the other is the EC description of another food item), and the model will perform binary classification, predicting whether the sentences are a match (i.e., 1) or not (i.e., 0). We start with the 2015--2016 ground truth PPC data for positive examples, and five randomly sampled negative examples per positive example.
 
 ## Our approach
-
-### Related work
+##### Related work
 
 Within the past few years, several papers have come out that learn contextual representations of sentences, where the entire sentence is used to generate embeddings.
 
@@ -41,11 +40,11 @@ Finally, many models have recently been developed that improve upon BERT, includ
 
 In our prior work on language understanding for nutrition **\[9--14\]**, we used a similar binary classification approach for learning embeddings, which were then used at test time to map from user-described meals to USDA food database matches, but with convolutional neural networks (CNNs) instead of BERT. (BERT was not created until 2018, and due to limited memory available for deployment, we needed a smaller model than even BERT base, which has 100 million parameters.) Further work demonstrated that BERT outperformed CNNs on several language understanding tasks, including nutrition **\[15\]**.
 
-### Training methods
+##### Training methods
 
 Since we used a neural network model, the only features passed into our model were the tokenized words themselves of the EC and UPC food descriptions -- we did not conduct any manual feature engineering **\[16\]**. The model was trained on a 90/10 split into 90% training and 10% validation data, where the validation data was used as a test set to fine-tune the model's hyperparameters. We started with a randomly sampled set of 16,000 pairs, batch size of 16 (i.e., the model would train on batches of 16 samples at a time), AdamW **\[17\]** as the optimizer (which adaptively updates the learning rate, or how large the update should be to the model's parameters), a linear schedule with warmup (i.e., starting with a small learning rate in the first few epochs of training due to large variance in early stages of training) **\[18\]**, and one epoch (i.e., the number of times the model passes through all the training data). We then added the next randomly sampled set of 16,000 pairs to get a model trained on 32,000 data points. Finally, we reached a total of 48,000 data samples used for training. Each pair of sequences was tokenized with the pre-trained BERT tokenizer, with the special CLS and SEP tokens (where CLS is a learned vector that is typically passed to downstream layers for final classification, and SEP is a learned vector that separates two input sequences), and was padded with zeros to the maximum length input sequence of 240 tokens, so that each input sequence would be the same length.
 
-### Model development approach
+##### Model development approach
 
 We faced many challenges due to the secure nature of the ADRF environment. Since our approach relies on BERT, we were blocked by errors due to the local BERT installation. Typically, BERT is downloaded from the web as the program runs. However, for this challenge, BERT must be installed locally for security reasons. To fix the errors, the BERT models needed to be installed with `git lfs clone` instead of git.
 
