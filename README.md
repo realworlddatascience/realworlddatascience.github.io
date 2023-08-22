@@ -5,7 +5,7 @@ See [realworlddatascience.net](https://realworlddatascience.net/) for further de
 
 ## Contributors ✨
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-8-orange.svg)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-9-orange.svg)](#contributors)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -25,6 +25,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/enndubbs"><img src="https://avatars.githubusercontent.com/u/76266181?v=4?s=100" width="100px;" alt="Noah DeGrange"/><br /><sub><b>Noah DeGrange</b></sub></a><br /><a href="#content-enndubbs" title="Content">🖋</a></td>
     </tr>
     <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/JasonZhangzy1757"><img src="https://avatars.githubusercontent.com/u/56742253?v=4?s=100" width="100px;" alt="Zheyuan (Jason) Zhang"/><br /><sub><b>Zheyuan (Jason) Zhang</b></sub></a><br /><a href="#content-JasonZhangzy1757" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://philosopher-analyst.netlify.app/"><img src="https://avatars.githubusercontent.com/u/39963221?v=4?s=100" width="100px;" alt="Zoë Turner"/><br /><sub><b>Zoë Turner</b></sub></a><br /><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues?q=author%3ALextuga007" title="Bug reports">🐛</a></td>
     </tr>
   </tbody>
