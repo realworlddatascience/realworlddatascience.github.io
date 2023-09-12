@@ -1,7 +1,9 @@
 # A showcase for data science in action
 Welcome to the home of **Real World Data Science**, a new project from the [Royal Statistical Society](https://rss.org.uk/). This repository contains all the source files and code for our website. The site and its content are being created and curated by data science practitioners and leaders with a single goal in mind: to help you deliver high quality, ethical, impactful data science in your workplace.
 
-See [realworlddatascience.net](https://realworlddatascience.net/) for further details and information on [becoming a contributor](https://realworlddatascience.net/contributor-docs/call-for-contributions.html).
+Below is a list of GitHub users who have contributed to Real World Data Science -- writing articles, developing tutorials, expanding our documentation, creating resources to support other contributors, raising issues, and squishing bugs. We are grateful to them all, and we invite you to join them! See [realworlddatascience.net](https://realworlddatascience.net/) for further details and information on [becoming a contributor](https://realworlddatascience.net/contributor-docs/call-for-contributions.html). 
+
+Also, be sure to check out the [RWDS_post_template repository](https://github.com/finnoh/RWDS_post_template) if you're thinking of submitting an article. It's a great resource to help you get started.
 
 ## Contributors ✨
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
