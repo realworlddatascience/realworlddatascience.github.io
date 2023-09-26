@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Brian Tarran">
-<meta name="dcterms.date" content="2023-09-25">
-<meta name="description" content="We’re in Chicago for this year’s posit::conf, where we’ll be sharing key takeaways from a selection of talks and sessions. Check back regularly for updates.">
+<meta name="dcterms.date" content="2023-09-27">
+<meta name="description" content="This year’s posit::conf has come to a close, and we had a great time in Chicago learning about data science software, ideas, and applications. Read on for key takeaways from a selection of talks and sessions.">
 
 <title>Real World Data Science - Live from Chicago: Real World Data Science at posit::conf(2023)</title>
 <style>
@@ -72,18 +72,174 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 </script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/editor/editor.main.css">
+
+<style>
+  .monaco-editor pre {
+    background-color: unset !important;
+  }
+
+  .btn-webr {
+    background-color: #EEEEEE;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0; /* Extra styling for consistency */
+    display: inline-block;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #000;
+    text-align: center;
+    text-decoration: none;
+    -webkit-text-decoration: none;
+    -moz-text-decoration: none;
+    -ms-text-decoration: none;
+    -o-text-decoration: none;
+    vertical-align: middle;
+    -webkit-user-select: none;
+    border-color: #dee2e6;
+    border: 1px solid rgba(0,0,0,0);
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    border-radius: 0.25rem;
+    transition: color .15s ease-in-out,background-color .15s ease-in-out,border-color .15s ease-in-out,box-shadow .15s ease-in-out;
+  }
+
+  .btn-webr:hover {
+    color: #000;
+    background-color: #e3e6ea;
+    border-color: #e1e5e9;
+  }
+
+  .btn-webr:disabled,.btn-webr.disabled,fieldset:disabled .btn-webr {
+    pointer-events: none;
+    opacity: .65
+  }
+</style>
+
+<script type="module">
+
+  // Start a timer
+  const initializeWebRTimerStart = performance.now();
+
+  // Determine if we need to install R packages
+  var installRPackagesList = [''];
+  // Check to see if we have an empty array, if we do set to skip the installation.
+  var setupRPackages = !(installRPackagesList.indexOf("") !== -1);
+
+  // Display a startup message?
+  var showStartupMessage = false;
+  var showHeaderMessage = false;
+  if (showStartupMessage) {
+
+    // Create the outermost div element
+    var quartoTitleMeta = document.createElement("div");
+    quartoTitleMeta.classList.add("quarto-title-meta");
+
+    // Create the first inner div element
+    var firstInnerDiv = document.createElement("div");
+
+    // Create the second inner div element with "WebR Status" heading 
+    // and contents
+    var secondInnerDiv = document.createElement("div");
+    secondInnerDiv.classList.add("quarto-title-meta-heading");
+    secondInnerDiv.innerText = "WebR Status";
+
+    // Add another inner div
+    var secondInnerDivContents = document.createElement("div");
+    secondInnerDivContents.classList.add("quarto-title-meta-contents");
+
+    // Describe the WebR state
+    var startupMessageWebR = document.createElement("p");
+    startupMessageWebR.innerText = "🟡 Loading...";
+    startupMessageWebR.setAttribute("id", "startup");
+    // Add `aria-live` to auto-announce the startup status to screen readers
+    startupMessageWebR.setAttribute("aria-live", "assertive");
+
+    // Put everything together
+    secondInnerDivContents.appendChild(startupMessageWebR);
+
+    // Add a status indicator for COOP and COEP Headers
+    if (showHeaderMessage) {
+      var crossOriginMessage = document.createElement("p");
+      crossOriginMessage.innerText = `${crossOriginIsolated ? '🟢' : '🟡'} COOP & COEP Headers`;
+      crossOriginMessage.setAttribute("id", "coop-coep-header");
+      secondInnerDivContents.appendChild(crossOriginMessage);
+    }
+
+    firstInnerDiv.appendChild(secondInnerDiv);
+    firstInnerDiv.appendChild(secondInnerDivContents);
+    quartoTitleMeta.appendChild(firstInnerDiv);
+
+    // Add new element as last child in header element
+    var header = document.getElementById("title-block-header");
+
+    // Check if the header option is present or missing
+    if(header) {
+      // If present, directly append the child element.
+      header.appendChild(quartoTitleMeta);
+    } else {
+      // Attempt to place the new element inside a header _after_ the Monaco initialization
+      var monacoScript = document.getElementById("webr-monaco-editor-init");
+      var header = document.createElement("header");
+      header.setAttribute("id", "title-block-header");
+      // Now attempt to add the webR area to the title
+      header.appendChild(quartoTitleMeta);
+      // Include the header after the script tag
+      monacoScript.after(header);
+    }
+  }
+
+  // Retrieve the webr.mjs
+  import { WebR, ChannelType } from "https://webr.r-wasm.org/v0.2.1/webr.mjs";
+
+  // Populate WebR options with defaults or new values based on 
+  // webr meta
+  globalThis.webR = new WebR({
+    "baseURL": "",
+    "serviceWorkerUrl": "",
+    "homedir": "/home/web_user", 
+    "channelType": ChannelType.PostMessage
+  });
+
+  // Initialization WebR
+  await globalThis.webR.init();
+
+  // Setup a shelter
+  globalThis.webRCodeShelter = await new globalThis.webR.Shelter();
+
+  // Installing Packages
+  if (showStartupMessage && setupRPackages) {
+    // If initialized, but we have packages to install switch status
+    startupMessageWebR.innerText = "🟡 Installing package dependencies..."
+    // Install packages
+    await globalThis.webR.installPackages(installRPackagesList)
+  }
+
+  // Switch to allowing code to be executed
+  document.querySelectorAll(".btn-webr").forEach((btn) => {
+    btn.innerText = "Run code";
+    btn.disabled = false;
+  });
+
+  // Stop timer
+  const initializeWebRTimerEnd = performance.now();
+
+  if (showStartupMessage) {
+    // If initialized, switch to a green light
+    startupMessageWebR.innerText = "🟢 Ready!"
+  }
+</script>
 
 
 <link rel="stylesheet" href="../../../../../../rwds.css">
 <meta property="og:title" content="Real World Data Science - Live from Chicago: Real World Data Science at posit::conf(2023)">
-<meta property="og:description" content="We’re in Chicago for this year’s posit::conf, where we’ll be sharing key takeaways from a selection of talks and sessions. Check back regularly for updates.">
+<meta property="og:description" content="This year’s posit::conf has come to a close, and we had a great time in Chicago learning about data science software, ideas, and applications. Read on for key takeaways from a selection of talks and sessions.">
 <meta property="og:image" content="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/09/19/images/chicago-theatre.png">
 <meta property="og:site-name" content="Real World Data Science">
 <meta property="og:image:height" content="724">
 <meta property="og:image:width" content="991">
 <meta property="og:image:alt" content="Chicago Theatre sign, illuminated at night.">
 <meta name="twitter:title" content="Real World Data Science - Live from Chicago: Real World Data Science at posit::conf(2023)">
-<meta name="twitter:description" content="We’re in Chicago for this year’s posit::conf, where we’ll be sharing key takeaways from a selection of talks and sessions. Check back regularly for updates.">
+<meta name="twitter:description" content="This year’s posit::conf has come to a close, and we had a great time in Chicago learning about data science software, ideas, and applications. Read on for key takeaways from a selection of talks and sessions.">
 <meta name="twitter:image" content="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/09/19/images/chicago-theatre.png">
 <meta name="twitter:site" content="@rwdatasci">
 <meta name="twitter:image-height" content="724">
@@ -158,7 +314,7 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
       <h1 class="title">Live from Chicago: Real World Data Science at posit::conf(2023)</h1>
                   <div>
         <div class="description">
-          <p>We’re in Chicago for this year’s posit::conf, where we’ll be sharing key takeaways from a selection of talks and sessions. Check back regularly for updates.</p>
+          <p>This year’s posit::conf has come to a close, and we had a great time in Chicago learning about data science software, ideas, and applications. Read on for key takeaways from a selection of talks and sessions.</p>
         </div>
       </div>
                           <div class="quarto-categories">
@@ -181,7 +337,7 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">September 25, 2023</p>
+        <p class="date">September 27, 2023</p>
       </div>
     </div>
     
@@ -203,21 +359,45 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
   <li><a href="#a-hackers-guide-to-open-source-llms" id="toc-a-hackers-guide-to-open-source-llms" class="nav-link" data-scroll-target="#a-hackers-guide-to-open-source-llms">A hacker’s guide to open source LLMs</a></li>
   <li><a href="#documenting-things-openly-for-future-us" id="toc-documenting-things-openly-for-future-us" class="nav-link" data-scroll-target="#documenting-things-openly-for-future-us">Documenting Things: Openly for Future Us</a></li>
   <li><a href="#teaching-data-science-in-adverse-circumstances-posit-cloud-and-quarto-to-the-rescue" id="toc-teaching-data-science-in-adverse-circumstances-posit-cloud-and-quarto-to-the-rescue" class="nav-link" data-scroll-target="#teaching-data-science-in-adverse-circumstances-posit-cloud-and-quarto-to-the-rescue">Teaching Data Science in Adverse Circumstances: Posit Cloud and Quarto to the Rescue</a></li>
+  <li><a href="#dynamic-interactions-empowering-educators-and-researchers-with-interactive-quarto-documents-using-webr" id="toc-dynamic-interactions-empowering-educators-and-researchers-with-interactive-quarto-documents-using-webr" class="nav-link" data-scroll-target="#dynamic-interactions-empowering-educators-and-researchers-with-interactive-quarto-documents-using-webr">Dynamic Interactions: Empowering Educators and Researchers with Interactive Quarto Documents Using webR</a></li>
   </ul></li>
   <li><a href="#wednesday-september-20" id="toc-wednesday-september-20" class="nav-link" data-scroll-target="#wednesday-september-20">Wednesday, September 20</a>
   <ul class="collapse">
   <li><a href="#r-not-only-in-production" id="toc-r-not-only-in-production" class="nav-link" data-scroll-target="#r-not-only-in-production">R Not Only In Production</a></li>
   <li><a href="#its-abstractions-all-the-way-down" id="toc-its-abstractions-all-the-way-down" class="nav-link" data-scroll-target="#its-abstractions-all-the-way-down">It’s Abstractions All the Way Down…</a></li>
+  <li><a href="#its-all-about-perspective-making-a-case-for-generative-art" id="toc-its-all-about-perspective-making-a-case-for-generative-art" class="nav-link" data-scroll-target="#its-all-about-perspective-making-a-case-for-generative-art">It’s All About Perspective: Making a Case for Generative Art</a></li>
+  <li><a href="#how-the-r-for-data-science-r4ds-online-learning-community-made-me-a-better-student" id="toc-how-the-r-for-data-science-r4ds-online-learning-community-made-me-a-better-student" class="nav-link" data-scroll-target="#how-the-r-for-data-science-r4ds-online-learning-community-made-me-a-better-student">How the R for Data Science (R4DS) Online Learning Community Made Me a Better Student</a></li>
+  <li><a href="#github-copilot-integration-with-rstudio-its-finally-here" id="toc-github-copilot-integration-with-rstudio-its-finally-here" class="nav-link" data-scroll-target="#github-copilot-integration-with-rstudio-its-finally-here">GitHub Copilot integration with RStudio, it’s finally here!</a></li>
   </ul></li>
   </ul>
 <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/viewpoints/editors-blog/posts/2023/09/19/positconf-blog.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
+<script src="https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs/loader.js"></script>
+<script type="module" id="webr-monaco-editor-init">
+
+  // Configure the Monaco Editor's loader
+  require.config({
+    paths: {
+      'vs': 'https://cdn.jsdelivr.net/npm/monaco-editor@0.43.0/min/vs'
+    }
+  });
+</script>
 
 
 
 
+<div class="callout callout-style-simple callout-note" style="margin-top:0">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>posit::conf(2023) is over, but this blog remains open for contributions. If you want to share personal highlights or reflections on your time at conference: 1. Fork <a href="https://github.com/realworlddatascience/realworlddatascience.github.io">our repo</a>, 2. update <a href="https://github.com/realworlddatascience/realworlddatascience.github.io/blob/positconf-blog/viewpoints/editors-blog/posts/2023/09/19/positconf-blog.qmd">this file</a> in the <code>positconf-blog</code> branch (or create a new branch of your own), and 3. make a pull request! You can also <a href="https://realworlddatascience.net/contact.html">email contributions</a>.</p>
+</div>
+</div>
+</div>
 <section id="tuesday-september-19" class="level2">
 <h2 class="anchored" data-anchor-id="tuesday-september-19">Tuesday, September 19</h2>
 <section id="from-data-confusion-to-data-intelligence" class="level3">
@@ -231,7 +411,7 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 <figcaption class="figure-caption">Elaine McVey’s “guerilla data science tactics” for building successful data science teams.</figcaption>
 </figure>
 </div>
-<p>Data scientists should start by scanning for opportunities to help the organisation, before building a small-scale version of what it is they propose to do. Once buy-in is achieved, and data is made available, it’s time to run with the project. Once complete, you need to “nail the landing”, McVey said, and make sure to communicate results broadly – not just to primary stakeholders, but across the organisation. Then comes time to “up the ante”: if your first project has built some organisational goodwill, leverage that and look for something higher risk, with higher potential reward for the organisation.</p>
+<p>Data scientists should start by scanning for opportunities to help the organisation, before building a small-scale version of what it is they propose to do. Once buy-in is achieved, and data is made available, it’s time to run with the project. Once complete, you need to “nail the landing,” McVey said, and make sure to communicate results broadly – not just to primary stakeholders, but across the organisation. Then comes time to “up the ante”: if your first project has built some organisational goodwill, leverage that and look for something higher risk, with higher potential reward for the organisation.</p>
 <p>Throughout this process, McVey said, data scientists should be building foundations for future projects – creating data pipelines, R packages, etc., that can be reused later. This was a point picked up and developed upon by Meza, who walked through in detail the steps required to establish “data foundations” within organisations, drawing on his own past experiences. Typically, he said, organisations seem to collect data just to store it – but always data should be collected, stored, and managed with analysis in mind.</p>
 </section>
 <section id="a-hackers-guide-to-open-source-llms" class="level3">
@@ -239,7 +419,7 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 <p>Fast.ai’s Jeremy Howard lifted the hood on large language models (LLMs) in the second of two keynotes this morning.</p>
 <p>Beginning with an accessible overview of what LLMs are, how they work, and how they are trained, Howard then addressed some of the criticisms made of LLMs – that they “can’t reason” or give correct answers.</p>
 <p>As Howard explained, a model like OpenAI’s GPT-4 is not trained at any point to give correct answers to prompts – only to predict the most likely next word, or word token, in a sequence.</p>
-<p>The pre-training step, for example, does not involve only feeding the model with “correct answers”, instead relying on a corpus of text from the internet – some (or, maybe, much) of which may consist of factual inaccuracies, errors, falsehoods, etc. And in the fine-tuning stage, when human feedback is used to either reward or penalise model outputs, Howard said there is a preference for confident-sounding responses – and so, again, this doesn’t necessarily reward the model for giving correct answers.</p>
+<p>The pre-training step, for example, does not involve only feeding the model with “correct answers,” instead relying on a corpus of text from the internet – some (or, maybe, much) of which may consist of factual inaccuracies, errors, falsehoods, etc. And in the fine-tuning stage, when human feedback is used to either reward or penalise model outputs, Howard said there is a preference for confident-sounding responses – and so, again, this doesn’t necessarily reward the model for giving correct answers.</p>
 <p>Howard made the case that users have to help language models to give good answers, and that custom instructions can be used to change the way models respond. He then walked delegates through a series of demos using open-source LLMs, to show how outputs can be refined and improved.</p>
 <p>“My view is that if you are going to be good at language modelling in any way,” said Howard, “you have to be good at using language models.”</p>
 </section>
@@ -272,9 +452,224 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 <section id="teaching-data-science-in-adverse-circumstances-posit-cloud-and-quarto-to-the-rescue" class="level3">
 <h3 class="anchored" data-anchor-id="teaching-data-science-in-adverse-circumstances-posit-cloud-and-quarto-to-the-rescue">Teaching Data Science in Adverse Circumstances: Posit Cloud and Quarto to the Rescue</h3>
 <p>Professor Aleksander Dietrichson of the Universidad de San Martin brought a valuable perspective to posit::conf(2023) on the challenges of teaching data science in the face of technology and language barriers.</p>
-<p>At the public, state-funded university in Argentina where Dietrichson works, more than half of students do not have access to laptops or computers at home, and those who do have access – whether at home or at school – may not have access to the latest kit. But “<a href="https://posit.cloud/">Posit Cloud</a> solves the resource issue”, Dietrichson said. The free-to-use, online browser-based version of Posit’s tools runs on anything; Dietrichson said he’s tested it successfully on both decade-old computers and cellphones – though he doesn’t recommend using it on a cellphone!</p>
+<p>At the public, state-funded university in Argentina where Dietrichson works, more than half of students do not have access to laptops or computers at home, and those who do have access – whether at home or at school – may not have access to the latest kit. But “<a href="https://posit.cloud/">Posit Cloud</a> solves the resource issue,” Dietrichson said. The free-to-use, online browser-based version of Posit’s tools runs on anything; Dietrichson said he’s tested it successfully on both decade-old computers and cellphones – though he doesn’t recommend using it on a cellphone!</p>
 <p>On language barriers, he pointed out that learning to code in R and Python can be challenging when English isn’t your first language – if you don’t have semantic access to function names, for example, there will be a steeper learning curve for students.</p>
-<p>Dietrichson also has to deal with the problem of “arithmaphobia” among some of the liberal arts students he teaches. This has necessitated a reshuffling of the typical statistics curriculum, he said, in order to make it easier for students to access. But the work is worth it, Dietrichson explained: many of his students want to work in careers like journalism, and he believes that “journalists should be statistically literate”.</p>
+<p>Dietrichson also has to deal with the problem of “arithmaphobia” among some of the liberal arts students he teaches. This has necessitated a reshuffling of the typical statistics curriculum, he said, in order to make it easier for students to access. But the work is worth it, Dietrichson explained: many of his students want to work in careers like journalism, and he believes that “journalists should be statistically literate.”</p>
+</section>
+<section id="dynamic-interactions-empowering-educators-and-researchers-with-interactive-quarto-documents-using-webr" class="level3">
+<h3 class="anchored" data-anchor-id="dynamic-interactions-empowering-educators-and-researchers-with-interactive-quarto-documents-using-webr">Dynamic Interactions: Empowering Educators and Researchers with Interactive Quarto Documents Using webR</h3>
+<p>Some of my favourite sessions at posit::conf(2023) were about <a href="https://quarto.org/">Quarto</a>. Understandable, really, when you consider that we used it to build this very site! Albert Rapp has described Quarto as a <a href="https://albert-rapp.de/posts/16_html_css_for_r/16_html_css_for_r.html">web dev gateway drug</a>, and I’d agree with him:</p>
+<blockquote class="blockquote">
+<p>Quarto is a powerful tool for creating beautiful and interactive documents. I think of it as a gateway drug to web development: While it offers a user-friendly interface for creating documents and blogs, it also allows users to delve into the world of HTML &amp; CSS without even realizing it.</p>
+</blockquote>
+<p>I spoke a bit about my own journey into web dev in one of the Quarto sessions at posit::conf, but what I loved most about these sessions was learning about all the cool new things I’ve yet to discover and try out. For example, <a href="https://thecoatlessprofessor.com/about/">James Balamuta</a>’s talk and demonstration of building interactive code cells into Quarto webpages was an eye-opener!</p>
+<p>Since returning from Chicago I’ve tested out this functionality and added Balamuta’s example here. First run the code that’s already in the code block but also edit it to try out your own examples.</p>
+<button class="btn btn-default btn-webr" disabled="" type="button" id="webr-run-button-1">Loading
+  webR...</button>
+<div id="webr-editor-1"></div>
+<div id="webr-code-output-1" aria-live="assertive">
+  <pre style="visibility: hidden"></pre>
+</div>
+<script type="module">
+  // Retrieve webR code cell information
+  const runButton = document.getElementById("webr-run-button-1");
+  const outputDiv = document.getElementById("webr-code-output-1");
+  const editorDiv = document.getElementById("webr-editor-1");
+
+  // Add a light grey outline around the code editor
+  editorDiv.style.border = "1px solid #eee";
+
+  // Load the Monaco Editor and create an instance
+  let editor;
+  require(['vs/editor/editor.main'], function () {
+    editor = monaco.editor.create(editorDiv, {
+      value: `fit = lm(mpg ~ am, data = mtcars)
+summary(fit)`,
+      language: 'r',
+      theme: 'vs-light',
+      automaticLayout: true,           // TODO: Could be problematic for slide decks
+      scrollBeyondLastLine: false,
+      minimap: {
+        enabled: false
+      },
+      fontSize: '17.5rem',               // Bootstrap is 1 rem
+      renderLineHighlight: "none",     // Disable current line highlighting
+      hideCursorInOverviewRuler: true  // Remove cursor indictor in right hand side scroll bar
+    });
+
+    // Dynamically modify the height of the editor window if new lines are added.
+    let ignoreEvent = false;
+    const updateHeight = () => {
+      const contentHeight = editor.getContentHeight();
+      // We're avoiding a width change
+      //editorDiv.style.width = `${width}px`;
+      editorDiv.style.height = `${contentHeight}px`;
+      try {
+        ignoreEvent = true;
+
+        // The key to resizing is this call
+        editor.layout();
+      } finally {
+        ignoreEvent = false;
+      }
+    };
+
+    // Helper function to check if selected text is empty
+    function isEmptyCodeText(selectedCodeText) {
+      return (selectedCodeText === null || selectedCodeText === undefined || selectedCodeText === "");
+    }
+
+    // Registry of keyboard shortcuts that should be re-added to each editor window
+    // when focus changes.
+    const addWebRKeyboardShortCutCommands = () => {
+      // Add a keydown event listener for Shift+Enter to run all code in cell
+      editor.addCommand(monaco.KeyMod.Shift | monaco.KeyCode.Enter, () => {
+
+        // Retrieve all text inside the editor
+        executeCode(editor.getValue());
+      });
+
+      // Add a keydown event listener for CMD/Ctrl+Enter to run selected code
+      editor.addCommand(monaco.KeyMod.CtrlCmd | monaco.KeyCode.Enter, () => {
+
+        // Get the selected text from the editor
+        const selectedText = editor.getModel().getValueInRange(editor.getSelection());
+        // Check if no code is selected
+        if (isEmptyCodeText(selectedText)) {
+          // Obtain the current cursor position
+          let currentPosition = editor.getPosition();
+          // Retrieve the current line content
+          let currentLine = editor.getModel().getLineContent(currentPosition.lineNumber);
+
+          // Propose a new position to move the cursor to
+          let newPosition = new monaco.Position(currentPosition.lineNumber + 1, 1);
+
+          // Check if the new position is beyond the last line of the editor
+          if (newPosition.lineNumber > editor.getModel().getLineCount()) {
+            // Add a new line at the end of the editor
+            editor.executeEdits("addNewLine", [{
+            range: new monaco.Range(newPosition.lineNumber, 1, newPosition.lineNumber, 1),
+            text: "\n", 
+            forceMoveMarkers: true,
+            }]);
+          }
+          
+          // Run the entire line of code.
+          executeCode(currentLine);
+
+          // Move cursor to new position
+          editor.setPosition(newPosition);
+        } else {
+          // Code to run when Ctrl+Enter is pressed with selected code
+          executeCode(selectedText);
+        }
+      });
+    }
+
+    // Register an on focus event handler for when a code cell is selected to update
+    // what keyboard shortcut commands should work.
+    // This is a workaround to fix a regression that happened with multiple
+    // editor windows since Monaco 0.32.0 
+    // https://github.com/microsoft/monaco-editor/issues/2947
+    editor.onDidFocusEditorText(addWebRKeyboardShortCutCommands);
+
+    // Register an on change event for when new code is added to the editor window
+    editor.onDidContentSizeChange(updateHeight);
+
+    // Manually re-update height to account for the content we inserted into the call
+    updateHeight();
+  });
+
+  // Function to execute the code (accepts code as an argument)
+  async function executeCode(codeToRun) {
+    // Disable run button for code cell active
+    runButton.disabled = true;
+
+    // Create a canvas variable for graphics
+    let canvas = undefined;
+
+    // Initialize webR
+    await globalThis.webR.init();
+
+    // Setup a webR canvas by making a namespace call into the {webr} package
+    await webR.evalRVoid("webr::canvas(width=504, height=360)");
+
+    // Capture output data from evaluating the code
+    const result = await webRCodeShelter.captureR(codeToRun, {
+      withAutoprint: true,
+      captureStreams: true,
+      captureConditions: false//,
+      // env: webR.objs.emptyEnv, // maintain a global environment for webR v0.2.0
+    });
+
+    // Start attempting to parse the result data
+    try {
+
+      // Stop creating images
+      await webR.evalRVoid("dev.off()");
+
+      // Merge output streams of STDOUT and STDErr (messages and errors are combined.)
+      const out = result.output.filter(
+        evt => evt.type == "stdout" || evt.type == "stderr"
+      ).map((evt) => evt.data).join("\n");
+
+      // Clean the state
+      const msgs = await webR.flush();
+
+      // Output each image stored
+      msgs.forEach(msg => {
+        // Determine if old canvas can be used or a new canvas is required.
+        if (msg.type === 'canvas'){
+          // Add image to the current canvas
+          if (msg.data.event === 'canvasImage') {
+            canvas.getContext('2d').drawImage(msg.data.image, 0, 0);
+          } else if (msg.data.event === 'canvasNewPage') {
+            // Generate a new canvas element
+            canvas = document.createElement("canvas");
+            canvas.setAttribute("width", 2 * 504);
+            canvas.setAttribute("height", 2 * 360);
+            canvas.style.width = "700px";
+            canvas.style.display = "block";
+            canvas.style.margin = "auto";
+          }
+        }
+      });
+
+      // Nullify the outputDiv of content
+      outputDiv.innerHTML = "";
+
+      // Design an output object for messages
+      const pre = document.createElement("pre");
+      if (/\S/.test(out)) {
+        // Display results as text
+        const code = document.createElement("code");
+        code.innerText = out;
+        pre.appendChild(code);
+      } else {
+        // If nothing is present, hide the element.
+        pre.style.visibility = "hidden";
+      }
+      outputDiv.appendChild(pre);
+
+      // Place the graphics on the canvas
+      if (canvas) {
+        const p = document.createElement("p");
+        p.appendChild(canvas);
+        outputDiv.appendChild(p);
+      }
+    } finally {
+      // Clean up the remaining code
+      webRCodeShelter.purge();
+      runButton.disabled = false;
+    }
+  }
+
+  // Add a click event listener to the run button
+  runButton.onclick = function () {
+    executeCode(editor.getValue());
+  };
+</script>
+<p>Visit the <a href="https://quarto-webr.thecoatlessprofessor.com/">quarto-webr website</a> for details on how to make full use of this capability. Once you’re up to speed, why not <a href="https://realworlddatascience.net/contributor-docs/contributor-guidelines.html">contribute a webR-enabled article for Real World Data Science</a>?</p>
 <!-- ### Talk title
 Add write-up here
 
@@ -286,7 +681,7 @@ Add write-up here
 <section id="r-not-only-in-production" class="level3">
 <h3 class="anchored" data-anchor-id="r-not-only-in-production">R Not Only In Production</h3>
 <p>Kara Woo, senior data science engineer at InsightRX, began her Wednesday morning keynote with a rousing description of posit::conf(2023) being like a “great community garden” where things are being cultivated and shared for the benefit of all. This is an important feeling, Woo said, because it doesn’t always feel like that in our day jobs. Data scientists can feel siloed, not able to share ideas with like-minded people, and facing resistance from people who say “R can’t do that, R isn’t a real programming language” – a comment that elicited a groan of weary familiarity from sections of the crowd.</p>
-<p>But as Woo went on to explain, “it is possible to build quality software in R” and “it is possible to have an organisation where the strengths of R and the people who use it influence the organisation as a whole”.</p>
+<p>But as Woo went on to explain, “it is possible to build quality software in R” and “it is possible to have an organisation where the strengths of R and the people who use it influence the organisation as a whole.”</p>
 <p>Woo was speaking from her experience at InsightRX, a precision medicine company, which makes software for clinicians to inform individualised dosing decisions for patients. Through a tool called Nova, clinicians feed in data about a patient’s unique characteristics, which is then passed to R for analysis, which then returns dosage recommendations to Nova.</p>
 <p>In InsightRX, R has also been used to solve problems that are not strictly data science problems. Woo gave the example of working with a colleague to write an R package to identify data labels that have been changed and rollout translations for those labels in multiple languages for software users in different parts of the world.</p>
 <p>“Our mindset of R being a first-class language empowers us to solve problems,” said Woo.</p>
@@ -302,17 +697,46 @@ Add write-up here
 </figure>
 </div>
 <p>Do you agree with Long’s assertion? If you don’t, what <em>is</em> the single biggest business value that’s been derived from the data science movement? Share your thoughts in the comments below.</p>
+</section>
+<section id="its-all-about-perspective-making-a-case-for-generative-art" class="level3">
+<h3 class="anchored" data-anchor-id="its-all-about-perspective-making-a-case-for-generative-art">It’s All About Perspective: Making a Case for Generative Art</h3>
+<p>Hobbies are important, right? They are a way to relax, to unwind. But also a great opportunity to learn things that might come in handy professionally. At least, that is the experience of Meghan Santiago Harris, a data scientist in the Prostate Cancer Clinical Trials Consortium at Memorial Sloan Kettering.</p>
+<p>Harris shared with delegates her journey into generative art, and how skills acquired using ggplot2 for “fun stuff” had a positive impact on her work.</p>
+<p>She first defined generative art as artwork created through a program in any language or interface, so long as the program itself executes the generation of the art. To make generative art, Harris said, you just need data and the ability to “think outside the grid” of your favourite graphics software or package. Harris’s tool of choice is ggplot2, but any will do: “If a tool lets you plot data, it will let you make art,” she said.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/gen-art.png" class="img-fluid figure-img" alt="The generative art image shows a setting sun on a red background, with the silhouettes of tall buildings in the foreground."></p>
+<figcaption class="figure-caption">A slide from Meghan Santiago Harris’s talk, with an example of how to create an image of the sun setting on a city using lines of R code.</figcaption>
+</figure>
+</div>
+<p>Harris’s passion for generative art bloomed during a recent period of maternity leave. She was coding for fun but also deepening her understanding and expertise in areas like code iteration, development and communication. And, in August, Harris published an R package called <a href="https://meghansaha.github.io/artpack/">artpack</a>, which is now available on CRAN and designed “to help generative artists of all levels create generative art in R.”</p>
+<p>Generative art was a motivation to learn and do more, Harris said, and doing something she loved helped make programming and data science more digestible.</p>
+</section>
+<section id="how-the-r-for-data-science-r4ds-online-learning-community-made-me-a-better-student" class="level3">
+<h3 class="anchored" data-anchor-id="how-the-r-for-data-science-r4ds-online-learning-community-made-me-a-better-student">How the R for Data Science (R4DS) Online Learning Community Made Me a Better Student</h3>
+<p>Following straight after <a href="#its-all-about-perspective-making-a-case-for-generative-art">Meghan Santiago Harris</a> was Lydia Gibson, a data scientist from Intel, with an inspiring talk about her route into data science. Gibson began by explaining how, when younger, “I wanted to be a fashion designer.” For her high school prom, Gibson even designed her own dress, which her grandmother made for her.</p>
+<p>In 2011, Gibson earned a BS in economics and worked in retail customer service and state and local government for a time before deciding to return to school to do a Masters in statistics in 2021. She had “no experience of programming” when she made this decision, but soon learned that R is “a necessary evil if you have to go back to school to do statistics.”</p>
+<p>Gibson told delegates that discovering data visualisation was what made her care about R. She could “feed [her] need for creativity” while also learning about things that were required for her course.</p>
+<p>And it was the <a href="https://rfordatasci.com/">R for Data Science (R4DS) Online Learning Community</a> that helped take her learning to the next level. Gibson described R4DS as “an amazing, welcoming learning environment where beginners and advanced folks alike can come together to learn not only R but data science as a whole.”</p>
+<p>“Being surrounded by folks more advanced than you is a gift, not a curse,” she said, and she urged delegates to find what they are passionate about and explore its depths.</p>
+</section>
+<section id="github-copilot-integration-with-rstudio-its-finally-here" class="level3">
+<h3 class="anchored" data-anchor-id="github-copilot-integration-with-rstudio-its-finally-here">GitHub Copilot integration with RStudio, it’s finally here!</h3>
+<p>Tom Mock, product manager for Posit Workbench and RStudio, had a full house for his talk about the upcoming integration of <a href="https://github.com/features/copilot">GitHub’s code Copilot product</a> into RStudio. Copilot, Mock said, is an AI pair programmer that offers autocomplete-style suggestions for code – and this integration is one of the most popular requested features among RStudio users on GitHub.</p>
+<p>To make use of the integration, you’ll need a Copilot subscription from GitHub. But more than that, Mock said, users will need to experiment to learn how to get the most out of the “generative [AI] loop.”</p>
+<p>See Mock’s slide deck below for more details.</p>
+<iframe width="100%" height="563px" src="https://colorado.posit.co/rsc/rstudio-copilot/#/TitleSlide"></iframe>
 <!-- ### Talk title
 Add write-up here
 
 *Add your name and affiliation here* -->
-<div class="callout callout-style-simple callout-note">
+<div class="callout callout-style-simple callout-note" style="margin-top:0">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-body-container">
-<p>Want to contribute to this blog? Fork <a href="https://github.com/realworlddatascience/realworlddatascience.github.io">our repo</a>, update <a href="https://github.com/realworlddatascience/realworlddatascience.github.io/blob/positconf-blog/viewpoints/editors-blog/posts/2023/09/19/positconf-blog.qmd">this file</a> in the <code>positconf-blog</code> branch, and make a pull request!</p>
+<p>posit::conf(2023) is over, but this blog remains open for contributions. If you want to share personal highlights or reflections on your time at conference: 1. Fork <a href="https://github.com/realworlddatascience/realworlddatascience.github.io">our repo</a>, 2. update <a href="https://github.com/realworlddatascience/realworlddatascience.github.io/blob/positconf-blog/viewpoints/editors-blog/posts/2023/09/19/positconf-blog.qmd">this file</a> in the <code>positconf-blog</code> branch (or create a new branch of your own), and 3. make a pull request! You can also <a href="https://realworlddatascience.net/contact.html">email contributions</a>.</p>
 </div>
 </div>
 </div>
@@ -334,7 +758,7 @@ Add write-up here
 <dl>
 <dt>How to cite</dt>
 <dd>
-Tarran, Brian. 2023. “Live from Chicago: Real World Data Science at posit::conf(2023).” Real World Data Science, September 19, 2023, updated September 20, 2023. <a href="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/09/19/positconf-blog.html">URL</a>
+Tarran, Brian. 2023. “Live from Chicago: Real World Data Science at posit::conf(2023).” Real World Data Science, September 19, 2023, updated September 27, 2023. <a href="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/09/19/positconf-blog.html">URL</a>
 </dd>
 </dl>
 </div>
