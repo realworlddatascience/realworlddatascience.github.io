@@ -7,7 +7,7 @@ Also, be sure to check out the [RWDS_post_template repository](https://github.co
 
 ## Contributors ✨
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-19-orange.svg)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-20-orange.svg)](#contributors)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -27,15 +27,16 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://www.ds-econ.com/"><img src="https://avatars.githubusercontent.com/u/59664225?v=4?s=100" width="100px;" alt="Finn-Ole Höner"/><br /><sub><b>Finn-Ole Höner</b></sub></a><br /><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/commits?author=finnoh" title="Code">💻</a> <a href="https://github.com/realworlddatascience/realworlddatascience.github.io/commits?author=finnoh" title="Documentation">📖</a> <a href="https://github.com/realworlddatascience/realworlddatascience.github.io/pulls?q=is%3Apr+reviewed-by%3Afinnoh" title="Reviewed Pull Requests">👀</a></td>
     </tr>
     <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/holliejohnson"><img src="https://avatars.githubusercontent.com/u/15801324?v=4?s=100" width="100px;" alt="Hollie"/><br /><sub><b>Hollie</b></sub></a><br /><a href="#ideas-holliejohnson" title="Ideas, Planning, & Feedback">🤔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://jauerbach.github.io"><img src="https://avatars.githubusercontent.com/u/4665257?v=4?s=100" width="100px;" alt="Jonathan Auerbach"/><br /><sub><b>Jonathan Auerbach</b></sub></a><br /><a href="#content-jauerbach" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="http://liambrierley.wordpress.com"><img src="https://avatars.githubusercontent.com/u/20865046?v=4?s=100" width="100px;" alt="Liam Brierley"/><br /><sub><b>Liam Brierley</b></sub></a><br /><a href="#content-lbrierley" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://faculty.bentley.edu/profile/mbhaduri"><img src="https://avatars.githubusercontent.com/u/96668735?v=4?s=100" width="100px;" alt="Moinak Bhaduri"/><br /><sub><b>Moinak Bhaduri</b></sub></a><br /><a href="#content-moinakbhaduri" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://bnaman50.github.io/"><img src="https://avatars.githubusercontent.com/u/5251592?v=4?s=100" width="100px;" alt="Naman Bansal"/><br /><sub><b>Naman Bansal</b></sub></a><br /><a href="#content-bnaman50" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/enndubbs"><img src="https://avatars.githubusercontent.com/u/76266181?v=4?s=100" width="100px;" alt="Noah DeGrange"/><br /><sub><b>Noah DeGrange</b></sub></a><br /><a href="#content-enndubbs" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/WenyingEcon"><img src="https://avatars.githubusercontent.com/u/136834848?v=4?s=100" width="100px;" alt="WenyingEcon"/><br /><sub><b>WenyingEcon</b></sub></a><br /><a href="#content-WenyingEcon" title="Content">🖋</a></td>
-      <td align="center" valign="top" width="14.28%"><a href="https://github.com/YANGWU001"><img src="https://avatars.githubusercontent.com/u/94724796?v=4?s=100" width="100px;" alt="Yang"/><br /><sub><b>Yang</b></sub></a><br /><a href="#content-YANGWU001" title="Content">🖋</a></td>
     </tr>
     <tr>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/YANGWU001"><img src="https://avatars.githubusercontent.com/u/94724796?v=4?s=100" width="100px;" alt="Yang"/><br /><sub><b>Yang</b></sub></a><br /><a href="#content-YANGWU001" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/JasonZhangzy1757"><img src="https://avatars.githubusercontent.com/u/56742253?v=4?s=100" width="100px;" alt="Zheyuan (Jason) Zhang"/><br /><sub><b>Zheyuan (Jason) Zhang</b></sub></a><br /><a href="#content-JasonZhangzy1757" title="Content">🖋</a> <a href="https://github.com/realworlddatascience/realworlddatascience.github.io/pulls?q=is%3Apr+reviewed-by%3AJasonZhangzy1757" title="Reviewed Pull Requests">👀</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://philosopher-analyst.netlify.app/"><img src="https://avatars.githubusercontent.com/u/39963221?v=4?s=100" width="100px;" alt="Zoë Turner"/><br /><sub><b>Zoë Turner</b></sub></a><br /><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues?q=author%3ALextuga007" title="Bug reports">🐛</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/karmake2"><img src="https://avatars.githubusercontent.com/u/32687596?v=4?s=100" width="100px;" alt="karmake2"/><br /><sub><b>karmake2</b></sub></a><br /><a href="#content-karmake2" title="Content">🖋</a></td>
