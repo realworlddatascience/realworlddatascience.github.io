@@ -30,7 +30,7 @@ From the outset of the rollout of body-worn cameras, TJJD faced a major issue wi
 
 For example, a typical dorm in a correctional center might have four JCOs assigned to it. Across a single week, these four JCOs would be expected to record at least 160 hours of footage.
 
-![](images/jcos-recording-totals.png){fig-align="center"}
+![](images/jcos-recording-totals.png){fig-align="center" fig-alt="A table illustrating working hours over the course of a week for four juvenile correctional officers"}
 
 ::: {.figure-caption style="text-align: center;"}
 **Figure 1:** Four JCOs x 40 hours per week = 160 hours of footage.
@@ -38,7 +38,7 @@ For example, a typical dorm in a correctional center might have four JCOs assign
 
 This was replicated across every dorm. Three dorms, for example, would produce nearly 500 hours of footage, as seen below.
 
-![](images/jcos-recording-totals-across-dorms.png){fig-align="center"}
+![](images/jcos-recording-totals-across-dorms.png){fig-align="center" fig-alt="A table illustrating working hours over the course of a week for four juvenile correctional officers in each of three dorms in one juvenile correctional facility"}
 
 ::: {.figure-caption style="text-align: center;"}
 **Figure 2:** Three dorms x four JCOs x 40 hours per week = 480 hours of footage.
@@ -46,7 +46,7 @@ This was replicated across every dorm. Three dorms, for example, would produce n
 
 Finally, we had more than one facility. Four facilities with three dorms each would produce nearly 2,000 hours of footage every week.
 
-![](images/jcos-recording-totals-across-facilities.png){fig-align="center"}
+![](images/jcos-recording-totals-across-facilities.png){fig-align="center" fig-alt="A table illustrating working hours over the course of a week for four juvenile correctional officers in each of three dorms in four separate juvenile correctional facilities"}
 
 ::: {.figure-caption style="text-align: center;"}
 **Figure 3:** Four facilities x three dorms x four JCOs x 40 hours per week = 1,960 hours of footage.
@@ -99,25 +99,25 @@ In order to operationalize the "red flags" from our brainstorming session, I nee
 Using these fields, I first created the following **aggregations per employee ID**:
 
 ::: {layout-nrow="2"}
-![**Number of clips** = Number of clips recorded.](images/film.png){fig-align="left"}
+![**Number of clips** = Number of clips recorded.](images/film.png){fig-align="left" fig-alt="graphical icon representing a strip of film"}
 
-![**Days with footage** = Number of discrete dates that appear in these clips.](images/calendar.png){fig-align="left"}
+![**Days with footage** = Number of discrete dates that appear in these clips.](images/calendar.png){fig-align="left" fig-alt="graphical icon representing a calendar"}
 
-![**Footage hours** = Total duration of all shot footage.](images/clock.png){fig-align="left"}
+![**Footage hours** = Total duration of all shot footage.](images/clock.png){fig-align="left" fig-alt="graphical icon representing a stopwatch"}
 
-![**Significant gaps** = Number of clips where the previous clip's end date was either greater than 15 minutes or less than eight hours before current clip's start date.](images/caution.png){fig-align="left"}
+![**Significant gaps** = Number of clips where the previous clip's end date was either greater than 15 minutes or less than eight hours before current clip's start date.](images/caution.png){fig-align="left" fig-alt="graphical icon of an exclamation mark inside a circle"}
 :::
 
 I used these aggregations to devise the following **staff metrics**:
 
 ::: {layout-nrow="2"}
-![**Clips per day** = Number of clips / Days with footage.](images/clip-per-day.png){fig-align="left"}
+![**Clips per day** = Number of clips / Days with footage.](images/clip-per-day.png){fig-align="left" fig-alt="graphical icons representing a strip of film and a calendar"}
 
-![**Footage per day** = Footage hours / Days with footage.](images/footage-per-day.png){fig-align="left"}
+![**Footage per day** = Footage hours / Days with footage.](images/footage-per-day.png){fig-align="left" fig-alt="graphical icons representing a stopwatch and a calendar"}
 
-![**Average clip length** = Footage hours / Number of clips.](images/avg-clip-length.png){fig-align="left"}
+![**Average clip length** = Footage hours / Number of clips.](images/avg-clip-length.png){fig-align="left" fig-alt="graphical icons representing a stopwatch and a strip of film"}
 
-![**Gaps per day** = Gaps / Days with footage.](images/gaps-per-day.png){fig-align="left"}
+![**Gaps per day** = Gaps / Days with footage.](images/gaps-per-day.png){fig-align="left" fig-alt="graphical icons of an exclamation mark inside a circle and a calendar"}
 :::
 
 Once I established these metrics for each employee I looked at their respective distributions. Standard staff shift lengths at the time were eight hours. If staff were using their cameras appropriately, we would expect to see distributions centered around clip lengths of about an hour, eight or fewer clips per day, and 8-12 footage hours per day. We would also expect to see 0 large gaps.
@@ -139,7 +139,7 @@ Footage_Metrics_by_Employee %>%
 
 </details>
 
-![](images/fig-1.png){fig-align="center"}
+![](images/fig-1.png){fig-align="center" fig-alt="Four histograms of key metrics - average clip length, average number of clips per day, average footage hours per day, and average gaps per day."}
 
 By eyeballing the distributions I could tell most staff were recording fewer than 10 clips per day, shooting about 0.5--2 hours for each clip, for a total of 2--10 hours of daily footage, with the majority of employees having less than one significant gap per day. Superficially, this appeared to provide evidence of widespread attempts at complying with the body-worn camera policy and no systemic rejection or resistance. If this were indeed the case, then we could turn our attention to individual outliers.
 
@@ -251,7 +251,7 @@ At this point, we could probably rule out deliberate noncompliance. The clip dat
 
 One way to check for deliberate noncompliance would be to first exclude shifts that contain zero footage whatsoever. This would rule out total mismatches, where -- for whatever reason -- the logged shifts had totally failed to overlap with recorded clips. For the remaining shifts that *do* contain footage, we could look at the proportion of the shift covered by footage. So, if an eight-hour shift had four hours of recorded footage associated with it, then we could say that 50% of the shift had been recorded. The following histogram is a distribution of the number of employees organized by the percent of their shift-hours they recorded (but only shifts that had a nonzero amount of footage).
 
-![](images/fig-2.png){fig-align="center"}
+![](images/fig-2.png){fig-align="center" fig-alt="A histogram of average percent of shifts recorded, excluding shifts with no recorded footage."}
 
 As it turned out, most employees recorded the majority of their matching shifts, a finding that roughly aligns with the initial clip analysis. So, what explains the 14,000 hours of footage with no shifts, and the 47,000 of shifts with no footage?
 
