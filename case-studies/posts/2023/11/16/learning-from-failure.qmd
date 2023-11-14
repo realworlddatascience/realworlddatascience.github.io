@@ -12,11 +12,6 @@ author: "Noah Wright"
 date: last-modified
 date-format: long
 toc: true
-format:
-  html:
-    code-annotations: below
-    code-fold: true
-    code-summary: "Show the code"
 ---
 
 Incarcerated youth are an exceptionally vulnerable population, and body-worn cameras are an important tool of accountability both for those incarcerated and the staff who supervise them. In 2018 the Texas Juvenile Justice Department (TJJD) deployed body-worn cameras for the first time, and this is a case study of how the agency developed a methodology for measuring the success of the camera rollout. This is also a case study of analysis failure, as it became clear that real-world implementation problems were corrupting the data and rendering the methodology unusable. However, the process of working through the causes of this failure helped the agency identify previously unrecognized problems and ultimately proved to be of great benefit. The purpose of this case study is to demonstrate how negative findings can still be incredibly useful in real-world settings.
@@ -127,8 +122,9 @@ I used these aggregations to devise the following **staff metrics**:
 
 Once I established these metrics for each employee I looked at their respective distributions. Standard staff shift lengths at the time were eight hours. If staff were using their cameras appropriately, we would expect to see distributions centered around clip lengths of about an hour, eight or fewer clips per day, and 8-12 footage hours per day. We would also expect to see 0 large gaps.
 
-```{r, message = FALSE, eval=FALSE}
-
+<details>
+<summary>Show the code</summary>
+```{{r}}
 library(tidyverse)
 
 Footage_Metrics_by_Employee <- read_csv("Output/Footage Metrics by Employee.csv")
@@ -139,8 +135,9 @@ Footage_Metrics_by_Employee %>%
   ggplot(aes(x = Value)) +
   geom_histogram() +
   facet_wrap(~Metric, scales = "free")
-
 ```
+
+</details>
 
 ![](images/fig-1.png){fig-align="center"}
 
@@ -160,15 +157,6 @@ In order to join the shift data to the camera data, I needed a common unit of an
 
 For example, let's take employee #9001005 at Facility Epsilon between April 1--3. This employee has the following clips recorded during that time period:
 
-```{r, message = FALSE, echo = FALSE, eval=FALSE}
-
-Sample_Clips <- read_csv("Output/Footage Sample.csv")
-
-Sample_Clips %>% 
-  knitr::kable(align = 'l')
-
-```
-
 | Employee_ID | Clip_ID | Clip_Start          | Clip_End            |
 |:------------|:--------|:--------------------|:--------------------|
 | 9001005     | 156421  | 2019-04-01 05:54:34 | 2019-04-01 08:34:34 |
@@ -181,17 +169,6 @@ Sample_Clips %>%
 
 We can join this to a similar table of shifts logged. This particular employee had the following shifts scheduled from April 1--3:
 
-```{r, message = FALSE, echo = FALSE, eval=FALSE}
-
-library(lubridate)
-
-Sample_Shifts <- read_csv("Output/Shift Sample.csv")
-
-Sample_Shifts %>% 
-  knitr::kable(align = 'l')
-
-```
-
 | Employee_ID | Shift_ID | Shift_Start         | Shift_End           |
 |:------------|:---------|:--------------------|:--------------------|
 | 9001005     | E050603  | 2019-04-01 06:00:00 | 2019-04-01 14:00:00 |
@@ -201,7 +178,9 @@ The table shows two eight-hour morning shifts from 6:00 am to 2:00 pm. We can jo
 
 To reshape the data for joining, I created a function that takes any data frame with a start and end column and unfolds it into discrete units of time. Using the code below to create the "Interval_Convert" function, the shift data above for employee 9001005 converts into one entry per hour of the day per shift. As a result, two eight-hour shifts get turned into 16 employee hours (a sample of which is shown below).
 
-```{r, message = FALSE, eval=FALSE}
+<details>
+<summary>Show the code</summary>
+```{{r}}
 library(sqldf)
 library(lubridate)
 
@@ -236,14 +215,7 @@ browser()
   return(Interval_Data_Table)
 }
 ```
-
-```{r, echo = FALSE, message = FALSE, eval=FALSE}
-source("R/Interval Convert.R")
-
-Interval_Convert(Sample_Shifts, Shift_Start, Shift_End, "hour") %>% 
-  select(-Single) %>% 
-  knitr::kable(align = 'l')
-```
+</details>
 
 | Interval_Start      | Interval_End        | Employee_ID | Shift_ID | Shift_Start         | Shift_End           | Seconds_Duration_Within_Interval |
 |:------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------|:----------------------------------------------------------------------------------|:----------------------------------------------------------|:----------------------------------------------------------------------|:-----------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
@@ -255,15 +227,6 @@ Interval_Convert(Sample_Shifts, Shift_Start, Shift_End, "hour") %>%
 
 The footage could be converted in a similar manner, and in this way I could break down both the shift data and the clip data into an hour-by-hour view and compare them to one another. Using this new format, I joined together the full tables of footage and shifts to determine how much footage was recorded with no corresponding shift in the timekeeping system, and vice-versa.
 
-```{r, message = FALSE, echo = FALSE, eval=FALSE}
-
-Mismatch_Statistics <- read_csv("Output/Footage-Shift Mismatch Summary Statistics.csv")
-
-Mismatch_Statistics %>% 
-  select(HR_Location, Footage_Hours_No_Shift, Employee_IDs_With_Missing_Shift) %>% 
-  knitr::kable(align = 'l')
-```
-
 | HR_Location | Footage_Hours_No_Shift | Employee_IDs_With_Missing_Shift |
 |:------------|:-----------------------|:--------------------------------|
 | Alpha       | 1805                   | 122                             |
@@ -273,13 +236,6 @@ Mismatch_Statistics %>%
 | Gamma       | 4153                   | 170                             |
 
 To summarize what the table is telling us: Almost every employee has footage hours that do not match with logged shifts, totaling nearly 14,000 hours when you add up the Footage_Hours_No_Shift column. But what about the opposite case? How many shift hours were logged with no corresponding footage?
-
-```{r, message = FALSE, echo = FALSE, eval=FALSE}
-
-Mismatch_Statistics %>% 
-  select(HR_Location, Shift_Hours_No_Footage, Employee_IDs_With_Missing_Footage) %>% 
-  knitr::kable(align = 'l')
-```
 
 | HR_Location | Shift_Hours_No_Footage | Employee_IDs_With_Missing_Footage |
 |:------------|:-----------------------|:----------------------------------|
@@ -295,13 +251,6 @@ At this point, we could probably rule out deliberate noncompliance. The clip dat
 
 One way to check for deliberate noncompliance would be to first exclude shifts that contain zero footage whatsoever. This would rule out total mismatches, where -- for whatever reason -- the logged shifts had totally failed to overlap with recorded clips. For the remaining shifts that *do* contain footage, we could look at the proportion of the shift covered by footage. So, if an eight-hour shift had four hours of recorded footage associated with it, then we could say that 50% of the shift had been recorded. The following histogram is a distribution of the number of employees organized by the percent of their shift-hours they recorded (but only shifts that had a nonzero amount of footage).
 
-```{r, message = FALSE, echo = FALSE, eval=FALSE}
-All_Employee_Metrics <- read_csv("Output/All Employee Metrics.csv")
-
-All_Employee_Metrics %>%
-  ggplot(aes(Average_Percent_of_Other_Shifts_Recorded)) +
-  geom_histogram()
-```
 ![](images/fig-2.png){fig-align="center"}
 
 As it turned out, most employees recorded the majority of their matching shifts, a finding that roughly aligns with the initial clip analysis. So, what explains the 14,000 hours of footage with no shifts, and the 47,000 of shifts with no footage?
@@ -351,17 +300,17 @@ About the author
 : **Noah Wright** is a data scientist with the Texas Juvenile Justice Department. He is interested in the applications of data science to public policy in the context of real-world constraints, and the ethics thereof (ethics being highly relevant in his line of work). He can be reached on [LinkedIn](https://www.linkedin.com/in/noahdwright/).
 :::
 
-<!-- ::: {.g-col-12 .g-col-md-6} -->
-<!-- Copyright and licence -->
-<!-- : &copy; 2023 Noah Wright -->
+::: {.g-col-12 .g-col-md-6}
+Copyright and licence
+: &copy; 2023 Noah Wright
 
-<!-- <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. -->
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.
 
-<!-- ::: -->
+:::
 
-<!-- ::: {.g-col-12 .g-col-md-6} -->
-<!-- How to cite -->
-<!-- : Wright, Noah. 2023. "Learning from failure." Real World Data Science, Month Day, 2023. [URL](add url) -->
-<!-- ::: -->
+::: {.g-col-12 .g-col-md-6}
+How to cite
+: Wright, Noah. 2023. "Learning from failure." Real World Data Science, Month Day, 2023. [URL](add url)
+:::
 :::
 :::
