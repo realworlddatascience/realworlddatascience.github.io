@@ -62,7 +62,7 @@ Because the agency had no way of automating the monitoring of footage, any proac
 
 2.  **Frequently turning the camera on and off** -- a correctional officer working a dorm should have their cameras always on when around youth and not be turning them on and off repeatedly.
 
-3.  **Large gaps between clips** -- It defeats the purpose of having cameras if they're not turned on.
+3.  **Large gaps between clips** -- it defeats the purpose of having cameras if they're not turned on.
 
 In addition, we came up with a fourth red flag, which could be screened for by comparing camera metadata with shift-tracking metadata:
 
@@ -72,7 +72,7 @@ In addition, we came up with a fourth red flag, which could be screened for by c
 
 For this analysis, I gathered the most recent three weeks of body-worn camera data -- which, at the time, covered April 1--21, 2019. I also pulled data from Shifthound (our shift management software) covering the same time period. Finally, I gathered HR data from CAPPS, the system that most of the State of Texas used at the time for personnel management and finance.[^1] I then performed some quality control work, summarized in the dropdown box below.
 
-[^1]: The underlying data for the analysis as presented in this article was requested through the Texas Public Information Act and went through TJJD's approval process for ensuring anonymity of records. It is available on [GitHub](https://t.ly/BUNRZ) along with the rest of the code used to write this article.
+[^1]: The underlying data for the analysis as presented in this article was requested through the Texas Public Information Act and went through TJJD's approval process for ensuring anonymity of records. It is available on [GitHub](https://github.com/enndubbs/Body-Worn-Camera-Monitoring) along with the rest of the code used to write this article.
 
 ::: {.callout-note appearance="simple" collapse="true"}
 ## Initial quality control steps
@@ -225,7 +225,7 @@ browser()
 | 2019-04-01 09:00:00 | 2019-04-01 10:00:00 | 9001005     | E050603  | 2019-04-01 06:00:00 | 2019-04-01 14:00:00 | 3600 secs                        |
 | ...                 | ...                 | ...         | ...      | ...                 | ...                 | ...                              |
 
-The footage could be converted in a similar manner, and in this way I could break down both the shift data and the clip data into an hour-by-hour view and compare them to one another. Using this new format, I joined together the full tables of footage and shifts to determine how much footage was recorded with no corresponding shift in the timekeeping system, and vice-versa.
+The footage could be converted in a similar manner, and in this way I could break down both the shift data and the clip data into an hour-by-hour view and compare them to one another. Using this new format, I joined together the full tables of footage and shifts to determine how much footage was recorded with no corresponding shift in the timekeeping system.
 
 | HR_Location | Footage_Hours_No_Shift | Employee_IDs_With_Missing_Shift |
 |:------------|:-----------------------|:--------------------------------|
@@ -253,7 +253,7 @@ One way to check for deliberate noncompliance would be to first exclude shifts t
 
 ![](images/fig-2.png){fig-align="center" fig-alt="A histogram of average percent of shifts recorded, excluding shifts with no recorded footage."}
 
-As it turned out, most employees recorded the majority of their matching shifts, a finding that roughly aligns with the initial clip analysis. So, what explains the 14,000 hours of footage with no shifts, and the 47,000 of shifts with no footage?
+As it turned out, most employees recorded the majority of their matching shifts, a finding that roughly aligns with the initial clip analysis. So, what explains the 14,000 hours of footage with no shifts, and the 47,000 hours of shifts with no footage?
 
 ## Causes of failure
 
@@ -272,7 +272,7 @@ The shift data was, unsurprisingly, even worse, and it was here we came across o
 ::: {.callout-note appearance="simple" collapse="true"}
 ### Quality issues in shift tracking data
 
-Our HR system, CAPPS, had a feature that tracked hours worked in order to calculate leave and overtime pay. However, CAPPS was a statewide application designed for 9--5 office workers, and could not capture the irregular working hours of our staff (much less aid in planning future shifts). We had obtained the shift management software to fill these gaps, but not realized how inconsistently it was being used. All facilities were required to have their employees log their shifts, but some followed through on this better than others. And even for those that did make a good-faith effort at follow-through, quality control was nonexistent.
+Our HR system, CAPPS, had a feature that tracked hours worked in order to calculate leave and overtime pay. However, CAPPS was a statewide application designed for 9--5 office workers, and could not capture the irregular working hours of our staff (much less aid in planning future shifts). We had obtained separate shift management software to fill these gaps, but not realized how inconsistently it was being used. All facilities were required to have their employees log their shifts, but some followed through on this better than others. And even for those that did make a good-faith effort at follow-through, quality control was nonexistent.
 
 In CAPPS, time entry determined pay, so strong incentives existed to ensure accurate entry. But for our shift management software, no incentives existed at all for making sure that entries were correct. For example, a correctional officer could have a 40-hour work week scheduled in the shift software but miss the entire week due to an injury, and the software would still show them as having worked 40 hours that week. Nobody bothered to go back and correct these types of errors because there was no reason to.
 
@@ -285,7 +285,7 @@ In the end, we had to rethink a number of aspects of the shift software's implem
 
 Whatever means we used to monitor compliance with the camera policy, we learned that it couldn't be fully automated. The agency followed up this analysis with a random sampling approach, in which monitors would randomly select times of day they knew a given staff member would have to have their cameras turned on and actually watch the associated clips. This review process confirmed the first impressions from the statistical review above: most employees *were* making good faith attempts at complying with the policy despite technical glitches, short-staffing, and administrative confusion. It also confirmed that proactive monitoring of correctional officers was a human process which had to come from supervisors and staff.
 
-The one piece of the analysis we did use going forward was the clip analysis (converted into a Power BI dashboard, included in the [GitHub repository](https://github.com/enndubbs/Body-Worn-Camera-Monitoring) for this article), but only as a supplement for already-launched investigations, not a prompt for one. Body-worn camera footage remained immensely useful for investigations after-the-fact, but inconsistencies in clip data were not, in and of themselves, particularly noteworthy "red flags". At the end of the day, analytics can contextualize and enhance human judgment, but it cannot replace it.
+The one piece of the analysis we did use going forward was the clip analysis (converted into a Power BI dashboard and included in the [GitHub repository](https://github.com/enndubbs/Body-Worn-Camera-Monitoring) for this article), but only as a supplement for already-launched investigations, not a prompt for one. Body-worn camera footage remained immensely useful for investigations after-the-fact, but inconsistencies in clip data were not, in and of themselves, particularly noteworthy "red flags". At the end of the day, analytics can contextualize and enhance human judgment, but it cannot replace it.
 
 In academia, the bias in favor of positive findings is well-documented. The failure to find something, or a lack of statistical significance, does not lend itself to publication in the same way that a novel discovery does. But, in an applied setting, where results matter more than publication criteria, negative findings can be highly insightful. They can falsify erroneous assumptions, bring unknown problems to light, and prompt the creation of new processes and tools. In this context, a failure is only truly a failure if nothing is learned from it.
 
@@ -310,7 +310,7 @@ Copyright and licence
 
 ::: {.g-col-12 .g-col-md-6}
 How to cite
-: Wright, Noah. 2023. "Learning from failure." Real World Data Science, Month Day, 2023. [URL](add url)
+: Wright, Noah. 2023. "Learning from failure: 'Red flags' in body-worn camera data." Real World Data Science, November 16, 2023. [URL](https://realworlddatascience.net/case-studies/posts/2023/11/16/learning-from-failure.html)
 :::
 :::
 :::
