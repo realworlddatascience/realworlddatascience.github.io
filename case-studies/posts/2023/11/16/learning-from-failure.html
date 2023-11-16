@@ -1,0 +1,1095 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.3.450">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Noah Wright">
+<meta name="dcterms.date" content="2023-11-16">
+<meta name="description" content="When body-worn cameras were rolled out to juvenile correctional officers in Texas in 2018, senior leaders hoped proactive analysis of camera metadata could be used to monitor compliance and prevent potential abuses. Instead, the analysis revealed a host of technical and administrative glitches, as Noah Wright explains.">
+
+<title>Real World Data Science - Learning from failure: ‘Red flags’ in body-worn camera data</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../">
+<link href="../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
+<script src="../../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 20,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../rwds.css">
+<meta property="og:title" content="Real World Data Science - Learning from failure: ‘Red flags’ in body-worn camera data">
+<meta property="og:description" content="When body-worn cameras were rolled out to juvenile correctional officers in Texas in 2018, senior leaders hoped proactive analysis of camera metadata could be used to monitor compliance and prevent potential abuses. Instead, the analysis revealed a host of technical and administrative glitches, as Noah Wright explains.">
+<meta property="og:image" content="https://realworlddatascience.net/case-studies/posts/2023/11/16/images/bodycam-monitor.png">
+<meta property="og:site-name" content="Real World Data Science">
+<meta property="og:image:height" content="724">
+<meta property="og:image:width" content="991">
+<meta property="og:image:alt" content="Computer monitor displaying bodycam recordings, primary colours, digital art. Created using Bing Image Creator.">
+<meta name="twitter:title" content="Real World Data Science - Learning from failure: ‘Red flags’ in body-worn camera data">
+<meta name="twitter:description" content="When body-worn cameras were rolled out to juvenile correctional officers in Texas in 2018, senior leaders hoped proactive analysis of camera metadata could be used to monitor compliance and prevent potential abuses. Instead, the analysis revealed a host of technical and administrative glitches, as Noah Wright explains.">
+<meta name="twitter:image" content="https://realworlddatascience.net/case-studies/posts/2023/11/16/images/bodycam-monitor.png">
+<meta name="twitter:site" content="@rwdatasci">
+<meta name="twitter:image-height" content="724">
+<meta name="twitter:image-width" content="991">
+<meta name="twitter:image:alt" content="Computer monitor displaying bodycam recordings, primary colours, digital art. Created using Bing Image Creator.">
+<meta name="twitter:card" content="summary_large_image">
+</head>
+
+<body class="nav-fixed">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-dark ">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container">
+    <a href="../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../case-studies/index.html" rel="" target="">
+ <span class="menu-text">Case studies</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../ideas/index.html" rel="" target="">
+ <span class="menu-text">Ideas</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../careers/index.html" rel="" target="">
+ <span class="menu-text">Careers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../viewpoints/index.html" rel="" target="">
+ <span class="menu-text">Viewpoints</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+ <span class="menu-text">About RWDS</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
+        <li>
+    <a class="dropdown-item" href="../../../../../about-rwds.html" rel="" target="">
+ <span class="dropdown-text">Who we are</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../contributor-docs/call-for-contributions.html" rel="" target="">
+ <span class="dropdown-text">How to contribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../contact.html" rel="" target="">
+ <span class="dropdown-text">Contact us</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+            <div class="quarto-navbar-tools">
+</div>
+          </div> <!-- /navcollapse -->
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Learning from failure: ‘Red flags’ in body-worn camera data</h1>
+                  <div>
+        <div class="description">
+          <p>When body-worn cameras were rolled out to juvenile correctional officers in Texas in 2018, senior leaders hoped proactive analysis of camera metadata could be used to monitor compliance and prevent potential abuses. Instead, the analysis revealed a host of technical and administrative glitches, as Noah Wright explains.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Crime and justice</div>
+                <div class="quarto-category">Public policy</div>
+                <div class="quarto-category">Data quality</div>
+                <div class="quarto-category">Data analysis</div>
+                <div class="quarto-category">Monitoring</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Noah Wright </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 16, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#background" id="toc-background" class="nav-link active" data-scroll-target="#background">Background</a></li>
+  <li><a href="#analysis-part-1-quality-control-and-footage-analysis" id="toc-analysis-part-1-quality-control-and-footage-analysis" class="nav-link" data-scroll-target="#analysis-part-1-quality-control-and-footage-analysis">Analysis, part 1: Quality control and footage analysis</a></li>
+  <li><a href="#analysis-part-2-footage-and-shift-comparison" id="toc-analysis-part-2-footage-and-shift-comparison" class="nav-link" data-scroll-target="#analysis-part-2-footage-and-shift-comparison">Analysis, part 2: Footage and shift comparison</a></li>
+  <li><a href="#causes-of-failure" id="toc-causes-of-failure" class="nav-link" data-scroll-target="#causes-of-failure">Causes of failure</a></li>
+  <li><a href="#what-we-learned-from-failure" id="toc-what-we-learned-from-failure" class="nav-link" data-scroll-target="#what-we-learned-from-failure">What we learned from failure</a></li>
+  </ul>
+<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/case-studies/posts/2023/11/16/learning-from-failure.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+<p>Incarcerated youth are an exceptionally vulnerable population, and body-worn cameras are an important tool of accountability both for those incarcerated and the staff who supervise them. In 2018 the Texas Juvenile Justice Department (TJJD) deployed body-worn cameras for the first time, and this is a case study of how the agency developed a methodology for measuring the success of the camera rollout. This is also a case study of analysis failure, as it became clear that real-world implementation problems were corrupting the data and rendering the methodology unusable. However, the process of working through the causes of this failure helped the agency identify previously unrecognized problems and ultimately proved to be of great benefit. The purpose of this case study is to demonstrate how negative findings can still be incredibly useful in real-world settings.</p>
+<div class="callout callout-style-simple callout-note callout-titled" style="margin:0">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Why body-worn cameras?
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Body-worn cameras became a standard tool of policing in the US in the mid-2010s. By recording officer interactions with the public, law enforcement agencies could achieve a greater degree of accountability. Not only could credible claims of police abuse against civilians be easily verified, the argument went, but false accusations would decline as well, saving law enforcement agencies time and resources that would otherwise be wasted on spurious allegations. Initial studies seemed to support this argument.</p>
+<p>TJJD faced similar issues to law enforcement agencies, and body-worn cameras seemed like they could be a useful tool. Secure youth residential facilities in Texas all had overhead cameras, but these were very old (they still ran on tape) and captured no audio. This presented a number of problems when it came to deciphering contested incidents, not to mention that these cameras had clearly not prevented any of the agency’s prior scandals from taking place. TJJD received special funding from the legislature to roll out body-worn cameras system-wide, and all juvenile correctional officers were required to wear one.</p>
+</div>
+</div>
+</div>
+<section id="background" class="level2">
+<h2 class="anchored" data-anchor-id="background">Background</h2>
+<p>From the outset of the rollout of body-worn cameras, TJJD faced a major issue with implementation: in 2019, body worn cameras were an established tool for law enforcement, but there was very little literature or best practice to draw from for their use in a correctional environment. Unlike police officers, juvenile correctional officers (JCOs) deal directly with their charges for virtually their entire shift. In an eight-hour shift, a police officer might record a few calls and traffic stops. A juvenile correctional officer, on the other hand, would record for almost eight consecutive hours. And, because TJJD recorded round-the-clock for hundreds of employees at a time, this added up very quickly to <em>a lot</em> of footage.</p>
+<p>For example, a typical dorm in a correctional center might have four JCOs assigned to it. Across a single week, these four JCOs would be expected to record at least 160 hours of footage.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/jcos-recording-totals.png" class="img-fluid figure-img" alt="A table illustrating working hours over the course of a week for four juvenile correctional officers"></p>
+</figure>
+</div>
+<div class="figure-caption" style="text-align: center;">
+<p><strong>Figure 1:</strong> Four JCOs x 40 hours per week = 160 hours of footage.</p>
+</div>
+<p>This was replicated across every dorm. Three dorms, for example, would produce nearly 500 hours of footage, as seen below.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/jcos-recording-totals-across-dorms.png" class="img-fluid figure-img" alt="A table illustrating working hours over the course of a week for four juvenile correctional officers in each of three dorms in one juvenile correctional facility"></p>
+</figure>
+</div>
+<div class="figure-caption" style="text-align: center;">
+<p><strong>Figure 2:</strong> Three dorms x four JCOs x 40 hours per week = 480 hours of footage.</p>
+</div>
+<p>Finally, we had more than one facility. Four facilities with three dorms each would produce nearly 2,000 hours of footage every week.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/jcos-recording-totals-across-facilities.png" class="img-fluid figure-img" alt="A table illustrating working hours over the course of a week for four juvenile correctional officers in each of three dorms in four separate juvenile correctional facilities"></p>
+</figure>
+</div>
+<div class="figure-caption" style="text-align: center;">
+<p><strong>Figure 3:</strong> Four facilities x three dorms x four JCOs x 40 hours per week = 1,960 hours of footage.</p>
+</div>
+<p>In actuality, we had a total of five facilities each with over a dozen dorms producing an anticipated <strong>17,000 hours</strong> of footage every week – an impossible amount to monitor manually.</p>
+<p>As a result, footage review had to be done in a limited, reactive manner. If our monitoring team received an incident report, they could easily zero in on the cameras of the officers involved and review the incident accordingly. But our executive team had hoped to be able to use the footage proactively, looking for “red flags” in order to <em>prevent</em> potential abuses instead of only responding to allegations.</p>
+<p>Because the agency had no way of automating the monitoring of footage, any proactive analysis had to be metadata-based. But what to look for in the metadata? Once again, the lack of best-practice literature left us in the lurch. So, we brainstormed ideas for “red flags” and came up with the following that could be screened for using camera metadata:</p>
+<ol type="1">
+<li><p><strong>Minimal quantity of footage</strong> – our camera policy required correctional officers to have their cameras on at all times in the presence of youth. No footage meant they weren’t using their cameras.</p></li>
+<li><p><strong>Frequently turning the camera on and off</strong> – a correctional officer working a dorm should have their cameras always on when around youth and not be turning them on and off repeatedly.</p></li>
+<li><p><strong>Large gaps between clips</strong> – it defeats the purpose of having cameras if they’re not turned on.</p></li>
+</ol>
+<p>In addition, we came up with a fourth red flag, which could be screened for by comparing camera metadata with shift-tracking metadata:</p>
+<ol start="4" type="1">
+<li><strong>Mismatch between clips recorded and shifts worked</strong> – the agency had very recently rolled out a new shift tracking software. We should expect to see the hours logged by the body cameras roughly match the shift hours worked.</li>
+</ol>
+</section>
+<section id="analysis-part-1-quality-control-and-footage-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-part-1-quality-control-and-footage-analysis">Analysis, part 1: Quality control and footage analysis</h2>
+<p>For this analysis, I gathered the most recent three weeks of body-worn camera data – which, at the time, covered April 1–21, 2019. I also pulled data from Shifthound (our shift management software) covering the same time period. Finally, I gathered HR data from CAPPS, the system that most of the State of Texas used at the time for personnel management and finance.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> I then performed some quality control work, summarized in the dropdown box below.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Initial quality control steps
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p><code>SkimR</code> is a helpful <code>R</code> package for exploratory analysis that gives summary statistics for every variable in a data frame, including missing values. After using the <code>skim</code> function on clip data, shift data, and HR data, I noticed that the clip data had some missing values for employee ID. This was an error which pointed to data entry mistakes – body-worn cameras do not record footage on their own, after all, so employee IDs should be assigned to each clip.</p>
+<p>From here I compared the employee ID field in the clip data to the employee ID field in the HR data. Somewhat surprisingly, IDs existed in the clip data that did not correspond to any entries in the HR data, indicating yet more data entry mistakes – the HR data is the ground truth for all employee IDs. I checked the shift data for the same error – employee IDs that did not exist in the HR data – and found the same problem.</p>
+<p>As well as employee IDs that did not exist in the HR data, I also looked for employee IDs in the footage and shift data which related to staff who were not actually employed between April 1–21, 2019. I found some examples of this, which indicated yet more errors: staff cannot use a body-worn camera or log a shift if they have yet to begin working or if they have been terminated (system permissions are revoked upon leaving employment).</p>
+<p>I made a list of every erroneous ID to pass off to HR and monitoring staff before excluding them from the subsequent analysis. In total, 10.6% of clips representing 11.3% of total footage had to be excluded due to these initial data quality issues, foreshadowing the subsequent data quality issues the analysis would uncover.</p>
+<p>The full analysis script <a href="https://t.ly/BUNRZ">can be found on GitHub</a>.</p>
+</div>
+</div>
+</div>
+<p>In order to operationalize the “red flags” from our brainstorming session, I needed to see what exactly the cameras captured in their metadata. The variables most relevant to our purposes were:</p>
+<ul>
+<li>Clip start</li>
+<li>Clip end</li>
+<li>Camera used</li>
+<li>Who was assigned to the camera at the time</li>
+<li>The role of the person assigned to the camera</li>
+</ul>
+<p>Using these fields, I first created the following <strong>aggregations per employee ID</strong>:</p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/film.png" class="img-fluid figure-img" alt="graphical icon representing a strip of film"></p>
+<figcaption class="figure-caption"><strong>Number of clips</strong> = Number of clips recorded.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/calendar.png" class="img-fluid figure-img" alt="graphical icon representing a calendar"></p>
+<figcaption class="figure-caption"><strong>Days with footage</strong> = Number of discrete dates that appear in these clips.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/clock.png" class="img-fluid figure-img" alt="graphical icon representing a stopwatch"></p>
+<figcaption class="figure-caption"><strong>Footage hours</strong> = Total duration of all shot footage.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/caution.png" class="img-fluid figure-img" alt="graphical icon of an exclamation mark inside a circle"></p>
+<figcaption class="figure-caption"><strong>Significant gaps</strong> = Number of clips where the previous clip’s end date was either greater than 15 minutes or less than eight hours before current clip’s start date.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>I used these aggregations to devise the following <strong>staff metrics</strong>:</p>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/clip-per-day.png" class="img-fluid figure-img" alt="graphical icons representing a strip of film and a calendar"></p>
+<figcaption class="figure-caption"><strong>Clips per day</strong> = Number of clips / Days with footage.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/footage-per-day.png" class="img-fluid figure-img" alt="graphical icons representing a stopwatch and a calendar"></p>
+<figcaption class="figure-caption"><strong>Footage per day</strong> = Footage hours / Days with footage.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/avg-clip-length.png" class="img-fluid figure-img" alt="graphical icons representing a stopwatch and a strip of film"></p>
+<figcaption class="figure-caption"><strong>Average clip length</strong> = Footage hours / Number of clips.</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="images/gaps-per-day.png" class="img-fluid figure-img" alt="graphical icons of an exclamation mark inside a circle and a calendar"></p>
+<figcaption class="figure-caption"><strong>Gaps per day</strong> = Gaps / Days with footage.</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>Once I established these metrics for each employee I looked at their respective distributions. Standard staff shift lengths at the time were eight hours. If staff were using their cameras appropriately, we would expect to see distributions centered around clip lengths of about an hour, eight or fewer clips per day, and 8-12 footage hours per day. We would also expect to see 0 large gaps.</p>
+<details>
+<summary>
+Show the code
+</summary>
+<div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>Footage_Metrics_by_Employee <span class="ot">&lt;-</span> <span class="fu">read_csv</span>(<span class="st">"Output/Footage Metrics by Employee.csv"</span>)</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>Footage_Metrics_by_Employee <span class="sc">%&gt;%</span> </span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(<span class="sc">-</span>Clips, <span class="sc">-</span>Days_With_Footage, <span class="sc">-</span>Footage_Hours, <span class="sc">-</span>Gaps) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pivot_longer</span>(<span class="sc">-</span>Employee_ID, <span class="at">names_to =</span> <span class="st">"Metric"</span>, <span class="at">values_to =</span> <span class="st">"Value"</span>) <span class="sc">%&gt;%</span> </span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>(<span class="fu">aes</span>(<span class="at">x =</span> Value)) <span class="sc">+</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_histogram</span>() <span class="sc">+</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">facet_wrap</span>(<span class="sc">~</span>Metric, <span class="at">scales =</span> <span class="st">"free"</span>)</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/fig-1.png" class="img-fluid figure-img" alt="Four histograms of key metrics - average clip length, average number of clips per day, average footage hours per day, and average gaps per day."></p>
+</figure>
+</div>
+<p>By eyeballing the distributions I could tell most staff were recording fewer than 10 clips per day, shooting about 0.5–2 hours for each clip, for a total of 2–10 hours of daily footage, with the majority of employees having less than one significant gap per day. Superficially, this appeared to provide evidence of widespread attempts at complying with the body-worn camera policy and no systemic rejection or resistance. If this were indeed the case, then we could turn our attention to individual outliers.</p>
+<p>First, though, we thought we would attempt to validate this initial impression by testing another assumption. If each employee works on average 40 hours per week – a substantial underestimate given how common overtime was – we should expect, over a three-week period, to see about 120 hours of footage per employee in the dataset. This is <em>not</em> what we found.</p>
+<p>Average footage per employee was 70.2 hours over the three-week period, meaning that the average employee was recording less than 60% of shift hours worked. With so many hours going unrecorded for unknown reasons, we needed to investigate further.</p>
+<p>Surely the shift data would clarify this…</p>
+</section>
+<section id="analysis-part-2-footage-and-shift-comparison" class="level2">
+<h2 class="anchored" data-anchor-id="analysis-part-2-footage-and-shift-comparison">Analysis, part 2: Footage and shift comparison</h2>
+<p>With the data on shifts worked from our timekeeping system, I could theoretically compare actual shifts worked to the amount of footage recorded. If there were patterns in where the gaps in footage fell, that comparison might help to explain why.</p>
+<p>In order to join the shift data to the camera data, I needed a common unit of analysis beyond “Employee ID.” Using only this value would produce a nonsensical table that joined up every clip of footage to every shift worked.</p>
+<p>For example, let’s take employee #9001005 at Facility Epsilon between April 1–3. This employee has the following clips recorded during that time period:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Employee_ID</th>
+<th style="text-align: left;">Clip_ID</th>
+<th style="text-align: left;">Clip_Start</th>
+<th style="text-align: left;">Clip_End</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">9001005</td>
+<td style="text-align: left;">156421</td>
+<td style="text-align: left;">2019-04-01 05:54:34</td>
+<td style="text-align: left;">2019-04-01 08:34:34</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">9001005</td>
+<td style="text-align: left;">155093</td>
+<td style="text-align: left;">2019-04-01 08:40:59</td>
+<td style="text-align: left;">2019-04-01 08:54:51</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">9001005</td>
+<td style="text-align: left;">151419</td>
+<td style="text-align: left;">2019-04-01 09:03:16</td>
+<td style="text-align: left;">2019-04-01 11:00:30</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">9001005</td>
+<td style="text-align: left;">153133</td>
+<td style="text-align: left;">2019-04-01 11:10:09</td>
+<td style="text-align: left;">2019-04-01 12:39:51</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">9001005</td>
+<td style="text-align: left;">151088</td>
+<td style="text-align: left;">2019-04-01 12:57:51</td>
+<td style="text-align: left;">2019-04-01 14:06:44</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">9001005</td>
+<td style="text-align: left;">150947</td>
+<td style="text-align: left;">2019-04-02 05:56:34</td>
+<td style="text-align: left;">2019-04-02 09:48:50</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">9001005</td>
+<td style="text-align: left;">151699</td>
+<td style="text-align: left;">2019-04-02 09:54:23</td>
+<td style="text-align: left;">2019-04-02 12:17:15</td>
+</tr>
+</tbody>
+</table>
+<p>We can join this to a similar table of shifts logged. This particular employee had the following shifts scheduled from April 1–3:</p>
+<table class="table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Employee_ID</th>
+<th style="text-align: left;">Shift_ID</th>
+<th style="text-align: left;">Shift_Start</th>
+<th style="text-align: left;">Shift_End</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">9001005</td>
+<td style="text-align: left;">E050603</td>
+<td style="text-align: left;">2019-04-01 06:00:00</td>
+<td style="text-align: left;">2019-04-01 14:00:00</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">9001005</td>
+<td style="text-align: left;">E051303</td>
+<td style="text-align: left;">2019-04-02 06:00:00</td>
+<td style="text-align: left;">2019-04-02 14:00:00</td>
+</tr>
+</tbody>
+</table>
+<p>The table shows two eight-hour morning shifts from 6:00 am to 2:00 pm. We can join the two tables together by ID on a messy many-to-many join, but that tells us nothing about how much they overlap (or fail to overlap) without extensive additional work. For example, we have a unique identifier for employee clip (Clip_ID) and employee shift (Shift_ID), but what we need is a unique identifier that can be used to join the two. Fortunately, for this particular data we can <em>create</em> a unique identifier since both clips and shifts are fundamentally measures of <em>time</em>. While Employee_ID is not in itself unique (i.e., one employee can have multiple clips attached to that ID), Employee_ID combined with time of day is unique. A person can only be in one place at a time, after all!</p>
+<p>To reshape the data for joining, I created a function that takes any data frame with a start and end column and unfolds it into discrete units of time. Using the code below to create the “Interval_Convert” function, the shift data above for employee 9001005 converts into one entry per hour of the day per shift. As a result, two eight-hour shifts get turned into 16 employee hours (a sample of which is shown below).</p>
+<details>
+<summary>
+Show the code
+</summary>
+<div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sqldf)</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(lubridate)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>Interval_Convert <span class="ot">&lt;-</span> <span class="cf">function</span>(DF, Start_Col, End_Col, Int_Unit, <span class="at">Int_Length =</span> <span class="dv">1</span>) {</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="fu">browser</span>()</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  Start_Col2 <span class="ot">&lt;-</span> <span class="fu">enquo</span>(Start_Col)</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>  End_Col2 <span class="ot">&lt;-</span> <span class="fu">enquo</span>(End_Col)</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>  Start_End <span class="ot">&lt;-</span> DF <span class="sc">%&gt;%</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">summarize</span>(<span class="at">Min_Start =</span> <span class="fu">min</span>(<span class="sc">!!</span>Start_Col2),</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>              <span class="at">Max_End =</span> <span class="fu">max</span>(<span class="sc">!!</span>End_Col2)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Start =</span> <span class="fu">floor_date</span>(Min_Start, Int_Unit),</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>           <span class="at">End =</span> <span class="fu">ceiling_date</span>(Max_End, Int_Unit))</span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>  DF <span class="ot">&lt;-</span> DF <span class="sc">%&gt;%</span></span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Single =</span> <span class="sc">!!</span>Start_Col2 <span class="sc">==</span> <span class="sc">!!</span>End_Col2)</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  Interval_Table <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(<span class="at">Interval_Start =</span> <span class="fu">seq.POSIXt</span>(Start_End<span class="sc">$</span>Start[<span class="dv">1</span>], Start_End<span class="sc">$</span>End[<span class="dv">1</span>], <span class="at">by =</span> <span class="fu">str_c</span>(Int_Length, <span class="st">" "</span>, Int_Unit))) <span class="sc">%&gt;%</span></span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Interval_End =</span> <span class="fu">lead</span>(Interval_Start)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span><span class="fu">is.na</span>(Interval_End))</span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  by <span class="ot">&lt;-</span> <span class="fu">join_by</span>(Interval_Start <span class="sc">&lt;=</span> <span class="sc">!!</span>End_Col2, Interval_End <span class="sc">&gt;=</span> <span class="sc">!!</span>Start_Col2)  </span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  Interval_Data_Table <span class="ot">&lt;-</span> Interval_Table <span class="sc">%&gt;%</span> </span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>    <span class="fu">left_join</span>(DF, by) <span class="sc">%&gt;%</span> </span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>    <span class="fu">mutate</span>(<span class="at">Seconds_Duration_Within_Interval =</span> <span class="fu">if_else</span>(<span class="sc">!!</span>End_Col2 <span class="sc">&gt;</span> Interval_End, Interval_End, <span class="sc">!!</span>End_Col2) <span class="sc">-</span></span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>             <span class="fu">if_else</span>(<span class="sc">!!</span>Start_Col2 <span class="sc">&lt;</span> Interval_Start, Interval_Start, <span class="sc">!!</span>Start_Col2)) <span class="sc">%&gt;%</span></span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>    <span class="fu">filter</span>(<span class="sc">!</span>(Single <span class="sc">&amp;</span> Interval_End <span class="sc">==</span> <span class="sc">!!</span>Start_Col2),</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>           <span class="fu">as.numeric</span>(Seconds_Duration_Within_Interval) <span class="sc">&gt;</span> <span class="dv">0</span>)</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">return</span>(Interval_Data_Table)</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb2-35"><a href="#cb2-35" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</details>
+<table class="table">
+<colgroup>
+<col style="width: 13%">
+<col style="width: 12%">
+<col style="width: 13%">
+<col style="width: 9%">
+<col style="width: 11%">
+<col style="width: 10%">
+<col style="width: 29%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Interval_Start</th>
+<th style="text-align: left;">Interval_End</th>
+<th style="text-align: left;">Employee_ID</th>
+<th style="text-align: left;">Shift_ID</th>
+<th style="text-align: left;">Shift_Start</th>
+<th style="text-align: left;">Shift_End</th>
+<th style="text-align: left;">Seconds_Duration_Within_Interval</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">2019-04-01 06:00:00</td>
+<td style="text-align: left;">2019-04-01 07:00:00</td>
+<td style="text-align: left;">9001005</td>
+<td style="text-align: left;">E050603</td>
+<td style="text-align: left;">2019-04-01 06:00:00</td>
+<td style="text-align: left;">2019-04-01 14:00:00</td>
+<td style="text-align: left;">3600 secs</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2019-04-01 07:00:00</td>
+<td style="text-align: left;">2019-04-01 08:00:00</td>
+<td style="text-align: left;">9001005</td>
+<td style="text-align: left;">E050603</td>
+<td style="text-align: left;">2019-04-01 06:00:00</td>
+<td style="text-align: left;">2019-04-01 14:00:00</td>
+<td style="text-align: left;">3600 secs</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">2019-04-01 08:00:00</td>
+<td style="text-align: left;">2019-04-01 09:00:00</td>
+<td style="text-align: left;">9001005</td>
+<td style="text-align: left;">E050603</td>
+<td style="text-align: left;">2019-04-01 06:00:00</td>
+<td style="text-align: left;">2019-04-01 14:00:00</td>
+<td style="text-align: left;">3600 secs</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2019-04-01 09:00:00</td>
+<td style="text-align: left;">2019-04-01 10:00:00</td>
+<td style="text-align: left;">9001005</td>
+<td style="text-align: left;">E050603</td>
+<td style="text-align: left;">2019-04-01 06:00:00</td>
+<td style="text-align: left;">2019-04-01 14:00:00</td>
+<td style="text-align: left;">3600 secs</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">…</td>
+<td style="text-align: left;">…</td>
+<td style="text-align: left;">…</td>
+<td style="text-align: left;">…</td>
+<td style="text-align: left;">…</td>
+<td style="text-align: left;">…</td>
+<td style="text-align: left;">…</td>
+</tr>
+</tbody>
+</table>
+<p>The footage could be converted in a similar manner, and in this way I could break down both the shift data and the clip data into an hour-by-hour view and compare them to one another. Using this new format, I joined together the full tables of footage and shifts to determine how much footage was recorded with no corresponding shift in the timekeeping system.</p>
+<table class="table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 34%">
+<col style="width: 47%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">HR_Location</th>
+<th style="text-align: left;">Footage_Hours_No_Shift</th>
+<th style="text-align: left;">Employee_IDs_With_Missing_Shift</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Alpha</td>
+<td style="text-align: left;">1805</td>
+<td style="text-align: left;">122</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Beta</td>
+<td style="text-align: left;">3749</td>
+<td style="text-align: left;">114</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Delta</td>
+<td style="text-align: left;">1208</td>
+<td style="text-align: left;">133</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Epsilon</td>
+<td style="text-align: left;">2899</td>
+<td style="text-align: left;">157</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gamma</td>
+<td style="text-align: left;">4153</td>
+<td style="text-align: left;">170</td>
+</tr>
+</tbody>
+</table>
+<p>To summarize what the table is telling us: Almost every employee has footage hours that do not match with logged shifts, totaling nearly 14,000 hours when you add up the Footage_Hours_No_Shift column. But what about the opposite case? How many shift hours were logged with no corresponding footage?</p>
+<table class="table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 33%">
+<col style="width: 48%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">HR_Location</th>
+<th style="text-align: left;">Shift_Hours_No_Footage</th>
+<th style="text-align: left;">Employee_IDs_With_Missing_Footage</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Alpha</td>
+<td style="text-align: left;">7338</td>
+<td style="text-align: left;">127</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Beta</td>
+<td style="text-align: left;">6014</td>
+<td style="text-align: left;">118</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Delta</td>
+<td style="text-align: left;">12830</td>
+<td style="text-align: left;">141</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Epsilon</td>
+<td style="text-align: left;">9000</td>
+<td style="text-align: left;">168</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gamma</td>
+<td style="text-align: left;">11960</td>
+<td style="text-align: left;">183</td>
+</tr>
+</tbody>
+</table>
+<p>Oh dear. Again, almost every employee has logged shift hours with no footage: 47,000 hours in total. To put it another way, that’s an entire work week per employee not showing up in camera footage.</p>
+<p>At this point, we could probably rule out deliberate noncompliance. The clip data already implied that most employees were following the policy, and our facility leadership would surely have noticed a mass refusal large enough to show up this clearly in the data.</p>
+<p>One way to check for deliberate noncompliance would be to first exclude shifts that contain zero footage whatsoever. This would rule out total mismatches, where – for whatever reason – the logged shifts had totally failed to overlap with recorded clips. For the remaining shifts that <em>do</em> contain footage, we could look at the proportion of the shift covered by footage. So, if an eight-hour shift had four hours of recorded footage associated with it, then we could say that 50% of the shift had been recorded. The following histogram is a distribution of the number of employees organized by the percent of their shift-hours they recorded (but only shifts that had a nonzero amount of footage).</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/fig-2.png" class="img-fluid figure-img" alt="A histogram of average percent of shifts recorded, excluding shifts with no recorded footage."></p>
+</figure>
+</div>
+<p>As it turned out, most employees recorded the majority of their matching shifts, a finding that roughly aligns with the initial clip analysis. So, what explains the 14,000 hours of footage with no shifts, and the 47,000 hours of shifts with no footage?</p>
+</section>
+<section id="causes-of-failure" class="level2">
+<h2 class="anchored" data-anchor-id="causes-of-failure">Causes of failure</h2>
+<p>Here, I believed, we had reached the end of what I could do with data alone, and so I presented these findings (or lack thereof) to executive leadership. The failure to gather reliable data from linking the clip data to the shift data prompted follow-ups into what exactly was going wrong. As it turned out, <em>many</em> things were going wrong.</p>
+<p>First, a number of technical problems plagued the early rollout of the cameras:</p>
+<ul>
+<li><p>All of our facilities suffered from high turnover, and camera ownership was not consistently updated. Employees who no longer worked at the agency could therefore appear in the clip data – somebody else had taken over their camera but had not put their name and ID on it.</p></li>
+<li><p>We had no way of telling if a camera was not recording due to being docked and recharging or not recording due to being switched off.</p></li>
+<li><p>In the early days of the rollout, footage got assigned to an employee based on the owner of the <em>dock</em>, not the camera. In other words, if Employee A had recorded their shift with their camera but uploaded the footage using a dock assigned to Employee B then the footage would show up in the system as belonging to Employee B.</p></li>
+</ul>
+<p>The shift data was, unsurprisingly, even worse, and it was here we came across our most important finding. While the evidence showed that there wasn’t any widespread non-compliance with the use of the cameras, there <em>was</em> widespread non-compliance with the use of our shift management software. Details are included in the dropdown box below.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Quality issues in shift tracking data
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-3" class="callout-3-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Our HR system, CAPPS, had a feature that tracked hours worked in order to calculate leave and overtime pay. However, CAPPS was a statewide application designed for 9–5 office workers, and could not capture the irregular working hours of our staff (much less aid in planning future shifts). We had obtained separate shift management software to fill these gaps, but not realized how inconsistently it was being used. All facilities were required to have their employees log their shifts, but some followed through on this better than others. And even for those that did make a good-faith effort at follow-through, quality control was nonexistent.</p>
+<p>In CAPPS, time entry determined pay, so strong incentives existed to ensure accurate entry. But for our shift management software, no incentives existed at all for making sure that entries were correct. For example, a correctional officer could have a 40-hour work week scheduled in the shift software but miss the entire week due to an injury, and the software would still show them as having worked 40 hours that week. Nobody bothered to go back and correct these types of errors because there was no reason to.</p>
+<p>The software was intended to be used proactively for planning purposes, not after-the-fact for logging and tracking purposes. Thus, it produced data that was totally inconsistent with actual hours worked, which became apparent when compared to data (like body-worn camera footage) that tracked actual hours on the floor.</p>
+<p>In the end, we had to rethink a number of aspects of the shift software’s implementation. In the process of these fixes, leadership also came to make explicit that the software’s primary purpose was to help facilities schedule future shifts, not audit hours worked after the fact (which CAPPS already did, just on a day-by-day basis as opposed to an hour-by-hour basis). This analysis was the only time we attempted to use the shift data in this manner.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="what-we-learned-from-failure" class="level2">
+<h2 class="anchored" data-anchor-id="what-we-learned-from-failure">What we learned from failure</h2>
+<p>Whatever means we used to monitor compliance with the camera policy, we learned that it couldn’t be fully automated. The agency followed up this analysis with a random sampling approach, in which monitors would randomly select times of day they knew a given staff member would have to have their cameras turned on and actually watch the associated clips. This review process confirmed the first impressions from the statistical review above: most employees <em>were</em> making good faith attempts at complying with the policy despite technical glitches, short-staffing, and administrative confusion. It also confirmed that proactive monitoring of correctional officers was a human process which had to come from supervisors and staff.</p>
+<p>The one piece of the analysis we did use going forward was the clip analysis (converted into a Power BI dashboard and included in the <a href="https://github.com/enndubbs/Body-Worn-Camera-Monitoring">GitHub repository</a> for this article), but only as a supplement for already-launched investigations, not a prompt for one. Body-worn camera footage remained immensely useful for investigations after-the-fact, but inconsistencies in clip data were not, in and of themselves, particularly noteworthy “red flags.” At the end of the day, analytics can contextualize and enhance human judgment, but it cannot replace it.</p>
+<p>In academia, the bias in favor of positive findings is well-documented. The failure to find something, or a lack of statistical significance, does not lend itself to publication in the same way that a novel discovery does. But, in an applied setting, where results matter more than publication criteria, negative findings can be highly insightful. They can falsify erroneous assumptions, bring unknown problems to light, and prompt the creation of new processes and tools. In this context, a failure is only truly a failure if nothing is learned from it.</p>
+<div class="article-btn">
+<p><a href="../../../../../case-studies/index.html">Find more case studies</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author</dt>
+<dd>
+<strong>Noah Wright</strong> is a data scientist with the Texas Juvenile Justice Department. He is interested in the applications of data science to public policy in the context of real-world constraints, and the ethics thereof (ethics being highly relevant in his line of work). He can be reached on <a href="https://www.linkedin.com/in/noahdwright/">LinkedIn</a>.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Noah Wright
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Wright, Noah. 2023. “Learning from failure: ‘Red flags’ in body-worn camera data.” Real World Data Science, November 16, 2023. <a href="https://realworlddatascience.net/case-studies/posts/2023/11/16/learning-from-failure.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>The underlying data for the analysis as presented in this article was requested through the Texas Public Information Act and went through TJJD’s approval process for ensuring anonymity of records. It is available on <a href="https://github.com/enndubbs/Body-Worn-Camera-Monitoring">GitHub</a> along with the rest of the code used to write this article.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn) {
+    const config = {
+      allowHTML: true,
+      content: contentFn,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start'
+    };
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="realworlddatascience/realworlddatascience.github.io" data-repo-id="R_kgDOILnnig" data-category="General" data-category-id="DIC_kwDOILnnis4CSt2s" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">Copyright © 2023 <a href="https://rss.org.uk/">Royal Statistical Society</a></div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/realworlddatascience">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/rwdatasci">
+      <i class="bi bi-twitter" role="img" aria-label="Twitter">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@rwdatasci">
+      <i class="bi bi-mastodon" role="img" aria-label="Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="../../../../../feeds.html">
+      <i class="bi bi-rss" role="img" aria-label="RWDS rss">
+</i> 
+    </a>
+  </li>  
+</ul>
+    </div>
+    <div class="nav-footer-right"><a href="../../../../../ts-and-cs.html">Terms &amp; Conditions</a></div>
+  </div>
+</footer>
+
+
+
+</body></html>
