@@ -72,9 +72,10 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 </script>
+<!-- Thank you to Ben Ruijl for the progress bar code!
+Ben is on GitHub here: https://github.com/benruijl
+And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
 
-
-<link rel="stylesheet" href="../../../../../../rwds.css">
 <meta property="og:title" content="Real World Data Science - ‘For me, data science is about bridging the gap between business requirements and the data that businesses have’">
 <meta property="og:description" content="Jasmine Holdsworth ‘fell in love’ with data science while employed as a data analyst at Stack Overflow. Now working as a data scientist at Expedia Group, she explains how inspiring mentors, R-Ladies meetups, and a commitment to learning (and teaching) helped shape her career path.">
 <meta property="og:image" content="https://realworlddatascience.net/careers/career-profiles/posts/2023/05/24/images/jh-photo.png">
@@ -90,9 +91,29 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 <meta name="twitter:image-width" content="991">
 <meta name="twitter:image:alt" content="Black and white portrait photo of Jasmine Holdsworth. Still from Real World Data Science video interview.">
 <meta name="twitter:card" content="summary_large_image">
-</head>
+</head><body class="nav-fixed"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
 
-<body class="nav-fixed">
+<script id="progressbar" type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const bar = document.querySelector('#progress-bar');
+    const post = document.querySelector('#quarto-content');
+    const html = document.documentElement;
+    
+    const height = post.scrollHeight + post.offsetTop;
+    
+    window.addEventListener('scroll', () => {
+        bar.style.width = (html.scrollTop / (height- html.clientHeight)) * 100 + '%';
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../../rwds.css">
+
+
+
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">

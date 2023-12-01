@@ -72,9 +72,10 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 </script>
+<!-- Thank you to Ben Ruijl for the progress bar code!
+Ben is on GitHub here: https://github.com/benruijl
+And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
 
-
-<link rel="stylesheet" href="../../../../../../rwds.css">
 <meta property="og:title" content="Real World Data Science - Using ‘basket complementarity’ to make product recommendations">
 <meta property="og:description" content="Purchase suggestions – e.g., “if you are buying that, you might also want this” – are, to a large extent, informed by the concept of complementarity: that certain products are often bought and/or used together. A journal paper by Puka and Jedrusik sheds light on how these product recommendations can be derived, as Moinak Bhaduri explains.">
 <meta property="og:image" content="https://realworlddatascience.net/ideas/datasciencebites/posts/2023/03/02/images/marjan-blan-marjanblan-3nURJV_L7-8-unsplash.jpg">
@@ -86,9 +87,29 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 <meta name="twitter:site" content="@rwdatasci">
 <meta name="twitter:image:alt" content="A shopping trolley being pushed around a supermarket. Photo by Marjan Blan | @marjanblan on Unsplash.">
 <meta name="twitter:card" content="summary_large_image">
-</head>
+</head><body class="nav-fixed"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
 
-<body class="nav-fixed">
+<script id="progressbar" type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const bar = document.querySelector('#progress-bar');
+    const post = document.querySelector('#quarto-content');
+    const html = document.documentElement;
+    
+    const height = post.scrollHeight + post.offsetTop;
+    
+    window.addEventListener('scroll', () => {
+        bar.style.width = (html.scrollTop / (height- html.clientHeight)) * 100 + '%';
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../../rwds.css">
+
+
+
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">

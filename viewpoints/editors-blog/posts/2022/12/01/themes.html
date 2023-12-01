@@ -72,9 +72,10 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 </script>
+<!-- Thank you to Ben Ruijl for the progress bar code!
+Ben is on GitHub here: https://github.com/benruijl
+And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
 
-
-<link rel="stylesheet" href="../../../../../../rwds.css">
 <meta property="og:title" content="Real World Data Science - Four themes for potential contributors to think about">
 <meta property="og:description" content="Can data science save the world? What is a data scientist? What statistical ideas do data scientists need to know? And, what’s happening in the world of data science?">
 <meta property="og:image" content="https://realworlddatascience.net/viewpoints/editors-blog/posts/2022/12/01/images/kelly-sikkema-vSNy_bWa5AE-unsplash-crop.jpg">
@@ -86,9 +87,29 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 <meta name="twitter:site" content="@rwdatasci">
 <meta name="twitter:image:alt" content="A photo of a black stencilled number 4 on a white brick wall. Photo by Kelly Sikkema on Unsplash.">
 <meta name="twitter:card" content="summary_large_image">
-</head>
+</head><body class="nav-fixed"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
 
-<body class="nav-fixed">
+<script id="progressbar" type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const bar = document.querySelector('#progress-bar');
+    const post = document.querySelector('#quarto-content');
+    const html = document.documentElement;
+    
+    const height = post.scrollHeight + post.offsetTop;
+    
+    window.addEventListener('scroll', () => {
+        bar.style.width = (html.scrollTop / (height- html.clientHeight)) * 100 + '%';
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../../rwds.css">
+
+
+
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">

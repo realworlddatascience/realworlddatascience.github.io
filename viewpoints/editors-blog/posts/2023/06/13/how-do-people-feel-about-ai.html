@@ -72,9 +72,10 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 </script>
+<!-- Thank you to Ben Ruijl for the progress bar code!
+Ben is on GitHub here: https://github.com/benruijl
+And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
 
-
-<link rel="stylesheet" href="../../../../../../rwds.css">
 <meta property="og:title" content="Real World Data Science - How do people feel about AI? Well, it’s complicated">
 <meta property="og:description" content="A new survey from the Ada Lovelace Institute and the Alan Turing Institute finds broadly positive views towards AI use cases in healthcare and border security, among others, but people are also concerned about the dangers of overreliance on the technologies and a lack of clarity around accountability.">
 <meta property="og:image" content="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/06/13/images/andy-kelly-0E_vhMVqL9g-unsplash.png">
@@ -90,9 +91,29 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 <meta name="twitter:image-width" content="991">
 <meta name="twitter:image:alt" content="A young girl holds the hand of a robot on display at the Kuromon Market in Osaka. Photo by Andy Kelly on Unsplash.">
 <meta name="twitter:card" content="summary_large_image">
-</head>
+</head><body class="nav-fixed"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
 
-<body class="nav-fixed">
+<script id="progressbar" type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const bar = document.querySelector('#progress-bar');
+    const post = document.querySelector('#quarto-content');
+    const html = document.documentElement;
+    
+    const height = post.scrollHeight + post.offsetTop;
+    
+    window.addEventListener('scroll', () => {
+        bar.style.width = (html.scrollTop / (height- html.clientHeight)) * 100 + '%';
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../../rwds.css">
+
+
+
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">

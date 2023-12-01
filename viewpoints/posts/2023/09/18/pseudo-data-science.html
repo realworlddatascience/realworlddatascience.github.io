@@ -72,9 +72,10 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 </script>
+<!-- Thank you to Ben Ruijl for the progress bar code!
+Ben is on GitHub here: https://github.com/benruijl
+And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
 
-
-<link rel="stylesheet" href="../../../../../rwds.css">
 <meta property="og:title" content="Real World Data Science - ‘Pseudo data science’ and other pitfalls: lessons from the UK’s stats regulator on how not to be misleading">
 <meta property="og:description" content="In organisations, data scientists are not the only players who get to influence how data and data science are presented and used – so they need to be on their guard for misleading or distorted presentations of their work, as Ed Humpherson explains.">
 <meta property="og:image" content="https://realworlddatascience.net/viewpoints/posts/2023/09/18/images/distorted-data.png">
@@ -90,9 +91,29 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 <meta name="twitter:image-width" content="991">
 <meta name="twitter:image:alt" content="A collection of data, viewed through a distorted lens, digital art, created by Bing Image Creator.">
 <meta name="twitter:card" content="summary_large_image">
-</head>
+</head><body class="nav-fixed"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
 
-<body class="nav-fixed">
+<script id="progressbar" type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const bar = document.querySelector('#progress-bar');
+    const post = document.querySelector('#quarto-content');
+    const html = document.documentElement;
+    
+    const height = post.scrollHeight + post.offsetTop;
+    
+    window.addEventListener('scroll', () => {
+        bar.style.width = (html.scrollTop / (height- html.clientHeight)) * 100 + '%';
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../rwds.css">
+
+
+
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">

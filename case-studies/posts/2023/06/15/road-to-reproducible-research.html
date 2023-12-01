@@ -106,9 +106,10 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 </script>
+<!-- Thank you to Ben Ruijl for the progress bar code!
+Ben is on GitHub here: https://github.com/benruijl
+And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
 
-
-<link rel="stylesheet" href="../../../../../rwds.css">
 <meta property="og:title" content="Real World Data Science - The road to reproducible research: hazards to avoid and tools to get you there safely">
 <meta property="og:description" content="The road to reproducibility can be a tricky one to navigate, as Davit Svanidze discovered when he set about making his bachelor’s thesis reproducible. If you are thinking of walking a similar path, start here. In this case study, Svanidze and colleagues map their journey, beginning to end – signposting hazards to avoid and software, tools, and approaches to help you along the way.">
 <meta property="og:image" content="https://realworlddatascience.net/case-studies/posts/2023/06/15/images/computer-intro.png">
@@ -124,9 +125,29 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 <meta name="twitter:image-width" content="991">
 <meta name="twitter:image:alt" content="A young man sits in front of a computer keyboard, surrounded by monitors and books and with computer cables covering various surfaces.">
 <meta name="twitter:card" content="summary_large_image">
-</head>
+</head><body class="nav-fixed"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
 
-<body class="nav-fixed">
+<script id="progressbar" type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const bar = document.querySelector('#progress-bar');
+    const post = document.querySelector('#quarto-content');
+    const html = document.documentElement;
+    
+    const height = post.scrollHeight + post.offsetTop;
+    
+    window.addEventListener('scroll', () => {
+        bar.style.width = (html.scrollTop / (height- html.clientHeight)) * 100 + '%';
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../rwds.css">
+
+
+
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">

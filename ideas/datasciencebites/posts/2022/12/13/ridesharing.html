@@ -72,9 +72,10 @@ function gtag(){dataLayer.push(arguments);}
 gtag('js', new Date());
 gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 </script>
+<!-- Thank you to Ben Ruijl for the progress bar code!
+Ben is on GitHub here: https://github.com/benruijl
+And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
 
-
-<link rel="stylesheet" href="../../../../../../rwds.css">
 <meta property="og:title" content="Real World Data Science - Determining the best way to route drivers for ridesharing via reinforcement learning">
 <meta property="og:description" content="A/B testing is often used to evaluate the impact of design ‘treatments’ — for example, are people who see advert A more likely to buy something than those who see advert B? Classical methods typically assume that changing one person’s treatment will not affect others, but what if that’s not the case? A paper by Shi et al.&nbsp;aims to address this problem.">
 <meta property="og:image" content="https://realworlddatascience.net/ideas/datasciencebites/posts/2022/12/13/images/paul-hanaoka-D-qq7W751vs-unsplash.jpg">
@@ -86,9 +87,29 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 <meta name="twitter:site" content="@rwdatasci">
 <meta name="twitter:image:alt" content="Photo taken from the backseat of a Lyft vehicle. Driver is seen in profile to the left of the picture. Phone is mounted on the dash and displays a maps app that is tracking the route to the passenger's destination. Photo by Paul Hanaoka on Unsplash.">
 <meta name="twitter:card" content="summary_large_image">
-</head>
+</head><body class="nav-fixed"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
 
-<body class="nav-fixed">
+<script id="progressbar" type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const bar = document.querySelector('#progress-bar');
+    const post = document.querySelector('#quarto-content');
+    const html = document.documentElement;
+    
+    const height = post.scrollHeight + post.offsetTop;
+    
+    window.addEventListener('scroll', () => {
+        bar.style.width = (html.scrollTop / (height- html.clientHeight)) * 100 + '%';
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../../rwds.css">
+
+
+
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
