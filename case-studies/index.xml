@@ -577,6 +577,7 @@ font-style: inherit;">```</span></span></code></pre></div>
 <p>With the data on shifts worked from our timekeeping system, I could theoretically compare actual shifts worked to the amount of footage recorded. If there were patterns in where the gaps in footage fell, that comparison might help to explain why.</p>
 <p>In order to join the shift data to the camera data, I needed a common unit of analysis beyond “Employee ID.” Using only this value would produce a nonsensical table that joined up every clip of footage to every shift worked.</p>
 <p>For example, let’s take employee #9001005 at Facility Epsilon between April 1–3. This employee has the following clips recorded during that time period:</p>
+<div class="table-responsive">
 <table class="table">
 <thead>
 <tr class="header">
@@ -631,7 +632,9 @@ font-style: inherit;">```</span></span></code></pre></div>
 </tr>
 </tbody>
 </table>
+</div>
 <p>We can join this to a similar table of shifts logged. This particular employee had the following shifts scheduled from April 1–3:</p>
+<div class="table-responsive">
 <table class="table">
 <thead>
 <tr class="header">
@@ -656,6 +659,7 @@ font-style: inherit;">```</span></span></code></pre></div>
 </tr>
 </tbody>
 </table>
+</div>
 <p>The table shows two eight-hour morning shifts from 6:00 am to 2:00 pm. We can join the two tables together by ID on a messy many-to-many join, but that tells us nothing about how much they overlap (or fail to overlap) without extensive additional work. For example, we have a unique identifier for employee clip (Clip_ID) and employee shift (Shift_ID), but what we need is a unique identifier that can be used to join the two. Fortunately, for this particular data we can <em>create</em> a unique identifier since both clips and shifts are fundamentally measures of <em>time</em>. While Employee_ID is not in itself unique (i.e., one employee can have multiple clips attached to that ID), Employee_ID combined with time of day is unique. A person can only be in one place at a time, after all!</p>
 <p>To reshape the data for joining, I created a function that takes any data frame with a start and end column and unfolds it into discrete units of time. Using the code below to create the “Interval_Convert” function, the shift data above for employee 9001005 converts into one entry per hour of the day per shift. As a result, two eight-hour shifts get turned into 16 employee hours (a sample of which is shown below).</p>
 <details>
@@ -944,6 +948,7 @@ font-style: inherit;">```</span></span></code></pre></div>
 </table>
 </div>
 <p>The footage could be converted in a similar manner, and in this way I could break down both the shift data and the clip data into an hour-by-hour view and compare them to one another. Using this new format, I joined together the full tables of footage and shifts to determine how much footage was recorded with no corresponding shift in the timekeeping system.</p>
+<div class="table-responsive">
 <table class="table">
 <colgroup>
 <col style="width: 18%">
@@ -985,7 +990,9 @@ font-style: inherit;">```</span></span></code></pre></div>
 </tr>
 </tbody>
 </table>
+</div>
 <p>To summarize what the table is telling us: Almost every employee has footage hours that do not match with logged shifts, totaling nearly 14,000 hours when you add up the Footage_Hours_No_Shift column. But what about the opposite case? How many shift hours were logged with no corresponding footage?</p>
+<div class="table-responsive">
 <table class="table">
 <colgroup>
 <col style="width: 18%">
@@ -1027,6 +1034,7 @@ font-style: inherit;">```</span></span></code></pre></div>
 </tr>
 </tbody>
 </table>
+</div>
 <p>Oh dear. Again, almost every employee has logged shift hours with no footage: 47,000 hours in total. To put it another way, that’s an entire work week per employee not showing up in camera footage.</p>
 <p>At this point, we could probably rule out deliberate noncompliance. The clip data already implied that most employees were following the policy, and our facility leadership would surely have noticed a mass refusal large enough to show up this clearly in the data.</p>
 <p>One way to check for deliberate noncompliance would be to first exclude shifts that contain zero footage whatsoever. This would rule out total mismatches, where – for whatever reason – the logged shifts had totally failed to overlap with recorded clips. For the remaining shifts that <em>do</em> contain footage, we could look at the proportion of the shift covered by footage. So, if an eight-hour shift had four hours of recorded footage associated with it, then we could say that 50% of the shift had been recorded. The following histogram is a distribution of the number of employees organized by the percent of their shift-hours they recorded (but only shifts that had a nonzero amount of footage).</p>
