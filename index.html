@@ -123,6 +123,34 @@ ul.task-list li input[type="checkbox"] {
   
 
   window.document.addEventListener("DOMContentLoaded", function (_event) {
+    const listingTargetEl = window.document.querySelector('#listing-ideas .list');
+    if (!listingTargetEl) {
+      // No listing discovered, do not attach.
+      return; 
+    }
+
+    const options = {
+      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
+      
+      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
+    };
+
+    window['quarto-listings'] = window['quarto-listings'] || {};
+    window['quarto-listings']['listing-ideas'] = new List('listing-ideas', options);
+
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  });
+
+  window.addEventListener('hashchange',() => {
+    if (window['quarto-listing-loaded']) {
+      window['quarto-listing-loaded']();
+    }
+  })
+  
+
+  window.document.addEventListener("DOMContentLoaded", function (_event) {
     const listingTargetEl = window.document.querySelector('#listing-careers .list');
     if (!listingTargetEl) {
       // No listing discovered, do not attach.
@@ -159,40 +187,13 @@ ul.task-list li input[type="checkbox"] {
 
     const options = {
       valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
+      page: 18,
+    pagination: { item: "<li class='page-item'><a class='page page-link' href='#'></a></li>" },
       searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
     };
 
     window['quarto-listings'] = window['quarto-listings'] || {};
     window['quarto-listings']['listing-viewpoints'] = new List('listing-viewpoints', options);
-
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  });
-
-  window.addEventListener('hashchange',() => {
-    if (window['quarto-listing-loaded']) {
-      window['quarto-listing-loaded']();
-    }
-  })
-  
-
-  window.document.addEventListener("DOMContentLoaded", function (_event) {
-    const listingTargetEl = window.document.querySelector('#listing-interviews .list');
-    if (!listingTargetEl) {
-      // No listing discovered, do not attach.
-      return; 
-    }
-
-    const options = {
-      valueNames: ['listing-title','listing-author','listing-date','listing-image','listing-description',{ data: ['index'] },{ data: ['categories'] },{ data: ['listing-date-sort'] },{ data: ['listing-file-modified-sort'] }],
-      
-      searchColumns: ["listing-title","listing-author","listing-date","listing-image","listing-description"],
-    };
-
-    window['quarto-listings'] = window['quarto-listings'] || {};
-    window['quarto-listings']['listing-interviews'] = new List('listing-interviews', options);
 
     if (window['quarto-listing-loaded']) {
       window['quarto-listing-loaded']();
@@ -303,17 +304,17 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 
 <div class="content-container">
 <div class="top-story purple-background">
-<p><a href="./viewpoints/interviews/posts/2023/11/24/politics-of-modelling.html"></a></p><a href="./viewpoints/interviews/posts/2023/11/24/politics-of-modelling.html">
+<p><a href="./viewpoints/posts/2023/12/06/ai-fringe.html"></a></p><a href="./viewpoints/posts/2023/12/06/ai-fringe.html">
 <div class="grid">
-<section id="i-would-like-modellers-to-be-less-ambitious-in-developing-monster-models-that-are-impossible-to-inspect" class="g-col-12 g-col-lg-4 top-story-text">
-<h2>‘I would like modellers to be less ambitious in developing monster models that are impossible to inspect’</h2>
-<p>Real World Data Science interviews Andrea Saltelli, co-editor of ‘The Politics of Modelling,’ about pandemic models, trust in science, and why we must seek to uncover the assumptions that shape model outputs.</p>
+<section id="evaluating-artificial-intelligence-how-data-science-and-statistics-can-make-sense-of-ai-models" class="g-col-12 g-col-lg-4 top-story-text">
+<h2>Evaluating artificial intelligence: How data science and statistics can make sense of AI models</h2>
+<p>How can we help organisations to deploy AI in a responsible way? Why have evaluation metrics trailed behind advances in AI technology? And, are data inputs receiving the attention they deserve in debates over AI development? Read on for highlights of the Royal Statistical Society’s recent AI Fringe event.</p>
 </section>
 <div class="g-col-12 g-col-lg-8 top-story-img">
-<p><img src="viewpoints/interviews/posts/2023/11/24/images/andrea-saltelli.png" class="img-fluid"></p>
+<p><img src="viewpoints/posts/2023/12/06/images/llm-3d-shapes.png" class="img-fluid"></p>
 </div>
 </div>
-</a><p><a href="./viewpoints/interviews/posts/2023/11/24/politics-of-modelling.html"></a></p>
+</a><p><a href="./viewpoints/posts/2023/12/06/ai-fringe.html"></a></p>
 </div>
 </div>
 <div class="header-text">
@@ -330,7 +331,32 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 </a><p><a href="./latest-content.html"></a></p>
 <div id="listing-latest-content" class="quarto-listing quarto-listing-container-grid">
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="Crime and justice,Data quality,Data linkage" data-listing-date-sort="1700611200000" data-listing-file-modified-sort="1701709734223" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10">
+<div class="g-col-1" data-index="0" data-categories="Modelling,Public policy" data-listing-date-sort="1700784000000" data-listing-file-modified-sort="1701863717847" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12">
+<a href="./viewpoints/interviews/posts/2023/11/24/politics-of-modelling.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./viewpoints/interviews/posts/2023/11/24/images/andrea-saltelli.png" class="thumbnail-image card-img" style="height: 150px;" alt="Portrait photo of Andrea Saltelli, co-editor of &amp;#039;The Politics of Modelling.'">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+‘I would like modellers to be less ambitious in developing monster models that are impossible to inspect’
+</h5>
+<div class="card-text listing-description">
+Real World Data Science interviews Andrea Saltelli, co-editor of ‘The Politics of Modelling,’ about pandemic models, trust in science, and why we must seek to uncover the…
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Brian Tarran
+</div>
+<div class="listing-date">
+Nov 24, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="1" data-categories="Crime and justice,Data quality,Data linkage" data-listing-date-sort="1700611200000" data-listing-file-modified-sort="1701863717735" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="10">
 <a href="./case-studies/posts/2023/11/22/splink.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -355,7 +381,7 @@ Nov 22, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="Crime and justice,Public policy,Data quality,Data analysis,Monitoring" data-listing-date-sort="1700092800000" data-listing-file-modified-sort="1701709734219" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="25">
+<div class="g-col-1" data-index="2" data-categories="Crime and justice,Public policy,Data quality,Data analysis,Monitoring" data-listing-date-sort="1700092800000" data-listing-file-modified-sort="1701863717731" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="25">
 <a href="./case-studies/posts/2023/11/16/learning-from-failure.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -380,7 +406,36 @@ Nov 16, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="2" data-categories="Open science,Open source,Open data,Reproducible research" data-listing-date-sort="1699228800000" data-listing-file-modified-sort="1701709734243" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
+<nav id="latest-content-pagination" class="listing-pagination" aria-label="Page Navigation">
+  <ul class="pagination"></ul>
+</nav>
+</div>
+</div>
+</div>
+<div class="pullout-text">
+<div class="pullout-container">
+<div class="pullout-block black-background">
+<p><img src="images/quote-purple.png" class="img-fluid" width="100"></p>
+<h2 id="open-science-supports-reproducible-research.-this-means-that-others-can-download-your-data-and-code-re-run-the-analysis-and-see-if-they-obtain-the-same-results.-to-get-the-full-benefit-of-open-science-and-promote-reproducibility-code-needs-to-be-written-with-enough-explanations-or-comments-to-help-others-understand-the-logic-of-the-various-stages-of-an-analysis.">Open science supports reproducible research. This means that others can download your data and code, re-run the analysis, and see if they obtain the same results. To get the full benefit of open science and promote reproducibility, code needs to be written with enough explanations or comments to help others understand the logic of the various stages of an analysis.</h2>
+<p>Isabel Sassoon, senior lecturer, Brunel University London</p>
+<div class="button">
+<p><a href="./ideas/posts/2023/11/06/how-to-open-science.html">How to ‘open science’</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="content-container">
+<div class="listing-block">
+<p><a href="./ideas/index.html"></a></p><a href="./ideas/index.html">
+<h2 id="ideas">Ideas</h2>
+</a><p><a href="./ideas/index.html"></a></p>
+<div id="listing-ideas" class="quarto-listing quarto-listing-container-grid">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-categories="Open science,Open source,Open data,Reproducible research" data-listing-date-sort="1699228800000" data-listing-file-modified-sort="1701863717751" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
 <a href="./ideas/posts/2023/11/06/how-to-open-science.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -405,13 +460,149 @@ Nov 6, 2023
 </div>
 </a>
 </div>
+<div class="g-col-1" data-index="1" data-categories="Forecasting,Prediction,Robustness" data-listing-date-sort="1689206400000" data-listing-file-modified-sort="1701863717743" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
+<a href="./ideas/datasciencebites/posts/2023/07/13/choosing-right-forecast.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./ideas/datasciencebites/posts/2023/07/13/images/brendan-church-pKeF6Tt3c08-unsplash.png" class="thumbnail-image card-img" style="height: 150px;" alt="New York road signs pointing left and right, both reading &amp;#039;One Way'.">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Choosing the right forecast
+</h5>
+<div class="card-text listing-description">
+Practitioners often select forecast methods based on averages of scores from many probabilistic forecasts. But this is not without its difficulties. A recent paper by Bolin…
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Brian King
+</div>
+<div class="listing-date">
+Jul 13, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="2" data-categories="AI ethics,Principles,Regulation" data-listing-date-sort="1688342400000" data-listing-file-modified-sort="1701863717751" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14">
+<a href="./ideas/posts/2023/07/03/trusted-AI.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./ideas/posts/2023/07/03/images/explainable-AI.png" class="thumbnail-image card-img" style="height: 150px;" alt="Nine small images with schematic representations of differently shaped neural networks, a human hand making a different gesture is placed behind each network.">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+Trusted AI: translating AI ethics from theory into practice
+</h5>
+<div class="card-text listing-description">
+Data scientists can act as critical enablers of ethical AI when they have the right knowledge and toolkits at their disposal. Maxine Setiawan and Mira Pijselman review three…
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Maxine Setiawan and Mira Pijselman
+</div>
+<div class="listing-date">
+Jul 3, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
 </div>
 <div class="listing-no-matching d-none">
 No matching items
 </div>
-<nav id="latest-content-pagination" class="listing-pagination" aria-label="Page Navigation">
-  <ul class="pagination"></ul>
-</nav>
+</div>
+</div>
+</div>
+<div class="content-container">
+<div class="listing-block">
+<p><a href="./careers/index.html"></a></p><a href="./careers/index.html">
+<h2 id="careers">Careers</h2>
+</a><p><a href="./careers/index.html"></a></p>
+<div id="listing-careers" class="quarto-listing quarto-listing-container-grid">
+<div class="list grid quarto-listing-cols-3">
+<div class="g-col-1" data-index="0" data-categories="Leadership,Management,Communication" data-listing-date-sort="1696377600000" data-listing-file-modified-sort="1701863717675" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="22">
+<a href="./careers/career-profiles/posts/2023/10/04/niclas-thomas.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./careers/career-profiles/posts/2023/10/04/images/niclas-thomas.png" class="thumbnail-image card-img" style="height: 150px;" alt="Photo of Niclas Thomas.">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+‘I fell in love with math, really, and fell into data science because of that’
+</h5>
+<div class="card-text listing-description">
+A passion for solving mathematical problems led Niclas Thomas to a PhD in machine learning and then a career in data science in the retail sphere. Now head of data science…
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Brian Tarran
+</div>
+<div class="listing-date">
+Oct 4, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="1" data-categories="Education,Research,Policy,Mentoring,Statistical literacy" data-listing-date-sort="1687910400000" data-listing-file-modified-sort="1701863717671" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
+<a href="./careers/career-profiles/posts/2023/06/28/claire-morton.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./careers/career-profiles/posts/2023/06/28/images/claire-morton.png" class="thumbnail-image card-img" style="height: 150px;" alt="Photo of Claire Morton. Photo supplied by Claire Morton, used with permission.">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+‘I was inspired by the power that numerical data have to tell stories and promote policy change’
+</h5>
+<div class="card-text listing-description">
+Claire Morton is an undergraduate student at Stanford University. In this Q&amp;A, Claire explains how a high school job in a cell biology lab led to college studies in…
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Brian Tarran
+</div>
+<div class="listing-date">
+Jun 28, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="2" data-categories="Consulting,Leadership,Econometrics,Sampling,Machine learning" data-listing-date-sort="1687910400000" data-listing-file-modified-sort="1701863717671" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
+<a href="./careers/career-profiles/posts/2023/06/28/albert-lee.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./careers/career-profiles/posts/2023/06/28/images/albert-lee.png" class="thumbnail-image card-img" style="height: 150px;" alt="Photo of Albert Lee. Photo supplied by Albert Lee, used with permission.">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+‘Living my identity takes courage. It is the same courage necessary to start a new business’
+</h5>
+<div class="card-text listing-description">
+Albert Lee, the founding partner at Summit Consulting, describes his career journey – from mathematics and economics at university to the birth of data science and building…
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Brian Tarran
+</div>
+<div class="listing-date">
+Jun 28, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+</div>
+<div class="listing-no-matching d-none">
+No matching items
+</div>
 </div>
 </div>
 </div>
@@ -429,12 +620,37 @@ No matching items
 </div>
 <div class="content-container">
 <div class="listing-block">
-<p><a href="./viewpoints/interviews/index.html"></a></p><a href="./viewpoints/interviews/index.html">
-<h2 id="interviews">Interviews</h2>
-</a><p><a href="./viewpoints/interviews/index.html"></a></p>
-<div id="listing-interviews" class="quarto-listing quarto-listing-container-grid">
+<p><a href="./viewpoints/index.html"></a></p><a href="./viewpoints/index.html">
+<h2 id="viewpoints">Viewpoints</h2>
+</a><p><a href="./viewpoints/index.html"></a></p>
+<div id="listing-viewpoints" class="quarto-listing quarto-listing-container-grid">
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="AI,Events,Algorithms,Risk" data-listing-date-sort="1698192000000" data-listing-file-modified-sort="1701709734331" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9">
+<div class="g-col-1" data-index="0" data-categories="AI,Large language models,Events" data-listing-date-sort="1698624000000" data-listing-file-modified-sort="1701863717827" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
+<a href="./viewpoints/editors-blog/posts/2023/10/30/ai-conf-panel.html" class="quarto-grid-link">
+<div class="quarto-grid-item card h-100 card-left">
+<p class="card-img-top">
+<img src="./viewpoints/editors-blog/posts/2023/10/30/images/panel.png" class="thumbnail-image card-img" style="height: 150px;" alt="Screengrab of RSS Conference panel members showing, left to right, Peter Wells, Maxine Setiawan, Sophie Carr, Chris Nemeth, and Karen Tingay.">
+</p>
+<div class="card-body post-contents">
+<h5 class="no-anchor card-title listing-title">
+How data science and statistics can shape the UK’s AI strategy
+</h5>
+<div class="card-text listing-description">
+At the Royal Statistical Society Conference this September, Real World Data Science brought together data scientists, statisticians, and policy experts to discuss the urgent…
+</div>
+<div class="card-attribution card-text-small justify">
+<div class="listing-author">
+Brian Tarran
+</div>
+<div class="listing-date">
+Oct 30, 2023
+</div>
+</div>
+</div>
+</div>
+</a>
+</div>
+<div class="g-col-1" data-index="1" data-categories="AI,Events,Algorithms,Risk" data-listing-date-sort="1698192000000" data-listing-file-modified-sort="1701863717839" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9">
 <a href="./viewpoints/interviews/posts/2023/10/25/evaluating-ai.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -459,71 +675,7 @@ Oct 25, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="Data sharing,Data linkage,Public engagement" data-listing-date-sort="1697414400000" data-listing-file-modified-sort="1701709734327" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="26">
-<a href="./viewpoints/interviews/posts/2023/10/16/data-sharing-in-gov.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./viewpoints/interviews/posts/2023/10/16/images/helen-miller-bakewell.png" class="thumbnail-image card-img" style="height: 150px;" alt="Photo of Helen Miller-Bakewell.">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-‘Feelings about sharing data can be context and time dependent – you can’t just do one survey or focus group’
-</h5>
-<div class="card-text listing-description">
-Real World Data Science sits down with Helen Miller-Bakewell of the UK Office for Statistics Regulation to talk data sharing and linkage in government – progress made…
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Brian Tarran
-</div>
-<div class="listing-date">
-Oct 16, 2023
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="2" data-categories="R,Education,Outreach" data-listing-date-sort="1695600000000" data-listing-file-modified-sort="1701709734327" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
-<a href="./viewpoints/interviews/posts/2023/09/25/rgirls-interview.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./viewpoints/interviews/posts/2023/09/25/images/rgirls.png" class="thumbnail-image card-img" style="height: 150px;" alt="R-Girls logo layered on top of a classroom scene, rendered in bright pastel colours, created by Bing Image Creator.">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-‘What if we try to bring R to the classroom? That was our wacky idea’
-</h5>
-<div class="card-text listing-description">
-R-Girls is a new project aiming to introduce R into secondary school lessons – just not through computer science classes! Real World Data Science meets with one of the…
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Brian Tarran
-</div>
-<div class="listing-date">
-Sep 25, 2023
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
-</div>
-</div>
-</div>
-<div class="content-container">
-<div class="listing-block">
-<p><a href="./viewpoints/index.html"></a></p><a href="./viewpoints/index.html">
-<h2 id="viewpoints">Viewpoints</h2>
-</a><p><a href="./viewpoints/index.html"></a></p>
-<div id="listing-viewpoints" class="quarto-listing quarto-listing-container-grid">
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="AI,Open source" data-listing-date-sort="1697760000000" data-listing-file-modified-sort="1701709734343" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
+<div class="g-col-1" data-index="2" data-categories="AI,Open source" data-listing-date-sort="1697760000000" data-listing-file-modified-sort="1701863717851" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
 <a href="./viewpoints/posts/2023/10/20/ai-for-humanity.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -548,161 +700,13 @@ Oct 20, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="Communication,Leadership,Transparency" data-listing-date-sort="1694995200000" data-listing-file-modified-sort="1701709734343" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
-<a href="./viewpoints/posts/2023/09/18/pseudo-data-science.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./viewpoints/posts/2023/09/18/images/distorted-data.png" class="thumbnail-image card-img" style="height: 150px;" alt="A collection of data, viewed through a distorted lens, digital art, created by Bing Image Creator.">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-‘Pseudo data science’ and other pitfalls: lessons from the UK’s stats regulator on how not to be misleading
-</h5>
-<div class="card-text listing-description">
-In organisations, data scientists are not the only players who get to influence how data and data science are presented and used – so they need to be on their guard for…
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Ed Humpherson
-</div>
-<div class="listing-date">
-Sep 18, 2023
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="2" data-categories="AI,AI ethics,Bias,Ethics" data-listing-date-sort="1693958400000" data-listing-file-modified-sort="1701709734339" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
-<a href="./viewpoints/posts/2023/09/06/biased-algorithms.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./viewpoints/posts/2023/09/06/images/AlanWarburton-QuantifiedHuman-991x724.png" class="thumbnail-image card-img" style="height: 150px;" alt="A photographic rendering of a young black man standing in front of a cloudy blue sky, seen through a refractive glass grid and overlaid with a diagram of a neural network.">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-For minorities, biased AI algorithms can damage almost every part of&nbsp;life
-</h5>
-<div class="card-text listing-description">
-In his new book, ‘Is Artificial Intelligence Racist?’, Arshin Adib-Moghaddam explores the relationship between various forms of racism and sexism and artificial…
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Arshin Adib-Moghaddam
-</div>
-<div class="listing-date">
-Sep 6, 2023
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
 </div>
 <div class="listing-no-matching d-none">
 No matching items
 </div>
-</div>
-</div>
-</div>
-<div class="pullout-text">
-<div class="pullout-container">
-<div class="pullout-block black-background">
-<p><img src="images/quote-purple.png" class="img-fluid" width="100"></p>
-<h2 id="ai-models-didnt-invent-medicine-accountancy-or-engineering.-they-didnt-learn-anything-directly-from-the-world-human-experts-taught-ai-models-how-to-do-these-things.-and-they-the-human-experts-did-it-without-giving-their-permission-or-even-knowing-that-it-was-happening.-the-large-tech-companies-have-sucked-up-all-of-human-knowledge-and-culture-and-now-provide-access-to-it-for-the-price-of-an-api-call.-this-is-a-huge-transfer-of-power-and-value-from-humanity-to-the-tech-companies.">AI models didn’t invent medicine, accountancy or engineering. They didn’t learn anything directly from the world – human experts taught AI models how to do these things. And they [the human experts] did it without giving their permission, or even knowing that it was happening. The large tech companies have sucked up all of human knowledge and culture and now provide access to it for the price of an API call. This is a huge transfer of power and value from humanity to the tech companies.</h2>
-<p>Martin Goodson on why we need ‘an AI for humanity’</p>
-<div class="button">
-<p><a href="./viewpoints/posts/2023/10/20/ai-for-humanity.html">Read the article</a></p>
-</div>
-</div>
-</div>
-</div>
-<div class="content-container">
-<div class="listing-block">
-<p><a href="./careers/index.html"></a></p><a href="./careers/index.html">
-<h2 id="careers">Careers</h2>
-</a><p><a href="./careers/index.html"></a></p>
-<div id="listing-careers" class="quarto-listing quarto-listing-container-grid">
-<div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="Large language models,AI,Communication,Regulation" data-listing-date-sort="1684368000000" data-listing-file-modified-sort="1701709734171" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="13">
-<a href="./careers/posts/2023/05/18/chatgpt-data-science-pt2.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./careers/posts/2023/05/18/images/google-deepmind-52afknBiUk4-unsplash.png" class="thumbnail-image card-img" style="height: 150px;" alt="3D render of a conceptual visualisation of large language models by artist Tim West. Photo by Google DeepMind on Unsplash.">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-Large language models: Do we need to understand the maths, or simply recognise the limitations?
-</h5>
-<div class="card-text listing-description">
-Do we need to understand the inner workings of large language models before we use them? Or, is it enough to simply teach people to recognise that model outputs can’t always…
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Brian Tarran
-</div>
-<div class="listing-date">
-May 18, 2023
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="1" data-categories="Large language models,AI,Skills,People" data-listing-date-sort="1683763200000" data-listing-file-modified-sort="1701709734167" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16">
-<a href="./careers/posts/2023/05/11/chatgpt-data-science-pt1.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./careers/posts/2023/05/11/images/chatgpt-homescreen.png" class="thumbnail-image card-img" style="height: 150px;" alt="Photo of ChatGPT homescreen, by Levart_Photographer on Unsplash.">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-How is ChatGPT changing data science?
-</h5>
-<div class="card-text listing-description">
-We sit down with the Royal Statistical Society’s Data Science and AI Section to hear how large language models are becoming part of the data science toolkit, and to consider…
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Brian Tarran
-</div>
-<div class="listing-date">
-May 11, 2023
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-<div class="g-col-1" data-index="2" data-categories="Problem definition,Stakeholder communication,Relationship management" data-listing-date-sort="1681776000000" data-listing-file-modified-sort="1701709734167" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="29">
-<a href="./careers/posts/2023/04/18/politics-of-performance-measurement.html" class="quarto-grid-link">
-<div class="quarto-grid-item card h-100 card-left">
-<p class="card-img-top">
-<img src="./careers/posts/2023/04/18/images/crowd-of-voices.png" class="thumbnail-image card-img" style="height: 150px;" alt="A crowd of people talking, with speech bubbles representing the different voices, digital art. Image created by Real World Data Science using Microsoft Bing Image Creator.">
-</p>
-<div class="card-body post-contents">
-<h5 class="no-anchor card-title listing-title">
-The politics of performance measurement
-</h5>
-<div class="card-text listing-description">
-Funding decisions, particularly for projects in the public sector, should be informed by data on what works and what doesn’t. But performance assessment is rarely…
-</div>
-<div class="card-attribution card-text-small justify">
-<div class="listing-author">
-Noah Wright
-</div>
-<div class="listing-date">
-Apr 18, 2023
-</div>
-</div>
-</div>
-</div>
-</a>
-</div>
-</div>
-<div class="listing-no-matching d-none">
-No matching items
-</div>
+<nav id="viewpoints-pagination" class="listing-pagination" aria-label="Page Navigation">
+  <ul class="pagination"></ul>
+</nav>
 </div>
 </div>
 </div>
@@ -713,7 +717,7 @@ No matching items
 </a><p><a href="./case-studies/index.html"></a></p>
 <div id="listing-case-studies" class="quarto-listing quarto-listing-container-grid">
 <div class="list grid quarto-listing-cols-3">
-<div class="g-col-1" data-index="0" data-categories="Machine learning,Natural language processing,Public policy,Health and wellbeing" data-listing-date-sort="1692576000000" data-listing-file-modified-sort="1701709734187" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
+<div class="g-col-1" data-index="0" data-categories="Machine learning,Natural language processing,Public policy,Health and wellbeing" data-listing-date-sort="1692576000000" data-listing-file-modified-sort="1701863717699" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
 <a href="./case-studies/posts/2023/08/21/05-third-place-winners.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -738,7 +742,7 @@ Aug 21, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="1" data-categories="Machine learning,Natural language processing,Public policy,Health and wellbeing" data-listing-date-sort="1692576000000" data-listing-file-modified-sort="1701709734187" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<div class="g-col-1" data-index="1" data-categories="Machine learning,Natural language processing,Public policy,Health and wellbeing" data-listing-date-sort="1692576000000" data-listing-file-modified-sort="1701863717699" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
 <a href="./case-studies/posts/2023/08/21/00-food-for-thought.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
@@ -763,7 +767,7 @@ Aug 21, 2023
 </div>
 </a>
 </div>
-<div class="g-col-1" data-index="2" data-categories="Machine learning,Natural language processing,Public policy,Health and wellbeing" data-listing-date-sort="1692576000000" data-listing-file-modified-sort="1701709734187" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14">
+<div class="g-col-1" data-index="2" data-categories="Machine learning,Natural language processing,Public policy,Health and wellbeing" data-listing-date-sort="1692576000000" data-listing-file-modified-sort="1701863717699" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="14">
 <a href="./case-studies/posts/2023/08/21/02-competition-design.html" class="quarto-grid-link">
 <div class="quarto-grid-item card h-100 card-left">
 <p class="card-img-top">
