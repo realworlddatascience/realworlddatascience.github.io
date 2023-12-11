@@ -17,7 +17,786 @@
 <width>144</width>
 </image>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Fri, 08 Dec 2023 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 12 Dec 2023 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>A Christmas card in R for the Real World Data Science community</title>
+  <dc:creator>Brian Tarran</dc:creator>
+  <link>https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/rwds-xmas-card.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>A few weeks back, I managed to catch Nicola Rennie’s presentation to the <a href="https://www.meetup.com/en-AU/oxford-r-user-group/events/297417319/">Oxford R User Group on how to create Christmas cards in R</a>. It was a fun session, and thanks to Nicola’s clear and concise explanations, I felt emboldened to attempt my own design, using her code as a base.</p>
+<p>If you missed the Meetup session, Nicola has kindly written <a href="../../../../../../ideas/tutorials/posts/2023/12/12/xmas-cards.html">a tutorial for Real World Data Science</a> that walks through all the necessary steps to create a snowman against a snowy night’s sky. You’ll want to read that tutorial first before returning to this blog.</p>
+<p>My design uses the same basic setting as Nicola’s but updates the scene to reflect the Real World Data Science (RWDS) brand colours, and I replace the snowman with a Christmas tree adorned with coloured baubles.</p>
+<section id="snowy-sky" class="level2">
+<h2 class="anchored" data-anchor-id="snowy-sky">Snowy sky</h2>
+<p>We begin by loading in the following packages, adding a couple extra to the ones Nicola uses:</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(ggplot2)</span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(ggforce)</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(sf)</span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(png)</span>
+<span id="cb1-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(patchwork) </span></code></pre></div>
+<p>Then we add the sky, now recoloured in RWDS purple using <code>fill</code> and <code>color</code>:</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">s1 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb2-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme_void</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb2-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme</span>(</span>
+<span id="cb2-4">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plot.background =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_rect</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#939bc9"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">color =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#939bc9"</span>)</span>
+<span id="cb2-5">  )</span>
+<span id="cb2-6">s1</span></code></pre></div>
+<p>We use the same code as Nicola to create the snowflakes, but we do this step first before adding snow on the ground, as we’re using the RWDS site background colour, hex code <code>#f0eeb</code>, to represent our settled snow:</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># add snowflakes</span></span>
+<span id="cb3-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">set.seed</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20231225</span>)</span>
+<span id="cb3-3">n <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span></span>
+<span id="cb3-4">snowflakes <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>(</span>
+<span id="cb3-5">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">runif</span>(n),</span>
+<span id="cb3-6">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">runif</span>(n)</span>
+<span id="cb3-7">)</span>
+<span id="cb3-8">s2 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s1 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-9">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_point</span>(</span>
+<span id="cb3-10">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> snowflakes,</span>
+<span id="cb3-11">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mapping =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(</span>
+<span id="cb3-12">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> x,</span>
+<span id="cb3-13">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> y</span>
+<span id="cb3-14">    ),</span>
+<span id="cb3-15">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>,</span>
+<span id="cb3-16">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pch =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span></span>
+<span id="cb3-17">  )</span>
+<span id="cb3-18">s2</span>
+<span id="cb3-19"></span>
+<span id="cb3-20"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># snow on ground</span></span>
+<span id="cb3-21">s3 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s2 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-22">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">annotate</span>(</span>
+<span id="cb3-23">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">geom =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"rect"</span>,</span>
+<span id="cb3-24">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xmin =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xmax =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,</span>
+<span id="cb3-25">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ymin =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ymax =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>,</span>
+<span id="cb3-26">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#f0eeeb"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#f0eeeb"</span></span>
+<span id="cb3-27">  ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-28">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">xlim</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-29">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ylim</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-30">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">coord_fixed</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">expand =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span>
+<span id="cb3-31">s3</span></code></pre></div>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/images/s2.png" class="img-fluid" alt="Purple square with white snowflakes."></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/images/s3.png" class="img-fluid" alt="Purple square with white snowflakes and off-white rectangle at the bottom."></p>
+</div>
+</div>
+</div>
+</section>
+<section id="oh-christmas-tree" class="level2">
+<h2 class="anchored" data-anchor-id="oh-christmas-tree">Oh, Christmas tree</h2>
+<p>To build her snowman, Nicola created a series of circles that were stacked and overlaid. A simple Christmas tree, though, requires a series of triangles. So, taking Nicola’s snowman’s nose (also a triangle) as our starting point, we coded three sets of coordinates – <code>tree_pts1</code>, <code>tree_pts2</code>, and <code>tree_pts3</code> – for three triangles of decreasing size that would sit on top of one another.</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># coordinates for tree base</span></span>
+<span id="cb4-2">tree_pts1 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">matrix</span>(</span>
+<span id="cb4-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(</span>
+<span id="cb4-4">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>,</span>
+<span id="cb4-5">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>,</span>
+<span id="cb4-6">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>,</span>
+<span id="cb4-7">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span></span>
+<span id="cb4-8">  ),</span>
+<span id="cb4-9">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ncol =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb4-10">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">byrow =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span></span>
+<span id="cb4-11">)</span>
+<span id="cb4-12"></span>
+<span id="cb4-13"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># coordinates for tree middle</span></span>
+<span id="cb4-14">tree_pts2 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">matrix</span>(</span>
+<span id="cb4-15">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(</span>
+<span id="cb4-16">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>,</span>
+<span id="cb4-17">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>,</span>
+<span id="cb4-18">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>,</span>
+<span id="cb4-19">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span></span>
+<span id="cb4-20">  ),</span>
+<span id="cb4-21">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ncol =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb4-22">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">byrow =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span></span>
+<span id="cb4-23">)</span>
+<span id="cb4-24"></span>
+<span id="cb4-25"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># coordinates for tree top</span></span>
+<span id="cb4-26">tree_pts3 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">matrix</span>(</span>
+<span id="cb4-27">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(</span>
+<span id="cb4-28">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.65</span>,</span>
+<span id="cb4-29">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.75</span>,</span>
+<span id="cb4-30">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.65</span>,</span>
+<span id="cb4-31">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.65</span></span>
+<span id="cb4-32">  ),</span>
+<span id="cb4-33">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ncol =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb4-34">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">byrow =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span></span>
+<span id="cb4-35">)</span>
+<span id="cb4-36"></span>
+<span id="cb4-37"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># put tree together</span></span>
+<span id="cb4-38">tree <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_multipolygon</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(tree_pts1),</span>
+<span id="cb4-39">                             <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(tree_pts2),</span>
+<span id="cb4-40">                             <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(tree_pts3)))</span>
+<span id="cb4-41">s4 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s3 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb4-42">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_sf</span>(</span>
+<span id="cb4-43">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> tree,</span>
+<span id="cb4-44">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"chartreuse4"</span>,</span>
+<span id="cb4-45">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"chartreuse4"</span></span>
+<span id="cb4-46">  ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb4-47">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">coord_sf</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">expand =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span>
+<span id="cb4-48">s4</span></code></pre></div>
+<p>A tree also requires a trunk, so we borrowed one of the rectangles from Nicola’s snowman’s hat for this purpose:</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">s5 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s4<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb5-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">annotate</span>(</span>
+<span id="cb5-3">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">geom =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"rect"</span>,</span>
+<span id="cb5-4">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xmin =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.45</span>,</span>
+<span id="cb5-5">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xmax =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.55</span>,</span>
+<span id="cb5-6">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ymin =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>,</span>
+<span id="cb5-7">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ymax =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>,</span>
+<span id="cb5-8">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"brown"</span></span>
+<span id="cb5-9">  )</span>
+<span id="cb5-10">s5</span></code></pre></div>
+<p>And, of course, no Christmas tree is complete without decorations. The “rocks” that formed the buttons and eyes on Nicola’s snowman were updated to become gold and red baubles for our tree:</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># add gold baubles</span></span>
+<span id="cb6-2">s6 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s5 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb6-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_point</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gold"</span>,</span>
+<span id="cb6-4">             <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>(</span>
+<span id="cb6-5">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.57</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.62</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.45</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>),</span>
+<span id="cb6-6">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.325</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.45</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.35</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.57</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.52</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>),</span>
+<span id="cb6-7">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">runif</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.5</span>)</span>
+<span id="cb6-8">             ),</span>
+<span id="cb6-9">             <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mapping =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> x, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> y, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> size)</span>
+<span id="cb6-10">  ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb6-11">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">scale_size_identity</span>()</span>
+<span id="cb6-12">s6</span>
+<span id="cb6-13"></span>
+<span id="cb6-14"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># add red baubles</span></span>
+<span id="cb6-15">s7 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s6 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb6-16">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_point</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"red3"</span>,</span>
+<span id="cb6-17">             <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>(</span>
+<span id="cb6-18">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.525</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.43</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.38</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.55</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>),</span>
+<span id="cb6-19">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.375</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.55</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.65</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.43</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.48</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.375</span>),</span>
+<span id="cb6-20">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">runif</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.5</span>)</span>
+<span id="cb6-21">             ),</span>
+<span id="cb6-22">             <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mapping =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> x, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> y, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> size)</span>
+<span id="cb6-23">  ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb6-24">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">scale_size_identity</span>()</span>
+<span id="cb6-25">s7</span></code></pre></div>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/images/s4.png" class="img-fluid" alt="Purple square with white snowflakes and green tree in foreground."></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/images/s5.png" class="img-fluid" alt="Purple square with white snowflakes and green tree in foreground, now with brown trunk at foot of tree."></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/images/s7.png" class="img-fluid" alt="Purple square with white snowflakes and green tree in foreground. Tree is decorated with red and gold baubles of various sizes."></p>
+</div>
+</div>
+</div>
+</section>
+<section id="seasons-greetings" class="level2">
+<h2 class="anchored" data-anchor-id="seasons-greetings">Season’s greetings</h2>
+<p>The final step was to add text to the top of the image, wishing you all a Merry Christmas, and our logo to the bottom, so you know who the card is from:</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># add text</span></span>
+<span id="cb7-2">s8 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s7 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb7-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">annotate</span>(</span>
+<span id="cb7-4">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">geom =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"text"</span>,</span>
+<span id="cb7-5">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>,</span>
+<span id="cb7-6">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.875</span>,</span>
+<span id="cb7-7">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">label =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Merry Christmas"</span>,</span>
+<span id="cb7-8">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"red3"</span>,</span>
+<span id="cb7-9">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fontface =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>,</span>
+<span id="cb7-10">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">18</span></span>
+<span id="cb7-11">  )</span>
+<span id="cb7-12">s8</span>
+<span id="cb7-13"></span>
+<span id="cb7-14"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># add logo </span></span>
+<span id="cb7-15">path <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"images/rwds-logo-150px.png"</span></span>
+<span id="cb7-16">img <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">readPNG</span>(path, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">native =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>) </span>
+<span id="cb7-17">s9 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s8 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span>                   </span>
+<span id="cb7-18">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">inset_element</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">p =</span> img, </span>
+<span id="cb7-19">                <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">left =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3265</span>, </span>
+<span id="cb7-20">                <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">bottom =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span>, </span>
+<span id="cb7-21">                <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">right =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6735</span>, </span>
+<span id="cb7-22">                <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">top =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span></span>
+<span id="cb7-23">  ) </span>
+<span id="cb7-24">s9</span></code></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/images/rwds-christmas-card.png" class="img-fluid figure-img" alt="Purple square with white snowflakes and green tree in foreground. Tree is decorated with red and gold baubles of various sizes. Text over tree reads Merry Christmas. Under tree is a logo for the Real World Data Science website."></p>
+</figure>
+</div>
+<p>I hope you like the Christmas card! From all of us at Real World Data Science, thank you for your support throughout 2023. Merry Christmas, happy holidays, and best wishes for 2024!</p>
+<div class="article-btn">
+<p><a href="../../../../../../viewpoints/editors-blog/index.html">Back to Editors’ blog</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Royal Statistical Society
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/https:/mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/https:/mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Tarran, Brian. 2023. “A Christmas card in R for the Real World Data Science community.” Real World Data Science, December 12, 2023. <a href="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/rwds-xmas-card.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <category>R</category>
+  <category>Data visualisation</category>
+  <category>Updates</category>
+  <guid>https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/rwds-xmas-card.html</guid>
+  <pubDate>Tue, 12 Dec 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/images/rwds-christmas-card-thumb.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
 <item>
   <title>AI and digital ethics in 2023: a ‘remarkable, eventful year’</title>
   <dc:creator>Brian Tarran</dc:creator>
@@ -2008,149 +2787,6 @@ Tarran, Brian. 2023. “‘Go out and talk about data science, particularly to s
   <guid>https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/27/schools-outreach.html</guid>
   <pubDate>Thu, 27 Jul 2023 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/27/images/kenny-eliason-zFSo6bnZJTw-unsplash.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>Testing out ChatGPT’s new Code Interpreter</title>
-  <dc:creator>Lee Clewley</dc:creator>
-  <link>https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/code-interpreter.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>On July 6, 2023, <a href="https://twitter.com/OpenAI/status/1677015057316872192?s=20">OpenAI began rolling out the Code Interpreter plugin</a> to users of its ChatGPT Plus service. But what exactly is this, and what functionality does it offer?</p>
-<p>Code Interpreter runs code and allows for uploading data so you can use ChatGPT for data cleaning, preprocessing, analysis, visualisation and predictive modelling tasks, among other things. This tool holds great promise for programmers and analysts alike, with the potential to streamline coding workflows as well as having an automated data analyst at your fingertips.</p>
-<p>To use Code Interpreter, you need to enable it in the ChatGPT settings (at time of writing this only works with a paid ChatGPT Plus subscription).</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/pic1.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic1.png" class="img-fluid figure-img" alt="Screenshot of ChatGPT Plus setting, showing Code Interpreter plugin option." width="700"></a></p>
-</figure>
-</div>
-<p>Now, let’s take it for a bit of a spin by uploading the <a href="https://www.kaggle.com/datasets/fedesoriano/stroke-prediction-dataset">stroke prediction dataset from Kaggle</a>.</p>
-<section id="the-stroke-prediction-dataset" class="level2">
-<h2 class="anchored" data-anchor-id="the-stroke-prediction-dataset">The stroke prediction dataset</h2>
-<p>The World Health Organization (WHO) identifies stroke as the second leading cause of death worldwide, accounting for roughly 11% of all fatalities.</p>
-<p>Kaggle’s stroke prediction dataset is used to forecast the likelihood of a patient suffering a stroke, taking into account various input parameters such as age, gender, presence of certain diseases, and smoking habits. Each row in the dataset offers pertinent information about an individual patient.</p>
-<p>Loading this dataset into ChatGPT Code Interpreter, one is treated with:</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/pic2.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic2.png" class="img-fluid figure-img" alt="Screenshot from ChatGPT, showing Code Interpreter's initial review of an uploaded stroke prediction dataset." width="700"></a></p>
-</figure>
-</div>
-<p>The user is asked: “Please let me know what analysis or operations you’d like to perform on this dataset. For instance, we can perform exploratory data analysis, data cleaning, data visualization, or predictive modelling.”</p>
-<p>It seems quite a bold claim. So, I asked it to do all of the above.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/pic3.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic3.png" class="img-fluid figure-img" alt="Screenshot from ChatGPT, showing Code Interpreter's overview explanation of planned analysis steps." width="700"></a></p>
-</figure>
-</div>
-<section id="exploratory-data-analysis" class="level3">
-<h3 class="anchored" data-anchor-id="exploratory-data-analysis">Exploratory Data Analysis</h3>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/pic4.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic4.png" class="img-fluid figure-img" alt="Screenshot of ChatGPT Code Interpreter's exploratory data analysis outputs." width="700"></a></p>
-</figure>
-</div>
-<p>This is a good, useful summary. The missing values in <code>bmi</code> are set to the median, which the user can later decide to change for themselves as the code is available to do so.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/pic5.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic5.png" class="img-fluid figure-img" alt="Screenshot of code output from ChatGPT Code Interpreter, showing how to set missing values in dataset to the median value." width="700"></a></p>
-</figure>
-</div>
-</section>
-<section id="data-visualisation" class="level3">
-<h3 class="anchored" data-anchor-id="data-visualisation">Data visualisation</h3>
-<p>Next, the visualisations of the variables are shown along with a correlation heatmap. Users can toggle between the visualisations and the code. The outputs are pretty useful, except for one mistake: <code>id</code> shouldn’t be included as part of the heatmap.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/pic6.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic6.png" class="img-fluid figure-img" alt="Screenshot of ChatGPT Code Interpreter's description of visualisations it will create, along with partial code for doing so." width="700"></a></p>
-</figure>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/pic7.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic7.png" class="img-fluid figure-img" alt="Histograms and bar plots created by ChatGPT Code Interpreter for variables in the Kaggle stroke prediction dataset." width="700"></a></p>
-</figure>
-</div>
-<div class="figure-caption" style="text-align: center;">
-<p>Histograms and bar plots created by ChatGPT Code Interpreter for variables in the Kaggle stroke prediction dataset.</p>
-</div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/pic8.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic8.png" class="img-fluid figure-img" alt="Correlation heatmap for variables in the Kaggle stroke prediction dataset." width="700"></a></p>
-</figure>
-</div>
-<div class="figure-caption" style="text-align: center;">
-<p>Correlation heatmap for variables in the Kaggle stroke prediction dataset.</p>
-</div>
-<p>Things start to go seriously awry when Code Interpreter tries to create a predictive model.</p>
-</section>
-<section id="the-predictive-model-is-garbage" class="level3">
-<h3 class="anchored" data-anchor-id="the-predictive-model-is-garbage">The predictive model is garbage</h3>
-<p>From the screenshot below, you can see that lumping all the data into a predictive model creates some highly spurious results. Age is a factor, as it should be, as is hypertension – indeed, those with hypertension in this dataset are around three times more likely to have a stroke than those without. In reality, there are also significant effects from glucose level and smoking, and also a slight BMI effect in this small, unbalanced dataset. However, <code>work_type_children</code> having a large positive effect is alarming and plainly wrong.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/pic9.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic9.png" class="img-fluid figure-img" alt="Screenshot showing ChatGPT Code Interpreter's most important features for predicting stroke. The inclusion of 'work_type_children' is wrong: it says that 'individuals who are children are more likely to have a stroke', but goes on to explain that 'this might be the result of an imbalance in the dataset or noise, as in reality, children generally have a lower risk of stroke." width="700"></a></p>
-</figure>
-</div>
-<p>It is very evident from the table below that the positive coefficient on children is spurious.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/pic10.png"><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/pic10.png" class="img-fluid figure-img" alt="Screenshot of table from ChatGPT code interpreter, showing 'number of individuals' and 'number of strokes' for each 'work type'. Figures for children are 687 individuals and 2 strokes." width="700"></a></p>
-</figure>
-</div>
-<p>So, where does this leave our thinking about Code Interpreter?</p>
-</section>
-</section>
-<section id="discussion" class="level2">
-<h2 class="anchored" data-anchor-id="discussion">Discussion</h2>
-<p>My test case is possibly an unfair one. The sort of study presented to Code Interpreter is one that requires careful analysis, and it uses a relatively small, tricky dataset whose difficulties are compounded by missing data. It’s therefore not surprising that, in this context, an automated analysis fails to shine in all respects.</p>
-<p>To be fair, OpenAI themselves describe the plugin as an “<a href="https://openai.com/blog/chatgpt-plugins">eager junior programmer</a>”. And as would be the case with a real junior programmer or junior data scientist, you’d expect a more experienced hand to be guiding an analysis like the one I asked for – someone who can sense-check results, point out errors, and offer suggestions for fixes and improvements.</p>
-<p>Despite some stumbles in this demo, OpenAI’s “junior programmer” presents a real step forward in the ChatGPT offering, and it is particularly impressive that one can toggle between code and charts without having to worry about coding at all.</p>
-<p>At this stage, I would argue that Code Interpreter may be useful for quick summaries, visualisations and a little basic data cleaning and some preliminary investigations. However, based on what I’ve seen so far, it is clear to me that highly trained statisticians won’t be replaced anytime soon.</p>
-<div class="article-btn">
-<p><a href="../../../../../../viewpoints/editors-blog/index.html">Back to Editors’ blog</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the author</dt>
-<dd>
-<strong>Lee Clewley</strong> is a member of the <a href="https://realworlddatascience.net/viewpoints/editors-blog/posts/2022/10/18/meet-the-team.html">editorial board of Real World Data Science</a> and head of applied AI in GSK’s AI and Machine Learning Group, R&amp;D.
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Lee Clewley
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/https:/mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/https:/mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail image by <a href="https://unsplash.com/@charlesdeluvio?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">charlesdeluvio</a> on <a href="https://unsplash.com/photos/pjAH2Ax4uWk?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Clewley, Lee. 2023. “Testing out ChatGPT’s new Code Interpreter.” Real World Data Science, July 19, 2023. <a href="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/code-interpreter.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-</section>
-
- ]]></description>
-  <category>AI</category>
-  <category>Large language models</category>
-  <category>Coding</category>
-  <category>Data analysis</category>
-  <guid>https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/code-interpreter.html</guid>
-  <pubDate>Wed, 19 Jul 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/images/charlesdeluvio-pjAH2Ax4uWk-unsplash.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 </channel>
 </rss>

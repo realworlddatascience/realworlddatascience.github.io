@@ -17,7 +17,1563 @@
 <width>144</width>
 </image>
 <generator>quarto-1.3.450</generator>
-<lastBuildDate>Fri, 08 Dec 2023 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 12 Dec 2023 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Creating Christmas cards with R</title>
+  <dc:creator>Nicola Rennie</dc:creator>
+  <link>https://realworlddatascience.net/ideas/tutorials/posts/2023/12/12/xmas-cards.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>When you think about data visualisation in R <span class="citation" data-cites="R-base">(R Core Team 2022)</span>, you’d be forgiven for not jumping straight to thinking about creating Christmas cards. However, the package and functions we often use to create bar charts and line graphs can be repurposed to create festive images. This tutorial provides a step-by-step guide to creating a Christmas card featuring a snowman – entirely in R. Though this seems like just a fun exercise, the functions and techniques you learn in this tutorial can also transfer into more traditional data visualisations created using {ggplot2} <span class="citation" data-cites="ggplot2">(Wickham 2016)</span> in R.</p>
+<p>The code in this tutorial relies on the following packages:</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(ggplot2)</span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(ggforce)</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(sf)</span></code></pre></div>
+<blockquote class="blockquote">
+<p>You may also have seen this tutorial presented at the <a href="https://github.com/nrennie/oxford-RUG-christmas-cards">Oxford R User Group November 2023 Meetup</a>.</p>
+</blockquote>
+<section id="lets-build-a-snowman" class="level2">
+<h2 class="anchored" data-anchor-id="lets-build-a-snowman">Let’s build a snowman!</h2>
+<p>Before we jump in to writing R code, let’s take a step back and think about what you actually need to build a snowman. If you were given some crayons and a piece of paper, what would you draw?</p>
+<p>You might draw two or three circles to make up the head and body. Perhaps some smaller dots for buttons and eyes, and a (rudimentary) hat constructed from some rectangles. Some brown lines create sticks for arms and, of course, a triangle to represent a carrot for a nose. For the background elements of our Christmas card, we also need the night sky (or day if you prefer), a light dusting of snow covering the ground, and a few snowflakes falling from the sky.</p>
+<p>Now lines, rectangles, circles, and triangles are all just simple geometric objects. Crucially, they’re all things that we can create with {ggplot2} in R.</p>
+</section>
+<section id="build-a-snowman-with-r" class="level2">
+<h2 class="anchored" data-anchor-id="build-a-snowman-with-r">Build a snowman with R</h2>
+<p>Let’s start with the background. The easiest way to start with a blank canvas in {ggplot2} is to create an empty plot using <code>ggplot()</code> with no arguments. We can also remove all theme elements (such as the grey background and grid lines) with <code>theme_void()</code>. To change the background colour to a dark blue for the night sky, we can edit the <code>plot.background</code> element of the theme using <code>element_rect()</code> (since the background is essentially just a big rectangle).</p>
+<p>In {ggplot2} <code>fill</code> is the inner colour of shapes whilst <code>colour</code> is the outline colour. You can specify colours in different ways in R: either via the <code>rgb()</code> function, using a character string for a hex colour such as <code>"#000000"</code>, or using a named colour. If you run <code>colors()</code>, you’ll see all the valid named colours you can use. Here, we’ve picked <code>"midnightblue"</code>.</p>
+<p>Let’s save this initial plot as an object <code>s1</code> that we’ll keep adding layers to. Saving plots in different stages of styling as objects can help to keep your code more modular.</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">s1 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb2-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme_void</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb2-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme</span>(</span>
+<span id="cb2-4">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plot.background =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_rect</span>(</span>
+<span id="cb2-5">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"midnightblue"</span></span>
+<span id="cb2-6">      )</span>
+<span id="cb2-7">  )</span>
+<span id="cb2-8">s1</span></code></pre></div>
+<p>Next we’ll add some snow on the ground. We’ll do this by drawing a white rectangle along the bottom of the plot. There are two different functions that we could use to add a rectangle: <code>geom_rect()</code> or <code>annotate()</code>. The difference between the two is that <code>geom_rect()</code> maps columns of a <code>data.frame</code> to different elements of a plot whereas <code>annotate()</code> can take values passed in as vectors. Most of the {ggplot2} graphs you’ll see will use <code>geom_*()</code> functions. However, if you’re only adding one or two elements to a plot then <code>annotate()</code> might be quicker.</p>
+<p>Since we’re only adding one rectangle for the snow, it’s easier to use <code>annotate()</code> with the <code>"rect"</code> geometry. This requires four arguments: the minimum and maximum x and y coordinates of the rectangle – essentially specifying where the corners are. We can also change the colour of the rectangle and its outline using the <code>fill</code> and <code>colour</code> arguments. Here, I’ve used a very light grey instead of white.</p>
+<p>If we don’t set the axis limits using <code>xlim()</code> and <code>ylim()</code>, the plot area will resize to fit the area of the snow rectangle. The night sky background will disappear. You can choose any axis limits you wish here – but the unit square will make it easier to find the right coordinates when deciding where to position other elements. Finally, we add <code>coord_fixed()</code> to fix the 1:1 aspect ratio and make sure our grid is actually square with <code>expand = FALSE</code> to remove the additional padding at the sides of the plot.</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">s2 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s1 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">annotate</span>(</span>
+<span id="cb3-3">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">geom =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"rect"</span>,</span>
+<span id="cb3-4">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xmin =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xmax =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,</span>
+<span id="cb3-5">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ymin =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ymax =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>,</span>
+<span id="cb3-6">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"grey98"</span>,</span>
+<span id="cb3-7">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"grey98"</span></span>
+<span id="cb3-8">  ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-9">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">xlim</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-10">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ylim</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-11">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">coord_fixed</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">expand =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span>
+<span id="cb3-12">s2</span></code></pre></div>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/12/12/images/s1.png" class="img-fluid" alt="Dark blue square."></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/12/12/images/s2.png" class="img-fluid" alt="Dark blue square with off-white rectangle at the bottom."></p>
+</div>
+</div>
+</div>
+<p>To finish off the background, we’ll add some falling snowflakes. We first need to decide where on the plot the snowflakes will appear. We’ll be plotting lots of snowflakes, so manually typing out the coordinates of where they’ll be would be very inefficient. Instead, we can use functions to generate the locations randomly. For this we’ll use the uniform distribution. The uniform distribution has two parameters – the lower and upper bounds where any values between the bounds are equally likely. You can generate samples from a uniform distribution in R using the <code>runif()</code> function.</p>
+<p>When generating random numbers in R (or any other programming language), it’s important to set a seed. This means that if you give your code to someone else, they’ll get the same random numbers as you. Some people choose to use the date as the random seed and since we’re making Christmas cards, we’ll use Christmas day as the random seed – in <code>yyyymmdd</code> format, of course!</p>
+<p>We create a variable <code>n</code> specifying how many snowflakes we’ll create. Creating a variable rather than hard coding the variables makes it easier to vary how many snowflakes we want. Since our plot grid goes between 0 and 1 in both the x and y directions, we generate random numbers between 0 and 1 for both the x and y coordinates and store the values in a <code>data.frame</code> called <code>snowflakes</code>.</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">set.seed</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20231225</span>)</span>
+<span id="cb4-2">n <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span></span>
+<span id="cb4-3">snowflakes <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>(</span>
+<span id="cb4-4">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">runif</span>(n, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>),</span>
+<span id="cb4-5">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">runif</span>(n, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>)</span>
+<span id="cb4-6">)</span></code></pre></div>
+<p>Now we can plot the <code>snowflakes</code> data using <code>geom_point()</code> – the same function you’d use for a scatter plot. Since we’re using a <code>geom_*()</code> function, we need to tell {ggplot2} which columns go on the <code>x</code> and <code>y</code> axes inside the <code>aes()</code> function. To plot the snowflakes, we’re going to make using of R’s different point characters. The default when plotting with <code>geom_point()</code> is a small black dot, but we can choose to use a small star (close enough to a snowflake!) by setting <code>pch = 8</code> and changing the <code>colour</code> to <code>"white"</code>.</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">s3 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s2 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb5-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_point</span>(</span>
+<span id="cb5-3">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> snowflakes,</span>
+<span id="cb5-4">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mapping =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(</span>
+<span id="cb5-5">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> x,</span>
+<span id="cb5-6">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> y</span>
+<span id="cb5-7">    ),</span>
+<span id="cb5-8">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>,</span>
+<span id="cb5-9">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pch =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span></span>
+<span id="cb5-10">  )</span>
+<span id="cb5-11">s3</span></code></pre></div>
+<p>Now comes the part where we start rolling up some snowballs! Or, in the case of an R snowman, we draw some circles. Unfortunately, there isn’t a built-in <code>geom_*()</code> function in {ggplot2} for plotting circles. We could use <code>geom_point()</code> here and increase the size of the points but this approach can look a little bit <em>fuzzy</em> when the points are very large. Instead, we’ll turn to a {ggplot2} extension package for some additional <code>geom_*</code> functions - {ggforce} <span class="citation" data-cites="ggforce">(Pedersen 2022)</span>.</p>
+<p>The <code>geom_circle()</code> function requires at least three elements mapped to the aesthetics inside <code>aes()</code>: the coordinates of the centre of the circle given by <code>x0</code> and <code>y0</code>, and the radii of each of the circles, <code>r</code>. Instead of creating a separate data frame and passing it into <code>geom_circle()</code>, we can alternatively create the data frame inside the function. The <code>fill</code> and <code>colour</code> arguments work as they do in {ggplot2} and we can set both to <code>"white"</code>.</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">s4 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s3 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb6-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_circle</span>(</span>
+<span id="cb6-3">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>(</span>
+<span id="cb6-4">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x0 =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>),</span>
+<span id="cb6-5">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y0 =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>),</span>
+<span id="cb6-6">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">r =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.15</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.1</span>)</span>
+<span id="cb6-7">    ),</span>
+<span id="cb6-8">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mapping =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x0 =</span> x0, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y0 =</span> y0, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">r =</span> r),</span>
+<span id="cb6-9">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>,</span>
+<span id="cb6-10">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span></span>
+<span id="cb6-11">  )</span>
+<span id="cb6-12">s4</span></code></pre></div>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/12/12/images/s3.png" class="img-fluid" alt="Dark blue square with off-white rectangle at the bottom and small random white stars."></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/12/12/images/s4.png" class="img-fluid" alt="Dark blue square with off-white rectangle at the bottom and small random white stars, and two white circles slightly off centre."></p>
+</div>
+</div>
+</div>
+<p>We can use <code>geom_point()</code> again to add some more points to represent the buttons and the eyes. Here, we’ll manually specify the coordinates of the points. For the buttons we add them in a vertical line in the middle of the snowman’s body circle, and for the eyes we add them in a horizontal line in the middle of the head circle.</p>
+<p>Since no two rocks are exactly the same size, we can add some random variation to the size of the points using <code>runif()</code> again. We generate five different sizes between 2 and 4.5. For reference, the default point size is 1.5. Adding <code>scale_size_identity()</code> means that the sizes of the points are actually equally to the sizes we generated from <code>runif()</code> and removes the legend that is automatically added when we add <code>size</code> inside <code>aes()</code>.</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">s5 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s4 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb7-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_point</span>(</span>
+<span id="cb7-3">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>(</span>
+<span id="cb7-4">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.57</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.62</span>),</span>
+<span id="cb7-5">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.25</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.35</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.52</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.52</span>),</span>
+<span id="cb7-6">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">runif</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">5</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.5</span>)</span>
+<span id="cb7-7">    ),</span>
+<span id="cb7-8">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mapping =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> x, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> y, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> size)</span>
+<span id="cb7-9">  ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb7-10">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">scale_size_identity</span>()</span>
+<span id="cb7-11">s5</span></code></pre></div>
+<p>To add sticks for arms, we can make use of <code>geom_segment()</code> to draw some lines. We could also use <code>geom_path()</code> but that is designed to connect points across multiple cases, whereas <code>geom_segment()</code> draws a single line per row of data – and we don’t want to join the snowman’s arms together!</p>
+<p>To use <code>geom_segment()</code> we need to create a data frame containing the x and y coordinates for the start and end of each line, and then pass this into the aesthetic mapping with <code>aes()</code>. We can control the colour and width of the lines using the <code>colour</code> and <code>linewidth</code> arguments. Setting the <code>lineend</code> argument to <code>"round"</code> means that the ends of the lines will be rounded rather than the default straight edge.</p>
+<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">s6 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s5 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span> </span>
+<span id="cb8-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_segment</span>(</span>
+<span id="cb8-3">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>(</span>
+<span id="cb8-4">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.46</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>),</span>
+<span id="cb8-5">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xend =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.33</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.85</span>),</span>
+<span id="cb8-6">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>),</span>
+<span id="cb8-7">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">yend =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>)</span>
+<span id="cb8-8">    ),</span>
+<span id="cb8-9">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mapping =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> x, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> y, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xend =</span> xend, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">yend =</span> yend),</span>
+<span id="cb8-10">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"chocolate4"</span>,</span>
+<span id="cb8-11">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">lineend =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"round"</span>,</span>
+<span id="cb8-12">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">linewidth =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span></span>
+<span id="cb8-13">  )</span>
+<span id="cb8-14">s6</span></code></pre></div>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/12/12/images/s5.png" class="img-fluid" alt="Dark blue square with off-white rectangle at the bottom and small random white stars, and two white circles slightly off centre. Five black dots denote two eyes and three buttons on a snowman."></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/12/12/images/s6.png" class="img-fluid" alt="Dark blue square with off-white rectangle at the bottom and small random white stars, and two white circles slightly off centre. Five black dots denote two eyes and three buttons on a snowman. Two brown lines look like arms."></p>
+</div>
+</div>
+</div>
+<p>We’ll now add a (very simple) hat to our snowman, fashioned out of two rectangles. We can add the rectangles as we did before using the <code>annotate()</code> function and specifying the locations of the corners of the rectangles. We start with a shorter wider rectangle for the brim of the hat, and then a taller, narrower rectangle for the crown of the hat. Since we’ll colour them both <code>"brown"</code>, it doesn’t matter if they overlap a little bit.</p>
+<p>This <em>might</em> be one of the situations we should have used <code>geom_rect()</code> instead of <code>annotate()</code> but it might take a lot of trial and error to position the hat exactly where we want it, and this seemed a little easier with <code>annotate()</code>.</p>
+<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">s7 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s6 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb9-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">annotate</span>(</span>
+<span id="cb9-3">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">geom =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"rect"</span>,</span>
+<span id="cb9-4">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xmin =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.46</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xmax =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.74</span>,</span>
+<span id="cb9-5">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ymin =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.55</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ymax =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.60</span>,</span>
+<span id="cb9-6">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"brown"</span></span>
+<span id="cb9-7">  ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb9-8">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">annotate</span>(</span>
+<span id="cb9-9">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">geom =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"rect"</span>,</span>
+<span id="cb9-10">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xmin =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.50</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xmax =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.70</span>,</span>
+<span id="cb9-11">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ymin =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.56</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ymax =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.73</span>,</span>
+<span id="cb9-12">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"brown"</span></span>
+<span id="cb9-13">  )</span>
+<span id="cb9-14">s7</span></code></pre></div>
+<p>Now we can move on to the final component of building a snowman – the carrot for his nose! We’re going to use a triangle for the nose. Unfortunately, there are no built-in triangle geoms in {ggplot2} so we’ll have to make our own. There are different ways to do this, but here we’re going to make use of the {sf} package <span class="citation" data-cites="sf">(Pebesma 2018)</span>. The {sf} package (short for <em>simple features</em>) is designed for working with spatial data. Although we’re not working with maps, we can still use {sf} to make shapes – including polygons.</p>
+<p>We start by constructing a matrix with two columns – one for x coordinates and one for y. The x coordinates start in the middle of the head and go slightly to the right for the triangle point. The y coordinates take a little bit more trial and error to get right. Note that although triangles only have three corners, we have four rows of points. The last row must be the same as the first to make the polygon <em>closed</em>. The matrix is then converted into a spatial object using the <code>st_polygon()</code> function, and we can check how it looks using <code>plot()</code>.</p>
+<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">nose_pts <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">matrix</span>(</span>
+<span id="cb10-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(</span>
+<span id="cb10-3">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>,</span>
+<span id="cb10-4">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.65</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.48</span>,</span>
+<span id="cb10-5">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.46</span>,</span>
+<span id="cb10-6">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span></span>
+<span id="cb10-7">  ),</span>
+<span id="cb10-8">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ncol =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb10-9">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">byrow =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span></span>
+<span id="cb10-10">)</span>
+<span id="cb10-11">nose <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_polygon</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(nose_pts))</span>
+<span id="cb10-12"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">plot</span>(nose)</span></code></pre></div>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/12/12/images/s7.png" class="img-fluid" alt="Dark blue square with off-white rectangle at the bottom and small random white stars, and two white circles slightly off centre. Five black dots denote two eyes and three buttons on a snowman. Two brown lines look like arms. Two red rectangles form a hat."></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/12/12/images/nose.png" class="img-fluid" alt="Outline of a triangle pointing to the right against a white background."></p>
+</div>
+</div>
+</div>
+<p>We can plot <code>sf</code> objects with {ggplot2} using <code>geom_sf()</code>. <code>geom_sf()</code> is a slightly special <code>geom</code> since we don’t need to specify an aesthetic mapping for the <code>x</code> and <code>y</code> axes – they are determined automatically from the <code>sf</code> object along with which type of geometry to draw. If your <code>sf</code> object has points, points will be drawn. If it has country shapes, polygons will be drawn. Like other <code>geom_*()</code> functions, we can change the <code>colour</code> and <code>fill</code> arguments to a different colour – in this case <code>"orange"</code> to represent a carrot!</p>
+<p>You should see a <code>Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code> message when you run the following code. The is because <code>geom_sf</code> forces it’s own coordinate system on the plot overriding our previous code specifying <code>coord_fixed()</code>. If you run it without the <code>coord_sf(expand = FALSE)</code>, the extra space around the plot will reappear. We can remove it again with <code>expand = FALSE</code>.</p>
+<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1">s8 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s7 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb11-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_sf</span>(</span>
+<span id="cb11-3">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> nose,</span>
+<span id="cb11-4">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"orange"</span>,</span>
+<span id="cb11-5">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"orange"</span></span>
+<span id="cb11-6">  ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb11-7">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">coord_sf</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">expand =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span>
+<span id="cb11-8">s8</span></code></pre></div>
+<blockquote class="blockquote">
+<p>You <em>could</em> skip the <code>sf</code> part of this completely and pass the coordinates directly into <code>geom_polygon()</code> instead. However, I’ve often found it quicker and easier to tinker with polygon shapes using <code>sf</code>.</p>
+</blockquote>
+<p>A key part of any Christmas card is the message wishing recipients a Merry Christmas! We can add text to our plot using the <code>annotate()</code> function and the <code>"text"</code> geometry (you could instead use <code>geom_text()</code> if you prefer). When adding text, we require at least three arguments: the <code>x</code> and <code>y</code> coordinates of where the text should be added, and the <code>label</code> denoting what text should appear. We can supply additional arguments to <code>annotate()</code> to style the text, such as: <code>colour</code> (which changes the colour of the text); <code>family</code> (to define which font to use); <code>fontface</code> (which determines if the font is bold or italic, for example); and <code>size</code> (which changes the size of the text). The <code>"mono"</code> option for <code>family</code> tells {ggplot2} to use the default system monospace font.</p>
+<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">s9 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s8 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb12-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">annotate</span>(</span>
+<span id="cb12-3">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">geom =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"text"</span>,</span>
+<span id="cb12-4">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.07</span>,</span>
+<span id="cb12-5">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">label =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Merry Christmas"</span>,</span>
+<span id="cb12-6">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"red3"</span>,</span>
+<span id="cb12-7">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">family =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"mono"</span>,</span>
+<span id="cb12-8">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fontface =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">7</span></span>
+<span id="cb12-9">  )</span>
+<span id="cb12-10">s9</span></code></pre></div>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/12/12/images/s8.png" class="img-fluid" alt="Dark blue square with off-white rectangle at the bottom and small random white stars, and two white circles slightly off centre. Five black dots denote two eyes and three buttons on a snowman. Two brown lines look like arms. Two red rectangles form a hat. Orange triangle as a nose."></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/12/12/images/s9.png" class="img-fluid" alt="Dark blue square with off-white rectangle at the bottom and small random white stars, and two white circles slightly off centre. Five black dots denote two eyes and three buttons on a snowman. Two brown lines look like arms. Two red rectangles form a hat. Orange triangle as a nose, with text reading Merry Christmas at the bottom."></p>
+</div>
+</div>
+</div>
+</section>
+<section id="sending-christmas-cards-in-r" class="level2">
+<h2 class="anchored" data-anchor-id="sending-christmas-cards-in-r">Sending Christmas cards in R</h2>
+<p>Now that we’ve finished creating our Christmas card, we need to think about how to send it. You could save it as an image file using <code>ggsave()</code>, print it out, and send it in the post. Or you could also use R to send it!</p>
+<p>There are many different R packages for sending emails from R. If you create a database of email addresses and names, you could personalise the message on the Christmas card and then send it automatically as an email from R. If you want to automate the process of sending physical cards from R, you might be interested in the <a href="https://github.com/jnolis">{ggirl} package</a> from Jacqueline Nolis <span class="citation" data-cites="ggirl">(Nolis 2023)</span>. {ggirl} allows you to send postcards with a <code>ggplot</code> object printed on the front. {ggirl} is also an incredible example of <a href="https://jnolis.com/blog/introducing_ggirl/">an eCommerce platform built with R</a>! Note that {ggirl} can currently only send physical items to addresses in the United States.</p>
+</section>
+<section id="other-christmas-r-packages" class="level2">
+<h2 class="anchored" data-anchor-id="other-christmas-r-packages">Other Christmas R packages</h2>
+<p>If you’re curious about making Christmas cards with R but you don’t have the time to make them from scratch, you’ll likely find the <code>christmas</code> R package <span class="citation" data-cites="christmas">(Barrera-Gomez 2022)</span> helpful. This package from Jose Barrera-Gomez can generate lots of different Christmas cards, many of them animated and available in different languages (English, Catalan and Spanish).</p>
+<p>Emil Hvitfeldt has also created a <a href="https://quarto.org/">Quarto</a> <a href="https://github.com/EmilHvitfeldt/quarto-snow">extension that gives the effect of falling snowflakes</a> on HTML outputs – including revealjs slides which is perfect for festive presentations!</p>
+<p>Have you made your own Christmas cards with R? We’d love to see your designs!</p>
+<div class="callout callout-style-simple callout-note" style="margin-top: 2.25rem;">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Inspired by Nicola’s tutorial, Real World Data Science has indeed made its own Christmas card design. <a href="../../../../../../viewpoints/editors-blog/posts/2023/12/12/rwds-xmas-card.html">Check out our attempt over at the Editors’ Blog</a>!</p>
+</div>
+</div>
+</div>
+<div class="article-btn">
+<p><a href="../../../../../../ideas/tutorials/index.html">Explore more Tutorials</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author</dt>
+<dd>
+<strong>Nicola Rennie</strong> is a lecturer in health data science in the Centre for Health Informatics, Computing, and Statistics (CHICAS) within Lancaster Medical School at Lancaster University. She’s an R enthusiast, data visualisation aficionado, and generative artist, among other things. Her personal website is hosted at <a href="https://nrennie.github.io/">nrennie.rbind.io</a>, and she is a co-author of the <a href="https://royal-statistical-society.github.io/datavisguide/">Royal Statistical Society’s Best Practices for Data Visualisation</a>.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Nicola Rennie
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://realworlddatascience.net/ideas/tutorials/posts/2023/12/12/https:/mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/ideas/tutorials/posts/2023/12/12/https:/mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Rennie, Nicola. 2023. “Creating Christmas cards with R.” Real World Data Science, December 12, 2023. <a href="https://realworlddatascience.net/ideas/tutorials/posts/2023/12/12/xmas-cards.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-christmas" class="csl-entry">
+Barrera-Gomez, Jose. 2022. <em>Christmas: Generation of Different Animated Christmas Cards</em>. <a href="https://CRAN.R-project.org/package=christmas">https://CRAN.R-project.org/package=christmas</a>.
+</div>
+<div id="ref-ggirl" class="csl-entry">
+Nolis, Jacqueline. 2023. <em>Ggirl: Ggplot2 Art in Real Life</em>. <a href="https://github.com/jnolis/ggirl">https://github.com/jnolis/ggirl</a>.
+</div>
+<div id="ref-sf" class="csl-entry">
+Pebesma, Edzer. 2018. <span>“<span class="nocase">Simple Features for R: Standardized Support for Spatial Vector Data</span>.”</span> <em><span>The R Journal</span></em> 10 (1): 439–46. <a href="https://doi.org/10.32614/RJ-2018-009">https://doi.org/10.32614/RJ-2018-009</a>.
+</div>
+<div id="ref-ggforce" class="csl-entry">
+Pedersen, Thomas Lin. 2022. <em>Ggforce: Accelerating ’Ggplot2’</em>. <a href="https://CRAN.R-project.org/package=ggforce">https://CRAN.R-project.org/package=ggforce</a>.
+</div>
+<div id="ref-R-base" class="csl-entry">
+R Core Team. 2022. <em>R: A Language and Environment for Statistical Computing</em>. Vienna, Austria: R Foundation for Statistical Computing. <a href="https://www.R-project.org/">https://www.R-project.org/</a>.
+</div>
+<div id="ref-ggplot2" class="csl-entry">
+Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Springer-Verlag New York. <a href="https://ggplot2.tidyverse.org">https://ggplot2.tidyverse.org</a>.
+</div>
+</div></section></div> ]]></description>
+  <category>R</category>
+  <category>Data visualisation</category>
+  <guid>https://realworlddatascience.net/ideas/tutorials/posts/2023/12/12/xmas-cards.html</guid>
+  <pubDate>Tue, 12 Dec 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/ideas/tutorials/posts/2023/12/12/images/xmas-card.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
+<item>
+  <title>A Christmas card in R for the Real World Data Science community</title>
+  <dc:creator>Brian Tarran</dc:creator>
+  <link>https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/rwds-xmas-card.html</link>
+  <description><![CDATA[ 
+
+
+
+
+<p>A few weeks back, I managed to catch Nicola Rennie’s presentation to the <a href="https://www.meetup.com/en-AU/oxford-r-user-group/events/297417319/">Oxford R User Group on how to create Christmas cards in R</a>. It was a fun session, and thanks to Nicola’s clear and concise explanations, I felt emboldened to attempt my own design, using her code as a base.</p>
+<p>If you missed the Meetup session, Nicola has kindly written <a href="../../../../../../ideas/tutorials/posts/2023/12/12/xmas-cards.html">a tutorial for Real World Data Science</a> that walks through all the necessary steps to create a snowman against a snowy night’s sky. You’ll want to read that tutorial first before returning to this blog.</p>
+<p>My design uses the same basic setting as Nicola’s but updates the scene to reflect the Real World Data Science (RWDS) brand colours, and I replace the snowman with a Christmas tree adorned with coloured baubles.</p>
+<section id="snowy-sky" class="level2">
+<h2 class="anchored" data-anchor-id="snowy-sky">Snowy sky</h2>
+<p>We begin by loading in the following packages, adding a couple extra to the ones Nicola uses:</p>
+<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(ggplot2)</span>
+<span id="cb1-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(ggforce)</span>
+<span id="cb1-3"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(sf)</span>
+<span id="cb1-4"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(png)</span>
+<span id="cb1-5"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">library</span>(patchwork) </span></code></pre></div>
+<p>Then we add the sky, now recoloured in RWDS purple using <code>fill</code> and <code>color</code>:</p>
+<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">s1 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ggplot</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb2-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme_void</span>() <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb2-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">theme</span>(</span>
+<span id="cb2-4">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">plot.background =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">element_rect</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#939bc9"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">color =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#939bc9"</span>)</span>
+<span id="cb2-5">  )</span>
+<span id="cb2-6">s1</span></code></pre></div>
+<p>We use the same code as Nicola to create the snowflakes, but we do this step first before adding snow on the ground, as we’re using the RWDS site background colour, hex code <code>#f0eeb</code>, to represent our settled snow:</p>
+<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># add snowflakes</span></span>
+<span id="cb3-2"><span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">set.seed</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">20231225</span>)</span>
+<span id="cb3-3">n <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">100</span></span>
+<span id="cb3-4">snowflakes <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>(</span>
+<span id="cb3-5">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">runif</span>(n),</span>
+<span id="cb3-6">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">runif</span>(n)</span>
+<span id="cb3-7">)</span>
+<span id="cb3-8">s2 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s1 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-9">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_point</span>(</span>
+<span id="cb3-10">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> snowflakes,</span>
+<span id="cb3-11">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mapping =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(</span>
+<span id="cb3-12">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> x,</span>
+<span id="cb3-13">      <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> y</span>
+<span id="cb3-14">    ),</span>
+<span id="cb3-15">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"white"</span>,</span>
+<span id="cb3-16">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">pch =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span></span>
+<span id="cb3-17">  )</span>
+<span id="cb3-18">s2</span>
+<span id="cb3-19"></span>
+<span id="cb3-20"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># snow on ground</span></span>
+<span id="cb3-21">s3 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s2 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-22">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">annotate</span>(</span>
+<span id="cb3-23">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">geom =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"rect"</span>,</span>
+<span id="cb3-24">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xmin =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xmax =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>,</span>
+<span id="cb3-25">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ymin =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ymax =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>,</span>
+<span id="cb3-26">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#f0eeeb"</span>, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"#f0eeeb"</span></span>
+<span id="cb3-27">  ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-28">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">xlim</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-29">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">ylim</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">1</span>) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb3-30">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">coord_fixed</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">expand =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span>
+<span id="cb3-31">s3</span></code></pre></div>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/images/s2.png" class="img-fluid" alt="Purple square with white snowflakes."></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/images/s3.png" class="img-fluid" alt="Purple square with white snowflakes and off-white rectangle at the bottom."></p>
+</div>
+</div>
+</div>
+</section>
+<section id="oh-christmas-tree" class="level2">
+<h2 class="anchored" data-anchor-id="oh-christmas-tree">Oh, Christmas tree</h2>
+<p>To build her snowman, Nicola created a series of circles that were stacked and overlaid. A simple Christmas tree, though, requires a series of triangles. So, taking Nicola’s snowman’s nose (also a triangle) as our starting point, we coded three sets of coordinates – <code>tree_pts1</code>, <code>tree_pts2</code>, and <code>tree_pts3</code> – for three triangles of decreasing size that would sit on top of one another.</p>
+<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># coordinates for tree base</span></span>
+<span id="cb4-2">tree_pts1 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">matrix</span>(</span>
+<span id="cb4-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(</span>
+<span id="cb4-4">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>,</span>
+<span id="cb4-5">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>,</span>
+<span id="cb4-6">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.8</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>,</span>
+<span id="cb4-7">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span></span>
+<span id="cb4-8">  ),</span>
+<span id="cb4-9">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ncol =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb4-10">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">byrow =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span></span>
+<span id="cb4-11">)</span>
+<span id="cb4-12"></span>
+<span id="cb4-13"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># coordinates for tree middle</span></span>
+<span id="cb4-14">tree_pts2 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">matrix</span>(</span>
+<span id="cb4-15">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(</span>
+<span id="cb4-16">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>,</span>
+<span id="cb4-17">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>,</span>
+<span id="cb4-18">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>,</span>
+<span id="cb4-19">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span></span>
+<span id="cb4-20">  ),</span>
+<span id="cb4-21">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ncol =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb4-22">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">byrow =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span></span>
+<span id="cb4-23">)</span>
+<span id="cb4-24"></span>
+<span id="cb4-25"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># coordinates for tree top</span></span>
+<span id="cb4-26">tree_pts3 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">matrix</span>(</span>
+<span id="cb4-27">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(</span>
+<span id="cb4-28">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.65</span>,</span>
+<span id="cb4-29">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.75</span>,</span>
+<span id="cb4-30">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.65</span>,</span>
+<span id="cb4-31">    <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.65</span></span>
+<span id="cb4-32">  ),</span>
+<span id="cb4-33">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ncol =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>,</span>
+<span id="cb4-34">  <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">byrow =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span></span>
+<span id="cb4-35">)</span>
+<span id="cb4-36"></span>
+<span id="cb4-37"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># put tree together</span></span>
+<span id="cb4-38">tree <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">st_multipolygon</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(<span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(tree_pts1),</span>
+<span id="cb4-39">                             <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(tree_pts2),</span>
+<span id="cb4-40">                             <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">list</span>(tree_pts3)))</span>
+<span id="cb4-41">s4 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s3 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb4-42">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_sf</span>(</span>
+<span id="cb4-43">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> tree,</span>
+<span id="cb4-44">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"chartreuse4"</span>,</span>
+<span id="cb4-45">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"chartreuse4"</span></span>
+<span id="cb4-46">  ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb4-47">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">coord_sf</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">expand =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">FALSE</span>)</span>
+<span id="cb4-48">s4</span></code></pre></div>
+<p>A tree also requires a trunk, so we borrowed one of the rectangles from Nicola’s snowman’s hat for this purpose:</p>
+<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">s5 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s4<span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb5-2">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">annotate</span>(</span>
+<span id="cb5-3">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">geom =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"rect"</span>,</span>
+<span id="cb5-4">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xmin =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.45</span>,</span>
+<span id="cb5-5">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">xmax =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.55</span>,</span>
+<span id="cb5-6">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ymin =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span>,</span>
+<span id="cb5-7">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">ymax =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>,</span>
+<span id="cb5-8">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"brown"</span></span>
+<span id="cb5-9">  )</span>
+<span id="cb5-10">s5</span></code></pre></div>
+<p>And, of course, no Christmas tree is complete without decorations. The “rocks” that formed the buttons and eyes on Nicola’s snowman were updated to become gold and red baubles for our tree:</p>
+<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># add gold baubles</span></span>
+<span id="cb6-2">s6 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s5 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb6-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_point</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"gold"</span>,</span>
+<span id="cb6-4">             <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>(</span>
+<span id="cb6-5">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.57</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.62</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.45</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>),</span>
+<span id="cb6-6">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.325</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.45</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.35</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.57</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.52</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>),</span>
+<span id="cb6-7">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">runif</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.5</span>)</span>
+<span id="cb6-8">             ),</span>
+<span id="cb6-9">             <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mapping =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> x, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> y, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> size)</span>
+<span id="cb6-10">  ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb6-11">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">scale_size_identity</span>()</span>
+<span id="cb6-12">s6</span>
+<span id="cb6-13"></span>
+<span id="cb6-14"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># add red baubles</span></span>
+<span id="cb6-15">s7 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s6 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb6-16">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">geom_point</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"red3"</span>,</span>
+<span id="cb6-17">             <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">data =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">data.frame</span>(</span>
+<span id="cb6-18">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.7</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.525</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.43</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.38</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.55</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>),</span>
+<span id="cb6-19">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.375</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.55</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.65</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.43</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.48</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.375</span>),</span>
+<span id="cb6-20">               <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">runif</span>(<span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">2</span>, <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">4.5</span>)</span>
+<span id="cb6-21">             ),</span>
+<span id="cb6-22">             <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">mapping =</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> x, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> y, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> size)</span>
+<span id="cb6-23">  ) <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb6-24">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">scale_size_identity</span>()</span>
+<span id="cb6-25">s7</span></code></pre></div>
+<div class="quarto-layout-panel">
+<div class="quarto-layout-row quarto-layout-valign-top">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/images/s4.png" class="img-fluid" alt="Purple square with white snowflakes and green tree in foreground."></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/images/s5.png" class="img-fluid" alt="Purple square with white snowflakes and green tree in foreground, now with brown trunk at foot of tree."></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/images/s7.png" class="img-fluid" alt="Purple square with white snowflakes and green tree in foreground. Tree is decorated with red and gold baubles of various sizes."></p>
+</div>
+</div>
+</div>
+</section>
+<section id="seasons-greetings" class="level2">
+<h2 class="anchored" data-anchor-id="seasons-greetings">Season’s greetings</h2>
+<p>The final step was to add text to the top of the image, wishing you all a Merry Christmas, and our logo to the bottom, so you know who the card is from:</p>
+<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># add text</span></span>
+<span id="cb7-2">s8 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s7 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span></span>
+<span id="cb7-3">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">annotate</span>(</span>
+<span id="cb7-4">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">geom =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"text"</span>,</span>
+<span id="cb7-5">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">x =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.5</span>,</span>
+<span id="cb7-6">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">y =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.875</span>,</span>
+<span id="cb7-7">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">label =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"Merry Christmas"</span>,</span>
+<span id="cb7-8">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"red3"</span>,</span>
+<span id="cb7-9">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">fontface =</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"bold"</span>,</span>
+<span id="cb7-10">    <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">size =</span> <span class="dv" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">18</span></span>
+<span id="cb7-11">  )</span>
+<span id="cb7-12">s8</span>
+<span id="cb7-13"></span>
+<span id="cb7-14"><span class="co" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;"># add logo </span></span>
+<span id="cb7-15">path <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
+background-color: null;
+font-style: inherit;">"images/rwds-logo-150px.png"</span></span>
+<span id="cb7-16">img <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">readPNG</span>(path, <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">native =</span> <span class="cn" style="color: #8f5902;
+background-color: null;
+font-style: inherit;">TRUE</span>) </span>
+<span id="cb7-17">s9 <span class="ot" style="color: #003B4F;
+background-color: null;
+font-style: inherit;">&lt;-</span> s8 <span class="sc" style="color: #5E5E5E;
+background-color: null;
+font-style: inherit;">+</span>                   </span>
+<span id="cb7-18">  <span class="fu" style="color: #4758AB;
+background-color: null;
+font-style: inherit;">inset_element</span>(<span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">p =</span> img, </span>
+<span id="cb7-19">                <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">left =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.3265</span>, </span>
+<span id="cb7-20">                <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">bottom =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.0</span>, </span>
+<span id="cb7-21">                <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">right =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.6735</span>, </span>
+<span id="cb7-22">                <span class="at" style="color: #657422;
+background-color: null;
+font-style: inherit;">top =</span> <span class="fl" style="color: #AD0000;
+background-color: null;
+font-style: inherit;">0.2</span></span>
+<span id="cb7-23">  ) </span>
+<span id="cb7-24">s9</span></code></pre></div>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/images/rwds-christmas-card.png" class="img-fluid figure-img" alt="Purple square with white snowflakes and green tree in foreground. Tree is decorated with red and gold baubles of various sizes. Text over tree reads Merry Christmas. Under tree is a logo for the Real World Data Science website."></p>
+</figure>
+</div>
+<p>I hope you like the Christmas card! From all of us at Real World Data Science, thank you for your support throughout 2023. Merry Christmas, happy holidays, and best wishes for 2024!</p>
+<div class="article-btn">
+<p><a href="../../../../../../viewpoints/editors-blog/index.html">Back to Editors’ blog</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Royal Statistical Society
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/https:/mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/https:/mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Tarran, Brian. 2023. “A Christmas card in R for the Real World Data Science community.” Real World Data Science, December 12, 2023. <a href="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/rwds-xmas-card.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <category>R</category>
+  <category>Data visualisation</category>
+  <category>Updates</category>
+  <guid>https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/rwds-xmas-card.html</guid>
+  <pubDate>Tue, 12 Dec 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/images/rwds-christmas-card-thumb.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
 <item>
   <title>AI and digital ethics in 2023: a ‘remarkable, eventful year’</title>
   <dc:creator>Brian Tarran</dc:creator>
@@ -3082,305 +4638,6 @@ This article is republished from <a href="https://theconversation.com">The Conve
   <guid>https://realworlddatascience.net/viewpoints/posts/2023/09/06/biased-algorithms.html</guid>
   <pubDate>Wed, 06 Sep 2023 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/viewpoints/posts/2023/09/06/images/AlanWarburton-QuantifiedHuman-991x724.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>RSS Conference preview: Evaluating AI, machine learning, and data visualisation</title>
-  <dc:creator>Brian Tarran</dc:creator>
-  <link>https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/08/24/rss-conference.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>The Royal Statistical Society International Conference takes place in Harrogate, England, this September (Monday 4 to Thursday 7). Real World Data Science will be in attendance, and we’ve helped organise a couple of sessions we’d like to tell you about.</p>
-<section id="evaluating-ai-how-data-science-and-statistics-can-shape-the-uks-ai-strategy" class="level3">
-<h3 class="anchored" data-anchor-id="evaluating-ai-how-data-science-and-statistics-can-shape-the-uks-ai-strategy">Evaluating AI: How data science and statistics can shape the UK’s AI strategy</h3>
-<p><strong>Date:</strong> 6 September <strong>Time:</strong> 9:00 am - 10:20 am <strong>Room:</strong> Auditorium (moved from Queens Suite 8)</p>
-<p>The launch of ChatGPT less than a year ago is a milestone moment in the story of artificial intelligence. Overnight, large language models were transformed from research projects into consumer products, now used by millions each month. <a href="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/07/19/code-interpreter.html">The capabilities are impressive</a>, <a href="https://realworlddatascience.net/careers/posts/2023/05/11/chatgpt-data-science-pt1.html">the productivity gains undeniable</a>. But, what of the downsides? These are issues <a href="https://realworlddatascience.net/viewpoints/interviews/posts/2023/04/28/stephanie-hare.html">societies, governments, and individuals are now starting to reckon with</a>.</p>
-<p>In March 2023, <a href="https://www.gov.uk/government/publications/ai-regulation-a-pro-innovation-approach/white-paper">the UK government published a white paper promising a “pro-innovation approach” to AI regulation</a>, while also acknowledging the risks AI poses to “people’s privacy, their human rights or their safety” and “concerns about the fairness of using AI tools to make decisions which impact people’s lives”. <a href="https://rss.org.uk/RSS/media/File-library/Policy/2023/RSS-AI-white-paper-response-v2-2.pdf">The Royal Statistical Society, in response, has called for investment in a centre for AI evaluation methodology</a>, arguing that users of AI systems should be able to judge the trustworthiness of claims made by AI companies as well as the outputs of their systems.</p>
-<p>What should AI evaluation look like? How will it work in practice? What metrics are most important, and – crucially – who gets to decide this? Join us for <a href="https://virtual.oxfordabstracts.com/#/event/4019/program?session=66677&amp;s=700">a special panel debate at the RSS International Conference</a>, where these questions, and more, will be discussed.</p>
-</section>
-<section id="best-practices-for-data-visualisation-how-to-make-data-outputs-more-readable-accessible-and-impactful" class="level3">
-<h3 class="anchored" data-anchor-id="best-practices-for-data-visualisation-how-to-make-data-outputs-more-readable-accessible-and-impactful">Best Practices for Data Visualisation: How to make data outputs more readable, accessible, and impactful</h3>
-<p><strong>Date:</strong> 5 September <strong>Time:</strong> 11:40 am - 1:00 pm <strong>Room:</strong> Auditorium</p>
-<p>The Royal Statistical Society (RSS) has published a new guide, “<a href="https://royal-statistical-society.github.io/datavisguide/">Best Practices for Data Visualisation</a>”, containing insights, advice, and examples (with code) to make data outputs more readable, accessible, and impactful. The guide is written primarily for contributors to Royal Statistical Society publications – including <em>Significance</em> magazine, the <em>Journal of the Royal Statistical Society Series A</em>, and Real World Data Science – but the information and advice within is also of broad relevance and use for any data visualisation task.</p>
-<p>In the first half of this conference session, authors Andreas Krause, <a href="https://nrennie.rbind.io/">Nicola Rennie</a>, and Brian Tarran will introduce the guide and its key recommendations, and there will be a short demo of how to use the new <a href="https://github.com/nrennie/RSSthemes">{RSSthemes} R package</a>. For the second half of the session, attendees will be invited to share feedback with the authors, propose ideas, and start developing new and expanded sections of the guide. Attendees will be shown how to work with the guide’s source files and collaborate via GitHub, so feel free to bring along a laptop and become a contributor!</p>
-<p>For more information, see <a href="https://royal-statistical-society.github.io/datavisguide/">rss.org.uk/datavisguide</a> and the <a href="https://virtual.oxfordabstracts.com/#/event/4019/program?session=65937&amp;s=0">RSS Conference website</a>.</p>
-</section>
-<section id="discussion-meeting-probabilistic-and-statistical-aspects-of-machine-learning" class="level3">
-<h3 class="anchored" data-anchor-id="discussion-meeting-probabilistic-and-statistical-aspects-of-machine-learning">Discussion Meeting: Probabilistic and statistical aspects of machine learning</h3>
-<p><strong>Date:</strong> 6 September <strong>Time:</strong> 5:00pm - 7:00 pm <strong>Room:</strong> Auditorium</p>
-<p>We haven’t helped organise this session, but we are interested to see it. Two papers will be presented for discussion and debate. Paper 1 is “Automatic Change-Point Detection in Time Series via Deep Learning” by Jie Li, Paul Fearnhead, Piotr Fryzlewicz, and Tengyao Wang, while Paper 2 is “From Denoising Diffusions to Denoising Markov Models” by Joe Benton, Yuyang Shi, Valentin De Bortoli, George Deligiannidis, and Arnaud Doucet. Preprints of both papers are available now via the <a href="https://rss.org.uk/training-events/events/discussion-papers/">RSS Discussion Meetings webpage</a>, and you can also hear more about the session in this interview with Adam Sykulski, RSS Discussion Papers editor.</p>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/1UL1H21v-Q0?si=WPftzqltawRknPPM" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<div class="article-btn">
-<p><a href="../../../../../../viewpoints/editors-blog/index.html">Back to Editors’ blog</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Royal Statistical Society
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/08/24/https:/mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/08/24/https:/mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail image by <a href="https://flic.kr/p/YzNWJw">jcw1967</a>, licenced under a Creative Commons Attribution 2.0 Generic (CC BY 2.0) <a href="https://creativecommons.org/licenses/by/2.0/">licence</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Tarran, Brian. 2023. “RSS Conference preview: Evaluating AI, machine learning, and data visualisation.” Real World Data Science, August 24, 2023. <a href="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/08/24/rss-conference.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-</section>
-
- ]]></description>
-  <category>AI</category>
-  <category>Machine learning</category>
-  <category>Data visualisation</category>
-  <category>Events</category>
-  <guid>https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/08/24/rss-conference.html</guid>
-  <pubDate>Thu, 24 Aug 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/08/24/images/harrogate-conference-centre.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>Food for Thought: Third place winners – Loyola Marymount</title>
-  <dc:creator>Yifan Hu and Mandy Korpusik</dc:creator>
-  <link>https://realworlddatascience.net/case-studies/posts/2023/08/21/05-third-place-winners.html</link>
-  <description><![CDATA[ 
-
-
-
-
-<p>Undergraduate student Yifan (Rosetta) Hu was responsible for writing the Python script that pre-processes the 2015–2016 UPC, EC, and PPC data for training neural network models. Her script randomly sampled five negative EC descriptions for every positive match between a UPC and EC code. Professor Mandy Korpusik performed the remaining work, including setting up the environment, training the BERT model, and evaluation. Hu spent roughly 10 hours on the competition, and Korpusik spent roughly 40 hours of work (and many additional hours running and monitoring the training and testing scripts).</p>
-<section id="our-perspective-on-the-challenge" class="level2">
-<h2 class="anchored" data-anchor-id="our-perspective-on-the-challenge">Our perspective on the challenge</h2>
-<p>The goal of this challenge is to use machine learning and natural language processing (NLP) to link language-based entries in the IRI and FNDDS databases. Our proposed approach is based on our prior work using deep learning models to map users’ natural language meal descriptions to the FNDDS database <span class="citation" data-cites="7953245">(Korpusik, Collins, and Glass 2017b)</span> to retrieve nutrition information in a spoken diet tracking system. In the past, we found a trade-off between accuracy and cost, leading us to select convolutional neural networks over recurrent long short-term memory (LSTM) networks – with nearly 10x as many parameters and 2x the training time required, LSTMs achieved slightly lower performance on semantic tagging and food database mapping on meals in the breakfast category. Here, we propose to investigate state-of-the-art transformers, specifically the contextual embedding model (i.e., the entire sentence is used as context to generate the embedding) known as BERT <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805">(Bidirectional Encoder Representations from Transformers, Devlin et al. 2018)</span>.</p>
-<section id="related-work" class="level5">
-<h5 class="anchored" data-anchor-id="related-work">Related work</h5>
-<p>Within the past few years, several papers have come out that learn contextual representations of sentences, where the entire sentence is used to generate embeddings.</p>
-<p>ELMo <span class="citation" data-cites="DBLP:journals/corr/abs-1802-05365">(Peters et al. 2018)</span> uses a linear combination of vectors extracted from intermediate layer representations of a bidirectional LSTM trained on a large text corpus as a language model; in this feature-based approach, the ELMo vector of the full input sentence is concatenated with the standard context-independent token representations and passed through a task-dependent model for final prediction. This showed performance improvement over state-of-the-art on six NLP tasks, including question answering, textual entailment, and sentiment analysis.</p>
-<p>OpenAI GPT <span class="citation" data-cites="radford2018improving">(Radford et al. 2018)</span> is a fine-tuning approach, where they first pre-train a multi-layer transformer <span class="citation" data-cites="NIPS2017_3f5ee243">(Vaswani et al. 2017)</span> as a language model on a large text corpus, and then conduct supervised fine-tuning on the specific task of interest, with a linear softmax layer on top of the pre-trained transformer.</p>
-<p>Google’s BERT <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805">(2018)</span> is a fine-tuning approach similar to GPT, but with the key difference that instead of combining separately trained forward and backward transformers, they instead use a masked language model for pre-training, where they randomly masked out input tokens and predicted only those tokens. They demonstrated state-of-the-art performance on 11 NLP tasks, including the CoNLL 2003 named entity recognition task, which is similar to our semantic tagging task.</p>
-<p>Finally, many models have recently been developed that improve upon BERT, including RoBERTa <span class="citation" data-cites="DBLP:journals/corr/abs-1907-11692">(which improves BERT’s pre-training by using bigger batches and more data, Y. Liu et al. 2019)</span>, XLNet <span class="citation" data-cites="NEURIPS2019_dc6a7e65">(which uses Transformer-XL and avoids BERT’s pretrain-finetune discrepancy through learning a truly bidirectional context via permutations over the factorization order, Yang et al. 2019)</span>, and ALBERT <span class="citation" data-cites="DBLP:journals/corr/abs-1909-11942">(a lightweight BERT, Lan et al. 2019)</span>.</p>
-<p>In our prior work on language understanding for nutrition <span class="citation" data-cites="7078635 7472843 7902155 korpusik17_interspeech 8461769 8721137">(Korpusik et al. 2014, 2016; Korpusik and Glass 2017, 2018, 2019; Korpusik, Collins, and Glass 2017a)</span>, we used a similar binary classification approach for learning embeddings, which were then used at test time to map from user-described meals to USDA food database matches, but with convolutional neural networks (CNNs) instead of BERT. (BERT was not created until 2018, and due to limited memory available for deployment, we needed a smaller model than even BERT base, which has 100 million parameters.) Further work demonstrated that BERT outperformed CNNs on several language understanding tasks, including nutrition <span class="citation" data-cites="korpusik19_interspeech">(Korpusik, Liu, and Glass 2019)</span>.</p>
-</section>
-</section>
-<section id="our-approach" class="level2">
-<h2 class="anchored" data-anchor-id="our-approach">Our approach</h2>
-<p>Our approach is to fine-tune a large pre-trained BERT language model on the food data. BERT was originally trained on a massive amount of text for a language modelling task (i.e., predicting which word should come next in a sentence). It relies on a transformer model, which uses an “attention” mechanism to identify which words the model should pay the most “attention” to. We are specifically using BERT for binary sequence classification, which refers to predicting a label (i.e., classification) for a sequence of words. In our case, during fine-tuning (i.e., training the model further on our own dataset) we will feed the model pairs of sentences (where one sentence is the UPC description of a food item and the other is the EC description of another food item), and the model will perform binary classification, predicting whether the sentences are a match (i.e., 1) or not (i.e., 0). We start with the 2015–2016 ground truth PPC data for positive examples, and five randomly sampled negative examples per positive example.</p>
-<section id="training-methods" class="level5">
-<h5 class="anchored" data-anchor-id="training-methods">Training methods</h5>
-<p>Since we used a neural network model, the only features passed into our model were the tokenized words themselves of the EC and UPC food descriptions – we did not conduct any manual feature engineering <span class="citation" data-cites="dong_liu">(Dong and Liu 2018)</span>. The model was trained on a 90/10 split into 90% training and 10% validation data, where the validation data was used as a test set to fine-tune the model’s hyperparameters. We started with a randomly sampled set of 16,000 pairs, batch size of 16 (i.e., the model would train on batches of 16 samples at a time), AdamW <span class="citation" data-cites="DBLP:journals/corr/abs-1711-05101">(Loshchilov and Hutter 2017)</span> as the optimizer (which adaptively updates the learning rate, or how large the update should be to the model’s parameters), a linear schedule with warmup <span class="citation" data-cites="DBLP:journals/corr/abs-1908-03265">(i.e., starting with a small learning rate in the first few epochs of training due to large variance in early stages of training, L. Liu et al. 2019)</span>, and one epoch (i.e., the number of times the model passes through all the training data). We then added the next randomly sampled set of 16,000 pairs to get a model trained on 32,000 data points. Finally, we reached a total of 48,000 data samples used for training. Each pair of sequences was tokenized with the pre-trained BERT tokenizer, with the special CLS and SEP tokens (where CLS is a learned vector that is typically passed to downstream layers for final classification, and SEP is a learned vector that separates two input sequences), and was padded with zeros to the maximum length input sequence of 240 tokens, so that each input sequence would be the same length.</p>
-</section>
-<section id="model-development-approach" class="level5">
-<h5 class="anchored" data-anchor-id="model-development-approach">Model development approach</h5>
-<p>We faced many challenges due to the secure nature of the ADRF environment. Since our approach relies on BERT, we were blocked by errors due to the local BERT installation. Typically, BERT is downloaded from the web as the program runs. However, for this challenge, BERT must be installed locally for security reasons. To fix the errors, the BERT models needed to be installed with <code>git lfs clone</code> instead of git.</p>
-<p>Second, we were unable to retrieve the test data from the database due to SQLAlchemy errors. We found a workaround by using DBeaver directly to save database tables as Excel spreadsheets, rather than accessing the database tables through Python.</p>
-<p>Finally, we needed a GPU in order to efficiently train our BERT models. However, we initially only had a CPU, so there was a delay due to setting up the GPU configuration. Once the GPU image was set up, there was still a CUDA error when running the BERT model during training. We determined that the model was too big to fit into GPU memory, so we found a workaround using gradient checkpointing (trading off computation speed for memory) with the transformers library’s Trainer and TrainingArguments. Unfortunately, the version of transformers we were using did not have these tools, and the library was not updated until less than a week before the deadline, so we still had to train the model on the CPU.</p>
-<p>To deal with the inability to run jobs in the background, our process was checkpointing our models every five batches, and saving the model predictions during evaluation to a csv file every five batches as well.</p>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>Find the code in the <a href="https://github.com/realworlddatascience/realworlddatascience.github.io/tree/main/case-studies/posts/2023/08/21/_code">Real World Data Science GitHub repository</a>.</p>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="our-results" class="level2">
-<h2 class="anchored" data-anchor-id="our-results">Our results</h2>
-<p>After training, the 48K model (so-called because it was trained on 48,000 data samples) was used at test time via ranking all possible 2017–18 EC descriptions given an unseen UPC description. The rankings were obtained through the model’s output value – the higher the output (or confidence), the more highly we ranked that EC description. To speed up the ranking process, we used blocking (i.e., only ranking a subset of all possible matches), specifically with exact word matches (using only the first six words in the UPC description, which appeared to be the most important), and fed all possible matches through the model in one batch per UPC description. Since we still did not have sufficient time to complete evaluation on the full set of test UPC descriptions, we implemented an expedited evaluation that only considered the first 10 matching EC descriptions in the BERT ranking process (which we call BERT-FAST). We also report results for the slower evaluation method that considers all EC descriptions that match at least one of the first six words in a given UPC description, but note that these results are based on just a small subset of the total test set. See Table 1 below for our results, where the <span class="citation" data-cites="5">(<strong>5?</strong>)</span> indicates how often the correct match was ranked among the top-5. See Table 2 for an estimate of how long it takes to train and test the model on a CPU.<br>
-<br>
-<br>
-</p>
-<div class="figure-caption">
-<p><strong>Table 1:</strong> S@5 and NCDG@5 for BERT, both for fast evaluation over the whole test set, and slower evaluation on a smaller subset (711 UPCs out of 37,693 total).</p>
-</div>
-<table class="table">
-<thead>
-<tr class="header">
-<th>Model</th>
-<th style="text-align: center;">Success@5</th>
-<th style="text-align: center;">NDCG@5</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>BERT-FAST</td>
-<td style="text-align: center;">0.057</td>
-<td style="text-align: center;">0.047</td>
-</tr>
-<tr class="even">
-<td>BERT-SLOW</td>
-<td style="text-align: center;">0.537</td>
-<td style="text-align: center;">0.412</td>
-</tr>
-</tbody>
-</table>
-<p><br>
-</p>
-<div class="figure-caption">
-<p><strong>Table 2:</strong> An estimate of the time required to train and test the model.</p>
-</div>
-<table class="table">
-<thead>
-<tr class="header">
-<th></th>
-<th>Time</th>
-</tr>
-</thead>
-<tbody>
-<tr class="odd">
-<td>Training (on 48K samples)</td>
-<td>16 hours</td>
-</tr>
-<tr class="even">
-<td>Testing (BERT-FAST)</td>
-<td>52 hours</td>
-</tr>
-<tr class="odd">
-<td>Testing (BERT-SLOW)</td>
-<td>63 days</td>
-</tr>
-</tbody>
-</table>
-<p><br>
-</p>
-</section>
-<section id="future-workrefinement" class="level2">
-<h2 class="anchored" data-anchor-id="future-workrefinement">Future work/refinement</h2>
-<p>In the future, with more time available, we would train on all data, not just our limited dataset of 48,000 pairs, as well as perform evaluation on the held-out test set with the full set of possible EC matches that have one or more words in common with the UPC description. We would compare against baseline word embedding methods such as word2vec <span class="citation" data-cites="DBLP:journals/corr/abs-1712-09405">(Mikolov et al. 2017)</span> and Glove <span class="citation" data-cites="pennington-etal-2014-glove">(Pennington, Socher, and Manning 2014)</span>, and we would explore hierarchical prediction methods for improving efficiency and accuracy. Specifically, we would first train a classifier to predict the generic food category, and then train finer-grained models to predict specific foods within a general food category. Finally, we are exploring multi-modal transformer-based approaches that allow two input modalities (i.e., food images and text descriptions of a meal) for predicting the best UPC match.</p>
-</section>
-<section id="lessons-learned" class="level2">
-<h2 class="anchored" data-anchor-id="lessons-learned">Lessons learned</h2>
-<p>We recommend that future challenges provide every team with both a CPU and a GPU in their workspace, to avoid transitioning from one to the other midway through the challenge. In addition, if possible, it would be very helpful to provide a mechanism for running jobs in the background. Finally, it may be useful for teams to submit snippets of code along with library package names, in order for the installations to be tested properly beforehand.</p>
-<div class="nav-btn-container">
-<div class="grid">
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../case-studies/posts/2023/08/21/04-second-place-winners.html">← Part 4: Second place winners</a></p>
-</div>
-</div>
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../case-studies/posts/2023/08/21/06-value-of-competitions.html">Part 6: The value of competitions →</a></p>
-</div>
-</div>
-</div>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the authors</dt>
-<dd>
-<strong>Yifan (Rosetta) Hu</strong> is an undergraduate student and <strong>Mandy Korpusik</strong> is an assistant professor of computer science at Loyola Marymount University’s Seaver College of Science and Engineering.
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Yifan Hu and Mandy Korpusik
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/https:/mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/https:/mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@pvsbond?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Peter Bond</a> on <a href="https://unsplash.com/photos/KfvknMhkmw0?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Hu, Yifan, and Mandy Korpusik. 2023. “Food for Thought: Third place winners – Loyola Marymount.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/viewpoints/case-studies/posts/2023/08/21/05-third-place-winners.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-DBLP:journals/corr/abs-1810-04805" class="csl-entry">
-Devlin, J., M.-W. Chang, K. Lee, and K. Toutanova. 2018. <span>“<span>BERT:</span> Pre-Training of Deep Bidirectional Transformers for Language Understanding.”</span> <em>CoRR</em> abs/1810.04805. <a href="http://arxiv.org/abs/1810.04805">http://arxiv.org/abs/1810.04805</a>.
-</div>
-<div id="ref-dong_liu" class="csl-entry">
-Dong, G., and H. Liu, eds. 2018. <em>Feature Engineering for Machine Learning and Data Analytics</em>. First edition. CRC Press.
-</div>
-<div id="ref-korpusik17_interspeech" class="csl-entry">
-Korpusik, M., Z. Collins, and J. Glass. 2017a. <span>“<span class="nocase">Character-Based Embedding Models and Reranking Strategies for Understanding Natural Language Meal Descriptions</span>.”</span> In <em>Proceedings of Interspeech</em>, 3320–24. <a href="https://doi.org/10.21437/Interspeech.2017-422">https://doi.org/10.21437/Interspeech.2017-422</a>.
-</div>
-<div id="ref-7953245" class="csl-entry">
-———. 2017b. <span>“Semantic Mapping of Natural Language Input to Database Entries via Convolutional Neural Networks.”</span> In <em>2017 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)</em>, 5685–89. <a href="https://doi.org/10.1109/ICASSP.2017.7953245">https://doi.org/10.1109/ICASSP.2017.7953245</a>.
-</div>
-<div id="ref-7902155" class="csl-entry">
-Korpusik, M., and J. Glass. 2017. <span>“Spoken Language Understanding for a Nutrition Dialogue System.”</span> <em>IEEE/ACM Transactions on Audio, Speech, and Language Processing</em> 25 (7): 1450–61. <a href="https://doi.org/10.1109/TASLP.2017.2694699">https://doi.org/10.1109/TASLP.2017.2694699</a>.
-</div>
-<div id="ref-8461769" class="csl-entry">
-———. 2018. <span>“Convolutional Neural Networks and Multitask Strategies for Semantic Mapping of Natural Language Input to a Structured Database.”</span> In <em>2018 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)</em>, 6174–78. <a href="https://doi.org/10.1109/ICASSP.2018.8461769">https://doi.org/10.1109/ICASSP.2018.8461769</a>.
-</div>
-<div id="ref-8721137" class="csl-entry">
-———. 2019. <span>“Deep Learning for Database Mapping and Asking Clarification Questions in Dialogue Systems.”</span> <em>IEEE/ACM Transactions on Audio, Speech, and Language Processing</em> 27 (8): 1321–34. <a href="https://doi.org/10.1109/TASLP.2019.2918618">https://doi.org/10.1109/TASLP.2019.2918618</a>.
-</div>
-<div id="ref-7472843" class="csl-entry">
-Korpusik, M., C. Huang, M. Price, and J. Glass. 2016. <span>“Distributional Semantics for Understanding Spoken Meal Descriptions.”</span> In <em>2016 IEEE International Conference on Acoustics, Speech and Signal Processing (ICASSP)</em>, 6070–74. <a href="https://doi.org/10.1109/ICASSP.2016.7472843">https://doi.org/10.1109/ICASSP.2016.7472843</a>.
-</div>
-<div id="ref-korpusik19_interspeech" class="csl-entry">
-Korpusik, M., Z. Liu, and J. Glass. 2019. <span>“<span class="nocase">A Comparison of Deep Learning Methods for Language Understanding</span>.”</span> In <em>Proceedings of Interspeech</em>, 849–53. <a href="https://doi.org/10.21437/Interspeech.2019-1262">https://doi.org/10.21437/Interspeech.2019-1262</a>.
-</div>
-<div id="ref-7078635" class="csl-entry">
-Korpusik, M., N. Schmidt, J. Drexler, S. Cyphers, and J. Glass. 2014. <span>“Data Collection and Language Understanding of Food Descriptions.”</span> In <em>2014 IEEE Spoken Language Technology Workshop (SLT)</em>, 560–65. <a href="https://doi.org/10.1109/SLT.2014.7078635">https://doi.org/10.1109/SLT.2014.7078635</a>.
-</div>
-<div id="ref-DBLP:journals/corr/abs-1909-11942" class="csl-entry">
-Lan, Z., M. Chen, S. Goodman, K. Gimpel, P. Sharma, and R. Soricut. 2019. <span>“<span>ALBERT:</span> <span>A</span> Lite <span>BERT</span> for Self-Supervised Learning of Language Representations.”</span> <em>CoRR</em> abs/1909.11942. <a href="http://arxiv.org/abs/1909.11942">http://arxiv.org/abs/1909.11942</a>.
-</div>
-<div id="ref-DBLP:journals/corr/abs-1908-03265" class="csl-entry">
-Liu, L., H. Jiang, P. He, W. Chen, X. Liu, J. Gao, and J. Han. 2019. <span>“On the Variance of the Adaptive Learning Rate and Beyond.”</span> <em>CoRR</em> abs/1908.03265. <a href="http://arxiv.org/abs/1908.03265">http://arxiv.org/abs/1908.03265</a>.
-</div>
-<div id="ref-DBLP:journals/corr/abs-1907-11692" class="csl-entry">
-Liu, Y., M. Ott, N. Goyal, J. Du, M. Joshi, D. Chen, O. Levy, M. Lewis, L. Zettlemoyer, and V. Stoyanov. 2019. <span>“RoBERTa: <span>A</span> Robustly Optimized <span>BERT</span> Pretraining Approach.”</span> <em>CoRR</em> abs/1907.11692. <a href="http://arxiv.org/abs/1907.11692">http://arxiv.org/abs/1907.11692</a>.
-</div>
-<div id="ref-DBLP:journals/corr/abs-1711-05101" class="csl-entry">
-Loshchilov, I., and F. Hutter. 2017. <span>“Fixing Weight Decay Regularization in Adam.”</span> <em>CoRR</em> abs/1711.05101. <a href="http://arxiv.org/abs/1711.05101">http://arxiv.org/abs/1711.05101</a>.
-</div>
-<div id="ref-DBLP:journals/corr/abs-1712-09405" class="csl-entry">
-Mikolov, T., E. Grave, P. Bojanowski, C. Puhrsch, and A. Joulin. 2017. <span>“Advances in Pre-Training Distributed Word Representations.”</span> <em>CoRR</em> abs/1712.09405. <a href="http://arxiv.org/abs/1712.09405">http://arxiv.org/abs/1712.09405</a>.
-</div>
-<div id="ref-pennington-etal-2014-glove" class="csl-entry">
-Pennington, J., R. Socher, and C. Manning. 2014. <span>“<span>G</span>lo<span>V</span>e: Global Vectors for Word Representation.”</span> In <em>Proceedings of the 2014 Conference on Empirical Methods in Natural Language Processing (<span>EMNLP</span>)</em>, 1532–43. Doha, Qatar: Association for Computational Linguistics. <a href="https://doi.org/10.3115/v1/D14-1162">https://doi.org/10.3115/v1/D14-1162</a>.
-</div>
-<div id="ref-DBLP:journals/corr/abs-1802-05365" class="csl-entry">
-Peters, M. E., M. Neumann, M. Iyyer, M. Gardner, C. Clark, K. Lee, and L. Zettlemoyer. 2018. <span>“Deep Contextualized Word Representations.”</span> <em>CoRR</em> abs/1802.05365. <a href="http://arxiv.org/abs/1802.05365">http://arxiv.org/abs/1802.05365</a>.
-</div>
-<div id="ref-radford2018improving" class="csl-entry">
-Radford, A., K. Narasimhan, T. Salimans, and I. Sutskever. 2018. <span>“Improving Language Understanding by Generative Pre-Training.”</span> <a href="https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf">https://s3-us-west-2.amazonaws.com/openai-assets/research-covers/language-unsupervised/language_understanding_paper.pdf</a>.
-</div>
-<div id="ref-NIPS2017_3f5ee243" class="csl-entry">
-Vaswani, A., N. Shazeer, N. Parmar, J. Uszkoreit, L. Jones, A. N. Gomez, Ł. Kaiser, and I. Polosukhin. 2017. <span>“Attention Is All You Need.”</span> In <em>Advances in Neural Information Processing Systems</em>, edited by I. Guyon, U. Von Luxburg, S. Bengio, H. Wallach, R. Fergus, S. Vishwanathan, and R. Garnett. Vol. 30. Curran Associates, Inc. <a href="https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf">https://proceedings.neurips.cc/paper_files/paper/2017/file/3f5ee243547dee91fbd053c1c4a845aa-Paper.pdf</a>.
-</div>
-<div id="ref-NEURIPS2019_dc6a7e65" class="csl-entry">
-Yang, Z., Z. Dai, Y. Yang, J. Carbonell, R. R. Salakhutdinov, and Q. V. Le. 2019. <span>“XLNet: Generalized Autoregressive Pretraining for Language Understanding.”</span> In <em>Advances in Neural Information Processing Systems</em>, edited by H. Wallach, H. Larochelle, A. Beygelzimer, F. dAlché-Buc, E. Fox, and R. Garnett. Vol. 32. Curran Associates, Inc. <a href="https://proceedings.neurips.cc/paper_files/paper/2019/file/dc6a7e655d7e5840e66733e9ee67cc69-Paper.pdf">https://proceedings.neurips.cc/paper_files/paper/2019/file/dc6a7e655d7e5840e66733e9ee67cc69-Paper.pdf</a>.
-</div>
-</div></section></div> ]]></description>
-  <category>Machine learning</category>
-  <category>Natural language processing</category>
-  <category>Public policy</category>
-  <category>Health and wellbeing</category>
-  <guid>https://realworlddatascience.net/case-studies/posts/2023/08/21/05-third-place-winners.html</guid>
-  <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/05-lm.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 </channel>
 </rss>
