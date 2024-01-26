@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -52,7 +52,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -61,6 +67,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -96,42 +103,56 @@ ul.task-list li input[type="checkbox"] {
     }
   })
   </script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
-
-<script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
-</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <link rel="stylesheet" href="../../rwds.css">
 <meta property="og:title" content="Editors’ Blog | Viewpoints | Real World Data Science">
 <meta property="og:description" content="News, updates, and discussions from the Editorial Board">
-<meta property="og:image" content="https://realworlddatascience.net/viewpoints/editors-blog/posts/2024/01/22/images/uk-parliament.png">
-<meta property="og:site-name" content="Real World Data Science">
-<meta property="og:image:height" content="724">
-<meta property="og:image:width" content="991">
+<meta property="og:image" content="https://realworlddatascience.net/viewpoints/editors-blog/images/rwds-logo-150px.png">
+<meta property="og:site_name" content="Real World Data Science">
 <meta name="twitter:title" content="Editors’ Blog | Viewpoints | Real World Data Science">
 <meta name="twitter:description" content="News, updates, and discussions from the Editorial Board">
-<meta name="twitter:image" content="https://realworlddatascience.net/viewpoints/editors-blog/posts/2024/01/22/images/uk-parliament.png">
+<meta name="twitter:image" content="https://realworlddatascience.net/viewpoints/editors-blog/images/rwds-logo-150px.png">
 <meta name="twitter:site" content="@rwdatasci">
-<meta name="twitter:image-height" content="724">
-<meta name="twitter:image-width" content="991">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     <img src="../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
     </a>
@@ -143,44 +164,44 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../case-studies/index.html" rel="" target="">
- <span class="menu-text">Case studies</span></a>
+    <a class="nav-link" href="../../case-studies/index.html"> 
+<span class="menu-text">Case studies</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../ideas/index.html" rel="" target="">
- <span class="menu-text">Ideas</span></a>
+    <a class="nav-link" href="../../ideas/index.html"> 
+<span class="menu-text">Ideas</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../careers/index.html" rel="" target="">
- <span class="menu-text">Careers</span></a>
+    <a class="nav-link" href="../../careers/index.html"> 
+<span class="menu-text">Careers</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../viewpoints/index.html" rel="" target="">
- <span class="menu-text">Viewpoints</span></a>
+    <a class="nav-link" href="../../viewpoints/index.html"> 
+<span class="menu-text">Viewpoints</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">About RWDS</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
         <li>
-    <a class="dropdown-item" href="../../about-rwds.html" rel="" target="">
+    <a class="dropdown-item" href="../../about-rwds.html">
  <span class="dropdown-text">Who we are</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../contributor-docs/call-for-contributions.html" rel="" target="">
+    <a class="dropdown-item" href="../../contributor-docs/call-for-contributions.html">
  <span class="dropdown-text">How to contribute</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../contact.html" rel="" target="">
+    <a class="dropdown-item" href="../../contact.html">
  <span class="dropdown-text">Contact us</span></a>
   </li>  
     </ul>
   </li>
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -218,21 +239,22 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 
 
 
+
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="AI ethics,Large language models,Monitoring,Public policy,Risk" data-listing-date-sort="1705881600000" data-listing-file-modified-sort="1705946316447" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
+<div class="quarto-post image-right" data-index="0" data-categories="AI ethics,Large language models,Monitoring,Public policy,Risk" data-listing-date-sort="1705881600000" data-listing-file-modified-sort="1706285882937" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="469">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2024/01/22/gen-ai-framework.html"> <img src="../../viewpoints/editors-blog/posts/2024/01/22/images/uk-parliament.png" class="thumbnail-image" alt="Long exposure photo of the UK Houses of Parliament and Portcullis House, taken from across the River Thames."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2024/01/22/gen-ai-framework.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2024/01/22/gen-ai-framework.html" class="no-external">
+<p><img src="../../viewpoints/editors-blog/posts/2024/01/22/images/uk-parliament.png" class="thumbnail-image" alt="Long exposure photo of the UK Houses of Parliament and Portcullis House, taken from across the River Thames."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2024/01/22/gen-ai-framework.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2024/01/22/gen-ai-framework.html">
 <h3 class="no-anchor listing-title">
-UK government sets out 10 principles for use of generative AI
+<a href="../../viewpoints/editors-blog/posts/2024/01/22/gen-ai-framework.html" class="no-external">UK government sets out 10 principles for use of generative AI</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2024/01/22/gen-ai-framework.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('AI ethics'); return false;">
 AI ethics
@@ -250,14 +272,12 @@ Public policy
 Risk
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2024/01/22/gen-ai-framework.html">
 <div class="listing-description">
-<p>Government says staff need to understand what generative AI is, its limitations, and how to deploy the technology lawfully, ethically and securely.</p>
+<a href="../../viewpoints/editors-blog/posts/2024/01/22/gen-ai-framework.html" class="no-external">Government says staff need to understand what generative AI is, its limitations, and how to deploy the technology lawfully, ethically and securely. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2024/01/22/gen-ai-framework.html">
+<a href="../../viewpoints/editors-blog/posts/2024/01/22/gen-ai-framework.html" class="no-external">
 <div class="listing-date">
 Jan 22, 2024
 </div>
@@ -267,19 +287,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="Coding,Prediction,Reproducible research,Statistics" data-listing-date-sort="1705536000000" data-listing-file-modified-sort="1705946316447" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="1" data-categories="Coding,Prediction,Reproducible research,Statistics" data-listing-date-sort="1705536000000" data-listing-file-modified-sort="1706285882937" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="339">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2024/01/18/cherry-blossom.html"> <img src="../../viewpoints/editors-blog/posts/2024/01/18/images/cherry-blossom.png" class="thumbnail-image" alt="Photo of Japanese cherry blossom, or sakura, against a blue background. Photo by AJ on Unsplash."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2024/01/18/cherry-blossom.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2024/01/18/cherry-blossom.html" class="no-external">
+<p><img src="../../viewpoints/editors-blog/posts/2024/01/18/images/cherry-blossom.png" class="thumbnail-image" alt="Photo of Japanese cherry blossom, or sakura, against a blue background. Photo by AJ on Unsplash."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2024/01/18/cherry-blossom.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2024/01/18/cherry-blossom.html">
 <h3 class="no-anchor listing-title">
-When will the cherry trees bloom? Get ready to make and share your predictions!
+<a href="../../viewpoints/editors-blog/posts/2024/01/18/cherry-blossom.html" class="no-external">When will the cherry trees bloom? Get ready to make and share your predictions!</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2024/01/18/cherry-blossom.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Coding'); return false;">
 Coding
@@ -294,14 +314,12 @@ Reproducible research
 Statistics
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2024/01/18/cherry-blossom.html">
 <div class="listing-description">
-<p>The 2024 International Cherry Blossom Prediction Competition will open for entries on February 1. There’s cash and prizes on offer for the best entries, including having your work featured on Real World Data Science.</p>
+<a href="../../viewpoints/editors-blog/posts/2024/01/18/cherry-blossom.html" class="no-external">The 2024 International Cherry Blossom Prediction Competition will open for entries on February 1. There’s cash and prizes on offer for the best entries, including having your work featured on Real World Data Science. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2024/01/18/cherry-blossom.html">
+<a href="../../viewpoints/editors-blog/posts/2024/01/18/cherry-blossom.html" class="no-external">
 <div class="listing-date">
 Jan 18, 2024
 </div>
@@ -311,19 +329,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="Coding,Communication,Events,Communities,Open source" data-listing-date-sort="1704240000000" data-listing-file-modified-sort="1705946316447" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1">
+<div class="quarto-post image-right" data-index="2" data-categories="Coding,Communication,Events,Communities,Open source" data-listing-date-sort="1704240000000" data-listing-file-modified-sort="1706285882937" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="1" data-listing-word-count-sort="156">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2024/01/03/posit-conf-video.html"> <img src="../../viewpoints/editors-blog/posts/2024/01/03/images/video-grab.png" class="thumbnail-image" alt="Still from posit::conf(2023) talk, splitscreen view. On the left screen is Real World Data Science editor Brian Tarran presenting; on the right screen is a screengrab of the Quarto webpage, with the words GitHub Pages circled in red."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2024/01/03/posit-conf-video.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2024/01/03/posit-conf-video.html" class="no-external">
+<p><img src="../../viewpoints/editors-blog/posts/2024/01/03/images/video-grab.png" class="thumbnail-image" alt="Still from posit::conf(2023) talk, splitscreen view. On the left screen is Real World Data Science editor Brian Tarran presenting; on the right screen is a screengrab of the Quarto webpage, with the words GitHub Pages circled in red."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2024/01/03/posit-conf-video.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2024/01/03/posit-conf-video.html">
 <h3 class="no-anchor listing-title">
-Creating a web publication with Quarto: the Real World Data Science origin story
+<a href="../../viewpoints/editors-blog/posts/2024/01/03/posit-conf-video.html" class="no-external">Creating a web publication with Quarto: the Real World Data Science origin story</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2024/01/03/posit-conf-video.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Coding'); return false;">
 Coding
@@ -341,14 +359,12 @@ Communities
 Open source
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2024/01/03/posit-conf-video.html">
 <div class="listing-description">
-<p>This is the story of how a Royal Statistical Society editor discovered an open source publishing system called Quarto, learned how to code (a bit), and built an online publication for the data science community.</p>
+<a href="../../viewpoints/editors-blog/posts/2024/01/03/posit-conf-video.html" class="no-external">This is the story of how a Royal Statistical Society editor discovered an open source publishing system called Quarto, learned how to code (a bit), and built an online publication for the data science community. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2024/01/03/posit-conf-video.html">
+<a href="../../viewpoints/editors-blog/posts/2024/01/03/posit-conf-video.html" class="no-external">
 <div class="listing-date">
 Jan 3, 2024
 </div>
@@ -358,19 +374,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="R,Data visualisation,Updates" data-listing-date-sort="1702339200000" data-listing-file-modified-sort="1705946316447" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
+<div class="quarto-post image-right" data-index="3" data-categories="R,Data visualisation,Updates" data-listing-date-sort="1702339200000" data-listing-file-modified-sort="1706285882937" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1379">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2023/12/12/rwds-xmas-card.html"> <img src="../../viewpoints/editors-blog/posts/2023/12/12/images/rwds-christmas-card-thumb.png" class="thumbnail-image" alt="Purple square with white snowflakes and green tree in foreground. Tree is decorated with red and gold baubles of various sizes."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2023/12/12/rwds-xmas-card.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2023/12/12/rwds-xmas-card.html" class="no-external">
+<p><img src="../../viewpoints/editors-blog/posts/2023/12/12/images/rwds-christmas-card-thumb.png" class="thumbnail-image" alt="Purple square with white snowflakes and green tree in foreground. Tree is decorated with red and gold baubles of various sizes."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2023/12/12/rwds-xmas-card.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2023/12/12/rwds-xmas-card.html">
 <h3 class="no-anchor listing-title">
-A Christmas card in R for the Real World Data Science community
+<a href="../../viewpoints/editors-blog/posts/2023/12/12/rwds-xmas-card.html" class="no-external">A Christmas card in R for the Real World Data Science community</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2023/12/12/rwds-xmas-card.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
 R
@@ -382,14 +398,12 @@ Data visualisation
 Updates
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2023/12/12/rwds-xmas-card.html">
 <div class="listing-description">
-<p>Inspired by Nicola Rennie’s excellent tutorial on making Christmas cards with R, we’ve had a go at putting together our own design – especially for you, the wonderful community of Real World Data Science readers and contributors. Thank you for supporting us this year!</p>
+<a href="../../viewpoints/editors-blog/posts/2023/12/12/rwds-xmas-card.html" class="no-external">Inspired by Nicola Rennie’s excellent tutorial on making Christmas cards with R, we’ve had a go at putting together our own design – especially for you, the wonderful community of Real World Data Science readers and contributors. Thank you for supporting us this year! </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2023/12/12/rwds-xmas-card.html">
+<a href="../../viewpoints/editors-blog/posts/2023/12/12/rwds-xmas-card.html" class="no-external">
 <div class="listing-date">
 Dec 12, 2023
 </div>
@@ -399,19 +413,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="AI,Large language models,Ethics,Regulation,Risk" data-listing-date-sort="1701993600000" data-listing-file-modified-sort="1705946316443" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
+<div class="quarto-post image-right" data-index="4" data-categories="AI,Large language models,Ethics,Regulation,Risk" data-listing-date-sort="1701993600000" data-listing-file-modified-sort="1706285882933" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1078">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2023/12/08/digital-ethics-summit.html"> <img src="../../viewpoints/editors-blog/posts/2023/12/08/images/kajetan-sumila-bxaqUeVIGHU-unsplash.png" class="thumbnail-image" alt="Black computer screen showing a folder icon, with the numbers 2023 being typed out below."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2023/12/08/digital-ethics-summit.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2023/12/08/digital-ethics-summit.html" class="no-external">
+<p><img src="../../viewpoints/editors-blog/posts/2023/12/08/images/kajetan-sumila-bxaqUeVIGHU-unsplash.png" class="thumbnail-image" alt="Black computer screen showing a folder icon, with the numbers 2023 being typed out below."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2023/12/08/digital-ethics-summit.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2023/12/08/digital-ethics-summit.html">
 <h3 class="no-anchor listing-title">
-AI and digital ethics in 2023: a ‘remarkable, eventful year’
+<a href="../../viewpoints/editors-blog/posts/2023/12/08/digital-ethics-summit.html" class="no-external">AI and digital ethics in 2023: a ‘remarkable, eventful year’</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2023/12/08/digital-ethics-summit.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
 AI
@@ -429,14 +443,12 @@ Regulation
 Risk
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2023/12/08/digital-ethics-summit.html">
 <div class="listing-description">
-<p>At techUK’s Digital Ethics Summit, experts looked back on a year in which AI chatbots dominated debates, helped shape legislative agendas, and opened our eyes to the dangers posed by the ‘democratisation of disinformation.’</p>
+<a href="../../viewpoints/editors-blog/posts/2023/12/08/digital-ethics-summit.html" class="no-external">At techUK’s Digital Ethics Summit, experts looked back on a year in which AI chatbots dominated debates, helped shape legislative agendas, and opened our eyes to the dangers posed by the ‘democratisation of disinformation.’ </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2023/12/08/digital-ethics-summit.html">
+<a href="../../viewpoints/editors-blog/posts/2023/12/08/digital-ethics-summit.html" class="no-external">
 <div class="listing-date">
 Dec 8, 2023
 </div>
@@ -446,19 +458,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="AI,Large language models,Events" data-listing-date-sort="1698624000000" data-listing-file-modified-sort="1705946316443" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
+<div class="quarto-post image-right" data-index="5" data-categories="AI,Large language models,Events" data-listing-date-sort="1698624000000" data-listing-file-modified-sort="1706285882933" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="542">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2023/10/30/ai-conf-panel.html"> <img src="../../viewpoints/editors-blog/posts/2023/10/30/images/panel.png" class="thumbnail-image" alt="Screengrab of RSS Conference panel members showing, left to right, Peter Wells, Maxine Setiawan, Sophie Carr, Chris Nemeth, and Karen Tingay."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2023/10/30/ai-conf-panel.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2023/10/30/ai-conf-panel.html" class="no-external">
+<p><img src="../../viewpoints/editors-blog/posts/2023/10/30/images/panel.png" class="thumbnail-image" alt="Screengrab of RSS Conference panel members showing, left to right, Peter Wells, Maxine Setiawan, Sophie Carr, Chris Nemeth, and Karen Tingay."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2023/10/30/ai-conf-panel.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2023/10/30/ai-conf-panel.html">
 <h3 class="no-anchor listing-title">
-How data science and statistics can shape the UK’s AI strategy
+<a href="../../viewpoints/editors-blog/posts/2023/10/30/ai-conf-panel.html" class="no-external">How data science and statistics can shape the UK’s AI strategy</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2023/10/30/ai-conf-panel.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
 AI
@@ -470,14 +482,12 @@ Large language models
 Events
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2023/10/30/ai-conf-panel.html">
 <div class="listing-description">
-<p>At the Royal Statistical Society Conference this September, Real World Data Science brought together data scientists, statisticians, and policy experts to discuss the urgent topic of artificial intelligence – risks, benefits, evaluation, and regulation. Watch the panel discussion in full!</p>
+<a href="../../viewpoints/editors-blog/posts/2023/10/30/ai-conf-panel.html" class="no-external">At the Royal Statistical Society Conference this September, Real World Data Science brought together data scientists, statisticians, and policy experts to discuss the urgent topic of artificial intelligence – risks, benefits, evaluation, and regulation. Watch the panel discussion in full! </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2023/10/30/ai-conf-panel.html">
+<a href="../../viewpoints/editors-blog/posts/2023/10/30/ai-conf-panel.html" class="no-external">
 <div class="listing-date">
 Oct 30, 2023
 </div>
@@ -487,19 +497,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="AI,Large language models,Communities,Events,Updates" data-listing-date-sort="1696896000000" data-listing-file-modified-sort="1705946316443" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
+<div class="quarto-post image-right" data-index="6" data-categories="AI,Large language models,Communities,Events,Updates" data-listing-date-sort="1696896000000" data-listing-file-modified-sort="1706285882933" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="557">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2023/10/10/october-events.html"> <img src="../../viewpoints/editors-blog/posts/2023/10/10/images/oct-events.png" class="thumbnail-image" alt="Halloween characters chatting over coffee at a professional conference focused on data science, digital art created by Bing Image Creator."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2023/10/10/october-events.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2023/10/10/october-events.html" class="no-external">
+<p><img src="../../viewpoints/editors-blog/posts/2023/10/10/images/oct-events.png" class="thumbnail-image" alt="Halloween characters chatting over coffee at a professional conference focused on data science, digital art created by Bing Image Creator."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2023/10/10/october-events.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2023/10/10/october-events.html">
 <h3 class="no-anchor listing-title">
-Join Real World Data Science at three events this October!
+<a href="../../viewpoints/editors-blog/posts/2023/10/10/october-events.html" class="no-external">Join Real World Data Science at three events this October!</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2023/10/10/october-events.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
 AI
@@ -517,14 +527,12 @@ Events
 Updates
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2023/10/10/october-events.html">
 <div class="listing-description">
-<p>An introduction to Real World Data Science as part of RSS Members’ Week; a keynote talk at the NHS-R Community Annual Conference; and a panel debate on AI evaluation, exploring how data science and statistics can help make sense of AI models. Halloween costumes not required…</p>
+<a href="../../viewpoints/editors-blog/posts/2023/10/10/october-events.html" class="no-external">An introduction to Real World Data Science as part of RSS Members’ Week; a keynote talk at the NHS-R Community Annual Conference; and a panel debate on AI evaluation, exploring how data science and statistics can help make sense of AI models. Halloween costumes not required… </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2023/10/10/october-events.html">
+<a href="../../viewpoints/editors-blog/posts/2023/10/10/october-events.html" class="no-external">
 <div class="listing-date">
 Oct 10, 2023
 </div>
@@ -534,19 +542,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="News,Updates,Call for contributions" data-listing-date-sort="1696204800000" data-listing-file-modified-sort="1705946316439" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
+<div class="quarto-post image-right" data-index="7" data-categories="News,Updates,Call for contributions" data-listing-date-sort="1696204800000" data-listing-file-modified-sort="1706285882929" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="407">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2023/10/02/asa-partner.html"> <img src="../../viewpoints/editors-blog/posts/2023/10/02/images/laptop-connect.png" class="thumbnail-image" alt="Two laptops connecting directly and becoming super charged, with a range of data visualisations in the background, comic book style. Created by Bing Image Creator."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2023/10/02/asa-partner.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2023/10/02/asa-partner.html" class="no-external">
+<p><img src="../../viewpoints/editors-blog/posts/2023/10/02/images/laptop-connect.png" class="thumbnail-image" alt="Two laptops connecting directly and becoming super charged, with a range of data visualisations in the background, comic book style. Created by Bing Image Creator."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2023/10/02/asa-partner.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2023/10/02/asa-partner.html">
 <h3 class="no-anchor listing-title">
-American Statistical Association joins Real World Data Science as partner
+<a href="../../viewpoints/editors-blog/posts/2023/10/02/asa-partner.html" class="no-external">American Statistical Association joins Real World Data Science as partner</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2023/10/02/asa-partner.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('News'); return false;">
 News
@@ -558,14 +566,12 @@ Updates
 Call for contributions
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2023/10/02/asa-partner.html">
 <div class="listing-description">
-<p>We’re thrilled to have ASA on board as a Real World Data Science partner and look forward to working with ASA members, groups and sections to further grow and develop the site.</p>
+<a href="../../viewpoints/editors-blog/posts/2023/10/02/asa-partner.html" class="no-external">We’re thrilled to have ASA on board as a Real World Data Science partner and look forward to working with ASA members, groups and sections to further grow and develop the site. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2023/10/02/asa-partner.html">
+<a href="../../viewpoints/editors-blog/posts/2023/10/02/asa-partner.html" class="no-external">
 <div class="listing-date">
 Oct 2, 2023
 </div>
@@ -575,19 +581,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="Conferences,Events" data-listing-date-sort="1695772800000" data-listing-file-modified-sort="1705946316439" data-listing-date-modified-sort="1704240000000" data-listing-reading-time-sort="13">
+<div class="quarto-post image-right" data-index="8" data-categories="Conferences,Events" data-listing-date-sort="1695772800000" data-listing-file-modified-sort="1706285882929" data-listing-date-modified-sort="1704240000000" data-listing-reading-time-sort="13" data-listing-word-count-sort="2577">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2023/09/19/positconf-blog.html"> <img src="../../viewpoints/editors-blog/posts/2023/09/19/images/chicago-theatre.png" class="thumbnail-image" alt="Chicago Theatre sign, illuminated at night."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2023/09/19/positconf-blog.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2023/09/19/positconf-blog.html" class="no-external">
+<p><img src="../../viewpoints/editors-blog/posts/2023/09/19/images/chicago-theatre.png" class="thumbnail-image" alt="Chicago Theatre sign, illuminated at night."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2023/09/19/positconf-blog.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2023/09/19/positconf-blog.html">
 <h3 class="no-anchor listing-title">
-Live from Chicago: Real World Data Science at posit::conf(2023)
+<a href="../../viewpoints/editors-blog/posts/2023/09/19/positconf-blog.html" class="no-external">Live from Chicago: Real World Data Science at posit::conf(2023)</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2023/09/19/positconf-blog.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Conferences'); return false;">
 Conferences
@@ -596,14 +602,12 @@ Conferences
 Events
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2023/09/19/positconf-blog.html">
 <div class="listing-description">
-<p>This year’s posit::conf has come to a close, and we had a great time in Chicago learning about data science software, ideas, and applications. Read on for key takeaways from a selection of talks and sessions.</p>
+<a href="../../viewpoints/editors-blog/posts/2023/09/19/positconf-blog.html" class="no-external">This year’s posit::conf has come to a close, and we had a great time in Chicago learning about data science software, ideas, and applications. Read on for key takeaways from a selection of talks and sessions. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2023/09/19/positconf-blog.html">
+<a href="../../viewpoints/editors-blog/posts/2023/09/19/positconf-blog.html" class="no-external">
 <div class="listing-date">
 Sep 27, 2023
 </div>
@@ -613,19 +617,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="Call for contributions,Tools,Updates" data-listing-date-sort="1694476800000" data-listing-file-modified-sort="1705946316435" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="9" data-categories="Call for contributions,Tools,Updates" data-listing-date-sort="1694476800000" data-listing-file-modified-sort="1706285882921" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="355">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2023/09/12/template.html"> <img src="../../viewpoints/editors-blog/posts/2023/09/12/images/roman-synkevych-UT8LMo-wlyk-unsplash.png" class="thumbnail-image" alt="A small figurine of an oktokata in the center, in the background a laptop with an open code editor and a terminal."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2023/09/12/template.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2023/09/12/template.html" class="no-external">
+<p><img src="../../viewpoints/editors-blog/posts/2023/09/12/images/roman-synkevych-UT8LMo-wlyk-unsplash.png" class="thumbnail-image" alt="A small figurine of an oktokata in the center, in the background a laptop with an open code editor and a terminal."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2023/09/12/template.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2023/09/12/template.html">
 <h3 class="no-anchor listing-title">
-Contributors: check out the new Real World Data Science template repo on GitHub
+<a href="../../viewpoints/editors-blog/posts/2023/09/12/template.html" class="no-external">Contributors: check out the new Real World Data Science template repo on GitHub</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2023/09/12/template.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Call for contributions'); return false;">
 Call for contributions
@@ -637,14 +641,12 @@ Tools
 Updates
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2023/09/12/template.html">
 <div class="listing-description">
-<p>The ‘RWDS_post_template’ repository, created by Finn-Ole Höner, demonstrates various Quarto features and helps site contributors to create content using our house style and format.</p>
+<a href="../../viewpoints/editors-blog/posts/2023/09/12/template.html" class="no-external">The ‘RWDS_post_template’ repository, created by Finn-Ole Höner, demonstrates various Quarto features and helps site contributors to create content using our house style and format. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2023/09/12/template.html">
+<a href="../../viewpoints/editors-blog/posts/2023/09/12/template.html" class="no-external">
 <div class="listing-date">
 Sep 12, 2023
 </div>
@@ -654,19 +656,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="AI,Machine learning,Data visualisation,Events" data-listing-date-sort="1692835200000" data-listing-file-modified-sort="1705946316431" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
+<div class="quarto-post image-right" data-index="10" data-categories="AI,Machine learning,Data visualisation,Events" data-listing-date-sort="1692835200000" data-listing-file-modified-sort="1706285882921" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="675">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2023/08/24/rss-conference.html"> <img src="../../viewpoints/editors-blog/posts/2023/08/24/images/harrogate-conference-centre.png" class="thumbnail-image" alt="Exterior photo of the Harrogate Convention Centre."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2023/08/24/rss-conference.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2023/08/24/rss-conference.html" class="no-external">
+<p><img src="../../viewpoints/editors-blog/posts/2023/08/24/images/harrogate-conference-centre.png" class="thumbnail-image" alt="Exterior photo of the Harrogate Convention Centre."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2023/08/24/rss-conference.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2023/08/24/rss-conference.html">
 <h3 class="no-anchor listing-title">
-RSS Conference preview: Evaluating AI, machine learning, and data visualisation
+<a href="../../viewpoints/editors-blog/posts/2023/08/24/rss-conference.html" class="no-external">RSS Conference preview: Evaluating AI, machine learning, and data visualisation</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2023/08/24/rss-conference.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
 AI
@@ -681,14 +683,12 @@ Data visualisation
 Events
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2023/08/24/rss-conference.html">
 <div class="listing-description">
-<p>Heading to RSS Conference in Harrogate this September? Here’s a selection of sessions to add to your schedule.</p>
+<a href="../../viewpoints/editors-blog/posts/2023/08/24/rss-conference.html" class="no-external">Heading to RSS Conference in Harrogate this September? Here’s a selection of sessions to add to your schedule. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2023/08/24/rss-conference.html">
+<a href="../../viewpoints/editors-blog/posts/2023/08/24/rss-conference.html" class="no-external">
 <div class="listing-date">
 Aug 24, 2023
 </div>
@@ -698,19 +698,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="11" data-categories="Conferences,Events" data-listing-date-sort="1692057600000" data-listing-file-modified-sort="1705946316431" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12">
+<div class="quarto-post image-right" data-index="11" data-categories="Conferences,Events" data-listing-date-sort="1692057600000" data-listing-file-modified-sort="1706285882921" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2222">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2023/08/06/jsm-blog.html"> <img src="../../viewpoints/editors-blog/posts/2023/08/06/images/google-sign.png" class="thumbnail-image" alt="Google logo on top of building, against a blue sky."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2023/08/06/jsm-blog.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2023/08/06/jsm-blog.html" class="no-external">
+<p><img src="../../viewpoints/editors-blog/posts/2023/08/06/images/google-sign.png" class="thumbnail-image" alt="Google logo on top of building, against a blue sky."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2023/08/06/jsm-blog.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2023/08/06/jsm-blog.html">
 <h3 class="no-anchor listing-title">
-Live from Toronto: Real World Data Science at the Joint Statistical Meetings
+<a href="../../viewpoints/editors-blog/posts/2023/08/06/jsm-blog.html" class="no-external">Live from Toronto: Real World Data Science at the Joint Statistical Meetings</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2023/08/06/jsm-blog.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Conferences'); return false;">
 Conferences
@@ -719,14 +719,12 @@ Conferences
 Events
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2023/08/06/jsm-blog.html">
 <div class="listing-description">
-<p>We’re in Toronto for this year’s Joint Statistical Meetings (JSM). Over the next few days, we’ll be sharing key takeaways from a selection of talks and sessions. Check back regularly for updates.</p>
+<a href="../../viewpoints/editors-blog/posts/2023/08/06/jsm-blog.html" class="no-external">We’re in Toronto for this year’s Joint Statistical Meetings (JSM). Over the next few days, we’ll be sharing key takeaways from a selection of talks and sessions. Check back regularly for updates. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2023/08/06/jsm-blog.html">
+<a href="../../viewpoints/editors-blog/posts/2023/08/06/jsm-blog.html" class="no-external">
 <div class="listing-date">
 Aug 15, 2023
 </div>
@@ -736,19 +734,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="12" data-categories="Education,Data literacy,Outreach" data-listing-date-sort="1690416000000" data-listing-file-modified-sort="1705946316427" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="12" data-categories="Education,Data literacy,Outreach" data-listing-date-sort="1690416000000" data-listing-file-modified-sort="1706285882913" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="383">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2023/07/27/schools-outreach.html"> <img data-src="../../viewpoints/editors-blog/posts/2023/07/27/images/kenny-eliason-zFSo6bnZJTw-unsplash.png" class="thumbnail-image" alt="A photo of children listening to teacher in class, taken from a child&amp;#039;s perspective."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2023/07/27/schools-outreach.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2023/07/27/schools-outreach.html" class="no-external">
+<p><img data-src="../../viewpoints/editors-blog/posts/2023/07/27/images/kenny-eliason-zFSo6bnZJTw-unsplash.png" class="thumbnail-image" alt="A photo of children listening to teacher in class, taken from a child&amp;#039;s perspective."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2023/07/27/schools-outreach.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2023/07/27/schools-outreach.html">
 <h3 class="no-anchor listing-title">
-‘Go out and talk about data science, particularly to schoolchildren’
+<a href="../../viewpoints/editors-blog/posts/2023/07/27/schools-outreach.html" class="no-external">‘Go out and talk about data science, particularly to schoolchildren’</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2023/07/27/schools-outreach.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Education'); return false;">
 Education
@@ -760,14 +758,12 @@ Data literacy
 Outreach
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2023/07/27/schools-outreach.html">
 <div class="listing-description">
-<p>Open University professor Rachel Hilliam calls for data science outreach in schools, to build skills pipeline and plug gaps: ‘There is absolutely no reason why we can’t excite children in a career in data science.’</p>
+<a href="../../viewpoints/editors-blog/posts/2023/07/27/schools-outreach.html" class="no-external">Open University professor Rachel Hilliam calls for data science outreach in schools, to build skills pipeline and plug gaps: ‘There is absolutely no reason why we can’t excite children in a career in data science.’ </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2023/07/27/schools-outreach.html">
+<a href="../../viewpoints/editors-blog/posts/2023/07/27/schools-outreach.html" class="no-external">
 <div class="listing-date">
 Jul 27, 2023
 </div>
@@ -777,19 +773,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="13" data-categories="AI,Large language models,Coding,Data analysis" data-listing-date-sort="1689724800000" data-listing-file-modified-sort="1705946316411" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6">
+<div class="quarto-post image-right" data-index="13" data-categories="AI,Large language models,Coding,Data analysis" data-listing-date-sort="1689724800000" data-listing-file-modified-sort="1706285882901" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="6" data-listing-word-count-sort="1017">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2023/07/19/code-interpreter.html"> <img data-src="../../viewpoints/editors-blog/posts/2023/07/19/images/charlesdeluvio-pjAH2Ax4uWk-unsplash.png" class="thumbnail-image" alt="Person sitting in front of a screen of code."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2023/07/19/code-interpreter.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2023/07/19/code-interpreter.html" class="no-external">
+<p><img data-src="../../viewpoints/editors-blog/posts/2023/07/19/images/charlesdeluvio-pjAH2Ax4uWk-unsplash.png" class="thumbnail-image" alt="Person sitting in front of a screen of code."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2023/07/19/code-interpreter.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2023/07/19/code-interpreter.html">
 <h3 class="no-anchor listing-title">
-Testing out ChatGPT’s new Code Interpreter
+<a href="../../viewpoints/editors-blog/posts/2023/07/19/code-interpreter.html" class="no-external">Testing out ChatGPT’s new Code Interpreter</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2023/07/19/code-interpreter.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
 AI
@@ -804,14 +800,12 @@ Coding
 Data analysis
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2023/07/19/code-interpreter.html">
 <div class="listing-description">
-<p>OpenAI’s latest plugin turns ChatGPT into a tool for data cleaning, preprocessing, analysis, visualisation and predictive modelling tasks, among other things. Some have hailed it ‘the new data scientist’, but is it all it’s cracked up to be? Real World Data Science takes Code Interpreter for a test drive.</p>
+<a href="../../viewpoints/editors-blog/posts/2023/07/19/code-interpreter.html" class="no-external">OpenAI’s latest plugin turns ChatGPT into a tool for data cleaning, preprocessing, analysis, visualisation and predictive modelling tasks, among other things. Some have hailed it ‘the new data scientist’, but is it all it’s cracked up to be? Real World Data Science takes Code Interpreter for a test drive. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2023/07/19/code-interpreter.html">
+<a href="../../viewpoints/editors-blog/posts/2023/07/19/code-interpreter.html" class="no-external">
 <div class="listing-date">
 Jul 19, 2023
 </div>
@@ -821,19 +815,19 @@ Lee Clewley
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="14" data-categories="AI,Open source,Accountability,Public opinion" data-listing-date-sort="1688688000000" data-listing-file-modified-sort="1705946316411" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
+<div class="quarto-post image-right" data-index="14" data-categories="AI,Open source,Accountability,Public opinion" data-listing-date-sort="1688688000000" data-listing-file-modified-sort="1706285882897" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="560">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2023/07/07/LDW.html"> <img data-src="../../viewpoints/editors-blog/posts/2023/07/07/images/benjamin-davies-Oja2ty_9ZLM-unsplash.png" class="thumbnail-image" alt="An aerial view of London and the River Thames, taken from The Shard, London, United Kingdom."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2023/07/07/LDW.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2023/07/07/LDW.html" class="no-external">
+<p><img data-src="../../viewpoints/editors-blog/posts/2023/07/07/images/benjamin-davies-Oja2ty_9ZLM-unsplash.png" class="thumbnail-image" alt="An aerial view of London and the River Thames, taken from The Shard, London, United Kingdom."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2023/07/07/LDW.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2023/07/07/LDW.html">
 <h3 class="no-anchor listing-title">
-Teaching a chatbot about love, and other adventures from London Data Week
+<a href="../../viewpoints/editors-blog/posts/2023/07/07/LDW.html" class="no-external">Teaching a chatbot about love, and other adventures from London Data Week</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2023/07/07/LDW.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
 AI
@@ -848,14 +842,12 @@ Accountability
 Public opinion
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2023/07/07/LDW.html">
 <div class="listing-description">
-<p>Our editor shares his personal highlights from the first ever London Data Week, including an art exhibition about AI, a panel discussion on the benefits of open source, and a workshop to help charities tap into statistical expertise.</p>
+<a href="../../viewpoints/editors-blog/posts/2023/07/07/LDW.html" class="no-external">Our editor shares his personal highlights from the first ever London Data Week, including an art exhibition about AI, a panel discussion on the benefits of open source, and a workshop to help charities tap into statistical expertise. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2023/07/07/LDW.html">
+<a href="../../viewpoints/editors-blog/posts/2023/07/07/LDW.html" class="no-external">
 <div class="listing-date">
 Jul 7, 2023
 </div>
@@ -865,19 +857,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="15" data-categories="AI,Accountability,Regulation,Public opinion" data-listing-date-sort="1686614400000" data-listing-file-modified-sort="1705946316407" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<div class="quarto-post image-right" data-index="15" data-categories="AI,Accountability,Regulation,Public opinion" data-listing-date-sort="1686614400000" data-listing-file-modified-sort="1706285882897" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="837">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2023/06/13/how-do-people-feel-about-ai.html"> <img data-src="../../viewpoints/editors-blog/posts/2023/06/13/images/andy-kelly-0E_vhMVqL9g-unsplash.png" class="thumbnail-image" alt="A young girl holds the hand of a robot on display at the Kuromon Market in Osaka. Photo by Andy Kelly on Unsplash."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2023/06/13/how-do-people-feel-about-ai.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2023/06/13/how-do-people-feel-about-ai.html" class="no-external">
+<p><img data-src="../../viewpoints/editors-blog/posts/2023/06/13/images/andy-kelly-0E_vhMVqL9g-unsplash.png" class="thumbnail-image" alt="A young girl holds the hand of a robot on display at the Kuromon Market in Osaka. Photo by Andy Kelly on Unsplash."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2023/06/13/how-do-people-feel-about-ai.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2023/06/13/how-do-people-feel-about-ai.html">
 <h3 class="no-anchor listing-title">
-How do people feel about AI? Well, it’s complicated
+<a href="../../viewpoints/editors-blog/posts/2023/06/13/how-do-people-feel-about-ai.html" class="no-external">How do people feel about AI? Well, it’s complicated</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2023/06/13/how-do-people-feel-about-ai.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
 AI
@@ -892,14 +884,12 @@ Regulation
 Public opinion
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2023/06/13/how-do-people-feel-about-ai.html">
 <div class="listing-description">
-<p>A new survey from the Ada Lovelace Institute and the Alan Turing Institute finds broadly positive views towards AI use cases in healthcare and border security, among others, but people are also concerned about the dangers of overreliance on the technologies and a lack of clarity around accountability.</p>
+<a href="../../viewpoints/editors-blog/posts/2023/06/13/how-do-people-feel-about-ai.html" class="no-external">A new survey from the Ada Lovelace Institute and the Alan Turing Institute finds broadly positive views towards AI use cases in healthcare and border security, among others, but people are also concerned about the dangers of overreliance on the technologies and a lack of clarity around accountability. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2023/06/13/how-do-people-feel-about-ai.html">
+<a href="../../viewpoints/editors-blog/posts/2023/06/13/how-do-people-feel-about-ai.html" class="no-external">
 <div class="listing-date">
 Jun 13, 2023
 </div>
@@ -909,19 +899,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="16" data-categories="Large language models,Skills,Tools,Ethics,People" data-listing-date-sort="1685059200000" data-listing-file-modified-sort="1705946316407" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
+<div class="quarto-post image-right" data-index="16" data-categories="Large language models,Skills,Tools,Ethics,People" data-listing-date-sort="1685059200000" data-listing-file-modified-sort="1706285882897" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="567">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2023/05/26/future.html"> <img data-src="../../viewpoints/editors-blog/posts/2023/05/26/images/binoculars.png" class="thumbnail-image" alt="Looking to distant landscape through binoculars, digital art. Image created by Bing Image Creator."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2023/05/26/future.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2023/05/26/future.html" class="no-external">
+<p><img data-src="../../viewpoints/editors-blog/posts/2023/05/26/images/binoculars.png" class="thumbnail-image" alt="Looking to distant landscape through binoculars, digital art. Image created by Bing Image Creator."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2023/05/26/future.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2023/05/26/future.html">
 <h3 class="no-anchor listing-title">
-What’s the future of data science and AI in an LLM world?
+<a href="../../viewpoints/editors-blog/posts/2023/05/26/future.html" class="no-external">What’s the future of data science and AI in an LLM world?</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2023/05/26/future.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Large language models'); return false;">
 Large language models
@@ -939,14 +929,12 @@ Ethics
 People
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2023/05/26/future.html">
 <div class="listing-description">
-<p>Osama Rahman, director of the Data Science Campus at the UK Office for National Statistics, shared his thoughts on the past, present, and future of data science at an event this week. Here are our key takeaways.</p>
+<a href="../../viewpoints/editors-blog/posts/2023/05/26/future.html" class="no-external">Osama Rahman, director of the Data Science Campus at the UK Office for National Statistics, shared his thoughts on the past, present, and future of data science at an event this week. Here are our key takeaways. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2023/05/26/future.html">
+<a href="../../viewpoints/editors-blog/posts/2023/05/26/future.html" class="no-external">
 <div class="listing-date">
 May 26, 2023
 </div>
@@ -956,19 +944,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="17" data-categories="Updates,Themes,People" data-listing-date-sort="1680048000000" data-listing-file-modified-sort="1705946316403" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3">
+<div class="quarto-post image-right" data-index="17" data-categories="Updates,Themes,People" data-listing-date-sort="1680048000000" data-listing-file-modified-sort="1706285882893" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="3" data-listing-word-count-sort="595">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2023/03/29/defining-DS.html"> <img data-src="../../viewpoints/editors-blog/posts/2023/03/29/images/rainbow.png" class="thumbnail-image" alt="An illustration of a colorful rainbow, with each band of the rainbow featuring a selection of numbers to represent data. Image created by Bing Image Creator."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2023/03/29/defining-DS.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2023/03/29/defining-DS.html" class="no-external">
+<p><img data-src="../../viewpoints/editors-blog/posts/2023/03/29/images/rainbow.png" class="thumbnail-image" alt="An illustration of a colorful rainbow, with each band of the rainbow featuring a selection of numbers to represent data. Image created by Bing Image Creator."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2023/03/29/defining-DS.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2023/03/29/defining-DS.html">
 <h3 class="no-anchor listing-title">
-Data science as ‘a rainbow’, and other definitions
+<a href="../../viewpoints/editors-blog/posts/2023/03/29/defining-DS.html" class="no-external">Data science as ‘a rainbow’, and other definitions</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2023/03/29/defining-DS.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Updates'); return false;">
 Updates
@@ -980,14 +968,12 @@ Themes
 People
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2023/03/29/defining-DS.html">
 <div class="listing-description">
-<p>Data science means different things to different people. Former RSS president Sylvia Richardson has described it as ‘a rainbow of interconnected disciplines’. What’s your personal definition?</p>
+<a href="../../viewpoints/editors-blog/posts/2023/03/29/defining-DS.html" class="no-external">Data science means different things to different people. Former RSS president Sylvia Richardson has described it as ‘a rainbow of interconnected disciplines’. What’s your personal definition? </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2023/03/29/defining-DS.html">
+<a href="../../viewpoints/editors-blog/posts/2023/03/29/defining-DS.html" class="no-external">
 <div class="listing-date">
 Mar 29, 2023
 </div>
@@ -997,19 +983,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="18" data-categories="AI,Large language models,Classifiers,Screening tests" data-listing-date-sort="1678838400000" data-listing-file-modified-sort="1705946316403" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
+<div class="quarto-post image-right" data-index="18" data-categories="AI,Large language models,Classifiers,Screening tests" data-listing-date-sort="1678838400000" data-listing-file-modified-sort="1706285882889" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2094">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2023/03/15/AI-screening.html"> <img data-src="../../viewpoints/editors-blog/posts/2023/03/15/images/teacher-marking-homework.png" class="thumbnail-image" alt="A teacher is marking homework and trying to decide whether a written piece of text has been created by a student or by a large language model, digital art. Created by DALL·E, prompt by Real World Data Science."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2023/03/15/AI-screening.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2023/03/15/AI-screening.html" class="no-external">
+<p><img data-src="../../viewpoints/editors-blog/posts/2023/03/15/images/teacher-marking-homework.png" class="thumbnail-image" alt="A teacher is marking homework and trying to decide whether a written piece of text has been created by a student or by a large language model, digital art. Created by DALL·E, prompt by Real World Data Science."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2023/03/15/AI-screening.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2023/03/15/AI-screening.html">
 <h3 class="no-anchor listing-title">
-OpenAI’s text classifier won’t calm fears about AI-written homework
+<a href="../../viewpoints/editors-blog/posts/2023/03/15/AI-screening.html" class="no-external">OpenAI’s text classifier won’t calm fears about AI-written homework</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2023/03/15/AI-screening.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
 AI
@@ -1024,14 +1010,12 @@ Classifiers
 Screening tests
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2023/03/15/AI-screening.html">
 <div class="listing-description">
-<p>Educators are worried about ChatGPT being used by students for homework assignments, so OpenAI has released a tool to classify whether text is human- or AI-written. But relying on the classifier’s results is ill-advised, as some basic statistics shows.</p>
+<a href="../../viewpoints/editors-blog/posts/2023/03/15/AI-screening.html" class="no-external">Educators are worried about ChatGPT being used by students for homework assignments, so OpenAI has released a tool to classify whether text is human- or AI-written. But relying on the classifier’s results is ill-advised, as some basic statistics shows. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2023/03/15/AI-screening.html">
+<a href="../../viewpoints/editors-blog/posts/2023/03/15/AI-screening.html" class="no-external">
 <div class="listing-date">
 Mar 15, 2023
 </div>
@@ -1041,19 +1025,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="19" data-categories="Skills,Training,AI,Machine learning,Data analytics" data-listing-date-sort="1676332800000" data-listing-file-modified-sort="1705946316403" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5">
+<div class="quarto-post image-right" data-index="19" data-categories="Skills,Training,AI,Machine learning,Data analytics" data-listing-date-sort="1676332800000" data-listing-file-modified-sort="1706285882889" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="5" data-listing-word-count-sort="976">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2023/02/14/digital-skills.html"> <img data-src="../../viewpoints/editors-blog/posts/2023/02/14/images/billetto-editorial-YvLd3xbo0ac-unsplash.jpg" class="thumbnail-image" alt="Woman painting while wearing virtual reality headset. Photo by Billetto Editorial on Unsplash."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2023/02/14/digital-skills.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2023/02/14/digital-skills.html" class="no-external">
+<p><img data-src="../../viewpoints/editors-blog/posts/2023/02/14/images/billetto-editorial-YvLd3xbo0ac-unsplash.jpg" class="thumbnail-image" alt="Woman painting while wearing virtual reality headset. Photo by Billetto Editorial on Unsplash."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2023/02/14/digital-skills.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2023/02/14/digital-skills.html">
 <h3 class="no-anchor listing-title">
-Data science can help close the ‘digital skills’ gap, or so it seems
+<a href="../../viewpoints/editors-blog/posts/2023/02/14/digital-skills.html" class="no-external">Data science can help close the ‘digital skills’ gap, or so it seems</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2023/02/14/digital-skills.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Skills'); return false;">
 Skills
@@ -1071,14 +1055,12 @@ Machine learning
 Data analytics
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2023/02/14/digital-skills.html">
 <div class="listing-description">
-<p>A ‘digital skills’ gap is harming employer productivity and growth, according to a survey by engineering body IET. But the ‘digital skills’ that are needed sound a lot like data science skills: statistical understanding, data analytics, AI and machine learning.</p>
+<a href="../../viewpoints/editors-blog/posts/2023/02/14/digital-skills.html" class="no-external">A ‘digital skills’ gap is harming employer productivity and growth, according to a survey by engineering body IET. But the ‘digital skills’ that are needed sound a lot like data science skills: statistical understanding, data analytics, AI and machine learning. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2023/02/14/digital-skills.html">
+<a href="../../viewpoints/editors-blog/posts/2023/02/14/digital-skills.html" class="no-external">
 <div class="listing-date">
 Feb 14, 2023
 </div>
@@ -1088,19 +1070,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="20" data-categories="Machine learning,Large language models,AI" data-listing-date-sort="1674777600000" data-listing-file-modified-sort="1705946316403" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18">
+<div class="quarto-post image-right" data-index="20" data-categories="Machine learning,Large language models,AI" data-listing-date-sort="1674777600000" data-listing-file-modified-sort="1706285882889" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="18" data-listing-word-count-sort="3465">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2023/01/27/talking-chatgpt.html"> <img data-src="../../viewpoints/editors-blog/posts/2023/01/27/images/Detlef.png" class="thumbnail-image" alt="Photo of Detlef Nauck"> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2023/01/27/talking-chatgpt.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2023/01/27/talking-chatgpt.html" class="no-external">
+<p><img data-src="../../viewpoints/editors-blog/posts/2023/01/27/images/Detlef.png" class="thumbnail-image" alt="Photo of Detlef Nauck"></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2023/01/27/talking-chatgpt.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2023/01/27/talking-chatgpt.html">
 <h3 class="no-anchor listing-title">
-ChatGPT can hold a conversation, but lacks knowledge representation and original sources for verification
+<a href="../../viewpoints/editors-blog/posts/2023/01/27/talking-chatgpt.html" class="no-external">ChatGPT can hold a conversation, but lacks knowledge representation and original sources for verification</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2023/01/27/talking-chatgpt.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Machine learning'); return false;">
 Machine learning
@@ -1112,14 +1094,12 @@ Large language models
 AI
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2023/01/27/talking-chatgpt.html">
 <div class="listing-description">
-<p>ChatGPT represents a next step in the evolution of large language models, says Detlef Nauck. However, there are still major challenges - and concerns - to overcome.</p>
+<a href="../../viewpoints/editors-blog/posts/2023/01/27/talking-chatgpt.html" class="no-external">ChatGPT represents a next step in the evolution of large language models, says Detlef Nauck. However, there are still major challenges - and concerns - to overcome. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2023/01/27/talking-chatgpt.html">
+<a href="../../viewpoints/editors-blog/posts/2023/01/27/talking-chatgpt.html" class="no-external">
 <div class="listing-date">
 Jan 27, 2023
 </div>
@@ -1129,19 +1109,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="21" data-categories="Updates,Events" data-listing-date-sort="1674000000000" data-listing-file-modified-sort="1705946316399" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="21" data-categories="Updates,Events" data-listing-date-sort="1674000000000" data-listing-file-modified-sort="1706285882889" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="264">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2023/01/18/rwds-at-rss-conference.html"> <img data-src="../../viewpoints/editors-blog/posts/2023/01/18/images/rss-conf23.png" class="thumbnail-image" alt="Flyer for RSS International Conference 2023, for all statisticians and data scientists. Taking place in Harrogate, 4-7 September 2023."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2023/01/18/rwds-at-rss-conference.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2023/01/18/rwds-at-rss-conference.html" class="no-external">
+<p><img data-src="../../viewpoints/editors-blog/posts/2023/01/18/images/rss-conf23.png" class="thumbnail-image" alt="Flyer for RSS International Conference 2023, for all statisticians and data scientists. Taking place in Harrogate, 4-7 September 2023."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2023/01/18/rwds-at-rss-conference.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2023/01/18/rwds-at-rss-conference.html">
 <h3 class="no-anchor listing-title">
-We’re taking Real World Data Science on the road
+<a href="../../viewpoints/editors-blog/posts/2023/01/18/rwds-at-rss-conference.html" class="no-external">We’re taking Real World Data Science on the road</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2023/01/18/rwds-at-rss-conference.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Updates'); return false;">
 Updates
@@ -1150,14 +1130,12 @@ Updates
 Events
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2023/01/18/rwds-at-rss-conference.html">
 <div class="listing-description">
-<p>Join us at the RSS International Conference 2023 in Harrogate, 4-7 September.</p>
+<a href="../../viewpoints/editors-blog/posts/2023/01/18/rwds-at-rss-conference.html" class="no-external">Join us at the RSS International Conference 2023 in Harrogate, 4-7 September. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2023/01/18/rwds-at-rss-conference.html">
+<a href="../../viewpoints/editors-blog/posts/2023/01/18/rwds-at-rss-conference.html" class="no-external">
 <div class="listing-date">
 Jan 18, 2023
 </div>
@@ -1167,19 +1145,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="22" data-categories="Updates,Newsletters" data-listing-date-sort="1672876800000" data-listing-file-modified-sort="1705946316399" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="22" data-categories="Updates,Newsletters" data-listing-date-sort="1672876800000" data-listing-file-modified-sort="1706285882889" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="216">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2023/01/05/newsletter.html"> <img data-src="../../viewpoints/editors-blog/posts/2023/01/05/images/brett-jordan-LPZy4da9aRo-unsplash.jpg" class="thumbnail-image" alt="Photo of an email app on a mobile device screen, showing 2 unread notifications. Photo by Brett Jordan on Unsplash."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2023/01/05/newsletter.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2023/01/05/newsletter.html" class="no-external">
+<p><img data-src="../../viewpoints/editors-blog/posts/2023/01/05/images/brett-jordan-LPZy4da9aRo-unsplash.jpg" class="thumbnail-image" alt="Photo of an email app on a mobile device screen, showing 2 unread notifications. Photo by Brett Jordan on Unsplash."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2023/01/05/newsletter.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2023/01/05/newsletter.html">
 <h3 class="no-anchor listing-title">
-Explore the RSS Data Science &amp; AI Section newsletter, right here!
+<a href="../../viewpoints/editors-blog/posts/2023/01/05/newsletter.html" class="no-external">Explore the RSS Data Science &amp; AI Section newsletter, right here!</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2023/01/05/newsletter.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Updates'); return false;">
 Updates
@@ -1188,14 +1166,12 @@ Updates
 Newsletters
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2023/01/05/newsletter.html">
 <div class="listing-description">
-<p>We’re starting the year with a new addition to the site: a page dedicated to the excellent RSS Data Science &amp; AI Section newsletter.</p>
+<a href="../../viewpoints/editors-blog/posts/2023/01/05/newsletter.html" class="no-external">We’re starting the year with a new addition to the site: a page dedicated to the excellent RSS Data Science &amp; AI Section newsletter. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2023/01/05/newsletter.html">
+<a href="../../viewpoints/editors-blog/posts/2023/01/05/newsletter.html" class="no-external">
 <div class="listing-date">
 Jan 5, 2023
 </div>
@@ -1205,19 +1181,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="23" data-categories="Updates,Content ideas,Call for contributions" data-listing-date-sort="1670889600000" data-listing-file-modified-sort="1705946316399" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2">
+<div class="quarto-post image-right" data-index="23" data-categories="Updates,Content ideas,Call for contributions" data-listing-date-sort="1670889600000" data-listing-file-modified-sort="1706285882889" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="2" data-listing-word-count-sort="400">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2022/12/13/dsb-launch.html"> <img data-src="../../viewpoints/editors-blog/posts/2022/12/13/images/datasciencebites-logo.png" class="thumbnail-image" alt="DataScienceBites logo. A dark grey circle with bite marks cut out. Overlaid text says, Import grad_students as writers, import new_research_papers as nrp, print(writers + nrp) and the title DataScienceBites."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2022/12/13/dsb-launch.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2022/12/13/dsb-launch.html" class="no-external">
+<p><img data-src="../../viewpoints/editors-blog/posts/2022/12/13/images/datasciencebites-logo.png" class="thumbnail-image" alt="DataScienceBites logo. A dark grey circle with bite marks cut out. Overlaid text says, Import grad_students as writers, import new_research_papers as nrp, print(writers + nrp) and the title DataScienceBites."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2022/12/13/dsb-launch.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2022/12/13/dsb-launch.html">
 <h3 class="no-anchor listing-title">
-Sink your teeth into some data science papers with our brand new blog
+<a href="../../viewpoints/editors-blog/posts/2022/12/13/dsb-launch.html" class="no-external">Sink your teeth into some data science papers with our brand new blog</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2022/12/13/dsb-launch.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Updates'); return false;">
 Updates
@@ -1229,14 +1205,12 @@ Content ideas
 Call for contributions
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2022/12/13/dsb-launch.html">
 <div class="listing-description">
-<p>Today we’re launching DataScienceBites – a new member of the ScienceBites family – offering bite-sized summaries of data science papers.</p>
+<a href="../../viewpoints/editors-blog/posts/2022/12/13/dsb-launch.html" class="no-external">Today we’re launching DataScienceBites – a new member of the ScienceBites family – offering bite-sized summaries of data science papers. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2022/12/13/dsb-launch.html">
+<a href="../../viewpoints/editors-blog/posts/2022/12/13/dsb-launch.html" class="no-external">
 <div class="listing-date">
 Dec 13, 2022
 </div>
@@ -1246,19 +1220,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="24" data-categories="Machine learning,Large language models,AI" data-listing-date-sort="1670544000000" data-listing-file-modified-sort="1705946316395" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
+<div class="quarto-post image-right" data-index="24" data-categories="Machine learning,Large language models,AI" data-listing-date-sort="1670544000000" data-listing-file-modified-sort="1706285882885" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2002">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2022/12/09/LLM-news.html"> <img data-src="../../viewpoints/editors-blog/posts/2022/12/09/images/jigsaw-words.jpg" class="thumbnail-image" alt="An image created by the Stable Diffusion 2.1 Demo. The model was asked to produce an image with the prompt, &amp;#039;Text from an old book cut up like a jigsaw puzzle with pieces missing'."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2022/12/09/LLM-news.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2022/12/09/LLM-news.html" class="no-external">
+<p><img data-src="../../viewpoints/editors-blog/posts/2022/12/09/images/jigsaw-words.jpg" class="thumbnail-image" alt="An image created by the Stable Diffusion 2.1 Demo. The model was asked to produce an image with the prompt, &amp;#039;Text from an old book cut up like a jigsaw puzzle with pieces missing'."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2022/12/09/LLM-news.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2022/12/09/LLM-news.html">
 <h3 class="no-anchor listing-title">
-LLMs in the news: hype, tripe, and everything in between
+<a href="../../viewpoints/editors-blog/posts/2022/12/09/LLM-news.html" class="no-external">LLMs in the news: hype, tripe, and everything in between</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2022/12/09/LLM-news.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Machine learning'); return false;">
 Machine learning
@@ -1270,14 +1244,12 @@ Large language models
 AI
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2022/12/09/LLM-news.html">
 <div class="listing-description">
-<p>We’re back discussing large language models after two weeks of ‘breakthrough’ announcements, excitable headlines, and some all-too-familiar ethical concerns.</p>
+<a href="../../viewpoints/editors-blog/posts/2022/12/09/LLM-news.html" class="no-external">We’re back discussing large language models after two weeks of ‘breakthrough’ announcements, excitable headlines, and some all-too-familiar ethical concerns. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2022/12/09/LLM-news.html">
+<a href="../../viewpoints/editors-blog/posts/2022/12/09/LLM-news.html" class="no-external">
 <div class="listing-date">
 Dec 9, 2022
 </div>
@@ -1287,19 +1259,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="25" data-categories="Machine learning,Large language models,AI" data-listing-date-sort="1670544000000" data-listing-file-modified-sort="1705946316395" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8">
+<div class="quarto-post image-right" data-index="25" data-categories="Machine learning,Large language models,AI" data-listing-date-sort="1670544000000" data-listing-file-modified-sort="1706285882885" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="8" data-listing-word-count-sort="1582">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2022/12/09/A-chat-with-ChatGPT.html"> <img data-src="../../viewpoints/editors-blog/posts/2022/12/09/images/chatgpt1.png" class="thumbnail-image" alt="A screenshot of an exchange between Real World Data Science editor Brian Tarran and ChatGPT."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2022/12/09/A-chat-with-ChatGPT.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2022/12/09/A-chat-with-ChatGPT.html" class="no-external">
+<p><img data-src="../../viewpoints/editors-blog/posts/2022/12/09/images/chatgpt1.png" class="thumbnail-image" alt="A screenshot of an exchange between Real World Data Science editor Brian Tarran and ChatGPT."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2022/12/09/A-chat-with-ChatGPT.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2022/12/09/A-chat-with-ChatGPT.html">
 <h3 class="no-anchor listing-title">
-A chat with ChatGPT
+<a href="../../viewpoints/editors-blog/posts/2022/12/09/A-chat-with-ChatGPT.html" class="no-external">A chat with ChatGPT</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2022/12/09/A-chat-with-ChatGPT.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Machine learning'); return false;">
 Machine learning
@@ -1311,14 +1283,12 @@ Large language models
 AI
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2022/12/09/A-chat-with-ChatGPT.html">
 <div class="listing-description">
-<p>‘Hello there! I’m a large language model trained by OpenAI, so I don’t have the ability to experience emotions or have a physical presence. I’m here to provide information and answer questions to the best of my ability. Is there something specific you would like to know?’</p>
+<a href="../../viewpoints/editors-blog/posts/2022/12/09/A-chat-with-ChatGPT.html" class="no-external">‘Hello there! I’m a large language model trained by OpenAI, so I don’t have the ability to experience emotions or have a physical presence. I’m here to provide information and answer questions to the best of my ability. Is there something specific you would like to know?’ </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2022/12/09/A-chat-with-ChatGPT.html">
+<a href="../../viewpoints/editors-blog/posts/2022/12/09/A-chat-with-ChatGPT.html" class="no-external">
 <div class="listing-date">
 Dec 9, 2022
 </div>
@@ -1328,19 +1298,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="26" data-categories="Updates,Themes,Content ideas" data-listing-date-sort="1669852800000" data-listing-file-modified-sort="1705946316395" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4">
+<div class="quarto-post image-right" data-index="26" data-categories="Updates,Themes,Content ideas" data-listing-date-sort="1669852800000" data-listing-file-modified-sort="1706285882885" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="4" data-listing-word-count-sort="755">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2022/12/01/themes.html"> <img data-src="../../viewpoints/editors-blog/posts/2022/12/01/images/kelly-sikkema-vSNy_bWa5AE-unsplash-crop.jpg" class="thumbnail-image" alt="A photo of a black stencilled number 4 on a white brick wall. Photo by Kelly Sikkema on Unsplash."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2022/12/01/themes.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2022/12/01/themes.html" class="no-external">
+<p><img data-src="../../viewpoints/editors-blog/posts/2022/12/01/images/kelly-sikkema-vSNy_bWa5AE-unsplash-crop.jpg" class="thumbnail-image" alt="A photo of a black stencilled number 4 on a white brick wall. Photo by Kelly Sikkema on Unsplash."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2022/12/01/themes.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2022/12/01/themes.html">
 <h3 class="no-anchor listing-title">
-Four themes for potential contributors to think about
+<a href="../../viewpoints/editors-blog/posts/2022/12/01/themes.html" class="no-external">Four themes for potential contributors to think about</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2022/12/01/themes.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Updates'); return false;">
 Updates
@@ -1352,14 +1322,12 @@ Themes
 Content ideas
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2022/12/01/themes.html">
 <div class="listing-description">
-<p>Can data science save the world? What is a data scientist? What statistical ideas do data scientists need to know? And, what’s happening in the world of data science?</p>
+<a href="../../viewpoints/editors-blog/posts/2022/12/01/themes.html" class="no-external">Can data science save the world? What is a data scientist? What statistical ideas do data scientists need to know? And, what’s happening in the world of data science? </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2022/12/01/themes.html">
+<a href="../../viewpoints/editors-blog/posts/2022/12/01/themes.html" class="no-external">
 <div class="listing-date">
 Dec 1, 2022
 </div>
@@ -1369,19 +1337,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="27" data-categories="Machine learning,Large language models,AI" data-listing-date-sort="1669161600000" data-listing-file-modified-sort="1705946316387" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9">
+<div class="quarto-post image-right" data-index="27" data-categories="Machine learning,Large language models,AI" data-listing-date-sort="1669161600000" data-listing-file-modified-sort="1706285882873" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1617">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2022/11/23/LLM-content-warning.html"> <img data-src="../../viewpoints/editors-blog/posts/2022/11/23/images/TeresaBerndtsson-LetterWord-Text-Taxonomy-1000x1333.jpg" class="thumbnail-image" alt="A black keyboard at the bottom of the picture has an open book on it, with red words in labels floating on top, with a letter A balanced on top of them. The perspective makes the composition form a kind of triangle from the keyboard to the capital A. The AI filter makes it look like a messy, with a kind of cartoon style."> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2022/11/23/LLM-content-warning.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2022/11/23/LLM-content-warning.html" class="no-external">
+<p><img data-src="../../viewpoints/editors-blog/posts/2022/11/23/images/TeresaBerndtsson-LetterWord-Text-Taxonomy-1000x1333.jpg" class="thumbnail-image" alt="A black keyboard at the bottom of the picture has an open book on it, with red words in labels floating on top, with a letter A balanced on top of them. The perspective makes the composition form a kind of triangle from the keyboard to the capital A. The AI filter makes it look like a messy, with a kind of cartoon style."></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2022/11/23/LLM-content-warning.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2022/11/23/LLM-content-warning.html">
 <h3 class="no-anchor listing-title">
-Why large language models should come with a content warning
+<a href="../../viewpoints/editors-blog/posts/2022/11/23/LLM-content-warning.html" class="no-external">Why large language models should come with a content warning</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2022/11/23/LLM-content-warning.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Machine learning'); return false;">
 Machine learning
@@ -1393,14 +1361,12 @@ Large language models
 AI
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2022/11/23/LLM-content-warning.html">
 <div class="listing-description">
-<p>The outputs of LLMs seem impressive, but users need to be wary of possible bias, plagiarism and model ‘hallucinations’.</p>
+<a href="../../viewpoints/editors-blog/posts/2022/11/23/LLM-content-warning.html" class="no-external">The outputs of LLMs seem impressive, but users need to be wary of possible bias, plagiarism and model ‘hallucinations’. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2022/11/23/LLM-content-warning.html">
+<a href="../../viewpoints/editors-blog/posts/2022/11/23/LLM-content-warning.html" class="no-external">
 <div class="listing-date">
 Nov 23, 2022
 </div>
@@ -1410,19 +1376,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="28" data-categories="People,Biographies" data-listing-date-sort="1666051200000" data-listing-file-modified-sort="1705946316387" data-listing-date-modified-sort="1701302400000" data-listing-reading-time-sort="12">
+<div class="quarto-post image-right" data-index="28" data-categories="People,Biographies" data-listing-date-sort="1666051200000" data-listing-file-modified-sort="1706285882873" data-listing-date-modified-sort="1701302400000" data-listing-reading-time-sort="12" data-listing-word-count-sort="2340">
 <div class="thumbnail">
-<p><a href="../../viewpoints/editors-blog/posts/2022/10/18/meet-the-team.html"> <img data-src="../../viewpoints/editors-blog/posts/2022/10/18/images/team.png" class="thumbnail-image" alt="Portrait photos of 12 members of the Real World Data Science Editorial team"> </a></p>
+<p><a href="../../viewpoints/editors-blog/posts/2022/10/18/meet-the-team.html" class="no-external"></a></p><a href="../../viewpoints/editors-blog/posts/2022/10/18/meet-the-team.html" class="no-external">
+<p><img data-src="../../viewpoints/editors-blog/posts/2022/10/18/images/team.png" class="thumbnail-image" alt="Portrait photos of 12 members of the Real World Data Science Editorial team"></p>
+</a><p><a href="../../viewpoints/editors-blog/posts/2022/10/18/meet-the-team.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/editors-blog/posts/2022/10/18/meet-the-team.html">
 <h3 class="no-anchor listing-title">
-Meet the team
+<a href="../../viewpoints/editors-blog/posts/2022/10/18/meet-the-team.html" class="no-external">Meet the team</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/editors-blog/posts/2022/10/18/meet-the-team.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('People'); return false;">
 People
@@ -1431,14 +1397,12 @@ People
 Biographies
 </div>
 </div>
-<a href="../../viewpoints/editors-blog/posts/2022/10/18/meet-the-team.html">
 <div class="listing-description">
-<p>Introducing the editors of Real World Data Science.</p>
+<a href="../../viewpoints/editors-blog/posts/2022/10/18/meet-the-team.html" class="no-external">Introducing the editors of Real World Data Science. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/editors-blog/posts/2022/10/18/meet-the-team.html">
+<a href="../../viewpoints/editors-blog/posts/2022/10/18/meet-the-team.html" class="no-external">
 <div class="listing-date">
 Oct 18, 2022
 </div>
@@ -1535,10 +1499,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -1548,8 +1511,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -1562,6 +1534,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -1605,6 +1696,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -1630,6 +1722,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -1691,12 +1809,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../viewpoints/index.html" class="pagination-link">
+      <a href="../../viewpoints/index.html" class="pagination-link  aria-label=" viewpoints"="">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Viewpoints</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../viewpoints/interviews/index.html" class="pagination-link">
+      <a href="../../viewpoints/interviews/index.html" class="pagination-link" aria-label="Interviews">
         <span class="nav-page-text">Interviews</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -1704,7 +1822,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">Copyright © 2024 <a href="https://rss.org.uk/">Royal Statistical Society</a></div>   
+    <div class="nav-footer-left">
+<p>Copyright © 2024 <a href="https://rss.org.uk/">Royal Statistical Society</a></p>
+</div>   
     <div class="nav-footer-center">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
@@ -1714,7 +1834,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </a>
   </li>  
     <li class="nav-item">
-    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience"><i class="ai  ai-zenodo ai-2xl"></i></a>
+    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience">
+<p><i class="ai  ai-zenodo ai-2xl"></i></p>
+</a>
   </li>  
     <li class="nav-item compact">
     <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
@@ -1741,10 +1863,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </a>
   </li>  
 </ul>
-    <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/viewpoints/editors-blog/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action">Report an issue</a></p></div></div></div>
-    <div class="nav-footer-right"><a href="../../ts-and-cs.html">Terms &amp; Conditions</a></div>
+    </div>
+    <div class="nav-footer-right">
+<p><a href="../../ts-and-cs.html">Terms &amp; Conditions</a></p>
+</div>
   </div>
 </footer>
+
 
 
 

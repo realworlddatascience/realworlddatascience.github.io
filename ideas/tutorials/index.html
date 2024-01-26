@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -52,7 +52,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -61,6 +67,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -95,31 +102,18 @@ ul.task-list li input[type="checkbox"] {
     }
   })
   </script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
-
-<script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
-</script>
 <!-- Thank you to Ben Ruijl for the progress bar code!
 Ben is on GitHub here: https://github.com/benruijl
 And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
 
 <meta property="og:title" content="Tutorials | Ideas | Real World Data Science">
 <meta property="og:description" content="Hands-on explorations of data science concepts, tools and methods">
-<meta property="og:image" content="https://realworlddatascience.net/ideas/tutorials/posts/2023/12/12/images/xmas-card.png">
-<meta property="og:site-name" content="Real World Data Science">
-<meta property="og:image:height" content="724">
-<meta property="og:image:width" content="991">
+<meta property="og:image" content="https://realworlddatascience.net/ideas/tutorials/images/rwds-logo-150px.png">
+<meta property="og:site_name" content="Real World Data Science">
 <meta name="twitter:title" content="Tutorials | Ideas | Real World Data Science">
 <meta name="twitter:description" content="Hands-on explorations of data science concepts, tools and methods">
-<meta name="twitter:image" content="https://realworlddatascience.net/ideas/tutorials/posts/2023/12/12/images/xmas-card.png">
+<meta name="twitter:image" content="https://realworlddatascience.net/ideas/tutorials/images/rwds-logo-150px.png">
 <meta name="twitter:site" content="@rwdatasci">
-<meta name="twitter:image-height" content="724">
-<meta name="twitter:image-width" content="991">
 <meta name="twitter:card" content="summary_large_image">
 </head><body class="nav-fixed"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
 
@@ -142,16 +136,43 @@ document.addEventListener("DOMContentLoaded", function() {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <link rel="stylesheet" href="../../rwds.css">
 
 
 
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     <img src="../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
     </a>
@@ -163,44 +184,44 @@ document.addEventListener("DOMContentLoaded", function() {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../case-studies/index.html" rel="" target="">
- <span class="menu-text">Case studies</span></a>
+    <a class="nav-link" href="../../case-studies/index.html"> 
+<span class="menu-text">Case studies</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../ideas/index.html" rel="" target="">
- <span class="menu-text">Ideas</span></a>
+    <a class="nav-link" href="../../ideas/index.html"> 
+<span class="menu-text">Ideas</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../careers/index.html" rel="" target="">
- <span class="menu-text">Careers</span></a>
+    <a class="nav-link" href="../../careers/index.html"> 
+<span class="menu-text">Careers</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../viewpoints/index.html" rel="" target="">
- <span class="menu-text">Viewpoints</span></a>
+    <a class="nav-link" href="../../viewpoints/index.html"> 
+<span class="menu-text">Viewpoints</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">About RWDS</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
         <li>
-    <a class="dropdown-item" href="../../about-rwds.html" rel="" target="">
+    <a class="dropdown-item" href="../../about-rwds.html">
  <span class="dropdown-text">Who we are</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../contributor-docs/call-for-contributions.html" rel="" target="">
+    <a class="dropdown-item" href="../../contributor-docs/call-for-contributions.html">
  <span class="dropdown-text">How to contribute</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../contact.html" rel="" target="">
+    <a class="dropdown-item" href="../../contact.html">
  <span class="dropdown-text">Contact us</span></a>
   </li>  
     </ul>
   </li>
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -238,21 +259,22 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
+
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="R,Data visualisation" data-listing-date-sort="1702339200000" data-listing-file-modified-sort="1705946316379" data-listing-date-modified-sort="1705622400000" data-listing-reading-time-sort="17">
+<div class="quarto-post image-right" data-index="0" data-categories="R,Data visualisation" data-listing-date-sort="1702339200000" data-listing-file-modified-sort="1706285882869" data-listing-date-modified-sort="1705622400000" data-listing-reading-time-sort="17" data-listing-word-count-sort="3310">
 <div class="thumbnail">
-<p><a href="../../ideas/tutorials/posts/2023/12/12/xmas-cards.html"> <img src="../../ideas/tutorials/posts/2023/12/12/images/xmas-card.png" class="thumbnail-image" alt="Dark blue square with off-white rectangle at the bottom and small random white stars, and two white circles slightly off centre. Five black dots denote two eyes and three buttons on a snowman. Two brown lines look like arms. Two red rectangles form a hat. Orange triangle as a nose, with text reading Merry Christmas at the bottom."> </a></p>
+<p><a href="../../ideas/tutorials/posts/2023/12/12/xmas-cards.html" class="no-external"></a></p><a href="../../ideas/tutorials/posts/2023/12/12/xmas-cards.html" class="no-external">
+<p><img src="../../ideas/tutorials/posts/2023/12/12/images/xmas-card.png" class="thumbnail-image" alt="Dark blue square with off-white rectangle at the bottom and small random white stars, and two white circles slightly off centre. Five black dots denote two eyes and three buttons on a snowman. Two brown lines look like arms. Two red rectangles form a hat. Orange triangle as a nose, with text reading Merry Christmas at the bottom."></p>
+</a><p><a href="../../ideas/tutorials/posts/2023/12/12/xmas-cards.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../ideas/tutorials/posts/2023/12/12/xmas-cards.html">
 <h3 class="no-anchor listing-title">
-Creating Christmas cards with R
+<a href="../../ideas/tutorials/posts/2023/12/12/xmas-cards.html" class="no-external">Creating Christmas cards with R</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../ideas/tutorials/posts/2023/12/12/xmas-cards.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
 R
@@ -261,14 +283,12 @@ R
 Data visualisation
 </div>
 </div>
-<a href="../../ideas/tutorials/posts/2023/12/12/xmas-cards.html">
 <div class="listing-description">
-<p>The programming language R is capable of creating a wide variety of geometric shapes that can be used to construct high quality graphics – including festive images. In this tutorial, Nicola Rennie walks us through the process of using R packages to create and send Christmas cards with R.</p>
+<a href="../../ideas/tutorials/posts/2023/12/12/xmas-cards.html" class="no-external">The programming language R is capable of creating a wide variety of geometric shapes that can be used to construct high quality graphics – including festive images. In this tutorial, Nicola Rennie walks us through the process of using R packages to create and send Christmas cards with R. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../ideas/tutorials/posts/2023/12/12/xmas-cards.html">
+<a href="../../ideas/tutorials/posts/2023/12/12/xmas-cards.html" class="no-external">
 <div class="listing-date">
 Dec 12, 2023
 </div>
@@ -278,19 +298,19 @@ Nicola Rennie
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="Prediction,History of data science,Statistics" data-listing-date-sort="1681344000000" data-listing-file-modified-sort="1705946316363" data-listing-date-modified-sort="1705536000000" data-listing-reading-time-sort="45">
+<div class="quarto-post image-right" data-index="1" data-categories="Prediction,History of data science,Statistics" data-listing-date-sort="1681344000000" data-listing-file-modified-sort="1706285882861" data-listing-date-modified-sort="1705536000000" data-listing-reading-time-sort="45" data-listing-word-count-sort="8881">
 <div class="thumbnail">
-<p><a href="../../ideas/tutorials/posts/2023/04/13/flowers.html"> <img src="../../ideas/tutorials/posts/2023/04/13/images/quetelet-flowers.png" class="thumbnail-image" alt="Portrait of Adolphe Quetelet, superimposed on a photo of blooming purple lilacs. Quetelet portrait from Wikimedia Commons, Public Domain. Lilacs photo by Arina Bogachyova/iStock."> </a></p>
+<p><a href="../../ideas/tutorials/posts/2023/04/13/flowers.html" class="no-external"></a></p><a href="../../ideas/tutorials/posts/2023/04/13/flowers.html" class="no-external">
+<p><img src="../../ideas/tutorials/posts/2023/04/13/images/quetelet-flowers.png" class="thumbnail-image" alt="Portrait of Adolphe Quetelet, superimposed on a photo of blooming purple lilacs. Quetelet portrait from Wikimedia Commons, Public Domain. Lilacs photo by Arina Bogachyova/iStock."></p>
+</a><p><a href="../../ideas/tutorials/posts/2023/04/13/flowers.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../ideas/tutorials/posts/2023/04/13/flowers.html">
 <h3 class="no-anchor listing-title">
-A demonstration of the law of the flowering plants
+<a href="../../ideas/tutorials/posts/2023/04/13/flowers.html" class="no-external">A demonstration of the law of the flowering plants</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../ideas/tutorials/posts/2023/04/13/flowers.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Prediction'); return false;">
 Prediction
@@ -302,14 +322,12 @@ History of data science
 Statistics
 </div>
 </div>
-<a href="../../ideas/tutorials/posts/2023/04/13/flowers.html">
 <div class="listing-description">
-<p>The day a flower blooms is one of the earliest phenomena studied with systematic data collection and analysis. The prediction rule developed nearly three centuries ago is still used by scientists – with relatively few changes – to plan harvests, manage pests, and study ecosystems stressed by climate change. In this tutorial, Jonathan Auerbach introduces the “law of the flowering plants” and demonstrates how it can be applied to modern datasets.</p>
+<a href="../../ideas/tutorials/posts/2023/04/13/flowers.html" class="no-external">The day a flower blooms is one of the earliest phenomena studied with systematic data collection and analysis. The prediction rule developed nearly three centuries ago is still used by scientists – with relatively few changes – to plan harvests, manage pests, and study ecosystems stressed by climate change. In this tutorial, Jonathan Auerbach introduces the “law of the flowering plants” and demonstrates how it can be applied to modern datasets. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../ideas/tutorials/posts/2023/04/13/flowers.html">
+<a href="../../ideas/tutorials/posts/2023/04/13/flowers.html" class="no-external">
 <div class="listing-date">
 Apr 13, 2023
 </div>
@@ -403,10 +421,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -416,8 +433,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -430,6 +456,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -473,6 +618,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -498,6 +644,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -559,12 +731,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../ideas/index.html" class="pagination-link">
+      <a href="../../ideas/index.html" class="pagination-link  aria-label=" ideas"="">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Ideas</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../ideas/datasciencebites/index.html" class="pagination-link">
+      <a href="../../ideas/datasciencebites/index.html" class="pagination-link" aria-label="Data Science Bites">
         <span class="nav-page-text">Data Science Bites</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -572,7 +744,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">Copyright © 2024 <a href="https://rss.org.uk/">Royal Statistical Society</a></div>   
+    <div class="nav-footer-left">
+<p>Copyright © 2024 <a href="https://rss.org.uk/">Royal Statistical Society</a></p>
+</div>   
     <div class="nav-footer-center">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
@@ -582,7 +756,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </a>
   </li>  
     <li class="nav-item">
-    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience"><i class="ai  ai-zenodo ai-2xl"></i></a>
+    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience">
+<p><i class="ai  ai-zenodo ai-2xl"></i></p>
+</a>
   </li>  
     <li class="nav-item compact">
     <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
@@ -609,10 +785,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </a>
   </li>  
 </ul>
-    <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/ideas/tutorials/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action">Report an issue</a></p></div></div></div>
-    <div class="nav-footer-right"><a href="../../ts-and-cs.html">Terms &amp; Conditions</a></div>
+    </div>
+    <div class="nav-footer-right">
+<p><a href="../../ts-and-cs.html">Terms &amp; Conditions</a></p>
+</div>
   </div>
 </footer>
+
 
 
 

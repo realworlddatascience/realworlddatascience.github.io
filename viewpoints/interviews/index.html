@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -52,7 +52,13 @@ ul.task-list li input[type="checkbox"] {
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -61,6 +67,7 @@ ul.task-list li input[type="checkbox"] {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
@@ -95,42 +102,56 @@ ul.task-list li input[type="checkbox"] {
     }
   })
   </script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
-
-<script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
-</script>
 
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <link rel="stylesheet" href="../../rwds.css">
 <meta property="og:title" content="Interviews | Viewpoints | Real World Data Science">
 <meta property="og:description" content="Deep dives with data scientists on hot topics and burning issues">
-<meta property="og:image" content="https://realworlddatascience.net/viewpoints/interviews/posts/2024/01/15/images/robert-santos.png">
-<meta property="og:site-name" content="Real World Data Science">
-<meta property="og:image:height" content="724">
-<meta property="og:image:width" content="991">
+<meta property="og:image" content="https://realworlddatascience.net/viewpoints/interviews/images/rwds-logo-150px.png">
+<meta property="og:site_name" content="Real World Data Science">
 <meta name="twitter:title" content="Interviews | Viewpoints | Real World Data Science">
 <meta name="twitter:description" content="Deep dives with data scientists on hot topics and burning issues">
-<meta name="twitter:image" content="https://realworlddatascience.net/viewpoints/interviews/posts/2024/01/15/images/robert-santos.png">
+<meta name="twitter:image" content="https://realworlddatascience.net/viewpoints/interviews/images/rwds-logo-150px.png">
 <meta name="twitter:site" content="@rwdatasci">
-<meta name="twitter:image-height" content="724">
-<meta name="twitter:image-width" content="991">
 <meta name="twitter:card" content="summary_large_image">
 </head>
 
 <body class="nav-fixed">
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a href="../../index.html" class="navbar-brand navbar-brand-logo">
     <img src="../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
     </a>
@@ -142,44 +163,44 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../case-studies/index.html" rel="" target="">
- <span class="menu-text">Case studies</span></a>
+    <a class="nav-link" href="../../case-studies/index.html"> 
+<span class="menu-text">Case studies</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../ideas/index.html" rel="" target="">
- <span class="menu-text">Ideas</span></a>
+    <a class="nav-link" href="../../ideas/index.html"> 
+<span class="menu-text">Ideas</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../careers/index.html" rel="" target="">
- <span class="menu-text">Careers</span></a>
+    <a class="nav-link" href="../../careers/index.html"> 
+<span class="menu-text">Careers</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../viewpoints/index.html" rel="" target="">
- <span class="menu-text">Viewpoints</span></a>
+    <a class="nav-link" href="../../viewpoints/index.html"> 
+<span class="menu-text">Viewpoints</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">About RWDS</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
         <li>
-    <a class="dropdown-item" href="../../about-rwds.html" rel="" target="">
+    <a class="dropdown-item" href="../../about-rwds.html">
  <span class="dropdown-text">Who we are</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../contributor-docs/call-for-contributions.html" rel="" target="">
+    <a class="dropdown-item" href="../../contributor-docs/call-for-contributions.html">
  <span class="dropdown-text">How to contribute</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../contact.html" rel="" target="">
+    <a class="dropdown-item" href="../../contact.html">
  <span class="dropdown-text">Contact us</span></a>
   </li>  
     </ul>
   </li>
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -217,21 +238,22 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 
 
 
+
 <div class="quarto-listing quarto-listing-container-default" id="listing-listing">
 <div class="list quarto-listing-default">
-<div class="quarto-post image-right" data-index="0" data-categories="Data,Data privacy,Data literacy,Education,Public engagement,AI" data-listing-date-sort="1705276800000" data-listing-file-modified-sort="1705946316471" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11">
+<div class="quarto-post image-right" data-index="0" data-categories="Data,Data privacy,Data literacy,Education,Public engagement,AI" data-listing-date-sort="1705276800000" data-listing-file-modified-sort="1706285882961" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="11" data-listing-word-count-sort="2025">
 <div class="thumbnail">
-<p><a href="../../viewpoints/interviews/posts/2024/01/15/census-bureau.html"> <img src="../../viewpoints/interviews/posts/2024/01/15/images/robert-santos.png" class="thumbnail-image" alt="Official photograph of US Census Bureau director Robert Santos, with US flag in background."> </a></p>
+<p><a href="../../viewpoints/interviews/posts/2024/01/15/census-bureau.html" class="no-external"></a></p><a href="../../viewpoints/interviews/posts/2024/01/15/census-bureau.html" class="no-external">
+<p><img src="../../viewpoints/interviews/posts/2024/01/15/images/robert-santos.png" class="thumbnail-image" alt="Official photograph of US Census Bureau director Robert Santos, with US flag in background."></p>
+</a><p><a href="../../viewpoints/interviews/posts/2024/01/15/census-bureau.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/interviews/posts/2024/01/15/census-bureau.html">
 <h3 class="no-anchor listing-title">
-‘We absolutely have to transform and modernise our operation’ – US Census Bureau director Robert Santos
+<a href="../../viewpoints/interviews/posts/2024/01/15/census-bureau.html" class="no-external">‘We absolutely have to transform and modernise our operation’ – US Census Bureau director Robert Santos</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/interviews/posts/2024/01/15/census-bureau.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Data'); return false;">
 Data
@@ -252,14 +274,12 @@ Public engagement
 AI
 </div>
 </div>
-<a href="../../viewpoints/interviews/posts/2024/01/15/census-bureau.html">
 <div class="listing-description">
-<p>Edited highlights from an interview conducted last summer with US Census Bureau director Robert Santos and colleagues, touching on pandemic challenges, the growing use of administrative data, data privacy concerns, data education and literacy, and how large language models might change the way we interact with official statistics.</p>
+<a href="../../viewpoints/interviews/posts/2024/01/15/census-bureau.html" class="no-external">Edited highlights from an interview conducted last summer with US Census Bureau director Robert Santos and colleagues, touching on pandemic challenges, the growing use of administrative data, data privacy concerns, data education and literacy, and how large language models might change the way we interact with official statistics. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/interviews/posts/2024/01/15/census-bureau.html">
+<a href="../../viewpoints/interviews/posts/2024/01/15/census-bureau.html" class="no-external">
 <div class="listing-date">
 Jan 15, 2024
 </div>
@@ -269,19 +289,19 @@ Brian Tarran (with Anna Britten)
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="1" data-categories="Data,People,Innovation,Data literacy,Public engagement" data-listing-date-sort="1702598400000" data-listing-file-modified-sort="1705946316467" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16">
+<div class="quarto-post image-right" data-index="1" data-categories="Data,People,Innovation,Data literacy,Public engagement" data-listing-date-sort="1702598400000" data-listing-file-modified-sort="1706285882957" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="16" data-listing-word-count-sort="3006">
 <div class="thumbnail">
-<p><a href="../../viewpoints/interviews/posts/2023/12/15/ian-diamond.html"> <img src="../../viewpoints/interviews/posts/2023/12/15/images/ian-diamond.png" class="thumbnail-image" alt="Photo of national statistician Professor Sir Ian Diamond, standing, with microphone, during a talk."> </a></p>
+<p><a href="../../viewpoints/interviews/posts/2023/12/15/ian-diamond.html" class="no-external"></a></p><a href="../../viewpoints/interviews/posts/2023/12/15/ian-diamond.html" class="no-external">
+<p><img src="../../viewpoints/interviews/posts/2023/12/15/images/ian-diamond.png" class="thumbnail-image" alt="Photo of national statistician Professor Sir Ian Diamond, standing, with microphone, during a talk."></p>
+</a><p><a href="../../viewpoints/interviews/posts/2023/12/15/ian-diamond.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/interviews/posts/2023/12/15/ian-diamond.html">
 <h3 class="no-anchor listing-title">
-‘I was pretty clear in my mind that we were into a no-going-back situation’
+<a href="../../viewpoints/interviews/posts/2023/12/15/ian-diamond.html" class="no-external">‘I was pretty clear in my mind that we were into a no-going-back situation’</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/interviews/posts/2023/12/15/ian-diamond.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Data'); return false;">
 Data
@@ -299,14 +319,12 @@ Data literacy
 Public engagement
 </div>
 </div>
-<a href="../../viewpoints/interviews/posts/2023/12/15/ian-diamond.html">
 <div class="listing-description">
-<p>Real World Data Science interviews UK national statistician Professor Sir Ian Diamond about culture change and innovation in the national statistical system post-Covid, building trust through transparency, and using AI tools to empower people to interrogate data.</p>
+<a href="../../viewpoints/interviews/posts/2023/12/15/ian-diamond.html" class="no-external">Real World Data Science interviews UK national statistician Professor Sir Ian Diamond about culture change and innovation in the national statistical system post-Covid, building trust through transparency, and using AI tools to empower people to interrogate data. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/interviews/posts/2023/12/15/ian-diamond.html">
+<a href="../../viewpoints/interviews/posts/2023/12/15/ian-diamond.html" class="no-external">
 <div class="listing-date">
 Dec 15, 2023
 </div>
@@ -316,19 +334,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="2" data-categories="Modelling,Public policy" data-listing-date-sort="1700784000000" data-listing-file-modified-sort="1705946316467" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12">
+<div class="quarto-post image-right" data-index="2" data-categories="Modelling,Public policy" data-listing-date-sort="1700784000000" data-listing-file-modified-sort="1706285882957" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="12" data-listing-word-count-sort="2215">
 <div class="thumbnail">
-<p><a href="../../viewpoints/interviews/posts/2023/11/24/politics-of-modelling.html"> <img src="../../viewpoints/interviews/posts/2023/11/24/images/andrea-saltelli.png" class="thumbnail-image" alt="Portrait photo of Andrea Saltelli, co-editor of &amp;#039;The Politics of Modelling.'"> </a></p>
+<p><a href="../../viewpoints/interviews/posts/2023/11/24/politics-of-modelling.html" class="no-external"></a></p><a href="../../viewpoints/interviews/posts/2023/11/24/politics-of-modelling.html" class="no-external">
+<p><img src="../../viewpoints/interviews/posts/2023/11/24/images/andrea-saltelli.png" class="thumbnail-image" alt="Portrait photo of Andrea Saltelli, co-editor of &amp;#039;The Politics of Modelling.'"></p>
+</a><p><a href="../../viewpoints/interviews/posts/2023/11/24/politics-of-modelling.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/interviews/posts/2023/11/24/politics-of-modelling.html">
 <h3 class="no-anchor listing-title">
-‘I would like modellers to be less ambitious in developing monster models that are impossible to inspect’
+<a href="../../viewpoints/interviews/posts/2023/11/24/politics-of-modelling.html" class="no-external">‘I would like modellers to be less ambitious in developing monster models that are impossible to inspect’</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/interviews/posts/2023/11/24/politics-of-modelling.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Modelling'); return false;">
 Modelling
@@ -337,14 +355,12 @@ Modelling
 Public policy
 </div>
 </div>
-<a href="../../viewpoints/interviews/posts/2023/11/24/politics-of-modelling.html">
 <div class="listing-description">
-<p>Real World Data Science interviews Andrea Saltelli, co-editor of ‘The Politics of Modelling,’ about pandemic models, trust in science, and why we must seek to uncover the assumptions that shape model outputs.</p>
+<a href="../../viewpoints/interviews/posts/2023/11/24/politics-of-modelling.html" class="no-external">Real World Data Science interviews Andrea Saltelli, co-editor of ‘The Politics of Modelling,’ about pandemic models, trust in science, and why we must seek to uncover the assumptions that shape model outputs. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/interviews/posts/2023/11/24/politics-of-modelling.html">
+<a href="../../viewpoints/interviews/posts/2023/11/24/politics-of-modelling.html" class="no-external">
 <div class="listing-date">
 Nov 24, 2023
 </div>
@@ -354,19 +370,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="3" data-categories="AI,Events,Algorithms,Risk" data-listing-date-sort="1698192000000" data-listing-file-modified-sort="1705946316463" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9">
+<div class="quarto-post image-right" data-index="3" data-categories="AI,Events,Algorithms,Risk" data-listing-date-sort="1698192000000" data-listing-file-modified-sort="1706285882953" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="9" data-listing-word-count-sort="1706">
 <div class="thumbnail">
-<p><a href="../../viewpoints/interviews/posts/2023/10/25/evaluating-ai.html"> <img src="../../viewpoints/interviews/posts/2023/10/25/images/andy-garrett.png" class="thumbnail-image" alt="Portrait photo of Andrew Garrett, president of the Royal Statistical Society."> </a></p>
+<p><a href="../../viewpoints/interviews/posts/2023/10/25/evaluating-ai.html" class="no-external"></a></p><a href="../../viewpoints/interviews/posts/2023/10/25/evaluating-ai.html" class="no-external">
+<p><img src="../../viewpoints/interviews/posts/2023/10/25/images/andy-garrett.png" class="thumbnail-image" alt="Portrait photo of Andrew Garrett, president of the Royal Statistical Society."></p>
+</a><p><a href="../../viewpoints/interviews/posts/2023/10/25/evaluating-ai.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/interviews/posts/2023/10/25/evaluating-ai.html">
 <h3 class="no-anchor listing-title">
-‘Statistics and data science are at the heart of the AI movement – we want to be a strong voice in the debate’
+<a href="../../viewpoints/interviews/posts/2023/10/25/evaluating-ai.html" class="no-external">‘Statistics and data science are at the heart of the AI movement – we want to be a strong voice in the debate’</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/interviews/posts/2023/10/25/evaluating-ai.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('AI'); return false;">
 AI
@@ -381,14 +397,12 @@ Algorithms
 Risk
 </div>
 </div>
-<a href="../../viewpoints/interviews/posts/2023/10/25/evaluating-ai.html">
 <div class="listing-description">
-<p>Royal Statistical Society president Andrew Garrett talks AI model evaluation and risk, and why training data and model inputs deserve greater attention in discussions over AI safety.</p>
+<a href="../../viewpoints/interviews/posts/2023/10/25/evaluating-ai.html" class="no-external">Royal Statistical Society president Andrew Garrett talks AI model evaluation and risk, and why training data and model inputs deserve greater attention in discussions over AI safety. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/interviews/posts/2023/10/25/evaluating-ai.html">
+<a href="../../viewpoints/interviews/posts/2023/10/25/evaluating-ai.html" class="no-external">
 <div class="listing-date">
 Oct 25, 2023
 </div>
@@ -398,19 +412,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="4" data-categories="Data sharing,Data linkage,Public engagement" data-listing-date-sort="1697414400000" data-listing-file-modified-sort="1705946316463" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="26">
+<div class="quarto-post image-right" data-index="4" data-categories="Data sharing,Data linkage,Public engagement" data-listing-date-sort="1697414400000" data-listing-file-modified-sort="1706285882949" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="26" data-listing-word-count-sort="5009">
 <div class="thumbnail">
-<p><a href="../../viewpoints/interviews/posts/2023/10/16/data-sharing-in-gov.html"> <img src="../../viewpoints/interviews/posts/2023/10/16/images/helen-miller-bakewell.png" class="thumbnail-image" alt="Photo of Helen Miller-Bakewell."> </a></p>
+<p><a href="../../viewpoints/interviews/posts/2023/10/16/data-sharing-in-gov.html" class="no-external"></a></p><a href="../../viewpoints/interviews/posts/2023/10/16/data-sharing-in-gov.html" class="no-external">
+<p><img src="../../viewpoints/interviews/posts/2023/10/16/images/helen-miller-bakewell.png" class="thumbnail-image" alt="Photo of Helen Miller-Bakewell."></p>
+</a><p><a href="../../viewpoints/interviews/posts/2023/10/16/data-sharing-in-gov.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/interviews/posts/2023/10/16/data-sharing-in-gov.html">
 <h3 class="no-anchor listing-title">
-‘Feelings about sharing data can be context and time dependent – you can’t just do one survey or focus group’
+<a href="../../viewpoints/interviews/posts/2023/10/16/data-sharing-in-gov.html" class="no-external">‘Feelings about sharing data can be context and time dependent – you can’t just do one survey or focus group’</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/interviews/posts/2023/10/16/data-sharing-in-gov.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Data sharing'); return false;">
 Data sharing
@@ -422,14 +436,12 @@ Data linkage
 Public engagement
 </div>
 </div>
-<a href="../../viewpoints/interviews/posts/2023/10/16/data-sharing-in-gov.html">
 <div class="listing-description">
-<p>Real World Data Science sits down with Helen Miller-Bakewell of the UK Office for Statistics Regulation to talk data sharing and linkage in government – progress made, hurdles to overcome, the importance of public engagement, and why ‘social licence’ is key.</p>
+<a href="../../viewpoints/interviews/posts/2023/10/16/data-sharing-in-gov.html" class="no-external">Real World Data Science sits down with Helen Miller-Bakewell of the UK Office for Statistics Regulation to talk data sharing and linkage in government – progress made, hurdles to overcome, the importance of public engagement, and why ‘social licence’ is key. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/interviews/posts/2023/10/16/data-sharing-in-gov.html">
+<a href="../../viewpoints/interviews/posts/2023/10/16/data-sharing-in-gov.html" class="no-external">
 <div class="listing-date">
 Oct 16, 2023
 </div>
@@ -439,19 +451,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="5" data-categories="R,Education,Outreach" data-listing-date-sort="1695600000000" data-listing-file-modified-sort="1705946316459" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7">
+<div class="quarto-post image-right" data-index="5" data-categories="R,Education,Outreach" data-listing-date-sort="1695600000000" data-listing-file-modified-sort="1706285882949" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="7" data-listing-word-count-sort="1255">
 <div class="thumbnail">
-<p><a href="../../viewpoints/interviews/posts/2023/09/25/rgirls-interview.html"> <img src="../../viewpoints/interviews/posts/2023/09/25/images/rgirls.png" class="thumbnail-image" alt="R-Girls logo layered on top of a classroom scene, rendered in bright pastel colours, created by Bing Image Creator."> </a></p>
+<p><a href="../../viewpoints/interviews/posts/2023/09/25/rgirls-interview.html" class="no-external"></a></p><a href="../../viewpoints/interviews/posts/2023/09/25/rgirls-interview.html" class="no-external">
+<p><img src="../../viewpoints/interviews/posts/2023/09/25/images/rgirls.png" class="thumbnail-image" alt="R-Girls logo layered on top of a classroom scene, rendered in bright pastel colours, created by Bing Image Creator."></p>
+</a><p><a href="../../viewpoints/interviews/posts/2023/09/25/rgirls-interview.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/interviews/posts/2023/09/25/rgirls-interview.html">
 <h3 class="no-anchor listing-title">
-‘What if we try to bring R to the classroom? That was our wacky idea’
+<a href="../../viewpoints/interviews/posts/2023/09/25/rgirls-interview.html" class="no-external">‘What if we try to bring R to the classroom? That was our wacky idea’</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/interviews/posts/2023/09/25/rgirls-interview.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('R'); return false;">
 R
@@ -463,14 +475,12 @@ Education
 Outreach
 </div>
 </div>
-<a href="../../viewpoints/interviews/posts/2023/09/25/rgirls-interview.html">
 <div class="listing-description">
-<p>R-Girls is a new project aiming to introduce R into secondary school lessons – just not through computer science classes! Real World Data Science meets with one of the project’s founders, Mohammed Mohammed, to learn more.</p>
+<a href="../../viewpoints/interviews/posts/2023/09/25/rgirls-interview.html" class="no-external">R-Girls is a new project aiming to introduce R into secondary school lessons – just not through computer science classes! Real World Data Science meets with one of the project’s founders, Mohammed Mohammed, to learn more. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/interviews/posts/2023/09/25/rgirls-interview.html">
+<a href="../../viewpoints/interviews/posts/2023/09/25/rgirls-interview.html" class="no-external">
 <div class="listing-date">
 Sep 25, 2023
 </div>
@@ -480,19 +490,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="6" data-categories="Data visualisation,Communication" data-listing-date-sort="1690848000000" data-listing-file-modified-sort="1705946316459" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="31">
+<div class="quarto-post image-right" data-index="6" data-categories="Data visualisation,Communication" data-listing-date-sort="1690848000000" data-listing-file-modified-sort="1706285882945" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="31" data-listing-word-count-sort="6194">
 <div class="thumbnail">
-<p><a href="../../viewpoints/interviews/posts/2023/08/01/alberto-cairo.html"> <img src="../../viewpoints/interviews/posts/2023/08/01/images/alberto-cairo.png" class="thumbnail-image" alt="Portrait photo of Alberto Cairo by JCA Photography"> </a></p>
+<p><a href="../../viewpoints/interviews/posts/2023/08/01/alberto-cairo.html" class="no-external"></a></p><a href="../../viewpoints/interviews/posts/2023/08/01/alberto-cairo.html" class="no-external">
+<p><img src="../../viewpoints/interviews/posts/2023/08/01/images/alberto-cairo.png" class="thumbnail-image" alt="Portrait photo of Alberto Cairo by JCA Photography"></p>
+</a><p><a href="../../viewpoints/interviews/posts/2023/08/01/alberto-cairo.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/interviews/posts/2023/08/01/alberto-cairo.html">
 <h3 class="no-anchor listing-title">
-The many ‘dialects’ of data visualization: Alberto Cairo and ‘The Art of Insight’
+<a href="../../viewpoints/interviews/posts/2023/08/01/alberto-cairo.html" class="no-external">The many ‘dialects’ of data visualization: Alberto Cairo and ‘The Art of Insight’</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/interviews/posts/2023/08/01/alberto-cairo.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Data visualisation'); return false;">
 Data visualisation
@@ -501,14 +511,12 @@ Data visualisation
 Communication
 </div>
 </div>
-<a href="../../viewpoints/interviews/posts/2023/08/01/alberto-cairo.html">
 <div class="listing-description">
-<p>In his upcoming new book, journalist and designer Alberto Cairo explores the idea of ‘data visualization as language’, one with many different dialects – statistical, journalistic, artistic, and so on. These dialects are not mutually exclusive, he says. So, what might they learn from each other?</p>
+<a href="../../viewpoints/interviews/posts/2023/08/01/alberto-cairo.html" class="no-external">In his upcoming new book, journalist and designer Alberto Cairo explores the idea of ‘data visualization as language’, one with many different dialects – statistical, journalistic, artistic, and so on. These dialects are not mutually exclusive, he says. So, what might they learn from each other? </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/interviews/posts/2023/08/01/alberto-cairo.html">
+<a href="../../viewpoints/interviews/posts/2023/08/01/alberto-cairo.html" class="no-external">
 <div class="listing-date">
 Aug 1, 2023
 </div>
@@ -518,19 +526,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="7" data-categories="Data,Innovation,Events,Communities" data-listing-date-sort="1686182400000" data-listing-file-modified-sort="1705946316459" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15">
+<div class="quarto-post image-right" data-index="7" data-categories="Data,Innovation,Events,Communities" data-listing-date-sort="1686182400000" data-listing-file-modified-sort="1706285882945" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="15" data-listing-word-count-sort="2881">
 <div class="thumbnail">
-<p><a href="../../viewpoints/interviews/posts/2023/06/08/london-data-week.html"> <img src="../../viewpoints/interviews/posts/2023/06/08/images/arthur-yao-HTicW9-i4xY-unsplash.png" class="thumbnail-image" alt="Photo of London at night, with Big Ben clock tower towering over the city. Photo by Arthur Yao on Unsplash."> </a></p>
+<p><a href="../../viewpoints/interviews/posts/2023/06/08/london-data-week.html" class="no-external"></a></p><a href="../../viewpoints/interviews/posts/2023/06/08/london-data-week.html" class="no-external">
+<p><img src="../../viewpoints/interviews/posts/2023/06/08/images/arthur-yao-HTicW9-i4xY-unsplash.png" class="thumbnail-image" alt="Photo of London at night, with Big Ben clock tower towering over the city. Photo by Arthur Yao on Unsplash."></p>
+</a><p><a href="../../viewpoints/interviews/posts/2023/06/08/london-data-week.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/interviews/posts/2023/06/08/london-data-week.html">
 <h3 class="no-anchor listing-title">
-London Data Week is almost here. What’s it all about?
+<a href="../../viewpoints/interviews/posts/2023/06/08/london-data-week.html" class="no-external">London Data Week is almost here. What’s it all about?</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/interviews/posts/2023/06/08/london-data-week.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Data'); return false;">
 Data
@@ -545,14 +553,12 @@ Events
 Communities
 </div>
 </div>
-<a href="../../viewpoints/interviews/posts/2023/06/08/london-data-week.html">
 <div class="listing-description">
-<p>The first ever London Data Week runs from 3–9 July 2023. Real World Data Science meets with organisers Sam Nutt and Jennifer Ding to hear about their vision and plans for the week, and a selection of activities to look forward to.</p>
+<a href="../../viewpoints/interviews/posts/2023/06/08/london-data-week.html" class="no-external">The first ever London Data Week runs from 3–9 July 2023. Real World Data Science meets with organisers Sam Nutt and Jennifer Ding to hear about their vision and plans for the week, and a selection of activities to look forward to. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/interviews/posts/2023/06/08/london-data-week.html">
+<a href="../../viewpoints/interviews/posts/2023/06/08/london-data-week.html" class="no-external">
 <div class="listing-date">
 Jun 8, 2023
 </div>
@@ -562,19 +568,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="8" data-categories="Technology ethics,AI ethics,Culture,Regulation" data-listing-date-sort="1682640000000" data-listing-file-modified-sort="1705946316455" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="39">
+<div class="quarto-post image-right" data-index="8" data-categories="Technology ethics,AI ethics,Culture,Regulation" data-listing-date-sort="1682640000000" data-listing-file-modified-sort="1706285882945" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="39" data-listing-word-count-sort="7797">
 <div class="thumbnail">
-<p><a href="../../viewpoints/interviews/posts/2023/04/28/stephanie-hare.html"> <img src="../../viewpoints/interviews/posts/2023/04/28/images/stephanie-hare-bw.png" class="thumbnail-image" alt="Photo of Stephanie Hare by Mitzi de Margary. Photo supplied by Stephanie Hare, used with permission."> </a></p>
+<p><a href="../../viewpoints/interviews/posts/2023/04/28/stephanie-hare.html" class="no-external"></a></p><a href="../../viewpoints/interviews/posts/2023/04/28/stephanie-hare.html" class="no-external">
+<p><img src="../../viewpoints/interviews/posts/2023/04/28/images/stephanie-hare-bw.png" class="thumbnail-image" alt="Photo of Stephanie Hare by Mitzi de Margary. Photo supplied by Stephanie Hare, used with permission."></p>
+</a><p><a href="../../viewpoints/interviews/posts/2023/04/28/stephanie-hare.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/interviews/posts/2023/04/28/stephanie-hare.html">
 <h3 class="no-anchor listing-title">
-‘I’m way more into prevention than cure’: Stephanie Hare on why we need a culture of technology ethics
+<a href="../../viewpoints/interviews/posts/2023/04/28/stephanie-hare.html" class="no-external">‘I’m way more into prevention than cure’: Stephanie Hare on why we need a culture of technology ethics</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/interviews/posts/2023/04/28/stephanie-hare.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Technology ethics'); return false;">
 Technology ethics
@@ -589,14 +595,12 @@ Culture
 Regulation
 </div>
 </div>
-<a href="../../viewpoints/interviews/posts/2023/04/28/stephanie-hare.html">
 <div class="listing-description">
-<p>Stephanie Hare, author of ‘Technology is Not Neutral’, talks to Real World Data Science about the ‘wicked problem’ of technology and AI ethics, and why laws and regulations are ‘necessary but insufficient’ to minimise harms. ‘We’re going to have to inculcate an entire new mindset,’ she argues.</p>
+<a href="../../viewpoints/interviews/posts/2023/04/28/stephanie-hare.html" class="no-external">Stephanie Hare, author of ‘Technology is Not Neutral’, talks to Real World Data Science about the ‘wicked problem’ of technology and AI ethics, and why laws and regulations are ‘necessary but insufficient’ to minimise harms. ‘We’re going to have to inculcate an entire new mindset,’ she argues. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/interviews/posts/2023/04/28/stephanie-hare.html">
+<a href="../../viewpoints/interviews/posts/2023/04/28/stephanie-hare.html" class="no-external">
 <div class="listing-date">
 Apr 28, 2023
 </div>
@@ -606,19 +610,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="9" data-categories="Data science education,Data literacy,Policy" data-listing-date-sort="1678060800000" data-listing-file-modified-sort="1705946316451" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="41">
+<div class="quarto-post image-right" data-index="9" data-categories="Data science education,Data literacy,Policy" data-listing-date-sort="1678060800000" data-listing-file-modified-sort="1706285882941" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="41" data-listing-word-count-sort="8083">
 <div class="thumbnail">
-<p><a href="../../viewpoints/interviews/posts/2023/03/06/data-science-act.html"> <img src="../../viewpoints/interviews/posts/2023/03/06/images/andy-feliciotti-isg8AL7-6uk-unsplash.png" class="thumbnail-image" alt="Bikers in front of the United States Capitol in Washington DC. Photo by Andy Feliciotti on Unsplash."> </a></p>
+<p><a href="../../viewpoints/interviews/posts/2023/03/06/data-science-act.html" class="no-external"></a></p><a href="../../viewpoints/interviews/posts/2023/03/06/data-science-act.html" class="no-external">
+<p><img src="../../viewpoints/interviews/posts/2023/03/06/images/andy-feliciotti-isg8AL7-6uk-unsplash.png" class="thumbnail-image" alt="Bikers in front of the United States Capitol in Washington DC. Photo by Andy Feliciotti on Unsplash."></p>
+</a><p><a href="../../viewpoints/interviews/posts/2023/03/06/data-science-act.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/interviews/posts/2023/03/06/data-science-act.html">
 <h3 class="no-anchor listing-title">
-US legislators get their data science act together
+<a href="../../viewpoints/interviews/posts/2023/03/06/data-science-act.html" class="no-external">US legislators get their data science act together</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/interviews/posts/2023/03/06/data-science-act.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Data science education'); return false;">
 Data science education
@@ -630,14 +634,12 @@ Data literacy
 Policy
 </div>
 </div>
-<a href="../../viewpoints/interviews/posts/2023/03/06/data-science-act.html">
 <div class="listing-description">
-<p>A bill introduced in the US Congress wants to make funds available to develop data science and data literacy education across the United States. We sit down with education and policy experts to discuss the challenges and opportunities ahead.</p>
+<a href="../../viewpoints/interviews/posts/2023/03/06/data-science-act.html" class="no-external">A bill introduced in the US Congress wants to make funds available to develop data science and data literacy education across the United States. We sit down with education and policy experts to discuss the challenges and opportunities ahead. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/interviews/posts/2023/03/06/data-science-act.html">
+<a href="../../viewpoints/interviews/posts/2023/03/06/data-science-act.html" class="no-external">
 <div class="listing-date">
 Mar 6, 2023
 </div>
@@ -647,19 +649,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="10" data-categories="Open science,Reproducible research" data-listing-date-sort="1675382400000" data-listing-file-modified-sort="1705946316451" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="23">
+<div class="quarto-post image-right" data-index="10" data-categories="Open science,Reproducible research" data-listing-date-sort="1675382400000" data-listing-file-modified-sort="1706285882941" data-listing-date-modified-sort="NaN" data-listing-reading-time-sort="23" data-listing-word-count-sort="4600">
 <div class="thumbnail">
-<p><a href="../../viewpoints/interviews/posts/2023/02/03/heidi-seibold.html"> <img src="../../viewpoints/interviews/posts/2023/02/03/images/heidi-seibold.png" class="thumbnail-image" alt="Photo of Heidi Seibold"> </a></p>
+<p><a href="../../viewpoints/interviews/posts/2023/02/03/heidi-seibold.html" class="no-external"></a></p><a href="../../viewpoints/interviews/posts/2023/02/03/heidi-seibold.html" class="no-external">
+<p><img src="../../viewpoints/interviews/posts/2023/02/03/images/heidi-seibold.png" class="thumbnail-image" alt="Photo of Heidi Seibold"></p>
+</a><p><a href="../../viewpoints/interviews/posts/2023/02/03/heidi-seibold.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/interviews/posts/2023/02/03/heidi-seibold.html">
 <h3 class="no-anchor listing-title">
-Why open science is ‘just good science in a digital era’
+<a href="../../viewpoints/interviews/posts/2023/02/03/heidi-seibold.html" class="no-external">Why open science is ‘just good science in a digital era’</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/interviews/posts/2023/02/03/heidi-seibold.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Open science'); return false;">
 Open science
@@ -668,14 +670,12 @@ Open science
 Reproducible research
 </div>
 </div>
-<a href="../../viewpoints/interviews/posts/2023/02/03/heidi-seibold.html">
 <div class="listing-description">
-<p>Real World Data Science speaks with statistician and data scientist Heidi Seibold about open science: what it means, the benefits of it, and how to move towards it.</p>
+<a href="../../viewpoints/interviews/posts/2023/02/03/heidi-seibold.html" class="no-external">Real World Data Science speaks with statistician and data scientist Heidi Seibold about open science: what it means, the benefits of it, and how to move towards it. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/interviews/posts/2023/02/03/heidi-seibold.html">
+<a href="../../viewpoints/interviews/posts/2023/02/03/heidi-seibold.html" class="no-external">
 <div class="listing-date">
 Feb 3, 2023
 </div>
@@ -685,19 +685,19 @@ Brian Tarran
 </a>
 </div>
 </div>
-<div class="quarto-post image-right" data-index="11" data-categories="Modelling,Ethics" data-listing-date-sort="1674604800000" data-listing-file-modified-sort="1705946316451" data-listing-date-modified-sort="1705536000000" data-listing-reading-time-sort="39">
+<div class="quarto-post image-right" data-index="11" data-categories="Modelling,Ethics" data-listing-date-sort="1674604800000" data-listing-file-modified-sort="1706285882941" data-listing-date-modified-sort="1705536000000" data-listing-reading-time-sort="39" data-listing-word-count-sort="7699">
 <div class="thumbnail">
-<p><a href="../../viewpoints/interviews/posts/2023/01/25/erica-thompson.html"> <img src="../../viewpoints/interviews/posts/2023/01/25/images/erica-thompson.png" class="thumbnail-image" alt="Photo of Erica Thompson"> </a></p>
+<p><a href="../../viewpoints/interviews/posts/2023/01/25/erica-thompson.html" class="no-external"></a></p><a href="../../viewpoints/interviews/posts/2023/01/25/erica-thompson.html" class="no-external">
+<p><img src="../../viewpoints/interviews/posts/2023/01/25/images/erica-thompson.png" class="thumbnail-image" alt="Photo of Erica Thompson"></p>
+</a><p><a href="../../viewpoints/interviews/posts/2023/01/25/erica-thompson.html" class="no-external"></a></p>
 </div>
 <div class="body">
-<a href="../../viewpoints/interviews/posts/2023/01/25/erica-thompson.html">
 <h3 class="no-anchor listing-title">
-How to ‘Escape from Model Land’: an interview with Erica Thompson
+<a href="../../viewpoints/interviews/posts/2023/01/25/erica-thompson.html" class="no-external">How to ‘Escape from Model Land’: an interview with Erica Thompson</a>
 </h3>
 <div class="listing-subtitle">
-
+<a href="../../viewpoints/interviews/posts/2023/01/25/erica-thompson.html" class="no-external"></a>
 </div>
-</a>
 <div class="listing-categories">
 <div class="listing-category" onclick="window.quartoListingCategory('Modelling'); return false;">
 Modelling
@@ -706,14 +706,12 @@ Modelling
 Ethics
 </div>
 </div>
-<a href="../../viewpoints/interviews/posts/2023/01/25/erica-thompson.html">
 <div class="listing-description">
-<p>Author Erica Thompson talks to Real World Data Science about the ‘social element’ of mathematical modelling, how it manifests, and what to do about it.</p>
+<a href="../../viewpoints/interviews/posts/2023/01/25/erica-thompson.html" class="no-external">Author Erica Thompson talks to Real World Data Science about the ‘social element’ of mathematical modelling, how it manifests, and what to do about it. </a>
 </div>
-</a>
 </div>
 <div class="metadata">
-<a href="../../viewpoints/interviews/posts/2023/01/25/erica-thompson.html">
+<a href="../../viewpoints/interviews/posts/2023/01/25/erica-thompson.html" class="no-external">
 <div class="listing-date">
 Jan 25, 2023
 </div>
@@ -807,10 +805,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -820,8 +817,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -834,6 +840,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -877,6 +1002,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -902,6 +1028,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -963,12 +1115,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../../viewpoints/editors-blog/index.html" class="pagination-link">
+      <a href="../../viewpoints/editors-blog/index.html" class="pagination-link  aria-label=" editors&#39;="" blog"="">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Editors’ blog</span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../../viewpoints/newsletter/index.html" class="pagination-link">
+      <a href="../../viewpoints/newsletter/index.html" class="pagination-link" aria-label="Newsletter">
         <span class="nav-page-text">Newsletter</span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
@@ -976,7 +1128,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">Copyright © 2024 <a href="https://rss.org.uk/">Royal Statistical Society</a></div>   
+    <div class="nav-footer-left">
+<p>Copyright © 2024 <a href="https://rss.org.uk/">Royal Statistical Society</a></p>
+</div>   
     <div class="nav-footer-center">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
@@ -986,7 +1140,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </a>
   </li>  
     <li class="nav-item">
-    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience"><i class="ai  ai-zenodo ai-2xl"></i></a>
+    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience">
+<p><i class="ai  ai-zenodo ai-2xl"></i></p>
+</a>
   </li>  
     <li class="nav-item compact">
     <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
@@ -1013,10 +1169,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </a>
   </li>  
 </ul>
-    <div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/viewpoints/interviews/index.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action">Report an issue</a></p></div></div></div>
-    <div class="nav-footer-right"><a href="../../ts-and-cs.html">Terms &amp; Conditions</a></div>
+    </div>
+    <div class="nav-footer-right">
+<p><a href="../../ts-and-cs.html">Terms &amp; Conditions</a></p>
+</div>
   </div>
 </footer>
+
 
 
 

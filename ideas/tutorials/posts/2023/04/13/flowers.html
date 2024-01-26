@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -25,7 +25,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -61,6 +61,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
+  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -96,18 +97,24 @@ div.csl-indent {
 <script src="../../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../../../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
 <script src="../../../../../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
 <link href="../../../../../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
 <link href="../../../../../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
-<link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
-<link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -116,20 +123,12 @@ div.csl-indent {
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
-
-<script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
-</script>
 <!-- Thank you to Ben Ruijl for the progress bar code!
 Ben is on GitHub here: https://github.com/benruijl
 And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
@@ -137,7 +136,7 @@ And you can see the original code here: https://github.com/quarto-dev/quarto-cli
 <meta property="og:title" content="Real World Data Science - A demonstration of the law of the flowering plants">
 <meta property="og:description" content="The day a flower blooms is one of the earliest phenomena studied with systematic data collection and analysis. The prediction rule developed nearly three centuries ago is still used by scientists – with relatively few changes – to plan harvests, manage pests, and study ecosystems stressed by climate change. In this tutorial, Jonathan Auerbach introduces the “law of the flowering plants” and demonstrates how it can be applied to modern datasets.">
 <meta property="og:image" content="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/quetelet-flowers.png">
-<meta property="og:site-name" content="Real World Data Science">
+<meta property="og:site_name" content="Real World Data Science">
 <meta property="og:image:height" content="695">
 <meta property="og:image:width" content="952">
 <meta property="og:image:alt" content="Portrait of Adolphe Quetelet, superimposed on a photo of blooming purple lilacs. Quetelet portrait from Wikimedia Commons, Public Domain. Lilacs photo by Arina Bogachyova/iStock.">
@@ -170,16 +169,43 @@ document.addEventListener("DOMContentLoaded", function() {
   <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
   <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
 
+<script type="text/javascript">
+const typesetMath = (el) => {
+  if (window.MathJax) {
+    // MathJax Typeset
+    window.MathJax.typeset([el]);
+  } else if (window.katex) {
+    // KaTeX Render
+    var mathElements = el.getElementsByClassName("math");
+    var macros = [];
+    for (var i = 0; i < mathElements.length; i++) {
+      var texText = mathElements[i].firstChild;
+      if (mathElements[i].tagName == "SPAN") {
+        window.katex.render(texText.data, mathElements[i], {
+          displayMode: mathElements[i].classList.contains('display'),
+          throwOnError: false,
+          macros: macros,
+          fleqn: false
+        });
+      }
+    }
+  }
+}
+window.Quarto = {
+  typesetMath
+};
+</script>
+
 <link rel="stylesheet" href="../../../../../../rwds.css">
 
 
 
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a href="../../../../../../index.html" class="navbar-brand navbar-brand-logo">
     <img src="../../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
     </a>
@@ -191,44 +217,44 @@ document.addEventListener("DOMContentLoaded", function() {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../../../../case-studies/index.html" rel="" target="">
- <span class="menu-text">Case studies</span></a>
+    <a class="nav-link" href="../../../../../../case-studies/index.html"> 
+<span class="menu-text">Case studies</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../../../../ideas/index.html" rel="" target="">
- <span class="menu-text">Ideas</span></a>
+    <a class="nav-link" href="../../../../../../ideas/index.html"> 
+<span class="menu-text">Ideas</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../../../../careers/index.html" rel="" target="">
- <span class="menu-text">Careers</span></a>
+    <a class="nav-link" href="../../../../../../careers/index.html"> 
+<span class="menu-text">Careers</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../../../../viewpoints/index.html" rel="" target="">
- <span class="menu-text">Viewpoints</span></a>
+    <a class="nav-link" href="../../../../../../viewpoints/index.html"> 
+<span class="menu-text">Viewpoints</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">About RWDS</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
         <li>
-    <a class="dropdown-item" href="../../../../../../about-rwds.html" rel="" target="">
+    <a class="dropdown-item" href="../../../../../../about-rwds.html">
  <span class="dropdown-text">Who we are</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../../../../contributor-docs/call-for-contributions.html" rel="" target="">
+    <a class="dropdown-item" href="../../../../../../contributor-docs/call-for-contributions.html">
  <span class="dropdown-text">How to contribute</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../../../../contact.html" rel="" target="">
+    <a class="dropdown-item" href="../../../../../../contact.html">
  <span class="dropdown-text">Contact us</span></a>
   </li>  
     </ul>
   </li>
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -294,10 +320,11 @@ document.addEventListener("DOMContentLoaded", function() {
   <li><a href="#your-turn-do-you-have-what-it-takes-to-beat-quetelets-law" id="toc-your-turn-do-you-have-what-it-takes-to-beat-quetelets-law" class="nav-link" data-scroll-target="#your-turn-do-you-have-what-it-takes-to-beat-quetelets-law">Your turn: Do you have what it takes to beat Quetelet’s law?</a></li>
   <li><a href="#appendix-preparing-usa-npn-data" id="toc-appendix-preparing-usa-npn-data" class="nav-link" data-scroll-target="#appendix-preparing-usa-npn-data">Appendix: Preparing USA NPN Data</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/ideas/tutorials/posts/2023/04/13/flowers.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/ideas/tutorials/posts/2023/04/13/flowers.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
+
 
 
 
@@ -314,35 +341,34 @@ document.addEventListener("DOMContentLoaded", function() {
 </ol>
 <p>At the end of the tutorial, we challenge you to design an algorithm that beats our predictions. The tutorial uses the <code>R</code> programming language. In particular, the code relies on the following packages:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"knitr"</span>)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"kableExtra"</span>)</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"tidyverse"</span>)</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"plotly"</span>)</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"rnoaa"</span>)</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"rnpn"</span>)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(<span class="st">"rvest"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="in">library("knitr")</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="in">library("kableExtra")</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="in">library("tidyverse")</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="in">library("plotly")</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="in">library("rnoaa")</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="in">library("rnpn")</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="in">library("rvest")</span></span>
 <span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <section id="the-law-of-the-flowering-plants" class="level2">
 <h2 class="anchored" data-anchor-id="the-law-of-the-flowering-plants">The law of the flowering plants</h2>
 <p>We begin by reviewing the law of the flowering plants as it was stated by Adolphe Quetelet. You may already know Quetelet as the inventor of the body mass index. Less known is that Quetelet recorded the bloom dates of hundreds of different plants between 1833 and 1852 at the Brussels Observatory, which he founded and directed. Quetelet reported that a plant flowers when exposed to a specific quantity of heat, measured in degrees of Celsius squared (°C²). For example, he calculated that a lilac blooms when the sum of the daily temperatures squared exceeds 4264°C² following the last frost.</p>
 <p>He communicated this law in his <em>Letters addressed to HRH the grand duke of Saxe-Coburg and Gotha</em> <span class="citation" data-cites="quetelet1846lettres quetelet_1849">(Number 33, <a href="#ref-quetelet1846lettres" role="doc-biblioref">1846</a>; translated <a href="#ref-quetelet_1849" role="doc-biblioref">1849</a>)</span> and in his reporting <em>On the climate of Belgium</em> <span class="citation" data-cites="observatoire1834annales quetelet_1857">(Chapter 4, Part 4, <a href="#ref-observatoire1834annales" role="doc-biblioref">1848</a>; data updated in Part 7, <a href="#ref-quetelet_1857" role="doc-biblioref">1857</a>)</span>. A picture of Quetelet and the title page of <em>On the climate of Belgium</em> are displayed in Figure 1.</p>
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-figure quarto-figure-center" style="flex-basis: 50.0%;justify-content: center;">
-<figure class="figure">
-<p><a href="images/quetelet_1875400.jpg" class="lightbox" title="Portrait of Adolphe Quetelet." data-description="Source:
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><a href="images/quetelet_1875400.jpg" class="lightbox" data-description="Source:
 
 <a
 href=&quot;https://en.wikipedia.org/wiki/Adolphe_Quetelet#/media/File:Adolphe_Qu%C3%A9telet_by_Joseph-Arnold_Demannez.jpg&quot;>Wikimedia
-Commons</a>" data-gallery="Quetelet"><img src="images/quetelet_1875400.jpg" class="img-fluid figure-img" alt="Portrait of Adolphe Quetelet."></a></p>
-</figure>
+Commons</a>" data-gallery="Quetelet"><img src="images/quetelet_1875400.jpg" alt="Portrait of Adolphe Quetelet." height="400"></a></p>
 </div>
-<div class="quarto-figure quarto-figure-center" style="flex-basis: 50.0%;justify-content: center;">
-<figure class="figure">
-<p><a href="images/sur_le_climat400.jpeg" class="lightbox" title="Title page of Adolphe Quetelet's 'On the climate of Belgium'." data-description="Source:
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
+<p><a href="images/sur_le_climat400.jpeg" class="lightbox" data-description="Source:
 
-<a href=&quot;https://gallica.bnf.fr/ark:/12148/bpt6k95028d&quot;>Gallica</a>" data-gallery="Quetelet"><img src="images/sur_le_climat400.jpeg" class="img-fluid figure-img" alt="Title page of Adolphe Quetelet's 'On the climate of Belgium'."></a></p>
-</figure>
+<a href=&quot;https://gallica.bnf.fr/ark:/12148/bpt6k95028d&quot;>Gallica</a>" data-gallery="Quetelet"><img src="images/sur_le_climat400.jpeg" alt="Title page of Adolphe Quetelet's 'On the climate of Belgium'." height="400"></a></p>
 </div>
 </div>
 </div>
@@ -353,9 +379,9 @@ Commons</a>" data-gallery="Quetelet"><img src="images/quetelet_1875400.jpg" clas
 <p>Quetelet was also not the first to study the relationship between temperature and bloom dates. René Réaumur <span class="citation" data-cites="deréaumur_1735">(<a href="#ref-deréaumur_1735" role="doc-biblioref">1735</a>)</span>, an early adopter of the thermometer, noted the relationship before Marsham published his <em>Indications</em>. But Quetelet was the first to systematically study the relationship across a wide variety of plants and derive the amount of heat needed to bloom. An example of Quetelet’s careful record keeping can be seen in Figure 2, one of many tables he reported in his publications.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/quetelet_bloom.png" class="lightbox" title="A table of bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852." data-description="Source:
+<p><a href="images/quetelet_bloom.png" class="lightbox" data-description="Source:
 
-<a href=&quot;https://gallica.bnf.fr/ark:/12148/bpt6k95028d&quot;>Gallica</a>" data-gallery="quarto-lightbox-gallery-3"><img src="images/quetelet_bloom.png" class="img-fluid figure-img" alt="A table of bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852." width="600"></a></p>
+<a href=&quot;https://gallica.bnf.fr/ark:/12148/bpt6k95028d&quot;>Gallica</a>" data-gallery="quarto-lightbox-gallery-3"><img src="images/quetelet_bloom.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="A table of bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852." width="600"></a></p>
 </figure>
 </div>
 <div class="figure-caption">
@@ -365,31 +391,28 @@ Commons</a>" data-gallery="Quetelet"><img src="images/quetelet_1875400.jpg" clas
 <section id="reproducing-quetelets-law-of-the-flowering-plants" class="level2">
 <h2 class="anchored" data-anchor-id="reproducing-quetelets-law-of-the-flowering-plants">Reproducing Quetelet’s law of the flowering plants</h2>
 <p>To reproduce Quetelet’s law, we combine the data in Figure 2 with additional observations from his <em>Letters</em>. We focus on Quetelet’s primary example, the bloom date of the common lilac, <em>Syringa vulgaris</em>, row 18 of Figure 2. We do this because Quetelet carefully describes his methodology for measuring the bloom date of lilacs. For example, Quetelet considers a lilac to have bloomed when “the first corolla opens and shows the stamina.” That event is closest to what the USA Phenology Network describes as “open flowers”, depicted in the center image of Figure 3 below. This detail will become relevant when we attempt to replicate Quetelet’s law in a later section. Note that although we focus on lilacs in this tutorial, the <code>R</code> code is easily edited to predict the day that other plants will bloom.</p>
-<div class="quarto-layout-panel">
-<div class="quarto-layout-row quarto-layout-valign-top">
-<div class="quarto-figure quarto-figure-center" style="flex-basis: 33.3%;justify-content: center;">
-<figure class="figure">
-<p><a href="images/buds250.jpg" class="lightbox" title="Photo of lilac flower buds." data-description="Source:
+<div>
 
-<a href=&quot;https://www.usanpn.org/nn/TrackaLilac&quot;>USA National Phenology
-Network</a>" data-gallery="flowers"><img src="images/buds250.jpg" class="img-fluid figure-img" alt="Photo of lilac flower buds."></a></p>
-</figure>
 </div>
-<div class="quarto-figure quarto-figure-center" style="flex-basis: 33.3%;justify-content: center;">
-<figure class="figure">
-<p><a href="images/open_flowers250.jpg" class="lightbox" title="Photo of open lilac flowers." data-description="Source:
+<div class="quarto-layout-panel" data-layout-ncol="3">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><a href="images/buds250.jpg" class="lightbox" data-description="Source:
 
 <a href=&quot;https://www.usanpn.org/nn/TrackaLilac&quot;>USA National Phenology
-Network</a>" data-gallery="flowers"><img src="images/open_flowers250.jpg" class="img-fluid figure-img" alt="Photo of open lilac flowers."></a></p>
-</figure>
+Network</a>" data-gallery="flowers"><img src="images/buds250.jpg" alt="Photo of lilac flower buds." height="250"></a></p>
 </div>
-<div class="quarto-figure quarto-figure-center" style="flex-basis: 33.3%;justify-content: center;">
-<figure class="figure">
-<p><a href="images/full_flowers250.jpg" class="lightbox" title="Photo of full lilac flowers." data-description="Source:
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><a href="images/open_flowers250.jpg" class="lightbox" data-description="Source:
 
 <a href=&quot;https://www.usanpn.org/nn/TrackaLilac&quot;>USA National Phenology
-Network</a>" data-gallery="flowers"><img src="images/full_flowers250.jpg" class="img-fluid figure-img" alt="Photo of full lilac flowers."></a></p>
-</figure>
+Network</a>" data-gallery="flowers"><img src="images/open_flowers250.jpg" alt="Photo of open lilac flowers." height="250"></a></p>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
+<p><a href="images/full_flowers250.jpg" class="lightbox" data-description="Source:
+
+<a href=&quot;https://www.usanpn.org/nn/TrackaLilac&quot;>USA National Phenology
+Network</a>" data-gallery="flowers"><img src="images/full_flowers250.jpg" alt="Photo of full lilac flowers." height="250"></a></p>
 </div>
 </div>
 </div>
@@ -398,23 +421,22 @@ Network</a>" data-gallery="flowers"><img src="images/full_flowers250.jpg" class=
 </div>
 <p>In the <code>R</code> code below, the five-column tibble <code>lilac</code> contains the date each year that Quetelet observed the lilacs bloom at Brussels Observatory. The first three columns are the month, day, and year the lilacs bloomed between 1839 and 1852. These columns are combined to form the fourth column, the full date the lilacs bloomed. The last column converts the date to the day of the year the lilacs bloomed, abbreviated “doy.” That is, “doy” is the number of days it took for the lilacs bloom following January 1. Both “date” and “doy” representations of Quetelet’s observations will be useful throughout this tutorial.</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>lilac <span class="ot">&lt;-</span>                   </span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(<span class="at">month =</span> <span class="fu">c</span>(<span class="st">"May"</span>, <span class="st">"April"</span>, <span class="st">"April"</span>, <span class="st">"April"</span>, <span class="st">"April"</span>, <span class="st">"April"</span>, <span class="st">"May"</span>, </span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>                   <span class="st">"April"</span>, <span class="st">"May"</span>, <span class="st">"April"</span>, <span class="st">"May"</span>, <span class="st">"April"</span>, <span class="st">"May"</span>, <span class="st">"May"</span>),</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>         <span class="at">day   =</span>  <span class="fu">c</span>(<span class="dv">10</span>, <span class="dv">28</span>, <span class="dv">24</span>, <span class="dv">28</span>, <span class="dv">20</span>, <span class="dv">25</span>, <span class="dv">13</span>, <span class="dv">12</span>, <span class="dv">9</span>, <span class="dv">21</span>, <span class="dv">2</span>, <span class="dv">30</span>, <span class="dv">1</span>, <span class="dv">12</span>),</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>         <span class="at">year  =</span> <span class="dv">1839</span><span class="sc">:</span><span class="dv">1852</span>,</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>         <span class="at">date  =</span> <span class="fu">as.Date</span>(<span class="fu">paste</span>(month, day, year), <span class="at">format =</span> <span class="st">"%B %d %Y"</span>),</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>         <span class="at">doy   =</span> <span class="fu">parse_number</span>(<span class="fu">format</span>(date, <span class="st">"%j"</span>))) </span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="in">lilac &lt;-                   </span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="in">  tibble(month = c("May", "April", "April", "April", "April", "April", "May", </span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a><span class="in">                   "April", "May", "April", "May", "April", "May", "May"),</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="in">         day   =  c(10, 28, 24, 28, 20, 25, 13, 12, 9, 21, 2, 30, 1, 12),</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="in">         year  = 1839:1852,</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="in">         date  = as.Date(paste(month, day, year), format = "%B %d %Y"),</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="in">         doy   = parse_number(format(date, "%j"))) </span></span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>lilac <span class="sc">%&gt;%</span> </span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">"c"</span>,</span>
-<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Table 1: Bloom dates of lilacs observed by Quetelet between 1839 and 1852."</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">"100%"</span>, <span class="at">height =</span> <span class="st">"400px"</span>)</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="in">lilac %&gt;% </span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = "c",</span></span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="in">        caption = "Table 1: Bloom dates of lilacs observed by Quetelet between 1839 and 1852.") %&gt;%</span></span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a><span class="in">  kable_styling() %&gt;%</span></span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="in">  scroll_box(width = "100%", height = "400px")</span></span>
 <span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="tab-table1">
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
-
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
 <b>Table 1:</b> Bloom dates of lilacs observed by Quetelet between 1839 and 1852.
@@ -678,7 +700,6 @@ May
 </td>
 </tr>
 </tbody>
-
 </table>
 </div>
 </div>
@@ -686,29 +707,28 @@ May
 <p>The <code>ghcnd_search</code> function returns the maximum and minimum temperature as separate tibbles in a list. In the <code>R</code> code below, we join the tibbles using the <code>reduce</code> function. Note that the temperature is reported in tenths of a degree (i.e.&nbsp;0.1°C) so we divide by 10 before calculating the temperature midrange, our estimate of the daily temperature.</p>
 <p>The result is a five-column tibble <code>temp</code>, which contains the year of the temperature record (“year”), the date of the temperature record (“date”), the maximum temperature (“tmax”), the minimum temperature (“tmin”), and the midrange temperature (“temp”). The first 10 rows of the table are below. When you produce the full table yourself, you may notice that a small portion of temperature records are missing. We found that imputing these missing values does not significantly change the results. Therefore, we ignore these days when conducting our analysis.</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>temp <span class="ot">&lt;-</span> </span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ghcnd_search</span>(<span class="at">stationid =</span> <span class="st">"BE000006447"</span>,</span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>               <span class="at">var =</span> <span class="fu">c</span>(<span class="st">"tmax"</span>, <span class="st">"tmin"</span>),</span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>               <span class="at">date_min =</span> <span class="st">"1839-01-01"</span>,</span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>               <span class="at">date_max =</span> <span class="st">"1852-12-31"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reduce</span>(left_join) <span class="sc">%&gt;%</span></span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">year =</span> <span class="fu">parse_number</span>(<span class="fu">format</span>(date, <span class="st">"%Y"</span>)), </span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>            date, </span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">tmax =</span> tmax <span class="sc">/</span> <span class="dv">10</span>, </span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">tmin =</span> tmin <span class="sc">/</span> <span class="dv">10</span>, </span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">temp =</span> (tmax <span class="sc">+</span> tmin) <span class="sc">/</span> <span class="dv">2</span>)</span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>temp <span class="sc">%&gt;%</span> </span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">"c"</span>, </span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"date"</span>, <span class="st">"maximum temperature (°C)"</span>, </span>
-<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"minimum temperature (°C)"</span>, <span class="st">"midrange temperature (°C)"</span>),</span>
-<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Table 2: Temperature observed at Brussels Observatory between 1839 and 1852."</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">"100%"</span>, <span class="at">height =</span> <span class="st">"400px"</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="in">temp &lt;- </span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="in">  ghcnd_search(stationid = "BE000006447",</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="in">               var = c("tmax", "tmin"),</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="in">               date_min = "1839-01-01",</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="in">               date_max = "1852-12-31") %&gt;%</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="in">  reduce(left_join) %&gt;%</span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="in">  transmute(year = parse_number(format(date, "%Y")), </span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="in">            date, </span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="in">            tmax = tmax / 10, </span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="in">            tmin = tmin / 10, </span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="in">            temp = (tmax + tmin) / 2)</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="in">temp %&gt;% </span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = "c", </span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="in">        col.names = c("year", "date", "maximum temperature (°C)", </span></span>
+<span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="in">                      "minimum temperature (°C)", "midrange temperature (°C)"),</span></span>
+<span id="cb3-18"><a href="#cb3-18" aria-hidden="true" tabindex="-1"></a><span class="in">        caption = "Table 2: Temperature observed at Brussels Observatory between 1839 and 1852.") %&gt;%</span></span>
+<span id="cb3-19"><a href="#cb3-19" aria-hidden="true" tabindex="-1"></a><span class="in">  kable_styling() %&gt;%</span></span>
+<span id="cb3-20"><a href="#cb3-20" aria-hidden="true" tabindex="-1"></a><span class="in">  scroll_box(width = "100%", height = "400px")</span></span>
 <span id="cb3-21"><a href="#cb3-21" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="tab-table2">
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
-
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
 <b>Table 2:</b> Temperature observed at Brussels Observatory between 1839 and 1852.
@@ -921,38 +941,36 @@ midrange temperature (°C)
 </td>
 </tr>
 </tbody>
-
 </table>
 </div>
 </div>
 <p>Reproducing Quetelet’s law is now a simple matter of calculating the sum of the squared daily temperature from the day of last frost until the bloom day. We could use the day of last frost reported in Quetelet’s <em>Letters</em>. However, since we will replicate Quetelet’s analysis with recent data in a later section, we use our own definition of the day of last frost. We define the day of last frost to be the day following the last day the maximum temperature is below 0. The <code>R</code> code below creates the function <code>doy_last_frost</code> to extract the day of last frost from the maximum temperature. To demonstrate this function, we then compare the bloom date with the last frost date in 1839, the first year Quetelet observed.</p>
 <div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>doy_last_frost <span class="ot">&lt;-</span> <span class="cf">function</span>(tmax, <span class="at">doy_max =</span> <span class="dv">100</span>) {</span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  dof <span class="ot">&lt;-</span> <span class="fu">which</span>(tmax[<span class="dv">1</span><span class="sc">:</span>doy_max] <span class="sc">&lt;=</span> <span class="dv">0</span>)</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span>(<span class="fu">length</span>(dof) <span class="sc">==</span> <span class="dv">0</span>) <span class="dv">1</span> <span class="cf">else</span> <span class="fu">max</span>(dof) <span class="sc">+</span> <span class="dv">1</span></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="in">doy_last_frost &lt;- function(tmax, doy_max = 100) {</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="in">  dof &lt;- which(tmax[1:doy_max] &lt;= 0)</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="in">  if(length(dof) == 0) 1 else max(dof) + 1</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="in">  }</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>bloom_day <span class="ot">&lt;-</span> </span>
-<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  lilac <span class="sc">%&gt;%</span> </span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">1839</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(doy) <span class="sc">+</span> </span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as.Date</span>(<span class="st">"1839-01-01"</span>)</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  </span>
-<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a>frost_day <span class="ot">&lt;-</span> </span>
-<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a>  temp <span class="sc">%&gt;%</span> </span>
-<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(year <span class="sc">==</span> <span class="dv">1839</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(tmax) <span class="sc">%&gt;%</span> </span>
-<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">doy_last_frost</span>() <span class="sc">+</span> <span class="fu">as.Date</span>(<span class="st">"1839-01-01"</span>) </span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="in">bloom_day &lt;- </span></span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a><span class="in">  lilac %&gt;% </span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(year == 1839) %&gt;%</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(doy) + </span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="in">  as.Date("1839-01-01")</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="in">  </span></span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="in">frost_day &lt;- </span></span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="in">  temp %&gt;% </span></span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(year == 1839) %&gt;% </span></span>
+<span id="cb4-16"><a href="#cb4-16" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(tmax) %&gt;% </span></span>
+<span id="cb4-17"><a href="#cb4-17" aria-hidden="true" tabindex="-1"></a><span class="in">  doy_last_frost() + as.Date("1839-01-01") </span></span>
 <span id="cb4-18"><a href="#cb4-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="st">`</span><span class="at">last frost date</span><span class="st">`</span> <span class="ot">=</span> frost_day, </span>
-<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a>       <span class="st">`</span><span class="at">bloom date</span><span class="st">`</span> <span class="ot">=</span> bloom_day) <span class="sc">%&gt;%</span></span>
-<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">"c"</span>,</span>
-<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Table 3: Last frost date and lilac bloom date at Brussels Observatory in 1839."</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span>
+<span id="cb4-19"><a href="#cb4-19" aria-hidden="true" tabindex="-1"></a><span class="in">tibble(`last frost date` = frost_day, </span></span>
+<span id="cb4-20"><a href="#cb4-20" aria-hidden="true" tabindex="-1"></a><span class="in">       `bloom date` = bloom_day) %&gt;%</span></span>
+<span id="cb4-21"><a href="#cb4-21" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = "c",</span></span>
+<span id="cb4-22"><a href="#cb4-22" aria-hidden="true" tabindex="-1"></a><span class="in">        caption = "Table 3: Last frost date and lilac bloom date at Brussels Observatory in 1839.") %&gt;%</span></span>
+<span id="cb4-23"><a href="#cb4-23" aria-hidden="true" tabindex="-1"></a><span class="in">  kable_styling()</span></span>
 <span id="cb4-24"><a href="#cb4-24" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="tab-table3">
 <div style="overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
-
 <table class="table" style="margin-left: auto; margin-right: auto; margin-bottom: 1.5em;">
 <caption>
 <b>Table 3:</b> Last frost date and lilac bloom date at Brussels Observatory in 1839.
@@ -977,71 +995,65 @@ bloom date
 </td>
 </tr>
 </tbody>
-
 </table>
 </div>
 </div>
 <p>If Quetelet’s law of the flowering plants is correct, Table 3 has the following interpretation. On March 8, 1839 the lilacs at Brussels Observatory began “collecting” temperature. The lilacs continued to “collect” temperature until May 11, at which point they exceeded their 4264°C² quota and bloomed. We visualize this theory in Figure 4 with the <code>R</code> packages <code>ggplot2</code>, a member of the set of packages that constitute the “tidyverse” <span class="citation" data-cites="Wickham2019">(<a href="#ref-Wickham2019" role="doc-biblioref">2019</a>)</span>, and <code>plotly</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>(temp <span class="sc">%&gt;%</span> </span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(date <span class="sc">&lt;</span> <span class="fu">as.Date</span>(<span class="st">"1839-06-01"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(date, temp) <span class="sc">+</span> </span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">""</span>,</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"midrange temperature (°C)"</span>,</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> </span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Figure 4: According to Quetelet's law, the lilacs bloom when exposed to 4264°C² following the last frost."</span>) <span class="sc">+</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(bloom_day, frost_day)), </span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">"dotted"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplotly</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_annotations</span>(<span class="at">x =</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(frost_day, bloom_day)),</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">4</span>, <span class="sc">-</span><span class="dv">4</span>),</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>                  <span class="at">text =</span> <span class="fu">c</span>(<span class="st">"last</span><span class="sc">\n</span><span class="st">frost"</span>, <span class="st">"first</span><span class="sc">\n</span><span class="st">bloom"</span>),</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>                  <span class="at">font =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ay =</span> <span class="dv">0</span>,</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>                  <span class="at">xshift =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">10</span>, <span class="sc">-</span><span class="dv">12</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">config</span>(<span class="at">displaylogo =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="in">(temp %&gt;% </span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(date &lt; as.Date("1839-06-01")) %&gt;% </span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot() + </span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="in">  aes(date, temp) + </span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line() + </span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="in">    x = "",</span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="in">    y = "midrange temperature (°C)",</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="in">    title = </span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="in">      "Figure 4: According to Quetelet's law, the lilacs bloom when exposed to 4264°C² following the last frost.") +</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_vline(xintercept = as.numeric(c(bloom_day, frost_day)), </span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="in">             linetype = "dotted")) %&gt;%</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplotly() %&gt;% </span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="in">  add_annotations(x = as.numeric(c(frost_day, bloom_day)),</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="in">                  y = c(-4, -4),</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="in">                  text = c("last\nfrost", "first\nbloom"),</span></span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="in">                  font = list(size = 14),</span></span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a><span class="in">                  ay = 0,</span></span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a><span class="in">                  xshift = c(-10, -12)) %&gt;%</span></span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a><span class="in">  config(displaylogo = FALSE)</span></span>
 <span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/fig4.png" class="lightbox" title="A line graph of midrange temperature by day, for January to June 1839, with day of last frost (March 8) and day of first bloom (May 11) marked by vertical dashed lines." data-description="Author
+<p><a href="images/fig4.png" class="lightbox" data-description="Author
 
 provided,
 
-<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>" data-gallery="quarto-lightbox-gallery-7"><img src="images/fig4.png" class="img-fluid figure-img" alt="A line graph of midrange temperature by day, for January to June 1839, with day of last frost (March 8) and day of first bloom (May 11) marked by vertical dashed lines."></a></p>
-</figure>
-</div>
+<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>" data-gallery="quarto-lightbox-gallery-7"><img src="images/fig4.png" class="img-fluid" alt="A line graph of midrange temperature by day, for January to June 1839, with day of last frost (March 8) and day of first bloom (May 11) marked by vertical dashed lines."></a></p>
 <div class="figure-caption">
 <p><strong>Figure 4:</strong> According to Quetelet’s law, the lilacs bloom when exposed to 4264°C² following the last frost. Author provided, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 </div>
 <p>We now have all the ingredients necessary to reproduce Quetelet’s findings. Our reproduction is greatly simplified by using the <code>nest</code> function from the <code>tidyr</code> package, another member of the “tidyverse”. For an overview of <code>nest</code>, see the <a href="https://r4ds.had.co.nz/many-models.html?q=nest#nested-data">“Nested data” section</a> of <span class="citation" data-cites="grolemund2017r">Grolemund and Wickham (<a href="#ref-grolemund2017r" role="doc-biblioref">2017</a>)</span>. We will group the data by year, nest, calculate the cumulative squared temperature from the frost date to the bloom date within each year, and then unnest. We ignore temperatures below 0°C. That is, temperatures below 0°C are set to 0°C. We do this because it is clear from Quetelet’s derivation of the law that only positive temperatures should be squared. See the next section for details.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>quetelet <span class="ot">&lt;-</span> </span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>  temp <span class="sc">%&gt;%</span> </span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">nest</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">left_join</span>(lilac) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">law =</span> <span class="fu">map</span>(data, <span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">pmax</span>(.<span class="sc">$</span>temp, <span class="dv">0</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)[(<span class="fu">doy_last_frost</span>(.<span class="sc">$</span>tmax) <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>doy]<span class="sc">^</span><span class="dv">2</span>))) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(law) <span class="sc">%&gt;%</span> </span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="in">quetelet &lt;- </span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="in">  temp %&gt;% </span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(year) %&gt;% </span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="in">  nest() %&gt;% </span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="in">  left_join(lilac) %&gt;% </span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(law = map(data, ~ sum(pmax(.$temp, 0, na.rm = TRUE)[(doy_last_frost(.$tmax) + 1):doy]^2))) %&gt;% </span></span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a><span class="in">  unnest(law) %&gt;% </span></span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="in">  ungroup()</span></span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>quetelet <span class="sc">%&gt;%</span> </span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Quetelet =</span> <span class="dv">4264</span>, </span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>            <span class="at">est =</span> <span class="fu">mean</span>(law), </span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>            <span class="at">se =</span> <span class="fu">sd</span>(law)<span class="sc">/</span><span class="fu">sqrt</span>(<span class="fu">n</span>()),</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>            <span class="at">ci  =</span> <span class="fu">str_c</span>(<span class="st">"["</span>, <span class="fu">round</span>(est <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> se), <span class="st">", "</span>, <span class="fu">round</span>(est <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> se), <span class="st">"]"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">dig =</span> <span class="dv">0</span>, </span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">align =</span> <span class="st">"c"</span>, </span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a>        <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Quetelet's law (°C²)"</span>, <span class="st">"estimate (°C²)"</span>, </span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"standard error (°C²)"</span>, <span class="st">"95% confidence interval (°C²)"</span>),</span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Table 4: Reproduction of Quetelet's analysis."</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="in">quetelet %&gt;% </span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(Quetelet = 4264, </span></span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="in">            est = mean(law), </span></span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a><span class="in">            se = sd(law)/sqrt(n()),</span></span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a><span class="in">            ci  = str_c("[", round(est - 2 * se), ", ", round(est + 2 * se), "]")) %&gt;%</span></span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(dig = 0, </span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="in">        align = "c", </span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="in">        col.names = c("Quetelet's law (°C²)", "estimate (°C²)", </span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="in">                      "standard error (°C²)", "95% confidence interval (°C²)"),</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="in">        caption = "Table 4: Reproduction of Quetelet's analysis.") %&gt;%</span></span>
+<span id="cb6-21"><a href="#cb6-21" aria-hidden="true" tabindex="-1"></a><span class="in">  kable_styling()</span></span>
 <span id="cb6-22"><a href="#cb6-22" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="tab-table4">
 <div style="overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
-
 <table class="table" style="margin-left: auto; margin-right: auto; margin-bottom: 1.5em;">
 <caption>
 <b>Table 4:</b> Reproduction of Quetelet’s analysis.
@@ -1078,31 +1090,29 @@ standard error (°C²)
 </td>
 </tr>
 </tbody>
-
 </table>
 </div>
 </div>
 <p>The results show that Quetelet’s findings are indeed reproducible. Quetelet estimated that lilacs bloom once exposed to 4264°C² following the last frost. Our reanalysis suggests a similar amount. However, 4264°C² is the overall average across all years – the estimated amount needed to bloom varies year to year. As a result, the average has a 95% confidence interval of approximately 3870°C² to 4660°C². Quetelet was well aware of this variation. He argued it was due to unobserved factors that influence growing conditions and change each year, and he dedicated significant space in his <em>Letters</em> to discuss them.</p>
 <p>These unobserved factors limit the accuracy of predictions made using the law. To assess the predictive accuracy of the law, we temporarily ignore the bloom dates Quetelet observed. Instead, we apply the 4264°C² quota to the temperature records at Brussels Observatory to predict the bloom date. We then compare our predictions with the bloom date Quetelet observed. The <code>R</code> code below creates the function <code>doy_prediction</code> to estimate the day the lilac will bloom from temperature records. Table 5 summarizes the accuracy of Quetelet’s law by the mean absolute error and root mean squared error.</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>doy_prediction <span class="ot">&lt;-</span> <span class="cf">function</span>(temp, tmax)</span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">doy_last_frost</span>(tmax) <span class="sc">+</span> <span class="fu">which.max</span>(<span class="fu">cumsum</span>(<span class="fu">pmax</span>(temp[(<span class="fu">doy_last_frost</span>(tmax) <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span><span class="dv">365</span>], <span class="dv">0</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)<span class="sc">^</span><span class="dv">2</span>) <span class="sc">&gt;</span> <span class="dv">4264</span>)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="in">doy_prediction &lt;- function(temp, tmax)</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="in">  doy_last_frost(tmax) + which.max(cumsum(pmax(temp[(doy_last_frost(tmax) + 1):365], 0, na.rm = TRUE)^2) &gt; 4264)</span></span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>quetelet <span class="sc">%&gt;%</span> </span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pred =</span> <span class="fu">map</span>(data, <span class="sc">~</span> <span class="fu">doy_prediction</span>(.<span class="sc">$</span>temp, .<span class="sc">$</span>tmax))) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(pred) <span class="sc">%&gt;%</span> </span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mae  =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(doy <span class="sc">-</span> pred)),</span>
-<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">rmse =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((doy <span class="sc">-</span> pred)<span class="sc">^</span><span class="dv">2</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">dig =</span> <span class="dv">0</span>,</span>
-<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">align =</span> <span class="st">"c"</span>,</span>
-<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"mean absolute error (days)"</span>, <span class="st">"root mean squared error (days)"</span>),</span>
-<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Table 5: Predictions using Quetelet's law are accurate within a week on average."</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a><span class="in">quetelet %&gt;% </span></span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(pred = map(data, ~ doy_prediction(.$temp, .$tmax))) %&gt;% </span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="in">  unnest(pred) %&gt;% </span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="in">  ungroup() %&gt;%</span></span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(mae  = mean(abs(doy - pred)),</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a><span class="in">            rmse = sqrt(mean((doy - pred)^2))) %&gt;%</span></span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(dig = 0,</span></span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a><span class="in">        align = "c",</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a><span class="in">        col.names = c("mean absolute error (days)", "root mean squared error (days)"),</span></span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a><span class="in">        caption = "Table 5: Predictions using Quetelet's law are accurate within a week on average.") %&gt;%</span></span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a><span class="in">  kable_styling()</span></span>
 <span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="tab-table5">
 <div style="overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
-
 <table class="table" style="margin-left: auto; margin-right: auto; margin-bottom: 1.5em;">
 <caption>
 <b>Table 5:</b> Predictions using Quetelet’s law are accurate within a week on average.
@@ -1127,27 +1137,25 @@ root mean squared error (days)
 </td>
 </tr>
 </tbody>
-
 </table>
 </div>
 </div>
 <p>Table 5 indicates that predictions made using the law are accurate to within a week on average. For comparison purposes, we also predict the day the lilacs will bloom using the average bloom date between 1839 and 1852. That is, on average the lilac bloomed on April 30 (April 29 on leap years), and we check the accuracy of simply predicting this average date each year. Table 6 indicates the average bloom date yields predictions that are less accurate by an average of two days.</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>quetelet <span class="sc">%&gt;%</span></span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">pred =</span> <span class="fu">mean</span>(doy),</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>            <span class="at">mae  =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(doy <span class="sc">-</span> pred)),</span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>            <span class="at">rmse =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((doy <span class="sc">-</span> pred)<span class="sc">^</span><span class="dv">2</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(mae, rmse) <span class="sc">%&gt;%</span></span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">dig =</span> <span class="dv">0</span>,</span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">align =</span> <span class="st">"c"</span>,</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>        <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"mean absolute error (days)"</span>,</span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"root mean squared error (days)"</span>),</span>
-<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Table 6: Predictions using the average bloom date are off by a week or more on average."</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="in">quetelet %&gt;%</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(pred = mean(doy),</span></span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="in">            mae  = mean(abs(doy - pred)),</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="in">            rmse = sqrt(mean((doy - pred)^2))) %&gt;%</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="in">  select(mae, rmse) %&gt;%</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(dig = 0,</span></span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="in">        align = "c",</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="in">        col.names = c("mean absolute error (days)",</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a><span class="in">                      "root mean squared error (days)"),</span></span>
+<span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a><span class="in">        caption = "Table 6: Predictions using the average bloom date are off by a week or more on average.") %&gt;%</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a><span class="in">  kable_styling()</span></span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="tab-table6">
 <div style="overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
-
 <table class="table" style="margin-left: auto; margin-right: auto; margin-bottom: 1.5em;">
 <caption>
 <b>Table 6:</b> Predictions using the average bloom date are off by a week or more on average.
@@ -1172,7 +1180,6 @@ root mean squared error (days)
 </td>
 </tr>
 </tbody>
-
 </table>
 </div>
 </div>
@@ -1199,24 +1206,23 @@ root mean squared error (days)
 <p>In this section, we replicate the law of the flowering plants using lilac bloom dates observed by scientists between 1956 and 2009 at 53 locations throughout the Pacific Northwest <span class="citation" data-cites="rosemartin_denny_weltzin_lee_marsh_wilson_mehdipoor_zurita-milla_schwartz_2015">(<a href="#ref-rosemartin_denny_weltzin_lee_marsh_wilson_mehdipoor_zurita-milla_schwartz_2015" role="doc-biblioref">2015</a>)</span>. The data can be downloaded from the USA National Phenology Network using the <code>rnpn</code> package <span class="citation" data-cites="the_comprehensive_r_archive_network_2022">(<a href="#ref-the_comprehensive_r_archive_network_2022" role="doc-biblioref">2022</a>)</span>. For space considerations, the <code>R</code> code that downloads and cleans the data is provided in the <a href="#appendix-preparing-usa-npn-data">Appendix</a>. Running this code yields the tibble <code>usa_npn</code>. Each row of the tibble corresponds with a bloom date observed at a given site in a given year. There are 31 columns, only seven of which we use in our replication. The remaining columns are documented in the <code>rnpn</code> package, and we will not review them here.</p>
 <p>Table 7 displays six of the seven columns (and only the first 10 rows of the full table). These columns are defined in the same way as the columns of <a href="#tab-table1">Table 1</a>, except for “site_id”, which denotes the site at which the observation was made. Table 1 does not have a “site_id” column because all observations were made at the same site, Brussels Observatory.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="fu">load</span>(<span class="fu">url</span>(<span class="st">"https://github.com/jauerbach/miscellaneous/blob/main/usa_npn.RData?raw=true"</span>))</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="in">load(url("https://github.com/jauerbach/miscellaneous/blob/main/usa_npn.RData?raw=true"))</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>usa_npn <span class="sc">%&gt;%</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(site_id, </span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>            <span class="at">month =</span> first_yes_month, </span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>            <span class="at">day   =</span> first_yes_day, </span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>            <span class="at">year  =</span> first_yes_year, </span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>            <span class="at">date  =</span> <span class="fu">as.Date</span>(<span class="fu">paste</span>(month, day, year), <span class="at">format =</span> <span class="st">"%m %d %Y"</span>),</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>            doy) <span class="sc">%&gt;%</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">"c"</span>,</span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Table 7: Bloom dates of lilacs observed in pacific northwest between 1956 and 2009."</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">"100%"</span>, </span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>             <span class="at">height =</span> <span class="st">"400px"</span>)</span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="in">usa_npn %&gt;%</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="in">  transmute(site_id, </span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="in">            month = first_yes_month, </span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="in">            day   = first_yes_day, </span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="in">            year  = first_yes_year, </span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="in">            date  = as.Date(paste(month, day, year), format = "%m %d %Y"),</span></span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a><span class="in">            doy) %&gt;%</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = "c",</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="in">        caption = "Table 7: Bloom dates of lilacs observed in pacific northwest between 1956 and 2009.") %&gt;%</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="in">  kable_styling() %&gt;%</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="in">  scroll_box(width = "100%", </span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="in">             height = "400px")</span></span>
 <span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="tab-table7">
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; margin-bottom: 1.5em; ">
-
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
 <b>Table 7:</b> Bloom dates of lilacs observed in pacific northwest between 1956 and 2009.
@@ -1465,28 +1471,26 @@ doy
 </td>
 </tr>
 </tbody>
-
 </table>
 </div>
 </div>
 <p>The seventh column we review is “temp”. Each row of “temp” is a tibble of temperature records taken at the nearest station in the Global Historical Climatology Network. The first tibble (again, only the first 10 rows) is displayed in Table 8 below. The columns are defined in the same way as the columns of <a href="#tab-table2">Table 2</a>, except for “id”, which denotes the location at which the temperature record was made. Table 2 does not have an “id” column because all observations were made at the same site, Brussels Observatory.</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>usa_npn <span class="sc">%&gt;%</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(temp) <span class="sc">%&gt;%</span></span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>  .[[<span class="dv">1</span>]] <span class="sc">%&gt;%</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">year =</span> <span class="fu">parse_number</span>(<span class="fu">format</span>(date, <span class="st">"%Y"</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(id, year, date, tmax, tmin, temp) <span class="sc">%&gt;%</span></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">"c"</span>,</span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>        <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"id"</span>, <span class="st">"year"</span>, <span class="st">"date"</span>, <span class="st">"maximum temperature (°C)"</span>, </span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"minimum temperature (°C)"</span>, <span class="st">"midrange temperature (°C)"</span>),</span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Table 8: Temperature observed at an example pacific northwest site in 1956."</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">"100%"</span>, </span>
-<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a>             <span class="at">height =</span> <span class="st">"400px"</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="in">usa_npn %&gt;%</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(temp) %&gt;%</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="in">  .[[1]] %&gt;%</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(year = parse_number(format(date, "%Y"))) %&gt;%</span></span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="in">  select(id, year, date, tmax, tmin, temp) %&gt;%</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = "c",</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="in">        col.names = c("id", "year", "date", "maximum temperature (°C)", </span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="in">                      "minimum temperature (°C)", "midrange temperature (°C)"),</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="in">        caption = "Table 8: Temperature observed at an example pacific northwest site in 1956.") %&gt;%</span></span>
+<span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="in">  kable_styling() %&gt;%</span></span>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="in">  scroll_box(width = "100%", </span></span>
+<span id="cb10-13"><a href="#cb10-13" aria-hidden="true" tabindex="-1"></a><span class="in">             height = "400px")</span></span>
 <span id="cb10-14"><a href="#cb10-14" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="tab-table8">
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
-
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
 <b>Table 8:</b> Temperature observed at an example pacific northwest site in 1956.
@@ -1735,33 +1739,31 @@ USC00245761
 </td>
 </tr>
 </tbody>
-
 </table>
 </div>
 </div>
 <p>We are now prepared to replicate Quetelet’s findings. We will use <code>R</code> code nearly identical to the code we used to reproduce Quetelet’s findings earlier. The main difference is due to the fact that temperature records are dependent across sites within a year. To account for this dependence, we compute the cumulative temperature squared from the last frost to the bloom date for each site and year. We then take the average across all sites within a year. Finally, we calculate the standard error and confidence interval using only the variation of the averages across years. Table 9 displays the results.</p>
 <div class="sourceCode" id="cb11"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>usa_npn <span class="sc">%&gt;%</span>             </span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="fu">rownames</span>(usa_npn)) <span class="sc">%&gt;%</span></span>
-<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">law =</span> </span>
-<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>           <span class="fu">map</span>(temp, <span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">pmax</span>(.<span class="sc">$</span>temp, <span class="dv">0</span>, <span class="at">na.rm =</span> <span class="cn">TRUE</span>)[(<span class="fu">doy_last_frost</span>(.<span class="sc">$</span>tmax, doy) <span class="sc">+</span> <span class="dv">1</span>)<span class="sc">:</span>(doy <span class="sc">-</span> <span class="dv">1</span>)]<span class="sc">^</span><span class="dv">2</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(law) <span class="sc">%&gt;%</span> </span>
-<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(year) <span class="sc">%&gt;%</span>    </span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">law =</span> <span class="fu">mean</span>(law)) <span class="sc">%&gt;%</span></span>
-<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">Quetelet =</span> <span class="dv">4264</span>, </span>
-<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">est =</span> <span class="fu">mean</span>(law), </span>
-<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a>            <span class="at">se =</span> <span class="fu">sd</span>(law) <span class="sc">/</span> <span class="fu">sqrt</span>(<span class="fu">n</span>()),</span>
-<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a>            <span class="at">ci  =</span> <span class="fu">str_c</span>(<span class="st">"["</span>, <span class="fu">round</span>(est <span class="sc">-</span> <span class="dv">2</span> <span class="sc">*</span> se), <span class="st">", "</span>, <span class="fu">round</span>(est <span class="sc">+</span> <span class="dv">2</span> <span class="sc">*</span> se), <span class="st">"]"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">dig =</span> <span class="dv">0</span>, </span>
-<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a>        <span class="at">align =</span> <span class="st">"c"</span>,</span>
-<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"Quetelet's law (°C²)"</span>, <span class="st">"estimate (°C²)"</span>,</span>
-<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"standard error (°C²)"</span>, <span class="st">"95% confidence interval (°C²)"</span>),</span>
-<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Table 9: Replication of Quetelet's analysis."</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span>
+<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="in">usa_npn %&gt;%             </span></span>
+<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(rownames(usa_npn)) %&gt;%</span></span>
+<span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(law = </span></span>
+<span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a><span class="in">           map(temp, ~ sum(pmax(.$temp, 0, na.rm = TRUE)[(doy_last_frost(.$tmax, doy) + 1):(doy - 1)]^2))) %&gt;%</span></span>
+<span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a><span class="in">  unnest(law) %&gt;% </span></span>
+<span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(year) %&gt;%    </span></span>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(law = mean(law)) %&gt;%</span></span>
+<span id="cb11-9"><a href="#cb11-9" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(Quetelet = 4264, </span></span>
+<span id="cb11-10"><a href="#cb11-10" aria-hidden="true" tabindex="-1"></a><span class="in">            est = mean(law), </span></span>
+<span id="cb11-11"><a href="#cb11-11" aria-hidden="true" tabindex="-1"></a><span class="in">            se = sd(law) / sqrt(n()),</span></span>
+<span id="cb11-12"><a href="#cb11-12" aria-hidden="true" tabindex="-1"></a><span class="in">            ci  = str_c("[", round(est - 2 * se), ", ", round(est + 2 * se), "]")) %&gt;%</span></span>
+<span id="cb11-13"><a href="#cb11-13" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(dig = 0, </span></span>
+<span id="cb11-14"><a href="#cb11-14" aria-hidden="true" tabindex="-1"></a><span class="in">        align = "c",</span></span>
+<span id="cb11-15"><a href="#cb11-15" aria-hidden="true" tabindex="-1"></a><span class="in">        col.names = c("Quetelet's law (°C²)", "estimate (°C²)",</span></span>
+<span id="cb11-16"><a href="#cb11-16" aria-hidden="true" tabindex="-1"></a><span class="in">                      "standard error (°C²)", "95% confidence interval (°C²)"),</span></span>
+<span id="cb11-17"><a href="#cb11-17" aria-hidden="true" tabindex="-1"></a><span class="in">        caption = "Table 9: Replication of Quetelet's analysis.") %&gt;%</span></span>
+<span id="cb11-18"><a href="#cb11-18" aria-hidden="true" tabindex="-1"></a><span class="in">  kable_styling()</span></span>
 <span id="cb11-19"><a href="#cb11-19" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="tab-table9">
 <div style="overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
-
 <table class="table" style="margin-left: auto; margin-right: auto; margin-bottom: 1.5em;">
 <caption>
 <b>Table 9:</b> Replication of Quetelet’s analysis.
@@ -1798,32 +1800,30 @@ standard error (°C²)
 </td>
 </tr>
 </tbody>
-
 </table>
 </div>
 </div>
 <p>Table 9 indicates that Quetelet’s findings are replicable in the sense that the confidence interval calculated using Quetelet’s data (<a href="#tab-table4">Table 4</a>) overlaps with the confidence interval calculated using the USA lilac data (Table 9). The standard error in Table 9 is smaller than Table 4 because the replication uses 54 years of data compared to Quetelet’s 14. Note that in the <code>R</code> code above, we subtract 1 from “doy” to correct for differences in how the bloom date is reported. This correction is not particularly important; the confidence intervals still overlap when this correction is removed.</p>
 <p>We now investigate the accuracy of Quetelet’s law when applied to the USA lilac data. As before, we make use of the <code>doy_prediction</code> function.</p>
 <div class="sourceCode" id="cb12"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>usa_npn <span class="ot">&lt;-</span> </span>
-<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>  usa_npn <span class="sc">%&gt;%</span> </span>
-<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">pred =</span> <span class="fu">map</span>(temp, <span class="sc">~</span> <span class="fu">doy_prediction</span>(.<span class="sc">$</span>temp, .<span class="sc">$</span>tmax))) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(pred) <span class="sc">%&gt;%</span> </span>
-<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a><span class="in">usa_npn &lt;- </span></span>
+<span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a><span class="in">  usa_npn %&gt;% </span></span>
+<span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(pred = map(temp, ~ doy_prediction(.$temp, .$tmax))) %&gt;% </span></span>
+<span id="cb12-5"><a href="#cb12-5" aria-hidden="true" tabindex="-1"></a><span class="in">  unnest(pred) %&gt;% </span></span>
+<span id="cb12-6"><a href="#cb12-6" aria-hidden="true" tabindex="-1"></a><span class="in">  ungroup()</span></span>
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>usa_npn <span class="sc">%&gt;%</span> </span>
-<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">mae  =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(doy <span class="sc">-</span> <span class="dv">1</span> <span class="sc">-</span> pred)),</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>            <span class="at">rmse =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((doy <span class="sc">-</span> <span class="dv">1</span> <span class="sc">-</span> pred)<span class="sc">^</span><span class="dv">2</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">dig =</span> <span class="dv">0</span>,</span>
-<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a>        <span class="at">align =</span> <span class="st">"c"</span>, </span>
-<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a>        <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"mean absolute error (days)"</span>,</span>
-<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"root mean squared error (days)"</span>),</span>
-<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Table 10: Predictions using Quetelet's law are accurate within about two weeks on average."</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span>
+<span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a><span class="in">usa_npn %&gt;% </span></span>
+<span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(mae  = mean(abs(doy - 1 - pred)),</span></span>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a><span class="in">            rmse = sqrt(mean((doy - 1 - pred)^2))) %&gt;%</span></span>
+<span id="cb12-11"><a href="#cb12-11" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(dig = 0,</span></span>
+<span id="cb12-12"><a href="#cb12-12" aria-hidden="true" tabindex="-1"></a><span class="in">        align = "c", </span></span>
+<span id="cb12-13"><a href="#cb12-13" aria-hidden="true" tabindex="-1"></a><span class="in">        col.names = c("mean absolute error (days)",</span></span>
+<span id="cb12-14"><a href="#cb12-14" aria-hidden="true" tabindex="-1"></a><span class="in">                      "root mean squared error (days)"),</span></span>
+<span id="cb12-15"><a href="#cb12-15" aria-hidden="true" tabindex="-1"></a><span class="in">        caption = "Table 10: Predictions using Quetelet's law are accurate within about two weeks on average.") %&gt;%</span></span>
+<span id="cb12-16"><a href="#cb12-16" aria-hidden="true" tabindex="-1"></a><span class="in">  kable_styling()</span></span>
 <span id="cb12-17"><a href="#cb12-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="tab-table10">
 <div style="overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
-
 <table class="table" style="margin-left: auto; margin-right: auto; margin-bottom: 1.5em;">
 <caption>
 <b>Table 10:</b> Predictions using Quetelet’s law are accurate within about two weeks on average.
@@ -1848,39 +1848,34 @@ root mean squared error (days)
 </td>
 </tr>
 </tbody>
-
 </table>
 </div>
 </div>
 <p>Table 10 indicates that the predictions are accurate to within two weeks on average. Recall that the predictions using Quetelet’s own data were accurate to within one week on average (<a href="#tab-table5">Table 5</a>). We speculate that the decrease in accuracy is due in part to the fact that both Quetelet’s lilacs and the temperature were observed at the same site, Brussels Observatory. In some cases, the USA lilacs were a few miles from where the temperature was recorded.</p>
 <p>Although the accuracy of the predictions made using Quetelet’s law is lower when applied to the USA lilac data, Figure 5 indicates that the law produces the correct bloom date on average. The figure plots the predictions made by the law against the actual bloom dates scientists observed. Note that instead of representing prediction-observation pairs as points in a scatter plot, the data are represented using blue contours. We use contours because there are more than 1,500 observations – too many to study using a scatter plot.</p>
 <div class="sourceCode" id="cb13"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>(usa_npn <span class="sc">%&gt;%</span> </span>
-<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">doy =</span> first_yes_doy) <span class="sc">%&gt;%</span></span>
-<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a>   <span class="fu">unnest</span>(pred) <span class="sc">%&gt;%</span> </span>
-<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a>   <span class="fu">mutate</span>(<span class="at">predicted =</span> <span class="fu">as.Date</span>(<span class="st">"2020-01-01"</span>) <span class="sc">+</span> pred,</span>
-<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a>          <span class="at">observed =</span> <span class="fu">as.Date</span>(<span class="st">"2020-01-01"</span>) <span class="sc">+</span> doy) <span class="sc">%&gt;%</span></span>
-<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a>   <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a>    <span class="fu">aes</span>(<span class="at">x =</span> observed, <span class="at">y =</span> predicted) <span class="sc">+</span></span>
-<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_density2d</span>(<span class="at">contour_var =</span> <span class="st">"ndensity"</span>) <span class="sc">+</span></span>
-<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">geom_abline</span>(<span class="at">intercept =</span> <span class="dv">0</span>, <span class="at">slope =</span> <span class="dv">1</span>, <span class="at">linetype =</span> <span class="dv">2</span>) <span class="sc">+</span></span>
-<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a>    <span class="fu">labs</span>(<span class="at">x =</span> <span class="st">"date observed"</span>, </span>
-<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a>         <span class="at">y =</span> <span class="st">"date predicted"</span>,</span>
-<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a>         <span class="at">title =</span> <span class="st">"Figure 5: Predictions using Quetelet's law are accurate within about two weeks on average."</span>) <span class="sc">+</span></span>
-<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a>    <span class="fu">theme</span>(<span class="at">legend.position =</span> <span class="st">"none"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplotly</span>(<span class="at">tooltip =</span> <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">config</span>(<span class="at">displaylogo =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a><span class="in">(usa_npn %&gt;% </span></span>
+<span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a><span class="in">   mutate(doy = first_yes_doy) %&gt;%</span></span>
+<span id="cb13-4"><a href="#cb13-4" aria-hidden="true" tabindex="-1"></a><span class="in">   unnest(pred) %&gt;% </span></span>
+<span id="cb13-5"><a href="#cb13-5" aria-hidden="true" tabindex="-1"></a><span class="in">   ungroup() %&gt;%</span></span>
+<span id="cb13-6"><a href="#cb13-6" aria-hidden="true" tabindex="-1"></a><span class="in">   mutate(predicted = as.Date("2020-01-01") + pred,</span></span>
+<span id="cb13-7"><a href="#cb13-7" aria-hidden="true" tabindex="-1"></a><span class="in">          observed = as.Date("2020-01-01") + doy) %&gt;%</span></span>
+<span id="cb13-8"><a href="#cb13-8" aria-hidden="true" tabindex="-1"></a><span class="in">   ggplot() + </span></span>
+<span id="cb13-9"><a href="#cb13-9" aria-hidden="true" tabindex="-1"></a><span class="in">    aes(x = observed, y = predicted) +</span></span>
+<span id="cb13-10"><a href="#cb13-10" aria-hidden="true" tabindex="-1"></a><span class="in">    geom_density2d(contour_var = "ndensity") +</span></span>
+<span id="cb13-11"><a href="#cb13-11" aria-hidden="true" tabindex="-1"></a><span class="in">    geom_abline(intercept = 0, slope = 1, linetype = 2) +</span></span>
+<span id="cb13-12"><a href="#cb13-12" aria-hidden="true" tabindex="-1"></a><span class="in">    labs(x = "date observed", </span></span>
+<span id="cb13-13"><a href="#cb13-13" aria-hidden="true" tabindex="-1"></a><span class="in">         y = "date predicted",</span></span>
+<span id="cb13-14"><a href="#cb13-14" aria-hidden="true" tabindex="-1"></a><span class="in">         title = "Figure 5: Predictions using Quetelet's law are accurate within about two weeks on average.") +</span></span>
+<span id="cb13-15"><a href="#cb13-15" aria-hidden="true" tabindex="-1"></a><span class="in">    theme(legend.position = "none")) %&gt;%</span></span>
+<span id="cb13-16"><a href="#cb13-16" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplotly(tooltip = "") %&gt;%</span></span>
+<span id="cb13-17"><a href="#cb13-17" aria-hidden="true" tabindex="-1"></a><span class="in">  config(displaylogo = FALSE)</span></span>
 <span id="cb13-18"><a href="#cb13-18" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/fig5.png" class="lightbox" title="This figure plots the predictions made by Quetelet's law against the actual bloom dates scientists observed from US lilac data. Data are represented using blue contours, and a dotted line of equality is drawn through the graph. The dotted line intersects the blue contours at their peak, suggesting that the law derived from Quetelet’s data accurately predicts the typical bloom date of the USA data." data-description="Author
+<p><a href="images/fig5.png" class="lightbox" data-description="Author
 
 provided,
 
-<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>" data-gallery="quarto-lightbox-gallery-8"><img src="images/fig5.png" class="img-fluid figure-img" alt="This figure plots the predictions made by Quetelet's law against the actual bloom dates scientists observed from US lilac data. Data are represented using blue contours, and a dotted line of equality is drawn through the graph. The dotted line intersects the blue contours at their peak, suggesting that the law derived from Quetelet’s data accurately predicts the typical bloom date of the USA data."></a></p>
-</figure>
-</div>
+<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>" data-gallery="quarto-lightbox-gallery-8"><img src="images/fig5.png" class="img-fluid" alt="This figure plots the predictions made by Quetelet's law against the actual bloom dates scientists observed from US lilac data. Data are represented using blue contours, and a dotted line of equality is drawn through the graph. The dotted line intersects the blue contours at their peak, suggesting that the law derived from Quetelet’s data accurately predicts the typical bloom date of the USA data."></a></p>
 <div class="figure-caption">
 <p><strong>Figure 5:</strong> Predictions using Quetelet’s law are accurate within about two weeks on average. Author provided, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 </div>
@@ -1888,25 +1883,24 @@ provided,
 <p>The dotted line is the “y = x” line, having zero intercept and unit slope. Prediction-observation pairs that lie on the line indicate perfect predictions. The fact that the dotted line intersects the blue contours at their peak suggests the law derived from Quetelet’s data accurately predicts the typical bloom date of the USA data. This accuracy is impressive given the fact that the USA lilacs were observed more than a century later and on a different continent. The blue curves deviate from the line by about two weeks in the vertical direction, which is consistent with Table 10.</p>
 <p>An average accuracy of two weeks might not sound impressive. But it is far more accurate than using the average bloom date Quetelet observed, April 30 (April 29 on leap years). The average bloom date yields predictions that are off by an additional eleven days on average.</p>
 <div class="sourceCode" id="cb14"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>usa_npn <span class="sc">%&gt;%</span></span>
-<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">doy =</span> first_yes_doy) <span class="sc">%&gt;%</span></span>
-<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(</span>
-<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a>    <span class="at">pred =</span> <span class="fu">mean</span>(quetelet<span class="sc">$</span>doy), </span>
-<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">mae  =</span> <span class="fu">mean</span>(<span class="fu">abs</span>(doy <span class="sc">-</span> pred)),</span>
-<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">rmse =</span> <span class="fu">sqrt</span>(<span class="fu">mean</span>((doy <span class="sc">-</span> pred)<span class="sc">^</span><span class="dv">2</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">select</span>(mae, rmse) <span class="sc">%&gt;%</span></span>
-<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(</span>
-<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">dig =</span> <span class="dv">0</span>,</span>
-<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">align =</span> <span class="st">"c"</span>,</span>
-<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a>    <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"mean absolute error (days)"</span>,</span>
-<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a>                  <span class="st">"root mean squared error (days)"</span>),</span>
-<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">caption =</span> <span class="st">"Table 11: Predictions using the average bloom date are off by three weeks or more on average."</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="in">usa_npn %&gt;%</span></span>
+<span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(doy = first_yes_doy) %&gt;%</span></span>
+<span id="cb14-4"><a href="#cb14-4" aria-hidden="true" tabindex="-1"></a><span class="in">  ungroup() %&gt;%</span></span>
+<span id="cb14-5"><a href="#cb14-5" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(</span></span>
+<span id="cb14-6"><a href="#cb14-6" aria-hidden="true" tabindex="-1"></a><span class="in">    pred = mean(quetelet$doy), </span></span>
+<span id="cb14-7"><a href="#cb14-7" aria-hidden="true" tabindex="-1"></a><span class="in">    mae  = mean(abs(doy - pred)),</span></span>
+<span id="cb14-8"><a href="#cb14-8" aria-hidden="true" tabindex="-1"></a><span class="in">    rmse = sqrt(mean((doy - pred)^2))) %&gt;%</span></span>
+<span id="cb14-9"><a href="#cb14-9" aria-hidden="true" tabindex="-1"></a><span class="in">  select(mae, rmse) %&gt;%</span></span>
+<span id="cb14-10"><a href="#cb14-10" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(</span></span>
+<span id="cb14-11"><a href="#cb14-11" aria-hidden="true" tabindex="-1"></a><span class="in">    dig = 0,</span></span>
+<span id="cb14-12"><a href="#cb14-12" aria-hidden="true" tabindex="-1"></a><span class="in">    align = "c",</span></span>
+<span id="cb14-13"><a href="#cb14-13" aria-hidden="true" tabindex="-1"></a><span class="in">    col.names = c("mean absolute error (days)",</span></span>
+<span id="cb14-14"><a href="#cb14-14" aria-hidden="true" tabindex="-1"></a><span class="in">                  "root mean squared error (days)"),</span></span>
+<span id="cb14-15"><a href="#cb14-15" aria-hidden="true" tabindex="-1"></a><span class="in">    caption = "Table 11: Predictions using the average bloom date are off by three weeks or more on average.") %&gt;%</span></span>
+<span id="cb14-16"><a href="#cb14-16" aria-hidden="true" tabindex="-1"></a><span class="in">  kable_styling()</span></span>
 <span id="cb14-17"><a href="#cb14-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="tab-table11">
 <div style="overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
-
 <table class="table" style="margin-left: auto; margin-right: auto; margin-bottom: 1.5em;">
 <caption>
 <b>Table 11:</b> Predictions using the average bloom date are off by three weeks or more on average.
@@ -1931,7 +1925,6 @@ root mean squared error (days)
 </td>
 </tr>
 </tbody>
-
 </table>
 </div>
 </div>
@@ -1942,49 +1935,48 @@ root mean squared error (days)
 <p>We use the AccuWeather forecast as it appeared on the webpage <a href="https://www.accuweather.com/en/be/brussels/27581/january-weather/27581?year=2023">AccuWeather.com</a> on February 19, 2023. AccuWeather reports the forecast for each month on a separate webpage. For reproducibility, we saved each page on the <a href="https://web.archive.org/web/20230219151906/https://www.accuweather.com/en/be/brussels/27581/january-weather/27581?year=2023&amp;unit=c">Internet Archive</a>. The following <code>R</code> code creates the function <code>get_weather_table</code> to retrieve each page we saved, extract the forecast contained within that page, and arrange the data as a tibble. The <code>get_weather_table</code> function combines several functions from the <code>rvest</code> package, which is yet another member of the “tidyverse”. In particular, the forecast on each page is contained within the div “monthly-calendar” and can be extracted with the <code>html_nodes</code> and <code>html_text2</code> functions.</p>
 <p>Applying the <code>get_weather_table</code> function to the url for each page yields a five column tibble <code>temp_br</code>, with columns defined in the same way as the tibble <code>temp</code>, discussed in previous sections. The first 10 rows are below; the data are also available on the author’s <a href="https://raw.githubusercontent.com/jauerbach/miscellaneous/main/temp_br.csv">GitHub</a>.</p>
 <div class="sourceCode" id="cb15"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a> get_weather_table <span class="ot">&lt;-</span> <span class="cf">function</span>(url)</span>
-<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">read_html</span>(url) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_nodes</span>(<span class="st">"div.monthly-calendar"</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">html_text2</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_remove_all</span>(<span class="st">"°|Hist. Avg. "</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">str_split</span>(<span class="st">" "</span>, <span class="at">simplify =</span> <span class="cn">TRUE</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">parse_number</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">matrix</span>(<span class="at">ncol =</span> <span class="dv">3</span>, </span>
-<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a>         <span class="at">byrow =</span> <span class="cn">TRUE</span>,</span>
-<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a>         <span class="at">dimnames =</span> <span class="fu">list</span>(<span class="cn">NULL</span>, <span class="fu">c</span>(<span class="st">"day"</span>, <span class="st">"tmax"</span>, <span class="st">"tmin"</span>))) <span class="sc">%&gt;%</span></span>
-<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">as_tibble</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(</span>
-<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a>    <span class="fu">row_number</span>() <span class="sc">%in%</span></span>
-<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a>      (<span class="fu">which</span>(<span class="fu">diff</span>(day) <span class="sc">&lt;</span> <span class="dv">0</span>) <span class="sc">%&gt;%</span> (<span class="cf">function</span>(x) <span class="cf">if</span>(<span class="fu">length</span>(x) <span class="sc">==</span> <span class="dv">1</span>) <span class="fu">seq</span>(<span class="dv">1</span>, x[<span class="dv">1</span>], <span class="dv">1</span>) <span class="cf">else</span> <span class="fu">seq</span>(x[<span class="dv">1</span>] <span class="sc">+</span> <span class="dv">1</span>, x[<span class="dv">2</span>], <span class="dv">1</span>))))</span>
+<span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a><span class="in"> get_weather_table &lt;- function(url)</span></span>
+<span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a><span class="in">  read_html(url) %&gt;% </span></span>
+<span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a><span class="in">  html_nodes("div.monthly-calendar") %&gt;% </span></span>
+<span id="cb15-5"><a href="#cb15-5" aria-hidden="true" tabindex="-1"></a><span class="in">  html_text2() %&gt;%</span></span>
+<span id="cb15-6"><a href="#cb15-6" aria-hidden="true" tabindex="-1"></a><span class="in">  str_remove_all("°|Hist. Avg. ") %&gt;%</span></span>
+<span id="cb15-7"><a href="#cb15-7" aria-hidden="true" tabindex="-1"></a><span class="in">  str_split(" ", simplify = TRUE) %&gt;%</span></span>
+<span id="cb15-8"><a href="#cb15-8" aria-hidden="true" tabindex="-1"></a><span class="in">  parse_number() %&gt;%</span></span>
+<span id="cb15-9"><a href="#cb15-9" aria-hidden="true" tabindex="-1"></a><span class="in">  matrix(ncol = 3, </span></span>
+<span id="cb15-10"><a href="#cb15-10" aria-hidden="true" tabindex="-1"></a><span class="in">         byrow = TRUE,</span></span>
+<span id="cb15-11"><a href="#cb15-11" aria-hidden="true" tabindex="-1"></a><span class="in">         dimnames = list(NULL, c("day", "tmax", "tmin"))) %&gt;%</span></span>
+<span id="cb15-12"><a href="#cb15-12" aria-hidden="true" tabindex="-1"></a><span class="in">  as_tibble() %&gt;%</span></span>
+<span id="cb15-13"><a href="#cb15-13" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(</span></span>
+<span id="cb15-14"><a href="#cb15-14" aria-hidden="true" tabindex="-1"></a><span class="in">    row_number() %in%</span></span>
+<span id="cb15-15"><a href="#cb15-15" aria-hidden="true" tabindex="-1"></a><span class="in">      (which(diff(day) &lt; 0) %&gt;% (function(x) if(length(x) == 1) seq(1, x[1], 1) else seq(x[1] + 1, x[2], 1))))</span></span>
 <span id="cb15-16"><a href="#cb15-16" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a>temp_br <span class="ot">&lt;-</span></span>
-<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a>  <span class="fu">tibble</span>(</span>
-<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a>    <span class="at">base_url =</span> <span class="st">"https://web.archive.org/web/20230219151906/https://www.accuweather.com/en/be/brussels/27581/"</span>,</span>
-<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a>    <span class="at">month =</span> month.name[<span class="dv">1</span><span class="sc">:</span><span class="dv">5</span>],</span>
-<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a>    <span class="at">year =</span> <span class="dv">2023</span>,</span>
-<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a>    <span class="at">url =</span> <span class="fu">str_c</span>(base_url, <span class="fu">tolower</span>(month), <span class="st">"-weather/27581?year="</span>, year, <span class="st">"&amp;unit=c"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp =</span> <span class="fu">map</span>(url, get_weather_table)) <span class="sc">%&gt;%</span></span>
-<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(temp) <span class="sc">%&gt;%</span></span>
-<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reduce</span>(bind_rows) <span class="sc">%&gt;%</span></span>
-<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(<span class="at">date =</span> <span class="fu">seq</span>(<span class="fu">as.Date</span>(<span class="st">"2023-01-01"</span>), <span class="fu">as.Date</span>(<span class="st">"2023-05-31"</span>), <span class="dv">1</span>),</span>
-<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>            <span class="at">year =</span> <span class="fu">parse_number</span>(<span class="fu">format</span>(date, <span class="st">"%Y"</span>)),</span>
-<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a>            tmax,</span>
-<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a>            tmin,</span>
-<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a>            <span class="at">temp =</span> (tmax <span class="sc">+</span> tmin) <span class="sc">/</span> <span class="dv">2</span>)</span>
+<span id="cb15-17"><a href="#cb15-17" aria-hidden="true" tabindex="-1"></a><span class="in">temp_br &lt;-</span></span>
+<span id="cb15-18"><a href="#cb15-18" aria-hidden="true" tabindex="-1"></a><span class="in">  tibble(</span></span>
+<span id="cb15-19"><a href="#cb15-19" aria-hidden="true" tabindex="-1"></a><span class="in">    base_url = "https://web.archive.org/web/20230219151906/https://www.accuweather.com/en/be/brussels/27581/",</span></span>
+<span id="cb15-20"><a href="#cb15-20" aria-hidden="true" tabindex="-1"></a><span class="in">    month = month.name[1:5],</span></span>
+<span id="cb15-21"><a href="#cb15-21" aria-hidden="true" tabindex="-1"></a><span class="in">    year = 2023,</span></span>
+<span id="cb15-22"><a href="#cb15-22" aria-hidden="true" tabindex="-1"></a><span class="in">    url = str_c(base_url, tolower(month), "-weather/27581?year=", year, "&amp;unit=c")) %&gt;%</span></span>
+<span id="cb15-23"><a href="#cb15-23" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(temp = map(url, get_weather_table)) %&gt;%</span></span>
+<span id="cb15-24"><a href="#cb15-24" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(temp) %&gt;%</span></span>
+<span id="cb15-25"><a href="#cb15-25" aria-hidden="true" tabindex="-1"></a><span class="in">  reduce(bind_rows) %&gt;%</span></span>
+<span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a><span class="in">  transmute(date = seq(as.Date("2023-01-01"), as.Date("2023-05-31"), 1),</span></span>
+<span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a><span class="in">            year = parse_number(format(date, "%Y")),</span></span>
+<span id="cb15-28"><a href="#cb15-28" aria-hidden="true" tabindex="-1"></a><span class="in">            tmax,</span></span>
+<span id="cb15-29"><a href="#cb15-29" aria-hidden="true" tabindex="-1"></a><span class="in">            tmin,</span></span>
+<span id="cb15-30"><a href="#cb15-30" aria-hidden="true" tabindex="-1"></a><span class="in">            temp = (tmax + tmin) / 2)</span></span>
 <span id="cb15-31"><a href="#cb15-31" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a>temp_br <span class="sc">%&gt;%</span></span>
-<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">relocate</span>(year) <span class="sc">%&gt;%</span></span>
-<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">dig =</span> <span class="dv">2</span>,</span>
-<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a>        <span class="at">align =</span> <span class="st">"c"</span>, </span>
-<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a>        <span class="at">col.names =</span> <span class="fu">c</span>(<span class="st">"year"</span>, <span class="st">"date"</span>, <span class="st">"maximum temperature (°C)"</span>,</span>
-<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a>                      <span class="st">"minimum temperature (°C)"</span>, <span class="st">"midrange temperature (°C)"</span>),</span>
-<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Table 12: Temperature forecast for Brussels, retrieved on February 19, 2023."</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scroll_box</span>(<span class="at">width =</span> <span class="st">"100%"</span>, <span class="at">height =</span> <span class="st">"400px"</span>)</span>
+<span id="cb15-32"><a href="#cb15-32" aria-hidden="true" tabindex="-1"></a><span class="in">temp_br %&gt;%</span></span>
+<span id="cb15-33"><a href="#cb15-33" aria-hidden="true" tabindex="-1"></a><span class="in">  relocate(year) %&gt;%</span></span>
+<span id="cb15-34"><a href="#cb15-34" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(dig = 2,</span></span>
+<span id="cb15-35"><a href="#cb15-35" aria-hidden="true" tabindex="-1"></a><span class="in">        align = "c", </span></span>
+<span id="cb15-36"><a href="#cb15-36" aria-hidden="true" tabindex="-1"></a><span class="in">        col.names = c("year", "date", "maximum temperature (°C)",</span></span>
+<span id="cb15-37"><a href="#cb15-37" aria-hidden="true" tabindex="-1"></a><span class="in">                      "minimum temperature (°C)", "midrange temperature (°C)"),</span></span>
+<span id="cb15-38"><a href="#cb15-38" aria-hidden="true" tabindex="-1"></a><span class="in">        caption = "Table 12: Temperature forecast for Brussels, retrieved on February 19, 2023.") %&gt;%</span></span>
+<span id="cb15-39"><a href="#cb15-39" aria-hidden="true" tabindex="-1"></a><span class="in">  kable_styling() %&gt;%</span></span>
+<span id="cb15-40"><a href="#cb15-40" aria-hidden="true" tabindex="-1"></a><span class="in">  scroll_box(width = "100%", height = "400px")</span></span>
 <span id="cb15-41"><a href="#cb15-41" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="tab-table12">
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
-
 <table class="table" style="margin-left: auto; margin-right: auto;">
 <caption>
 <b>Table 12:</b> Temperature forecast for Brussels, retrieved on February 19, 2023.
@@ -2197,31 +2189,29 @@ midrange temperature (°C)
 </td>
 </tr>
 </tbody>
-
 </table>
 </div>
 </div>
 <p>We now predict the day the lilacs will bloom. The <code>R</code> code below uses the <code>doy_prediction</code> and <code>doy_last_frost</code> functions created in earlier sections and displays the prediction in Table 13. At the time of our writing, the predicted date is <strong>April 19</strong>. The forecast is easily updated by providing the url to the updated AccuWeather webpage. (You might use the url <a href="https://web.archive.org/save">https://web.archive.org/save</a> to save a webpage to the Internet Archive to ensure your work is reproducible.)</p>
 <div class="sourceCode" id="cb16"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a>bloom_day_br <span class="ot">&lt;-</span></span>
-<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>  temp_br <span class="sc">%&gt;%</span></span>
-<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">date =</span> <span class="fu">doy_prediction</span>(temp, tmax) <span class="sc">+</span> <span class="fu">as.Date</span>(<span class="st">"2023-01-01"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(date)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="in">bloom_day_br &lt;-</span></span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="in">  temp_br %&gt;%</span></span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(date = doy_prediction(temp, tmax) + as.Date("2023-01-01")) %&gt;%</span></span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(date)</span></span>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a>frost_day_br <span class="ot">&lt;-</span> </span>
-<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a>  temp_br <span class="sc">%&gt;%</span> </span>
-<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">pull</span>(tmax) <span class="sc">%&gt;%</span> </span>
-<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">doy_last_frost</span>() <span class="sc">+</span> <span class="fu">as.Date</span>(<span class="st">"2023-01-01"</span>) </span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="in">frost_day_br &lt;- </span></span>
+<span id="cb16-8"><a href="#cb16-8" aria-hidden="true" tabindex="-1"></a><span class="in">  temp_br %&gt;% </span></span>
+<span id="cb16-9"><a href="#cb16-9" aria-hidden="true" tabindex="-1"></a><span class="in">  pull(tmax) %&gt;% </span></span>
+<span id="cb16-10"><a href="#cb16-10" aria-hidden="true" tabindex="-1"></a><span class="in">  doy_last_frost() + as.Date("2023-01-01") </span></span>
 <span id="cb16-11"><a href="#cb16-11" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="fu">tibble</span>(<span class="st">`</span><span class="at">last frost date</span><span class="st">`</span> <span class="ot">=</span> frost_day_br, </span>
-<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a>       <span class="st">`</span><span class="at">bloom date</span><span class="st">`</span> <span class="ot">=</span> bloom_day_br) <span class="sc">%&gt;%</span></span>
-<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable</span>(<span class="at">align =</span> <span class="st">"c"</span>,</span>
-<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a>        <span class="at">caption =</span> <span class="st">"Table 13: Last frost date and lilac bloom date in Brussels in 2023."</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a>  <span class="fu">kable_styling</span>()</span>
+<span id="cb16-12"><a href="#cb16-12" aria-hidden="true" tabindex="-1"></a><span class="in">tibble(`last frost date` = frost_day_br, </span></span>
+<span id="cb16-13"><a href="#cb16-13" aria-hidden="true" tabindex="-1"></a><span class="in">       `bloom date` = bloom_day_br) %&gt;%</span></span>
+<span id="cb16-14"><a href="#cb16-14" aria-hidden="true" tabindex="-1"></a><span class="in">  kable(align = "c",</span></span>
+<span id="cb16-15"><a href="#cb16-15" aria-hidden="true" tabindex="-1"></a><span class="in">        caption = "Table 13: Last frost date and lilac bloom date in Brussels in 2023.") %&gt;%</span></span>
+<span id="cb16-16"><a href="#cb16-16" aria-hidden="true" tabindex="-1"></a><span class="in">  kable_styling()</span></span>
 <span id="cb16-17"><a href="#cb16-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div id="tab-table13">
 <div style="overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
-
 <table class="table" style="margin-left: auto; margin-right: auto; margin-bottom: 1.5em;">
 <caption>
 <b>Table 13:</b> Last frost date and lilac bloom date in Brussels in 2023.
@@ -2246,41 +2236,36 @@ bloom date
 </td>
 </tr>
 </tbody>
-
 </table>
 </div>
 </div>
 <p>We visualize the predictions in Figure 6, which has the same interpretation as Figure 4. If the temperature forecast and Quetelet’s law are correct, on January 27, 2023 the lilacs in Brussels began “collecting” temperature. The lilacs will continue to “collect” temperature until April 19, at which point they will exceed their 4264°C² quota and bloom.</p>
 <div class="sourceCode" id="cb17"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>(temp_br <span class="sc">%&gt;%</span> </span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplot</span>() <span class="sc">+</span> </span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">aes</span>(date, temp) <span class="sc">+</span> </span>
-<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_line</span>() <span class="sc">+</span> </span>
-<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a>  <span class="fu">labs</span>(</span>
-<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="st">""</span>,</span>
-<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">y =</span> <span class="st">"midrange temperature (°C)"</span>,</span>
-<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span></span>
-<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a>      <span class="st">"Figure 6: According to Quetelet's law, the lilacs will bloom once exposed to 4264°C² following the last frost."</span>) <span class="sc">+</span></span>
-<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_vline</span>(<span class="at">xintercept =</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(frost_day_br, bloom_day_br)), </span>
-<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a>             <span class="at">linetype =</span> <span class="st">"dotted"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ggplotly</span>() <span class="sc">%&gt;%</span> </span>
-<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a>  <span class="fu">add_annotations</span>(<span class="at">x =</span> <span class="fu">as.numeric</span>(<span class="fu">c</span>(frost_day_br, bloom_day_br)),</span>
-<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a>                  <span class="at">y =</span> <span class="fu">c</span>(<span class="dv">14</span>, <span class="dv">14</span>),</span>
-<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a>                  <span class="at">text =</span> <span class="fu">c</span>(<span class="st">"last</span><span class="sc">\n</span><span class="st">frost"</span>, <span class="st">"first</span><span class="sc">\n</span><span class="st">bloom"</span>),</span>
-<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a>                  <span class="at">font =</span> <span class="fu">list</span>(<span class="at">size =</span> <span class="dv">14</span>),</span>
-<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a>                  <span class="at">ay =</span> <span class="dv">0</span>,</span>
-<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a>                  <span class="at">xshift =</span> <span class="fu">c</span>(<span class="sc">-</span><span class="dv">14</span>, <span class="sc">-</span><span class="dv">16</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">config</span>(<span class="at">displaylogo =</span> <span class="cn">FALSE</span>)</span>
+<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a><span class="in">(temp_br %&gt;% </span></span>
+<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplot() + </span></span>
+<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a><span class="in">  aes(date, temp) + </span></span>
+<span id="cb17-5"><a href="#cb17-5" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_line() + </span></span>
+<span id="cb17-6"><a href="#cb17-6" aria-hidden="true" tabindex="-1"></a><span class="in">  labs(</span></span>
+<span id="cb17-7"><a href="#cb17-7" aria-hidden="true" tabindex="-1"></a><span class="in">    x = "",</span></span>
+<span id="cb17-8"><a href="#cb17-8" aria-hidden="true" tabindex="-1"></a><span class="in">    y = "midrange temperature (°C)",</span></span>
+<span id="cb17-9"><a href="#cb17-9" aria-hidden="true" tabindex="-1"></a><span class="in">    title =</span></span>
+<span id="cb17-10"><a href="#cb17-10" aria-hidden="true" tabindex="-1"></a><span class="in">      "Figure 6: According to Quetelet's law, the lilacs will bloom once exposed to 4264°C² following the last frost.") +</span></span>
+<span id="cb17-11"><a href="#cb17-11" aria-hidden="true" tabindex="-1"></a><span class="in">  geom_vline(xintercept = as.numeric(c(frost_day_br, bloom_day_br)), </span></span>
+<span id="cb17-12"><a href="#cb17-12" aria-hidden="true" tabindex="-1"></a><span class="in">             linetype = "dotted")) %&gt;%</span></span>
+<span id="cb17-13"><a href="#cb17-13" aria-hidden="true" tabindex="-1"></a><span class="in">  ggplotly() %&gt;% </span></span>
+<span id="cb17-14"><a href="#cb17-14" aria-hidden="true" tabindex="-1"></a><span class="in">  add_annotations(x = as.numeric(c(frost_day_br, bloom_day_br)),</span></span>
+<span id="cb17-15"><a href="#cb17-15" aria-hidden="true" tabindex="-1"></a><span class="in">                  y = c(14, 14),</span></span>
+<span id="cb17-16"><a href="#cb17-16" aria-hidden="true" tabindex="-1"></a><span class="in">                  text = c("last\nfrost", "first\nbloom"),</span></span>
+<span id="cb17-17"><a href="#cb17-17" aria-hidden="true" tabindex="-1"></a><span class="in">                  font = list(size = 14),</span></span>
+<span id="cb17-18"><a href="#cb17-18" aria-hidden="true" tabindex="-1"></a><span class="in">                  ay = 0,</span></span>
+<span id="cb17-19"><a href="#cb17-19" aria-hidden="true" tabindex="-1"></a><span class="in">                  xshift = c(-14, -16)) %&gt;%</span></span>
+<span id="cb17-20"><a href="#cb17-20" aria-hidden="true" tabindex="-1"></a><span class="in">  config(displaylogo = FALSE)</span></span>
 <span id="cb17-21"><a href="#cb17-21" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/fig6.png" class="lightbox" title="A line graph of midrange temperature by day in Brussels for January 1 to February 18 (observed) and February 19 to May 20 (forecast), 2023, with day of last frost (January 27) and predicted day of first bloom (April 19) marked by vertical dashed lines." data-description="Author
+<p><a href="images/fig6.png" class="lightbox" data-description="Author
 
 provided,
 
-<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>" data-gallery="quarto-lightbox-gallery-9"><img src="images/fig6.png" class="img-fluid figure-img" alt="A line graph of midrange temperature by day in Brussels for January 1 to February 18 (observed) and February 19 to May 20 (forecast), 2023, with day of last frost (January 27) and predicted day of first bloom (April 19) marked by vertical dashed lines."></a></p>
-</figure>
-</div>
+<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>" data-gallery="quarto-lightbox-gallery-9"><img src="images/fig6.png" class="img-fluid" alt="A line graph of midrange temperature by day in Brussels for January 1 to February 18 (observed) and February 19 to May 20 (forecast), 2023, with day of last frost (January 27) and predicted day of first bloom (April 19) marked by vertical dashed lines."></a></p>
 <div class="figure-caption">
 <p><strong>Figure 6:</strong> According to Quetelet’s law, the lilacs will bloom once exposed to 4264°C² following the last frost. Author provided, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 </div>
@@ -2291,15 +2276,11 @@ provided,
 <p>The law of the flowering plants surely stands the test of time. It continues to be used by scientists – with relatively few changes – to plan harvests, manage pests, and study ecosystems stressed by climate change. We speculate the law’s longevity is due to the fact that it balances simplicity with relatively accurate predictions.</p>
 <p>Although Quetelet did not discover the law, he did much to advance it. Quetelet founded an international network for “observations of the periodical phenomena” (in addition to numerous statistical societies and publications, including the precursor to the Royal Statistical Society). Quetelet’s network of 80 stations collected observations throughout Europe from 1841 until 1872. In particular, Quetelet collaborated with Charles Morren – who later coined the term phenology, the name of the field that now studies biological life-cycle events like the timing of flower blooms <span class="citation" data-cites="demarée_rutishauser_2011">(<a href="#ref-demarée_rutishauser_2011" role="doc-biblioref">Demarée and Rutishauser 2011</a>)</span>.</p>
 <p>In recent years, the observations collected through phenology networks have become an important resource for understanding the impacts of climate change. For example, the USA National Phenology Network calculates the Spring Bloom Index, which measures the “first day of spring” using the days lilacs are observed to bloom at locations across the United States. The index is then compared to previous years. Figure 7 shows one comparison, called the Return Interval. The Return Interval is much like a p-value, calculating how frequently more extreme spring indices were observed in previous decades. Bloom dates that are uncommonly early (green) or late (purple) may indicate environments stressed by changing climate. Scientists exploit the relationship between temperature and bloom date to extrapolate the index to areas with few observations.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/six-bloom-return-interval-2020.png" class="lightbox" title="A map of the United States showing the Spring Bloom Index Return Interval 2020, which measures whether spring is typical when compared to recent decades." data-description="Source:
+<p><a href="images/six-bloom-return-interval-2020.png" class="lightbox" data-description="Source:
 
 <a
 href=&quot;https://www.usanpn.org/files/npn/maps/six-bloom-return-interval-2020.png&quot;>USA
-National Phenology Network</a>" data-gallery="quarto-lightbox-gallery-10"><img src="images/six-bloom-return-interval-2020.png" class="img-fluid figure-img" alt="A map of the United States showing the Spring Bloom Index Return Interval 2020, which measures whether spring is typical when compared to recent decades."></a></p>
-</figure>
-</div>
+National Phenology Network</a>" data-gallery="quarto-lightbox-gallery-10"><img src="images/six-bloom-return-interval-2020.png" class="img-fluid" alt="A map of the United States showing the Spring Bloom Index Return Interval 2020, which measures whether spring is typical when compared to recent decades."></a></p>
 <div class="figure-caption">
 <p><strong>Figure 7:</strong> The Spring Bloom Index Return Interval measures whether spring is typical when compared to recent decades. Source: <a href="https://www.usanpn.org/files/npn/maps/six-bloom-return-interval-2020.png">USA National Phenology Network</a>.</p>
 </div>
@@ -2333,70 +2314,70 @@ National Phenology Network</a>" data-gallery="quarto-lightbox-gallery-10"><img s
 <section id="appendix-preparing-usa-npn-data" class="level2">
 <h2 class="anchored" data-anchor-id="appendix-preparing-usa-npn-data">Appendix: Preparing USA NPN Data</h2>
 <div class="sourceCode" id="cb18"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{r}</span></span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. download lilac data using `rnpn`</span></span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>usa_npn <span class="ot">&lt;-</span> </span>
-<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>  <span class="fu">npn_download_individual_phenometrics</span>(<span class="at">request_source =</span> <span class="st">"Jonathan Auerbach"</span>,</span>
-<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">year =</span> <span class="dv">1900</span><span class="sc">:</span><span class="dv">2050</span>,</span>
-<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">species_ids =</span> <span class="dv">36</span>,                       </span>
-<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a>                                       <span class="at">phenophase_ids =</span> <span class="fu">c</span>(<span class="dv">77</span>, <span class="dv">412</span>))            </span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="in"># 1. download lilac data using `rnpn`</span></span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a><span class="in">usa_npn &lt;- </span></span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a><span class="in">  npn_download_individual_phenometrics(request_source = "Jonathan Auerbach",</span></span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a><span class="in">                                       year = 1900:2050,</span></span>
+<span id="cb18-6"><a href="#cb18-6" aria-hidden="true" tabindex="-1"></a><span class="in">                                       species_ids = 36,                       </span></span>
+<span id="cb18-7"><a href="#cb18-7" aria-hidden="true" tabindex="-1"></a><span class="in">                                       phenophase_ids = c(77, 412))            </span></span>
 <span id="cb18-8"><a href="#cb18-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. limit analysis to sites that report more than 25 times</span></span>
-<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a>site_ids <span class="ot">&lt;-</span> </span>
-<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a>  usa_npn <span class="sc">%&gt;%</span> </span>
-<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(site_id) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">n =</span> <span class="fu">n</span>()) <span class="sc">%&gt;%</span> <span class="fu">filter</span>(n <span class="sc">&gt;</span> <span class="dv">25</span>) <span class="sc">%&gt;%</span> <span class="fu">pull</span>(site_id)</span>
+<span id="cb18-9"><a href="#cb18-9" aria-hidden="true" tabindex="-1"></a><span class="in"># 2. limit analysis to sites that report more than 25 times</span></span>
+<span id="cb18-10"><a href="#cb18-10" aria-hidden="true" tabindex="-1"></a><span class="in">site_ids &lt;- </span></span>
+<span id="cb18-11"><a href="#cb18-11" aria-hidden="true" tabindex="-1"></a><span class="in">  usa_npn %&gt;% </span></span>
+<span id="cb18-12"><a href="#cb18-12" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(site_id) %&gt;% </span></span>
+<span id="cb18-13"><a href="#cb18-13" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(n = n()) %&gt;% filter(n &gt; 25) %&gt;% pull(site_id)</span></span>
 <span id="cb18-14"><a href="#cb18-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a>usa_npn <span class="ot">&lt;-</span> </span>
-<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a>  usa_npn <span class="sc">%&gt;%</span> </span>
-<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(site_id <span class="sc">%in%</span> site_ids)</span>
+<span id="cb18-15"><a href="#cb18-15" aria-hidden="true" tabindex="-1"></a><span class="in">usa_npn &lt;- </span></span>
+<span id="cb18-16"><a href="#cb18-16" aria-hidden="true" tabindex="-1"></a><span class="in">  usa_npn %&gt;% </span></span>
+<span id="cb18-17"><a href="#cb18-17" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(site_id %in% site_ids)</span></span>
 <span id="cb18-18"><a href="#cb18-18" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. find nearest weather stations for each site</span></span>
-<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a>locations <span class="ot">&lt;-</span> </span>
-<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a>  usa_npn <span class="sc">%&gt;%</span> </span>
-<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(site_id) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">latitude =</span> <span class="fu">first</span>(latitude), </span>
-<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a>            <span class="at">longitude =</span> <span class="fu">first</span>(longitude))</span>
+<span id="cb18-19"><a href="#cb18-19" aria-hidden="true" tabindex="-1"></a><span class="in"># 3. find nearest weather stations for each site</span></span>
+<span id="cb18-20"><a href="#cb18-20" aria-hidden="true" tabindex="-1"></a><span class="in">locations &lt;- </span></span>
+<span id="cb18-21"><a href="#cb18-21" aria-hidden="true" tabindex="-1"></a><span class="in">  usa_npn %&gt;% </span></span>
+<span id="cb18-22"><a href="#cb18-22" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(site_id) %&gt;% </span></span>
+<span id="cb18-23"><a href="#cb18-23" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(latitude = first(latitude), </span></span>
+<span id="cb18-24"><a href="#cb18-24" aria-hidden="true" tabindex="-1"></a><span class="in">            longitude = first(longitude))</span></span>
 <span id="cb18-25"><a href="#cb18-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a>stations <span class="ot">&lt;-</span> </span>
-<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ghcnd_stations</span>() <span class="sc">%&gt;%</span></span>
-<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(first_year <span class="sc">&lt;=</span> <span class="fu">min</span>(usa_npn<span class="sc">$</span>first_yes_year),</span>
-<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a>         last_year  <span class="sc">&gt;=</span> <span class="fu">max</span>(usa_npn<span class="sc">$</span>first_yes_year),</span>
-<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a>         state <span class="sc">!=</span> <span class="st">""</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(id, latitude, longitude, state) <span class="sc">%&gt;%</span></span>
-<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarize</span>(<span class="at">temp_flag =</span> <span class="fu">sum</span>(element <span class="sc">%in%</span> <span class="fu">c</span>(<span class="st">"TMIN"</span>, <span class="st">"TMAX"</span>))) <span class="sc">%&gt;%</span>            </span>
-<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(temp_flag <span class="sc">==</span> <span class="dv">2</span>) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb18-26"><a href="#cb18-26" aria-hidden="true" tabindex="-1"></a><span class="in">stations &lt;- </span></span>
+<span id="cb18-27"><a href="#cb18-27" aria-hidden="true" tabindex="-1"></a><span class="in">  ghcnd_stations() %&gt;%</span></span>
+<span id="cb18-28"><a href="#cb18-28" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(first_year &lt;= min(usa_npn$first_yes_year),</span></span>
+<span id="cb18-29"><a href="#cb18-29" aria-hidden="true" tabindex="-1"></a><span class="in">         last_year  &gt;= max(usa_npn$first_yes_year),</span></span>
+<span id="cb18-30"><a href="#cb18-30" aria-hidden="true" tabindex="-1"></a><span class="in">         state != "") %&gt;%</span></span>
+<span id="cb18-31"><a href="#cb18-31" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(id, latitude, longitude, state) %&gt;%</span></span>
+<span id="cb18-32"><a href="#cb18-32" aria-hidden="true" tabindex="-1"></a><span class="in">  summarize(temp_flag = sum(element %in% c("TMIN", "TMAX"))) %&gt;%            </span></span>
+<span id="cb18-33"><a href="#cb18-33" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(temp_flag == 2) %&gt;% </span></span>
+<span id="cb18-34"><a href="#cb18-34" aria-hidden="true" tabindex="-1"></a><span class="in">  ungroup()</span></span>
 <span id="cb18-35"><a href="#cb18-35" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a>dist <span class="ot">&lt;-</span> <span class="cf">function</span>(x, <span class="at">y =</span> stations <span class="sc">%&gt;%</span> <span class="fu">select</span>(latitude, longitude)) </span>
-<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a>  stations<span class="sc">$</span>id[<span class="fu">which.min</span>(<span class="fu">sqrt</span>((x[<span class="dv">1</span>] <span class="sc">-</span> y[,<span class="dv">1</span>])<span class="sc">^</span><span class="dv">2</span> <span class="sc">+</span> (x[<span class="dv">2</span>] <span class="sc">-</span> y[,<span class="dv">2</span>])<span class="sc">^</span><span class="dv">2</span>)[,<span class="dv">1</span>])]</span>
+<span id="cb18-36"><a href="#cb18-36" aria-hidden="true" tabindex="-1"></a><span class="in">dist &lt;- function(x, y = stations %&gt;% select(latitude, longitude)) </span></span>
+<span id="cb18-37"><a href="#cb18-37" aria-hidden="true" tabindex="-1"></a><span class="in">  stations$id[which.min(sqrt((x[1] - y[,1])^2 + (x[2] - y[,2])^2)[,1])]</span></span>
 <span id="cb18-38"><a href="#cb18-38" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a>locations<span class="sc">$</span>station_id <span class="ot">&lt;-</span> <span class="fu">apply</span>(locations, <span class="dv">1</span>, <span class="cf">function</span>(x) <span class="fu">dist</span>(<span class="fu">c</span>(x[<span class="st">"latitude"</span>], x[<span class="st">"longitude"</span>])))</span>
+<span id="cb18-39"><a href="#cb18-39" aria-hidden="true" tabindex="-1"></a><span class="in">locations$station_id &lt;- apply(locations, 1, function(x) dist(c(x["latitude"], x["longitude"])))</span></span>
 <span id="cb18-40"><a href="#cb18-40" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. get weather data from nearest station using `rnoaa`</span></span>
-<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a>get_station_data <span class="ot">&lt;-</span> <span class="cf">function</span>(station_id) </span>
-<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ghcnd_search</span>(<span class="at">stationid =</span> station_id,</span>
-<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a>               <span class="at">var =</span> <span class="fu">c</span>(<span class="st">"tmin"</span>, <span class="st">"tmax"</span>),</span>
-<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a>               <span class="at">date_min =</span> <span class="st">"1956-01-01"</span>,</span>
-<span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a>               <span class="at">date_max =</span> <span class="st">"2011-12-31"</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a>  <span class="fu">reduce</span>(left_join, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"id"</span>, <span class="st">"date"</span>)) <span class="sc">%&gt;%</span></span>
-<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a>  <span class="fu">transmute</span>(id, </span>
-<span id="cb18-49"><a href="#cb18-49" aria-hidden="true" tabindex="-1"></a>            date, </span>
-<span id="cb18-50"><a href="#cb18-50" aria-hidden="true" tabindex="-1"></a>            <span class="at">tmax =</span> tmax <span class="sc">/</span> <span class="dv">10</span>,</span>
-<span id="cb18-51"><a href="#cb18-51" aria-hidden="true" tabindex="-1"></a>            <span class="at">tmin =</span> tmin <span class="sc">/</span> <span class="dv">10</span>)</span>
+<span id="cb18-41"><a href="#cb18-41" aria-hidden="true" tabindex="-1"></a><span class="in"># 4. get weather data from nearest station using `rnoaa`</span></span>
+<span id="cb18-42"><a href="#cb18-42" aria-hidden="true" tabindex="-1"></a><span class="in">get_station_data &lt;- function(station_id) </span></span>
+<span id="cb18-43"><a href="#cb18-43" aria-hidden="true" tabindex="-1"></a><span class="in">  ghcnd_search(stationid = station_id,</span></span>
+<span id="cb18-44"><a href="#cb18-44" aria-hidden="true" tabindex="-1"></a><span class="in">               var = c("tmin", "tmax"),</span></span>
+<span id="cb18-45"><a href="#cb18-45" aria-hidden="true" tabindex="-1"></a><span class="in">               date_min = "1956-01-01",</span></span>
+<span id="cb18-46"><a href="#cb18-46" aria-hidden="true" tabindex="-1"></a><span class="in">               date_max = "2011-12-31") %&gt;%</span></span>
+<span id="cb18-47"><a href="#cb18-47" aria-hidden="true" tabindex="-1"></a><span class="in">  reduce(left_join, by = c("id", "date")) %&gt;%</span></span>
+<span id="cb18-48"><a href="#cb18-48" aria-hidden="true" tabindex="-1"></a><span class="in">  transmute(id, </span></span>
+<span id="cb18-49"><a href="#cb18-49" aria-hidden="true" tabindex="-1"></a><span class="in">            date, </span></span>
+<span id="cb18-50"><a href="#cb18-50" aria-hidden="true" tabindex="-1"></a><span class="in">            tmax = tmax / 10,</span></span>
+<span id="cb18-51"><a href="#cb18-51" aria-hidden="true" tabindex="-1"></a><span class="in">            tmin = tmin / 10)</span></span>
 <span id="cb18-52"><a href="#cb18-52" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb18-53"><a href="#cb18-53" aria-hidden="true" tabindex="-1"></a>usa_npn <span class="ot">&lt;-</span> </span>
-<span id="cb18-54"><a href="#cb18-54" aria-hidden="true" tabindex="-1"></a>  locations <span class="sc">%&gt;%</span></span>
-<span id="cb18-55"><a href="#cb18-55" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp =</span> <span class="fu">map</span>(station_id, get_station_data)) <span class="sc">%&gt;%</span></span>
-<span id="cb18-56"><a href="#cb18-56" aria-hidden="true" tabindex="-1"></a>  <span class="fu">right_join</span>(usa_npn, <span class="at">by =</span> <span class="fu">c</span>(<span class="st">"site_id"</span>, <span class="st">"latitude"</span>, <span class="st">"longitude"</span>)) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-57"><a href="#cb18-57" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(<span class="fu">rownames</span>(usa_npn)) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-58"><a href="#cb18-58" aria-hidden="true" tabindex="-1"></a>  <span class="fu">mutate</span>(<span class="at">temp =</span> <span class="fu">map</span>(temp, <span class="sc">~</span> .x <span class="sc">%&gt;%</span> </span>
-<span id="cb18-59"><a href="#cb18-59" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">filter</span>(<span class="fu">format</span>(date, <span class="st">"%Y"</span>) <span class="sc">==</span> first_yes_year) <span class="sc">%&gt;%</span></span>
-<span id="cb18-60"><a href="#cb18-60" aria-hidden="true" tabindex="-1"></a>                      <span class="fu">mutate</span>(<span class="at">temp =</span> (tmin <span class="sc">+</span> tmax) <span class="sc">/</span> <span class="dv">2</span>)),</span>
-<span id="cb18-61"><a href="#cb18-61" aria-hidden="true" tabindex="-1"></a>         <span class="at">num_obs =</span> <span class="fu">map</span>(temp,<span class="sc">~</span> <span class="fu">sum</span>(<span class="fu">format</span>(.x<span class="sc">$</span>date,<span class="st">"%j"</span>) <span class="sc">&lt;=</span> <span class="dv">150</span>)),</span>
-<span id="cb18-62"><a href="#cb18-62" aria-hidden="true" tabindex="-1"></a>         <span class="at">doy =</span> first_yes_doy, <span class="at">year =</span> first_yes_year) <span class="sc">%&gt;%</span> </span>
-<span id="cb18-63"><a href="#cb18-63" aria-hidden="true" tabindex="-1"></a>  <span class="fu">unnest</span>(num_obs) <span class="sc">%&gt;%</span>  </span>
-<span id="cb18-64"><a href="#cb18-64" aria-hidden="true" tabindex="-1"></a>  <span class="fu">filter</span>(num_obs <span class="sc">==</span> <span class="dv">150</span>) <span class="sc">%&gt;%</span></span>
-<span id="cb18-65"><a href="#cb18-65" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ungroup</span>()</span>
+<span id="cb18-53"><a href="#cb18-53" aria-hidden="true" tabindex="-1"></a><span class="in">usa_npn &lt;- </span></span>
+<span id="cb18-54"><a href="#cb18-54" aria-hidden="true" tabindex="-1"></a><span class="in">  locations %&gt;%</span></span>
+<span id="cb18-55"><a href="#cb18-55" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(temp = map(station_id, get_station_data)) %&gt;%</span></span>
+<span id="cb18-56"><a href="#cb18-56" aria-hidden="true" tabindex="-1"></a><span class="in">  right_join(usa_npn, by = c("site_id", "latitude", "longitude")) %&gt;% </span></span>
+<span id="cb18-57"><a href="#cb18-57" aria-hidden="true" tabindex="-1"></a><span class="in">  group_by(rownames(usa_npn)) %&gt;% </span></span>
+<span id="cb18-58"><a href="#cb18-58" aria-hidden="true" tabindex="-1"></a><span class="in">  mutate(temp = map(temp, ~ .x %&gt;% </span></span>
+<span id="cb18-59"><a href="#cb18-59" aria-hidden="true" tabindex="-1"></a><span class="in">                      filter(format(date, "%Y") == first_yes_year) %&gt;%</span></span>
+<span id="cb18-60"><a href="#cb18-60" aria-hidden="true" tabindex="-1"></a><span class="in">                      mutate(temp = (tmin + tmax) / 2)),</span></span>
+<span id="cb18-61"><a href="#cb18-61" aria-hidden="true" tabindex="-1"></a><span class="in">         num_obs = map(temp,~ sum(format(.x$date,"%j") &lt;= 150)),</span></span>
+<span id="cb18-62"><a href="#cb18-62" aria-hidden="true" tabindex="-1"></a><span class="in">         doy = first_yes_doy, year = first_yes_year) %&gt;% </span></span>
+<span id="cb18-63"><a href="#cb18-63" aria-hidden="true" tabindex="-1"></a><span class="in">  unnest(num_obs) %&gt;%  </span></span>
+<span id="cb18-64"><a href="#cb18-64" aria-hidden="true" tabindex="-1"></a><span class="in">  filter(num_obs == 150) %&gt;%</span></span>
+<span id="cb18-65"><a href="#cb18-65" aria-hidden="true" tabindex="-1"></a><span class="in">  ungroup()</span></span>
 <span id="cb18-66"><a href="#cb18-66" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="article-btn">
 <p><a href="../../../../../../ideas/tutorials/index.html">Explore more Tutorials</a></p>
@@ -2435,7 +2416,7 @@ Auerbach, Jonathan. 2023. “A demonstration of the law of the flowering plants.
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
 <div id="ref-chamberlain_2021" class="csl-entry" role="listitem">
 Chamberlain, Scott. 2021. <span>“’NOAA’ Weather Data from r [r Package Rnoaa Version 1.3.8].”</span> <em>The Comprehensive R Archive Network</em>. Comprehensive R Archive Network (CRAN). <a href="https://CRAN.R-project.org/package=rnoaa">https://CRAN.R-project.org/package=rnoaa</a>.
 </div>
@@ -2552,10 +2533,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -2565,8 +2545,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -2579,6 +2568,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -2622,6 +2730,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -2647,6 +2756,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -2708,10 +2843,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <script src="https://giscus.app/client.js" data-repo="realworlddatascience/realworlddatascience.github.io" data-repo-id="R_kgDOILnnig" data-category="General" data-category-id="DIC_kwDOILnnis4CSt2s" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
 </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">Copyright © 2024 <a href="https://rss.org.uk/">Royal Statistical Society</a></div>   
+    <div class="nav-footer-left">
+<p>Copyright © 2024 <a href="https://rss.org.uk/">Royal Statistical Society</a></p>
+</div>   
     <div class="nav-footer-center">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
@@ -2721,7 +2860,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </a>
   </li>  
     <li class="nav-item">
-    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience"><i class="ai  ai-zenodo ai-2xl"></i></a>
+    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience">
+<p><i class="ai  ai-zenodo ai-2xl"></i></p>
+</a>
   </li>  
     <li class="nav-item compact">
     <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
@@ -2748,11 +2889,38 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </a>
   </li>  
 </ul>
-    </div>
-    <div class="nav-footer-right"><a href="../../../../../../ts-and-cs.html">Terms &amp; Conditions</a></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/ideas/tutorials/posts/2023/04/13/flowers.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p><a href="../../../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
+</div>
   </div>
 </footer>
-<script>var lightboxQuarto = GLightbox({"descPosition":"bottom","openEffect":"zoom","selector":".lightbox","loop":true,"closeEffect":"zoom"});</script>
+<script>var lightboxQuarto = GLightbox({"openEffect":"zoom","descPosition":"bottom","selector":".lightbox","loop":false,"closeEffect":"zoom"});
+window.onload = () => {
+  lightboxQuarto.on('slide_before_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    const href = trigger.getAttribute('href');
+    if (href !== null) {
+      const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+      if (imgEl !== null) {
+        const srcAttr = imgEl.getAttribute("src");
+        if (srcAttr && srcAttr.startsWith("data:")) {
+          slideConfig.href = srcAttr;
+        }
+      }
+    } 
+  });
+
+  lightboxQuarto.on('slide_after_load', (data) => {
+    const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+    if (window.Quarto?.typesetMath) {
+      window.Quarto.typesetMath(slideNode);
+    }
+  });
+
+};
+          </script>
+
 
 
 

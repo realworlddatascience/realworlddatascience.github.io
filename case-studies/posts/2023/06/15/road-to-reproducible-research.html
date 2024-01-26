@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.3.450">
+<meta name="generator" content="quarto-1.4.549">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -25,7 +25,7 @@ ul.task-list li input[type="checkbox"] {
 }
 /* CSS for syntax highlighting */
 pre > code.sourceCode { white-space: pre; position: relative; }
-pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span { line-height: 1.25; }
 pre > code.sourceCode > span:empty { height: 1.2em; }
 .sourceCode { overflow: visible; }
 code.sourceCode > span { color: inherit; text-decoration: inherit; }
@@ -85,7 +85,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   "collapse-after": 3,
   "panel-placement": "end",
   "type": "overlay",
-  "limit": 20,
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
   "language": {
     "search-no-results-text": "No results",
     "search-matching-documents-text": "matching documents",
@@ -94,20 +100,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
     "search-more-match-text": "more match in this document",
     "search-more-matches-text": "more matches in this document",
     "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
     "search-detached-cancel-button-title": "Cancel",
     "search-submit-button-title": "Submit",
     "search-label": "Search"
   }
 }</script>
-<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
-
-<script type="text/javascript">
-
-window.dataLayer = window.dataLayer || [];
-function gtag(){dataLayer.push(arguments);}
-gtag('js', new Date());
-gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
-</script>
 <!-- Thank you to Ben Ruijl for the progress bar code!
 Ben is on GitHub here: https://github.com/benruijl
 And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
@@ -115,7 +113,7 @@ And you can see the original code here: https://github.com/quarto-dev/quarto-cli
 <meta property="og:title" content="Real World Data Science - The road to reproducible research: hazards to avoid and tools to get you there safely">
 <meta property="og:description" content="The road to reproducibility can be a tricky one to navigate, as Davit Svanidze discovered when he set about making his bachelor’s thesis reproducible. If you are thinking of walking a similar path, start here. In this case study, Svanidze and colleagues map their journey, beginning to end – signposting hazards to avoid and software, tools, and approaches to help you along the way.">
 <meta property="og:image" content="https://realworlddatascience.net/case-studies/posts/2023/06/15/images/computer-intro.png">
-<meta property="og:site-name" content="Real World Data Science">
+<meta property="og:site_name" content="Real World Data Science">
 <meta property="og:image:height" content="724">
 <meta property="og:image:width" content="991">
 <meta property="og:image:alt" content="A young man sits in front of a computer keyboard, surrounded by monitors and books and with computer cables covering various surfaces.">
@@ -152,10 +150,10 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 <div id="quarto-search-results"></div>
-  <header id="quarto-header" class="headroom fixed-top">
-    <nav class="navbar navbar-expand-lg navbar-dark ">
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
-      <div class="navbar-brand-container">
+      <div class="navbar-brand-container mx-auto">
     <a href="../../../../../index.html" class="navbar-brand navbar-brand-logo">
     <img src="../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
     </a>
@@ -167,44 +165,44 @@ document.addEventListener("DOMContentLoaded", function() {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../../../case-studies/index.html" rel="" target="">
- <span class="menu-text">Case studies</span></a>
+    <a class="nav-link" href="../../../../../case-studies/index.html"> 
+<span class="menu-text">Case studies</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../../../ideas/index.html" rel="" target="">
- <span class="menu-text">Ideas</span></a>
+    <a class="nav-link" href="../../../../../ideas/index.html"> 
+<span class="menu-text">Ideas</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../../../careers/index.html" rel="" target="">
- <span class="menu-text">Careers</span></a>
+    <a class="nav-link" href="../../../../../careers/index.html"> 
+<span class="menu-text">Careers</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../../../viewpoints/index.html" rel="" target="">
- <span class="menu-text">Viewpoints</span></a>
+    <a class="nav-link" href="../../../../../viewpoints/index.html"> 
+<span class="menu-text">Viewpoints</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="button" data-bs-toggle="dropdown" aria-expanded="false" rel="" target="">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="button" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">About RWDS</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
         <li>
-    <a class="dropdown-item" href="../../../../../about-rwds.html" rel="" target="">
+    <a class="dropdown-item" href="../../../../../about-rwds.html">
  <span class="dropdown-text">Who we are</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../../../contributor-docs/call-for-contributions.html" rel="" target="">
+    <a class="dropdown-item" href="../../../../../contributor-docs/call-for-contributions.html">
  <span class="dropdown-text">How to contribute</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../../../contact.html" rel="" target="">
+    <a class="dropdown-item" href="../../../../../contact.html">
  <span class="dropdown-text">Contact us</span></a>
   </li>  
     </ul>
   </li>
 </ul>
-            <div class="quarto-navbar-tools">
-</div>
           </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
       </div> <!-- /container-fluid -->
     </nav>
 </header>
@@ -268,10 +266,11 @@ document.addEventListener("DOMContentLoaded", function() {
   <li><a href="#the-deep-learning-challenge" id="toc-the-deep-learning-challenge" class="nav-link" data-scroll-target="#the-deep-learning-challenge">The deep learning challenge</a></li>
   <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
   </ul>
-<div class="toc-actions"><div><i class="bi bi-github"></i></div><div class="action-links"><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/case-studies/posts/2023/06/15/road-to-reproducible-research.qmd" class="toc-action">Edit this page</a></p><p><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action">Report an issue</a></p></div></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/case-studies/posts/2023/06/15/road-to-reproducible-research.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
+
 
 
 
@@ -281,7 +280,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <p>Davit’s story starts here, but there is much more for the interested reader to discover. At certain points in this article, we will direct readers to other resources, namely a <a href="https://github.com/dsvanidze/replicability/blob/master/notebooks/main.ipynb">Jupyter notebook</a> and <a href="https://github.com/dsvanidze/replicability">GitHub repository</a> which contain all the instructions, data and code necessary to reproduce Davit’s research. Together, these components offer a comprehensive overview of the thought process and technical implementation required for reproducibility. While there is no one-size-fits-all approach, the principles remain consistent.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/computer.png" class="img-fluid figure-img" alt="A young man sits in front of a computer keyboard, surrounded by monitors and books and with computer cables covering various surfaces"></p>
+<p><img src="images/computer.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="A young man sits in front of a computer keyboard, surrounded by monitors and books and with computer cables covering various surfaces"></p>
 </figure>
 </div>
 <div class="figure-caption" style="text-align: center;">
@@ -300,96 +299,96 @@ document.addEventListener("DOMContentLoaded", function() {
 <p>As my code became longer, I overlooked the path names linked to algorithms that were generating the results. This mistake – which would have been easily corrected if spotted earlier – resulted in incorrect outputs. Such errors could have enormous (negative) implications in a public health context, where evidence-based decisions have real impacts on human lives. It was at this point that I realised that my code is the fundamental pillar of the validity of my empirical work. How can someone trust my work if they are not able to verify it?</p>
 <p>The following dummy code demonstrates the hardcoding issue:</p>
 <div class="sourceCode" id="cb1"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Hardcoded path</span></span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>file_path <span class="op">=</span> <span class="st">"/user/notebooks/toydata.csv"</span></span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(file_path) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> <span class="bu">file</span>.read()</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(data)</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">FileNotFoundError</span>:</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"File not found"</span>)</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="in"># Hardcoded path</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="in">file_path = "/user/notebooks/toydata.csv"</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="in">try:</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="in">    with open(file_path) as file:</span></span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="in">        data = file.read()</span></span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="in">        print(data)</span></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="in">except FileNotFoundError:</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="in">    print("File not found")</span></span>
 <span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="images/hardcoded-paths-1.gif" class="img-fluid"></p>
 <p>In the code above, a dummy file (<code>toydata.csv</code>) is used. The dummy file contains data on the prices of three different toys, but only the path of the file is relevant to this example. If the hardcoded file path – <code>"/user/notebooks/toydata.csv"</code> – exists on the machine being used, the code will run just fine. But, when run in a different environment without said path, the code will result in a <code>"File not found error"</code>. Better code that uses relative paths can be written as:</p>
 <div class="sourceCode" id="cb2"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Relative path</span></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a><span class="in"># Relative path</span></span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="in">import os</span></span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>file_path <span class="op">=</span> os.path.join(os.getcwd(), <span class="st">"toydata.csv"</span>)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="cf">try</span>:</span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> <span class="bu">open</span>(file_path) <span class="im">as</span> <span class="bu">file</span>:</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        data <span class="op">=</span> <span class="bu">file</span>.read()</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>        <span class="bu">print</span>(data)</span>
-<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="cf">except</span> <span class="pp">FileNotFoundError</span>:</span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"File not found"</span>)</span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="in">file_path = os.path.join(os.getcwd(), "toydata.csv")</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a><span class="in">try:</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="in">    with open(file_path) as file:</span></span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a><span class="in">        data = file.read()</span></span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="in">        print(data)</span></span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="in">except FileNotFoundError:</span></span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a><span class="in">    print("File not found")</span></span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="images/hardcoded-paths-2.gif" class="img-fluid"></p>
 <p>You can see that this code has successfully imported data from the dataset <code>toydata.csv</code> and printed its two columns (toy and price) and three rows.</p>
 <p>The following example is a simplified version of what happened when I wrote code to train several models, store the results and run a procedure to compare results with the predictive performance of a benchmark model:</p>
 <div class="sourceCode" id="cb3"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Set an arbitrary predictive performance value of a benchmark model</span></span>
-<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="co"># and accept/reject models if the results are above/below the value.</span></span>
-<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>benchmark <span class="op">=</span> <span class="dv">50</span></span>
-<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the model details in one place for a better overview</span></span>
-<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> {</span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="st">"model1"</span>: {<span class="st">"name"</span>: <span class="st">"model1"</span>, <span class="st">"type"</span>: <span class="st">"simple"</span>}, </span>
-<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"model2"</span>: {<span class="st">"name"</span>: <span class="st">"model2"</span>, <span class="st">"type"</span>: <span class="st">"complex"</span>}</span>
-<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the current model to "model1" to use it for training and check its results</span></span>
-<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>current_model <span class="op">=</span> model[<span class="st">"model1"</span>]</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="co"># Train a simple model for "model1" and a complex model for "model2"</span></span>
-<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Training result of the "model1" is 30 and for "model2" is 70</span></span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>model_structure <span class="op">=</span> train(current_model[<span class="st">"type"</span>])</span>
-<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the model and its result in a .csv file</span></span>
-<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>model_structure.to_csv(<span class="st">'/all/notebooks/results-of-model1.csv'</span>, index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="in"># Set an arbitrary predictive performance value of a benchmark model</span></span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a><span class="in"># and accept/reject models if the results are above/below the value.</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a><span class="in">benchmark = 50</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="in"># Set the model details in one place for a better overview</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a><span class="in">model = {</span></span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a><span class="in">    "model1": {"name": "model1", "type": "simple"}, </span></span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a><span class="in">    "model2": {"name": "model2", "type": "complex"}</span></span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a><span class="in"># Set the current model to "model1" to use it for training and check its results</span></span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a><span class="in">current_model = model["model1"]</span></span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a><span class="in"># Train a simple model for "model1" and a complex model for "model2"</span></span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="in"># Training result of the "model1" is 30 and for "model2" is 70</span></span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="in">model_structure = train(current_model["type"])</span></span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="in"># Save the model and its result in a .csv file</span></span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="in">model_structure.to_csv('/all/notebooks/results-of-model1.csv', index=False)</span></span>
 <span id="cb3-17"><a href="#cb3-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb4"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the model result and compare with benchmark</span></span>
-<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model name: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(current_model[<span class="st">"name"</span>]))</span>
-<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model type: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(current_model[<span class="st">"type"</span>]))</span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the result of the current model</span></span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> pd.read_csv(<span class="st">'/all/notebooks/results-of-model2.csv'</span>).iloc[<span class="dv">0</span>, <span class="dv">0</span>]</span>
-<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Result: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(result))</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="in"># Load the model result and compare with benchmark</span></span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a><span class="in">print("Model name: {}".format(current_model["name"]))</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a><span class="in">print("Model type: {}".format(current_model["type"]))</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="in"># Load the result of the current model</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a><span class="in">result = pd.read_csv('/all/notebooks/results-of-model2.csv').iloc[0, 0]</span></span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a><span class="in">print("Result: {}".format(result))</span></span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> result <span class="op">&gt;</span> benchmark:</span>
-<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\033</span><span class="st">[3;32m&gt;&gt;&gt; Result is better than the benchmark -&gt; Accept the model and use it for calculations"</span>)</span>
-<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\033</span><span class="st">[3;31m&gt;&gt;&gt; Result is NOT better than the benchmark -&gt; Reject the model as it is not optimal"</span>)</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="in">if result &gt; benchmark:</span></span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a><span class="in">    print("\033[3;32m&gt;&gt;&gt; Result is better than the benchmark -&gt; Accept the model and use it for calculations")</span></span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a><span class="in">else:</span></span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="in">    print("\033[3;31m&gt;&gt;&gt; Result is NOT better than the benchmark -&gt; Reject the model as it is not optimal")</span></span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="images/hardcoded-paths-3.gif" class="img-fluid"></p>
 <p>Everything looks fine at a glance. But, if you examine the code carefully, you may spot the problem. Initially, when I coded the procedure (training the model, saving and loading the results), I hardcoded the paths and had to change them for each tested model. First, I trained <code>model2</code>, a complex model, and tested it against the benchmark (70 &gt; 50 → accepted). I repeated the procedure for <code>model1</code> (a simple model). Its result was identical to <code>model2</code>, therefore I kept <code>model1</code> following the <a href="https://www.sciencedirect.com/topics/computer-science/parsimony-principle">parsimony principle</a>.</p>
 <p>However, for the code line loading the result for the current model (line 5, second cell), I forgot to amend the path and so mistakenly loaded the result of <code>model2</code>. As a consequence, I accepted a model which should have been rejected. These wrong results were then spread further in the code, including all charts and maps and the conclusions of my analysis.</p>
 <p>A small coding error like this can therefore be fatal to an analysis. Below is the corrected code:</p>
 <div class="sourceCode" id="cb5"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
-<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Set an arbitrary predictive performance value of a benchmark model</span></span>
-<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="co"># and accept/reject models if the results are above/below the value.</span></span>
-<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>benchmark <span class="op">=</span> <span class="dv">50</span></span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the model details (INCLUDING PATHS) in one place for a better overview</span></span>
-<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> {</span>
-<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="st">"model1"</span>: {<span class="st">"name"</span>: <span class="st">"model1"</span>, <span class="st">"type"</span>: <span class="st">"simple"</span>, <span class="st">"path"</span>: os.path.join(os.getcwd(), <span class="st">"results-of-model1.csv"</span>)}, </span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="st">"model2"</span>: {<span class="st">"name"</span>: <span class="st">"model2"</span>, <span class="st">"type"</span>: <span class="st">"complex"</span>, <span class="st">"path"</span>: os.path.join(os.getcwd(), <span class="st">"results-of-model2.csv"</span>)}</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>}</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Set the current model to "model1" to use it for training and check its results</span></span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>current_model <span class="op">=</span> model[<span class="st">"model1"</span>]</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Train a simple model for "model1" and a complex model for "model2"</span></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="co"># Training result of the "model1" is 30 and for "model2" is 70</span></span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>model_structure <span class="op">=</span> train(current_model[<span class="st">"type"</span>])</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="co"># Save the model and its result in a .csv file</span></span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>model_structure.to_csv(current_model[<span class="st">"path"</span>], index<span class="op">=</span><span class="va">False</span>)</span>
+<span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a><span class="in">import os</span></span>
+<span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a><span class="in"># Set an arbitrary predictive performance value of a benchmark model</span></span>
+<span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a><span class="in"># and accept/reject models if the results are above/below the value.</span></span>
+<span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a><span class="in">benchmark = 50</span></span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a><span class="in"># Set the model details (INCLUDING PATHS) in one place for a better overview</span></span>
+<span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="in">model = {</span></span>
+<span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="in">    "model1": {"name": "model1", "type": "simple", "path": os.path.join(os.getcwd(), "results-of-model1.csv")}, </span></span>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="in">    "model2": {"name": "model2", "type": "complex", "path": os.path.join(os.getcwd(), "results-of-model2.csv")}</span></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="in">}</span></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="in"># Set the current model to "model1" to use it for training and check its results</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="in">current_model = model["model1"]</span></span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="in"># Train a simple model for "model1" and a complex model for "model2"</span></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="in"># Training result of the "model1" is 30 and for "model2" is 70</span></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="in">model_structure = train(current_model["type"])</span></span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="in"># Save the model and its result in a .csv file</span></span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a><span class="in">model_structure.to_csv(current_model["path"], index=False)</span></span>
 <span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="sourceCode" id="cb6"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Get the model result and compare with the benchmark</span></span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model name: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(current_model[<span class="st">"name"</span>]))</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Model type: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(current_model[<span class="st">"type"</span>]))</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Load the result of the current model WITH a VARIABLE PATH</span></span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>result <span class="op">=</span> pd.read_csv(current_model[<span class="st">"path"</span>]).iloc[<span class="dv">0</span>, <span class="dv">0</span>]</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Result: </span><span class="sc">{}</span><span class="st">"</span>.<span class="bu">format</span>(result))</span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="in"># Get the model result and compare with the benchmark</span></span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a><span class="in">print("Model name: {}".format(current_model["name"]))</span></span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a><span class="in">print("Model type: {}".format(current_model["type"]))</span></span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a><span class="in"># Load the result of the current model WITH a VARIABLE PATH</span></span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a><span class="in">result = pd.read_csv(current_model["path"]).iloc[0, 0]</span></span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a><span class="in">print("Result: {}".format(result))</span></span>
 <span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="cf">if</span> result <span class="op">&gt;</span> benchmark:</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\033</span><span class="st">[3;32m&gt;&gt;&gt; Result is better than the benchmark -&gt; Accept the model and use it for calculations"</span>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="cf">else</span>:</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="st">"</span><span class="ch">\033</span><span class="st">[3;31m&gt;&gt;&gt; Result is NOT better than the benchmark -&gt; Reject the model as it is not optimal"</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a><span class="in">if result &gt; benchmark:</span></span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a><span class="in">    print("\033[3;32m&gt;&gt;&gt; Result is better than the benchmark -&gt; Accept the model and use it for calculations")</span></span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a><span class="in">else:</span></span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a><span class="in">    print("\033[3;31m&gt;&gt;&gt; Result is NOT better than the benchmark -&gt; Reject the model as it is not optimal")</span></span>
 <span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="images/hardcoded-paths-4.gif" class="img-fluid"></p>
 <p>Here, the paths are stored with other model details (line 7–8, first cell). Therefore, we can use them as variables when we need them (e.g., line 16, first cell, and line 5, second cell). Now, when the current model is set to <code>model1</code> (line 11, first cell), everything is automatically adjusted. Also, if the path details need to be changed, we only need to change them once and everything else is automatically adjusted and updated. The code now correctly states that <code>model1</code> performs worse than the benchmark and is therefore rejected and we should keep <code>model2</code>, which performs best.</p>
@@ -412,23 +411,23 @@ document.addEventListener("DOMContentLoaded", function() {
 <p>If your code <em>does</em> take too long to run, some operations can often be accelerated – for example, by reducing the size of the datasets or by implementing computationally efficient data processing approaches (e.g., using <a href="https://pytorch.org/">PyTorch</a>). Aim for a running time of a few minutes – or about as long as it takes to make a cup of tea or coffee. Of course, if data needs to be reduced to save computational time, the person rerunning your code won’t generate the same results as in your original analysis. This therefore will not lead to reproducibility, <em>sensu stricto</em>. However, as long as you state clearly what are the expected results from the reduced dataset, your peers can at least inspect your code and offer feedback, and this marks a step towards reproducibility.</p>
 <p>We should also make sure our code is free from bugs – both the kind that might lead to errors in analysis and also those that stop the code running to completion. Bugs can occur for various reasons. For example, some code chunks written on a Windows machine may not properly execute on a macOS machine because the former uses <code>\</code> for file paths, while the latter uses <code>/</code>:</p>
 <div class="sourceCode" id="cb7"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Path works on macOS/Linux</span></span>
-<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="st">"../../all/notebooks/toydata.csv"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
-<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(f.read())</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a><span class="in"># Path works on macOS/Linux</span></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="in">with open("../../all/notebooks/toydata.csv", "r") as f:</span></span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="in">    print(f.read())</span></span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Path works only on Windows    </span></span>
-<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(<span class="vs">r"..\..\all\notebooks\toydata.csv"</span>, <span class="st">"r"</span>) <span class="im">as</span> f:</span>
-<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>   <span class="bu">print</span>(f.read())</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a><span class="in"># Path works only on Windows    </span></span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a><span class="in">with open(r"..\..\all\notebooks\toydata.csv", "r") as f:</span></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a><span class="in">   print(f.read())</span></span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="images/path-cross-platform-compatibility-1.gif" class="img-fluid"></p>
 <p>Here, only the macOS/Linux version works, since the code this capture was taken from was implemented on a Linux server. There are alternatives, however. The code below works on macOS, Linux, and also Windows machines:</p>
 <div class="sourceCode" id="cb8"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> pathlib <span class="im">import</span> Path</span>
+<span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a><span class="in">from pathlib import Path</span></span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co"># Path works on every OS: macOS/Linux/Windows</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co"># It will automatically replace the path to "..\..\all\notebooks\toydata.csv" when it runs on Windows</span></span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> <span class="bu">open</span>(Path(<span class="st">"../../all/notebooks/toydata.csv"</span>), <span class="st">"r"</span>) <span class="im">as</span> f:</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(f.read())</span>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="in"># Path works on every OS: macOS/Linux/Windows</span></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="in"># It will automatically replace the path to "..\..\all\notebooks\toydata.csv" when it runs on Windows</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="in">with open(Path("../../all/notebooks/toydata.csv"), "r") as f:</span></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a><span class="in">    print(f.read())</span></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="images/path-cross-platform-compatibility-2.gif" class="img-fluid"></p>
 <p>The extra Python package, <code>pathlib</code>, is of course unnecessary if you build a Docker container for your project, as discussed <a href="#solving-compatibility-chaos-with-docker">in the previous section</a>.</p>
@@ -438,7 +437,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <p>By this stage in my project, I was feeling that I’d made good progress towards ensuring that my work would be reproducible. I’d expended a lot of effort to make my code readable, efficient, and also absent of bugs (or, at least, this is what I was hoping for). I’d also built a Docker container to allow others to replicate my computing environment and rerun the analysis. Still, I wanted to make sure there were no barriers that would prevent people – my supervisors, in particular – from being able to review the work I had done for my undergraduate thesis. What I wanted was a way to present a complete narrative of my project that was easy to understand and follow. For this, I turned to Jupyter Notebook.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/jupyter.png" class="img-fluid figure-img" alt="A rendering of the god Jupiter, holding a pencil and sat in front of an open laptop computer"></p>
+<p><img src="images/jupyter.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="A rendering of the god Jupiter, holding a pencil and sat in front of an open laptop computer"></p>
 </figure>
 </div>
 <div class="figure-caption" style="text-align: center;">
@@ -464,7 +463,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <p>One of the challenges for research projects employing machine learning and deep learning algorithms is that outputs can be influenced by the randomness that is inherent in these approaches. Consider the four portraits below, generated by the Midjourney bot.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/DL_bkg.png" class="img-fluid figure-img" alt="Four portraits rendered by generative AI. Each portrait looks broadly similar, but there are noticeable differences in facial features and the abstract patterns overlaid on the portraits"></p>
+<p><img src="images/DL_bkg.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Four portraits rendered by generative AI. Each portrait looks broadly similar, but there are noticeable differences in facial features and the abstract patterns overlaid on the portraits"></p>
 </figure>
 </div>
 <div class="figure-caption" style="text-align: center;">
@@ -475,34 +474,34 @@ document.addEventListener("DOMContentLoaded", function() {
 <p>There are many elements of an analysis in which randomness may be present and lead to different results. For example, in a classification (where your dependent variable is binary, e.g., success/failure with 1 and 0) or a regression (where your dependent variable is continuous, e.g., temperature measurements of 10.1°C, 2.8°C, etc.), you might need to split your data into training and testing sets. The training set is used to estimate the model (hyper)parameters and the testing set is used to compute the performance of the model. The way the split is usually operationalised is as a random selection of rows of your data. So, in principle, each time you split your data into training and testing sets, you may end up with different rows in each set. Differences in the training set may therefore lead to different values of the model (hyper)parameters and affect the predictive performance that is measured from the testing set. Also, differences in the testing set may lead to variations in the predictive performance scores, which in turn lead to potentially different interpretations and, ultimately, decisions if the results are used for that purpose.</p>
 <p>This aspect of randomness in the training of models is relatively well known. But randomness may hide in other parts of code. One such example is illustrated below. Here, using Python, we set the seed number to 0 using <code>np.random.seed(seed value)</code>. The <code>random.seed()</code> function from the package <code>numpy</code> (abbreviated <code>np</code>) saves the state of a random function so that it can create identical random numbers independently of the machine you use, and this is for any number of executions. A seed value is an initial input or starting point used by a pseudorandom number generator to generate a sequence of random numbers. It is often an integer or a timestamp. The number generator takes this seed value and uses it to produce a deterministic series of random numbers that appear to be random but can be recreated by using the same seed value. Without providing this seed value, the first execution of the function typically uses the current system time. The animation below generates two random arrays <code>arr1</code> and <code>arr2</code> using <code>np.random.rand(3,2)</code>. Note that the values <code>3,2</code> indicate that we want random values for an array that has 3 rows and 2 columns.</p>
 <div class="sourceCode" id="cb9"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a><span class="in">import numpy as np</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="co">#Set the seed number e.g. to 0</span></span>
-<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">0</span>)</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate random array</span></span>
-<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>arr1 <span class="op">=</span> np.random.rand(<span class="dv">3</span>,<span class="dv">2</span>)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="co">## print("Array 1:")</span></span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="co">## print(arr1)</span></span>
+<span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a><span class="in">#Set the seed number e.g. to 0</span></span>
+<span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a><span class="in">np.random.seed(0)</span></span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a><span class="in"># Generate random array</span></span>
+<span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a><span class="in">arr1 = np.random.rand(3,2)</span></span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a><span class="in">## print("Array 1:")</span></span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a><span class="in">## print(arr1)</span></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="co">#Set the seed number as before to get the same results</span></span>
-<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>np.random.seed(<span class="dv">0</span>)</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate another random array</span></span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>arr2 <span class="op">=</span> np.random.rand(<span class="dv">3</span>,<span class="dv">2</span>)</span>
-<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="co">## print("\nArray 2:")</span></span>
-<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="co">## print(arr2)</span></span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="in">#Set the seed number as before to get the same results</span></span>
+<span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="in">np.random.seed(0)</span></span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a><span class="in"># Generate another random array</span></span>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a><span class="in">arr2 = np.random.rand(3,2)</span></span>
+<span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a><span class="in">## print("\nArray 2:")</span></span>
+<span id="cb9-16"><a href="#cb9-16" aria-hidden="true" tabindex="-1"></a><span class="in">## print(arr2)</span></span>
 <span id="cb9-17"><a href="#cb9-17" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="images/randomisation-with-seed.gif" class="img-fluid"></p>
 <p>If you run the code yourself multiple times, the values of <code>arr1</code> and <code>arr2</code> should remain identical. If this is not the case, check that the seed value is set to 0 in lines 4 and 11. These identical results are possible because we set the seed value to 0, which ensures that the random number generator produces the same sequence of numbers each time the code is run. Now, let’s look at what happens if we remove the line <code>np.random.seed(0)</code>:</p>
 <div class="sourceCode" id="cb10"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
-<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="co">#Generate random array</span></span>
-<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>arr1 <span class="op">=</span> np.random.rand(<span class="dv">3</span>,<span class="dv">2</span>)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="co">## print("Array 1:")</span></span>
-<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="co">## print(arr1)</span></span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="in">#Generate random array</span></span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="in">arr1 = np.random.rand(3,2)</span></span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="in">## print("Array 1:")</span></span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="in">## print(arr1)</span></span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="co">#Generate another random array</span></span>
-<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a>arr2 <span class="op">=</span> np.random.rand(<span class="dv">3</span>,<span class="dv">2</span>)</span>
-<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="co">## print("\nArray 2:")</span></span>
-<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="co">## print(arr2)</span></span>
+<span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a><span class="in">#Generate another random array</span></span>
+<span id="cb10-8"><a href="#cb10-8" aria-hidden="true" tabindex="-1"></a><span class="in">arr2 = np.random.rand(3,2)</span></span>
+<span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a><span class="in">## print("\nArray 2:")</span></span>
+<span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a><span class="in">## print(arr2)</span></span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <p><img src="images/randomisation-without-seed.gif" class="img-fluid"></p>
 <p>Here, the values of <code>arr1</code> and <code>arr2</code> will be different each time we run the code since the seed value was not set and is therefore changing over time.</p>
@@ -519,11 +518,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <li>The importance of setting the seed values in random number generators.</li>
 </ul>
 <p>The graphic below provides a visual overview of the different components of our study and shows how each component works with the others to support reproducibility.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/docker-workflow.png"><img src="images/docker-workflow.png" class="img-fluid figure-img" alt="A diagrammatic overview of the interlinking systems and processes created by the authors to allow their research to be reproduced"></a></p>
-</figure>
-</div>
+<p><a href="images/docker-workflow.png"><img src="images/docker-workflow.png" class="img-fluid" alt="A diagrammatic overview of the interlinking systems and processes created by the authors to allow their research to be reproduced"></a></p>
 <p>We use (A) the version control system, Git, and its hosting service, GitHub, which enables a team to share code with peers, efficiently track and synchronise code changes between local and server machines, and reset the project to a working state in case something breaks. Docker containers (B) include all necessary objects (engine, data, and scripts). Docker needs to be installed (plain-line arrows) by all users (project leader, collaborator(s), reviewer(s), and public user(s)) on their local machines (C); and (D) we use a user-friendly interface (JupyterLab) deployed from a local machine to facilitate the operations required to reproduce the work. The project leader and collaborators can edit (upload/download) the project files stored on the GitHub server (plain-line arrows) while reviewers and public users can only read the files (dotted-line arrows).</p>
 <p>Now, it is over to you. Our <a href="https://github.com/dsvanidze/replicability/blob/master/notebooks/main.ipynb">Jupyter notebook</a> provides a walkthrough of our research. Our <a href="https://github.com/dsvanidze/replicability">GitHub repository</a> has all the data, code and other files you need to reproduce our work, and this <a href="https://github.com/dsvanidze/replicability#readme">README file</a> will help you get started.</p>
 <p>And with that, we wish you all the best on the road to reproducibility!</p>
@@ -661,10 +656,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
-  function tippyHover(el, contentFn) {
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
-      content: contentFn,
       maxWidth: 500,
       delay: 100,
       arrow: false,
@@ -674,8 +668,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       interactive: true,
       interactiveBorder: 10,
       theme: 'quarto',
-      placement: 'bottom-start'
+      placement: 'bottom-start',
     };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
     window.tippy(el, config); 
   }
   const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
@@ -688,6 +691,125 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
       return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
     });
   }
       let selectedAnnoteEl;
@@ -731,6 +853,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
             }
             div.style.top = top - 2 + "px";
             div.style.height = height + 4 + "px";
+            div.style.left = 0;
             let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
             if (gutterDiv === null) {
               gutterDiv = window.document.createElement("div");
@@ -756,6 +879,32 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         });
         selectedAnnoteEl = undefined;
       };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
       // Attach click handler to the DT
       const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
       for (const annoteDlNode of annoteDls) {
@@ -817,10 +966,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <script src="https://giscus.app/client.js" data-repo="realworlddatascience/realworlddatascience.github.io" data-repo-id="R_kgDOILnnig" data-category="General" data-category-id="DIC_kwDOILnnis4CSt2s" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
 </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
 </div> <!-- /content -->
 <footer class="footer">
   <div class="nav-footer">
-    <div class="nav-footer-left">Copyright © 2024 <a href="https://rss.org.uk/">Royal Statistical Society</a></div>   
+    <div class="nav-footer-left">
+<p>Copyright © 2024 <a href="https://rss.org.uk/">Royal Statistical Society</a></p>
+</div>   
     <div class="nav-footer-center">
       <ul class="footer-items list-unstyled">
     <li class="nav-item compact">
@@ -830,7 +983,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </a>
   </li>  
     <li class="nav-item">
-    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience"><i class="ai  ai-zenodo ai-2xl"></i></a>
+    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience">
+<p><i class="ai  ai-zenodo ai-2xl"></i></p>
+</a>
   </li>  
     <li class="nav-item compact">
     <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
@@ -857,10 +1012,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </a>
   </li>  
 </ul>
-    </div>
-    <div class="nav-footer-right"><a href="../../../../../ts-and-cs.html">Terms &amp; Conditions</a></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/case-studies/posts/2023/06/15/road-to-reproducible-research.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p><a href="../../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
+</div>
   </div>
 </footer>
+
 
 
 
