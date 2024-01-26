@@ -17,7 +17,7 @@ image-alt: Computer monitor displaying bodycam recordings, primary colours, digi
 
 Incarcerated youth are an exceptionally vulnerable population, and body-worn cameras are an important tool of accountability both for those incarcerated and the staff who supervise them. In 2018 the Texas Juvenile Justice Department (TJJD) deployed body-worn cameras for the first time, and this is a case study of how the agency developed a methodology for measuring the success of the camera rollout. This is also a case study of analysis failure, as it became clear that real-world implementation problems were corrupting the data and rendering the methodology unusable. However, the process of working through the causes of this failure helped the agency identify previously unrecognized problems and ultimately proved to be of great benefit. The purpose of this case study is to demonstrate how negative findings can still be incredibly useful in real-world settings.
 
-::: {.callout-note appearance="simple" collapse="true" style="margin:0"}
+::: {.callout-note appearance="simple" collapse="true"}
 ## Why body-worn cameras?
 
 Body-worn cameras became a standard tool of policing in the US in the mid-2010s. By recording officer interactions with the public, law enforcement agencies could achieve a greater degree of accountability. Not only could credible claims of police abuse against civilians be easily verified, the argument went, but false accusations would decline as well, saving law enforcement agencies time and resources that would otherwise be wasted on spurious allegations. Initial studies seemed to support this argument.
@@ -158,6 +158,7 @@ In order to join the shift data to the camera data, I needed a common unit of an
 
 For example, let's take employee #9001005 at Facility Epsilon between April 1--3. This employee has the following clips recorded during that time period:
 
+::: {.table-responsive}
 | Employee_ID | Clip_ID | Clip_Start          | Clip_End            |
 |:------------|:--------|:--------------------|:--------------------|
 | 9001005     | 156421  | 2019-04-01 05:54:34 | 2019-04-01 08:34:34 |
@@ -167,13 +168,16 @@ For example, let's take employee #9001005 at Facility Epsilon between April 1--3
 | 9001005     | 151088  | 2019-04-01 12:57:51 | 2019-04-01 14:06:44 |
 | 9001005     | 150947  | 2019-04-02 05:56:34 | 2019-04-02 09:48:50 |
 | 9001005     | 151699  | 2019-04-02 09:54:23 | 2019-04-02 12:17:15 |
+:::
 
 We can join this to a similar table of shifts logged. This particular employee had the following shifts scheduled from April 1--3:
 
+::: {.table-responsive}
 | Employee_ID | Shift_ID | Shift_Start         | Shift_End           |
 |:------------|:---------|:--------------------|:--------------------|
 | 9001005     | E050603  | 2019-04-01 06:00:00 | 2019-04-01 14:00:00 |
 | 9001005     | E051303  | 2019-04-02 06:00:00 | 2019-04-02 14:00:00 |
+:::
 
 The table shows two eight-hour morning shifts from 6:00 am to 2:00 pm. We can join the two tables together by ID on a messy many-to-many join, but that tells us nothing about how much they overlap (or fail to overlap) without extensive additional work. For example, we have a unique identifier for employee clip (Clip_ID) and employee shift (Shift_ID), but what we need is a unique identifier that can be used to join the two. Fortunately, for this particular data we can *create* a unique identifier since both clips and shifts are fundamentally measures of *time*. While Employee_ID is not in itself unique (i.e., one employee can have multiple clips attached to that ID), Employee_ID combined with time of day is unique. A person can only be in one place at a time, after all!
 
@@ -218,6 +222,7 @@ browser()
 ```
 </details>
 
+::: {.table-responsive}
 | Interval_Start      | Interval_End        | Employee_ID | Shift_ID | Shift_Start         | Shift_End           | Seconds_Duration_Within_Interval |
 |:------------------------------------------------------------------------------------|:-------------------------------------------------------------------------------|:----------------------------------------------------------------------------------|:----------------------------------------------------------|:----------------------------------------------------------------------|:-----------------------------------------------------------------|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
 | 2019-04-01 06:00:00 | 2019-04-01 07:00:00 | 9001005     | E050603  | 2019-04-01 06:00:00 | 2019-04-01 14:00:00 | 3600 secs                        |
@@ -225,9 +230,11 @@ browser()
 | 2019-04-01 08:00:00 | 2019-04-01 09:00:00 | 9001005     | E050603  | 2019-04-01 06:00:00 | 2019-04-01 14:00:00 | 3600 secs                        |
 | 2019-04-01 09:00:00 | 2019-04-01 10:00:00 | 9001005     | E050603  | 2019-04-01 06:00:00 | 2019-04-01 14:00:00 | 3600 secs                        |
 | ...                 | ...                 | ...         | ...      | ...                 | ...                 | ...                              |
+:::
 
 The footage could be converted in a similar manner, and in this way I could break down both the shift data and the clip data into an hour-by-hour view and compare them to one another. Using this new format, I joined together the full tables of footage and shifts to determine how much footage was recorded with no corresponding shift in the timekeeping system.
 
+::: {.table-responsive}
 | HR_Location | Footage_Hours_No_Shift | Employee_IDs_With_Missing_Shift |
 |:------------|:-----------------------|:--------------------------------|
 | Alpha       | 1805                   | 122                             |
@@ -235,9 +242,11 @@ The footage could be converted in a similar manner, and in this way I could brea
 | Delta       | 1208                   | 133                             |
 | Epsilon     | 2899                   | 157                             |
 | Gamma       | 4153                   | 170                             |
+:::
 
 To summarize what the table is telling us: Almost every employee has footage hours that do not match with logged shifts, totaling nearly 14,000 hours when you add up the Footage_Hours_No_Shift column. But what about the opposite case? How many shift hours were logged with no corresponding footage?
 
+::: {.table-responsive}
 | HR_Location | Shift_Hours_No_Footage | Employee_IDs_With_Missing_Footage |
 |:------------|:-----------------------|:----------------------------------|
 | Alpha       | 7338                   | 127                               |
@@ -245,6 +254,7 @@ To summarize what the table is telling us: Almost every employee has footage hou
 | Delta       | 12830                  | 141                               |
 | Epsilon     | 9000                   | 168                               |
 | Gamma       | 11960                  | 183                               |
+:::
 
 Oh dear. Again, almost every employee has logged shift hours with no footage: 47,000 hours in total. To put it another way, that's an entire work week per employee not showing up in camera footage.
 
