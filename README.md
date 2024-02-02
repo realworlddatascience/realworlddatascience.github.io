@@ -1,7 +1,8 @@
-# A showcase for data science in action
+# Real World Data Science: <br/> Data science and AI in action
+
 Welcome to the home of [Real World Data Science](https://realworlddatascience.net/), a new project from the [Royal Statistical Society](https://rss.org.uk/), in partnership with the [American Statistical Association](https://www.amstat.org/). This repository contains all the source files and code for our website. 
 
-The site and its content are being created and curated by data science practitioners and leaders with a single goal in mind: to help you deliver high quality, ethical, impactful data science in your workplace.
+The site and its content are being created and curated by data science practitioners and leaders with a single goal in mind: to help you deliver high quality, ethical, impactful data science and AI in your workplace.
 
 ## Table of contents
 1. [Contributors](#contributors-)
@@ -113,6 +114,8 @@ Other file types in the root of the repository are:
 The most important file for understanding and controlling site structure is `_quarto.yml`. From here we set the appearance of the navigation bar and the content it links to; page navigation for sections and sub-sections; the site footer; and basic formatting. Extensive documentation on all aspects of the `_quarto.yml` is available on the [Quarto website](https://quarto.org/docs/websites/).
 
 ### Index files and listings
+
+### Other file types and folders
 
 ## Create an article
 Also, be sure to check out the [RWDS_post_template repository](https://github.com/finnoh/RWDS_post_template) if you're thinking of submitting an article. It's a great resource to help you get started.
