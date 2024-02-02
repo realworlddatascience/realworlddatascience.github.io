@@ -4,7 +4,7 @@ Welcome to the home of [Real World Data Science](https://realworlddatascience.ne
 The site and its content are being created and curated by data science practitioners and leaders with a single goal in mind: to help you deliver high quality, ethical, impactful data science in your workplace.
 
 ## Table of contents
-1. [Contributors](#contributors-✨)
+1. [Contributors](#contributors-)
 2. [Become a contributor](#become-a-contributor)
 3. [Site and repository structure](#site-and-repository-structure)
 4. [Create an article](#create-an-article)
@@ -76,7 +76,7 @@ The call for contributions links to detailed notes for the various types of cont
 While the call for contributions focuses primarily on site content, we also welcome contributions that seek to improve the design and functionality of the site itself. [Real World Data Science](https://realworlddatascience.net/) is built using [Quarto](https://quarto.org/), an open-source scientific and technical publishing system developed by [Posit](https://posit.co/). [We learned a lot from the open-source community in building this site](https://www.youtube.com/watch?v=ncDEqHxMWnE), and we hope we can return the favour in time by expanding the scope of what's possible to build with Quarto.  
 
 ## Site and repository structure
-[Real World Data Science](https://realworlddatascience.net/) basically consists of a homepage, 4 main content sections, and a small collection of documents that introduce the site, its aims, our partners and so on. This structure is reflected in our navigation bar:
+[Real World Data Science](https://realworlddatascience.net/) consists of a homepage, 4 main content sections, and a small collection of documents that introduce the site, its aims, our partners and so on. This structure is reflected in our navigation bar:
 
 ![Real World Data Science nav bar](images/nav-bar.PNG)
 
@@ -87,7 +87,7 @@ Here you can see our four main content sections:
 - Careers
 - Viewpoints
 
-And then there is the "About RWDS" section, which links to all the general information documents.
+And then there is the "About RWDS" section, which links to those documents containing general information about the site.
 
 Our repository structure mirrors the site structure. We have folders for each of our main content sections, highlighted in yellow below:
 
@@ -97,17 +97,17 @@ There is no dedicated folder for the "About RWDS" section. Instead, these docume
 
 ![RWDS repo top-level files](images/repo-top-level-files.PNG)
 
-As you'll see from the above image, all document or article files are in the `.qmd` format. We'll discuss this format in more detail in the [Create an article](#create-an-article) section, but special mention needs to be made to the `index.qmd` file. You will see this file name frequently throughout our repo, and each `index.qmd` file controls a homepage -- either the main site homepage or a section homepage.
+As you'll see from the above image, all documents/article files are in the `.qmd` format. We'll discuss this format in more detail in the [Create an article](#create-an-article) section, but special mention needs to be made to the `index.qmd` file. You will see this file name frequently throughout our repo, and each `index.qmd` file controls a homepage -- either the main site homepage or a section homepage.
 
 Other file types in the root of the repository are:
 
-- `.all-contributorsrc` -- contains the data that populates our [contributor list](#contributors-✨)
+- `.all-contributorsrc` -- contains the data that populates our [contributor list](#contributors-)
 - `.gitignore` -- a list of files or folders that are excluded from version control
 - `.md` -- content files that are published only as part of the RWDS repository, not as part of the site itself
 - `progress-bar.html` -- code that is used across the site to apply a progress bar to published articles
 - `.css` and `.scss` -- files controlling site design and styling
 
-The most important file for understanding and controlling site structure is `_quarto.yml`. From here you set the appearance of the navigation bar and the content it links to; page navigation for sections and sub-sections; the site footer; and basic formatting. Extensive documentation on all aspects of the `_quarto.yml` is available on the [Quarto website](https://quarto.org/docs/websites/).
+The most important file for understanding and controlling site structure is `_quarto.yml`. From here we set the appearance of the navigation bar and the content it links to; page navigation for sections and sub-sections; the site footer; and basic formatting. Extensive documentation on all aspects of the `_quarto.yml` is available on the [Quarto website](https://quarto.org/docs/websites/).
 
 ## Create an article
 Also, be sure to check out the [RWDS_post_template repository](https://github.com/finnoh/RWDS_post_template) if you're thinking of submitting an article. It's a great resource to help you get started.
