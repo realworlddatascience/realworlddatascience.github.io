@@ -76,6 +76,9 @@ The call for contributions links to detailed notes for the various types of cont
 While the call for contributions focuses primarily on site content, we also welcome contributions that seek to improve the design and functionality of the site itself. [Real World Data Science](https://realworlddatascience.net/) is built using [Quarto](https://quarto.org/), an open-source scientific and technical publishing system developed by [Posit](https://posit.co/). [We learned a lot from the open-source community in building this site](https://www.youtube.com/watch?v=ncDEqHxMWnE), and we hope we can return the favour in time by expanding the scope of what's possible to build with Quarto.  
 
 ## Site and repository structure
+
+### Overview
+
 [Real World Data Science](https://realworlddatascience.net/) consists of a homepage, 4 main content sections, and a small collection of documents that introduce the site, its aims, our partners and so on. This structure is reflected in our navigation bar:
 
 ![Real World Data Science nav bar](images/nav-bar.PNG)
@@ -108,6 +111,8 @@ Other file types in the root of the repository are:
 - `.css` and `.scss` -- files controlling site design and styling
 
 The most important file for understanding and controlling site structure is `_quarto.yml`. From here we set the appearance of the navigation bar and the content it links to; page navigation for sections and sub-sections; the site footer; and basic formatting. Extensive documentation on all aspects of the `_quarto.yml` is available on the [Quarto website](https://quarto.org/docs/websites/).
+
+### Index files and listings
 
 ## Create an article
 Also, be sure to check out the [RWDS_post_template repository](https://github.com/finnoh/RWDS_post_template) if you're thinking of submitting an article. It's a great resource to help you get started.
