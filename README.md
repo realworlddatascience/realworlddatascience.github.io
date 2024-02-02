@@ -1,16 +1,23 @@
 # A showcase for data science in action
-Welcome to the home of **Real World Data Science**, a new project from the [Royal Statistical Society](https://rss.org.uk/), in partnership with the [American Statistical Association](https://www.amstat.org/). This repository contains all the source files and code for our website. The site and its content are being created and curated by data science practitioners and leaders with a single goal in mind: to help you deliver high quality, ethical, impactful data science in your workplace.
+Welcome to the home of [Real World Data Science](https://realworlddatascience.net/), a new project from the [Royal Statistical Society](https://rss.org.uk/), in partnership with the [American Statistical Association](https://www.amstat.org/). This repository contains all the source files and code for our website. 
 
-Below is a list of GitHub users who have contributed to Real World Data Science -- writing articles, developing tutorials, expanding our documentation, creating resources to support other contributors, raising issues, and squishing bugs. We are grateful to them all, and we invite you to join them! See [realworlddatascience.net](https://realworlddatascience.net/) for further details and information on [becoming a contributor](https://realworlddatascience.net/contributor-docs/call-for-contributions.html). 
+The site and its content are being created and curated by data science practitioners and leaders with a single goal in mind: to help you deliver high quality, ethical, impactful data science in your workplace.
 
-Also, be sure to check out the [RWDS_post_template repository](https://github.com/finnoh/RWDS_post_template) if you're thinking of submitting an article. It's a great resource to help you get started.
+## Table of contents
+1. [Contributors](#contributors-✨)
+2. [Become a contributor](#become-a-contributor)
+3. [Site and repository structure](#site-and-repository-structure)
+4. [Create an article](#create-an-article)
+5. [Add an article](#add-an-article)
+6. [Publish and article](#publish-an-article)
+7. [Update the homepage](#update-the-homepage)
 
 ## Contributors ✨
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
 [![All Contributors](https://img.shields.io/badge/all_contributors-24-orange.svg)](#contributors)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
-Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
+Our thanks go to these wonderful people for all their contributions to [Real World Data Science](https://realworlddatascience.net/) -- writing articles, developing tutorials, expanding our documentation, creating resources to support other contributors, raising issues, and squishing bugs, among other things ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
 
 <!-- ALL-CONTRIBUTORS-LIST:START - Do not remove or modify this section -->
 <!-- prettier-ignore-start -->
@@ -58,3 +65,24 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
 <!-- ALL-CONTRIBUTORS-LIST:END -->
 
 This project follows the [all-contributors](https://github.com/all-contributors/all-contributors) specification. Contributions of any kind welcome!
+
+## Become a contributor
+[Real World Data Science](https://realworlddatascience.net/) aims to inform, inspire and strengthen the data science community by showcasing real-world examples of data science practice and bringing together data scientists to share knowledge.
+
+We cannot succeed in these aims without the support and contributions of the data science community, so we invite you to review our [open call for contributions](https://realworlddatascience.net/contributor-docs/call-for-contributions.html).
+
+The call for contributions links to detailed notes for the various types of content we are looking to publish, including case studies and tutorials. It describes the website's basic functionality, our ethos, the submission and review process, and what happens post-publication. There's also a style guide with advice on tone and structure, and ways of handling technical content, jargon, figures and more.
+
+While the call for contributions focuses primarily on site content, we also welcome contributions that seek to improve the design and functionality of the site itself. [Real World Data Science](https://realworlddatascience.net/) is built using [Quarto](https://quarto.org/), an open-source scientific and technical publishing system developed by [Posit](https://posit.co/). [We learned a lot from the open-source community in building this site](https://www.youtube.com/watch?v=ncDEqHxMWnE), and we hope we can return the favour in time by expanding the scope of what's possible to build with Quarto.  
+
+## Site and repository structure
+
+## Create an article
+Also, be sure to check out the [RWDS_post_template repository](https://github.com/finnoh/RWDS_post_template) if you're thinking of submitting an article. It's a great resource to help you get started.
+
+
+## Add an article
+
+## Publish an article
+
+## Update the homepage
