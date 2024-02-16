@@ -11,12 +11,8 @@ author: Jonathan Auerbach, David Kepplinger, and Nicholas Rios
 date: 02/19/2024
 toc: true
 bibliography: references.bib
-execute:
-  eval: false
-  echo: false
-  messages: false
-  error: false
-  warning: false
+image: images/bubbles.png
+image-alt: Two bubbles overlapping on a black background.
 ---
 
 What is data science, and where did it come from? Is data science a new and exciting set of skills, necessary for analyzing 21st century data? Or is it (as some have claimed) a rebranding of statistics, which has carefully developed time-honored methods for data analysis over the past century? 
@@ -39,6 +35,9 @@ Our main assumption is that the skills required to work in an occupation can be 
 
 The algorithms we employ consider occupations to be similar if they have many instructional programs in common. Data scientists and statisticians share 14 degrees, suggesting they are similar: Half the programs that prepare students to be a statistician also prepare students to be a data scientist. In contrast, data scientists and computer programmers share six degrees in common, suggesting they are less similar; computer programmers have 17 degrees overall so only a third of the programs that prepare students to be a computer programmer also prepare students to be a data scientist.^[Our analysis treats all instructional programs as equal and independent. We do not consider, for example, the number of workers that hold a degree from an instructional program or whether two instructional programs are similar or offered by similar academic departments. Our analysis could be adjusted to account for this or related information, although it is unclear to the authors whether such an adjustment would make the results more accurate.] 
 
+::: {.callout-note appearance="simple" collapse="true"}
+Data and code to reproduce the analysis and figures is available through [GitHub](https://github.com/brtarran/what-is-data-science).
+:::
 
 ## Data science is a shared enterprise among science and math 
 
@@ -47,61 +46,7 @@ We use [naïve Bayes](https://en.wikipedia.org/wiki/Naive_Bayes_classifier#Multi
 The use of Bayes’ rule is appealing because the similarity between a given occupation and data science takes into account the similarity of every other occupation and data science. Our use of Bayes’ rule is naïve in in the sense that -- before collecting the data -- we assume these workers are equally likely to have come from any occupation. 
 
 The occupations with the largest probabilities, and thus most related to data science, are summarized in @fig-naive-bayes. We find that the hypothetical workers have a 50% chance of being natural sciences managers and a 50% chance of being statisticians or mathematicians.^[Note that natural sciences managers share 18 instructional programs with data scientists, while statisticians share 14.] We conclude that data science is a shared enterprise among science and math, and thus those trained in natural sciences have as much claim to data science as those trained in mathematics and statistics. 
- 
-```{r}
-#| label: fig-naive-bayes
-#| out-width: 800px
-#| fig-width: 8
-#| fig-height: 4
-#| fig-cap: >
-#|   We use [naïve Bayes](https://en.wikipedia.org/wiki/Naive_Bayes_classifier#Multinomial_naive_Bayes) 
-#|   to measure the similarity between each occupation and data science in terms of the preparation required to work in that occupation. 
-#|   We find that in terms of the preparation required to become a data scientist, data science is a shared enterprise among science and math.
-library("tidyverse")
-library("naivebayes")
-theme_set(theme_bw(base_size = 12))
 
-# read CIP-SOC data
-cip_soc <- 
-  read_csv("data/CIP2020_SOC2018_Crosswalk.csv") %>%
-  filter(CIP2020Title != "NO MATCH") # remove occupations that do not require college degree
-
-# construct CIP-SOC adjacency matrix, A
-A <- 
-  cip_soc %>% 
-  select(-SOC2018Code) %>%
-  mutate(flow = 1) %>%
-  pivot_wider(names_from = SOC2018Title, 
-              values_from = flow,
-              values_fill = 0)
-
-# get labels for A
-soc <- colnames(A)[-c(1,2)]
-cip <- A$CIP2020Title
-A_mat <- as.matrix(A[,-c(1,2)])
-A_mat_t <- t(A_mat)
-colnames(A_mat_t) <- cip
-
-# naive Bayes
-fit <- multinomial_naive_bayes(x = A_mat_t[which(soc != "Data Scientists"), ], 
-                               y = soc[which(soc != "Data Scientists")])
-pred <- predict(fit, newdata = A_mat_t, type = "prob")
-
-# graph occupations with highest posterior probability
-bind_cols(soc = names(pred[which(soc == "Data Scientists"),]),
-          prob = c(unname(pred[which(soc == "Data Scientists"),]))) %>%
-  slice_max(order_by = prob, n = 10) %>%
-  ggplot() +
-  aes(fct_reorder(soc, prob), weight = prob) +
-  geom_bar() +
-  coord_flip() +
-  scale_y_continuous(labels = scales::percent, 
-                     breaks = c(0, .2, .4, .6),
-                     limits = c(0, .6),
-                     expand = c(0, 0, .05, 0),
-                     name = "posterior probability workers come from a certain occupation\n given that they have degrees associated with data science") +
-  scale_x_discrete(name = "") 
-``` 
 ![We use [naïve Bayes](https://en.wikipedia.org/wiki/Naive_Bayes_classifier#Multinomial_naive_Bayes) to measure the similarity between each occupation and data science in terms of the preparation required to work in that occupation. We find that in terms of the preparation required to become a data scientist, data science is a shared enterprise among science and math.](images/fig-naive-bayes.png){#fig-naive-bayes}
 
 ## Data science is closest to statistics in its role among other occupations 
@@ -110,392 +55,13 @@ We use [eigen centrality](https://en.wikipedia.org/wiki/Centrality#Eigenvector_c
 
 The eigen centrality of each occupation is displayed in @fig-centrality-growth. Each point represents an occupation, the x-axis denotes the centrality of the occupation, and the y-axis denotes the percent growth of the occupation as [predicted](https://www.bls.gov/emp/) by the US Bureau of Labor Statistics over the next decade. The figure demonstrates that data scientists and statisticians occupy nearly identical positions: Both are fast growing and central to the other occupations that work with data. In contrast, natural sciences managers are central but growing much more slowly, suggesting a role closer to managers. We conclude that -- though data scientists are prepared similarly to natural sciences managers -- the role of the data scientist is essentially the role of the statistician.
 
-```{r}
-#| label: fig-centrality-growth
-#| out-width: 1000px
-#| fig-width: 10
-#| fig-height: 4
-#| fig-cap: >
-#|   We use [eigen centrality](https://en.wikipedia.org/wiki/Centrality#Eigenvector_centrality) (eigen decomposition) 
-#|   to measure the similarity of each occupation in terms of its role relative to other occupations. 
-#|   We find that in terms of the role a data scientist serves relative to other occupations, data science and statistics occupy nearly identical positions.
-
-library("igraph")
-library("ggrepel")
-
-# read SOC outlook data
-soc_outlook <- read_csv("data/soc_outlook.csv")
-
-# get growth by occuation
-growth <-
-  tibble(SOC2018Title  = soc) %>%
-  left_join(cip_soc %>% select(SOC2018Code, SOC2018Title) %>% unique()) %>%
-  left_join(soc_outlook %>% select(-`2022 National Employment Matrix title`),
-            by = join_by(`SOC2018Code` == `2022 National Employment Matrix code`)) %>%
-  pull(`Employment change, percent, 2022-32`)
-
-# get eigen centrality 
-adj_mat <- t(A_mat) %*% A_mat
-soc_igraph <- simplify(graph_from_adjacency_matrix(adj_mat, mode = "undirected"))
-soc_eigen_centrality <- eigen_centrality(soc_igraph, directed = FALSE)
-  
-# graph occupation growth against centrality
-tibble(label = str_replace(names(soc_eigen_centrality$vector), ", All Other", ""),
-       growth = growth,
-       degree = soc_eigen_centrality$vector) %>%
-  filter(growth > 0, degree > 0) %>%
-  ggplot() +
-  aes(degree, growth / 100, label = label) +
-  geom_point() +
-  geom_text_repel(max.overlaps = 7) +
-  labs(x = "centrality (2020)", ) +
-  scale_y_continuous(name = "predicted percent growth (2022 - 2032)",
-                     labels = scales::percent,
-                     limits = c(0, .5),
-                     expand = c(0, 0)) +
-  scale_x_continuous(limits = c(-.01, 1.01),
-                     expand = c(0, 0))
-```
-
 ![We use [eigen centrality](https://en.wikipedia.org/wiki/Centrality#Eigenvector_centrality) (eigen decomposition) to measure the similarity of each occupation in terms of its role relative to other occupations. We find that in terms of the role a data scientist serves relative to other occupations, data science and statistics occupy nearly identical positions.](images/fig-centrality-growth.png){#fig-centrality-growth}
 
 But this role may be changing. @fig-centrality-change shows the centrality (x-axis) of each occupation (y-axis) in 2010 and 2020. Green bars denote increases from 2010 to 2020 while yellow bars denote decreases. We find that while statisticians and data scientists may serve nearly identical roles today, the centrality of statisticians has declined over the past decade relative to other occupations. In contrast, the centrality of data scientists has grown, now surpassing statisticians as the most central fast-growing occupation. We conclude that though a data scientist and a statistician serve similar roles today, those roles may change as the workforce changes. Note that the occupation classifications changed in 2018, and we used the [crosswalk](https://www.bls.gov/soc/2018/crosswalks_used_by_agencies.htm) provided by the US Bureau of Labor Statistics to make these comparisons. 
 
-```{r}
-#| label: fig-centrality-change
-#| out-width: 800px
-#| fig-width: 8
-#| fig-height: 6
-#| fig-cap: >
-#|   We use [eigen centrality](https://en.wikipedia.org/wiki/Centrality#Eigenvector_centrality) (eigen decomposition) 
-#|   to measure the similarity of each occupation in terms of its role relative to other occupations. 
-#|   We find that the centrality of statisticians has declined over the past decade relative to other occupations, while the centrality of data scientists has grown, now surpassing statisticians as the most central fast-growing occupation.
-
-# read SOC-SOC data
-soc_soc <- read_csv("data/soc_2010_to_2018_crosswalk.csv")
-
-# read CIP-SOC data from 2010
-cip_soc_2010 <- 
-  read_csv("data/CIP2010_SOC2010_Crosswalk.csv") %>%
-  filter(CIP2010Title != "NO MATCH") # remove occupations that do not require college degree
-
-# construct 2010 CIP-SOC adjacency matrix, A
-A_2010 <- 
-  cip_soc_2010 %>% 
-  select(-SOC2010Code) %>%
-  mutate(flow = 1) %>%
-  pivot_wider(names_from = SOC2010Title, 
-              values_from = flow,
-              values_fill = 0)
-
-# get labels for A_2010
-soc_2010 <- colnames(A_2010)[-c(1,2)]
-
-soccode_2010 <-
-  cip_soc_2010 %>%
-  filter(!duplicated(SOC2010Title)) %>%
-  right_join(tibble(SOC2010Title = soc_2010)) %>%
-  pull(SOC2010Code)
-
-soccode <-
-  cip_soc %>%
-  filter(!duplicated(SOC2018Title)) %>%
-  right_join(tibble(SOC2018Title = soc)) %>%
-  pull(SOC2018Code)
-
-A_mat_2010 <- as.matrix(A_2010[,-c(1,2)])
-
-# get 2010 eigen centrality
-adj_mat_2010 <- t(A_mat_2010) %*% A_mat_2010
-soc_igraph_2010 <- simplify(graph_from_adjacency_matrix(adj_mat_2010, mode = "undirected"))
-soc_eigen_centrality_2010 <- eigen_centrality(soc_igraph_2010, directed = FALSE)
-
-# graph change in occupation centrality
-tibble(`2010 SOC Code` = soccode_2010,
-       centrality2010 = unname(soc_eigen_centrality_2010$vector),
-       rank2010 = rank(centrality2010)/length(centrality2010)) %>%
-  left_join(soc_soc) %>%
-  left_join(
-    tibble(`2018 SOC Code` = soccode,
-           growth = growth,
-           centrality = unname(soc_eigen_centrality$vector),
-           rank = rank(centrality)/length(centrality))) %>%
-  filter(growth > 20,
-         !duplicated(`2018 SOC Title`)) %>%
-   mutate(x = fct_reorder(
-    str_replace(`2018 SOC Title`, ", All Other|\\(|#|\\)", ""), rank),
-    change = ifelse(rank > rank2010, "increase", "decrease")) %>%
-  ggplot() +
-  aes(x = x, xend = x, y = rank2010, yend = rank, color = change) +
-  geom_segment(arrow = arrow(length = unit(.25, "cm")),
-               size = 1) +
-  scale_color_manual(values = c("increase" = "#009E73",
-                                "decrease" = "#E69F00")) +
-  coord_flip() +
-  labs(x = "") +
-  scale_y_continuous(expand = expansion(mult = c(0, .05)),
-                     label = scales::percent,
-                     breaks = c(0, .25, .5, .75, 1),
-                     name = "change in centrality percentile from 2010 to 2020\n where 0% is least central and 100% is most central\nlimited to fast-growing occupations (>20%) \n(green represents increase, yellow decrease)") +
-  theme(axis.title.y = element_text(hjust=0),
-        legend.position = "none")
-```
-
 ![We use [eigen centrality](https://en.wikipedia.org/wiki/Centrality#Eigenvector_centrality) (eigen decomposition) to measure the similarity of each occupation in terms of its role relative to other occupations. We find that the centrality of statisticians has declined over the past decade relative to other occupations, while the centrality of data scientists has grown, now surpassing statisticians as the most central fast-growing occupation.](images/fig-centrality-change.png){#fig-centrality-change}
 
 The findings in this section are based on the adjacency matrix that encodes whether an instructional program (row) is associated with an occupation (column). A more detailed summary of the matrix is provided in @fig-interactive-plot, which depicts the matrix as a network graph. Larger nodes represent occupations that are fast growing, while nodes closer to the center of the network represent more central occupations. The figure is interactive. You can zoom in to see the similar positions between data scientists and statisticians, which are both large (fast growing) and central.
-
-```{r}
-#| label: interactive-plot-setup
-#| include: FALSE
-library("tidyverse")
-library("network")
-library("colorspace")
-library("GGally")
-library("sna")
-
-# read CIP-SOC data
-cip_soc <- 
-  read_csv("data/CIP2020_SOC2018_Crosswalk.csv") %>%
-  filter(CIP2020Title != "NO MATCH") # remove occupations that do not require college degree
-
-# read SOC outlook data
-soc_outlook <- read_csv("data/soc_outlook.csv")
-
-# construct CIP-SOC adjacency matrix, A
-A <-  cip_soc %>% 
-  select(-SOC2018Code) %>%
-  mutate(flow = 1) %>%
-  pivot_wider(names_from = SOC2018Title, 
-                                values_from = flow,
-                                values_fill = 0)
-
-# get labels for A
-soc <- colnames(A)[-c(1,2)]
-cip <- A$CIP2020Title
-growth <-
-  tibble(SOC2018Title  = soc) %>%
-  left_join(cip_soc %>% select(SOC2018Code, SOC2018Title) %>% unique()) %>%
-  left_join(soc_outlook %>% select(-`2022 National Employment Matrix title`),
-            by = join_by(`SOC2018Code` == `2022 National Employment Matrix code`)) %>%
-  pull(`Employment change, percent, 2022-32`)
-growth[is.na(growth)] <- 0
-
-# construct network
-A_mat <- as.matrix(A[,-c(1,2)])
-A_net <- network(crossprod(A_mat))
-network.vertex.names(A_net) <- soc
-A_net %v% "growth" <- ifelse(growth > 0, growth, 0)
-
-# create colors based on 2-digit CIP
-MAX_GROUPS <- 7
-
-cip_full <- tibble(CIP2020Title = cip) %>%
-  left_join(cip_soc %>% 
-              ungroup() %>% 
-              select(CIP2020Title, CIP2020Code) %>%
-              filter(!duplicated(CIP2020Title))) %>%
-  mutate(CIP2020Code = str_sub(CIP2020Code, 1, 2),
-         CIP2020Code = fct_lump_n(CIP2020Code, MAX_GROUPS, other_level = "other"))
-
-cip_full %<>%
-  left_join(tibble(CIP2020Code = levels(cip_full$CIP2020Code),
-                   cipcolors = RColorBrewer::brewer.pal(length(CIP2020Code),
-                                                        'Dark2'))) %>% 
-  group_by(CIP2020Code) %>% 
-  mutate(group_size = n()) %>% 
-  ungroup()
-
-blend_cip_colors <- function (socs) {
-  colors <- A %>%
-    select(all_of(c("CIP2020Code", "CIP2020Title", socs = socs))) %>%
-    left_join(select(cip_full, CIP2020Title, group_size, cipcolors) %>% unique(), 
-              by = "CIP2020Title") %>%
-    filter(socs > 0)
-  
-  wgts <- 1 / colors$group_size
-  wgts <- wgts / sum(wgts)
-  
-  hex2RGB(colors$cipcolors) %>% 
-    as('polarLUV') %>% 
-    coords() %>% 
-    {
-      cm <- .
-      # lightness     ... weighted geometric mean
-      # polar coords' ... weighted arithmetic mean
-      c(exp(sum(log(cm[, 1]) * wgts)),
-        colSums(wgts * cm[, 2:3, drop = FALSE]))
-      
-    } %>% 
-    matrix(nrow = 1) %>% 
-    polarLUV() %>% 
-    hex(fixup = TRUE)
-}
-
-A_net %v% "color" <- colnames(A)[-(1:2)] %>% 
-  vapply(FUN = blend_cip_colors,
-         FUN.VALUE = character(1))
-
-set.seed(123)
-plot_net <- ggnet2(A_net, 
-                   mode = "fruchtermanreingold",
-                   size = "growth",  
-                   alpha = .8,
-                   edge.size = .005, 
-                   color = "color")
-
-make_circle <- function (x0, y0, radius, res = 100, ...) {
-  tibble(t = sort(c(0.5 * pi, 1.5 * pi, seq(0, 2 * pi, length.out = res))),
-         xc = x0 + radius * cos(t),
-         yc = y0 + radius * sin(t),
-         ...)
-
-}
-
-scale_01 <- function (x) {
-  (x - min(x)) / diff(range(x))
-}
-
-
-# graph network
-cip_desc_family <- read_csv("data/CIPCode2020.csv") %>% 
-  filter(CIPFamily == CIPCode) %>% 
-  mutate(CIPCode = str_extract(CIPCode, '\\d{2}'),
-         CIPTitle = str_remove(str_to_title(CIPTitle), '\\.$'))
-
-plot_data <- plot_net$data %>% 
-  mutate(radius = pmax(0.002, 0.025 * (size / max(size))),
-         label = fct_rev(fct_reorder(label, size)))
-
-label_data <- plot_data %>%
-  filter(label %in% c("Statisticians", "Data Scientists")) %>% 
-  mutate(occupation = label)
-
-legend_data <- cip_full %>% 
-  group_by(CIP2020Code) %>%
-  summarize(color = cipcolors[[1]]) %>% 
-  left_join(cip_desc_family, by = c('CIP2020Code' = 'CIPCode')) %>% 
-  mutate(CIPTitle = str_to_sentence(replace_na(CIPTitle, 'All other occupations')) %>% 
-           str_replace(',? and', ' &')) %>% 
-  select(CIPTitle, color)
-
-plot_color <- plot_data %>% 
-  group_by(label) %>% 
-  group_modify(function (x, gr) {
-    color <- force(x$color[[1]])
-    radius <- force(x$radius[[1]])
-    make_circle(x$x[[1]], x$y[[1]],
-                radius = radius,
-                color = color)
-  }) %>% 
-  ggplot(aes(x = x, y = y, color = color, group = label)) +
-  geom_polygon(aes(x = xc, y = yc, fill = color), alpha = 0.8) +
-  scale_color_identity() +
-  scale_fill_identity() +
-  guides(size = 'none',
-         color = 'none',
-         fill = 'none') +
-  theme_minimal() +
-  theme(axis.title = element_blank(), 
-        axis.text = element_blank(),
-        panel.grid.major = element_blank(),
-        panel.grid.minor = element_blank(),
-        axis.ticks = element_blank()) +
-  coord_fixed(xlim = c(-0.05, 1.05),
-              ylim = c(-0.05, 1.05))
-
-```
-
-
-
-```{r}
-#| label: fig-interactive-plot
-#| out-width: 100%
-#| out-height: 800px
-#| fig-cap: >
-#|  A visualization of the network of occupations in which occupations are
-#|  placed according to their closeness determined by instructional programs that train students
-#|  to work in multiple fields. 
-#|  We find that in terms of the role a data scientist serves relative to other occupations,
-#|  data science and statistics occupy nearly identical positions.
-#|  Occupations are colored according to the mix of primary occupation groups
-#|  connected to them through their degrees in common.
-#| fig-width: 8
-#| fig-height: 8
-
-library("plotly")
-int_plot <- ggplotly(plot_color, tooltip = "label")
-
-# Remove the default "label: " prefix for plotly labels
-# and don't show labels for text on the graph
-int_plot$x$data <- lapply(int_plot$x$data, function (x) {
-  x$text <- str_remove(x$text, '^label: ')
-  if (identical(x$mode, "text")) {
-    x$hoverinfo <- 'skip'
-  }
-  x
-})
-
-# Make sure the plot starts at the outermost zoom level
-int_plot$x$layout$xaxis$autorange <- TRUE
-int_plot$x$layout$yaxis$autorange <- TRUE
-
-# Add a legend
-for (i in seq_len(nrow(legend_data))) {
-  int_plot <- plotly::add_bars(int_plot, x = 0.5, y = 0,
-                               inherit = FALSE,
-                               showlegend = TRUE,
-                               color = I(legend_data$color[[i]]),
-                               name = str_wrap(legend_data$CIPTitle[[i]], width = 35, exdent = 4))
-}
-
-int_plot$x$layout$annotations <- label_data %>% 
-  group_by(label) %>% 
-  group_map(function (lbl, gr) {
-    sgn <- str_detect(gr$label, 'Statisticians') * 2 - 1
-    
-    list(line = list(color = "black"),
-         opacity = 1,
-         showarrow = TRUE,
-         text = gr$label,
-         x = lbl$x + sgn * sqrt(2) * lbl$radius / 2,
-         y = lbl$y - sgn * sqrt(2) * lbl$radius / 2,
-         # bgcolor = 'rgba(255, 255, 255, 0.75)',
-         bgcolor = paste0(lbl$color, 'bf'),
-         # arrowcolor = lbl$color,
-         arrowcolor = '#000',
-         arrowwidth = 2.5,
-         bordercolor = lbl$color,
-         # bordercolor = '#000',
-         borderwidth = 3,
-         borderpad = 2,
-         # font = list(color = lbl$color),
-         font = list(color = 'white'),
-         ax = sgn * 50,
-         ay = sgn * 50,
-         xref = 'x',
-         yref = 'y')
-  })
-
-int_plot <- layout(int_plot, 
-                   showlegend = TRUE,
-                   legend = list(
-                     itemclick = FALSE,
-                     itemdoubleclick = FALSE,
-                     itemsizing = 'constant',
-                     itemwidth = 15,
-                     valign = 'top',
-                     yanchor = 'middle',
-                     y = 0.5,
-                     title = list(text = "<b>Primary occupation group</b>",
-                                  size = 12)
-                   ))
-int_plot
-
-# save interactive plot as separate html file, embed as iframe
-
-htmlwidgets::saveWidget(as_widget(int_plot), "index.html")
-```
 
 ::: {#fig-interactive-plot}
 ```{=html}
@@ -503,6 +69,7 @@ htmlwidgets::saveWidget(as_widget(int_plot), "index.html")
   <iframe class="responsive-iframe" src="images/index.html" title="fig-interactive-plot"></iframe>
 </div>
 ```
+
 A visualization of the network of occupations in which occupations are placed according to their closeness determined by instructional programs that train students to work in multiple fields. We find that in terms of the role a data scientist serves relative to other occupations, data science and statistics occupy nearly identical positions. Occupations are colored according to the mix of primary occupation groups connected to them through their degrees in common.
 :::
 
@@ -530,7 +97,8 @@ About the author
 Copyright and licence
 : &copy; 2023 Jonathan Auerbach, David Kepplinger, and Nicholas Rios
 
-<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> Text, code, and figures are licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence, except where otherwise noted</a>.
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> Text, code, and figures are licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>, except where otherwise noted. Thumbnail photo by <a href="https://unsplash.com/@marcsm?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Marc Sendra Martorell</a> on <a href="https://unsplash.com/photos/closeup-photo-of-two-bubbles-2BrdNFxW0UY?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>.
+  
   
 :::
 
