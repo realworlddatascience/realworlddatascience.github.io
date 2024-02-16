@@ -17,7 +17,6 @@ execute:
   messages: false
   error: false
   warning: false
-code-fold: true
 ---
 
 What is data science, and where did it come from? Is data science a new and exciting set of skills, necessary for analyzing 21st century data? Or is it (as some have claimed) a rebranding of statistics, which has carefully developed time-honored methods for data analysis over the past century? 
@@ -103,6 +102,7 @@ bind_cols(soc = names(pred[which(soc == "Data Scientists"),]),
                      name = "posterior probability workers come from a certain occupation\n given that they have degrees associated with data science") +
   scale_x_discrete(name = "") 
 ``` 
+![We use [naïve Bayes](https://en.wikipedia.org/wiki/Naive_Bayes_classifier#Multinomial_naive_Bayes) to measure the similarity between each occupation and data science in terms of the preparation required to work in that occupation. We find that in terms of the preparation required to become a data scientist, data science is a shared enterprise among science and math.](images/fig-naive-bayes.png){#fig-naive-bayes}
 
 ## Data science is closest to statistics in its role among other occupations 
 
@@ -156,6 +156,8 @@ tibble(label = str_replace(names(soc_eigen_centrality$vector), ", All Other", ""
   scale_x_continuous(limits = c(-.01, 1.01),
                      expand = c(0, 0))
 ```
+
+![We use [eigen centrality](https://en.wikipedia.org/wiki/Centrality#Eigenvector_centrality) (eigen decomposition) to measure the similarity of each occupation in terms of its role relative to other occupations. We find that in terms of the role a data scientist serves relative to other occupations, data science and statistics occupy nearly identical positions.](images/fig-centrality-growth.png){#fig-centrality-growth}
 
 But this role may be changing. @fig-centrality-change shows the centrality (x-axis) of each occupation (y-axis) in 2010 and 2020. Green bars denote increases from 2010 to 2020 while yellow bars denote decreases. We find that while statisticians and data scientists may serve nearly identical roles today, the centrality of statisticians has declined over the past decade relative to other occupations. In contrast, the centrality of data scientists has grown, now surpassing statisticians as the most central fast-growing occupation. We conclude that though a data scientist and a statistician serve similar roles today, those roles may change as the workforce changes. Note that the occupation classifications changed in 2018, and we used the [crosswalk](https://www.bls.gov/soc/2018/crosswalks_used_by_agencies.htm) provided by the US Bureau of Labor Statistics to make these comparisons. 
 
@@ -238,6 +240,8 @@ tibble(`2010 SOC Code` = soccode_2010,
   theme(axis.title.y = element_text(hjust=0),
         legend.position = "none")
 ```
+
+![We use [eigen centrality](https://en.wikipedia.org/wiki/Centrality#Eigenvector_centrality) (eigen decomposition) to measure the similarity of each occupation in terms of its role relative to other occupations. We find that the centrality of statisticians has declined over the past decade relative to other occupations, while the centrality of data scientists has grown, now surpassing statisticians as the most central fast-growing occupation.](images/fig-centrality-change.png){#fig-centrality-change}
 
 The findings in this section are based on the adjacency matrix that encodes whether an instructional program (row) is associated with an occupation (column). A more detailed summary of the matrix is provided in @fig-interactive-plot, which depicts the matrix as a network graph. Larger nodes represent occupations that are fast growing, while nodes closer to the center of the network represent more central occupations. The figure is interactive. You can zoom in to see the similar positions between data scientists and statisticians, which are both large (fast growing) and central.
 
@@ -487,12 +491,20 @@ int_plot <- layout(int_plot,
                                   size = 12)
                    ))
 int_plot
-# uncomment next line for publication purposes - save interactive plot 
-# as separate html file, embed as iframe
+
+# save interactive plot as separate html file, embed as iframe
 
 htmlwidgets::saveWidget(as_widget(int_plot), "index.html")
 ```
 
+::: {#fig-interactive-plot}
+```{=html}
+<div class="tv-iframe-container">
+  <iframe class="responsive-iframe" src="images/index.html" title="fig-interactive-plot"></iframe>
+</div>
+```
+A visualization of the network of occupations in which occupations are placed according to their closeness determined by instructional programs that train students to work in multiple fields. We find that in terms of the role a data scientist serves relative to other occupations, data science and statistics occupy nearly identical positions. Occupations are colored according to the mix of primary occupation groups connected to them through their degrees in common.
+:::
 
 ## Is data science statistics? 
 
