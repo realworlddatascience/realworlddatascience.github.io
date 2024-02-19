@@ -7,7 +7,7 @@ Also, be sure to check out the [RWDS_post_template repository](https://github.co
 
 ## Contributors ✨
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
-[![All Contributors](https://img.shields.io/badge/all_contributors-25-orange.svg)](#contributors)
+[![All Contributors](https://img.shields.io/badge/all_contributors-26-orange.svg)](#contributors)
 <!-- ALL-CONTRIBUTORS-BADGE:END -->
 
 Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/docs/en/emoji-key)):
@@ -48,6 +48,7 @@ Thanks goes to these wonderful people ([emoji key](https://allcontributors.org/d
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/Isabelsassoon"><img src="https://avatars.githubusercontent.com/u/19779286?v=4?s=100" width="100px;" alt="isabelsassoon"/><br /><sub><b>isabelsassoon</b></sub></a><br /><a href="#content-isabelsassoon" title="Content">🖋</a> <a href="#ideas-isabelsassoon" title="Ideas, Planning, & Feedback">🤔</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/karmake2"><img src="https://avatars.githubusercontent.com/u/32687596?v=4?s=100" width="100px;" alt="karmake2"/><br /><sub><b>karmake2</b></sub></a><br /><a href="#content-karmake2" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/mkorpusik"><img src="https://avatars.githubusercontent.com/u/432933?v=4?s=100" width="100px;" alt="mkorpusik"/><br /><sub><b>mkorpusik</b></sub></a><br /><a href="#content-mkorpusik" title="Content">🖋</a></td>
+      <td align="center" valign="top" width="14.28%"><a href="https://github.com/nrios4"><img src="https://avatars.githubusercontent.com/u/160526557?v=4?s=100" width="100px;" alt="nrios4"/><br /><sub><b>nrios4</b></sub></a><br /><a href="#content-nrios4" title="Content">🖋</a></td>
       <td align="center" valign="top" width="14.28%"><a href="https://github.com/psresnik"><img src="https://avatars.githubusercontent.com/u/1170866?v=4?s=100" width="100px;" alt="psresnik"/><br /><sub><b>psresnik</b></sub></a><br /><a href="#content-psresnik" title="Content">🖋</a></td>
     </tr>
   </tbody>
