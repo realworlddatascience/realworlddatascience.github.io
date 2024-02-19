@@ -1,0 +1,862 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.550">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Jonathan Auerbach, David Kepplinger, and Nicholas Rios">
+<meta name="dcterms.date" content="2024-02-19">
+<meta name="description" content="Two popular data science algorithms – naïve Bayes and eigen centrality – are used to examine the difference between data scientists, statisticians, and other occupations.">
+
+<title>Real World Data Science - What is data science? A closer look at science’s latest priority dispute</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../">
+<link href="../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
+<script src="../../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
+</script>
+<!-- Thank you to Ben Ruijl for the progress bar code!
+Ben is on GitHub here: https://github.com/benruijl
+And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
+
+<meta property="og:title" content="Real World Data Science - What is data science? A closer look at science’s latest priority dispute">
+<meta property="og:description" content="Two popular data science algorithms – naïve Bayes and eigen centrality – are used to examine the difference between data scientists, statisticians, and other occupations.">
+<meta property="og:image" content="https://realworlddatascience.net/ideas/posts/2024/02/19/images/bubbles.png">
+<meta property="og:site_name" content="Real World Data Science">
+<meta property="og:image:height" content="724">
+<meta property="og:image:width" content="991">
+<meta property="og:image:alt" content="Two bubbles overlapping on a black background.">
+<meta name="twitter:title" content="Real World Data Science - What is data science? A closer look at science’s latest priority dispute">
+<meta name="twitter:description" content="Two popular data science algorithms – naïve Bayes and eigen centrality – are used to examine the difference between data scientists, statisticians, and other occupations.">
+<meta name="twitter:image" content="https://realworlddatascience.net/ideas/posts/2024/02/19/images/bubbles.png">
+<meta name="twitter:site" content="@rwdatasci">
+<meta name="twitter:image-height" content="724">
+<meta name="twitter:image-width" content="991">
+<meta name="twitter:image:alt" content="Two bubbles overlapping on a black background.">
+<meta name="twitter:card" content="summary_large_image">
+</head><body class="nav-fixed"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
+
+<script id="progressbar" type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const bar = document.querySelector('#progress-bar');
+    const post = document.querySelector('#quarto-content');
+    const html = document.documentElement;
+    
+    const height = post.scrollHeight + post.offsetTop;
+    
+    window.addEventListener('scroll', () => {
+        bar.style.width = (html.scrollTop / (height- html.clientHeight)) * 100 + '%';
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../rwds.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../case-studies/index.html"> 
+<span class="menu-text">Case studies</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../ideas/index.html"> 
+<span class="menu-text">Ideas</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../careers/index.html"> 
+<span class="menu-text">Careers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../viewpoints/index.html"> 
+<span class="menu-text">Viewpoints</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About RWDS</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
+        <li>
+    <a class="dropdown-item" href="../../../../../about-rwds.html">
+ <span class="dropdown-text">Who we are</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../contributor-docs/call-for-contributions.html">
+ <span class="dropdown-text">How to contribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../contact.html">
+ <span class="dropdown-text">Contact us</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">What is data science? A closer look at science’s latest priority dispute</h1>
+                  <div>
+        <div class="description">
+          <p>Two popular data science algorithms – naïve Bayes and eigen centrality – are used to examine the difference between data scientists, statisticians, and other occupations.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Algorithms</div>
+                <div class="quarto-category">Data science education</div>
+                <div class="quarto-category">Skills</div>
+                <div class="quarto-category">Training</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Jonathan Auerbach, David Kepplinger, and Nicholas Rios </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 19, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#we-examine-the-role-of-data-science-using-data-science" id="toc-we-examine-the-role-of-data-science-using-data-science" class="nav-link active" data-scroll-target="#we-examine-the-role-of-data-science-using-data-science">We examine the role of data science using data science</a></li>
+  <li><a href="#data-science-is-a-shared-enterprise-among-science-and-math" id="toc-data-science-is-a-shared-enterprise-among-science-and-math" class="nav-link" data-scroll-target="#data-science-is-a-shared-enterprise-among-science-and-math">Data science is a shared enterprise among science and math</a></li>
+  <li><a href="#data-science-is-closest-to-statistics-in-its-role-among-other-occupations" id="toc-data-science-is-closest-to-statistics-in-its-role-among-other-occupations" class="nav-link" data-scroll-target="#data-science-is-closest-to-statistics-in-its-role-among-other-occupations">Data science is closest to statistics in its role among other occupations</a></li>
+  <li><a href="#is-data-science-statistics" id="toc-is-data-science-statistics" class="nav-link" data-scroll-target="#is-data-science-statistics">Is data science statistics?</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/ideas/posts/2024/02/19/what-is-data-science.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>What is data science, and where did it come from? Is data science a new and exciting set of skills, necessary for analyzing 21st century data? Or is it (as some have claimed) a rebranding of statistics, which has carefully developed time-honored methods for data analysis over the past century?</p>
+<p>Priority disputes – disagreements over who deserves credit for a new scientific theory or method – date back to the beginning of science. Famous examples include the invention of <a href="https://en.wikipedia.org/wiki/Leibniz–Newton_calculus_controversy">calculus</a> and <a href="https://projecteuclid.org/journals/annals-of-statistics/volume-9/issue-3/Gauss-and-the-Invention-of-Least-Squares/10.1214/aos/1176345451.full">ordinary least squares</a>. But this latest dispute calls into question the novelty of an entire discipline.</p>
+<p>In this article, we use two popular data science algorithms to examine the difference between data science, statistics, and other occupations. We find that in terms of the preparation required to become a data scientist, data science reflects both the work of natural sciences managers – individuals who oversee research operations in the natural sciences – and statisticians and mathematicians. This suggests that data science is a shared enterprise among science and math, and thus those trained in the natural sciences have as much claim to data science as those trained in mathematics and statistics.</p>
+<p>In terms of the role a data scientist serves relative to other occupations, however, we find that data science is closest to statistics by far. Both occupations are fast growing and central among the occupations that work with data, suggesting a data scientist serves the same function as a statistician. But this function may be changing. While the centrality of statistics has declined over the past decade relative to other occupations, the centrality of data science has grown. In fact, data science has now surpassed statistics as the most central fast-growing occupation.</p>
+<section id="we-examine-the-role-of-data-science-using-data-science" class="level2">
+<h2 class="anchored" data-anchor-id="we-examine-the-role-of-data-science-using-data-science">We examine the role of data science using data science</h2>
+<p>Everyone seems to agree that data science requires skills traditionally associated with a variety of different occupations. <a href="http://drewconway.com/zia/2013/3/26/the-data-science-venn-diagram">Drew Conway</a>, for example, describes data science as a combination of math and statistics, substantive (domain) expertise, and “hacking” skills (see <a href="#fig-conway" class="quarto-xref">Figure&nbsp;1</a>). In dispute is the relative importance of those skills. <a href="https://www.statisticsviews.com/article/nate-silver-what-i-need-from-statisticians/">Some</a> <a href="https://imstat.org/2014/10/01/ims-presidential-address-let-us-own-data-science/">have</a> <a href="https://magazine.amstat.org/blog/2013/07/01/datascience/">argued</a> that data science is basically statistics – and that 20th century statisticians like <a href="https://imstat.org/2023/09/30/hand-writing-john-tukey-the-first-data-scientist/">John Tukey</a> have long possessed the data science skills traditionally associated with computer science and the natural sciences. <a href="http://drewconway.com/zia/2013/3/26/the-data-science-venn-diagram">Others</a> <a href="https://statmodeling.stat.columbia.edu/2013/11/14/statistics-least-important-part-data-science/">have</a> <a href="https://web.archive.org/web/20211219192027/http://www.dataists.com/2010/09/a-taxonomy-of-data-science/">argued</a> that data science is truly interdisciplinary, and statistical thinking only plays a small role. But while opinions on data science abound, few appear to be based on data or science.<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a></p>
+<div id="fig-conway" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-conway-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://images.squarespace-cdn.com/content/v1/5150aec6e4b0e340ec52710a/1364352051365-HZAS3CLBF7ABLE3F5OBY/Data_Science_VD.png?format=2500w" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-conway-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: <a href="http://drewconway.com/zia/2013/3/26/the-data-science-venn-diagram">Drew Conway</a> describes data science as a combination of math and statistics, substantive (domain) expertise, and “hacking” skills. Conway’s data science venn diagram, reproduced here, is Creative Commons licensed as <a href="https://creativecommons.org/licenses/by-nc/3.0/legalcode">Attribution-NonCommercial</a>.
+</figcaption>
+</figure>
+</div>
+<p>To that end, we use two popular data science algorithms, naïve Bayes and eigen centrality (eigen decomposition), to investigate the question: What is data science? Both algorithms use data listing the training a worker must generally complete to work in an occupation, such as data science. Specifically, we use the <a href="https://nces.ed.gov/ipeds/cipcode/resources.aspx?y=56">CIP SOC Crosswalk</a> provided by the US Bureau of Labor Statistics and US National Center for Education Statistics, which links the <a href="https://nces.ed.gov/ipeds/cipcode/Default.aspx?y=56">Classification of Instructional Programs</a> – the standard classification of educational fields of study into roughly 2,000 instructional programs – with the <a href="https://www.bls.gov/soc/">Standard Occupational Classification</a> – the standard classification of professions into roughly 700 occupations.</p>
+<p>Our main assumption is that the skills required to work in an occupation can be represented by the instructional programs that prepare students to work in that occupation. For example, the occupation “data scientists” is associated with 35 instructional programs, such as data science, statistics, artificial intelligence, computational science, mathematical biology, and econometrics. The occupation “statisticians” is associated with 26 instructional programs, including data science, statistics, and econometrics, but not artificial intelligence, computational science, or mathematical biology.</p>
+<p>The algorithms we employ consider occupations to be similar if they have many instructional programs in common. Data scientists and statisticians share 14 degrees, suggesting they are similar: Half the programs that prepare students to be a statistician also prepare students to be a data scientist. In contrast, data scientists and computer programmers share six degrees in common, suggesting they are less similar; computer programmers have 17 degrees overall so only a third of the programs that prepare students to be a computer programmer also prepare students to be a data scientist.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a></p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Data and code to reproduce the analysis and figures are available through <a href="https://github.com/brtarran/what-is-data-science">GitHub</a>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="data-science-is-a-shared-enterprise-among-science-and-math" class="level2">
+<h2 class="anchored" data-anchor-id="data-science-is-a-shared-enterprise-among-science-and-math">Data science is a shared enterprise among science and math</h2>
+<p>We use <a href="https://en.wikipedia.org/wiki/Naive_Bayes_classifier#Multinomial_naive_Bayes">naïve Bayes</a> to measure the similarity between each occupation and data science in terms of the preparation required to work in that occupation. Specifically, we first pretend that the occupation “data scientist” did not exist and then use Bayes’ rule to calculate the probability that a hypothetical group of workers with the 35 degrees associated with data science could have come from one of the roughly 700 other occupations. The higher the measure, the more consistent that occupation is with data science.</p>
+<p>The use of Bayes’ rule is appealing because the similarity between a given occupation and data science takes into account the similarities between every other occupation and data science. Our use of Bayes’ rule is naïve in the sense that – before collecting the data – we assume these workers are equally likely to have come from any occupation.</p>
+<p>The occupations with the largest probabilities, and thus most related to data science, are summarized in <a href="#fig-naive-bayes" class="quarto-xref">Figure&nbsp;2</a>. We find that the hypothetical workers have a 50% chance of being natural sciences managers and a 50% chance of being statisticians or mathematicians.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> We conclude that data science is a shared enterprise among science and math, and thus those trained in natural sciences have as much claim to data science as those trained in mathematics and statistics.</p>
+<div id="fig-naive-bayes" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-naive-bayes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/fig-naive-bayes.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-naive-bayes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: We use <a href="https://en.wikipedia.org/wiki/Naive_Bayes_classifier#Multinomial_naive_Bayes">naïve Bayes</a> to measure the similarity between each occupation and data science in terms of the preparation required to work in that occupation. We find that in terms of the preparation required to become a data scientist, data science is a shared enterprise among science and math.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="data-science-is-closest-to-statistics-in-its-role-among-other-occupations" class="level2">
+<h2 class="anchored" data-anchor-id="data-science-is-closest-to-statistics-in-its-role-among-other-occupations">Data science is closest to statistics in its role among other occupations</h2>
+<p>We use <a href="https://en.wikipedia.org/wiki/Centrality#Eigenvector_centrality">eigen centrality</a> (eigen decomposition) to measure the similarity of each occupation in terms of its role relative to other occupations. Specifically, we calculate the principal right singular vector of the adjacency matrix denoting whether an instructional program (row) is associated with an occupation (column).<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> An occupation has high eigen centrality when the instructional programs that prepare a worker for that occupation also prepare that worker for many other occupations as well. This suggests that the higher the measure, the more central the role of the occupation relative to other occupations.</p>
+<p>The eigen centrality of each occupation is displayed in <a href="#fig-centrality-growth" class="quarto-xref">Figure&nbsp;3</a>. Each point represents an occupation, the x-axis denotes the centrality of the occupation, and the y-axis denotes the percent growth of the occupation as <a href="https://www.bls.gov/emp/">predicted</a> by the US Bureau of Labor Statistics over the next decade. The figure demonstrates that data scientists and statisticians occupy nearly identical positions: Both are fast growing and central to the other occupations that work with data. In contrast, natural sciences managers are central but growing much more slowly, suggesting a role closer to managers. We conclude that – though data scientists are prepared similarly to natural sciences managers – a data scientist serves the same function as a statistician.</p>
+<div id="fig-centrality-growth" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-centrality-growth-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/fig-centrality-growth-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-centrality-growth-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: We use <a href="https://en.wikipedia.org/wiki/Centrality#Eigenvector_centrality">eigen centrality</a> (eigen decomposition) to measure the similarity of each occupation in terms of its role relative to other occupations. We find that in terms of the role a data scientist serves relative to other occupations, a data scientist functions like a statistician.
+</figcaption>
+</figure>
+</div>
+<p>But this function may be changing. <a href="#fig-centrality-change" class="quarto-xref">Figure&nbsp;4</a> shows the centrality (x-axis) of each occupation (y-axis) in 2010 and 2020. Green bars denote increases from 2010 to 2020 while yellow bars denote decreases. We find that the centrality of statisticians has declined over the past decade relative to other occupations, while the centrality of data scientists has grown. In fact, data science has now surpassed statistics as the most central fast-growing occupation. We conclude that though a data scientist and a statistician serve similar roles today, those roles may change as the workforce changes. Note that the occupation classifications changed in 2018, and we used the <a href="https://www.bls.gov/soc/2018/crosswalks_used_by_agencies.htm">crosswalk</a> provided by the US Bureau of Labor Statistics to make these comparisons.</p>
+<div id="fig-centrality-change" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-centrality-change-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/fig-centrality-change-1.png" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-centrality-change-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: We use <a href="https://en.wikipedia.org/wiki/Centrality#Eigenvector_centrality">eigen centrality</a> (eigen decomposition) to measure the similarity of each occupation in terms of its role relative to other occupations. We find that the centrality of statisticians has declined over the past decade relative to other occupations, while the centrality of data scientists has grown. Data science has now surpassed statistics as the most central fast-growing occupation. (Occupations predicted to grow more than 20% over the next decade shown.)
+</figcaption>
+</figure>
+</div>
+<p>The findings in this section are based on the adjacency matrix that encodes whether an instructional program (row) is associated with an occupation (column). A more detailed summary of the matrix is provided in <a href="#fig-interactive-plot" class="quarto-xref">Figure&nbsp;5</a>, which depicts the matrix as a network graph. Larger nodes represent occupations that are growing faster, while nodes closer to the center of the network represent more central occupations. The figure is interactive. You can zoom in to see the similar positions between data scientists and statisticians, which are both large (fast growing) and central.</p>
+<div id="fig-interactive-plot" class="quarto-figure quarto-figure-center quarto-float anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-interactive-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="tv-iframe-container">
+  <iframe class="responsive-iframe" src="images/network.html" title="fig-interactive-plot"></iframe>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-interactive-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: A visualization of occupations as a network: Occupations are placed according to the instructional programs that train students for that occupation, with occupations closer together sharing more instructional programs in common. We find data scientists and statisticians occupy nearly identical positions at the center of the network. Occupations are colored according to the primary classification of instructional programs that train students for that occupation. Larger nodes represent occupations that are growing faster.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="is-data-science-statistics" class="level2">
+<h2 class="anchored" data-anchor-id="is-data-science-statistics">Is data science statistics?</h2>
+<p>We conclude that individuals trained in managing natural sciences research – a slow growing occupation – are turning to data science – a much faster growing occupation, and one which currently serves a role like that of a statistician. But if present trends continue, data science is poised to eclipse the historic role of the statistician as central to the occupations that work with data.</p>
+<p>This suggests that while data science may be new and exciting, the role served by the data scientist is not particularly new. This does not mean that data scientists necessarily use the same time-honored methods for data analysis as statisticians. It is the authors’ experience, however, that many data science tools are in fact statistical. Indeed, the two data science algorithms we used in this article are both taught to students as new and exciting, but in reality are centuries-old methods steeped in statistical history.</p>
+<p>Regardless of whether data science is or is not statistics, the occupation “data scientist” has proven immensely popular, capturing a zeitgeist that has eluded statistics. This is best evidenced by the fact that data science – and not statistics – has been crowned the <a href="https://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century">sexiest</a> job of the 21st century. But if statistics has not enjoyed the popularity of data science, perhaps the real question in need of answering is: What is statistics?</p>
+<div class="article-btn">
+<p><a href="../../../../../ideas/index.html">Explore more data science ideas</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author</dt>
+<dd>
+<strong>Jonathan Auerbach</strong> is an assistant professor in the Department of Statistics at George Mason University. His research covers a wide range of topics at the intersection of statistics and public policy. His interests include the analysis of longitudinal data, particularly for data science and causal inference, as well as urban analytics, open data, and the collection, evaluation, and communication of official statistics.
+</dd>
+<dd>
+<strong>David Kepplinger</strong> is an assistant professor in the Department of Statistics at George Mason University. His research revolves around methods for robust and reliable estimation and inference in the presence of aberrant contamination in high-dimensional, complex data. He has active collaborations with researchers from the medical, biological, and life sciences.
+</dd>
+<dd>
+<strong>Nicholas Rios</strong> is an assistant professor of statistics at George Mason University. He earned his PhD in statistics 2022 from Penn State University, where his dissertation focused on designing optimal mixture experiments. His primary research interests are experimental design and methods for intelligent data collection in the presence of real-world constraints. He is also interested in functional data analysis, computational statistics, compositional data analysis, and the analysis of high-dimensional data.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Jonathan Auerbach, David Kepplinger, and Nicholas Rios
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> Text, code, and figures are licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>, except where otherwise noted. Thumbnail photo by <a href="https://unsplash.com/@marcsm?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Marc Sendra Martorell</a> on <a href="https://unsplash.com/photos/closeup-photo-of-two-bubbles-2BrdNFxW0UY?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Unsplash</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Auerbach, Jonathan, David Kepplinger, and Nicholas Rios. 2023. “What is data science? A closer look at science’s latest priority dispute.” Real World Data Science, February 19, 2024. <a href="https://realworlddatascience.net/ideas/posts/2024/02/19/what-is-data-science.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-donoho201750" class="csl-entry" role="listitem">
+Donoho, David. 2017. <span>“50 Years of Data Science.”</span> <em>Journal of Computational and Graphical Statistics</em> 26 (4): 745–66.
+</div>
+<div id="ref-stigler1981gauss" class="csl-entry" role="listitem">
+Stigler, Stephen M. 1981. <span>“Gauss and the Invention of Least Squares.”</span> <em>The Annals of Statistics</em>, 465–74.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Descriptions of occupations by government agencies are not particularly helpful in differentiating between data science, statistics, and related occupations. For example, according to the Bureau of Labor Statistics, data scientists use “analytical tools and techniques to extract meaningful insights from data.” This description is similar to mathematicians/statisticians, who “analyze data and apply computational techniques to solve problems,” and operations research analysts who use “mathematics and logic to help solve complex issues.”<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Our analysis treats all instructional programs as equal and independent. We do not consider, for example, the number of workers who hold a degree from an instructional program or whether two instructional programs are similar or offered by similar academic departments. Our analysis could be adjusted to account for this or related information, although it is unclear to the authors whether such an adjustment would make the results more accurate.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Note that natural sciences managers share 18 instructional programs with data scientists, while statisticians share 14.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Or alternatively, the principal eigenvector of the adjacency matrix denoting the number of instructional programs each occupation (row) has in common with each other occupation (column).<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      return note.innerHTML;
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="realworlddatascience/realworlddatascience.github.io" data-repo-id="R_kgDOILnnig" data-category="General" data-category-id="DIC_kwDOILnnis4CSt2s" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p>Copyright © 2024 <a href="https://rss.org.uk/">Royal Statistical Society</a></p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/realworlddatascience">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience">
+<p><i class="ai  ai-zenodo ai-2xl"></i></p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/rwdatasci">
+      <i class="bi bi-twitter-x" role="img" aria-label="Twitter/X">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@rwdatasci">
+      <i class="bi bi-mastodon" role="img" aria-label="Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="../../../../../feeds.html">
+      <i class="bi bi-rss" role="img" aria-label="RWDS rss">
+</i> 
+    </a>
+  </li>  
+</ul>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/ideas/posts/2024/02/19/what-is-data-science.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p><a href="../../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
