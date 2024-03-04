@@ -101,7 +101,7 @@ There is no dedicated folder for the "About RWDS" section. Instead, these docume
 
 ![RWDS repo top-level files](images/repo-top-level-files.PNG)
 
-As you'll see from the above image, all documents/article files are in the `.qmd` format. We'll discuss this format in more detail in the [Create an article](#create-an-article) section, but special mention needs to be made to the `index.qmd` file. You will see this file name frequently throughout our repo, and each `index.qmd` file controls a homepage -- either the main site homepage or a section homepage.
+As you'll see from the above image, all documents/article files are in the `.qmd` format. These are Quarto's own version of [Markdown documents](https://www.markdownguide.org/) which can be rendered and output as different filetypes. For RWDS, our `.qmd` files are output as html pages, but Quarto can also produce Word documents and PDFs from the same source file. We'll discuss the `.qmd` format in more detail in the [Create an article](#create-an-article) section. For now special mention needs to be made to the `index.qmd` file. You will see this file name frequently throughout our repo, and each `index.qmd` file controls a homepage -- either the main site homepage or a section homepage.
 
 Other file types in the root of the repository are:
 
@@ -204,12 +204,39 @@ listing:
 Later, in the section on [updating the RWDS homepage](#update-the-homepage), we'll show how to control where on a page these individual lists appear.
 
 ### Other file types and folders
-- .github
-- _extensions
-- _freeze
-- _metadata.yml
+One other important and common filetype to note is `_metadata.yml`. You'll find these files in various folders and subfolders throughout the repo, and their role is to set styles and formats for html files rendered from `.qmd` documents.
 
+For example, in the `case-studies` folder of our repo, there is a `_metadata.yml` file containing the following:
 
+``` markdown
+title-block-banner: true
+sidebar: false
+page-layout: article
+```
+
+Thanks to these settings, any `.qmd` file in the `case-studies` folder or subfolders will, when rendered in html, use the `title-block-banner` styling. There will be no `sidebar` navigation on these pages and the `page-layout` will be in the `article` style.
+
+If we then move one folder level down to `case-studies/posts`, we find a second `_metadata.yml` file. This one includes:
+
+``` markdown
+include-in-header: 
+  - ../../progress-bar.html
+  
+comments:
+  giscus: 
+      repo: realworlddatascience/realworlddatascience.github.io
+      category: General
+```
+
+Because of these settings, any `.qmd` file in the `case-studies/posts` folder or subfolders will, when rendered in html, feature a progress bar at the top of the page (the bar fills up as readers scroll through the page). There will also be a section for user comments at the end of each rendered page. 
+
+We place this second `_metadata.yml` file one level down, away from the `case-studies/index.qmd` file, because, while we want all rendered pages in the Case Studies section to use the same basic layout, we don't want our section homepage to feature either a progress bar or a comments section -- these features are for article pages only, and article files are found in the `case-studies/posts` folder and subfolders. In the [next section](#create-an-article), we'll explain how to create an article file from scratch. 
+
+Before moving on, a few words about the following folders in our repo:
+
+- `.github` contains code controlling the workflows that kick-in automatically whenever the `main` branch of our repository is updated.
+- `_extensions` is where code and files for various [Quarto extensions](https://quarto.org/docs/extensions/) are installed.
+- `_freeze` stores previously executed computational outputs so they don't need to be re-executed every time the site is rendered.
 
 ## Create an article
 Also, be sure to check out the [RWDS_post_template repository](https://github.com/finnoh/RWDS_post_template) if you're thinking of submitting an article. It's a great resource to help you get started.
