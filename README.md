@@ -107,15 +107,109 @@ Other file types in the root of the repository are:
 
 - `.all-contributorsrc` -- contains the data that populates our [contributor list](#contributors-)
 - `.gitignore` -- a list of files or folders that are excluded from version control
-- `.md` -- content files that are published only as part of the RWDS repository, not as part of the site itself
+- `.md` -- content files that are published only as part of the RWDS repository, not as part of the site itself (this README, for example)
 - `progress-bar.html` -- code that is used across the site to apply a progress bar to published articles
 - `.css` and `.scss` -- files controlling site design and styling
 
-The most important file for understanding and controlling site structure is `_quarto.yml`. From here we set the appearance of the navigation bar and the content it links to; page navigation for sections and sub-sections; the site footer; and basic formatting. Extensive documentation on all aspects of the `_quarto.yml` is available on the [Quarto website](https://quarto.org/docs/websites/).
+The most important file for understanding and controlling site structure is `_quarto.yml`. From here we set the appearance of the navigation bar and the content it links to; page navigation for sections and sub-sections; the site footer; and basic formatting. 
+
+> Extensive documentation on all aspects of the `_quarto.yml` is available on the [Quarto website](https://quarto.org/docs/websites/).
 
 ### Index files and listings
+`index.qmd` files appear throughout the RWDS repo and, as explained earlier, the content of these files determines what appears on our homepages -- either the main site homepage or section homepages.
+
+To understand these file types and pages in a bit more detail, it's best to think of each RWDS homepage as, essentially, a page of listings: the main site homepage contains listings of articles from all the different sections of the site, whereas section homepages list only articles that appear in their respective sections.
+
+To explain, let's take a look at a straightforward example: the `index.qmd` file for the Case Studies section:
+
+![index.qmd file for RWDS Case Studies section](images/case-study-index.PNG)
+
+And here's a clearer view of the code:
+
+``` markdown
+---
+pagetitle: Case studies | Real World Data Science
+title: Case studies
+subtitle: How data science is used to solve real-world problems in business, public policy and beyond
+search: false
+repo-actions: false
+listing:
+  contents: 
+  - posts
+  - "!index.qmd"
+  sort: "date desc"
+  type: grid
+  categories: true
+  sort-ui: false
+  filter-ui: false
+  page-size: 30
+  feed: true
+---
+Our case study content is in development. Interested in contributing a case study to Real World Data Science? [Check out our call for contributions](/contributor-docs/call-for-contributions.qmd). 
+```
+
+This is just 19 lines of code, and 18 of them are the YAML configuration for the page. If we  look at a screenshot of the homepage, we can then explore what each line of code is doing on the published page:
+
+![Screenshot of RWDS Case Studies homepage](images/case-study-homepage.PNG)
+
+`pagetitle` controls what appears in the browser tab header, `title` and `subtitle` are the page header contents, `search: false` and `repo-actions: false` switch off functionality that is not needed specifically for this page, and the `listing:` section determines what `contents` are listed on the page. Here, we define the `contents` as being any `.qmd` files that reside within the `posts` subfolder of the Case Studies folder, but we specifically exclude any `index.qmd` files from appearing in the listings by prefixing the filename with a `!`.
+
+As we move further down the `listing` section of the YAML, we set the `sort` order our contents appear in, what layout `type` to use, whether article `categories` should appear as part of the listings page, and whether users should have the ability to reorder and filter content using the `sort-ui` and `filter-ui` options. Finally, we set the number of listed items per page using the `page-size` variable, while `feed: true` creates [an XML file](https://realworlddatascience.net/feeds.html) that can be used with RSS readers.
+
+> To learn more about these and other website page options, see the [Reference section on the Quarto website](https://quarto.org/docs/reference/projects/websites.html).
+
+The Case Studies section of RWDS has no subsections and therefore has the simplest `index.qmd`. The Ideas section, meanwhile, has two subsections -- DataScienceBites and Tutorials -- and so the folders for these subsections are specified in the `listing` section of the `ideas/index.qmd` file:
+
+``` markdown
+listing:
+  contents: 
+  - datasciencebites
+  - tutorials
+  - posts
+  - "!index.qmd"
+```
+
+Although this `listing` is pulling content from multiple folders, all the content will be shown in a single list. It is possible, however, to construct multiple lists, each pulling from different folders, and include these separate lists within a single page. We use this functionality in constructing the main homepage for RWDS. In the `index.qmd` file in the root of the repository, the `listing` section of the YAML includes different lists constructed from various folders, and each list is assigned its own `id`. For example:
+
+``` markdown
+listing:
+  - id: latest-content
+    contents: 
+    - /case-studies
+    - /ideas
+    - /careers
+    - /viewpoints
+    - "!index.qmd"
+    sort: "date desc"
+    type: grid
+    categories: false
+    sort-ui: false
+    filter-ui: false
+    max-items: 3
+    feed: false
+
+  - id: case-studies
+    contents: 
+    - /case-studies
+    - "!index.qmd"
+    sort: "date desc"
+    type: grid
+    categories: false
+    sort-ui: false
+    filter-ui: false
+    max-items: 3
+    feed: false
+```
+
+Later, in the section on [updating the RWDS homepage](#update-the-homepage), we'll show how to control where on a page these individual lists appear.
 
 ### Other file types and folders
+- .github
+- _extensions
+- _freeze
+- _metadata.yml
+
+
 
 ## Create an article
 Also, be sure to check out the [RWDS_post_template repository](https://github.com/finnoh/RWDS_post_template) if you're thinking of submitting an article. It's a great resource to help you get started.
