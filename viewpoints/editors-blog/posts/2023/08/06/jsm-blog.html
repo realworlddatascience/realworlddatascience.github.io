@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -281,7 +281,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <p>James Webb, since launch, has “completely expanded our point of view”, said Leja, allowing astronomers to explore the first stars and galaxies at greater resolution than ever before.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/james-webb.png" class="img-fluid figure-img" alt="Image from the James Webb telescope showing two galaxies in the process of merging, twisting each other out of shape." width="500"></p>
+<p><img src="images/james-webb.png" class="img-fluid figure-img" width="500"></p>
 <figcaption>Image from the James Webb telescope showing two galaxies in the process of merging, twisting each other out of shape. Credit: ESA/Webb, NASA &amp; CSA, L. Armus, A. Evan, licenced under CC BY 2.0.</figcaption>
 </figure>
 </div>
@@ -328,7 +328,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <p>But, he said, when researchers download this cheap data, they are bound to worry about the quality of it. Drawing an analogy to food poisoning, Yu asked: What if the data we “feed” to algorithms is not clean? What is the impact of that?</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/data-hazards.png" class="img-fluid figure-img" alt="A person is illustrated in a warm, cartoon-like style in green. They are looking up thoughtfully from the bottom left at a large hazard symbol in the middle of the image. The hazard symbol is a bright orange square tilted 45 degrees, with a black and white illustration of an exclamation mark in the middle where the exclamation mark shape is made up of tiny 1s and 0s like binary code. To the right-hand side of the image a small character made of lines and circles (like nodes and edges on a graph) is standing with its ‘arms’ and ‘legs’ stretched out, and two antenna sticking up. It faces off to the right-hand side of the image." width="500"></p>
+<p><img src="images/data-hazards.png" class="img-fluid figure-img" width="500"></p>
 <figcaption>Illustration by Yasmin Dwiputri &amp; Data Hazards Project / Better Images of AI / Managing Data Hazards / Licenced by CC-BY 4.0.</figcaption>
 </figure>
 </div>
@@ -343,7 +343,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <p>Soriano also spoke about the key role randomised experiments play in product development – harking back to <a href="#teaching-statistics-in-higher-education-with-active-learning">Nathaniel Stevens’ earlier talk on this subject</a>. YouTube runs hundreds, if not thousands, of concurrent experiments, Soriano said; statisticians can’t, therefore, be involved in each one. As Soriano’s colleague, Angela Schoergendorfer, explained later in the session, the role of the data scientist is to build methodology and metrics that others in the business can use to run their own experiments.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/google-sign.png" class="img-fluid figure-img" alt="Google logo on top of building, against a blue sky." width="500"></p>
+<p><img src="images/google-sign.png" class="img-fluid figure-img" width="500"></p>
 <figcaption>Photo by Pawel Czerwinski on Unsplash.</figcaption>
 </figure>
 </div>
@@ -461,6 +461,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/realworlddatascience\.net\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -495,7 +513,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');

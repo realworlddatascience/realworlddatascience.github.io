@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.550">
+<meta name="generator" content="quarto-1.4.551">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -380,7 +380,7 @@ Initial quality control steps
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="images/film.png" class="img-fluid quarto-figure quarto-figure-left figure-img" alt="graphical icon representing a strip of film"></p>
+<p><img src="images/film.png" class="img-fluid figure-img"></p>
 <figcaption><strong>Number of clips</strong> = Number of clips recorded.</figcaption>
 </figure>
 </div>
@@ -388,7 +388,7 @@ Initial quality control steps
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="images/calendar.png" class="img-fluid quarto-figure quarto-figure-left figure-img" alt="graphical icon representing a calendar"></p>
+<p><img src="images/calendar.png" class="img-fluid figure-img"></p>
 <figcaption><strong>Days with footage</strong> = Number of discrete dates that appear in these clips.</figcaption>
 </figure>
 </div>
@@ -398,7 +398,7 @@ Initial quality control steps
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="images/clock.png" class="img-fluid quarto-figure quarto-figure-left figure-img" alt="graphical icon representing a stopwatch"></p>
+<p><img src="images/clock.png" class="img-fluid figure-img"></p>
 <figcaption><strong>Footage hours</strong> = Total duration of all shot footage.</figcaption>
 </figure>
 </div>
@@ -406,7 +406,7 @@ Initial quality control steps
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="images/caution.png" class="img-fluid quarto-figure quarto-figure-left figure-img" alt="graphical icon of an exclamation mark inside a circle"></p>
+<p><img src="images/caution.png" class="img-fluid figure-img"></p>
 <figcaption><strong>Significant gaps</strong> = Number of clips where the previous clip’s end date was either greater than 15 minutes or less than eight hours before current clip’s start date.</figcaption>
 </figure>
 </div>
@@ -422,7 +422,7 @@ Initial quality control steps
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="images/clip-per-day.png" class="img-fluid quarto-figure quarto-figure-left figure-img" alt="graphical icons representing a strip of film and a calendar"></p>
+<p><img src="images/clip-per-day.png" class="img-fluid figure-img"></p>
 <figcaption><strong>Clips per day</strong> = Number of clips / Days with footage.</figcaption>
 </figure>
 </div>
@@ -430,7 +430,7 @@ Initial quality control steps
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="images/footage-per-day.png" class="img-fluid quarto-figure quarto-figure-left figure-img" alt="graphical icons representing a stopwatch and a calendar"></p>
+<p><img src="images/footage-per-day.png" class="img-fluid figure-img"></p>
 <figcaption><strong>Footage per day</strong> = Footage hours / Days with footage.</figcaption>
 </figure>
 </div>
@@ -440,7 +440,7 @@ Initial quality control steps
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="images/avg-clip-length.png" class="img-fluid quarto-figure quarto-figure-left figure-img" alt="graphical icons representing a stopwatch and a strip of film"></p>
+<p><img src="images/avg-clip-length.png" class="img-fluid figure-img"></p>
 <figcaption><strong>Average clip length</strong> = Footage hours / Number of clips.</figcaption>
 </figure>
 </div>
@@ -448,7 +448,7 @@ Initial quality control steps
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="images/gaps-per-day.png" class="img-fluid quarto-figure quarto-figure-left figure-img" alt="graphical icons of an exclamation mark inside a circle and a calendar"></p>
+<p><img src="images/gaps-per-day.png" class="img-fluid figure-img"></p>
 <figcaption><strong>Gaps per day</strong> = Gaps / Days with footage.</figcaption>
 </figure>
 </div>
@@ -939,6 +939,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     // clear code selection
     e.clearSelection();
   });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/realworlddatascience\.net\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
   function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
     const config = {
       allowHTML: true,
@@ -973,7 +991,11 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       try { href = new URL(href).hash; } catch {}
       const id = href.replace(/^#\/?/, "");
       const note = window.document.getElementById(id);
-      return note.innerHTML;
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
     });
   }
   const xrefs = window.document.querySelectorAll('a.quarto-xref');
