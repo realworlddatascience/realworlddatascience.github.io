@@ -239,7 +239,15 @@ Before moving on, a few words about the following folders in our repo:
 - `_freeze` stores previously executed computational outputs so they don't need to be re-executed every time the site is rendered.
 
 ## Create an article
-Also, be sure to check out the [RWDS_post_template repository](https://github.com/finnoh/RWDS_post_template) if you're thinking of submitting an article. It's a great resource to help you get started.
+Before you start creating content for Real World Data Science, we strongly recommend you familiarise yourself with the basics of Quarto. The [Quarto website](https://quarto.org/docs/get-started/) has a short "Get Started" guide with a three-part tutorial that won't take more than an hour to work through.
+
+If you've run through the "Get Started" guide, or you've used Quarto before, you'll be ready to get going on your RWDS article: the Quarto CLI will be installed on your machine and you'll have chosen which tool you want to work with (we recommend VS Code if you're comfortable with Markdown, or RStudio if you'd prefer to take advantage of the inbuilt Quarto visual editor).
+
+Next, you'll want to head over to Finn-Ole Höner's [RWDS_post_template repository](https://github.com/finnoh/RWDS_post_template), and click the "Use this template" button. This will create a new repository in your own GitHub account which contains several files that you'll need throughout the article development process. 
+
+The first file, `content-brief.qmd`, is for you to sketch out your article idea. Open up the file in your tool of choice and hit the render button. This will produce an html page, styled in the RWDS theme, with a series of instructions for you to follow. Once you've followed the instructions and added the required information under the various headings in the `.qmd` file, you should contact the RWDS editor to discuss next steps. See our published [Contributor Guidelines](https://realworlddatascience.net/contributor-docs/contributor-guidelines.html#the-submission-process) for an overview of the RWDS submission process.
+
+Once a content brief has been received, reviewed and accepted by the RWDS editor and editorial board, work on the article proper can begin. For this, you'll want to use the `report.qmd` file from the template repository. This file not only serves as a basic template for all published RWDS articles, it also contains examples of the main Quarto features used by RWDS. If you open up this file in your tool of choice, render it, and read through the html and `.qmd` versions side-by-side, you'll be able to see the underlying code that produces the various html outputs.
 
 
 ## Add an article
