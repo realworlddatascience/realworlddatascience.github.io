@@ -238,6 +238,8 @@ Before moving on, a few words about the following folders in our repo:
 - `_extensions` is where code and files for various [Quarto extensions](https://quarto.org/docs/extensions/) are installed.
 - `_freeze` stores previously executed computational outputs so they don't need to be re-executed every time the site is rendered.
 
+### Explaining the branches
+
 ## Create an article
 Before you start creating content for Real World Data Science, we strongly recommend you familiarise yourself with the basics of Quarto. The [Quarto website](https://quarto.org/docs/get-started/) has a short "Get Started" guide with a three-part tutorial that won't take more than an hour to work through.
 
