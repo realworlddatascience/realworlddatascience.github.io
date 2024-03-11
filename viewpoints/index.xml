@@ -17,7 +17,116 @@
 <width>144</width>
 </image>
 <generator>quarto-1.4.551</generator>
-<lastBuildDate>Wed, 06 Mar 2024 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 11 Mar 2024 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Democratizing Data: Using natural language processing and machine learning to capture dataset usage</title>
+  <dc:creator>Brian Tarran</dc:creator>
+  <link>https://realworlddatascience.net/viewpoints/interviews/posts/2024/03/11/democratizing-data.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Figuring out how much money is spent annually on collecting and publishing datasets is a challenge. According to the World Bank, it is <a href="https://blogs.worldbank.org/opendata/how-much-should-governments-spend-data">“painfully hard to obtain”</a> information just on government spending on data, never mind all the other bodies and organisations who invest in the creation of data assets. But there’s an even more challenging figure to pin down: How much value does all this data provide? By and large, there is very little data – or systematic collection of data – on dataset usage. There’s no easy way to find all the users of a particular dataset and to see how the data has been used, or what research topics it may have contributed to.</p>
+<p>Writing in the <a href="https://hdsr.mitpress.mit.edu/pub/g6e8noiy/release/2">Harvard Data Science Review in April 2022</a>, <a href="https://julialane.org/">Julia Lane</a> and others explained that “the current approach to finding what data sets are used to answer scientific questions … is largely manual and ad hoc.” They went on to argue: “Better information on the use of data is likely to have at least two results: (i) government agencies might use the information to describe the return on investment in data sets and (ii) scientists might use the information to reduce the time taken to search and discover other empirical research.”</p>
+<p>This hope for a better understanding of how datasets are used and the value they provide underpins the creation of “Democratizing Data: A Search and Discovery Platform for Public Data Assets.”</p>
+<p>As described on <a href="https://democratizingdata.ai/">the platform’s homepage</a>, Democratizing Data “describes how datasets identified by federal agencies have been used in scientific research. It uses machine learning algorithms to search over 90 million documents and find how datasets are cited, in what publications, and what topics they are used to study.”</p>
+<p>But this is just the start of what Lane thinks the project could eventually achieve, as she explains in this interview.</p>
+<div class="keyline">
+<hr>
+</div>
+<p><strong>How did the Democratizing Data platform come about?</strong><br>
+It emerged from three things, really, and I can trace the start of it back to 2016, when I was asked to build a secure environment that could host confidential microdata in order to inform the work of the <a href="https://obamawhitehouse.archives.gov/omb/management/commission_evidence">Commission on Evidence-Based Policymaking</a>.<sup>1</sup> They asked me to lead on this because I had built the <a href="https://www.norc.org/services-solutions/data-enclave.html">NORC remote access Data Enclave at the University of Chicago</a> 10 years before that.</p>
+<p>This was the first step towards Democratizing Data.</p>
+<p>The second step was figuring out how to create value from the data in the secure environment, because we knew that if we couldn’t create value, government agencies weren’t going to put their data into it.</p>
+<p>But how do you figure out what agencies are going to want to do with the data in a secure environment? It’s difficult to get them to tell you what they want, so I thought, well, why don’t we build training classes, put people in these training classes and have them work on problems with their own data? That way, we’re going to know what problems they have so that we can address them.</p>
+<p>So, step 1 was build secure environment. Step 2 was build capacity and identify the questions that are of interest to agencies so that they would put data into the secure environment. That led to the training classes that Frauke Kreuter, Rayid Ghani, and I put together, which are described here.</p>
+<p>But then what happened was, people kept coming to me in the classes and asking, “Who else has worked with these data, and who can I go to and ask questions?”</p>
+<p>I could give them a list of people, but that list would be biased by my age and race and sex and the people I know. What about those people who are doing really interesting stuff with these data that I happen not to know about?</p>
+<p>So, that’s how Democratizing Data got started. I thought, really the best way to give a full answer to those sorts of questions is to figure out what datasets are being used in research publications.</p>
+<p>Now, how was I going do that? I could read all the publications and manually write notes about who the authors were, and what the topics were, and what datasets they used. But that’s not realistic. So, I thought, well, maybe we could combine natural language processing techniques with machine learning so that you could “read” all these publications and find out how datasets are cited.</p>
+<div class="pullquote-container">
+<div class="grid">
+<div class="g-col-12 g-col-lg-4">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="https://realworlddatascience.net/viewpoints/interviews/posts/2024/03/11/images/julia-lane-sq.png" class="img-fluid figure-img"></p>
+<figcaption>Julia Lane, professor at the NYU Wagner Graduate School of Public Service and visiting fellow at RTI International. Image supplied, used with permission.</figcaption>
+</figure>
+</div>
+</div>
+<div class="g-col-12 g-col-lg-8 pullquote-grid pullquote">
+<p><img src="https://realworlddatascience.net/images/pullquote-purple.png" class="img-fluid" width="50"></p>
+<p>We’re searching for ways to measure how datasets are used, how they’re valued, and so on. Federal statistical data and Elsevier’s Scopus have been a great starting point for us, but the broader vision is to incorporate other datasets and other publication databases.</p>
+</div>
+</div>
+</div>
+<p><strong>Would this have been a problem that needed solving if there were common, established citation standards and practices for datasets?</strong><br>
+There <em>are</em> great citation practices for datasets, and we’ve had them for 15 years. Back when I was a National Science Foundation (NSF) program officer, everyone was saying, well, if we just get the plumbing right, people will come and use it. Well, they don’t. Even when there are DOIs available and they’re relatively easy to cite, people don’t. The plumbing’s there, we built it, but they didn’t come.</p>
+<p>So, I think there has to be a demand-side piece, and we talk about that in one of the papers in an upcoming special issue of the <a href="https://hdsr.mitpress.mit.edu/">Harvard Data Science Review</a>: How do you create an incentive structure so that people do provide information about how they’ve used data? My thinking was that, suppose we can find out who’s using what data. Then the incentive structure to an academic is “your name in lights”: you are the world’s living expert in orange carrots with green stripes, or whatever. So, we would read the publications, find the datasets, and then you could have a leaderboard of the people who have done the most work in a particular field, and then people would have an incentive both to cite datasets and to let you know when you miss things. And that was when I thought, well, let’s put all this information up in a dashboard.</p>
+<p><strong>So, is the grand vision for this to create a platform that, essentially, any data owner – anyone who publishes datasets – could plug into, connect to, and understand how other people are using their datasets?</strong><br>
+That’s right. The grand vision is basically to set up a search and discovery portal. Originally, my thinking was that would be super helpful for people just starting out in a field; for a new graduate student or a postdoc to say, “I want to figure out what work has been done on recidivism of welfare recipients relative to access to jobs and neighborhood characteristics,” for example, and for them to see what datasets are available and how they have been used.</p>
+<p>But from the data producer side it’d also be useful to know: Who’s using the datasets? Where are the gaps? Where are we maybe not reaching as many people as we thought we were, and how can we change that?</p>
+<p>So, while the original idea was to build a platform for researchers, plans changed when the <a href="https://www.govinfo.gov/content/pkg/PLAW-115publ435/pdf/PLAW-115publ435.pdf">Evidence Act</a> passed, and agencies were required to produce usage statistics for their datasets.<sup>2</sup></p>
+<p>We started a pilot with the US Department of Agriculture’s (USDA) Economic Research Service (ERS). They have been a huge supporter and helped us work through a lot of the issues. Then, when we began showing around the ERS wireframes and ideas, the NSF National Center for Science and Engineering Statistics joined in, and so did USDA’s National Agricultural Statistics Service and the National Center for Education Statistics and the National Oceanic and Atmospheric Administration.</p>
+<p>So, we have these agencies involved and they’ve really been the drivers, the intellectual partners, pushing the design and the structure forward.</p>
+<p><strong>I’ve had a chance to play around with some of the <a href="https://democratizingdata.ai/tools/dashboards/">public dashboards you’ve released on Tableau</a>, and I really like the way you can explore dataset usage from different start points and end up with a list of publications that use those datasets. My question is, though, how have you connected all this up – datasets and publications?</strong><br>
+Our start point was scientific publications because these are pretty well curated. We ended up working with Elsevier because Scopus [Elsevier’s abstract and citation database] is a well-curated corpus and they’ve got the associated publication metadata well curated.</p>
+<p>So, we have the Scopus corpus, and we then ran <a href="https://www.kaggle.com/c/coleridgeinitiative-show-us-the-data">a Kaggle competition</a> to develop machine learning models to identify candidate snippets of text from scientific papers that seem like they might be referring to a dataset.</p>
+<p>Human researchers would then validate those snippets as either referring to a dataset or not, and once they’ve validated the publication-to-dataset dyad, we then pull in all the metadata associated with the publication: authors, institutions, key topics, publication year, countries, etc. – all this information gets piped over to the dashboards.</p>
+<p><strong>You published <a href="https://hdsr.mitpress.mit.edu/pub/g6e8noiy/release/2">a Harvard Data Science Review article about this competition a couple of years ago</a>, and from that I understand that you can actually get quite far with a simple string-matching method for finding datasets, but you would still miss a lot of citations using this approach because of the variability in the way people refer to datasets.</strong><br>
+That’s right. There were three different models that were developed, and each one picks up different aspects of how authors mention data in publications, and all three have been extremely useful. We learned a lot about the variety of ways in which researchers cite the data that they use.</p>
+<p>It turns out that more people do cite datasets in references than we had originally thought, but usually they don’t cite a DOI, they cite the URL or they cite the exact name of the dataset, so string search of references and URLs pulls out quite a lot of information that the DOIs, <em>per se</em>, don’t.</p>
+<p><strong>What are the next steps for scaling up the Democratizing Data work?</strong><br>
+I think it is more of a sociotechnical issue than a technical one. We have the plumbing, but really what we need to do is to figure out the incentives for researchers. We need to build a community around the data, which is what’s happened with code and the sharing of code on platforms like GitHub.</p>
+<p>Obviously, our initial focus has been on federal statistical data, but there’s also a lot of interest in how administrative data or streaming data are being used.</p>
+<p>The advantage of starting with statistical data is that they have names. As we learn more about citation patterns, though, it may be that we don’t need precise names. What may happen is that the community starts converging on common terminologies for datasets. That happens in a lot of fields.</p>
+<p>At the moment, it feels a little bit like the Wild West. We’re searching for ways to measure how datasets are used, how they’re valued, and so on. Federal statistical data and Elsevier’s Scopus have been a great starting point for us, but the broader vision is to incorporate other datasets and other publication databases like arXiv and Semantic Scholar. But all those other datasets that are out there, they need to be curated and documented in some way and that’s a huge task, so the solution has got to be community curation and sharing, right?</p>
+<p>If we don’t build a community around the data, we’re just going to have really bad information, really bad analysis, and really bad statistics on the value that our datasets – all these data assets – provide. My colleague <a href="https://www.rti.org/event/rti-fellow-program-distinguished-lecture-series-democratizing-data">Nancy Potok gave a talk a couple of days ago</a> in which she said that our future depends on this – and it really does.</p>
+<div class="article-btn">
+<p><a href="../../../../../../viewpoints/interviews/index.html">Find more Interviews</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Royal Statistical Society
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Photo of Julia Lane is not included in this licence.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Tarran, Brian. 2023. “Democratizing Data: Using natural language processing and machine learning to capture dataset usage.” Real World Data Science, March 11, 2024. <a href="https://realworlddatascience.net/viewpoints/interviews/posts/2024/03/11/democratizing-data.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>The Commission on Evidence-Based Policymaking was “charged with examining all aspects of how to increase the availability and use of government data to build evidence and inform program design, while protecting privacy and confidentiality of those data.”↩︎</p></li>
+<li id="fn2"><p>Specifically, the act requires federal agencies to identify and implement methods “for collecting and analyzing digital information on data asset usage by users within and outside of the agency.”↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>AI</category>
+  <category>Data</category>
+  <category>Machine learning</category>
+  <category>Natural language processing</category>
+  <guid>https://realworlddatascience.net/viewpoints/interviews/posts/2024/03/11/democratizing-data.html</guid>
+  <pubDate>Mon, 11 Mar 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/viewpoints/interviews/posts/2024/03/11/images/julia-lane-thumb.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
 <item>
   <title>Editor’s note: Not saying goodbye, just saying…</title>
   <dc:creator>Brian Tarran</dc:creator>
@@ -2675,95 +2784,6 @@ Tarran, Brian. 2023. “‘What if we try to bring R to the classroom? That was 
   <guid>https://realworlddatascience.net/viewpoints/interviews/posts/2023/09/25/rgirls-interview.html</guid>
   <pubDate>Mon, 25 Sep 2023 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/viewpoints/interviews/posts/2023/09/25/images/rgirls.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>‘Pseudo data science’ and other pitfalls: lessons from the UK’s stats regulator on how not to be misleading</title>
-  <dc:creator>Ed Humpherson</dc:creator>
-  <link>https://realworlddatascience.net/viewpoints/posts/2023/09/18/pseudo-data-science.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>A typical article on data science hails new data sources, new tools, and new visualisations, and thereby supports the case for the value of data science.</p>
-<p>But this article takes a different angle: it talks about potential pitfalls that can face data scientists. It is based on our work as the Office for Statistics Regulation (OSR), the UK’s regulator for official statistics. We see lots of great work done by statisticians in government. But we also see some of the challenges they face – and data scientists are also likely to encounter the same challenges.</p>
-<p>The problems arise from the fact that neither statisticians nor data scientists do their work in isolation. The work usually takes places within organisations – businesses, government bodies, think tanks, academic institutions – and as a result, the statisticians and/or data scientists are not the only players who get to influence how data science is presented and used.</p>
-<p>What are the pitfalls we see in our work as regulator?</p>
-<section id="pseudo-data-science" class="level2">
-<h2 class="anchored" data-anchor-id="pseudo-data-science">Pseudo data science</h2>
-<p>The first type of pitfall is pseudo data science.</p>
-<p>Pseudo data science is a term we use to describe attempts to pass off crude work as being more data science-y than it really is. That reflects a sense in public life that data science is new, innovative, somehow the Future. In this context, people who are not data scientists can be tempted to dress themselves up in the clothes of data science to enhance their credibility. This dressing up is usually well-intentioned – communications professionals who want to illuminate and explain complex issues in an engaging way.</p>
-<p>The trouble is, it can sometimes backfire. In our work at OSR, we have over the last year seen several examples where organisations have sought to publish visualisations that look like they are the product of in-depth data analysis – when in fact they have been drawn by communications staff using graphic design packages. Examples include <a href="https://osr.statisticsauthority.gov.uk/correspondence/ed-humpherson-to-david-pares-treasury-inflation-infographic/">inflation</a>, <a href="https://uksa.statisticsauthority.gov.uk/correspondence/response-from-sir-robert-chote-to-andrew-gwynne-mp-dhsc-chart-on-nurses-pay/">nurses pay</a>, and <a href="https://uksa.statisticsauthority.gov.uk/correspondence/letter-to-rachel-reeves-mp-gdp-growth-chart/">comparisons of UK economic performance with other countries</a>. To be fair, whenever we have pointed out issues like this, organisations have responded well, putting in place new procedures to ensure that analysts sign off on this kind of visualisations. Nevertheless, we suspect that the temptations to indulge in pseudo data science will remain strong – and we may need to intervene on similar cases in future.</p>
-</section>
-<section id="unintelligent-transparency" class="level2">
-<h2 class="anchored" data-anchor-id="unintelligent-transparency">Unintelligent transparency</h2>
-<p>The second pitfall is a failure of <a href="https://osr.statisticsauthority.gov.uk/publication/regulatory-guidance-on-intelligent-transparency/">intelligent transparency</a>.</p>
-<p>There is a raw form of transparency – quoting a single number (a naked number we call it); or dumping data out into the public domain with no explanation. This is not intelligent transparency. The latter involves being clear where data come from, what their source is, and making underlying data available so that others can understand and verify the statements that are being made. Raw transparency and naked numbers treat an audience with little respect; intelligent transparency helps the audience understand and appreciate what sits behind high level claims.</p>
-<p>Data science outputs can sometimes seem to communications teams easy to cherry pick for the most attractive number. Again, like pseudo data science, this reflects largely good intentions – to communicate complex things through ideas. But it becomes easy for a single, unsupported number to be used and reused until it loses most of its meaning. We call this weaponization of data, and it is the antithesis of intelligent transparency. And there is a lot of it about – for example the way in which the former Prime Minister of the UK talked repeatedly about <a href="https://uksa.statisticsauthority.gov.uk/correspondence/sir-david-norgrove-to-prime-minister-employment-statistics/">employment</a>; or <a href="https://uksa.statisticsauthority.gov.uk/correspondence/response-from-sir-robert-chote-to-alex-cole-hamilton-msp-scottish-renewable-energy-statistics/">claims</a> about Scotland’s capacity for <a href="https://uksa.statisticsauthority.gov.uk/correspondence/sir-robert-chote-to-stephen-kerr-msp-renewable-energy/">renewable energy</a>. These examples indicate the pathology of weaponization that can impact data science outputs. They also act as a reminder that data scientists can counter weaponization of their own outputs by delivering engaging and insightful communication.</p>
-</section>
-<section id="context-collapse" class="level2">
-<h2 class="anchored" data-anchor-id="context-collapse">Context collapse</h2>
-<p>The third type of pitfall surrounds context collapse.</p>
-<p>This idea comes from the work of the philosopher <a href="http://lucymcdonald.co.uk/wp-content/uploads/2023/02/Context-Collapse-Online-LMcDonald.pdf">Lucy McDonald</a> (who in turn has built on the ideas of <a href="https://www.danah.org/">danah boyd</a>). What is context collapse? Imagine a swimming pool – with neat divisions of the pool into different lanes. All is clearly labelled – fast, medium, slow – for lane swimmers, who are in turn separated from the splash area for families and the deep end for divers. Removing the lanes, and thus taking away any signposting, increases the likelihood for things to go wrong. The fast swimmers doing front crawl clash with the slower breaststroke swimmers; both are constantly having to avoid the families with young children; and all need to watch for the periodic big splashes created by the divers. This is the online communication environment, in which formerly private and casual statements can go viral; in which a brief statement in a media environment can be picked up on and circulated many times; and in which some bad actors (the divers) may wish to disrupt deliberately the debate by breaking all the rules.</p>
-<p>How can this affect data science? It happens when individual bits of data are taken from their context, and used in service of a different, and bigger, argument. A good example is data on Covid vaccinations. Here, UK organisations like the Office for National Statistics and the UK Health Security Agency published comprehensive data in good faith about vaccinations and their impact. Some of the underlying data, however, was taken out of the broader context and used in isolation to support criticisms of vaccines – criticisms that the wider evidence base did not support.</p>
-<p>The challenge then became how the organisations should respond. At an organisational level, they did not wish to withdraw the data – because that would reduce transparency. Instead they sought to both caveat their data more clearly; and directly rebut the more egregious misuses of the data. In a sense, then, what began as an individual analytical output became part of a broader organisational judgement on positioning in the face of misinformation.</p>
-<p>It is fair to say that, against this third pitfall, there is not yet a clear consensus on how to address it. Practice is emerging all the time and we at OSR continue to support producers of data as they grapple with it.</p>
-<p>There are other potential pitfalls to using data science. But what unites these three – pseudo data science; unintelligent transparency; and context collapse – is that they relate to situations where data science rubs up against broader organisational dynamics, around communications, presentation and organisational strategy.</p>
-<p>And the meta-message is this: for data scientists to thrive in organisations, they need to be good at more than data science. They need to be skilled at working alongside and influencing colleagues from other functions. Only through this form of <a href="https://osr.statisticsauthority.gov.uk/analytical-leadership/">data leadership</a> can the pitfalls be dealt with effectively.</p>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>This article is based on a presentation at the <a href="https://www.datascienceforhealthequity.com/">Data Science for Health Equity</a> group in May 2023.</p>
-</div>
-</div>
-</div>
-<div class="article-btn">
-<p><a href="../../../../../viewpoints/index.html">Discover more Viewpoints</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the author</dt>
-<dd>
-<strong>Ed Humpherson</strong> is head of the Office for Statistics Regulation, which provides independent regulation of all official statistics in the UK. The aim of OSR is to enhance public confidence in the trustworthiness, quality and value of statistics produced by government.
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Ed Humpherson
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Humpherson, Ed. 2023. “‘Pseudo data science’ and other pitfalls: lessons from the UK’s stats regulator on how not to be misleading.” Real World Data Science, September 18, 2023. <a href="https://realworlddatascience.net/viewpoints/posts/2023/09/18/pseudo-data-science.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-</section>
-
- ]]></description>
-  <category>Communication</category>
-  <category>Leadership</category>
-  <category>Transparency</category>
-  <guid>https://realworlddatascience.net/viewpoints/posts/2023/09/18/pseudo-data-science.html</guid>
-  <pubDate>Mon, 18 Sep 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/viewpoints/posts/2023/09/18/images/distorted-data.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 </channel>
 </rss>

@@ -17,7 +17,116 @@
 <width>144</width>
 </image>
 <generator>quarto-1.4.551</generator>
-<lastBuildDate>Wed, 06 Mar 2024 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 11 Mar 2024 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Democratizing Data: Using natural language processing and machine learning to capture dataset usage</title>
+  <dc:creator>Brian Tarran</dc:creator>
+  <link>https://realworlddatascience.net/viewpoints/interviews/posts/2024/03/11/democratizing-data.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Figuring out how much money is spent annually on collecting and publishing datasets is a challenge. According to the World Bank, it is <a href="https://blogs.worldbank.org/opendata/how-much-should-governments-spend-data">“painfully hard to obtain”</a> information just on government spending on data, never mind all the other bodies and organisations who invest in the creation of data assets. But there’s an even more challenging figure to pin down: How much value does all this data provide? By and large, there is very little data – or systematic collection of data – on dataset usage. There’s no easy way to find all the users of a particular dataset and to see how the data has been used, or what research topics it may have contributed to.</p>
+<p>Writing in the <a href="https://hdsr.mitpress.mit.edu/pub/g6e8noiy/release/2">Harvard Data Science Review in April 2022</a>, <a href="https://julialane.org/">Julia Lane</a> and others explained that “the current approach to finding what data sets are used to answer scientific questions … is largely manual and ad hoc.” They went on to argue: “Better information on the use of data is likely to have at least two results: (i) government agencies might use the information to describe the return on investment in data sets and (ii) scientists might use the information to reduce the time taken to search and discover other empirical research.”</p>
+<p>This hope for a better understanding of how datasets are used and the value they provide underpins the creation of “Democratizing Data: A Search and Discovery Platform for Public Data Assets.”</p>
+<p>As described on <a href="https://democratizingdata.ai/">the platform’s homepage</a>, Democratizing Data “describes how datasets identified by federal agencies have been used in scientific research. It uses machine learning algorithms to search over 90 million documents and find how datasets are cited, in what publications, and what topics they are used to study.”</p>
+<p>But this is just the start of what Lane thinks the project could eventually achieve, as she explains in this interview.</p>
+<div class="keyline">
+<hr>
+</div>
+<p><strong>How did the Democratizing Data platform come about?</strong><br>
+It emerged from three things, really, and I can trace the start of it back to 2016, when I was asked to build a secure environment that could host confidential microdata in order to inform the work of the <a href="https://obamawhitehouse.archives.gov/omb/management/commission_evidence">Commission on Evidence-Based Policymaking</a>.<sup>1</sup> They asked me to lead on this because I had built the <a href="https://www.norc.org/services-solutions/data-enclave.html">NORC remote access Data Enclave at the University of Chicago</a> 10 years before that.</p>
+<p>This was the first step towards Democratizing Data.</p>
+<p>The second step was figuring out how to create value from the data in the secure environment, because we knew that if we couldn’t create value, government agencies weren’t going to put their data into it.</p>
+<p>But how do you figure out what agencies are going to want to do with the data in a secure environment? It’s difficult to get them to tell you what they want, so I thought, well, why don’t we build training classes, put people in these training classes and have them work on problems with their own data? That way, we’re going to know what problems they have so that we can address them.</p>
+<p>So, step 1 was build secure environment. Step 2 was build capacity and identify the questions that are of interest to agencies so that they would put data into the secure environment. That led to the training classes that Frauke Kreuter, Rayid Ghani, and I put together, which are described here.</p>
+<p>But then what happened was, people kept coming to me in the classes and asking, “Who else has worked with these data, and who can I go to and ask questions?”</p>
+<p>I could give them a list of people, but that list would be biased by my age and race and sex and the people I know. What about those people who are doing really interesting stuff with these data that I happen not to know about?</p>
+<p>So, that’s how Democratizing Data got started. I thought, really the best way to give a full answer to those sorts of questions is to figure out what datasets are being used in research publications.</p>
+<p>Now, how was I going do that? I could read all the publications and manually write notes about who the authors were, and what the topics were, and what datasets they used. But that’s not realistic. So, I thought, well, maybe we could combine natural language processing techniques with machine learning so that you could “read” all these publications and find out how datasets are cited.</p>
+<div class="pullquote-container">
+<div class="grid">
+<div class="g-col-12 g-col-lg-4">
+<div class="quarto-figure quarto-figure-left">
+<figure class="figure">
+<p><img src="https://realworlddatascience.net/viewpoints/interviews/posts/2024/03/11/images/julia-lane-sq.png" class="img-fluid figure-img"></p>
+<figcaption>Julia Lane, professor at the NYU Wagner Graduate School of Public Service and visiting fellow at RTI International. Image supplied, used with permission.</figcaption>
+</figure>
+</div>
+</div>
+<div class="g-col-12 g-col-lg-8 pullquote-grid pullquote">
+<p><img src="https://realworlddatascience.net/images/pullquote-purple.png" class="img-fluid" width="50"></p>
+<p>We’re searching for ways to measure how datasets are used, how they’re valued, and so on. Federal statistical data and Elsevier’s Scopus have been a great starting point for us, but the broader vision is to incorporate other datasets and other publication databases.</p>
+</div>
+</div>
+</div>
+<p><strong>Would this have been a problem that needed solving if there were common, established citation standards and practices for datasets?</strong><br>
+There <em>are</em> great citation practices for datasets, and we’ve had them for 15 years. Back when I was a National Science Foundation (NSF) program officer, everyone was saying, well, if we just get the plumbing right, people will come and use it. Well, they don’t. Even when there are DOIs available and they’re relatively easy to cite, people don’t. The plumbing’s there, we built it, but they didn’t come.</p>
+<p>So, I think there has to be a demand-side piece, and we talk about that in one of the papers in an upcoming special issue of the <a href="https://hdsr.mitpress.mit.edu/">Harvard Data Science Review</a>: How do you create an incentive structure so that people do provide information about how they’ve used data? My thinking was that, suppose we can find out who’s using what data. Then the incentive structure to an academic is “your name in lights”: you are the world’s living expert in orange carrots with green stripes, or whatever. So, we would read the publications, find the datasets, and then you could have a leaderboard of the people who have done the most work in a particular field, and then people would have an incentive both to cite datasets and to let you know when you miss things. And that was when I thought, well, let’s put all this information up in a dashboard.</p>
+<p><strong>So, is the grand vision for this to create a platform that, essentially, any data owner – anyone who publishes datasets – could plug into, connect to, and understand how other people are using their datasets?</strong><br>
+That’s right. The grand vision is basically to set up a search and discovery portal. Originally, my thinking was that would be super helpful for people just starting out in a field; for a new graduate student or a postdoc to say, “I want to figure out what work has been done on recidivism of welfare recipients relative to access to jobs and neighborhood characteristics,” for example, and for them to see what datasets are available and how they have been used.</p>
+<p>But from the data producer side it’d also be useful to know: Who’s using the datasets? Where are the gaps? Where are we maybe not reaching as many people as we thought we were, and how can we change that?</p>
+<p>So, while the original idea was to build a platform for researchers, plans changed when the <a href="https://www.govinfo.gov/content/pkg/PLAW-115publ435/pdf/PLAW-115publ435.pdf">Evidence Act</a> passed, and agencies were required to produce usage statistics for their datasets.<sup>2</sup></p>
+<p>We started a pilot with the US Department of Agriculture’s (USDA) Economic Research Service (ERS). They have been a huge supporter and helped us work through a lot of the issues. Then, when we began showing around the ERS wireframes and ideas, the NSF National Center for Science and Engineering Statistics joined in, and so did USDA’s National Agricultural Statistics Service and the National Center for Education Statistics and the National Oceanic and Atmospheric Administration.</p>
+<p>So, we have these agencies involved and they’ve really been the drivers, the intellectual partners, pushing the design and the structure forward.</p>
+<p><strong>I’ve had a chance to play around with some of the <a href="https://democratizingdata.ai/tools/dashboards/">public dashboards you’ve released on Tableau</a>, and I really like the way you can explore dataset usage from different start points and end up with a list of publications that use those datasets. My question is, though, how have you connected all this up – datasets and publications?</strong><br>
+Our start point was scientific publications because these are pretty well curated. We ended up working with Elsevier because Scopus [Elsevier’s abstract and citation database] is a well-curated corpus and they’ve got the associated publication metadata well curated.</p>
+<p>So, we have the Scopus corpus, and we then ran <a href="https://www.kaggle.com/c/coleridgeinitiative-show-us-the-data">a Kaggle competition</a> to develop machine learning models to identify candidate snippets of text from scientific papers that seem like they might be referring to a dataset.</p>
+<p>Human researchers would then validate those snippets as either referring to a dataset or not, and once they’ve validated the publication-to-dataset dyad, we then pull in all the metadata associated with the publication: authors, institutions, key topics, publication year, countries, etc. – all this information gets piped over to the dashboards.</p>
+<p><strong>You published <a href="https://hdsr.mitpress.mit.edu/pub/g6e8noiy/release/2">a Harvard Data Science Review article about this competition a couple of years ago</a>, and from that I understand that you can actually get quite far with a simple string-matching method for finding datasets, but you would still miss a lot of citations using this approach because of the variability in the way people refer to datasets.</strong><br>
+That’s right. There were three different models that were developed, and each one picks up different aspects of how authors mention data in publications, and all three have been extremely useful. We learned a lot about the variety of ways in which researchers cite the data that they use.</p>
+<p>It turns out that more people do cite datasets in references than we had originally thought, but usually they don’t cite a DOI, they cite the URL or they cite the exact name of the dataset, so string search of references and URLs pulls out quite a lot of information that the DOIs, <em>per se</em>, don’t.</p>
+<p><strong>What are the next steps for scaling up the Democratizing Data work?</strong><br>
+I think it is more of a sociotechnical issue than a technical one. We have the plumbing, but really what we need to do is to figure out the incentives for researchers. We need to build a community around the data, which is what’s happened with code and the sharing of code on platforms like GitHub.</p>
+<p>Obviously, our initial focus has been on federal statistical data, but there’s also a lot of interest in how administrative data or streaming data are being used.</p>
+<p>The advantage of starting with statistical data is that they have names. As we learn more about citation patterns, though, it may be that we don’t need precise names. What may happen is that the community starts converging on common terminologies for datasets. That happens in a lot of fields.</p>
+<p>At the moment, it feels a little bit like the Wild West. We’re searching for ways to measure how datasets are used, how they’re valued, and so on. Federal statistical data and Elsevier’s Scopus have been a great starting point for us, but the broader vision is to incorporate other datasets and other publication databases like arXiv and Semantic Scholar. But all those other datasets that are out there, they need to be curated and documented in some way and that’s a huge task, so the solution has got to be community curation and sharing, right?</p>
+<p>If we don’t build a community around the data, we’re just going to have really bad information, really bad analysis, and really bad statistics on the value that our datasets – all these data assets – provide. My colleague <a href="https://www.rti.org/event/rti-fellow-program-distinguished-lecture-series-democratizing-data">Nancy Potok gave a talk a couple of days ago</a> in which she said that our future depends on this – and it really does.</p>
+<div class="article-btn">
+<p><a href="../../../../../../viewpoints/interviews/index.html">Find more Interviews</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Royal Statistical Society
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Photo of Julia Lane is not included in this licence.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Tarran, Brian. 2023. “Democratizing Data: Using natural language processing and machine learning to capture dataset usage.” Real World Data Science, March 11, 2024. <a href="https://realworlddatascience.net/viewpoints/interviews/posts/2024/03/11/democratizing-data.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>The Commission on Evidence-Based Policymaking was “charged with examining all aspects of how to increase the availability and use of government data to build evidence and inform program design, while protecting privacy and confidentiality of those data.”↩︎</p></li>
+<li id="fn2"><p>Specifically, the act requires federal agencies to identify and implement methods “for collecting and analyzing digital information on data asset usage by users within and outside of the agency.”↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>AI</category>
+  <category>Data</category>
+  <category>Machine learning</category>
+  <category>Natural language processing</category>
+  <guid>https://realworlddatascience.net/viewpoints/interviews/posts/2024/03/11/democratizing-data.html</guid>
+  <pubDate>Mon, 11 Mar 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/viewpoints/interviews/posts/2024/03/11/images/julia-lane-thumb.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
 <item>
   <title>Editor’s note: Not saying goodbye, just saying…</title>
   <dc:creator>Brian Tarran</dc:creator>
@@ -4140,129 +4249,6 @@ Tarran, Brian. 2023. “‘Statistics and data science are at the heart of the A
   <guid>https://realworlddatascience.net/viewpoints/posts/2023/10/20/ai-for-humanity.html</guid>
   <pubDate>Fri, 20 Oct 2023 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/viewpoints/posts/2023/10/20/images/etienne-girardet-_HO6LmpGDl8-unsplash.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>‘Feelings about sharing data can be context and time dependent – you can’t just do one survey or focus group’</title>
-  <dc:creator>Brian Tarran</dc:creator>
-  <link>https://realworlddatascience.net/viewpoints/interviews/posts/2023/10/16/data-sharing-in-gov.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>This summer, the UK Office for Statistics Regulation (OSR) published its report on <a href="https://osr.statisticsauthority.gov.uk/publication/data-sharing-and-linkage-for-the-public-good/">Data Sharing and Linkage for the Public Good</a>. In the report, the OSR notes that the value of sharing and linking data has become widely recognised within government, though there remain areas of challenge and uncertainties about “the public’s attitude to, and confidence in, data sharing.”</p>
-<p>The report also warns that “unless significant changes are implemented… progress that has been made could be lost and the potential for data sharing and linkage to deliver public good will not be achieved.”</p>
-<p>To find out more about the report and its recommendations for change, we sat down with Helen Miller-Bakewell, OSR’s head of development and impact. Listen to the full interview below or on YouTube.</p>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/72eqvS34n7c?si=tzoiivVk-m4su1aT" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<section id="transcript" class="level2">
-<h2 class="anchored" data-anchor-id="transcript">Transcript</h2>
-<div class="callout callout-style-simple callout-warning" style="margin-top: 0.75rem;">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>This transcript has been produced using <a href="https://otter.ai/">speech-to-text transcription software</a>. It has been only lightly edited to correct mistranscriptions and remove some repetitions.</p>
-</div>
-</div>
-</div>
-<p><strong>Brian Tarran</strong><br>
-Hello, I’m Brian Tarran, editor of realworlddatascience.net. And welcome to another Real World Data Science interview. Today I’m speaking with Helen Miller-Bakewell of the Office for Statistics Regulation. And we’re talking about the Office’s July 2023 report, Data Sharing and Linkage for the Public Good. In this report, the OSR reviews progress that has been made towards sharing and linking data for the public good. It says that the value of sharing and linking data has become widely recognised within government, though there remain areas of challenge and uncertainties about, quote, the public’s attitude to and confidence in data sharing. The report warns that quote, unless significant changes are implemented, the OSR is concerned that progress that has been made could be lost and the potential for data sharing and linkage to deliver public good will not be achieved. In my interview with Helen, we talk about some of the key highlights and findings of the report some of its main recommendations, some examples of data sharing and linkage that are going on now within government. So let’s hand over now to Helen, who will begin by introducing herself, her role within OSR and some of the background to the report.</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-So I’m Helen, Helen Miller-Bakewell, I have an official title of head of development and impact within OSR. OSR as a whole, our kind of formal job is to regulate statistics produced by government, we are the regulatory arm of the UK Statistics Authority. And our aim is to work towards statistics that serves the public good, and a government that produces and uses statistics analysis in a way that means the public can feel confident in them, and the analysis that that’s done and how they’re used. Within OSR, I used to be a regulator of statistics, I was out there looking at official statistics on crime and security, holding them up against our code of practice for statistics, which sets the standards that we would like to see government statistics meet. In my role now I actually oversee a few of our cross organisation functions, that all are designed to try and improve the way that OSR as a whole works, and to do work that can support the statistical system as a whole. And the most relevant one for today is the data and methods function. And a key piece of work that that function has been working on for the last year is looking at how data sharing and linkage is done across government, and that supports one of OSR’s wider interests and ambitions. One of our ambitions for the current five years is to make greater data available in a secure way for research and evaluation. That’s what this report that we’re going to be talking about has contributed to.</p>
-<p><strong>Brian Tarran</strong><br>
-Before we get stuck into the report, maybe it’s worth setting out what does OSR mean when it’s talking about data sharing and linkage? What’s the driver for this being a kind of a priority, something that OSR wants to encourage and to see happen? What are the public benefits that you hope to accrue from it?</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-The general premise that’s underpinned the report, and the reason that we have been a champion and advocate for date sharing and linkage for a while, is that we think data can be more powerful when it’s linked, and when it’s made accessible, in a secure way, to a wider audience for analysis. And it can offer more insights and better fulfil its potential to serve the public goods. And again, I keep saying serve the public goods. Within OSR, we very much think that statistics analysis, it shouldn’t just be for government, for decision makers in government, it should be available to the public, to all stakeholders, really, who wants to use it to make decisions hold government to account.</p>
-<p><strong>Brian Tarran</strong><br>
-So for people reading this or listening to this, who haven’t yet had a chance to dig into the report – and it’s very interesting report – what are the key messages that you want to share with people? What is the, I guess, what’s the assessment of the current state of data sharing and linkage?</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-I think some of the key messages do echo what other reports have said in this space, which is that there really has been some excellent progress in terms of data sharing and data linkage. We last reported on data sharing and linkage back in 2018 and 2019, when the DA was kind of coming into force and things were starting to move slowly.</p>
-<p><strong>Brian Tarran</strong><br>
-Sorry to interrupt you. But what is the DEA did you say?</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-It’s the Digital Economy Act. So there was some amendments to the DEA, it created new, new powers to enable greater sharing of data for research and statistics, and it put the Office for National Statistics at the centre of those powers. It kind of gave ONS greater powers to ask other departments across the government to share data with them for research and statistical purposes. And the UK Statistics Authority as well have powers to accredit researcher and accredit processing environments so that people can have access to more data as well across governments.</p>
-<p><strong>Brian Tarran</strong><br>
-So your last report was in 2018, 2019 time. There’s been good progress, you say, since then. I wanted to ask you about some good examples of data linkage that you’ve seen in that time. Maybe the obvious one is Covid, I’m guessing. The pandemic, that offered a lot of opportunities for linking different datasets together. But are there– is that it? Or are there others that you want to highlight?</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-I think the pandemic definitely provided a really strong impetus to share data, to link data. And I think, you know, we saw things done which hadn’t been possible previously, it broke down barriers, and was a kind of an excellent enabler, which is fantastic, because it was a crisis situation. And actually, yes, one of the examples that I would highlight, and I know others in OSR would highlight that was doing Covid, was Office for National Statistics estimates of Covid-19 mortality rates among different ethnic groups, and that drew on census data, it drew on death registration data at your on hospital episode statistics, it drew on data from lots of different places to create some really, really important analysis. It’s exciting to be able to say now that there are good examples of data sharing and linkage across different topic areas and different organisations. And I think if you spoke to regulators in OSR working in different domains, they will each have like their favourite examples of, of data sharing and linkage. Having worked in crime and security regulation myself, the one that comes straight to mind is Data First, which is data linkage project led by Ministry of Justice, working with ADR UK – another one, I don’t have to say full often, Administrative Data Research UK – and that’s done a fantastic job of kind of opening up access again, in a secure way, a real focus on security, to a wealth of data from across MOJ systems, sometimes horrible, clunky legacy systems – I hope none won’t be offended if I say that – but making it valuable because people can, you know, to a greater extent now link it and link it to data from other departments as well.</p>
-<p>I did ask a couple of colleagues if they wanted to throw me any other examples of data sharing and linkage that they particularly think highly of, and another one that came up was the Registration and Population Interaction Database, RAPID database, which has been created by DWP [Department for Work and Pensions]. And that provides that brings together data, information from DWP, HMRC [His Majesty’s Revenue &amp; Customs] and local authorities to try and give a view of citizens’ interactions across the breadth of DWP services. What the report does say is, although we have these good examples, there are still barriers and challenges to doing data sharing and linkage. And that, that can, can be true across the whole process, right from getting support for the idea, through the practical steps of finding out what data is available, where, who owns it, how you can get to it, and then actually doing the linkage bit technically at the end. So we’ve been in a situation where things definitely have improved. But it’s, in many cases, it is not easy or efficient yet to share or link data. Our report talks about different barriers we heard about during the course of interviews with stakeholders, that we’ve encountered through our regulatory work as well. And we make 16 – to be precise – recommendations for how we could, or how government could, could start to chip away at those to, to improve the situation going forward.</p>
-<p><strong>Brian Tarran</strong><br>
-Yeah, and I would like to talk about some of those recommendations, I guess the more technical side of the recommendations, a bit, a bit later. One thing I wanted to ask you now about was about a word that sort of jumped out at me in, in the report was this idea of needing there to be a social licence for data sharing. And in the report, social licence has, has been defined as the, like, the level of acceptance or approval in local communities for data linkage projects. Now, I guess for something like the pandemic, right, you can argue that there is a kind of an implicit social licence, it was an emergency situation, there was, you know, people at risk. So that sort of use case was kind of justified, but I was curious about how social licences for these things can best be established and, and maintained, because that’s about kind of interaction with the public, right? You know, you could put a load of government statisticians and data scientists into a room and say, what could you do with this, all this data and how you could, could you link it all together? And they’d get very excited about it? But actually, then, how do you then take that to the public and convince them that it’s a good idea, or are there other ways of making sure this social licence has been obtained?</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-So, social licence and public engagement were one of the topics that was good, most consistently mentioned across the interview– interviews we held. And yeah, there just seemed to be a consensus which we would support that those working on data sharing and linkage should be prioritising public engagement around their work, both to kind of gauge the amount of social licence that there might be, or any sticking points, and potentially start to build social licence as well. And I think, you know, it’s really great to see people thinking like that, and I would actually say as well, it seems to be a recurring theme. And it’s really nice to see that having prominence. Another finding from the interviews was, you know, the flip side of this, yes, people think it’s important, but often people can not quite know how to approach public engagement, building social licence. And there are actually a few examples we highlight in the report where we, where we think public engagement has been done, done well, hopefully, to kind of inspire people. I would say, you know, I have a few kind of overarching thoughts on what can be important. And I think it, it comes so much to trust and trustworthiness. And I think the way, some ways that you can support trust with the public are transparency, saying what you’re going to do and why, and how, and actually the outcomes as well, when possible, let’s sit closing the circle. Thinking about this interview, I remembered OSR ran a public dialogue last year with ADR UK. And we were trying to talk to members of the public about what they understand by the public good of statistics and data. And one of the messages that came up there was people want to feel the impact their data and feel that outcome. And they don’t always feel they get that knowledge back. Like, what, what was, so what was the outcome of you having my data and doing these things that you kind of said you would do? So yeah, transparency, and then kind of linked to that, I guess, like continuous engagement, and considered engagement. And the public is not a homogenous group, there will be different groups that are important to engage for different data sharing, different data linkage projects, and you kind of need to consider who are the people you need to really engage with for your specific initiatives. And then it’s, I’m afraid you can’t just do one survey or one focus group, there needs to be some kind of mechanism for getting more continuous engagement to keep an eye on actually, how are people feeling now, because we know that social licence and people’s feelings about sharing data, it can be context dependent, it can be time dependent. And actually the first couple of recommendations in the report, so right there at one and two, number one is about the value of trackers like CDEI’s [Centre for Data Ethics and Innovation] Public Attitudes Survey, which, you know, are run on a semi-regular basis to try and track how the public are feeling at a high level about questions around data. And then our second recommendation is about having an organisation that can do more to produce guidance and support people doing research to do public engagement well.</p>
-<p><strong>Brian Tarran</strong><br>
-Does the mission statement of statistics for the public good, does that kind of help guide the approach, right? So any data linkage, data sharing project, you need to understand, you need to think about okay, what’s the public good that we’re trying to achieve here? And then that becomes your, almost the point, the focal point of the discussion with the public about why we want to do this and why we think there’ll be a benefit.</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-Absolutely. This focus on the public good is what we always come back to in, in OSR. And again, it is something that can sometimes slightly differentiate us from other organisations in this space where there may be a very internal government focus. Yeah, absolutely. What’s the outcome that’s seeking to be achieved? And will we achieve it? Did we achieve it?</p>
-<p><strong>Brian Tarran</strong><br>
-One of the parts of the report that I was quite interested in was the four future scenarios. The task you set yourself was to look five years from, from now at where we might be, and I guess give a range of, like, scenarios in which data linkage is great, and everyone’s doing it and it’s fully supported, down to it’s, you know, it’s happening on a piecemeal basis or not at all. So what I wanted to understand was, how those scena– whether any of those scenarios are more likely than others to emerge, and whether the kind of likelihood of those scenarios emerging are dependent on certain of your recommendations.</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-The scenarios just allowed us to explore in a theoretical way, like, yeah, where, where could we end up? We hope the 16 recommendations we’ve made, taken together, if they could all be fully delivered, could lead us towards that ultimate scenario of data sharing and linkage for the public good. And you can put quite neatly different recommendations against different bits of that scenario to help get, get us there. I think if, if I reflect on the scenarios like right now, the one that feels like most familiar to me is data sharing and linkage in silos. We’ve kind of spoken a little bit earlier already about how there are some areas of government and some topic areas and some organisations that are doing some really brilliant work. And I could see quite a realistic scenario where that kind of becomes more entrenched over, over the next five years. But, you know, maybe that’s actually just realistic, right? Maybe it’s unrealistic to expect that every organisation [in] government with different, different sizes, different funding, different priorities, could, could end up in exactly the same place on date sharing and linkage, all at the kind of, the top level. But I do, I do think if we can chip away at the recommendations we’ve made, then every organisation could improve on their starting point and move towards that, that scenario.</p>
-<p><strong>Brian Tarran</strong><br>
-Okay, so let’s talk about some of the recommendations of how we get there. And there were a couple of areas I particularly wanted to focus on. One was talking about career frameworks, and having those kind of reflect, and I guess, reward the skills of those who are working on data and data linkage projects. So I was kind of wondering, you know, are there, are these skills that are kind of currently either underserved or under recognised within the existing career frameworks? And if so, how do we change that? Or was that is that beyond the scope of your report to recommend that?</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-I think the situation across government is perhaps relatively complicated here. And I think what we, what we’d really like to see, essentially, is a situation where people in roles, in data roles, basically feel valued, and they can see a clear career pathway for them within government. And I think what we have at the moment is a variety of career frameworks that support people working in in roles with data and a decentralised pay model. Which means pay scales across, across roles can, can – and frameworks – can vary. You can see intuitively, how that has the potential to kind of create confusion for individuals – like well, which career framework should I look at – and, and then on the pay side, the potential to create kind of skills sink, where people want to go and work particular areas simply because they can be paid more, and in some cases it’s a considerable amount more, actually. And the reason I say it’s complicated is because, I mean, to some extent, this, what we have, is appropriate. People who work on data and sharing and linkage projects can come from lots of different analytical backgrounds – like, you could have a statistician or a social researcher or a data scientist or data architect, they could all be working on a, on a data sharing project, shall we say. And actually, it kind of makes sense that people in those kind of different roles might have different career frameworks and paths. And similarly, as I say, pay is decentralised, I don’t think OSR has much power to change too much there. But, you can see there are arguments for departments being able to have their own say on what skills they need to kind of pay more for in different circumstances at different times to, to bolster things. However, what we have said in the report, what we call for, and what we will try and speak to people who own frameworks to try and facilitate, is just a bit more awareness between people who own different frameworks about what else is out there, and a bit more consistency, therefore, about how different data skills perhaps are reflected and where they’re reflected in different frameworks. So we’re not asking for one single framework, I don’t think that would be practical, or particularly serve people working in data very well. But yeah, like more awareness, better joined up working, more consistent use of frameworks in, in job adverts, for example, just to help people see more clarity about their careers and where they can take them.</p>
-<p><strong>Brian Tarran</strong><br>
-I was at an event recently where, you know, people working in, in data science or data, data kind of roles in government, were talking about how, like, the sort of career pathways and that there’s a feeling that technical skills, or growing technical skills aren’t always as well rewarded as greater sort of managerial responsibilities, so that if you become a, someone who’s excellent at being able to solve the, the knotty problems of data linkage and sharing, right, you might not be as well compensated for that as you might be if you were, say, running a team of 20, 30 people and sort of not actually applying those technical skills on a day-to-day basis. So it’s, I guess that was where my question was coming from was, is it that sort of thing that we kind of need to, need to address in some way? But, again, that might be beyond the scope of, you know, what you were looking at it on this particular matter?</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-Well, I think it’s something for us to think more about, if I’m honest. We have committed ourselves to a follow on report for this. And we want to kind of take a look at the recommendations next year and see, you know, how far everything’s got. So, you know, any, any additional bits that we haven’t covered in this first report are good for us to think about. I think the situation you’ve just outlined sounds very familiar, to be honest, and not just across data science, across a whole load of roles where, yeah, actually your technical skills, they take you really well to middle management, but then there often comes a point where, if you want to go higher and have greater remuneration, you might have to move more to those softer skills, those managerial skills. That’s something we can think a bit more about, actually. And when we do have conversations with those who we kind of pointed to for the frameworks recommendation, maybe have a look into it a bit more.</p>
-<p><strong>Brian Tarran</strong><br>
-This is, I guess, some somewhat related to the previous point. But the other aspect of the recommendations that jumped out to me were the discussion around quality metadata and documentation, standardisation and things like that as being priorities for effective data linkage, these are the things that need to be in place. But again, when you chat to researchers, not just in government but all over the place, these less glamorous aspects of data management are kind of underappreciated. And often teams are, the way that, the way teams work, the way projects work is you finish one, you move on to the next, you don’t really want to think too much about the one that you just worked on, because you’ve got a new priority or a new round of funding or whatever it is. So how do we convince senior leaders that, that there are sufficient resources for this sort of work that needs to be done? It might not sort of deliver necessarily immediate value and benefits, but it’s about kind of accruing the kind of infrastructure, I guess, to, to make sure that data sharing and linkage, you can achieve your, you know, your most optimistic vision of data sharing and linkage being widespread in government.</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-Yeah, I think it’s a really important question. And yeah, having worked as a statistician as well, before I came into this world of regulation, yep, I recognise what you just described. And, you know, I think it’s always going to be a challenge in these kind of fast-paced multiple priority environments, where often people are resource stretched in terms of people, time, money, all those things together. Though, I think there’s a couple of tacks. One, I think, is maybe improving the data literacy of senior leaders, and trying to give them a greater understanding of, of data, how it’s used, and around these issues of kind of standardisation, and why they’re why they’re so important. And, actually, a couple of the recommendations earlier on in the report, in the people section, are around improving the– or strengthening the statistical literacy and the data literacy of senior leaders and recommending they go on, for example, the Data Science Campus in ONS run a master class for senior leaders across the service. So I think there was a kind of a bit of a, an education thing. And yeah, I guess, you know, part of that is setting out, like, what are the benefits? And what are the risks of not doing this? I think that, you know, here comes a role for people like OSR in setting expectations, especially in the world of official statistics, it is completely within our power to set the expectation for what government statistics should be doing with regards to metadata, or kind of following, following best practice and things like that. Our code of practice for statistics does do that to some extent already. And us as well, there’s a role for us in demonstrating the benefits and saying why we’re asking people to do these things and, and what’s good when it, when it goes well. I was thinking about this, and it drew to mind the EAST Framework. I don’t know if you’ve come across that. It’s a framework that was introduced to me by the Behavioural Insights Team for bringing about change and what you– what interventions need to be if they’re going to be successful, and it’s Easy, Attractive, Social and Timely. And I think when we and when other organisations who are kind of working on metadata standardisation, like the Central Digital Data Office, like Department for Science, Innovation and Technology, there’s, you know, there’s a few players here. We need to be keeping these, the EAST in mind as we design to try and help people kind of come on board with things more easily. And yeah, recommendation 16 in the report, the final one, is about standardisation and about, there are lots of players in this space and can we, can we bring them together a bit to be even more effective? So that’s, that’s definitely something we’ll be looking at in the coming months.</p>
-<p><strong>Brian Tarran</strong><br>
-And you said that there’ll be a follow up report soon. When is that? When are you targeting?</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-We’re planning next summer. So last time when we did our first report on Joined-up Data in 2018. And then we did a follow on one year on in 2019. We found that was quite an effective way to, for us and others, to kind of build and maintain momentum. And yeah, again, you know, feels a bit unfair almost to just put out a load of recommendations, and then then leave, leave the world to it. We’d like to see if we can help facilitate and then tell people how we’ve been getting on.</p>
-<p><strong>Brian Tarran</strong><br>
-And I’m guessing it’s not, you’re not looking for all recommend– 16 recommendations to be implemented by next year. But it’s, are we making steps towards some of them? Are we are we heading in the right direction?</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-You know, let’s practice what we preach. A bit of transparency. Yeah, are we heading in the right direction? And if we’re not, you know, is there a plan? I’d love to be optimistic. That optimistic. I wouldn’t expect that we can just put ticks against all 16 recommendations next year. But hopefully, yeah, we can, we could do some progress bars.</p>
-<p><strong>Brian Tarran</strong><br>
-Excellent. Well, we should probably schedule a follow up interview for a year’s time then. But Helen, thank you very much for your time today.</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-Oh, you’re very welcome. And if anyone, any of your listeners interested in, in the report, please do get in touch with OSR. We’d be very happy to talk about the report that we’ve just written or about, you know what we’re doing. Following on from that? Yeah, thank you.</p>
-<p><strong>Brian Tarran</strong><br>
-So we’ll definitely put a link to the report in the show notes. So once again, Helen, thank you very much for joining us.</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-Oh, you’re welcome. Thank you.</p>
-<div class="article-btn">
-<p><a href="../../../../../../viewpoints/interviews/index.html">Find more Interviews</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Royal Statistical Society
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This interview is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Tarran, Brian. 2023. “‘Feelings about sharing data can be context and time dependent – you can’t just do one survey or focus group.’” Real World Data Science, October 16, 2023. <a href="https://realworlddatascience.net/viewpoints/interviews/posts/2023/10/16/data-sharing-in-gov.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-</section>
-
- ]]></description>
-  <category>Data sharing</category>
-  <category>Data linkage</category>
-  <category>Public engagement</category>
-  <guid>https://realworlddatascience.net/viewpoints/interviews/posts/2023/10/16/data-sharing-in-gov.html</guid>
-  <pubDate>Mon, 16 Oct 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/viewpoints/interviews/posts/2023/10/16/images/helen-miller-bakewell.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 </channel>
 </rss>
