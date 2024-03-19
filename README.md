@@ -244,9 +244,11 @@ Our repository, like many on GitHub, contains multiple "branches". For the RWDS 
 The `gh-pages` branch is where the RWDS site is served from. Unlike other branches of our repository, we do not manually update the `gh-pages` branch. It is automatically updated any time a change is made to the `main` branch, which is why article/website development work must be done away from the `main` branch until ready to publish/deploy.
 
 ## Create an article
-Before you start creating content for Real World Data Science, we strongly recommend you familiarise yourself with the basics of Quarto. The [Quarto website](https://quarto.org/docs/get-started/) has a short "Get Started" guide with a three-part tutorial that won't take more than an hour to work through.
+Before you start creating content for Real World Data Science, we strongly recommend you familiarise yourself with the basics of Quarto. The [Quarto website](https://quarto.org/docs/get-started/) has a short "Get Started" guide with a three-part tutorial that won't take more than an hour to work through. 
 
-If you've run through the "Get Started" guide, or you've used Quarto before, you'll be ready to get going on your RWDS article: the Quarto CLI will be installed on your machine and you'll have chosen which tool you want to work with (we recommend VS Code if you're comfortable with Markdown, or RStudio if you'd prefer to take advantage of the inbuilt Quarto visual editor).
+If you've never worked with GitHub before, you also want to create your own GitHub account, download the [GitHub Desktop app](https://desktop.github.com/), and have [Git](https://git-scm.com/) installed on your local machine.^[Further reading: [Git vs. GitHub: What's the difference?](https://devmountain.com/blog/git-vs-github-whats-the-difference/)] 
+
+Now, if you've run through the "Get Started" guide, or you've used Quarto before, you'll be ready to get going on your RWDS article: the Quarto CLI will be installed on your machine and you'll have chosen which tool you want to work with (we recommend [VS Code](https://code.visualstudio.com/) if you're comfortable with Markdown, or [RStudio](https://posit.co/download/rstudio-desktop/) if you'd prefer to take advantage of the inbuilt Quarto visual editor).
 
 Next, you'll want to head over to Finn-Ole Höner's [RWDS_post_template repository](https://github.com/finnoh/RWDS_post_template), and click the "Use this template" button. This will create a new repository in your own GitHub account which contains several files that you'll need throughout the article development process. 
 
@@ -258,7 +260,7 @@ When you have a draft of an article you are happy with, you'll want to share it 
 
 1. [Invite the RWDS editor to become a collaborator](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository) on the repository you've created in your personal account.
 
-This is the perhaps the most efficient way of working as it allows the editor to make their own copy of your repository, review and render the `report.qmd` themselves, share html and Word versions with reviewers, gather feedback, and then make comments and suggested changes via pull request.
+This is perhaps the most efficient way of working - and the one we recommend - as it allows the editor to make their own copy of your repository, review and render the `report.qmd` themselves, share html and Word versions with reviewers, gather feedback, and then make comments and suggested changes via pull request.
 
 2. Render your `report.qmd` as html and Word files and [email these to the RWDS editor](https://realworlddatascience.net/contact.html).
 
@@ -272,9 +274,38 @@ format:
 
 This will ensure that the rendered html file displays correctly when opened as a standalone document.
 
+### A note about executable code
+One of the great features of Quarto is that articles can incorporate executable R and Python code. This makes it possible to run (and rerun) your data analysis or create (and recreate) data visualisations every time a Quarto document is rendered. At the article development stage, you might decide to take advantage of these particular features, and there are advantages to doing so - it allows our reviewers, for example, to run the code themselves and see whether the analysis is reproducible on different machines.
+
+However, articles published on RWDS cannot include executable code. If we were to allow this, our site render process would have to load in many different R and Python packages, and this would - over time - kill our render speeds. 
+
+So, if you do plan to use executable code when developing and submitting a draft of your article, you will also need to give some thought to how the article will work in a non-executable format. For example:
+
+- Code can remain in the article, but `eval: false` will need to be included in the article YAML or in individual code blocks. This will prevent Quarto from running the code.
+- Data visualisations produced from code should be saved as image files and these image files used for the published version of the article.
+- Interactive graphics produced from code should be saved as html, and the html file embedded as an iframe in the published version of the article.^[The [What is data science?](https://realworlddatascience.net/ideas/posts/2024/02/19/what-is-data-science.html) article includes an example of how to do this. See lines 424-512 of the [submitted version](https://github.com/jauerbach/what-is-data-science/blob/main/RWDS_post_template-main/report.qmd) and lines 67-72 of the [published version](https://github.com/realworlddatascience/realworlddatascience.github.io/blob/main/ideas/posts/2024/02/19/what-is-data-science.qmd).]
+
 ## Add an article
+Congratulations! Your article has been accepted. Now we need to get it ready for publication. The [Instructions for RWDS team members](#instructions-for-rwds-team-members) section walks through the steps the RWDS editor follows when getting ready to publish a new article. But the great thing about building RWDS on GitHub is, you don't need to wait for the editor to do this work. If your article has been accepted and you are comfortable working with Quarto and GitHub, you could complete this process yourself. See the section, [Instructions for external contributors](#instructions-for-external-contributors) for more details.
 
+### Instructions for RWDS team members
 
-## Publish an article
+1. Create a new branch
+: This can be done either through the RWDS repository page on GitHub.com or the GitHub Desktop app. The new branch should be created from the `main` branch and should be named for the article being created. We'll use the branch name `new-case-study` and the article name `report.qmd` as examples throughout this section.
+
+2. Switch to new branch on your local machine
+: First, make sure your local copy of the RWDS repo is up to date with the remote version. Then, using either GitHub Desktop or your code editor, switch to the `new-case-study` branch.
+
+3. Create folders for new article
+: Throughout RWDS, we use the following folder structure for articles: `[section name]/posts/[year]/[month]/[day]/[file name].qmd`. Year, month, and day are set according to the intended publication date of the article. So, if you intend to publish `report.qmd` in the Case Studies section on April 1, 2024, you'll want to create the following folder location: `case-studies/posts/2024/04/01`. You'll also want to create an `images` subfolder within the `01` folder.
+
+![Example of RWDS folder structure for published articles](images/folder-example.PNG)
+
+4. Add article files to folders
+: Place `report.qmd` in the `case-studies/posts/2024/04/01` folder. Put illustrations, photos, figures, etc., in the `case-studies/posts/2024/04/01/images` folder.   
+
+### Instructions for external contributors
 
 ## Update the homepage
+
+## Publish an article
