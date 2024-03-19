@@ -126,7 +126,7 @@ To explain, let's take a look at a straightforward example: the `index.qmd` file
 
 And here's a clearer view of the code:
 
-``` markdown
+``` yaml
 ---
 pagetitle: Case studies | Real World Data Science
 title: Case studies
@@ -160,7 +160,7 @@ As we move further down the `listing` section of the YAML, we set the `sort` ord
 
 The Case Studies section of RWDS has no subsections and therefore has the simplest `index.qmd`. The Ideas section, meanwhile, has two subsections -- DataScienceBites and Tutorials -- and so the folders for these subsections are specified in the `listing` section of the `ideas/index.qmd` file:
 
-``` markdown
+``` yaml
 listing:
   contents: 
   - datasciencebites
@@ -171,7 +171,7 @@ listing:
 
 Although this `listing` is pulling content from multiple folders, all the content will be shown in a single list. It is possible, however, to construct multiple lists, each pulling from different folders, and include these separate lists within a single page. We use this functionality in constructing the main homepage for RWDS. In the `index.qmd` file in the root of the repository, the `listing` section of the YAML includes different lists constructed from various folders, and each list is assigned its own `id`. For example:
 
-``` markdown
+``` yaml
 listing:
   - id: latest-content
     contents: 
@@ -208,7 +208,7 @@ One other important and common filetype to note is `_metadata.yml`. You'll find 
 
 For example, in the `case-studies` folder of our repo, there is a `_metadata.yml` file containing the following:
 
-``` markdown
+``` yaml
 title-block-banner: true
 sidebar: false
 page-layout: article
@@ -218,7 +218,7 @@ Thanks to these settings, any `.qmd` file in the `case-studies` folder or subfol
 
 If we then move one folder level down to `case-studies/posts`, we find a second `_metadata.yml` file. This one includes:
 
-``` markdown
+``` yaml
 include-in-header: 
   - ../../progress-bar.html
   
@@ -234,12 +234,14 @@ We place this second `_metadata.yml` file one level down, away from the `case-st
 
 Before moving on, a few words about the following folders in our repo:
 
-- `.github` contains code controlling the workflows that kick-in automatically whenever the `main` branch of our repository is updated.
+- `.github` contains code controlling the workflows that kick-in automatically whenever the `main` [branch](#what-are-branches) of our repository is updated.
 - `_extensions` is where code and files for various [Quarto extensions](https://quarto.org/docs/extensions/) are installed.
 - `_freeze` stores previously executed computational outputs so they don't need to be re-executed every time the site is rendered.
 
-### Explaining the branches
-[to add]
+### What are 'branches'?
+Our repository, like many on GitHub, contains multiple "branches". For the RWDS repo, think of these different branches as being "in development" versions of the site. Every time we want to add a new article to the site, for example, we create a branch that is a copy of the `main` branch. We update this branch with the new article and associated files. Then, when the article is finished and ready to publish, we make a "pull request" against the `main` branch. This merges all the changes made to our new branch into the `main` branch and triggers an automated process that re-renders the site, producing new html files that are then pushed to the `gh-pages` branch of our repository.
+
+The `gh-pages` branch is where the RWDS site is served from. Unlike other branches of our repository, we do not manually update the `gh-pages` branch. It is automatically updated any time a change is made to the `main` branch, which is why article/website development work must be done away from the `main` branch until ready to publish/deploy.
 
 ## Create an article
 Before you start creating content for Real World Data Science, we strongly recommend you familiarise yourself with the basics of Quarto. The [Quarto website](https://quarto.org/docs/get-started/) has a short "Get Started" guide with a three-part tutorial that won't take more than an hour to work through.
@@ -250,12 +252,28 @@ Next, you'll want to head over to Finn-Ole Höner's [RWDS_post_template reposito
 
 The first file, `content-brief.qmd`, is for you to sketch out your article idea. Open up the file in your tool of choice and hit the render button. This will produce an html page, styled in the RWDS theme, with a series of instructions for you to follow. Once you've followed the instructions and added the required information under the various headings in the `.qmd` file, you should contact the RWDS editor to discuss next steps. See our published [Contributor Guidelines](https://realworlddatascience.net/contributor-docs/contributor-guidelines.html#the-submission-process) for an overview of the RWDS submission process.
 
-Once a content brief has been received, reviewed and accepted by the RWDS editor and editorial board, work on the article proper can begin. For this, you'll want to use the `report.qmd` file from the template repository. This file not only serves as a basic template for all published RWDS articles, it also contains examples of the main Quarto features used by RWDS. If you open up this file in your tool of choice, render it, and read through the html and `.qmd` versions side-by-side, you'll be able to see the underlying code that produces the various html outputs.
+Once a content brief has been received, reviewed and accepted by the RWDS editor and editorial board, work on the article itself can begin. For this, you'll want to use the `report.qmd` file from the template repository. This file not only serves as a basic template for all published RWDS articles, it also contains examples of the main Quarto features used by RWDS. If you open up this file in your tool of choice, render it, and read through the html and `.qmd` versions side-by-side, you'll be able to see the underlying code that produces the various html outputs.
 
+When you have a draft of an article you are happy with, you'll want to share it with the RWDS editor and editorial board. There are a couple of ways to do this:
+
+1. [Invite the RWDS editor to become a collaborator](https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-personal-account-on-github/managing-access-to-your-personal-repositories/inviting-collaborators-to-a-personal-repository) on the repository you've created in your personal account.
+
+This is the perhaps the most efficient way of working as it allows the editor to make their own copy of your repository, review and render the `report.qmd` themselves, share html and Word versions with reviewers, gather feedback, and then make comments and suggested changes via pull request.
+
+2. Render your `report.qmd` as html and Word files and [email these to the RWDS editor](https://realworlddatascience.net/contact.html).
+
+If you are sharing articles in this way, you'll want to make sure to include the following in the YAML of your `report.qmd`:
+
+``` yaml
+format:
+  html:
+    embed-resources: true
+```
+
+This will ensure that the rendered html file displays correctly when opened as a standalone document.
 
 ## Add an article
 
-[Note: Make sure to mention about embed-resources: true]
 
 ## Publish an article
 
