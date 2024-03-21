@@ -246,7 +246,9 @@ The `gh-pages` branch is where the RWDS site is served from. Unlike other branch
 ## Create an article
 Before you start creating content for Real World Data Science, we strongly recommend you familiarise yourself with the basics of Quarto. The [Quarto website](https://quarto.org/docs/get-started/) has a short "Get Started" guide with a three-part tutorial that won't take more than an hour to work through. 
 
-If you've never worked with GitHub before, you also want to create your own GitHub account, download the [GitHub Desktop app](https://desktop.github.com/), and have [Git](https://git-scm.com/) installed on your local machine.^[Further reading: [Git vs. GitHub: What's the difference?](https://devmountain.com/blog/git-vs-github-whats-the-difference/)] 
+If you've never worked with GitHub before, you also want to create your own GitHub account, download the [GitHub Desktop app](https://desktop.github.com/), and have [Git](https://git-scm.com/) installed on your local machine.[^1]
+
+[^1]: Further reading: [Git vs. GitHub: What's the difference?](https://devmountain.com/blog/git-vs-github-whats-the-difference/) 
 
 Now, if you've run through the "Get Started" guide, or you've used Quarto before, you'll be ready to get going on your RWDS article: the Quarto CLI will be installed on your machine and you'll have chosen which tool you want to work with (we recommend [VS Code](https://code.visualstudio.com/) if you're comfortable with Markdown, or [RStudio](https://posit.co/download/rstudio-desktop/) if you'd prefer to take advantage of the inbuilt Quarto visual editor).
 
