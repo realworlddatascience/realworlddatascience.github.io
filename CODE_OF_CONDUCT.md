@@ -57,7 +57,7 @@ Note that unless prior permission is agreed in writing with the editor of RWDS, 
 
 Instances of abusive, harassing, or otherwise unacceptable behavior may be
 reported to the community leaders responsible for enforcement at
-[b.tarran@rss.org.uk](mailto:b.tarran@rss.org.uk).
+[rwds@rss.org.uk](mailto:rwds@rss.org.uk).
 All complaints will be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the
