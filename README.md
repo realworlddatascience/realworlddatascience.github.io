@@ -308,6 +308,11 @@ Throughout RWDS, we use the following folder structure for articles: `[section n
 ### 4. Add article files to folders 
 Place `report.qmd` in the `case-studies/posts/2024/04/01` folder. Put illustrations, photos, figures, etc., in the `case-studies/posts/2024/04/01/images` folder.
 
+#### A quick note about image files
+To keep the RWDS repo and website running smoothly, image file sizes should be as small as possible. Absolute maximum pixel width is 1000px. For figures and illustrations within articles, we recommend using a pixel width of 500px-800px. Images used as thumbnails for article listings must be set to 991px(w) x 724px(h).
+
+Larger image files can be hosted externally and still included in RWDS articles. See the [RWDS_post_template repository](https://github.com/finnoh/RWDS_post_template) for examples of how this works.
+
 ### 5. Review and update the article YAML
 If `report.qmd` has been prepared using the [RWDS_post_template repository](https://github.com/finnoh/RWDS_post_template), the first 30-plus lines of code will be a YAML block, structured something like this:
 
@@ -387,6 +392,8 @@ image: images/thumbnail-image.png # points to the image file location
 image-alt: # provides a description of the image for screen readers
 ```
 
+Remember, images used as thumbnails for article listings must be set to 991px(w) x 724px(h).
+
 ### 6. Review and update the article footer
 All RWDS articles end with a foooter that looks like this:
 
@@ -434,5 +441,6 @@ date: 04/01/2024 # date is in mm/dd/yyyy format
 Now, let's [update the RWDS homepage](#update-the-homepage).
 
 ## Update the homepage
+To update the RWDS homepage, we need to work with the `index.qmd` file in the root of the repository. 
 
 ## Publish an article
