@@ -292,25 +292,23 @@ So, if you do plan to use executable code when developing and submitting a draft
 [^2]: The [What is data science?](https://realworlddatascience.net/ideas/posts/2024/02/19/what-is-data-science.html) article includes an example of how to do this. See lines 424-512 of the [submitted version](https://github.com/jauerbach/what-is-data-science/blob/main/RWDS_post_template-main/report.qmd) and lines 67-72 of the [published version](https://github.com/realworlddatascience/realworlddatascience.github.io/blob/main/ideas/posts/2024/02/19/what-is-data-science.qmd).
 
 ## Add an article
-Congratulations! Your article has been accepted. Now we need to get it ready for publication. The [Instructions for RWDS team members](#instructions-for-rwds-team-members) section walks through the steps the RWDS editor follows when getting ready to publish a new article. But the great thing about building RWDS on GitHub is, you don't need to wait for the editor to do this work. If your article has been accepted and you are comfortable working with Quarto and GitHub, you could complete this process yourself. See the section, [Instructions for external contributors](#instructions-for-external-contributors) for more details.
+Congratulations! Your article has been accepted. Now we need to get it ready for publication. This section walks through the steps the RWDS editor follows when getting ready to publish a new article. But the great thing about building RWDS on GitHub is, you don't need to wait for the editor to do this work. If your article has been accepted and you are comfortable working with Quarto and GitHub, you could complete this process yourself. External contributors can't work directly with the RWDS repo, though, so you'll first need to ["fork" the repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo), which will create a copy of the repo in your own GitHub account.
 
-### Instructions for RWDS team members
+### 1. Create a new branch 
+This can be done either through the repository page on GitHub.com or the GitHub Desktop app. The new branch should be created from the `main` branch and should be named for the article being created. We'll use the branch name `new-case-study` and the article name `report.qmd` as examples throughout this section.
 
-##### 1. Create a new branch 
-This can be done either through the RWDS repository page on GitHub.com or the GitHub Desktop app. The new branch should be created from the `main` branch and should be named for the article being created. We'll use the branch name `new-case-study` and the article name `report.qmd` as examples throughout this section.
-
-##### 2. Switch to new branch on your local machine 
+### 2. Switch to new branch on your local machine 
 First, make sure your local copy of the RWDS repo is up to date with the remote version. Then, using either GitHub Desktop or your code editor, switch to the `new-case-study` branch.
 
-##### 3. Create folders for new article 
+### 3. Create folders for new article 
 Throughout RWDS, we use the following folder structure for articles: `[section name]/posts/[year]/[month]/[day]/[file name].qmd`. Year, month, and day are set according to the intended publication date of the article. So, if you intend to publish `report.qmd` in the Case Studies section on April 1, 2024, you'll want to create the following folder location: `case-studies/posts/2024/04/01`. You'll also want to create an `images` subfolder within the `01` folder.
 
 ![Example of RWDS folder structure for published articles](images/folder-example.PNG)
 
-##### 4. Add article files to folders 
+### 4. Add article files to folders 
 Place `report.qmd` in the `case-studies/posts/2024/04/01` folder. Put illustrations, photos, figures, etc., in the `case-studies/posts/2024/04/01/images` folder.
 
-##### 5. Review and update the article YAML
+### 5. Review and update the article YAML
 If `report.qmd` has been prepared using the [RWDS_post_template repository](https://github.com/finnoh/RWDS_post_template), the first 30-plus lines of code will be a YAML block, structured something like this:
 
 ```yaml
@@ -389,7 +387,7 @@ image: images/thumbnail-image.png # points to the image file location
 image-alt: # provides a description of the image for screen readers
 ```
 
-##### 6. Review and update the article footer
+### 6. Review and update the article footer
 All RWDS articles end with a foooter that looks like this:
 
 ![](images/article-footer-example.PNG)
@@ -424,18 +422,16 @@ How to cite
 :::
 ```
 
-##### 7. Save and commit your changes
+### 7. Save and commit your changes
 By this point, you're ready to commit the first version of `report.qmd` to the `new-case-study` branch of the RWDS repo. Go ahead and do so, and then render the article. This will produce a working version of the article, and the RWDS website as a whole, on your local machine.
 
-Check the rendered article against the submitted version. Does everything appear as it should? If not, edit the file, save, re-render and check again. When you are happy that article displays and reads as it should, head on over to the relevant section homepage (which, for this example, would be the Case Studies section). Make sure the article, and its thumbnail image, appear as the top story in the section listings. If it does, you are almost ready to publish. You just need to go back into the article one more time and edit the `date:` field of the YAML, changing it from `last-modified` to the target publication date - which we set as April 1, 2024 when setting up the article folders:
+Check the rendered article against the submitted version. Does everything appear as it should? If not, edit the file, save, re-render and check again. When you are happy that the article displays and reads as it should, head on over to the relevant section homepage (which, for this example, would be the Case Studies section). Make sure the article (and its thumbnail image) appears as the first story in the section listings. If it does, you are almost ready to publish. You just need to go back into `report.qmd` one more time and edit the `date:` field of the YAML, changing it from `last-modified` to the target publication date, which we set as April 1, 2024 when setting up the article folders:
 
 ```yaml
 date: 04/01/2024 # date is in mm/dd/yyyy format
 ```
 
 Now, let's [update the RWDS homepage](#update-the-homepage).
-
-### Instructions for external contributors
 
 ## Update the homepage
 
