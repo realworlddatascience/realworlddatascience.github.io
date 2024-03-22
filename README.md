@@ -256,7 +256,7 @@ Now, if you've run through the "Get Started" guide, or you've used Quarto before
 
 Next, you'll want to head over to Finn-Ole Höner's [RWDS_post_template repository](https://github.com/finnoh/RWDS_post_template), and click the "Use this template" button. This will create a new repository in your own GitHub account which contains several files that you'll need throughout the article development process. 
 
-The first file, `content-brief.qmd`, is for you to sketch out your article idea. Open up the file in your tool of choice and hit the render button. This will produce an html page, styled in the RWDS theme, with a series of instructions for you to follow. Once you've followed the instructions and added the required information under the various headings in the `.qmd` file, you should contact the RWDS editor to discuss next steps. See our published [Contributor Guidelines](https://realworlddatascience.net/contributor-docs/contributor-guidelines.html#the-submission-process) for an overview of the RWDS submission process.
+The first file, `content-brief.qmd`, is for you to sketch out your article idea. Open up the file in your editing tool of choice and hit the render button. This will produce an html page, styled in the RWDS theme, with a series of instructions for you to follow. Once you've followed the instructions and added the required information under the various headings in the `.qmd` file, you should contact the RWDS editor to discuss next steps. See our published [Contributor Guidelines](https://realworlddatascience.net/contributor-docs/contributor-guidelines.html#the-submission-process) for an overview of the RWDS submission process.
 
 Once a content brief has been received, reviewed and accepted by the RWDS editor and editorial board, work on the article itself can begin. For this, you'll want to use the `report.qmd` file from the template repository. This file not only serves as a basic template for all published RWDS articles, it also contains examples of the main Quarto features used by RWDS. If you open up this file in your tool of choice, render it, and read through the html and `.qmd` versions side-by-side, you'll be able to see the underlying code that produces the various html outputs.
 
@@ -296,19 +296,144 @@ Congratulations! Your article has been accepted. Now we need to get it ready for
 
 ### Instructions for RWDS team members
 
-1. Create a new branch
-: This can be done either through the RWDS repository page on GitHub.com or the GitHub Desktop app. The new branch should be created from the `main` branch and should be named for the article being created. We'll use the branch name `new-case-study` and the article name `report.qmd` as examples throughout this section.
+##### 1. Create a new branch 
+This can be done either through the RWDS repository page on GitHub.com or the GitHub Desktop app. The new branch should be created from the `main` branch and should be named for the article being created. We'll use the branch name `new-case-study` and the article name `report.qmd` as examples throughout this section.
 
-2. Switch to new branch on your local machine
-: First, make sure your local copy of the RWDS repo is up to date with the remote version. Then, using either GitHub Desktop or your code editor, switch to the `new-case-study` branch.
+##### 2. Switch to new branch on your local machine 
+First, make sure your local copy of the RWDS repo is up to date with the remote version. Then, using either GitHub Desktop or your code editor, switch to the `new-case-study` branch.
 
-3. Create folders for new article
-: Throughout RWDS, we use the following folder structure for articles: `[section name]/posts/[year]/[month]/[day]/[file name].qmd`. Year, month, and day are set according to the intended publication date of the article. So, if you intend to publish `report.qmd` in the Case Studies section on April 1, 2024, you'll want to create the following folder location: `case-studies/posts/2024/04/01`. You'll also want to create an `images` subfolder within the `01` folder.
+##### 3. Create folders for new article 
+Throughout RWDS, we use the following folder structure for articles: `[section name]/posts/[year]/[month]/[day]/[file name].qmd`. Year, month, and day are set according to the intended publication date of the article. So, if you intend to publish `report.qmd` in the Case Studies section on April 1, 2024, you'll want to create the following folder location: `case-studies/posts/2024/04/01`. You'll also want to create an `images` subfolder within the `01` folder.
 
 ![Example of RWDS folder structure for published articles](images/folder-example.PNG)
 
-4. Add article files to folders
-: Place `report.qmd` in the `case-studies/posts/2024/04/01` folder. Put illustrations, photos, figures, etc., in the `case-studies/posts/2024/04/01/images` folder.   
+##### 4. Add article files to folders 
+Place `report.qmd` in the `case-studies/posts/2024/04/01` folder. Put illustrations, photos, figures, etc., in the `case-studies/posts/2024/04/01/images` folder.
+
+##### 5. Review and update the article YAML
+If `report.qmd` has been prepared using the [RWDS_post_template repository](https://github.com/finnoh/RWDS_post_template), the first 30-plus lines of code will be a YAML block, structured something like this:
+
+```yaml
+---
+title: My report.qmd article # article headline
+description: | # article description or standfirst
+  This is a dummy article created for the RWDS README.
+categories: # key topics or themes of the article
+  - Resources
+  - for
+  - Contributors
+author: Author1, Author2 # author names
+date: last-modified # keeps the date current with the last commit date
+date-format: long # A long date that includes a wide month name, e.g. April 1, 2024
+toc: true # sets whether rendered article should include a table of contents
+format: # controls various format options
+  html:
+    theme: [lux, rwds.scss] 
+    css: rwds.css
+    toc: true
+    grid:
+      sidebar-width: 0px
+      body-width: 1000px
+      margin-width: 250px
+    code-annotations: below
+    mermaid: 
+      theme: neutral
+bibliography: references.bib # points to a bibtex document, if used
+csl: chicago.csl # formats bibtex references to correct style
+execute: # controls how Quarto deals with code blocks in a document
+  eval: false
+  echo: true
+  messages: false
+  error: false
+  warning: false
+nocite: '@*' # creates a reference list of all references, whether or not they are cited in the text
+page-layout: article # controls page style
+title-block-banner: true # controls whether page includes a title-block-banner
+citation: true # auto generates a citation at the end of the article
+---
+```
+
+This YAML includes a lot of metadata fields that are necessary for ensuring `report.qmd` is styled correctly when it is being developed as a standalone article. But, when the time comes to make `report.qmd` part of the RWDS repository, we can strip out a lot of the fields, as follows:
+
+```yaml
+---
+title: My report.qmd article
+description: | 
+  This is a dummy article created for the RWDS README.
+categories: 
+  - Resources
+  - for
+  - Contributors
+author: Author1, Author2 
+date: last-modified
+toc: true # can be set to 'false' if article is short or has few sections
+format: # this section is only required if code annotations or Mermaid diagrams are used
+  html:
+    code-annotations: below # only required if code annotations are used
+    mermaid: 
+      theme: neutral # only required if Mermaid diagrams are using
+bibliography: references.bib # only required if bibtex references are used
+execute: # only required if code blocks are included
+  eval: false
+  echo: true
+  messages: false
+  error: false
+  warning: false
+---
+```
+
+We'll also want to include two new YAML fields that allow us to specify a thumbnail image with which to illustrate the article in the website listings:
+
+```yaml
+image: images/thumbnail-image.png # points to the image file location
+image-alt: # provides a description of the image for screen readers
+```
+
+##### 6. Review and update the article footer
+All RWDS articles end with a foooter that looks like this:
+
+![](images/article-footer-example.PNG)
+
+The code for this footer is below. For your `report.qmd`, edit the various sections of the footer as necessary - e.g. updating the `{.article-btn}` text and link, changing the author bio to include multiple authors, etc.
+
+```markdown
+::: {.article-btn}
+[Find more case studies](/case-studies/index.qmd)
+:::
+
+::: {.further-info}
+::: grid
+::: {.g-col-12 .g-col-md-12}
+About the author
+: **Robin Linacre** is an economist, data scientist and data engineer based at the UK Ministry of Justice. He is the lead author of Splink.
+:::
+
+::: {.g-col-12 .g-col-md-6}
+Copyright and licence
+: &copy; 2023 Robin Linacre
+
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@possessedphotography?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Possessed Photography</a> on <a href="https://unsplash.com/photos/yellow-metal-chain-NwpSBZMhc-M?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>.
+  
+:::
+
+::: {.g-col-12 .g-col-md-6}
+How to cite
+: Linacre, Robin. 2023. "Deduplicating and linking large datasets using Splink." Real World Data Science, November 22, 2023. [URL](https://realworlddatascience.net/case-studies/posts/2023/11/22/splink.html)
+:::
+:::
+:::
+```
+
+##### 7. Save and commit your changes
+By this point, you're ready to commit the first version of `report.qmd` to the `new-case-study` branch of the RWDS repo. Go ahead and do so, and then render the article. This will produce a working version of the article, and the RWDS website as a whole, on your local machine.
+
+Check the rendered article against the submitted version. Does everything appear as it should? If not, edit the file, save, re-render and check again. When you are happy that article displays and reads as it should, head on over to the relevant section homepage (which, for this example, would be the Case Studies section). Make sure the article, and its thumbnail image, appear as the top story in the section listings. If it does, you are almost ready to publish. You just need to go back into the article one more time and edit the `date:` field of the YAML, changing it from `last-modified` to the target publication date - which we set as April 1, 2024 when setting up the article folders:
+
+```yaml
+date: 04/01/2024 # date is in mm/dd/yyyy format
+```
+
+Now, let's [update the RWDS homepage](#update-the-homepage).
 
 ### Instructions for external contributors
 
