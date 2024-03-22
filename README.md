@@ -10,8 +10,8 @@ The site and its content are being created and curated by data science practitio
 3. [Site and repository structure](#site-and-repository-structure)
 4. [Create an article](#create-an-article)
 5. [Add an article](#add-an-article)
-6. [Publish and article](#publish-an-article)
-7. [Update the homepage](#update-the-homepage)
+6. [Update the homepage](#update-the-homepage)
+7. [Publish an article](#publish-an-article)
 
 ## Contributors ✨
 <!-- ALL-CONTRIBUTORS-BADGE:START - Do not remove or modify this section -->
@@ -395,7 +395,7 @@ image-alt: # provides a description of the image for screen readers
 Remember, images used as thumbnails for article listings must be set to 991px(w) x 724px(h).
 
 ### 6. Review and update the article footer
-All RWDS articles end with a foooter that looks like this:
+All RWDS articles end with a footer that looks like this:
 
 ![](images/article-footer-example.PNG)
 
@@ -438,10 +438,10 @@ Check the rendered article against the submitted version. Does everything appear
 date: 04/01/2024 # date is in mm/dd/yyyy format
 ```
 
-Now, let's [update the RWDS homepage](#update-the-homepage).
+And now it's time to...
 
 ## Update the homepage
-To update the RWDS homepage, we need to work with the `index.qmd` file in the root of the repository. As explained in our section on [index files](#index-files-and-listings), the RWDS homepage is essentially a collection of listings that pull from each of the main sections of the site - Case Studies, Ideas, Careers, and Viewpoints - and there's also a "Latest Content" listing that pulls in content from across all sections. We can see this reflected in the YAML of the `index.qmd` file:
+To update the RWDS homepage, we need to work with the `index.qmd` file in the root of the repository. As explained in our section on [index files](#index-files-and-listings), the RWDS homepage is essentially a collection of listings that pull from each of the main sections of the site - Case Studies, Ideas, Careers, and Viewpoints - and there's also a Latest Content listing that pulls in content from across all sections. We can see this reflected in the YAML of the `index.qmd` file:
 
 ```yaml
 listing:
@@ -509,8 +509,73 @@ listing:
     feed: false
 ```
 
-But for the main homepage, unlike the section homepages, we want to specify exactly where these listings appear on the page. And that's where the `id:` field of the YAML metadata comes in handy. Let's take "Latest Content", for example. We want this to appear fairly near the top of the homepage, so site visitors can see all the newest content that's been published.
+For the main homepage, unlike the section homepages, we want to specify exactly where these different listings will appear on the page. That's where the `id:` field of the YAML metadata comes in handy. Let's take Latest Content, for example. We want this to appear fairly near the top of the homepage, so site visitors can see all the newest content that's been published. To do this we need to create a div that contains the `id` assigned to the Latest Content listing, like so:
 
+```markdown
+::: {#latest-content}
+:::
+```
 
+But, because we've designed these listings to look a certain way on the page, we need to place that listing div inside a css-styled `.listing-block` (also a div) which has a header that is linked to a dedicated listing page (`latest-content.qmd`). This, too is nested inside a css-styled `.content-container`:
+
+```markdown
+::: {.content-container}
+::: {.listing-block}
+<a href="latest-content.qmd">
+
+## Latest content 
+</a>
+
+::: {#latest-content}
+:::
+
+:::
+:::
+```
+
+We use variations of this approach throughout the homepage to create different sections to the page. The screenshot below shows two of these sections, both code and rendered output, side by side:
+
+![Side-by-side view of RWDS homepage code and rendered output.](images/home-listing-example.PNG)
+
+Any article, once added to the RWDS repo and merged into the `main` branch, will automatically appear on the homepage when the site re-renders. However, the article will only appear in two places: in the Latest Content listing, and in the relevant section listing. If we return to our `report.qmd` example, remember that this is intended to be a new case study. So, the published and rendered version of `report.qmd` will be automatically listed in the Latest Content and Case Studies section.
+
+However, whenever a new article is published, we like to draw particular attention to it, using a custom banner at the top of the homepage. Here's what that looks like, again with the code alongside:
+
+![Side-by-side view of RWDS homepage code and rendered output.](images/home-listing-example2.PNG)
+
+Here, then, are the steps you need to follow to update the homepage when a new article is ready to be published:
+
+### 1. Update the custom banner
+The custom banner is made up of divs within divs and looks a bit messy, but there are only a few lines you need to update, highlighted in the image below.
+
+![Highlights shows which lines of the custom banner code to update.](images/banner-update.PNG)
+
+The first line to update, numbered 135, is the path to the article. In our `report.qmd` example, this would need to be changed to `"/case-studies/posts/2024/04/01/report.qmd"`. The next two lines to edit, 139 and 140, are - respectively - the `title` and `description` text from the `report.qmd` file. The last line to update, 143, is the path to the thumbnail image file, e.g. `case-studies/posts/2024/04/01/images/thumbnail-image.png`.
+
+### 2. Update the Latest Content listing
+Look again at the example homepage banner image above, and you'll notice that the featured story - an interview with Nationwide's Matthew Jones - is not included in the Latest Content listing. This is deliberate: we don't want the same image and text repeated on the same page. To exclude an article from a listing, we can prefix a filename with a `!`. We covered this previously in our section on [index files and listings](#index-files-and-listings).
+
+So, in the YAML of the homepage `index.qmd` file, you want to add `!report.qmd` to the `contents` section of the `id: latest-content` listing: 
+
+```yaml
+listing:
+  - id: latest-content
+    contents: 
+    - /case-studies
+    - /ideas
+    - /careers
+    - /viewpoints
+    - "!index.qmd"
+    - "!report.qmd"
+```
+
+This will exclude `report.qmd` from showing in the Latest Content section of the homepage. But, importantly, if site users decide to browse the full Latest Content page, `report.qmd` will still show up there.
+
+You may also decide to exclude your new article from appearing in the relevant section listing on the homepage, again to avoid the same text and image appearing in multiple places on one page. For our `report.qmd` example, then, you might choose to add `!report.qmd` to the `id: case-studies` section of the YAML.
+
+### 3. Save and commit your changes
+As when finalising your article, if you're now finished updating the homepage, you'll want to save your changes and commit them. We'd also recommend re-rendering the site to check that the homepage appears as intended, that the custom banner links point to the correct article, and that anything you chose to exclude from specific listings has been excluded.
+
+If everything's looking good at this stage, we should be ready to publish.
 
 ## Publish an article
