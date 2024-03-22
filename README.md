@@ -441,6 +441,6 @@ date: 04/01/2024 # date is in mm/dd/yyyy format
 Now, let's [update the RWDS homepage](#update-the-homepage).
 
 ## Update the homepage
-To update the RWDS homepage, we need to work with the `index.qmd` file in the root of the repository. 
+To update the RWDS homepage, we need to work with the `index.qmd` file in the root of the repository. As explained in our section on [index files](#index-files-and-listings), the RWDS homepage is essentially a collection of different listings that pull from all the main sections of the site. 
 
 ## Publish an article
