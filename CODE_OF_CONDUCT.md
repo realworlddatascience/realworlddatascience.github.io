@@ -1,3 +1,11 @@
+---
+title: Contributor Covenant Code of Conduct
+page-layout: article
+sidebar: false
+toc: true
+title-block-banner: true
+---
+
 ## Contributor Covenant Code of Conduct
 ### Our pledge
 

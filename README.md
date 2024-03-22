@@ -441,6 +441,76 @@ date: 04/01/2024 # date is in mm/dd/yyyy format
 Now, let's [update the RWDS homepage](#update-the-homepage).
 
 ## Update the homepage
-To update the RWDS homepage, we need to work with the `index.qmd` file in the root of the repository. As explained in our section on [index files](#index-files-and-listings), the RWDS homepage is essentially a collection of different listings that pull from all the main sections of the site. 
+To update the RWDS homepage, we need to work with the `index.qmd` file in the root of the repository. As explained in our section on [index files](#index-files-and-listings), the RWDS homepage is essentially a collection of listings that pull from each of the main sections of the site - Case Studies, Ideas, Careers, and Viewpoints - and there's also a "Latest Content" listing that pulls in content from across all sections. We can see this reflected in the YAML of the `index.qmd` file:
+
+```yaml
+listing:
+  - id: latest-content
+    contents: 
+    - /case-studies
+    - /ideas
+    - /careers
+    - /viewpoints
+    - "!index.qmd"
+    sort: "date desc"
+    type: grid
+    categories: false
+    sort-ui: false
+    filter-ui: false
+    max-items: 3
+    feed: false
+
+  - id: case-studies
+    contents: 
+    - /case-studies
+    - "!index.qmd"
+    sort: "date desc"
+    type: grid
+    categories: false
+    sort-ui: false
+    filter-ui: false
+    max-items: 3
+    feed: false
+
+  - id: ideas
+    contents: 
+    - /ideas
+    - "!index.qmd"
+    sort: "date desc"
+    type: grid
+    categories: false
+    sort-ui: false
+    filter-ui: false
+    max-items: 3
+    feed: false
+
+  - id: careers
+    contents: 
+    - /careers
+    - "!index.qmd"
+    sort: "date desc"
+    type: grid
+    categories: false
+    sort-ui: false
+    filter-ui: false
+    max-items: 3
+    feed: false
+
+  - id: viewpoints
+    contents: 
+    - /viewpoints
+    - "!index.qmd"
+    sort: "date desc"
+    type: grid
+    categories: false
+    sort-ui: false
+    filter-ui: false
+    max-items: 3
+    feed: false
+```
+
+But for the main homepage, unlike the section homepages, we want to specify exactly where these listings appear on the page. And that's where the `id:` field of the YAML metadata comes in handy. Let's take "Latest Content", for example. We want this to appear fairly near the top of the homepage, so site visitors can see all the newest content that's been published.
+
+
 
 ## Publish an article
