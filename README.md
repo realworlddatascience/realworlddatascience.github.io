@@ -569,13 +569,35 @@ listing:
     - "!report.qmd"
 ```
 
-This will exclude `report.qmd` from showing in the Latest Content section of the homepage. But, importantly, if site users decide to browse the full Latest Content page, `report.qmd` will still show up there.
+This will exclude `report.qmd` from showing in the Latest Content section of the homepage. But, importantly, if site users decide to browse the full [Latest Content page](https://realworlddatascience.net/latest-content.html), `report.qmd` will still show up there.
 
 You may also decide to exclude your new article from appearing in the relevant section listing on the homepage, again to avoid the same text and image appearing in multiple places on one page. For our `report.qmd` example, then, you might choose to add `!report.qmd` to the `id: case-studies` section of the YAML.
 
 ### 3. Save and commit your changes
-As when finalising your article, if you're now finished updating the homepage, you'll want to save your changes and commit them. We'd also recommend re-rendering the site to check that the homepage appears as intended, that the custom banner links point to the correct article, and that anything you chose to exclude from specific listings has been excluded.
+When you've finished updating the homepage, save your changes and commit them. We'd also recommend re-rendering the site to check that the homepage appears as intended, that the custom banner links point to the correct article, and that anything you have chosen to exclude from specific homepage listings has been excluded.
 
-If everything's looking good at this stage, we should be ready to publish.
+If everything's looking good at this stage, we're ready to publish.
 
 ## Publish an article
+The final step on the RWDS publishing journey is to 'merge' all new files and folders - all your commits - into the `main` branch of the RWDS repository. If you've been following the workflow described in this README, all the changes made so far have been to a new branch of the repo. (The example we've used throughout has been the `new-case-study` branch.) To update the `main` branch and, in turn, the live website, we need to make a 'pull request' from our new branch against the `main` branch. Once the pull request has been reviewed and approved, all commits made to, e.g., the `new-case-study` branch will become part of the `main` branch. This will trigger an automated workflow process that:
+
+1. Re-renders the site
+2. Pushes rendered files to the `gh-pages` branch
+3. Deploys the site to GitHub Pages
+
+### Create a pull request
+You can start a pull request using the GitHub Desktop app. Switch to your branch, make sure all changes are committed, and click the "Preview Pull Request" button. This will then open a GitHub webpage in your browser. 
+
+Alternatively, you can head straight to GitHub yourself through your browser. Once there, switch to the branch you want to make a pull request from. At the top of the page you'll see a message, e.g. "This branch is 2 commits ahead of `main`". Click the hyperlinked part of the message and this will take you to a page titled "Comparing changes". Here you can review all the commits you've made and the files you've added to your branch which you want to make part of the `main` branch. 
+
+Once you're happy to proceed, click the "Create pull request" button. This will take you to the "Open a pull request" page. Give your pull request a title and a description, then click the "Create pull request" button again. 
+
+### Check and review proposed changes
+Once a pull request is created, an automated check will begin running. This is basically a test render of the site to make sure there will be no render errors when the pull request is merged and closed. Reviewers can also be assigned to the pull request to review and approve all the proposed changes to the `main` branch. 
+
+If the render check passes successfully and all changes are approved, the pull request can be merged. Note, though, that only authorised repository members can merge pull requests.
+
+As soon as the merge is approved, the `main` branch is updated, the automated workflow process begins and, within a few minutes, Real World Data Science will be updated.
+
+## Any questions?
+Thank you for reading this documentation and your interest in contributing to Real World Data Science. If anything is unclear in this guide, or if you have questions about any aspect of the contributing process, please feel free to either [contact the RWDS team directly](https://realworlddatascience.net/contact.html) or [open an Issue](https://github.com/realworlddatascience/realworlddatascience.github.io/issues) in the RWDS repository.
