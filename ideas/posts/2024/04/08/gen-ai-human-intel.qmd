@@ -10,18 +10,21 @@ categories:
 author: Diego Miranda-Saavedra
 date: 04/08/2024
 toc: true
-# bibliography: references.bib
-# image: images/bubbles.png
-# image-alt: Two bubbles overlapping on a black background.
+image: images/data-people.png
+image-alt: A watercolour illustration in two strong colours showing the silhouettes of four people, two of whom have dogs on leads. They all cast shadows, and vary between realistic representations and those formed by representations of algorithms, data points or networks.
+language: 
+    section-title-footnotes: References
 ---
 
 Generative artificial intelligence (AI) models have taken the world by storm over the past year. The human-like outputs of these systems, and the recent publication of a guideline to determine the degree of consciousness of machines, have again raised the question of whether machines will soon be able to replicate human intelligence. In this article, we discuss some of the merits and limitations of modern machine learning models, and also provide a general view of human intelligence and the position of "intelligent" systems in the constellation of human capabilities.
 
 Large language models (LLMs) such as ChatGPT are designed to process and understand natural language, and to generate human-like text in response to prompts and questions. This is achieved thanks to a specific type of deep learning architecture called the *Transformer*, which consists of an encoder and a decoder, each made up of some number *N* of blocks. Here the input text is eventually transformed into predicted (and contextualised) output text (Fig. 1, [1]). LLMs are trained on complex and large bodies of text so that they can learn complex patterns and relationships between words in sentences, in different contexts. 
 
- 
+![](images/fig1.png){fig-align="center" fig-alt="Architecture of the Transformer. The left-hand block is the Encoder, whereas the right-hand block represents the decoder"}
 
-Figure 1. Architecture of the Transformer. The left-hand block is the Encoder, whereas the right-hand block represents the decoder [1].
+::: {.figure-caption style="text-align: center;"}
+**Figure 1:** Architecture of the Transformer. The left-hand block is the Encoder, whereas the right-hand block represents the decoder [1].
+:::
 
 The two main types of LLMs are autoregressive models and autoencoding models. Autoregressive models such as OpenAI’s GPT (Generative Pre-trained Transformer) generate text by predicting the next word in a sequence given the previously emitted words. Autoencoding models such as Google’s BERT (Bidirectional Encoder Representations from Transformers) also aim to produce coherent and contextually relevant text, but they do so by attempting to predict missing words (from a corrupted version of the text) while considering the surrounding context.
 
@@ -30,14 +33,17 @@ LLMs are engineering marvels capable of producing syntactically flawless, cohere
 ## Speaking and understanding
 The Turing test was proposed by Alan Turing in the 1950s. It operates on the basis that if a person is unable to tell whether the entity they are interacting with over typed messages is a human or a machine (irrespective of the answers being correct), the machine is said to have achieved human-level intelligence [6]. There’s some debate over whether ChatGPT could pass this test; it has been specifically trained not to impersonate humans and will frequently preface its responses with the phrase, "As a large language model...", thus giving the game away. But [others are impressed at what developers like OpenAI have been able to achieve](https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/01/27/talking-chatgpt.html) in terms of building artificial models that can sustain realistic-sounding conversations. 
 
-So let's say, for the sake of argument, that we do now have machines that can communicate in a human-like way. Does this mean that those machines possess human-level intelligence? Not according to a different set of tests, called the Winograd schemas – puzzles that differ by one or two words and whose solutions cannot be determined using statistics but instead require common sense and an understanding of the physical world [8]. For example, the following sentence:
+This, though, is where the Turing test falls apart as a means of assessing machine intelligence. The ability to "mimic human chatter" does not by itself suggest that a machine understands what it is 'reading' or 'writing' in the same way a human would [7]. Consider a different set of tests, called the Winograd schemas – puzzles that differ by one or two words and whose solutions cannot be determined using statistics but instead require common sense and an understanding of the physical world [8]. For example, the following sentence:
 
 > The trophy would not fit in the suitcase because it was too **small/large**.
 
-Humans would infer that if the last word of that sentence is *small*, then *suitcase* is the object being described, whereas if the word is *large* then we are referring to the *trophy*. ChatGPT v3.5 was unable to make this inference when the question was first put to it (see Figure 2), although a later test finds it now can – as can other LLMs. Some suggest that this type of improvement comes from training ChatGPT to do better on some of the tasks that are routinely used to highlight model limitations on social media at the expense of giving worse answers in other contexts [9]. But could this improvement be due to ChatGPT and other models having suddenly acquired common sense and an understanding of the physical world? A more complex set of Winograd schema questions, the WinoGrande dataset, suggests not: humans still outperform computers on these tests[10].
+Humans would infer that if the last word of that sentence is *small*, then *suitcase* is the object being described, whereas if the word is *large* then we are referring to the *trophy*. ChatGPT v3.5 was unable to make this inference when the question was first put to it (see Figure 2), although a later test finds it now can – as can other LLMs. Some suggest that this type of improvement comes from training ChatGPT to do better on some of the tasks that are routinely used to highlight model limitations on social media at the expense of giving worse answers in other contexts [9]. But could this improvement be due to ChatGPT and other models suddenly having acquired common sense and an understanding of the physical world? A more complex set of Winograd schema questions, the WinoGrande dataset, suggests not: humans still outperform computers on these tests[10].
 
- 
-Figure 2. GPT-3.5’s inconclusive answer to a typical WinoGrad Schema question.          
+![](images/fig2.png){fig-align="center" fig-alt="Screenshot of author's ChatGPT conversation, prompting the AI chatbot to solve a WinoGrad schema question"}
+
+::: {.figure-caption style="text-align: center;"}
+**Figure 2:** GPT-3.5’s inconclusive answer to a typical WinoGrad schema question.
+:::
 
 Machines will likely beat us all at these puzzles one day, in the same way that they already beat the world champions of chess and Go, can translate across multiple languages, and diagnose rare forms of cancer that escape well-trained doctors. These *narrow AI* applications that spectacularly outperform humans at very specific tasks will become more and more common. But will a multiplicity of narrow AI soon lead to general AI that can compete or beat humans at *all* tasks? Will human-level linguistic capabilities inevitably result in machines acquiring human-level intelligence in the not-too-distant future? Some developers and researchers certainly believe or hope so. Others remain sceptical.
 
@@ -56,10 +62,11 @@ Another major limitation of algorithms for achieving human-like adaptive learnin
 
 Although some ingenious approaches have been developed for mitigating catastrophic forgetting (and which are much smarter than simply building a new network for each new task), it has also been shown that no single method can solve catastrophic forgetting while allowing incremental learning in every possible situation [22]. The problem with catastrophic forgetting is not only that it contradicts a fundamental characteristic of human intelligence -- the ability to learn within, and adapt to, changing environments [23]; catastrophic forgetting is also a major bottleneck for the development of adaptable systems that learn incrementally from the constant flow of data in the real world, such as autonomous vehicles, recommender systems, anomaly detection methods and, in general, any device embedded with sensors. Moreover, the development of continual learning methods is key not just for machine intelligence, but also for learning scalability: by 2025 the world will be producing some 175 zettabytes of data annually [24], of which we will only be able to store between 3% and 12% [25]. Thus, for learning to be scalable in the future, continual learning methods will need to be able to process data faster and in real time, learn on the fly and then discard the data, much like humans do.
 
+![](images/fig3.png){fig-align="center" fig-alt="Illustration of catastrophic forgetting and ideal learning in a two-class classifier"}
 
- 
-
-Figure 3. Illustration of catastrophic forgetting and ideal learning in a two-class classifier.
+::: {.figure-caption style="text-align: center;"}
+**Figure 3:** Illustration of catastrophic forgetting and ideal learning in a two-class classifier.
+:::
 
 ## How are we wired?
 One further bottleneck for machines emulating human-level intelligence is that we do not yet understand the circuitry of the brain well enough to be able to reproduce it, and therefore we have been working with misleading models. For instance, the realisation of the “all-or-nothing” nature of action potentials (i.e. there is no such thing as the partial firing of a neuron) led McCulloch and Pitts to propose the concept of the artificial neuron and suggest that networks of neurons could equally be modelled as (all-or-nothing) logical propositions [26]. From this point onwards, the dominant idea over most of the past century has been that the brain is essentially a computer. But even on a superficial level of analysis, brains and computers have very different architectures and behaviour, with computers specifically making optimal use of virtually unlimited memory as well as an extraordinary capacity for brute-force searching. On the microscopic level, networks of neurons cannot possibly be modelled as logical propositions because they do not really operate in this manner: a single neuronal synapse is an environment that harbours hundreds of proteins that specifically interact with other proteins in complex networks that possess clear time-space coordinates. Neurons process information and generate not just electrical signals but also discrete biochemical changes that occur in cycles instead of linearly. Moreover, a system like the brain responds to stimuli over long periods of time, which can effect changes in its own behaviour. Understanding at least how some cognitive tasks are performed at an algorithmic level would likely translate into major progress towards emulating human-level intelligence [27]. 
@@ -212,10 +219,6 @@ An International Data Corporation White Paper, 2018. URL: https://bit.ly/3mMxSB5
 
 [61] Yanai I, Lercher M. What Is The Question? Genome Biology 20(1):289, 2019.
 
-
-
-
-
 ::: article-btn
 [Explore more data science ideas](/ideas/index.qmd)
 :::
@@ -230,7 +233,7 @@ About the author
 Copyright and licence
 : &copy; 2024 Diego Miranda-Saavedra
 
-<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> Text, code, and figures are licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>, except where otherwise noted.
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> Text, code, and figures are licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>, except where otherwise noted. Thumbnail image by <a href="https://www.jemimahknightstudio.com/work/ai">Jamillah Knowles</a> / <a href="https://www.betterimagesofai.org">Better Images of AI</a> / Data People / <a href="https://creativecommons.org/licenses/by/4.0/">Licenced by CC-BY 4.0</a>.
 
 :::
 ::: {.g-col-12 .g-col-md-6}
