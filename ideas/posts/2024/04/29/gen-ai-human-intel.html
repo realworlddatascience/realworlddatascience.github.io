@@ -1,0 +1,861 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.553">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Diego Miranda-Saavedra">
+<meta name="dcterms.date" content="2024-04-29">
+<meta name="description" content="Diego Miranda-Saavedra explores some of the merits and limitations of modern machine learning models, and considers where these ‘intelligent’ systems might sit in the constellation of human capabilities.">
+
+<title>Real World Data Science - Generative AI models and the quest for human-level artificial intelligence</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../">
+<link href="../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
+<script src="../../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
+</script>
+<!-- Thank you to Ben Ruijl for the progress bar code!
+Ben is on GitHub here: https://github.com/benruijl
+And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
+
+<meta property="og:title" content="Real World Data Science - Generative AI models and the quest for human-level artificial intelligence">
+<meta property="og:description" content="Diego Miranda-Saavedra explores some of the merits and limitations of modern machine learning models, and considers where these ‘intelligent’ systems might sit in the constellation of human capabilities.">
+<meta property="og:image" content="https://realworlddatascience.net/ideas/posts/2024/04/29/images/data-people.png">
+<meta property="og:site_name" content="Real World Data Science">
+<meta property="og:image:height" content="724">
+<meta property="og:image:width" content="991">
+<meta property="og:image:alt" content="A watercolour illustration in two strong colours showing the silhouettes of four people, two of whom have dogs on leads. They all cast shadows, and vary between realistic representations and those formed by representations of algorithms, data points or networks.">
+<meta name="twitter:title" content="Real World Data Science - Generative AI models and the quest for human-level artificial intelligence">
+<meta name="twitter:description" content="Diego Miranda-Saavedra explores some of the merits and limitations of modern machine learning models, and considers where these ‘intelligent’ systems might sit in the constellation of human capabilities.">
+<meta name="twitter:image" content="https://realworlddatascience.net/ideas/posts/2024/04/29/images/data-people.png">
+<meta name="twitter:site" content="@rwdatasci">
+<meta name="twitter:image-height" content="724">
+<meta name="twitter:image-width" content="991">
+<meta name="twitter:image:alt" content="A watercolour illustration in two strong colours showing the silhouettes of four people, two of whom have dogs on leads. They all cast shadows, and vary between realistic representations and those formed by representations of algorithms, data points or networks.">
+<meta name="twitter:card" content="summary_large_image">
+</head><body class="nav-fixed"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
+
+<script id="progressbar" type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const bar = document.querySelector('#progress-bar');
+    const post = document.querySelector('#quarto-content');
+    const html = document.documentElement;
+    
+    const height = post.scrollHeight + post.offsetTop;
+    
+    window.addEventListener('scroll', () => {
+        bar.style.width = (html.scrollTop / (height- html.clientHeight)) * 100 + '%';
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../rwds.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../case-studies/index.html"> 
+<span class="menu-text">Case studies</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../ideas/index.html"> 
+<span class="menu-text">Ideas</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../careers/index.html"> 
+<span class="menu-text">Careers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../viewpoints/index.html"> 
+<span class="menu-text">Viewpoints</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About RWDS</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
+        <li>
+    <a class="dropdown-item" href="../../../../../about-rwds.html">
+ <span class="dropdown-text">Who we are</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../contributor-docs/call-for-contributions.html">
+ <span class="dropdown-text">How to contribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../CODE_OF_CONDUCT.html">
+ <span class="dropdown-text">Code of conduct</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../contact.html">
+ <span class="dropdown-text">Contact us</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Generative AI models and the quest for human-level artificial intelligence</h1>
+                  <div>
+        <div class="description">
+          <p>Diego Miranda-Saavedra explores some of the merits and limitations of modern machine learning models, and considers where these ‘intelligent’ systems might sit in the constellation of human capabilities.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">AI</div>
+                <div class="quarto-category">Large language models</div>
+                <div class="quarto-category">Machine learning</div>
+                <div class="quarto-category">Deep neural networks</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Diego Miranda-Saavedra </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 29, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#speaking-and-understanding" id="toc-speaking-and-understanding" class="nav-link active" data-scroll-target="#speaking-and-understanding">Speaking and understanding</a></li>
+  <li><a href="#thinking-and-learning" id="toc-thinking-and-learning" class="nav-link" data-scroll-target="#thinking-and-learning">Thinking and learning</a></li>
+  <li><a href="#how-are-we-wired" id="toc-how-are-we-wired" class="nav-link" data-scroll-target="#how-are-we-wired">How are we wired?</a></li>
+  <li><a href="#closing-thoughts" id="toc-closing-thoughts" class="nav-link" data-scroll-target="#closing-thoughts">Closing thoughts</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/ideas/posts/2024/04/29/gen-ai-human-intel.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>Generative artificial intelligence (AI) models have taken the world by storm over the past year. The human-like outputs of these systems, and the recent publication of a guideline to determine the degree of consciousness of machines, have again raised the question of whether machines will soon be able to replicate human intelligence. In this article, we discuss some of the merits and limitations of modern machine learning models, and also provide a general view of human intelligence and the position of “intelligent” systems in the constellation of human capabilities.</p>
+<p>Large language models (LLMs) such as ChatGPT are designed to process and understand natural language, and to generate human-like text in response to prompts and questions. This is achieved thanks to a specific type of deep learning architecture called the <em>Transformer</em>, which consists of an encoder and a decoder, each made up of some number <em>N</em> of blocks. Here the input text is eventually transformed into predicted (and contextualised) output text (<a href="#fig-1" class="quarto-xref">Figure&nbsp;1</a>).<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> LLMs are trained on complex and large bodies of text so that they can learn complex patterns and relationships between words in sentences, in different contexts.</p>
+<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Architecture of the Transformer. The left-hand block is the Encoder, whereas the right-hand block represents the decoder">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/fig1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Architecture of the Transformer. The left-hand block is the Encoder, whereas the right-hand block represents the decoder">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Architecture of the Transformer. The left-hand block is the Encoder, whereas the right-hand block represents the decoder.
+</figcaption>
+</figure>
+</div>
+<p>The two main types of LLMs are autoregressive models and autoencoding models. Autoregressive models such as OpenAI’s GPT (Generative Pre-trained Transformer) generate text by predicting the next word in a sequence given the previously emitted words. Autoencoding models such as Google’s BERT (Bidirectional Encoder Representations from Transformers) also aim to produce coherent and contextually relevant text, but they do so by attempting to predict missing words (from a corrupted version of the text) while considering the surrounding context.</p>
+<p>LLMs are engineering marvels capable of producing syntactically flawless, coherent, and remarkable responses to complex requests such as question answering, text summarisation, computer code generation, document classification, text generation and sentiment analysis. We tend to associate linguistic skills with intelligence because communication via an elaborate language system is largely synonymous with the human intellect. So, do the linguistic skills of tools like ChatGPT mean these systems are close to displaying human-level intelligence? Proponents of the Turing test might well argue “yes”. Most would still say “no”.</p>
+<section id="speaking-and-understanding" class="level2">
+<h2 class="anchored" data-anchor-id="speaking-and-understanding">Speaking and understanding</h2>
+<p>The Turing test was proposed by Alan Turing in the 1950s. It operates on the basis that if a person is unable to tell whether the entity they are interacting with over typed messages is a human or a machine (irrespective of the answers being correct), the machine is said to have achieved human-level intelligence.<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a> There’s some debate over whether ChatGPT could pass this test; it has been specifically trained not to impersonate humans and will frequently preface its responses with the phrase, “As a large language model…”, thus giving the game away. But <a href="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/01/27/talking-chatgpt.html">others are impressed at what developers like OpenAI have been able to achieve</a> in terms of building artificial models that can sustain realistic-sounding conversations.</p>
+<p>This, though, is where the Turing test falls apart as a means of assessing machine intelligence. The ability to “<a href="https://www.nature.com/articles/d41586-023-02361-7">mimic human chatter</a>” does not by itself suggest that a machine understands what it is ‘reading’ or ‘writing’ in the same way a human would. Consider a different set of tests, called the Winograd schemas – puzzles that differ by one or two words and whose solutions cannot be determined using statistics but instead require common sense and an understanding of the physical world.<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a> For example, the following sentence:</p>
+<blockquote class="blockquote">
+<p>The trophy would not fit in the suitcase because it was too <strong>small/large</strong>.</p>
+</blockquote>
+<p>Humans would infer that if the last word of that sentence is <em>small</em>, then <em>suitcase</em> is the object being described, whereas if the word is <em>large</em> then we are referring to the <em>trophy</em>. ChatGPT v3.5 was unable to make this inference when the question was first put to it (see <a href="#fig-2" class="quarto-xref">Figure&nbsp;2</a>), although a later test finds it now can – as can other LLMs. Some suggest that this type of improvement comes from training ChatGPT to do better on some of the tasks that are routinely used to highlight model limitations on social media at the expense of <a href="https://www.searchenginejournal.com/chatgpt-quality-worsened/492145/">giving worse answers in other contexts</a>. But could this improvement be due to ChatGPT and other models suddenly having acquired common sense and an understanding of the physical world? A more complex set of Winograd schema questions, the WinoGrande dataset, suggests not: humans still outperform computers on these tests.<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a></p>
+<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Screenshot of author's ChatGPT conversation, prompting the AI chatbot to solve a WinoGrad schema question">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/fig2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Screenshot of author's ChatGPT conversation, prompting the AI chatbot to solve a WinoGrad schema question">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: GPT-3.5’s inconclusive answer to a typical WinoGrad schema question.
+</figcaption>
+</figure>
+</div>
+<p>Machines will likely beat us all at these puzzles one day, in the same way that they already beat the world champions of chess and Go, can translate across multiple languages, and diagnose rare forms of cancer that escape well-trained doctors. These <em>narrow AI</em> applications that spectacularly outperform humans at very specific tasks will become more and more common. But will a multiplicity of narrow AI soon lead to general AI that can compete or beat humans at <em>all</em> tasks? Will human-level linguistic capabilities inevitably result in machines acquiring human-level intelligence in the not-too-distant future? Some developers and researchers certainly believe or hope so. Others remain sceptical.</p>
+</section>
+<section id="thinking-and-learning" class="level2">
+<h2 class="anchored" data-anchor-id="thinking-and-learning">Thinking and learning</h2>
+<p>What is “intelligence”, anyway? More than 70 working definitions currently exist.<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> One that focuses specifically on human-level intelligence while excluding lower types of animal intelligence is this: “intelligence can be understood as the ability to generate a range of plausible scenarios about how the world around you may unfold and then base sensible actions on those predictions”.<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> Does this come anywhere close to describing the way LLMs work, or indeed any other machine learning algorithm?</p>
+<p>In my view, part of the reason why attaining human-level intelligence remains a distant goal has to do with how machines think differently from us.</p>
+<p>The goal of a machine learning algorithm is always to optimise a particular function – whether the machine is playing chess (the goal is to win) or classifying images (the goal is to correctly classify as many images as possible). The majority of problems that human intelligence has to “solve”, however, do not always have a clear goal. Consider a simple chatbot standing in for a human on a customer helpline: What scalar quantity should it look to optimise? Is it ensuring that engagement with the customer is informative and supportive? Or, perhaps the goal is to build a recurrent relationship. In either case, how will these quantities be measured? Dealing with this type of real-world problem, where the variable to optimise is not well-defined, represents a formidable obstacle for the development of machine learning algorithms whose behaviour must approximate human intelligence.</p>
+<p>Moreover, machines can be surprisingly easy to fool. For example, placing an object next to the one we are trying to classify can confuse image classification algorithms – a <a href="https://www.youtube.com/watch?v=i1sp4X57TL4">well-known example shows a patch being placed next to a banana</a>, which makes the deep neural network (DNN) classify the banana as a toaster with a high degree of confidence. We can also fool image classification networks <a href="https://arxiv.org/abs/1811.11553">by showing the same object under different lighting conditions and orientations</a>, such as when we flip a school bus on its side (as in an accident). The reason why a DNN cannot do this trivial mental rotation is because learning algorithms cannot generalise knowledge to unseen (or “out of distribution”) examples – imbuing them with no small amount of “brittleness”.<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a> Compare this to the human mind, which learns in a semi-supervised manner: we need only be shown a few guiding examples to be able to extrapolate knowledge. This is a clear evolutionary adaptation since most real-world learning is semi-supervised: we do not need to explore every road to learn to drive, nor do every possible differentiation exercise to become confident at calculus. Likewise, we do not need to become fully bilingual in a language before we start combining newly learned words to try to explain complex concepts.</p>
+<p>Next to GPT-4’s <a href="https://arxiv.org/abs/2303.08774">100-trillion parameter model</a>, the human brain seems <a href="https://www.wired.com/story/cerebras-chip-cluster-neural-networks-ai/">much more</a> <a href="https://arxiv.org/pdf/2005.14165">parsimonious</a>. Therefore, progress in AI would perhaps come faster if we could teach machines to learn from a few (or no) labelled examples instead of being so heavily dependent on terabytes of labelled data (supervised learning) and on our own interpretation of the world.<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a></p>
+<p>Another major limitation of algorithms for achieving human-like adaptive learning in changing environments is the fact that they cannot keep learning without forgetting previously learned training data. This phenomenon is called <em>catastrophic forgetting</em>,<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a> and it occurs because of the <em>stability-plasticity dilemma</em>: this states that a certain degree of plasticity is required for the integration of new knowledge, but also radically new knowledge (e.g.&nbsp;large weight changes in a DNN) disrupts the stability necessary for retaining the previously learned representations (<a href="#fig-3" class="quarto-xref">Figure&nbsp;3</a>). In other words, weight stability is synonymous with knowledge retention, but it also introduces the rigidity that prevents the learning of new tasks.<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a></p>
+<div id="fig-3" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Illustration of catastrophic forgetting and ideal learning in a two-class classifier">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/fig3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Illustration of catastrophic forgetting and ideal learning in a two-class classifier">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Illustration of catastrophic forgetting and ideal learning in a two-class classifier.
+</figcaption>
+</figure>
+</div>
+<p>Although some ingenious approaches have been developed for mitigating catastrophic forgetting (and which are much smarter than simply building a new network for each new task), it has also been shown that no single method can solve catastrophic forgetting while allowing incremental learning in every possible situation.<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> The problem with catastrophic forgetting is not only that it contradicts a fundamental characteristic of human intelligence – the ability to learn within, and adapt to, changing environments;<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a> catastrophic forgetting is also a major bottleneck for the development of adaptable systems that learn incrementally from the constant flow of data in the real world, such as autonomous vehicles, recommender systems, anomaly detection methods and, in general, any device embedded with sensors. Moreover, the development of continual learning methods is key not just for machine intelligence, but also for learning scalability: by 2025 the world will be <a href="https://www.seagate.com/files/www-content/our-story/trends/files/idc-seagate-dataage-whitepaper.pdf">producing some 175 zettabytes of data annually</a>, of which we will only be able to <a href="https://www.uber.com/en-GB/blog/uber-big-data-platform/">store between 3% and 12%</a>. Thus, for learning to be scalable in the future, continual learning methods will need to be able to process data faster and in real time, learn on the fly and then discard the data, much like humans do.</p>
+</section>
+<section id="how-are-we-wired" class="level2">
+<h2 class="anchored" data-anchor-id="how-are-we-wired">How are we wired?</h2>
+<p>One further bottleneck for machines emulating human-level intelligence is that we do not yet understand the circuitry of the brain well enough to be able to reproduce it, and therefore we have been working with misleading models. For instance, the realisation of the “all-or-nothing” nature of action potentials (i.e.&nbsp;there is no such thing as the partial firing of a neuron) led McCulloch and Pitts to propose the concept of the artificial neuron and suggest that networks of neurons could equally be modelled as (all-or-nothing) logical propositions.<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a> From this point onwards, the dominant idea over most of the past century has been that the brain is essentially a computer. But even on a superficial level of analysis, brains and computers have very different architectures and behaviour, with computers specifically making optimal use of virtually unlimited memory as well as an extraordinary capacity for brute-force searching. On the microscopic level, networks of neurons cannot possibly be modelled as logical propositions because they do not really operate in this manner: a single neuronal synapse is an environment that harbours hundreds of proteins that specifically interact with other proteins in complex networks that possess clear time-space coordinates. Neurons process information and generate not just electrical signals but also discrete biochemical changes that occur in cycles instead of linearly. Moreover, a system like the brain responds to stimuli over long periods of time, which can effect changes in its own behaviour. Understanding at least how some cognitive tasks are performed at an algorithmic level would likely translate into major progress towards emulating human-level intelligence.<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a></p>
+<p>GPT-4’s impressive capabilities can make people believe that some AI systems are conscious on a human level (since animals display limited consciousness), but this is an illusion. Consciousness is another essential quality that we can easily recognise when we see it, but which (like intelligence) is extraordinarily difficult to define – other than consciousness simply being everything you experience, or, more formally put, the “awareness of internal and external existence”.<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a> Could machines eventually achieve consciousness? This is a controversial and key question because, besides intelligence, having a degree of consciousness on the level exercised by humans is believed to be necessary for displaying goal-directed behaviour.<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a> Recall that machine learning algorithms do have the general goal of optimising functions but these goals are determined by human programmers, not the machines themselves.</p>
+<p>A fundamental question regarding the development of consciousness is this: if an AI system were close to consciousness, how would we know? Butlin and colleagues recently explored the question in a groundbreaking paper where they compiled a list of “indicator properties” drawn from various neuroscientific theories of consciousness (since no theory is clearly superior). The idea is that the more boxes an AI system ticks, <a href="https://arxiv.org/pdf/2308.08708.pdf">the more likely it is close to being conscious</a>. The authors argue that a failure to identify artificial consciousness has important moral implications because an entity that exhibits consciousness invariably influences how we feel it should be treated. While this is likely true, humans do not necessarily need to feel that an entity is conscious in order to develop empathy. Emotional attachment is a basic human instinct, and we have a tendency to anthropomorphise. You may remember the story of hitchBOT, a clearly unconscious yet friendly robot invented by David Smith of McMaster University. <a href="https://twitter.com/hitchbot">HitchBOT</a> could barely speak and its only mission was to autostop. It ended up travelling throughout Europe and North America thanks to the sympathy it generated. The “beheading” of the robot in Philadelphia in 2015 had huge repercussions across the planet because thousands of strangers had developed empathy and become <a href="https://www.gq.com/story/americans-murder-friendly-canadian-hitchhiking-robot">emotionally attached to hitchBOT</a> despite never having met it.<a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a> Do you think that a machine is likely to develop a degree of human-like empathy anytime soon?</p>
+<p>Finally, another fundamental human trait that is absent from machines, and which is particularly important in these trying times, is our capacity for remaining <em>hopeful</em>, which can be seen as a post-hoc rationalisation of our survival instinct. Being hopeful means that we think things will improve beyond what would be reasonable to predict for the immediate or medium-term future given the most recently available data points. Jane Goodall defines hope as “a crucial survival trait that enables us to keep going in the face of adversity”. Desmond Tutu gave an equally ethereal definition: “Hope is being able to see that there is light despite all the darkness”.<a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a> One fundamental aspect of hope is its undeniable association with <em>agency</em>, i.e.&nbsp;our capacity to <em>voluntarily</em> act in a given environment: even when we are at odds with the desired outcome, hope makes us take action, which in turn fuels more hope, thus establishing a dynamic form of self-stimulation over thousands of ethical actions without necessarily having a clear variable to optimise, which machines are incapable of doing. And, one very interesting thing about hope is that its effects can be quantified in the short term: hope is much better than intelligence and personality at predicting academic performance,<a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a> as well as performance in the workplace, with hopeful workers being reported as 14% more productive.<a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a></p>
+</section>
+<section id="closing-thoughts" class="level2">
+<h2 class="anchored" data-anchor-id="closing-thoughts">Closing thoughts</h2>
+<p>Generative language-based models have reignited much interest in the possibility of artificially recreating human-level intelligence. Despite being seminal breakthroughs, we must not forget that LLMs are, essentially, just very sophisticated pattern recognition systems which, when trained on even larger datasets, may become even better at predicting the most appropriate responses to different prompts. LLMs are incomplete models of thought, though, plagued by practical problems that we have not discussed here, such as giving incorrect answers, security breaches, privacy concerns regarding personal data used in their training datasets, algorithmic opacity and an inability to meet the EU’s General Data Protection Regulation (GDPR), and their amplification of web <em>bias</em> which can result in answers that discriminate against different groups.<a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a> Even if these limitations are fixed one day, the capabilities of LLMs still do not approximate general human intelligence.</p>
+<p>Generative models are just one type of narrow AI application. Such applications will continue to evolve at a very fast pace and produce breakthroughs of paramount importance. Some of the latest breakthroughs in the biomedical field include the discovery of new antibiotics against deadly antibiotic-resistant bacteria<a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a> and <a href="https://deepmind.google/discover/blog/alphafold-using-ai-for-scientific-discovery-2020/">AlphaFold’s</a> accurate prediction of a protein’s structure from its amino acid sequence.<a href="#fn23" class="footnote-ref" id="fnref23" role="doc-noteref"><sup>23</sup></a> <a href="#fn24" class="footnote-ref" id="fnref24" role="doc-noteref"><sup>24</sup></a> The number of ways an amino acid sequence may fold is astronomical. Thus being able to predict a protein’s structure as accurately as experimental measurements (by X-ray crystallography or cryo-electron microscopy) represents a gigantic step towards understanding a protein’s likely function and its regulation, how it may be drugged to combat diseases and for antibiotic development, and its manipulation to guide vaccine design as was done during the <a href="https://www.biorxiv.org/content/10.1101/2021.05.10.443524v1">coronavirus pandemic</a>.<a href="#fn25" class="footnote-ref" id="fnref25" role="doc-noteref"><sup>25</sup></a> Most impressively, AlphaFold is able to predict the structural effects of single amino changes (mutations), which is essential for engineering new proteins as well as for understanding evolutionary history and mechanistic aspects of diseases.<a href="#fn26" class="footnote-ref" id="fnref26" role="doc-noteref"><sup>26</sup></a></p>
+<p>Being able to harness the power of narrow AI applications and delegate some tasks to machines will allow humans to focus on those tasks at which we do better than machines. <em>Augmented intelligence</em> is the name given to the close collaboration between humans and machines, which was first proposed in the 1950s, and is now <a href="https://pz.harvard.edu/sites/default/files/Intelligence%20Augmentation-%20Upskilling%20Humans%20to%20Complement%20AI.pdf">finally within reach</a>.<a href="#fn27" class="footnote-ref" id="fnref27" role="doc-noteref"><sup>27</sup></a> <a href="#fn28" class="footnote-ref" id="fnref28" role="doc-noteref"><sup>28</sup></a> Current examples of devices that are a functional extension of human beings are virtual reality headsets that expand the users’ senses and perceptions, implantable technologies that substitute access cards, and, in general, any software that automates research and data analysis. Since such technological developments might make us more “intelligent” or at least more productive, will we then still need machines that display human-like intelligence?</p>
+<p>The official position of some major players like Microsoft is to not even attempt to replicate human intelligence but to produce “AI centred on assisting human productivity in a responsible way”.<a href="#fn29" class="footnote-ref" id="fnref29" role="doc-noteref"><sup>29</sup></a> Still, a recent paper that reported GPT-4’s impressive performance at solving a number of difficult tasks (in the fields of mathematics, coding, vision, medicine, law and psychology) suggests that GPT-4 displays “<a href="https://arxiv.org/abs/2303.12712">sparks of artificial general intelligence</a>”. This is in line with OpenAI’s <a href="https://openai.com/blog/planning-for-agi-and-beyond">clearly stated goal</a> of developing human-level intelligence. However, the debate over whether we are getting any closer to replicating intelligence with just a few impressive generative models that simply recombine and duplicate data on which they have been trained is self-limiting because it takes a very narrow view of human intelligence. For one thing, mindlessly generating text (“speaking”) and thinking are <a href="https://nymag.com/intelligencer/article/ai-artificial-intelligence-chatbots-emily-m-bender.html">two very different things</a>. It has been shown that while LLMs may excel at formal linguistic competence (understanding language rules and patterns), their performance on tasks that evaluate human thought in the real world (functional linguistic competence) is <a href="https://arxiv.org/abs/2301.06627">very limited</a>. Moreover, GPT-4 is unable to reason. We can define reasoning as the process of drawing justifiable conclusions from a set of premises, which is also a key component of intelligence. When given a set of 21 distinct problems ranging from simple arithmetic and logic puzzles to spatial and temporal reasoning, and medical common sense, <a href="https://medium.com/@konstantine_45825/gpt-4-cant-reason-2eab795e2523">GPT-4 proved incapable of applying elementary reasoning techniques</a>.</p>
+<p>OpenAI’s newest headline-grabbing development, <a href="https://openai.com/sora">Sora</a>, shares many of the limitations of GPT-4. Sora is a model that can generate video clips from text prompts – but while it may prove useful for content creation, it seems incapable of understanding the real world. OpenAI’s defence is that Sora still struggles with “simulating the physics of a complex scene” but that it “represents a foundation for models that can understand and simulate the real world”. This is, OpenAI believes, key for training models that will help solve problems that require simulating the physical world (e.g.&nbsp;rescue missions), and eventually for achieving general AI. However, it is suspected that Sora’s limitations in understanding the physical world have nothing to do with physics. For example, in <a href="https://twitter.com/sama/status/1758249750909096142?s=61">a generated video of a monkey playing chess in a park</a>, we see a 7x7 board and three kings. This is likely not an error of insufficient training data or of computational power. This is an error that reveals a failure to discern the cultural regularity of the world by making wrong generalisations despite having ample evidence of the existence of universal 8x8 chess boards and one king per player. A video of <a href="https://twitter.com/openai/status/1758192965703647443?s=61">a stylish woman wandering in Tokyo</a> is also incorrect for the same reason: nobody takes two consecutive left steps in a row (about 30s into the video). Sora also does not appear to understand cause and effect; for example, in a video of a basketball that makes a hoop explode, the net appears to be restored automatically following the explosion. Sora uses arrangements of pixels to predict new pixel configurations, but without trying to understand the cultural context of the images. This is why the images and videos generated by Sora <a href="https://garymarcus.substack.com/p/sora-cant-handle-the-truth">seem correct at the pixel level</a> but <em>globally</em> wrong. Thus, OpenAI’s claim that “<a href="https://openai.com/research/video-generation-models-as-world-simulators">scaling video generation models is a promising path towards building general purpose simulators of the physical world</a>” is open to doubt.</p>
+<p>LLMs do not yet approximate the human brain; generative video models do not approximate the physical world; and human intelligence is so much more than combining formal linguistic competence with complete models of thought, or making creative videos that respect the physical constraints of the world. Human intelligence is not limited to specific domains either but exists in the open to challenge currently held views. Ask Noah Chomsky and he will respond that generative models like ChatGPT are essentially “<a href="https://www.nytimes.com/2023/03/08/opinion/noam-chomsky-chatgpt-ai.html">high-tech plagiarism</a>”. Human consciousness includes a sense of self which machines will not be able to replicate anytime soon – or perhaps never will, since a human brain and a computer are <a href="https://www.wired.com/story/artificial-intelligence-consciousness/#:~:text=Pondering%20this%20question%2C%20it's%20important,necessary%20nor%20sufficient%20for%20consciousness.">not the same</a>. Human consciousness is coupled with curiosity, imagination, intuition, emotions, desires, purpose, objectives, wisdom and even humour. If we think about humour, a good sense of humour means thinking outside of the box and connecting concepts and situations in novel ways, which is something that machines are unable to do. Also, by thinking outside the box, humans are able to <em>consciously</em> ask a variety of questions – the most <em>extraordinary</em> of which have led to major leaps in our understanding of the world around us.</p>
+<p><em>Reasonable</em> questions can be posed by many and answered logically (some even by machines) using the standard scientific process of experimental design, controls and hypothesis validation. In this context, the faster and more efficient exploration of search space by learning methods, complemented by the delegation of repetitive tasks to machines, will <a href="https://www.technologyreview.com/2023/07/05/1075865/eric-schmidt-ai-will-transform-science/">allow scientists to conduct experiments at greater scale</a> while focusing on designing optimal solutions. Beyond reasonable questions and expected results is the concept of <em>serendipity</em> that machines cannot yet be made to grasp. Some of the greatest discoveries in the history of science are indeed serendipitous (accidental), including the discovery of insulin, penicillin, smallpox vaccination, the anti-malarial drug quinine, X-rays, nylon and the anaesthetic effects of ether and nitrous oxide.<a href="#fn30" class="footnote-ref" id="fnref30" role="doc-noteref"><sup>30</sup></a> Turning accidents into discoveries requires having a questioning mind that can view data from several perspectives and connect seemingly unrelated pieces of information instead of discarding unusual results right away.</p>
+<p>And yet beyond serendipitous discoveries we have <em>extraordinary</em> questions, which machines are as yet incapable of asking. Extraordinary questions lie outside of our current frame of knowledge and require an illogical step that is often the product of letting one’s mind wander freely.<a href="#fn31" class="footnote-ref" id="fnref31" role="doc-noteref"><sup>31</sup></a> A classical example here is when Einstein was trying to modify Maxwell’s equations so that they were no longer in contradiction with the constant speed of light that had been observed. After trying to modify these equations for years, Einstein eventually realised that it was not Maxwell’s fault. Rather, our notion of time was incorrect. Einstein thus stumbled upon the very question that led to the idea that the rate at which time passes depends on one’s frame of reference. While machines follow rules, the revolutionary ideas of Einstein, Newton, Darwin, Galileo, Wittgenstein and many others did not follow any rules established at the time. Therefore, the real danger in thinking that we can rely on “intelligent” machines to achieve a human level of imagination, intuition, wisdom or purpose anytime soon is that the world will become an even more statistically predictable place.</p>
+<div class="article-btn">
+<p><a href="../../../../../ideas/index.html">Explore more data science ideas</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author</dt>
+<dd>
+<strong>Diego Miranda-Saavedra</strong>, PhD, is a data scientist and a financial investor. His book <em>How To Think About Data Science</em> (Chapman &amp; Hall / CRC Press) was published in December, 2022.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2024 Diego Miranda-Saavedra
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> Text, code, and figures are licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>, except where otherwise noted. Thumbnail image by <a href="https://www.jemimahknightstudio.com/work/ai">Jamillah Knowles</a> / <a href="https://www.betterimagesofai.org">Better Images of AI</a> / Data People / <a href="https://creativecommons.org/licenses/by/4.0/">Licenced by CC-BY 4.0</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Miranda-Saavedra, Diego. 2024. “Generative AI models and the quest for human-level artificial intelligence.” Real World Data Science, April 29, 2024. <a href="https://realworlddatascience.net/ideas/posts/2024/04/08/gen-ai-human-intel.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">References</h2>
+
+<ol>
+<li id="fn1"><p>Vaswani A, Shazeer N, Parmar N, Uszkoreit J, Jones L, Gomez AN, Kaiser L, Polosukhin I. <em>Attention is All you Need</em>. In Advances in Neural Information Processing Systems 30 (NIPS 2017), Long Beach, California (USA), 2017. ISBN: 9781510860964.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Turing A. <em>Computing Machinery and Intelligence</em>. Mind, LIX(236):433-460, 1950.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Levesque HJ, Davis E, Morgenstern L. <em>The Winograd Schema Challenge</em>. In KR’12: Proceedings of the Thirteenth International Conference on Principles of Knowledge Representation and Reasoning, June 2012, Rome, Italy. AIII Press, Palo Alto (CA), USA, 2012. ISBN: 9781577355601.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Sakaguchi K, Le Bras R, Bhagavatula C, Choi Y. <em>WinoGrande: An Adversarial Winograd Schema Challenge at Scale</em>. In Proceedings of the Thirty-Fourth AAAI Conference on Artificial Intelligence, 34(05), 8732–8740. February 2020, New York (NY), USA. AIII Press, Palo Alto (CA), USA, 2020. ISSN: 2159–5399.<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Legg S, Hutter M. <em>A Collection of Definitions of Intelligence</em>. Proceedings of the 2007 Conference on Advances in Artificial General Intelligence: Concepts, Architectures and Algorithms: Proceedings of the AGI Workshop 2006, 17-24. IOS Press, Amsterdam, the Netherlands, 2007. ISBN: 978-1-58603-758-1.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Suleyman M, Bhaskar M. <em>The Coming Wave</em>. Bodley Head, London, UK, 2023. ISBN-10: 1847927483.<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>McCarthy J. <em>From Here to Human-Level AI</em>. Artificial Intelligence, 171(18):1174–1182, 2007.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>LeCun Y, Bengio Y, Hinton G. <em>Deep Learning</em>. Nature, 521(7553):436–444, 2015.<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>McCloskey M, Cohen NJ. <em>Catastrophic Interference in Connectionist Networks: The Sequential Learning Problem</em>. Psychology of learning and motivation, 24:109–165, 1989.<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>Abraham WC, Robins A. <em>Memory Retention - the Synaptic Stability Versus Plasticity Dilemma</em>. Trends in Neurosciences, 28(2):73–78, 2005.<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>Kemker R, McClure M, Abitino A, Hayes T, Kanan C. <em>Measuring Catastrophic Forgetting in Neural Networks</em>. In Proceedings of the AAAI Conference on Artificial Intelligence, 32(1). AAAI Press, Palo Alto (CA), USA, 2018. ISBN: 9781577358008.<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>Hadsell R, Rao D, Rusu AA, Pascanu R. <em>Embracing Change: Continual Learning in Deep Neural Networks</em>. Trends in Cognitive Sciences 24(12): 1028–1040, 2020.<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>McCulloch W, Pitts W. <em>A Logical Calculus of Ideas Immanent in Nervous Activity</em>. Bulletin of Mathematical Biophysics, 5(4):115–133, 1943.<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>Brooks R, Hassabis D, Bray D, Shashua A. <em>Is the Brain a Good Model for Machine Intelligence?</em> Nature 482: 462-463, 2012.<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p>Koch C. <em>What Is Consciousness?</em> Nature, 557:S8–S12, 2018.<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16"><p>DeWall C, Baumeister R, Masicampo R. <em>Evidence that Logical Reasoning Depends on Conscious Processing</em>. Consciousness and Cognition 17(3): 628, 2008.<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17"><p>Darling K, Nandy P, and Breazeal C. <em>Empathic Concern and the Effect of Stories in Human-Robot Interaction</em>. 24th IEEE International Symposium on Robot and Human Interactive Communication (RO-MAN) 2015, Kobe, Japan, August 31 - September 4, pp.&nbsp;770-775. IEEE, Washington (DC), USA, 2015. ISBN: 9781467367042.<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18"><p>Goodall J, Abrams D. <em>The Book of Hope: A Survival Guide for an Endangered Planet (1st Edition)</em>. Viking Press, New York (NY), USA, 2021. ISBN-10: 024147857X.<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19"><p>Day L, Hanson K, Maltby J, Proctor C, Wood A. <em>Hope Uniquely Predicts Objective Academic Achievement Above Intelligence, Personality, and Previous Academic Achievement</em>. Journal of Research in Personality 44(4): 550-553, 2010.<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn20"><p>Reichard RJ, Avey JB, Lopez S, Dollwet M. <em>Having the Will and Finding the Way: A Review and Meta-Analysis of Hope at Work</em>. The Journal of Positive Psychology 8(4): 292-304, 2013.<a href="#fnref20" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn21"><p>Baeza-Yates R. <em>Bias on the Web</em>. Communications of the ACM, 61(6):54–61, 2018.<a href="#fnref21" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn22"><p>Liu G et al.&nbsp;<em>Deep learning-guided discovery of an antibiotic targeting Acinetobacter baumannii</em>. Nature Chemical Biology 19: 1342-1350, 2023.<a href="#fnref22" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn23"><p>Senior AW et al.&nbsp;<em>Protein structure prediction using multiple deep neural networks in the 13th Critical Assessment of Protein Structure Prediction (CASP13)</em>. Proteins: Structure, Function and Bioinformatics 87(12):1141–1148, 2019.<a href="#fnref23" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn24"><p>Senior AW et al.&nbsp;<em>Improved protein structure prediction using potentials from deep learning</em>. Nature 577:706–710, 2020.<a href="#fnref24" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn25"><p>Higgins MK. <em>Can We AlphaFold Our Way Out of the Next Pandemic?</em> Journal of Molecular Biology 433(20):1–7, 2021.<a href="#fnref25" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn26"><p>McBride JM, Polev K, Abdirasulov A, Reinharz V, Grzybowski BA, Tlusty T. <em>AlphaFold2 Can Predict Single-Mutation Effects</em>. Phys. Rev.&nbsp;Lett. 121:218401, 2023.<a href="#fnref26" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn27"><p>Zheng NN, Liu ZY, Ren PJ, Ma YQ, Chen ST, Yu SY, Xue JR, Chen BD, Wang FY. <em>Hybrid-Augmented Intelligence: Collaboration and Cognition</em>. Frontiers of Information Technology &amp; Electronic Engineering 18:153-179, 2017.<a href="#fnref27" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn28"><p>Bryant PT. <em>Augmented Humanity: Being and Remaining Agentic in a Digitalized World</em>. Palgrave Macmillan, Cham, Switzerland. ISBN: 9783030764449.<a href="#fnref28" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn29"><p>Lenharo M. <em>If AI Becomes Conscious: Here’s How Researchers Will Know</em>. Nature, 24 August 2023.<a href="#fnref29" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn30"><p>Roberts RM. <em>Serendipity: Accidental Discoveries in Science (1st Edition)</em>. Wiley-VCH, Weinheim, Germany, 1989. ISBN: 0471602035.<a href="#fnref30" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn31"><p>Yanai I, Lercher M. <em>What Is The Question?</em> Genome Biology 20(1):289, 2019.<a href="#fnref31" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/realworlddatascience\.net\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="realworlddatascience/realworlddatascience.github.io" data-repo-id="R_kgDOILnnig" data-category="General" data-category-id="DIC_kwDOILnnis4CSt2s" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><a href="../../../../../LICENCE.html">Copyright © 2024 Royal Statistical Society</a></p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/realworlddatascience">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience">
+<p><i class="ai  ai-zenodo ai-2xl"></i></p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/rwdatasci">
+      <i class="bi bi-twitter-x" role="img" aria-label="Twitter/X">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@rwdatasci">
+      <i class="bi bi-mastodon" role="img" aria-label="Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="../../../../../feeds.html">
+      <i class="bi bi-rss" role="img" aria-label="RWDS rss">
+</i> 
+    </a>
+  </li>  
+</ul>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/ideas/posts/2024/04/29/gen-ai-human-intel.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p><a href="../../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
