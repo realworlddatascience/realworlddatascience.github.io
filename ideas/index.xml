@@ -17,7 +17,160 @@
 <width>144</width>
 </image>
 <generator>quarto-1.4.554</generator>
-<lastBuildDate>Mon, 29 Apr 2024 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 07 May 2024 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>AI series: Healthy datasets for optimised AI performance</title>
+  <dc:creator>Fatemeh Torabi, Lewis Hotchkiss, Emma Squires, Prof. Simon E. Thompson and Prof. Ronan A. Lyons</dc:creator>
+  <link>https://realworlddatascience.net/ideas/posts/2024/05/07/ai-series-3.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<!-- article text to go here -->
+<p>In Charles Babbage’s <a href="https://www.gutenberg.org/files/57532/57532-h/57532-h.htm">Passages from the Life of a Philosopher</a> he recalls two incidents where he is asked, “Pray, Mr.&nbsp;Babbage, if you put into the machine wrong figures, will the right answers come out?” Reflecting on these incidents he comments, “I am not able rightly to apprehend the kind of confusion of ideas that could provoke such a question.” Similarly, accurate and clean data is at the core of a functional AI model. However, ensuring accuracy of input data to avoid any “wrong figures” creeping into training datasets used to train AI models, demands meticulous attention during the stages of data wrangling, cleaning, and curation.</p>
+<p>This necessity is particularly pronounced when dealing with the vast datasets used for training machine learning algorithms which are at the core of AI models. The predictive power of these models are highly dependent on the quality of the training data. <sup>1</sup> The most obvious errors which often require meticulous attention at data processing stages are duplication, missingness and data imbalance (Figure&nbsp;1). The presence of any of these errors can exert multifaceted impacts both in the training and testing stage of machine learning algorithms that are at the core of any AI models, and the challenge does not end there. The provenance, content, format and structure of the data require attention as well. Even data that is essentially correct may be “wrong” for a particular data set.</p>
+<section id="obviating-the-obvious-errors" class="level2">
+<h2 class="anchored" data-anchor-id="obviating-the-obvious-errors">Obviating the obvious errors</h2>
+<p>Duplicated records can mask existing diversities within the data, diminishing the representativeness of important subgroups and leading to a biased training set and model outcomes. If duplication originates from data labelling issues, it can lead to fundamental challenges during the training of supervised models. <sup>2</sup> In healthcare data, this issue can arise when linking data across multiple sources where each source holds different labels for the same data. <sup>3</sup></p>
+<p>Missingness directly leads to loss of information required for training the algorithms on various real-world scenarios. It is typically addressed via two primary routes: deletion of missing rows or imputation. Deleting missing rows results in a reduction of the sample size and bias. For instance, when it comes to health data, using electronic medical records from a single health provider such as general practice may give rise to a lot of missingness in other aspects of an individual’s health such as their hospital records, pathology testing data or medical imaging. On the one hand, structured missingness can serve as an informative feature to explore within the data. However in cases where missing data causes pixelation in the comprehensive health picture we are attempting to construct, it often conceals an underlying narrative. <sup>4</sup> For instance, the COVID-19 response involved many initiatives across the AI community, however, during the early stages of the pandemic partial availability of data pixelated the picture and impacted models predictive ability which resulted in a minimal improvement according to the UK’s national centre for data science and AI report. <sup>5</sup></p>
+<p>Imputing missing values can preserve the whole sample. However, the introduction of noise during the imputation process may compromise the quality of fitted models, contingent upon the proportion of missing records. One way to offset this may be to use larger and larger data sets that might inevitably include a fuller training picture to the algorithm, just as adding dots to a pixelated image makes it more and more clear what is depicted.</p>
+<p>It is often perceived that for certain instances, particularly in the context of deep learning models, such as neural networks, the model itself is capable of handling missing values without explicit imputation or deletion procedures. <sup>6</sup> Is this really true in a real-world scenario? Are these models advanced enough to achieve an optimised performance even when data quality is not at an optimised level? <sup>7</sup> Köse et al.&nbsp;(2020) investigated the effect of two conventional imputation approaches: Multiple imputation (MICE) <sup>8</sup> and Factor analysis of mixed data (FAMD) <sup>9</sup> on performance of deep learning models. Their study endorsed the use of such explicit imputation approaches, showing an enhancement in model performance. <sup>10</sup></p>
+<p>Data imbalance issues, arise within datasets where there is a disproportionate amount of information pertaining to a specific aspect. When imbalanced data, rich in focused information, is used to train an AI model, the model becomes adept at learning about the specific aspect but may struggle to generalise its findings to diverse scenarios, thus fostering overfitting where the model achieves accurate prediction on the training data but loses accuracy for any new test dataset.</p>
+<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Stages involved in AI model development">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/ideas/posts/2024/05/07/images/Stages-of-model-development-724.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Stages involved in AI model development">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Stages involved in AI model development.
+</figcaption>
+</figure>
+</div>
+<p>Overfitting severely undermines the predictive performance of AI models on data beyond their training set, defeating the primary purpose of these models. For instance, out of all strokes that occur, approximately 85% are ischaemic, caused by blockage of blood supply to part of the brain, and 15% are haemorrhagic, caused by bleeding into the brain. Development of machine-learning and AI-based stroke predictive models are therefore being affected by this natural imbalance in the two types of stroke. <sup>11</sup> This type of imbalance also exists in population wide studies where stroke itself is only present in a minority subsection of a healthy population. <sup>12</sup></p>
+<p>The circumstances of data collection can lead to bias, so care is needed at early stages to ensure that datasets are representative of the real world. These types of error can be picked up at an initial Quality Assurance (QA) stage conducted to reveal any unexpected errors in data used by AI models. QA checks often involve principle checks on presented values to ensure they are the right data type and within the expected range and have the expected temporal coverage.</p>
+<p>Finally the choice of features included in a data set requires consideration since this can also have implications on an algorithm. Taking another example from the COVID-19 pandemic, a group of researchers trained an algorithm on radiological imaging of COVID-19 patients where the position of the patient during radiology was present as a feature in the dataset. However, since more severe cases were lying down and less severe cases were standing up, the existence of this feature resulted in an algorithm that predicted COVID-19 risk based on the position of the patients. Here although the data included was correct, its inclusion in the dataset proved to be “wrong”.</p>
+</section>
+<section id="things-get-complicated" class="level2">
+<h2 class="anchored" data-anchor-id="things-get-complicated">Things get complicated</h2>
+<p>When AI algorithms encounter complex, unstructured data, the task of quality assurance suddenly balloons beyond tackling the three main errors highlighted above. Such circumstances require some kind of quality enhancement procedure, where datasets in the form of images or unstructured text go through a curation process which involves enhancement of the quality and standardisation of the format to the level required for integration into AI algorithms. This process of standardization of data is paramount across various domains, especially in healthcare where complex, unstructured health data holds transformative potential for AI driven advances that revolutionise diagnosis, treatment, and prognosis of diseases. From electronic health records to magnetic resonance imaging (MRI) scans and genetic sequences, this data offers a wealth of insights for AI models to learn from. Adopting standardised formats not only facilitates seamless integration of diverse datasets but also streamlines the development and deployment of AI models. However, unlocking this potential requires a strong foundation in high-quality, processed data which begins with standardisation.</p>
+<p>One category of complex health data is neuroimaging of which a prime example is MRI. Different institutions will often employ different acquisition protocols and different ways of collecting and storing neuroimaging data. Above all, this can make it very difficult to integrate into existing workflows and processing pipelines, but it also makes it challenging to understand, compare and combine with other datasets. To address these challenges, the neuroimaging community has adopted the Brain Imaging Data Structure (BIDS) <sup>13</sup> – a standardised format for organising and naming MRI data which allows compliant data to integrate smoothly with existing workflows and AI models, streamlining processing and analysis. By embracing standardisation, we can pave the way for common processing tools to enable the generation of AI-ready data.</p>
+<p>Next, comes pre-processing. Sticking with the neuroimaging example, MRI scans are susceptible to various forms of noise and artifacts, which can appear as blurring or distortions which, without proper processing, can be misinterpreted by AI models. Pre-processing typically includes steps for spatial normalisation and image registration, involving alignment of brain images from different individuals into a common reference model and alignment of different images of the same subject to a common template. This standardisation facilitates inter-subject and inter-study comparisons, enabling AI models to generalise effectively across diverse datasets. However, the multi-layer aspect of this process means that aligning data to a common template is dependent on the choice of template which itself can introduce bias if the template brain doesn’t accurately reflect the patient’s anatomy (due to age, ethnicity, or disease for example).</p>
+<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Neuroimaging data">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/ideas/posts/2024/05/07/images/neuroimaging.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Neuroimaging data">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Neuroimaging data.
+</figcaption>
+</figure>
+</div>
+<p>Once pre-processing is complete, you may want to combine datasets to increase sample sizes for your AI model. This is where harmonisation techniques <sup>14</sup> <sup>15</sup> come in to deal with inconsistencies and variations in acquisition which can add noise and bias into a model. A typical technique for harmonisation in neuroimaging, known as ComBat <sup>16</sup>, works by modelling data using a hierarchical Bayesian model and followed by empirical Bayes to infer the distribution of the unknown factors. The method is actually borrowed from genomics data but is applicable to situations where multiple features of the same type are collected for each participant, whether that be expression levels for genes, or imaging derived measures such as volumes from different regions. This is a crucial step for combining datasets to enable AI models to focus on learning the actual relationships within the data rather than struggling with inconsistencies across datasets. It also leads to models which can generalise better on unseen data.</p>
+</section>
+<section id="feeding-hungry-algorithms" class="level2">
+<h2 class="anchored" data-anchor-id="feeding-hungry-algorithms">Feeding hungry algorithms</h2>
+<p>The public good is at the heart of AI driven approaches and indeed, the aim is to develop models with optimised predictive ability that can be generalised to many scenarios. For this to be achieved a large and diverse training source is required. This is often referred to as data hungry algorithms. To provide a large amount of enriched training data for optimised model development two main approaches have been explored: federated analytics and synthetic data.</p>
+<p>Federation is when data from multiple sources is made available for training and analysis of models designed to run on data that is not held in a single place, nominally called distributed models. It provides the opportunity to test algorithms in different populations/settings to ensure generalisability. In the context of patient-level health data, the data is often held institutionally. Enabling federation and trustworthy sharing of these datasets requires extensive attention to governance models and a common model between multiple organisations is a known catalyst of this process <sup>17</sup> <sup>18</sup></p>
+<p>Generating synthetic data <sup>19</sup> from original data sources is a resource intensive mechanism. It requires the development of models on the real data to learn existing patterns, formats, and statistical properties within the original data from which it is possible to generate further synthetic versions of these data. When working with sensitive data such as health records, ensuring patient data is safe and secure is covered by information governance. Depending on how close the synthetic data source is to the original data, the same governance level may still be applicable when trying to bring individual/patient data from multiple sources together. A suggested solution to overcome the governance challenges in the context of synthetic data is to use a <a href="https://www.adruk.org/news-publications/news-blogs/accelerating-public-policy-research-with-easier-safer-synthetic-data/">low-fidelity version</a> of the original data which means a level of bias has been added throughout the synthesisation process to ensure safety and security of individual level data. <sup>20</sup> While the low fidelity data sources are generated based on real data, it is worth noting that the rise in generative AI also poses a concern for data pollution, particularly where AI tools such as Gretel.ai <sup>21</sup> are used to generate synthetic data which may also be used to train AI models – the problematic case of AI training AI!</p>
+<p>When using sensitive health data of patients a further layer is in place to ensure security of access. These are called Trusted Research Environments (<a href="https://www.hdruk.ac.uk/access-to-health-data/trusted-research-environments/">TREs</a>), secure technology infrastructures which play a crucial role in consolidating disparate data collections into a centralised repository, facilitating researcher access to data for scientific exploration. However, integrating data from various sources into AI models poses challenges due to differences in data collection methods and formats, hindering computational analysis. In response, the FAIR (Findable, Accessible, Interoperable, Reusable) data principles were introduced in 2016 to enhance the reusability of scientific datasets by humans and machines. <sup>22</sup> Adoption of FAIR principles within TREs ensures well-documented, curated, and harmonised datasets, addressing issues raised above such as duplicated records and missing data. <sup>23</sup> Additionally, preprocessing pipelines within TREs streamline data standardisation, creating “AI research-ready” datasets. <sup>24</sup></p>
+<p>Access to real-world healthcare data remains challenging, prompting the development of AI models on open-source or synthetic datasets. However, these models often exhibit performance discrepancies when applied to real world data <sup>25</sup> It is therefore imperative to provide researchers with secure access to real-world healthcare data within TREs, bolstered by robust governance and support mechanisms. Initiatives like the GRAIMATTER study <sup>26</sup> and AI risk evaluation workshops <sup>27</sup> exemplify efforts to facilitate AI model development and translation from TREs to clinical settings. By establishing governance guidelines and promoting FAIR datasets, TREs aim to become important resources for the AI research community. Providing standardised and curated data rich repositories that AI models can be developed on is a top priority in UK-TREs. Given the well-defined and secure governance environments of TREs they may also provide the basis for federated data analysis allowing researchers to combine datasets across TREs/data environments. In this way they can provide the large numbers that data hungry algorithms require, while avoiding the wide-ranging and myriad ways that data for a specific dataset can be “wrong”.</p>
+</section>
+<section id="also-in-the-ai-series" class="level2">
+<h2 class="anchored" data-anchor-id="also-in-the-ai-series">Also in the AI series:</h2>
+<p><a href="https://realworlddatascience.net/ideas/posts/2024/04/22/ai-series-1.html">What is AI? Shedding light on the method and madness in these algorithms</a> <a href="https://realworlddatascience.net/ideas/posts/2024/04/29/gen-ai-human-intel.html">Generative AI models and the quest for human-level artificial intelligence</a></p>
+<div class="article-btn">
+<p><a href="../../../../../ideas/index.html">Explore more data science ideas</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+<strong>Fatemeh Torabi</strong> is Senior Research Officer and Data Scientist, at Swansea University and works on Health Data Science and Population Data Science for the Dementias Platform UK.
+</dd>
+<dd>
+<p><strong>Lewis Hotchkiss</strong> is a Research Officer in Neuroimaging at Swansea University and works on Population Data Science for the Dementias Platform UK.</p>
+</dd>
+<dd>
+<p><strong>Emma Squires</strong> is the Data Project Manager for Dementias Platform UK based at Swansea University and works on Population Data Science</p>
+</dd>
+<dd>
+<p><strong>Prof.&nbsp;Simon E. Thompson</strong> is Deputy Associate Director of the Dementias Platform UK</p>
+</dd>
+<dd>
+<p><strong>Prof.&nbsp;Ronan A. Lyons</strong> is the Associate Director of the Dementias Platform UK based at Swansea University and works on Population Data Science.</p>
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<!-- copyright goes to the author, or to Royal Statistical Society if written by staff -->
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2024 Royal Statistical Society
+</dd>
+</dl>
+<!-- confirm licence terms with contributor before publishing - must be Creative Commons licence, but different types of CC licences might be preferred -->
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. <!-- Add thumbnail image credit and any licence terms here --></p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Torabi, Fatemeh, Hotchkiss, Lewis, Squires, Emma, Thompson, Simon E. and Lyons, Ronan A. 2024. “Getting the data right for optimised AI performance.” Real World Data Science, May 7, 2024. <a href="https://realworlddatascience.net/ideas/posts/2024/05/07/ai-series-3.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<!-- Make sure to update main site homepage (index.qmd) before publishing. See README for details. -->
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Li, P. et al.&nbsp;CleanML: A Benchmark for Joint Data Cleaning and Machine Learning [Experiments and Analysis]↩︎</p></li>
+<li id="fn2"><p>Azeroual, O. et al.&nbsp;A Record Linkage-Based Data Deduplication Framework with DataCleaner Extension. Multimodal Technol. Interact. 2022, Vol. 6, Page 27 6, 27 (2022).↩︎</p></li>
+<li id="fn3"><p>Rajpurkar, P., Chen, E., Banerjee, O. &amp; Topol, E. J. AI in health and medicine. Nat. Med. 2022 281 28, 31–38 (2022).↩︎</p></li>
+<li id="fn4"><p>Mitra, R. et al.&nbsp;Learning from data with structured missingness. (2023).↩︎</p></li>
+<li id="fn5"><p>Alan Turing Institution. Data science and AI in the age of COVID-19. 2020 https://www.turing.ac.uk/sites/default/files/2021-06/data-science-and-ai-in-the-age-of-covid_full-report_2.pdf↩︎</p></li>
+<li id="fn6"><p>Han, J. &amp; Kang, S. Dynamic imputation for improved training of neural network with missing values. Expert Syst. Appl. 194, 116508 (2022).↩︎</p></li>
+<li id="fn7"><p>Köse, T. et al.&nbsp;Effect of Missing Data Imputation on Deep Learning Prediction Performance for Vesicoureteral Reflux and Recurrent Urinary Tract Infection Clinical Study. Biomed Res. Int. 2020, (2020).↩︎</p></li>
+<li id="fn8"><p>Azur, M. J., Stuart, E. A., Frangakis, C. &amp; Leaf, P. J. Multiple imputation by chained equations: what is it and how does it work? Int. J. Methods Psychiatr. Res. 20, 40–49 (2011).↩︎</p></li>
+<li id="fn9"><p>Audigier, V., Husson, F. &amp; Josse, J. A principal component method to impute missing values for mixed data. Adv. Data Anal. Classif. 10, 5–26 (2016).↩︎</p></li>
+<li id="fn10"><p>Köse, T. et al.&nbsp;Effect of Missing Data Imputation on Deep Learning Prediction Performance for Vesicoureteral Reflux and Recurrent Urinary Tract Infection Clinical Study. Biomed Res. Int. 2020, (2020).↩︎</p></li>
+<li id="fn11"><p>Liu, T., Fan, W. &amp; Wu, C. A hybrid machine learning approach to cerebral stroke prediction based on imbalanced medical dataset. Artif. Intell. Med. 101, 101723 (2019).↩︎</p></li>
+<li id="fn12"><p>Kokkotis, C. et al.&nbsp;An Explainable Machine Learning Pipeline for Stroke Prediction on Imbalanced Data. Diagnostics 2022, Vol. 12, Page 2392 12, 2392 (2022).↩︎</p></li>
+<li id="fn13"><p>Gorgolewski, K. J. et al.&nbsp;BIDS apps: Improving ease of use, accessibility, and reproducibility of neuroimaging data analysis methods. PLoS Comput. Biol. 13, (2017).↩︎</p></li>
+<li id="fn14"><p>Bauermeister, S. et al.&nbsp;Research-ready data: the C-Surv data model. Eur. J. Epidemiol. 38, 179–187 (2023).↩︎</p></li>
+<li id="fn15"><p>Abbasizanjani, H. et al.&nbsp;Harmonising electronic health records for reproducible research: challenges, solutions and recommendations from a UK-wide COVID-19 research collaboration. BMC Med. Inform. Decis. Mak. 23, 1–15 (2023).↩︎</p></li>
+<li id="fn16"><p>Orlhac, F. et al.&nbsp;A Guide to ComBat Harmonization of Imaging Biomarkers in Multicenter Studies. J. Nucl. Med. 63, 172 (2022).↩︎</p></li>
+<li id="fn17"><p>Toga, A. W. et al.&nbsp;The pursuit of approaches to federate data to accelerate Alzheimer’s disease and related dementia research: GAAIN, DPUK, and ADDI. Front. Neuroinform. 17, 1175689 (2023).↩︎</p></li>
+<li id="fn18"><p>Torabi, F. et al.&nbsp;A common framework for health data governance standards. Nat. Med. 2024 1–4 (2024) doi:10.1038/s41591-023-02686-w.↩︎</p></li>
+<li id="fn19"><p>Tucker, A., Wang, Z., Rotalinti, Y. &amp; Myles, P. Generating high-fidelity synthetic patient data for assessing machine learning healthcare software. npj Digit. Med. 2020 31 3, 1–13 (2020)↩︎</p></li>
+<li id="fn20"><p>Tucker, A., Wang, Z., Rotalinti, Y. &amp; Myles, P. Generating high-fidelity synthetic patient data for assessing machine learning healthcare software. npj Digit. Med. 2020 31 3, 1–13 (2020)↩︎</p></li>
+<li id="fn21"><p>Noruzman, A. H., Ghani, N. A. &amp; Zulkifli, N. S. A. Gretel.ai: Open-Source Artificial Intelligence Tool To Generate New Synthetic Data. MALAYSIAN J. Innov. Eng. Appl. Soc. Sci. 1, 15–22 (2021).↩︎</p></li>
+<li id="fn22"><p>Wilkinson, M. D. et al.&nbsp;The FAIR Guiding Principles for scientific data management and stewardship. Sci. Data 2016 31 3, 1–9 (2016).↩︎</p></li>
+<li id="fn23"><p>Chen, Y. et al.&nbsp;A FAIR and AI-ready Higgs boson decay dataset. Sci. Data 9, (2021).↩︎</p></li>
+<li id="fn24"><p>Esteban, O. et al.&nbsp;fMRIPrep: a robust preprocessing pipeline for functional MRI. Nat. Methods 16, 111–116 (2018).↩︎</p></li>
+<li id="fn25"><p>Alkhalifah, T., Wang, H. &amp; Ovcharenko, O. MLReal: Bridging the gap between training on synthetic data and real data applications in machine learning. Artif. Intell. Geosci. 3, 101–114 (2022).↩︎</p></li>
+<li id="fn26"><p>Jefferson, E. et al.&nbsp;GRAIMATTER Green Paper: Recommendations for disclosure control of trained Machine Learning (ML) models from Trusted Research Environments (TREs). doi:10.5281/ZENODO.7089491.↩︎</p></li>
+<li id="fn27"><p>DARE UK Community Working Group - DARE UK. https://dareuk.org.uk/dare-uk-community-working-groups/dare-uk-community-working-group-ai-risk-evaluation-working-group/.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>AI</category>
+  <category>Data management</category>
+  <category>Data science education</category>
+  <guid>https://realworlddatascience.net/ideas/posts/2024/05/07/ai-series-3.html</guid>
+  <pubDate>Tue, 07 May 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/ideas/posts/2024/05/07/images/Stages-of-model-development-724.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
 <item>
   <title>AI Series: Generative AI models and the quest for human-level artificial intelligence</title>
   <dc:creator>Diego Miranda-Saavedra</dc:creator>
@@ -30,7 +183,7 @@
 
 <p>Generative artificial intelligence (AI) models have taken the world by storm over the past year. The human-like outputs of these systems, and the recent publication of a guideline to determine the degree of consciousness of machines, have again raised the question of whether machines will soon be able to replicate human intelligence. In this article, we discuss some of the merits and limitations of modern machine learning models, and also provide a general view of human intelligence and the position of “intelligent” systems in the constellation of human capabilities.</p>
 <p>Large language models (LLMs) such as ChatGPT are designed to process and understand natural language, and to generate human-like text in response to prompts and questions. This is achieved thanks to a specific type of deep learning architecture called the <em>Transformer</em>, which consists of an encoder and a decoder, each made up of some number <em>N</em> of blocks. Here the input text is eventually transformed into predicted (and contextualised) output text (Figure&nbsp;1).<sup>1</sup> LLMs are trained on complex and large bodies of text so that they can learn complex patterns and relationships between words in sentences, in different contexts.</p>
-<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Architecture of the Transformer. The left-hand block is the Encoder, whereas the right-hand block represents the decoder">
+<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Architecture of the Transformer. The left-hand block is the Encoder, whereas the right-hand block represents the decoder" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/04/29/images/fig1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Architecture of the Transformer. The left-hand block is the Encoder, whereas the right-hand block represents the decoder">
@@ -50,7 +203,7 @@ Figure&nbsp;1: Architecture of the Transformer. The left-hand block is the Encod
 <p>The trophy would not fit in the suitcase because it was too <strong>small/large</strong>.</p>
 </blockquote>
 <p>Humans would infer that if the last word of that sentence is <em>small</em>, then <em>suitcase</em> is the object being described, whereas if the word is <em>large</em> then we are referring to the <em>trophy</em>. ChatGPT v3.5 was unable to make this inference when the question was first put to it (see Figure&nbsp;2), although a later test finds it now can – as can other LLMs. Some suggest that this type of improvement comes from training ChatGPT to do better on some of the tasks that are routinely used to highlight model limitations on social media at the expense of <a href="https://www.searchenginejournal.com/chatgpt-quality-worsened/492145/">giving worse answers in other contexts</a>. But could this improvement be due to ChatGPT and other models suddenly having acquired common sense and an understanding of the physical world? A more complex set of Winograd schema questions, the WinoGrande dataset, suggests not: humans still outperform computers on these tests.<sup>4</sup></p>
-<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Screenshot of author's ChatGPT conversation, prompting the AI chatbot to solve a WinoGrad schema question">
+<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Screenshot of author's ChatGPT conversation, prompting the AI chatbot to solve a WinoGrad schema question" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/04/29/images/fig2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Screenshot of author's ChatGPT conversation, prompting the AI chatbot to solve a WinoGrad schema question">
@@ -70,7 +223,7 @@ Figure&nbsp;2: GPT-3.5’s inconclusive answer to a typical WinoGrad schema ques
 <p>Moreover, machines can be surprisingly easy to fool. For example, placing an object next to the one we are trying to classify can confuse image classification algorithms – a <a href="https://www.youtube.com/watch?v=i1sp4X57TL4">well-known example shows a patch being placed next to a banana</a>, which makes the deep neural network (DNN) classify the banana as a toaster with a high degree of confidence. We can also fool image classification networks <a href="https://arxiv.org/abs/1811.11553">by showing the same object under different lighting conditions and orientations</a>, such as when we flip a school bus on its side (as in an accident). The reason why a DNN cannot do this trivial mental rotation is because learning algorithms cannot generalise knowledge to unseen (or “out of distribution”) examples – imbuing them with no small amount of “brittleness”.<sup>7</sup> Compare this to the human mind, which learns in a semi-supervised manner: we need only be shown a few guiding examples to be able to extrapolate knowledge. This is a clear evolutionary adaptation since most real-world learning is semi-supervised: we do not need to explore every road to learn to drive, nor do every possible differentiation exercise to become confident at calculus. Likewise, we do not need to become fully bilingual in a language before we start combining newly learned words to try to explain complex concepts.</p>
 <p>Next to GPT-4’s <a href="https://arxiv.org/abs/2303.08774">100-trillion parameter model</a>, the human brain seems <a href="https://www.wired.com/story/cerebras-chip-cluster-neural-networks-ai/">much more</a> <a href="https://arxiv.org/pdf/2005.14165">parsimonious</a>. Therefore, progress in AI would perhaps come faster if we could teach machines to learn from a few (or no) labelled examples instead of being so heavily dependent on terabytes of labelled data (supervised learning) and on our own interpretation of the world.<sup>8</sup></p>
 <p>Another major limitation of algorithms for achieving human-like adaptive learning in changing environments is the fact that they cannot keep learning without forgetting previously learned training data. This phenomenon is called <em>catastrophic forgetting</em>,<sup>9</sup> and it occurs because of the <em>stability-plasticity dilemma</em>: this states that a certain degree of plasticity is required for the integration of new knowledge, but also radically new knowledge (e.g.&nbsp;large weight changes in a DNN) disrupts the stability necessary for retaining the previously learned representations (Figure&nbsp;3). In other words, weight stability is synonymous with knowledge retention, but it also introduces the rigidity that prevents the learning of new tasks.<sup>10</sup></p>
-<div id="fig-3" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Illustration of catastrophic forgetting and ideal learning in a two-class classifier">
+<div id="fig-3" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Illustration of catastrophic forgetting and ideal learning in a two-class classifier" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/04/29/images/fig3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Illustration of catastrophic forgetting and ideal learning in a two-class classifier">
