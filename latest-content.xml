@@ -16,10 +16,10 @@
 <height>83</height>
 <width>144</width>
 </image>
-<generator>quarto-1.4.553</generator>
+<generator>quarto-1.4.554</generator>
 <lastBuildDate>Mon, 29 Apr 2024 00:00:00 GMT</lastBuildDate>
 <item>
-  <title>Generative AI models and the quest for human-level artificial intelligence</title>
+  <title>AI Series: Generative AI models and the quest for human-level artificial intelligence</title>
   <dc:creator>Diego Miranda-Saavedra</dc:creator>
   <link>https://realworlddatascience.net/ideas/posts/2024/04/29/gen-ai-human-intel.html</link>
   <description><![CDATA[ 
@@ -30,7 +30,7 @@
 
 <p>Generative artificial intelligence (AI) models have taken the world by storm over the past year. The human-like outputs of these systems, and the recent publication of a guideline to determine the degree of consciousness of machines, have again raised the question of whether machines will soon be able to replicate human intelligence. In this article, we discuss some of the merits and limitations of modern machine learning models, and also provide a general view of human intelligence and the position of “intelligent” systems in the constellation of human capabilities.</p>
 <p>Large language models (LLMs) such as ChatGPT are designed to process and understand natural language, and to generate human-like text in response to prompts and questions. This is achieved thanks to a specific type of deep learning architecture called the <em>Transformer</em>, which consists of an encoder and a decoder, each made up of some number <em>N</em> of blocks. Here the input text is eventually transformed into predicted (and contextualised) output text (Figure&nbsp;1).<sup>1</sup> LLMs are trained on complex and large bodies of text so that they can learn complex patterns and relationships between words in sentences, in different contexts.</p>
-<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Architecture of the Transformer. The left-hand block is the Encoder, whereas the right-hand block represents the decoder" data-fig-align="center">
+<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Architecture of the Transformer. The left-hand block is the Encoder, whereas the right-hand block represents the decoder">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/04/29/images/fig1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Architecture of the Transformer. The left-hand block is the Encoder, whereas the right-hand block represents the decoder">
@@ -50,7 +50,7 @@ Figure&nbsp;1: Architecture of the Transformer. The left-hand block is the Encod
 <p>The trophy would not fit in the suitcase because it was too <strong>small/large</strong>.</p>
 </blockquote>
 <p>Humans would infer that if the last word of that sentence is <em>small</em>, then <em>suitcase</em> is the object being described, whereas if the word is <em>large</em> then we are referring to the <em>trophy</em>. ChatGPT v3.5 was unable to make this inference when the question was first put to it (see Figure&nbsp;2), although a later test finds it now can – as can other LLMs. Some suggest that this type of improvement comes from training ChatGPT to do better on some of the tasks that are routinely used to highlight model limitations on social media at the expense of <a href="https://www.searchenginejournal.com/chatgpt-quality-worsened/492145/">giving worse answers in other contexts</a>. But could this improvement be due to ChatGPT and other models suddenly having acquired common sense and an understanding of the physical world? A more complex set of Winograd schema questions, the WinoGrande dataset, suggests not: humans still outperform computers on these tests.<sup>4</sup></p>
-<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Screenshot of author's ChatGPT conversation, prompting the AI chatbot to solve a WinoGrad schema question" data-fig-align="center">
+<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Screenshot of author's ChatGPT conversation, prompting the AI chatbot to solve a WinoGrad schema question">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/04/29/images/fig2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Screenshot of author's ChatGPT conversation, prompting the AI chatbot to solve a WinoGrad schema question">
@@ -70,7 +70,7 @@ Figure&nbsp;2: GPT-3.5’s inconclusive answer to a typical WinoGrad schema ques
 <p>Moreover, machines can be surprisingly easy to fool. For example, placing an object next to the one we are trying to classify can confuse image classification algorithms – a <a href="https://www.youtube.com/watch?v=i1sp4X57TL4">well-known example shows a patch being placed next to a banana</a>, which makes the deep neural network (DNN) classify the banana as a toaster with a high degree of confidence. We can also fool image classification networks <a href="https://arxiv.org/abs/1811.11553">by showing the same object under different lighting conditions and orientations</a>, such as when we flip a school bus on its side (as in an accident). The reason why a DNN cannot do this trivial mental rotation is because learning algorithms cannot generalise knowledge to unseen (or “out of distribution”) examples – imbuing them with no small amount of “brittleness”.<sup>7</sup> Compare this to the human mind, which learns in a semi-supervised manner: we need only be shown a few guiding examples to be able to extrapolate knowledge. This is a clear evolutionary adaptation since most real-world learning is semi-supervised: we do not need to explore every road to learn to drive, nor do every possible differentiation exercise to become confident at calculus. Likewise, we do not need to become fully bilingual in a language before we start combining newly learned words to try to explain complex concepts.</p>
 <p>Next to GPT-4’s <a href="https://arxiv.org/abs/2303.08774">100-trillion parameter model</a>, the human brain seems <a href="https://www.wired.com/story/cerebras-chip-cluster-neural-networks-ai/">much more</a> <a href="https://arxiv.org/pdf/2005.14165">parsimonious</a>. Therefore, progress in AI would perhaps come faster if we could teach machines to learn from a few (or no) labelled examples instead of being so heavily dependent on terabytes of labelled data (supervised learning) and on our own interpretation of the world.<sup>8</sup></p>
 <p>Another major limitation of algorithms for achieving human-like adaptive learning in changing environments is the fact that they cannot keep learning without forgetting previously learned training data. This phenomenon is called <em>catastrophic forgetting</em>,<sup>9</sup> and it occurs because of the <em>stability-plasticity dilemma</em>: this states that a certain degree of plasticity is required for the integration of new knowledge, but also radically new knowledge (e.g.&nbsp;large weight changes in a DNN) disrupts the stability necessary for retaining the previously learned representations (Figure&nbsp;3). In other words, weight stability is synonymous with knowledge retention, but it also introduces the rigidity that prevents the learning of new tasks.<sup>10</sup></p>
-<div id="fig-3" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Illustration of catastrophic forgetting and ideal learning in a two-class classifier" data-fig-align="center">
+<div id="fig-3" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Illustration of catastrophic forgetting and ideal learning in a two-class classifier">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/04/29/images/fig3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Illustration of catastrophic forgetting and ideal learning in a two-class classifier">
@@ -99,6 +99,10 @@ Figure&nbsp;3: Illustration of catastrophic forgetting and ideal learning in a t
 <p>LLMs do not yet approximate the human brain; generative video models do not approximate the physical world; and human intelligence is so much more than combining formal linguistic competence with complete models of thought, or making creative videos that respect the physical constraints of the world. Human intelligence is not limited to specific domains either but exists in the open to challenge currently held views. Ask Noah Chomsky and he will respond that generative models like ChatGPT are essentially “<a href="https://www.nytimes.com/2023/03/08/opinion/noam-chomsky-chatgpt-ai.html">high-tech plagiarism</a>”. Human consciousness includes a sense of self which machines will not be able to replicate anytime soon – or perhaps never will, since a human brain and a computer are <a href="https://www.wired.com/story/artificial-intelligence-consciousness/#:~:text=Pondering%20this%20question%2C%20it's%20important,necessary%20nor%20sufficient%20for%20consciousness.">not the same</a>. Human consciousness is coupled with curiosity, imagination, intuition, emotions, desires, purpose, objectives, wisdom and even humour. If we think about humour, a good sense of humour means thinking outside of the box and connecting concepts and situations in novel ways, which is something that machines are unable to do. Also, by thinking outside the box, humans are able to <em>consciously</em> ask a variety of questions – the most <em>extraordinary</em> of which have led to major leaps in our understanding of the world around us.</p>
 <p><em>Reasonable</em> questions can be posed by many and answered logically (some even by machines) using the standard scientific process of experimental design, controls and hypothesis validation. In this context, the faster and more efficient exploration of search space by learning methods, complemented by the delegation of repetitive tasks to machines, will <a href="https://www.technologyreview.com/2023/07/05/1075865/eric-schmidt-ai-will-transform-science/">allow scientists to conduct experiments at greater scale</a> while focusing on designing optimal solutions. Beyond reasonable questions and expected results is the concept of <em>serendipity</em> that machines cannot yet be made to grasp. Some of the greatest discoveries in the history of science are indeed serendipitous (accidental), including the discovery of insulin, penicillin, smallpox vaccination, the anti-malarial drug quinine, X-rays, nylon and the anaesthetic effects of ether and nitrous oxide.<sup>30</sup> Turning accidents into discoveries requires having a questioning mind that can view data from several perspectives and connect seemingly unrelated pieces of information instead of discarding unusual results right away.</p>
 <p>And yet beyond serendipitous discoveries we have <em>extraordinary</em> questions, which machines are as yet incapable of asking. Extraordinary questions lie outside of our current frame of knowledge and require an illogical step that is often the product of letting one’s mind wander freely.<sup>31</sup> A classical example here is when Einstein was trying to modify Maxwell’s equations so that they were no longer in contradiction with the constant speed of light that had been observed. After trying to modify these equations for years, Einstein eventually realised that it was not Maxwell’s fault. Rather, our notion of time was incorrect. Einstein thus stumbled upon the very question that led to the idea that the rate at which time passes depends on one’s frame of reference. While machines follow rules, the revolutionary ideas of Einstein, Newton, Darwin, Galileo, Wittgenstein and many others did not follow any rules established at the time. Therefore, the real danger in thinking that we can rely on “intelligent” machines to achieve a human level of imagination, intuition, wisdom or purpose anytime soon is that the world will become an even more statistically predictable place.</p>
+</section>
+<section id="also-in-the-ai-series" class="level2">
+<h2 class="anchored" data-anchor-id="also-in-the-ai-series">Also in the AI series:</h2>
+<p><a href="https://realworlddatascience.net/ideas/posts/2024/04/22/ai-series-1.html">What is AI? Shedding light on the method and madness in these algorithms</a> <a href="https://realworlddatascience.net/ideas/posts/2024/05/07/ai-series-3.html">Healthy datasets for optimised AI performance</a></p>
 <div class="article-btn">
 <p><a href="../../../../../ideas/index.html">Explore more data science ideas</a></p>
 </div>
@@ -455,7 +459,7 @@ It emerged from three things, really, and I can trace the start of it back to 20
 <div class="g-col-12 g-col-lg-4">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="https://realworlddatascience.net/viewpoints/interviews/posts/2024/03/11/images/julia-lane-sq.png" class="img-fluid figure-img"></p>
+<p><img src="https://realworlddatascience.net/viewpoints/interviews/posts/2024/03/11/images/julia-lane-sq.png" class="img-fluid figure-img" alt="Photo of Julia Lane, professor at the NYU Wagner Graduate School of Public Service and visiting fellow at RTI International."></p>
 <figcaption>Julia Lane, professor at the NYU Wagner Graduate School of Public Service and visiting fellow at RTI International. Image supplied, used with permission.</figcaption>
 </figure>
 </div>
@@ -1008,7 +1012,7 @@ Tarran, Brian. 2024. “When will the cherry trees bloom? Get ready to make and 
 <div class="g-col-12 g-col-lg-4">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="https://realworlddatascience.net/viewpoints/interviews/posts/2024/01/15/images/robert-santos-sq.png" class="img-fluid figure-img"></p>
+<p><img src="https://realworlddatascience.net/viewpoints/interviews/posts/2024/01/15/images/robert-santos-sq.png" class="img-fluid figure-img" alt="Official photograph of US Census Bureau director Robert Santos, with US flag in background."></p>
 <figcaption>Robert Santos, director, US Census Bureau</figcaption>
 </figure>
 </div>
@@ -1155,7 +1159,7 @@ Was it culture? Was it improved processes? Was it better methods? All of the abo
 <div class="g-col-12 g-col-lg-4">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="https://realworlddatascience.net/viewpoints/interviews/posts/2023/12/15/images/ian-diamond-sq.png" class="img-fluid figure-img"></p>
+<p><img src="https://realworlddatascience.net/viewpoints/interviews/posts/2023/12/15/images/ian-diamond-sq.png" class="img-fluid figure-img" alt="Photo of national statistician Professor Sir Ian Diamond, standing, with microphone, during a talk."></p>
 <figcaption>Professor Sir Ian Diamond, UK national statistician. Image supplied, used with permission.</figcaption>
 </figure>
 </div>
@@ -3083,7 +3087,7 @@ The manifesto was something which came out of the pandemic, in fact, because we 
 <div class="g-col-12 g-col-lg-4">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="https://realworlddatascience.net/viewpoints/interviews/posts/2023/11/24/images/andrea-saltelli-sq.png" class="img-fluid figure-img"></p>
+<p><img src="https://realworlddatascience.net/viewpoints/interviews/posts/2023/11/24/images/andrea-saltelli-sq.png" class="img-fluid figure-img" alt="Andrea Saltelli, co-editor of 'The Politics of Modelling'"></p>
 <figcaption>Andrea Saltelli, co-editor of ‘The Politics of Modelling.’</figcaption>
 </figure>
 </div>
@@ -3543,7 +3547,7 @@ Initial quality control steps
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="https://realworlddatascience.net/case-studies/posts/2023/11/16/images/film.png" class="img-fluid figure-img"></p>
+<p><img src="https://realworlddatascience.net/case-studies/posts/2023/11/16/images/film.png" class="img-fluid figure-img" alt="graphical icon representing a strip of film"></p>
 <figcaption><strong>Number of clips</strong> = Number of clips recorded.</figcaption>
 </figure>
 </div>
@@ -3551,7 +3555,7 @@ Initial quality control steps
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="https://realworlddatascience.net/case-studies/posts/2023/11/16/images/calendar.png" class="img-fluid figure-img"></p>
+<p><img src="https://realworlddatascience.net/case-studies/posts/2023/11/16/images/calendar.png" class="img-fluid figure-img" alt="graphical icon representing a calendar"></p>
 <figcaption><strong>Days with footage</strong> = Number of discrete dates that appear in these clips.</figcaption>
 </figure>
 </div>
@@ -3561,7 +3565,7 @@ Initial quality control steps
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="https://realworlddatascience.net/case-studies/posts/2023/11/16/images/clock.png" class="img-fluid figure-img"></p>
+<p><img src="https://realworlddatascience.net/case-studies/posts/2023/11/16/images/clock.png" class="img-fluid figure-img" alt="graphical icon representing a stopwatch"></p>
 <figcaption><strong>Footage hours</strong> = Total duration of all shot footage.</figcaption>
 </figure>
 </div>
@@ -3569,7 +3573,7 @@ Initial quality control steps
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="https://realworlddatascience.net/case-studies/posts/2023/11/16/images/caution.png" class="img-fluid figure-img"></p>
+<p><img src="https://realworlddatascience.net/case-studies/posts/2023/11/16/images/caution.png" class="img-fluid figure-img" alt="graphical icon of an exclamation mark inside a circle"></p>
 <figcaption><strong>Significant gaps</strong> = Number of clips where the previous clip’s end date was either greater than 15 minutes or less than eight hours before current clip’s start date.</figcaption>
 </figure>
 </div>
@@ -3585,7 +3589,7 @@ Initial quality control steps
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="https://realworlddatascience.net/case-studies/posts/2023/11/16/images/clip-per-day.png" class="img-fluid figure-img"></p>
+<p><img src="https://realworlddatascience.net/case-studies/posts/2023/11/16/images/clip-per-day.png" class="img-fluid figure-img" alt="graphical icons representing a strip of film and a calendar"></p>
 <figcaption><strong>Clips per day</strong> = Number of clips / Days with footage.</figcaption>
 </figure>
 </div>
@@ -3593,7 +3597,7 @@ Initial quality control steps
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="https://realworlddatascience.net/case-studies/posts/2023/11/16/images/footage-per-day.png" class="img-fluid figure-img"></p>
+<p><img src="https://realworlddatascience.net/case-studies/posts/2023/11/16/images/footage-per-day.png" class="img-fluid figure-img" alt="graphical icons representing a stopwatch and a calendar"></p>
 <figcaption><strong>Footage per day</strong> = Footage hours / Days with footage.</figcaption>
 </figure>
 </div>
@@ -3603,7 +3607,7 @@ Initial quality control steps
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="https://realworlddatascience.net/case-studies/posts/2023/11/16/images/avg-clip-length.png" class="img-fluid figure-img"></p>
+<p><img src="https://realworlddatascience.net/case-studies/posts/2023/11/16/images/avg-clip-length.png" class="img-fluid figure-img" alt="graphical icons representing a stopwatch and a strip of film"></p>
 <figcaption><strong>Average clip length</strong> = Footage hours / Number of clips.</figcaption>
 </figure>
 </div>
@@ -3611,7 +3615,7 @@ Initial quality control steps
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="https://realworlddatascience.net/case-studies/posts/2023/11/16/images/gaps-per-day.png" class="img-fluid figure-img"></p>
+<p><img src="https://realworlddatascience.net/case-studies/posts/2023/11/16/images/gaps-per-day.png" class="img-fluid figure-img" alt="graphical icons of an exclamation mark inside a circle and a calendar"></p>
 <figcaption><strong>Gaps per day</strong> = Gaps / Days with footage.</figcaption>
 </figure>
 </div>
