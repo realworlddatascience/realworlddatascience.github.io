@@ -24,7 +24,6 @@ Decisions around medium and long-term allocation of healthcare resources are fra
 
 The Bristol, North Somerset, South Gloucestershire Integrated Care Board (BNSSG ICB - we love elaborate acronyms in the National Health Service!), in the south west of England, is part of the local NHS apparatus responsible for planning the current and future health needs of the one million resident population.
 
-
 ::: {#fig-bnssg-map}
 ```{=html}
 <div class="tv-iframe-container">
@@ -64,20 +63,12 @@ By synthesising these pieces of data, we create our DPM forecast. Starting from 
 
 The model can be thought of as having the following inputs:
 
-```{r}
-#| label: model-inputs
-#| echo: false
-#| outputs: 'asis'
-#| eval: true
-
-model_inputs_tbl <- readr::read_csv("./data/model-inputs.csv", col_types = readr::cols(
-  `Model Input` = readr::col_character(),
-  Description = readr::col_character(),
-  `Data Source` = readr::col_character()
-))
-
-knitr::kable(model_inputs_tbl, format = "markdown")
-```
+|Model Input                                 |Description                                                                       |Data Source |
+|:-------------------------------------------|:---------------------------------------------------------------------------------|:-----------|
+|initial population                          |The starting number of people in each Core Segment                                |SWD         |
+|inner transition matrix                     |The yearly proportions of people moving from one Core Segment to another          |SWD         |
+|births, net migration, deaths - numbers     |The yearly number of people moving in and out of the area                         |ONS         |
+|births, net migration, deaths - proportions |The proportion of births/migrations/deaths that come from each Core Segment group |SWD         |
 
 
 From these inputs, it deterministically outputs the yearly forecasts for the number of people in each Core Segment. From these yearly Core Segment population figures, we can also forecast use by point of delivery by taking historic SWD information on the activity used by current Core Segment breakdown, under the assumption that stays the same into the future.
