@@ -17,7 +17,134 @@
 <width>144</width>
 </image>
 <generator>quarto-1.4.554</generator>
-<lastBuildDate>Tue, 14 May 2024 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 21 May 2024 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>AI series: Evaluation essentials for safe and reliable AI model performance</title>
+  <dc:creator>Isabel Sassoon</dc:creator>
+  <link>https://realworlddatascience.net/ideas/posts/2024/05/21/ai-series-4.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>It took just sixteen hours for <a href="https://blogs.microsoft.com/blog/2016/03/25/learning-tays-introduction/">Microsoft’s shiny new chatbot</a> Tay to be shut down for profanity. The chatbot had been released on the social media platform, X, then known as Twitter, following extensive evaluation and stress testing under different conditions to ensure that interacting with the chatbot would be a positive experience. Unfortunately, the testing plan had not bargained on a coordinated attack exploiting the chatbot’s vulnerability when exposed to a torrent of offensive material. Tay soon began tweeting wildly inappropriate words and images and was taken offline within hours.</p>
+<p>The chatbot’s failure highlights just how hard yet imperative it can be to test and evaluate a model before real world deployment. With the recent flux of accessible “off-the-shelf” machine learning algorithms, building AI models, in particular generative AI models is now relatively straight forward. However, the simplicity with which models are deployed undermines the complexity of evaluating them. Nonetheless, deploying the model anywhere outside the data and context it has been trained on can be risky if its performance is not evaluated. The evaluation process requires clear definitions for good performance as well as highlighting the potential risks, and can throw up unexpected requirements in the test data. Not only are the subtle nuances in the initial evaluation requirements important, but once deployed a process needs to be in place so that the algorithm can be monitored over time.</p>
+<section id="know-your-goals" class="level2">
+<h2 class="anchored" data-anchor-id="know-your-goals">Know your goals</h2>
+<p>The first point to note is that checking how well the output from an AI model matches the data in the training set is not an adequate indication of how well it will perform once deployed on other data. The problem can be exemplified by considering a simple model based on an equation that best fits a training data set. Data values are inevitably subject to measurement uncertainties and local conditions that add various types of noise, so taking the line defined by the equation identified as best matching the training data and measuring how good that match is falls short of adequate evaluation - the more perfectly a model matches this noisy data, the less perfectly it will fit an alternative set of data, a scenario described as “overfitting”. Similarly, what a machine learning or AI algorithm or model learns when it optimises its fit to the training data may not be generalisable.</p>
+<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/ideas/posts/2024/05/21/images/Evaluation_thumbnail.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Evaluation procedures. Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart.
+</figcaption>
+</figure>
+</div>
+<p>There are a number of possible approaches and factors to take into account when sourcing test data but the first thing to consider when drawing up a process for evaluating an AI model is its objective. With this objective in mind it is then possible to pin down an appropriate measure of performance, which will shape how to use the test data to evaluate the model performance. Among the distinguishing factors between different measures used to evaluate how a model performs on test data, some will be suitable when the objective is to classify (e.g high or low risk based on health data?) while others are useful for models that estimate or predict (e.g What is the estimated height of a child given their parents heights).</p>
+<p>Classification model performance can be measured using accuracy, confusion matrices, sensitivity, specificity and the receiver operating characteristic (ROC). Classification accuracy summarises the performance of a classification model as the number of cases in which the model correctly classifies divided by the total number of cases used in the test set. However, this can be a blunt tool as there are cases where there is a different cost or consequence depending on the direction of the error. Confusion matrices are helpful to explore how the model performs in correctly classifying the different classes. The confusion matrix sums up the number of cases the model classifies correctly within each of the classes, for example how many actual high-risk cases are correctly classified as high risk by the model. The number of cases the model classifies as high risk, for example, that are not high risk is referred to as the False Positives. In the context of medical tests (e.g the covid lateral flow tests) testing positive for a condition that is not actually there is potentially less damaging than testing negative when the condition is there.</p>
+<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="The ROC. The receiver operating characteristic can provide a helpful means of visualising performance. Credit: Shutterstock">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/ideas/posts/2024/05/21/images/ROC_from_shutterstoc.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The ROC. The receiver operating characteristic can provide a helpful means of visualising performance. Credit: Shutterstock">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: The ROC. The receiver operating characteristic can provide a helpful means of visualising performance. Credit: Shutterstock.
+</figcaption>
+</figure>
+</div>
+<p>Additionally, the sensitivity and specificity can provide a more detailed look at model performance. The sensitivity refers to the proportion of cases labelled as positive that are classified as positive by the model, whereas specificity refers to the proportion labelled as negative that it classifies as negative. It is useful to visualise model performance and the receiver operating characteristic (ROC) provides a method to do just that. The ROC plots the True Positive rate against the False Positive rate for the model. This can be further summarised in one value as the area under the curve (AUC). The larger the AUC the better the model is performing.</p>
+<p>Deciding whether accuracy is enough or whether there is a need to delve into the directions of the errors depends on the context of the model’s deployment. Other examples in medicine include the risk models that were developed to assess an individual’s risk of a specific medical condition, such as <a href="https://qrisk.org/">QRISK</a> <sup>1</sup> which calculates a person’s risk of developing a heart attack or stroke over the next 10 years. Here model performance needs to go beyond accuracy and consider the direction of the errors it makes. A good overview of performance evaluation is outlined by Flach (2019) <sup>2</sup>. Is it better to tell someone they may be at risk of disease X, run a blood test and rule it out (False Positive) than to tell them they are not at risk and not check (False Negative)? All this needs to be considered and factored into the validation of the model. It is worth noting that a systematic direction for its errors can also cause an algorithm to hit <a href="https://realworlddatascience.net/ideas/posts/2024/05/14/ai-series-2.html">ethical problems</a>.</p>
+<p>When evaluating the performance of models that are estimating a numerical value (e.g height of child from height of parents) the measures used are based on how far off the model’s estimate is from the actual value (which is known for testing data). There are then a multitude of ways of summarising that quantity. The mean square error (MSE) is computed by taking the average squared difference between the estimated values from the model and the actual value in the data. Other variations include root mean square error (RMSE) and mean absolute error (MAE). The RMSE is computed in the same way as the MSE but the value is square rooted. The MAE takes a different approach by summing up the absolute errors (i.e.&nbsp;the error magnitude). Each of these three measures involve dividing the value obtained by the number of rows in the data. Depending on the context one of these measures may be better suited than others. For example the MSE is sensitive to outliers so can be easily skewed by a small number of extreme values, which may be useful to highlight them, whereas the RMSE has the advantage of being measured in the same units as the original variable the model is designed to estimate.</p>
+<p>Large Language Models (e.g.&nbsp;Gemini, ChatGPT) are also models trained on a data set and as such also need to be evaluated and monitored. Whereas in the models discussed so far there are some standard metrics, evaluating Large Language Models is more challenging as there are a multitude of benchmarks and metrics<sup>3</sup>. When LLMs are used to answer questions (when you ask a chatbot a question) then monitoring the performance of the model (the trained LLM) can involve anything. Is the answer correct? Is the answer clear? Is the answer biased? The possible metrics are varied and not as simple to capture in one measure. It is also possible to use a LLM to evaluate or score another LLMs’ answer to a question. However this adds its own risk as LLMs are not 100% accurate or consistent themselves, and they can <a href="https://realworlddatascience.net/viewpoints/editors-blog/posts/2022/11/23/LLM-content-warning.html">hallucinate</a>.</p>
+</section>
+<section id="getting-data-right" class="level2">
+<h2 class="anchored" data-anchor-id="getting-data-right">Getting data right</h2>
+<p>Not only is separate test data needed for an evaluation, but care is needed to ensure the test data is suitably representative. Similar requirements apply for test data as for the original training data to ensure the dataset is representative of the context the model will be deployed in. For instance, if an algorithm is being developed to handle photos from the UK, training and testing it on photos where the sun always shines may cause problems. The model needs to be trained and tested on a set of photos that include rain and clouds otherwise it cannot be assumed it will reliably classify such photos if they appear during deployment in the real world. Getting the training and test data set right may mean using a smaller more curated set than simply one that contains everything available.</p>
+<p>These data sets also need to have reliable labelling i.e.&nbsp;the rows of data need to be accurate so that the model’s performance can be assessed objectively against a trusted “ground truth”. For example, if we want to evaluate the performance of a fraud transaction classification model using accuracy as the performance metric, then we need a reliable training data set with true fraud transactions to evaluate how good the model is at detecting them. A data set with a list of transactions that are not accurately identified (or labelled) as fraud or not is not helpful. Thinking about how some commercial Large Language models (LLMs) are trained on all the data in the “internet” it is worth asking whether a smaller more curated and specific training set would be better for model performance as well as being more ethical and safer.</p>
+<p>Several approaches for generating test data sets take training and test data as distinct subsets from the same initial data set <sup>4</sup>. There are different ways of doing this to make the most of the data to evaluate the model as systematically and exhaustively as possible. Perhaps the simplest example is using a hold-out set, which involves taking all the data available and taking a random subset of the data to use for testing the model. Depending on how much data is available then this can be 50% or less.</p>
+<p>A slightly more sophisticated approach is k-fold cross validation, which involves splitting all the data you have available into k subsets and then doing k iterations where in each iteration a different kth of the data is used as the testing data for evaluation of the model built by training it on the remaining (k-1/k) of the data. This is repeated k times each time using a different one of the k subsets for testing. The performance of the model can then be averaged over the k iterations. (The measure of performance can be, say, accuracy or sensitivity depending on the context). For example, if k is 3 then the data is split into 3, and each iteration will take a different 2/3 of the data as training data to build the model, and the remaining 1/3 as testing data to evaluate the model.</p>
+<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="K fold cross validation can indicate how sensitive a model is to the test data. Credit: Fabian Flöck CC-BY-AS-3.0">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/ideas/posts/2024/05/21/images/k-fold-cross-validation.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="K fold cross validation can indicate how sensitive a model is to the test data. Credit: Fabian Flöck CC-BY-AS-3.0">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: K fold cross validation can indicate how sensitive a model is to the test data. Credit: Fabian Flöck CC-BY-AS-3.0
+</figcaption>
+</figure>
+</div>
+<p>Bootstrap is a more computationally intensive approach and it involves creating multiple samples by randomly sampling with replacement from the original data. Typically, hundreds or thousands of and such samples are generated, each will be different. These multiple samples provide multiple versions of the training and testing data so the model can be evaluated on all these variations. As bootstrap relies on sampling with replacement this means that each row of data in the original data can appear multiple times in a sample training or test data during each iteration, or not appear in other samples. As with k-fold cross validation the performance of the model can be then averaged over these multiple iterations. It is important that bootstrap does not rely on only a handful of iterations. Both bootstrap and cross validation offer an opportunity to see how sensitive the model’s performance is to the characteristics of the test data, but when the data sets available are small, the use of the bootstrap approach provides a more robust way of estimating the model’s performance.</p>
+<p>An approach that can be useful to test whether the performance of the model is sensitive to time is time-based splits. This involves taking a “sliding window” ensuring that data is split into back-to-back time periods. Using a back-to-back (sliding window) further ensures that the data the model is trained on is separate from the one it is tested on.</p>
+</section>
+<section id="maintained-monitoring" class="level2">
+<h2 class="anchored" data-anchor-id="maintained-monitoring">Maintained monitoring</h2>
+<p>Once an algorithm has been let loose it can be challenging to maintain any rigorous monitoring, but it is worth highlighting the importance of taking on the challenge of ongoing monitoring and promising approaches to it. Some of the same metrics will apply to keep a handle on the myriad of issues that could arise. These range from the banal, such as data input errors, to the complex as is the case in model drift.</p>
+<p>In the first case, if a model makes use of data that is fed into it from another system (e.g.&nbsp;a billing system) any update to this other system can affect model performance. Identifying this involves checking that the characteristics of the data used to train the model and the latest data fed into the model are not too dissimilar, since a difference in the data such as an increase by a factor of 10 or a hundred can cause the algorithm to fail. The magnitude of acceptable change in the data will depend on the context. Such a step change (due to source system update) in one of the model inputs can be identified and can potentially be an easy fix.</p>
+<p>Model drift is more complex as real-world data evolves over time. There are two types of model drift: data drift and concept drift. Data drift refers to the change that can occur to data over time, whilst concept drift<sup>5</sup> is a deterioration or change in the relationship between the target variable and input variables of a model. An example of data drift could be in the context of billing data the addition of new price plans or phones to the data, whilst an example of concept drift can arise when there is a change in the relationship between the effect (for instance, leaving one mobile phone provider for another) and underlying factors changes. In the context of the mobile phone provider market, a concept drift may mean that leaving for another provider is no longer dictated so much by price sensitivity as the type of network. Both types of drift lead to a deterioration in performance of the model as time goes by. Performance monitoring of the model is key to detecting model drift but differentiating between data or concept drift requires additional specialist approaches. Some of these are outlined in (Rotalinti, 2022)<sup>6</sup> and (Davis, 2020)<sup>7</sup>.</p>
+<p>In some cases, refreshing a model to account for the change in the underlying data (both training and test) can be quick and easy. However, if concept drift is detected, then it may take more than just a model refresh as the relationships between the variable we are trying to model, and the explanatory data has changed. This may involve finding new data sources and could lead to significant changes in the model, for example moving from a regression model to a neural network. Deciding to rebuild or retrain a model can also in some cases have environmental impact (particularly for the more resource intensive models such as deep learning and LLMs). Either way, where models are subject to peer review or some form of governance this can be a more onerous task.</p>
+<p>Even with each step in a model’s evaluation stringently adhered to it is also important to assess the context for its deployment for risks and rogue scenarios that might break or in the case of Tay despoil it. And like all other stages of the evaluation this should not just be at the time of deployment but also over time. When models (machine learning or other) are used to inform or make important decisions providing information on how and when the model was evaluated, and how it is monitored should be standard practice not just to avoid the wasted expense of another broken AI model (algorithm) left on the shelf but more importantly to safeguard the welfare of those who come into contact with it.</p>
+<div class="article-btn">
+<p><a href="../../../../../ideas/index.html">Explore more data science ideas</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author</dt>
+<dd>
+<strong>Isabel Sassoon</strong> is senior lecturer in the Department of Computer Science, Brunel University London.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<!-- copyright goes to the author, or to Royal Statistical Society if written by staff -->
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2024 Royal Statistical Society
+</dd>
+</dl>
+<!-- confirm licence terms with contributor before publishing - must be Creative Commons licence, but different types of CC licences might be preferred -->
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. <!-- Add thumbnail image credit and any licence terms here --></p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Sassoon, Isabel. 2024. “Evaluation essentials for safe and reliable AI model performance .” Real World Data Science, May 21, 2024. <a href="https://realworlddatascience.net/ideas/posts/2024/05/06/ai-series-4.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<!-- Make sure to update main site homepage (index.qmd) before publishing. See README for details. -->
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">References</h2>
+
+<ol>
+<li id="fn1"><p>Hippisley-Cox, J., Coupland, C. and Brindle, P. Development and validation of QRISK3 risk prediction algorithms to estimate future risk of cardiovascular disease: prospective cohort study.<em>BMJ</em> (2017) <a href="https://www.bmj.com/content/357/bmj.j2099">doi: https://doi.org/10.1136/bmj.j2099</a>.↩︎</p></li>
+<li id="fn2"><p>Flach, P. (2019). Performance evaluation in machine learning: the good, the bad, the ugly, and the way forward. <em>Proceedings of the AAAI conference on artificial intelligence</em> pp.&nbsp;9808-9814 (2019) <a href="https://ojs.aaai.org/index.php/AAAI/article/view/5055">doi: https://doi.org/10.1609/aaai.v33i01.33019808</a>.↩︎</p></li>
+<li id="fn3"><p>Chang, Y. <em>et al.</em> A survey on evaluation of large language models. <em>ACM Transactions on Intelligent Systems and Technology</em> (2023) <a href="https://dl.acm.org/doi/10.1145/3641289">doi: https://doi.org/10.1145/3641289</a>.↩︎</p></li>
+<li id="fn4"><p>Witten, I. H., Frank, E. and Hall, M. A. Data mining: Practical machine learning tools and techniques. Morgan Kaufmann (2011).↩︎</p></li>
+<li id="fn5"><p>Bayram, F., Ahmed, B. S. and Kassler A. From concept drift to model degradation: An overview on performance-aware drift detectors. <em>Knowledge-Based Systems</em> (2022) <a href="https://www.sciencedirect.com/science/article/pii/S0950705122002854">doi: https://doi.org/10.1016/j.knosys.2022.108632</a>.↩︎</p></li>
+<li id="fn6"><p>Rotalinti, Y., Tucker, A., Lonergan, M., Myles, P. and Branson, R. Detecting drift in healthcare AI models based on data availability. <em>Joint European Conference on Machine Learning and Knowledge Discovery in Databases</em> 243-258 (2022) Springer Nature Switzerland. <a href="https://link.springer.com/chapter/10.1007/978-3-031-23633-4_17">doi: https://doi.org/10.1007/978-3-031-23633-4_17</a>↩︎</p></li>
+<li id="fn7"><p>Davis, S. E., Greevy Jr, R. A., Lasko, T. A., Walsh, C. G. and Matheny, M. E. Detection of calibration drift in clinical prediction models to inform model updating. <em>Journal of biomedical informatics</em> (2020) <a href="https://www.sciencedirect.com/science/article/pii/S1532046420302392">doi: https://doi.org/10.1016/j.jbi.2020.103611</a>.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>AI</category>
+  <category>Machine Learning</category>
+  <category>Large Language Models</category>
+  <guid>https://realworlddatascience.net/ideas/posts/2024/05/21/ai-series-4.html</guid>
+  <pubDate>Tue, 21 May 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/ideas/posts/2024/05/21/images/Evaluation_thumbnail.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>AI series: On AI ethics - influencing its use in the delivery of public good</title>
   <dc:creator>Olivia Varley-Winter</dc:creator>
@@ -149,7 +276,7 @@ Varley-Winter, O., Author. 2024. “On AI ethics - influencing its use in the de
 <p>Imputing missing values can preserve the whole sample. However, the introduction of noise during the imputation process may compromise the quality of fitted models, contingent upon the proportion of missing records. One way to offset this may be to use larger and larger data sets that might inevitably include a fuller training picture to the algorithm, just as adding dots to a pixelated image makes it more and more clear what is depicted.</p>
 <p>It is often perceived that for certain instances, particularly in the context of deep learning models, such as neural networks, the model itself is capable of handling missing values without explicit imputation or deletion procedures. <sup>6</sup> Is this really true in a real-world scenario? Are these models advanced enough to achieve an optimised performance even when data quality is not at an optimised level? <sup>7</sup> Köse et al.&nbsp;(2020) investigated the effect of two conventional imputation approaches: Multiple imputation (MICE) <sup>8</sup> and Factor analysis of mixed data (FAMD) <sup>9</sup> on performance of deep learning models. Their study endorsed the use of such explicit imputation approaches, showing an enhancement in model performance. <sup>10</sup></p>
 <p>Data imbalance issues, arise within datasets where there is a disproportionate amount of information pertaining to a specific aspect. When imbalanced data, rich in focused information, is used to train an AI model, the model becomes adept at learning about the specific aspect but may struggle to generalise its findings to diverse scenarios, thus fostering overfitting where the model achieves accurate prediction on the training data but loses accuracy for any new test dataset.</p>
-<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Stages involved in AI model development" data-fig-align="center">
+<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Stages involved in AI model development">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/07/images/Stages-of-model-development-724.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Stages involved in AI model development">
@@ -168,7 +295,7 @@ Figure&nbsp;1: Stages involved in AI model development.
 <p>When AI algorithms encounter complex, unstructured data, the task of quality assurance suddenly balloons beyond tackling the three main errors highlighted above. Such circumstances require some kind of quality enhancement procedure, where datasets in the form of images or unstructured text go through a curation process which involves enhancement of the quality and standardisation of the format to the level required for integration into AI algorithms. This process of standardization of data is paramount across various domains, especially in healthcare where complex, unstructured health data holds transformative potential for AI driven advances that revolutionise diagnosis, treatment, and prognosis of diseases. From electronic health records to magnetic resonance imaging (MRI) scans and genetic sequences, this data offers a wealth of insights for AI models to learn from. Adopting standardised formats not only facilitates seamless integration of diverse datasets but also streamlines the development and deployment of AI models. However, unlocking this potential requires a strong foundation in high-quality, processed data which begins with standardisation.</p>
 <p>One category of complex health data is neuroimaging of which a prime example is MRI. Different institutions will often employ different acquisition protocols and different ways of collecting and storing neuroimaging data. Above all, this can make it very difficult to integrate into existing workflows and processing pipelines, but it also makes it challenging to understand, compare and combine with other datasets. To address these challenges, the neuroimaging community has adopted the Brain Imaging Data Structure (BIDS) <sup>13</sup> – a standardised format for organising and naming MRI data which allows compliant data to integrate smoothly with existing workflows and AI models, streamlining processing and analysis. By embracing standardisation, we can pave the way for common processing tools to enable the generation of AI-ready data.</p>
 <p>Next, comes pre-processing. Sticking with the neuroimaging example, MRI scans are susceptible to various forms of noise and artifacts, which can appear as blurring or distortions which, without proper processing, can be misinterpreted by AI models. Pre-processing typically includes steps for spatial normalisation and image registration, involving alignment of brain images from different individuals into a common reference model and alignment of different images of the same subject to a common template. This standardisation facilitates inter-subject and inter-study comparisons, enabling AI models to generalise effectively across diverse datasets. However, the multi-layer aspect of this process means that aligning data to a common template is dependent on the choice of template which itself can introduce bias if the template brain doesn’t accurately reflect the patient’s anatomy (due to age, ethnicity, or disease for example).</p>
-<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Neuroimaging data" data-fig-align="center">
+<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Neuroimaging data">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/07/images/neuroimaging.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Neuroimaging data">
@@ -294,7 +421,7 @@ Torabi, Fatemeh, Hotchkiss, Lewis, Squires, Emma, Thompson, Simon E. and Lyons, 
 
 <p>Generative artificial intelligence (AI) models have taken the world by storm over the past year. The human-like outputs of these systems, and the recent publication of a guideline to determine the degree of consciousness of machines, have again raised the question of whether machines will soon be able to replicate human intelligence. In this article, we discuss some of the merits and limitations of modern machine learning models, and also provide a general view of human intelligence and the position of “intelligent” systems in the constellation of human capabilities.</p>
 <p>Large language models (LLMs) such as ChatGPT are designed to process and understand natural language, and to generate human-like text in response to prompts and questions. This is achieved thanks to a specific type of deep learning architecture called the <em>Transformer</em>, which consists of an encoder and a decoder, each made up of some number <em>N</em> of blocks. Here the input text is eventually transformed into predicted (and contextualised) output text (Figure&nbsp;1).<sup>1</sup> LLMs are trained on complex and large bodies of text so that they can learn complex patterns and relationships between words in sentences, in different contexts.</p>
-<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Architecture of the Transformer. The left-hand block is the Encoder, whereas the right-hand block represents the decoder" data-fig-align="center">
+<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Architecture of the Transformer. The left-hand block is the Encoder, whereas the right-hand block represents the decoder">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/04/29/images/fig1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Architecture of the Transformer. The left-hand block is the Encoder, whereas the right-hand block represents the decoder">
@@ -314,7 +441,7 @@ Figure&nbsp;1: Architecture of the Transformer. The left-hand block is the Encod
 <p>The trophy would not fit in the suitcase because it was too <strong>small/large</strong>.</p>
 </blockquote>
 <p>Humans would infer that if the last word of that sentence is <em>small</em>, then <em>suitcase</em> is the object being described, whereas if the word is <em>large</em> then we are referring to the <em>trophy</em>. ChatGPT v3.5 was unable to make this inference when the question was first put to it (see Figure&nbsp;2), although a later test finds it now can – as can other LLMs. Some suggest that this type of improvement comes from training ChatGPT to do better on some of the tasks that are routinely used to highlight model limitations on social media at the expense of <a href="https://www.searchenginejournal.com/chatgpt-quality-worsened/492145/">giving worse answers in other contexts</a>. But could this improvement be due to ChatGPT and other models suddenly having acquired common sense and an understanding of the physical world? A more complex set of Winograd schema questions, the WinoGrande dataset, suggests not: humans still outperform computers on these tests.<sup>4</sup></p>
-<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Screenshot of author's ChatGPT conversation, prompting the AI chatbot to solve a WinoGrad schema question" data-fig-align="center">
+<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Screenshot of author's ChatGPT conversation, prompting the AI chatbot to solve a WinoGrad schema question">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/04/29/images/fig2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Screenshot of author's ChatGPT conversation, prompting the AI chatbot to solve a WinoGrad schema question">
@@ -334,7 +461,7 @@ Figure&nbsp;2: GPT-3.5’s inconclusive answer to a typical WinoGrad schema ques
 <p>Moreover, machines can be surprisingly easy to fool. For example, placing an object next to the one we are trying to classify can confuse image classification algorithms – a <a href="https://www.youtube.com/watch?v=i1sp4X57TL4">well-known example shows a patch being placed next to a banana</a>, which makes the deep neural network (DNN) classify the banana as a toaster with a high degree of confidence. We can also fool image classification networks <a href="https://arxiv.org/abs/1811.11553">by showing the same object under different lighting conditions and orientations</a>, such as when we flip a school bus on its side (as in an accident). The reason why a DNN cannot do this trivial mental rotation is because learning algorithms cannot generalise knowledge to unseen (or “out of distribution”) examples – imbuing them with no small amount of “brittleness”.<sup>7</sup> Compare this to the human mind, which learns in a semi-supervised manner: we need only be shown a few guiding examples to be able to extrapolate knowledge. This is a clear evolutionary adaptation since most real-world learning is semi-supervised: we do not need to explore every road to learn to drive, nor do every possible differentiation exercise to become confident at calculus. Likewise, we do not need to become fully bilingual in a language before we start combining newly learned words to try to explain complex concepts.</p>
 <p>Next to GPT-4’s <a href="https://arxiv.org/abs/2303.08774">100-trillion parameter model</a>, the human brain seems <a href="https://www.wired.com/story/cerebras-chip-cluster-neural-networks-ai/">much more</a> <a href="https://arxiv.org/pdf/2005.14165">parsimonious</a>. Therefore, progress in AI would perhaps come faster if we could teach machines to learn from a few (or no) labelled examples instead of being so heavily dependent on terabytes of labelled data (supervised learning) and on our own interpretation of the world.<sup>8</sup></p>
 <p>Another major limitation of algorithms for achieving human-like adaptive learning in changing environments is the fact that they cannot keep learning without forgetting previously learned training data. This phenomenon is called <em>catastrophic forgetting</em>,<sup>9</sup> and it occurs because of the <em>stability-plasticity dilemma</em>: this states that a certain degree of plasticity is required for the integration of new knowledge, but also radically new knowledge (e.g.&nbsp;large weight changes in a DNN) disrupts the stability necessary for retaining the previously learned representations (Figure&nbsp;3). In other words, weight stability is synonymous with knowledge retention, but it also introduces the rigidity that prevents the learning of new tasks.<sup>10</sup></p>
-<div id="fig-3" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Illustration of catastrophic forgetting and ideal learning in a two-class classifier" data-fig-align="center">
+<div id="fig-3" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Illustration of catastrophic forgetting and ideal learning in a two-class classifier">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/04/29/images/fig3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Illustration of catastrophic forgetting and ideal learning in a two-class classifier">
@@ -2230,16 +2357,16 @@ font-style: inherit;">```</span></span></code></pre></div>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><a href="images/quetelet_1875400.jpg" class="lightbox" data-gallery="Quetelet" data-description="Source:
+<p><a href="images/quetelet_1875400.jpg" class="lightbox" data-description="Source:
 
 <a
 href=&quot;https://en.wikipedia.org/wiki/Adolphe_Quetelet#/media/File:Adolphe_Qu%C3%A9telet_by_Joseph-Arnold_Demannez.jpg&quot;>Wikimedia
-Commons</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/quetelet_1875400.jpg" alt="Portrait of Adolphe Quetelet." height="400"></a></p>
+Commons</a>" data-gallery="Quetelet"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/quetelet_1875400.jpg" alt="Portrait of Adolphe Quetelet." height="400"></a></p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><a href="images/sur_le_climat400.jpeg" class="lightbox" data-gallery="Quetelet" data-description="Source:
+<p><a href="images/sur_le_climat400.jpeg" class="lightbox" data-description="Source:
 
-<a href=&quot;https://gallica.bnf.fr/ark:/12148/bpt6k95028d&quot;>Gallica</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/sur_le_climat400.jpeg" alt="Title page of Adolphe Quetelet's 'On the climate of Belgium'." height="400"></a></p>
+<a href=&quot;https://gallica.bnf.fr/ark:/12148/bpt6k95028d&quot;>Gallica</a>" data-gallery="Quetelet"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/sur_le_climat400.jpeg" alt="Title page of Adolphe Quetelet's 'On the climate of Belgium'." height="400"></a></p>
 </div>
 </div>
 </div>
@@ -2250,9 +2377,9 @@ Commons</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/20
 <p>Quetelet was also not the first to study the relationship between temperature and bloom dates. René Réaumur <span class="citation" data-cites="deréaumur_1735">(1735)</span>, an early adopter of the thermometer, noted the relationship before Marsham published his <em>Indications</em>. But Quetelet was the first to systematically study the relationship across a wide variety of plants and derive the amount of heat needed to bloom. An example of Quetelet’s careful record keeping can be seen in Figure 2, one of many tables he reported in his publications.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/quetelet_bloom.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" data-description="Source:
+<p><a href="images/quetelet_bloom.png" class="lightbox" data-description="Source:
 
-<a href=&quot;https://gallica.bnf.fr/ark:/12148/bpt6k95028d&quot;>Gallica</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/quetelet_bloom.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="A table of bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852." width="600"></a></p>
+<a href=&quot;https://gallica.bnf.fr/ark:/12148/bpt6k95028d&quot;>Gallica</a>" data-gallery="quarto-lightbox-gallery-3"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/quetelet_bloom.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="A table of bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852." width="600"></a></p>
 </figure>
 </div>
 <div class="figure-caption">
@@ -2268,22 +2395,22 @@ Commons</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/20
 <div class="quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><a href="images/buds250.jpg" class="lightbox" data-gallery="flowers" data-description="Source:
+<p><a href="images/buds250.jpg" class="lightbox" data-description="Source:
 
 <a href=&quot;https://www.usanpn.org/nn/TrackaLilac&quot;>USA National Phenology
-Network</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/buds250.jpg" alt="Photo of lilac flower buds." height="250"></a></p>
+Network</a>" data-gallery="flowers"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/buds250.jpg" alt="Photo of lilac flower buds." height="250"></a></p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><a href="images/open_flowers250.jpg" class="lightbox" data-gallery="flowers" data-description="Source:
+<p><a href="images/open_flowers250.jpg" class="lightbox" data-description="Source:
 
 <a href=&quot;https://www.usanpn.org/nn/TrackaLilac&quot;>USA National Phenology
-Network</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/open_flowers250.jpg" alt="Photo of open lilac flowers." height="250"></a></p>
+Network</a>" data-gallery="flowers"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/open_flowers250.jpg" alt="Photo of open lilac flowers." height="250"></a></p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><a href="images/full_flowers250.jpg" class="lightbox" data-gallery="flowers" data-description="Source:
+<p><a href="images/full_flowers250.jpg" class="lightbox" data-description="Source:
 
 <a href=&quot;https://www.usanpn.org/nn/TrackaLilac&quot;>USA National Phenology
-Network</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/full_flowers250.jpg" alt="Photo of full lilac flowers." height="250"></a></p>
+Network</a>" data-gallery="flowers"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/full_flowers250.jpg" alt="Photo of full lilac flowers." height="250"></a></p>
 </div>
 </div>
 </div>
@@ -3050,11 +3177,11 @@ font-style: inherit;">  config(displaylogo = FALSE)</span></span>
 <span id="cb5-22"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```</span></span></code></pre></div>
-<p><a href="images/fig4.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" data-description="Author
+<p><a href="images/fig4.png" class="lightbox" data-description="Author
 
 provided,
 
-<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig4.png" class="img-fluid" alt="A line graph of midrange temperature by day, for January to June 1839, with day of last frost (March 8) and day of first bloom (May 11) marked by vertical dashed lines."></a></p>
+<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>" data-gallery="quarto-lightbox-gallery-7"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig4.png" class="img-fluid" alt="A line graph of midrange temperature by day, for January to June 1839, with day of last frost (March 8) and day of first bloom (May 11) marked by vertical dashed lines."></a></p>
 <div class="figure-caption">
 <p><strong>Figure 4:</strong> According to Quetelet’s law, the lilacs bloom when exposed to 4264°C² following the last frost. Author provided, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 </div>
@@ -4162,11 +4289,11 @@ font-style: inherit;">  config(displaylogo = FALSE)</span></span>
 <span id="cb13-18"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```</span></span></code></pre></div>
-<p><a href="images/fig5.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" data-description="Author
+<p><a href="images/fig5.png" class="lightbox" data-description="Author
 
 provided,
 
-<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig5.png" class="img-fluid" alt="This figure plots the predictions made by Quetelet's law against the actual bloom dates scientists observed from US lilac data. Data are represented using blue contours, and a dotted line of equality is drawn through the graph. The dotted line intersects the blue contours at their peak, suggesting that the law derived from Quetelet’s data accurately predicts the typical bloom date of the USA data."></a></p>
+<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>" data-gallery="quarto-lightbox-gallery-8"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig5.png" class="img-fluid" alt="This figure plots the predictions made by Quetelet's law against the actual bloom dates scientists observed from US lilac data. Data are represented using blue contours, and a dotted line of equality is drawn through the graph. The dotted line intersects the blue contours at their peak, suggesting that the law derived from Quetelet’s data accurately predicts the typical bloom date of the USA data."></a></p>
 <div class="figure-caption">
 <p><strong>Figure 5:</strong> Predictions using Quetelet’s law are accurate within about two weeks on average. Author provided, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 </div>
@@ -4736,11 +4863,11 @@ font-style: inherit;">  config(displaylogo = FALSE)</span></span>
 <span id="cb17-21"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```</span></span></code></pre></div>
-<p><a href="images/fig6.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" data-description="Author
+<p><a href="images/fig6.png" class="lightbox" data-description="Author
 
 provided,
 
-<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig6.png" class="img-fluid" alt="A line graph of midrange temperature by day in Brussels for January 1 to February 18 (observed) and February 19 to May 20 (forecast), 2023, with day of last frost (January 27) and predicted day of first bloom (April 19) marked by vertical dashed lines."></a></p>
+<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>" data-gallery="quarto-lightbox-gallery-9"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig6.png" class="img-fluid" alt="A line graph of midrange temperature by day in Brussels for January 1 to February 18 (observed) and February 19 to May 20 (forecast), 2023, with day of last frost (January 27) and predicted day of first bloom (April 19) marked by vertical dashed lines."></a></p>
 <div class="figure-caption">
 <p><strong>Figure 6:</strong> According to Quetelet’s law, the lilacs will bloom once exposed to 4264°C² following the last frost. Author provided, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 </div>
@@ -4751,11 +4878,11 @@ provided,
 <p>The law of the flowering plants surely stands the test of time. It continues to be used by scientists – with relatively few changes – to plan harvests, manage pests, and study ecosystems stressed by climate change. We speculate the law’s longevity is due to the fact that it balances simplicity with relatively accurate predictions.</p>
 <p>Although Quetelet did not discover the law, he did much to advance it. Quetelet founded an international network for “observations of the periodical phenomena” (in addition to numerous statistical societies and publications, including the precursor to the Royal Statistical Society). Quetelet’s network of 80 stations collected observations throughout Europe from 1841 until 1872. In particular, Quetelet collaborated with Charles Morren – who later coined the term phenology, the name of the field that now studies biological life-cycle events like the timing of flower blooms <span class="citation" data-cites="demarée_rutishauser_2011">(Demarée and Rutishauser 2011)</span>.</p>
 <p>In recent years, the observations collected through phenology networks have become an important resource for understanding the impacts of climate change. For example, the USA National Phenology Network calculates the Spring Bloom Index, which measures the “first day of spring” using the days lilacs are observed to bloom at locations across the United States. The index is then compared to previous years. Figure 7 shows one comparison, called the Return Interval. The Return Interval is much like a p-value, calculating how frequently more extreme spring indices were observed in previous decades. Bloom dates that are uncommonly early (green) or late (purple) may indicate environments stressed by changing climate. Scientists exploit the relationship between temperature and bloom date to extrapolate the index to areas with few observations.</p>
-<p><a href="images/six-bloom-return-interval-2020.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" data-description="Source:
+<p><a href="images/six-bloom-return-interval-2020.png" class="lightbox" data-description="Source:
 
 <a
 href=&quot;https://www.usanpn.org/files/npn/maps/six-bloom-return-interval-2020.png&quot;>USA
-National Phenology Network</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/six-bloom-return-interval-2020.png" class="img-fluid" alt="A map of the United States showing the Spring Bloom Index Return Interval 2020, which measures whether spring is typical when compared to recent decades."></a></p>
+National Phenology Network</a>" data-gallery="quarto-lightbox-gallery-10"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/six-bloom-return-interval-2020.png" class="img-fluid" alt="A map of the United States showing the Spring Bloom Index Return Interval 2020, which measures whether spring is typical when compared to recent decades."></a></p>
 <div class="figure-caption">
 <p><strong>Figure 7:</strong> The Spring Bloom Index Return Interval measures whether spring is typical when compared to recent decades. Source: <a href="https://www.usanpn.org/files/npn/maps/six-bloom-return-interval-2020.png">USA National Phenology Network</a>.</p>
 </div>

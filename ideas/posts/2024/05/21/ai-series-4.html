@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.4.554">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Isabel Sassoon">
+<meta name="dcterms.date" content="2024-05-21">
+<meta name="description" content="The real world can be a dangerous place for an AI algorithm, full of unforeseen data, evolving behaviours and significant human consequences. Isabel Sassoon highlights some of the hurdles to navigate when testing and assessing whether a model is fit for purpose.">
+
+<title>Real World Data Science - AI series: Evaluation essentials for safe and reliable AI model performance</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../">
+<link href="../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
+<script src="../../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
+</script>
+<!-- Thank you to Ben Ruijl for the progress bar code!
+Ben is on GitHub here: https://github.com/benruijl
+And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
+
+<meta property="og:title" content="Real World Data Science - AI series: Evaluation essentials for safe and reliable AI model performance">
+<meta property="og:description" content="The real world can be a dangerous place for an AI algorithm, full of unforeseen data, evolving behaviours and significant human consequences. Isabel Sassoon highlights some of the hurdles to navigate when testing and assessing whether a model is fit for purpose.">
+<meta property="og:image" content="https://realworlddatascience.net/ideas/posts/2024/05/21/images/Evaluation_thumbnail.jpg">
+<meta property="og:site_name" content="Real World Data Science">
+<meta property="og:image:alt" content="Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart.">
+<meta name="twitter:title" content="Real World Data Science - AI series: Evaluation essentials for safe and reliable AI model performance">
+<meta name="twitter:description" content="The real world can be a dangerous place for an AI algorithm, full of unforeseen data, evolving behaviours and significant human consequences. Isabel Sassoon highlights some of the hurdles to navigate when testing and assessing whether a model is fit for purpose.">
+<meta name="twitter:image" content="https://realworlddatascience.net/ideas/posts/2024/05/21/images/Evaluation_thumbnail.jpg">
+<meta name="twitter:site" content="@rwdatasci">
+<meta name="twitter:image:alt" content="Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart.">
+<meta name="twitter:card" content="summary_large_image">
+</head><body class="nav-fixed"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
+
+<script id="progressbar" type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const bar = document.querySelector('#progress-bar');
+    const post = document.querySelector('#quarto-content');
+    const html = document.documentElement;
+    
+    const height = post.scrollHeight + post.offsetTop;
+    
+    window.addEventListener('scroll', () => {
+        bar.style.width = (html.scrollTop / (height- html.clientHeight)) * 100 + '%';
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../rwds.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../case-studies/index.html"> 
+<span class="menu-text">Case studies</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../ideas/index.html"> 
+<span class="menu-text">Ideas</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../careers/index.html"> 
+<span class="menu-text">Careers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../viewpoints/index.html"> 
+<span class="menu-text">Viewpoints</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About RWDS</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
+        <li>
+    <a class="dropdown-item" href="../../../../../about-rwds.html">
+ <span class="dropdown-text">Who we are</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../contributor-docs/call-for-contributions.html">
+ <span class="dropdown-text">How to contribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../CODE_OF_CONDUCT.html">
+ <span class="dropdown-text">Code of conduct</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../contact.html">
+ <span class="dropdown-text">Contact us</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+          <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">AI series: Evaluation essentials for safe and reliable AI model performance</h1>
+                  <div>
+        <div class="description">
+          <p>The real world can be a dangerous place for an AI algorithm, full of unforeseen data, evolving behaviours and significant human consequences. Isabel Sassoon highlights some of the hurdles to navigate when testing and assessing whether a model is fit for purpose.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">AI</div>
+                <div class="quarto-category">Machine Learning</div>
+                <div class="quarto-category">Large Language Models</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Isabel Sassoon </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 21, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#know-your-goals" id="toc-know-your-goals" class="nav-link active" data-scroll-target="#know-your-goals">Know your goals</a></li>
+  <li><a href="#getting-data-right" id="toc-getting-data-right" class="nav-link" data-scroll-target="#getting-data-right">Getting data right</a></li>
+  <li><a href="#maintained-monitoring" id="toc-maintained-monitoring" class="nav-link" data-scroll-target="#maintained-monitoring">Maintained monitoring</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/ideas/posts/2024/05/21/ai-series-4.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>It took just sixteen hours for <a href="https://blogs.microsoft.com/blog/2016/03/25/learning-tays-introduction/">Microsoft’s shiny new chatbot</a> Tay to be shut down for profanity. The chatbot had been released on the social media platform, X, then known as Twitter, following extensive evaluation and stress testing under different conditions to ensure that interacting with the chatbot would be a positive experience. Unfortunately, the testing plan had not bargained on a coordinated attack exploiting the chatbot’s vulnerability when exposed to a torrent of offensive material. Tay soon began tweeting wildly inappropriate words and images and was taken offline within hours.</p>
+<p>The chatbot’s failure highlights just how hard yet imperative it can be to test and evaluate a model before real world deployment. With the recent flux of accessible “off-the-shelf” machine learning algorithms, building AI models, in particular generative AI models is now relatively straight forward. However, the simplicity with which models are deployed undermines the complexity of evaluating them. Nonetheless, deploying the model anywhere outside the data and context it has been trained on can be risky if its performance is not evaluated. The evaluation process requires clear definitions for good performance as well as highlighting the potential risks, and can throw up unexpected requirements in the test data. Not only are the subtle nuances in the initial evaluation requirements important, but once deployed a process needs to be in place so that the algorithm can be monitored over time.</p>
+<section id="know-your-goals" class="level2">
+<h2 class="anchored" data-anchor-id="know-your-goals">Know your goals</h2>
+<p>The first point to note is that checking how well the output from an AI model matches the data in the training set is not an adequate indication of how well it will perform once deployed on other data. The problem can be exemplified by considering a simple model based on an equation that best fits a training data set. Data values are inevitably subject to measurement uncertainties and local conditions that add various types of noise, so taking the line defined by the equation identified as best matching the training data and measuring how good that match is falls short of adequate evaluation - the more perfectly a model matches this noisy data, the less perfectly it will fit an alternative set of data, a scenario described as “overfitting”. Similarly, what a machine learning or AI algorithm or model learns when it optimises its fit to the training data may not be generalisable.</p>
+<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/Evaluation_thumbnail.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Evaluation procedures. Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart.
+</figcaption>
+</figure>
+</div>
+<p>There are a number of possible approaches and factors to take into account when sourcing test data but the first thing to consider when drawing up a process for evaluating an AI model is its objective. With this objective in mind it is then possible to pin down an appropriate measure of performance, which will shape how to use the test data to evaluate the model performance. Among the distinguishing factors between different measures used to evaluate how a model performs on test data, some will be suitable when the objective is to classify (e.g high or low risk based on health data?) while others are useful for models that estimate or predict (e.g What is the estimated height of a child given their parents heights).</p>
+<p>Classification model performance can be measured using accuracy, confusion matrices, sensitivity, specificity and the receiver operating characteristic (ROC). Classification accuracy summarises the performance of a classification model as the number of cases in which the model correctly classifies divided by the total number of cases used in the test set. However, this can be a blunt tool as there are cases where there is a different cost or consequence depending on the direction of the error. Confusion matrices are helpful to explore how the model performs in correctly classifying the different classes. The confusion matrix sums up the number of cases the model classifies correctly within each of the classes, for example how many actual high-risk cases are correctly classified as high risk by the model. The number of cases the model classifies as high risk, for example, that are not high risk is referred to as the False Positives. In the context of medical tests (e.g the covid lateral flow tests) testing positive for a condition that is not actually there is potentially less damaging than testing negative when the condition is there.</p>
+<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="The ROC. The receiver operating characteristic can provide a helpful means of visualising performance. Credit: Shutterstock">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/ROC_from_shutterstoc.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The ROC. The receiver operating characteristic can provide a helpful means of visualising performance. Credit: Shutterstock">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: The ROC. The receiver operating characteristic can provide a helpful means of visualising performance. Credit: Shutterstock.
+</figcaption>
+</figure>
+</div>
+<p>Additionally, the sensitivity and specificity can provide a more detailed look at model performance. The sensitivity refers to the proportion of cases labelled as positive that are classified as positive by the model, whereas specificity refers to the proportion labelled as negative that it classifies as negative. It is useful to visualise model performance and the receiver operating characteristic (ROC) provides a method to do just that. The ROC plots the True Positive rate against the False Positive rate for the model. This can be further summarised in one value as the area under the curve (AUC). The larger the AUC the better the model is performing.</p>
+<p>Deciding whether accuracy is enough or whether there is a need to delve into the directions of the errors depends on the context of the model’s deployment. Other examples in medicine include the risk models that were developed to assess an individual’s risk of a specific medical condition, such as <a href="https://qrisk.org/">QRISK</a> <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> which calculates a person’s risk of developing a heart attack or stroke over the next 10 years. Here model performance needs to go beyond accuracy and consider the direction of the errors it makes. A good overview of performance evaluation is outlined by Flach (2019) <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. Is it better to tell someone they may be at risk of disease X, run a blood test and rule it out (False Positive) than to tell them they are not at risk and not check (False Negative)? All this needs to be considered and factored into the validation of the model. It is worth noting that a systematic direction for its errors can also cause an algorithm to hit <a href="https://realworlddatascience.net/ideas/posts/2024/05/14/ai-series-2.html">ethical problems</a>.</p>
+<p>When evaluating the performance of models that are estimating a numerical value (e.g height of child from height of parents) the measures used are based on how far off the model’s estimate is from the actual value (which is known for testing data). There are then a multitude of ways of summarising that quantity. The mean square error (MSE) is computed by taking the average squared difference between the estimated values from the model and the actual value in the data. Other variations include root mean square error (RMSE) and mean absolute error (MAE). The RMSE is computed in the same way as the MSE but the value is square rooted. The MAE takes a different approach by summing up the absolute errors (i.e.&nbsp;the error magnitude). Each of these three measures involve dividing the value obtained by the number of rows in the data. Depending on the context one of these measures may be better suited than others. For example the MSE is sensitive to outliers so can be easily skewed by a small number of extreme values, which may be useful to highlight them, whereas the RMSE has the advantage of being measured in the same units as the original variable the model is designed to estimate.</p>
+<p>Large Language Models (e.g.&nbsp;Gemini, ChatGPT) are also models trained on a data set and as such also need to be evaluated and monitored. Whereas in the models discussed so far there are some standard metrics, evaluating Large Language Models is more challenging as there are a multitude of benchmarks and metrics<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. When LLMs are used to answer questions (when you ask a chatbot a question) then monitoring the performance of the model (the trained LLM) can involve anything. Is the answer correct? Is the answer clear? Is the answer biased? The possible metrics are varied and not as simple to capture in one measure. It is also possible to use a LLM to evaluate or score another LLMs’ answer to a question. However this adds its own risk as LLMs are not 100% accurate or consistent themselves, and they can <a href="https://realworlddatascience.net/viewpoints/editors-blog/posts/2022/11/23/LLM-content-warning.html">hallucinate</a>.</p>
+</section>
+<section id="getting-data-right" class="level2">
+<h2 class="anchored" data-anchor-id="getting-data-right">Getting data right</h2>
+<p>Not only is separate test data needed for an evaluation, but care is needed to ensure the test data is suitably representative. Similar requirements apply for test data as for the original training data to ensure the dataset is representative of the context the model will be deployed in. For instance, if an algorithm is being developed to handle photos from the UK, training and testing it on photos where the sun always shines may cause problems. The model needs to be trained and tested on a set of photos that include rain and clouds otherwise it cannot be assumed it will reliably classify such photos if they appear during deployment in the real world. Getting the training and test data set right may mean using a smaller more curated set than simply one that contains everything available.</p>
+<p>These data sets also need to have reliable labelling i.e.&nbsp;the rows of data need to be accurate so that the model’s performance can be assessed objectively against a trusted “ground truth”. For example, if we want to evaluate the performance of a fraud transaction classification model using accuracy as the performance metric, then we need a reliable training data set with true fraud transactions to evaluate how good the model is at detecting them. A data set with a list of transactions that are not accurately identified (or labelled) as fraud or not is not helpful. Thinking about how some commercial Large Language models (LLMs) are trained on all the data in the “internet” it is worth asking whether a smaller more curated and specific training set would be better for model performance as well as being more ethical and safer.</p>
+<p>Several approaches for generating test data sets take training and test data as distinct subsets from the same initial data set <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>. There are different ways of doing this to make the most of the data to evaluate the model as systematically and exhaustively as possible. Perhaps the simplest example is using a hold-out set, which involves taking all the data available and taking a random subset of the data to use for testing the model. Depending on how much data is available then this can be 50% or less.</p>
+<p>A slightly more sophisticated approach is k-fold cross validation, which involves splitting all the data you have available into k subsets and then doing k iterations where in each iteration a different kth of the data is used as the testing data for evaluation of the model built by training it on the remaining (k-1/k) of the data. This is repeated k times each time using a different one of the k subsets for testing. The performance of the model can then be averaged over the k iterations. (The measure of performance can be, say, accuracy or sensitivity depending on the context). For example, if k is 3 then the data is split into 3, and each iteration will take a different 2/3 of the data as training data to build the model, and the remaining 1/3 as testing data to evaluate the model.</p>
+<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="K fold cross validation can indicate how sensitive a model is to the test data. Credit: Fabian Flöck CC-BY-AS-3.0">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/k-fold-cross-validation.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="K fold cross validation can indicate how sensitive a model is to the test data. Credit: Fabian Flöck CC-BY-AS-3.0">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: K fold cross validation can indicate how sensitive a model is to the test data. Credit: Fabian Flöck CC-BY-AS-3.0
+</figcaption>
+</figure>
+</div>
+<p>Bootstrap is a more computationally intensive approach and it involves creating multiple samples by randomly sampling with replacement from the original data. Typically, hundreds or thousands of and such samples are generated, each will be different. These multiple samples provide multiple versions of the training and testing data so the model can be evaluated on all these variations. As bootstrap relies on sampling with replacement this means that each row of data in the original data can appear multiple times in a sample training or test data during each iteration, or not appear in other samples. As with k-fold cross validation the performance of the model can be then averaged over these multiple iterations. It is important that bootstrap does not rely on only a handful of iterations. Both bootstrap and cross validation offer an opportunity to see how sensitive the model’s performance is to the characteristics of the test data, but when the data sets available are small, the use of the bootstrap approach provides a more robust way of estimating the model’s performance.</p>
+<p>An approach that can be useful to test whether the performance of the model is sensitive to time is time-based splits. This involves taking a “sliding window” ensuring that data is split into back-to-back time periods. Using a back-to-back (sliding window) further ensures that the data the model is trained on is separate from the one it is tested on.</p>
+</section>
+<section id="maintained-monitoring" class="level2">
+<h2 class="anchored" data-anchor-id="maintained-monitoring">Maintained monitoring</h2>
+<p>Once an algorithm has been let loose it can be challenging to maintain any rigorous monitoring, but it is worth highlighting the importance of taking on the challenge of ongoing monitoring and promising approaches to it. Some of the same metrics will apply to keep a handle on the myriad of issues that could arise. These range from the banal, such as data input errors, to the complex as is the case in model drift.</p>
+<p>In the first case, if a model makes use of data that is fed into it from another system (e.g.&nbsp;a billing system) any update to this other system can affect model performance. Identifying this involves checking that the characteristics of the data used to train the model and the latest data fed into the model are not too dissimilar, since a difference in the data such as an increase by a factor of 10 or a hundred can cause the algorithm to fail. The magnitude of acceptable change in the data will depend on the context. Such a step change (due to source system update) in one of the model inputs can be identified and can potentially be an easy fix.</p>
+<p>Model drift is more complex as real-world data evolves over time. There are two types of model drift: data drift and concept drift. Data drift refers to the change that can occur to data over time, whilst concept drift<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> is a deterioration or change in the relationship between the target variable and input variables of a model. An example of data drift could be in the context of billing data the addition of new price plans or phones to the data, whilst an example of concept drift can arise when there is a change in the relationship between the effect (for instance, leaving one mobile phone provider for another) and underlying factors changes. In the context of the mobile phone provider market, a concept drift may mean that leaving for another provider is no longer dictated so much by price sensitivity as the type of network. Both types of drift lead to a deterioration in performance of the model as time goes by. Performance monitoring of the model is key to detecting model drift but differentiating between data or concept drift requires additional specialist approaches. Some of these are outlined in (Rotalinti, 2022)<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a> and (Davis, 2020)<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>.</p>
+<p>In some cases, refreshing a model to account for the change in the underlying data (both training and test) can be quick and easy. However, if concept drift is detected, then it may take more than just a model refresh as the relationships between the variable we are trying to model, and the explanatory data has changed. This may involve finding new data sources and could lead to significant changes in the model, for example moving from a regression model to a neural network. Deciding to rebuild or retrain a model can also in some cases have environmental impact (particularly for the more resource intensive models such as deep learning and LLMs). Either way, where models are subject to peer review or some form of governance this can be a more onerous task.</p>
+<p>Even with each step in a model’s evaluation stringently adhered to it is also important to assess the context for its deployment for risks and rogue scenarios that might break or in the case of Tay despoil it. And like all other stages of the evaluation this should not just be at the time of deployment but also over time. When models (machine learning or other) are used to inform or make important decisions providing information on how and when the model was evaluated, and how it is monitored should be standard practice not just to avoid the wasted expense of another broken AI model (algorithm) left on the shelf but more importantly to safeguard the welfare of those who come into contact with it.</p>
+<div class="article-btn">
+<p><a href="../../../../../ideas/index.html">Explore more data science ideas</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author</dt>
+<dd>
+<strong>Isabel Sassoon</strong> is senior lecturer in the Department of Computer Science, Brunel University London.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<!-- copyright goes to the author, or to Royal Statistical Society if written by staff -->
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2024 Royal Statistical Society
+</dd>
+</dl>
+<!-- confirm licence terms with contributor before publishing - must be Creative Commons licence, but different types of CC licences might be preferred -->
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. <!-- Add thumbnail image credit and any licence terms here --></p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Sassoon, Isabel. 2024. “Evaluation essentials for safe and reliable AI model performance .” Real World Data Science, May 21, 2024. <a href="https://realworlddatascience.net/ideas/posts/2024/05/06/ai-series-4.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<!-- Make sure to update main site homepage (index.qmd) before publishing. See README for details. -->
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">References</h2>
+
+<ol>
+<li id="fn1"><p>Hippisley-Cox, J., Coupland, C. and Brindle, P. Development and validation of QRISK3 risk prediction algorithms to estimate future risk of cardiovascular disease: prospective cohort study.<em>BMJ</em> (2017) <a href="https://www.bmj.com/content/357/bmj.j2099">doi: https://doi.org/10.1136/bmj.j2099</a>.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Flach, P. (2019). Performance evaluation in machine learning: the good, the bad, the ugly, and the way forward. <em>Proceedings of the AAAI conference on artificial intelligence</em> pp.&nbsp;9808-9814 (2019) <a href="https://ojs.aaai.org/index.php/AAAI/article/view/5055">doi: https://doi.org/10.1609/aaai.v33i01.33019808</a>.<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Chang, Y. <em>et al.</em> A survey on evaluation of large language models. <em>ACM Transactions on Intelligent Systems and Technology</em> (2023) <a href="https://dl.acm.org/doi/10.1145/3641289">doi: https://doi.org/10.1145/3641289</a>.<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Witten, I. H., Frank, E. and Hall, M. A. Data mining: Practical machine learning tools and techniques. Morgan Kaufmann (2011).<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Bayram, F., Ahmed, B. S. and Kassler A. From concept drift to model degradation: An overview on performance-aware drift detectors. <em>Knowledge-Based Systems</em> (2022) <a href="https://www.sciencedirect.com/science/article/pii/S0950705122002854">doi: https://doi.org/10.1016/j.knosys.2022.108632</a>.<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Rotalinti, Y., Tucker, A., Lonergan, M., Myles, P. and Branson, R. Detecting drift in healthcare AI models based on data availability. <em>Joint European Conference on Machine Learning and Knowledge Discovery in Databases</em> 243-258 (2022) Springer Nature Switzerland. <a href="https://link.springer.com/chapter/10.1007/978-3-031-23633-4_17">doi: https://doi.org/10.1007/978-3-031-23633-4_17</a><a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Davis, S. E., Greevy Jr, R. A., Lasko, T. A., Walsh, C. G. and Matheny, M. E. Detection of calibration drift in clinical prediction models to inform model updating. <em>Journal of biomedical informatics</em> (2020) <a href="https://www.sciencedirect.com/science/article/pii/S1532046420302392">doi: https://doi.org/10.1016/j.jbi.2020.103611</a>.<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+window.document.addEventListener("DOMContentLoaded", function (event) {
+  const toggleBodyColorMode = (bsSheetEl) => {
+    const mode = bsSheetEl.getAttribute("data-mode");
+    const bodyEl = window.document.querySelector("body");
+    if (mode === "dark") {
+      bodyEl.classList.add("quarto-dark");
+      bodyEl.classList.remove("quarto-light");
+    } else {
+      bodyEl.classList.add("quarto-light");
+      bodyEl.classList.remove("quarto-dark");
+    }
+  }
+  const toggleBodyColorPrimary = () => {
+    const bsSheetEl = window.document.querySelector("link#quarto-bootstrap");
+    if (bsSheetEl) {
+      toggleBodyColorMode(bsSheetEl);
+    }
+  }
+  toggleBodyColorPrimary();  
+  const icon = "";
+  const anchorJS = new window.AnchorJS();
+  anchorJS.options = {
+    placement: 'right',
+    icon: icon
+  };
+  anchorJS.add('.anchored');
+  const isCodeAnnotation = (el) => {
+    for (const clz of el.classList) {
+      if (clz.startsWith('code-annotation-')) {                     
+        return true;
+      }
+    }
+    return false;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button', {
+    text: function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+  });
+  clipboard.on('success', function(e) {
+    // button target
+    const button = e.trigger;
+    // don't keep focus
+    button.blur();
+    // flash "checked"
+    button.classList.add('code-copy-button-checked');
+    var currentTitle = button.getAttribute("title");
+    button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
+    setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
+      button.setAttribute("title", currentTitle);
+      button.classList.remove('code-copy-button-checked');
+    }, 1000);
+    // clear code selection
+    e.clearSelection();
+  });
+    var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+    var mailtoRegex = new RegExp(/^mailto:/);
+      var filterRegex = new RegExp("https:\/\/realworlddatascience\.net\/");
+    var isInternal = (href) => {
+        return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+    }
+    // Inspect non-navigation links and adorn them if external
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+    for (var i=0; i<links.length; i++) {
+      const link = links[i];
+      if (!isInternal(link.href)) {
+        // undo the damage that might have been done by quarto-nav.js in the case of
+        // links that we want to consider external
+        if (link.dataset.originalHref !== undefined) {
+          link.href = link.dataset.originalHref;
+        }
+      }
+    }
+  function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+    const config = {
+      allowHTML: true,
+      maxWidth: 500,
+      delay: 100,
+      arrow: false,
+      appendTo: function(el) {
+          return el.parentElement;
+      },
+      interactive: true,
+      interactiveBorder: 10,
+      theme: 'quarto',
+      placement: 'bottom-start',
+    };
+    if (contentFn) {
+      config.content = contentFn;
+    }
+    if (onTriggerFn) {
+      config.onTrigger = onTriggerFn;
+    }
+    if (onUntriggerFn) {
+      config.onUntrigger = onUntriggerFn;
+    }
+    window.tippy(el, config); 
+  }
+  const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+  for (var i=0; i<noterefs.length; i++) {
+    const ref = noterefs[i];
+    tippyHover(ref, function() {
+      // use id or data attribute instead here
+      let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+      try { href = new URL(href).hash; } catch {}
+      const id = href.replace(/^#\/?/, "");
+      const note = window.document.getElementById(id);
+      if (note) {
+        return note.innerHTML;
+      } else {
+        return "";
+      }
+    });
+  }
+  const xrefs = window.document.querySelectorAll('a.quarto-xref');
+  const processXRef = (id, note) => {
+    // Strip column container classes
+    const stripColumnClz = (el) => {
+      el.classList.remove("page-full", "page-columns");
+      if (el.children) {
+        for (const child of el.children) {
+          stripColumnClz(child);
+        }
+      }
+    }
+    stripColumnClz(note)
+    if (id === null || id.startsWith('sec-')) {
+      // Special case sections, only their first couple elements
+      const container = document.createElement("div");
+      if (note.children && note.children.length > 2) {
+        container.appendChild(note.children[0].cloneNode(true));
+        for (let i = 1; i < note.children.length; i++) {
+          const child = note.children[i];
+          if (child.tagName === "P" && child.innerText === "") {
+            continue;
+          } else {
+            container.appendChild(child.cloneNode(true));
+            break;
+          }
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(container);
+        }
+        return container.innerHTML
+      } else {
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        return note.innerHTML;
+      }
+    } else {
+      // Remove any anchor links if they are present
+      const anchorLink = note.querySelector('a.anchorjs-link');
+      if (anchorLink) {
+        anchorLink.remove();
+      }
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(note);
+      }
+      // TODO in 1.5, we should make sure this works without a callout special case
+      if (note.classList.contains("callout")) {
+        return note.outerHTML;
+      } else {
+        return note.innerHTML;
+      }
+    }
+  }
+  for (var i=0; i<xrefs.length; i++) {
+    const xref = xrefs[i];
+    tippyHover(xref, undefined, function(instance) {
+      instance.disable();
+      let url = xref.getAttribute('href');
+      let hash = undefined; 
+      if (url.startsWith('#')) {
+        hash = url;
+      } else {
+        try { hash = new URL(url).hash; } catch {}
+      }
+      if (hash) {
+        const id = hash.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note !== null) {
+          try {
+            const html = processXRef(id, note.cloneNode(true));
+            instance.setContent(html);
+          } finally {
+            instance.enable();
+            instance.show();
+          }
+        } else {
+          // See if we can fetch this
+          fetch(url.split('#')[0])
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.getElementById(id);
+            if (note !== null) {
+              const html = processXRef(id, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      } else {
+        // See if we can fetch a full url (with no hash to target)
+        // This is a special case and we should probably do some content thinning / targeting
+        fetch(url)
+        .then(res => res.text())
+        .then(html => {
+          const parser = new DOMParser();
+          const htmlDoc = parser.parseFromString(html, "text/html");
+          const note = htmlDoc.querySelector('main.content');
+          if (note !== null) {
+            // This should only happen for chapter cross references
+            // (since there is no id in the URL)
+            // remove the first header
+            if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+              note.children[0].remove();
+            }
+            const html = processXRef(null, note);
+            instance.setContent(html);
+          } 
+        }).finally(() => {
+          instance.enable();
+          instance.show();
+        });
+      }
+    }, function(instance) {
+    });
+  }
+      let selectedAnnoteEl;
+      const selectorForAnnotation = ( cell, annotation) => {
+        let cellAttr = 'data-code-cell="' + cell + '"';
+        let lineAttr = 'data-code-annotation="' +  annotation + '"';
+        const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+        return selector;
+      }
+      const selectCodeLines = (annoteEl) => {
+        const doc = window.document;
+        const targetCell = annoteEl.getAttribute("data-target-cell");
+        const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+        const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+        const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+        const lineIds = lines.map((line) => {
+          return targetCell + "-" + line;
+        })
+        let top = null;
+        let height = null;
+        let parent = null;
+        if (lineIds.length > 0) {
+            //compute the position of the single el (top and bottom and make a div)
+            const el = window.document.getElementById(lineIds[0]);
+            top = el.offsetTop;
+            height = el.offsetHeight;
+            parent = el.parentElement.parentElement;
+          if (lineIds.length > 1) {
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+            height = bottom - top;
+          }
+          if (top !== null && height !== null && parent !== null) {
+            // cook up a div (if necessary) and position it 
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            div.style.top = top - 2 + "px";
+            div.style.height = height + 4 + "px";
+            div.style.left = 0;
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            gutterDiv.style.top = top - 2 + "px";
+            gutterDiv.style.height = height + 4 + "px";
+          }
+          selectedAnnoteEl = annoteEl;
+        }
+      };
+      const unselectCodeLines = () => {
+        const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+        elementsIds.forEach((elId) => {
+          const div = window.document.getElementById(elId);
+          if (div) {
+            div.remove();
+          }
+        });
+        selectedAnnoteEl = undefined;
+      };
+        // Handle positioning of the toggle
+    window.addEventListener(
+      "resize",
+      throttle(() => {
+        elRect = undefined;
+        if (selectedAnnoteEl) {
+          selectCodeLines(selectedAnnoteEl);
+        }
+      }, 10)
+    );
+    function throttle(fn, ms) {
+    let throttle = false;
+    let timer;
+      return (...args) => {
+        if(!throttle) { // first call gets through
+            fn.apply(this, args);
+            throttle = true;
+        } else { // all the others get throttled
+            if(timer) clearTimeout(timer); // cancel #2
+            timer = setTimeout(() => {
+              fn.apply(this, args);
+              timer = throttle = false;
+            }, ms);
+        }
+      };
+    }
+      // Attach click handler to the DT
+      const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+      for (const annoteDlNode of annoteDls) {
+        annoteDlNode.addEventListener('click', (event) => {
+          const clickedEl = event.target;
+          if (clickedEl !== selectedAnnoteEl) {
+            unselectCodeLines();
+            const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+            if (activeEl) {
+              activeEl.classList.remove('code-annotation-active');
+            }
+            selectCodeLines(clickedEl);
+            clickedEl.classList.add('code-annotation-active');
+          } else {
+            // Unselect the line
+            unselectCodeLines();
+            clickedEl.classList.remove('code-annotation-active');
+          }
+        });
+      }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
+  var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+  for (var i=0; i<bibliorefs.length; i++) {
+    const ref = bibliorefs[i];
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
+      });
+    }
+  }
+});
+</script>
+<script src="https://giscus.app/client.js" data-repo="realworlddatascience/realworlddatascience.github.io" data-repo-id="" data-category="General" data-category-id="" data-mapping="title" data-reactions-enabled="1" data-emit-metadata="0" data-input-position="top" data-theme="light" data-lang="en" crossorigin="anonymous" async="">
+</script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><a href="../../../../../LICENCE.html">Copyright © 2024 Royal Statistical Society</a></p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/realworlddatascience">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience">
+<p><i class="ai  ai-zenodo ai-2xl"></i></p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/rwdatasci">
+      <i class="bi bi-twitter-x" role="img" aria-label="Twitter/X">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@rwdatasci">
+      <i class="bi bi-mastodon" role="img" aria-label="Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="../../../../../feeds.html">
+      <i class="bi bi-rss" role="img" aria-label="RWDS rss">
+</i> 
+    </a>
+  </li>  
+</ul>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/ideas/posts/2024/05/21/ai-series-4.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p><a href="../../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
