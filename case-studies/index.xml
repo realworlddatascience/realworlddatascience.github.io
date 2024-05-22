@@ -17,7 +17,7 @@
 <width>144</width>
 </image>
 <generator>quarto-1.4.554</generator>
-<lastBuildDate>Wed, 15 May 2024 09:41:59 GMT</lastBuildDate>
+<lastBuildDate>Wed, 22 May 2024 07:02:22 GMT</lastBuildDate>
 <item>
   <title>Forecasting the Health Needs of a Changing Population</title>
   <dc:creator>Luke Shaw (BNSSG ICB), Rich Wood (BNSSG ICB, University of Bath), Christos Vasilakis (University of Bath), Zehra Onen Dumlu (University of Bath)</dc:creator>
@@ -223,7 +223,7 @@ Shaw, Luke et al 2024. “Forecasting the Health Needs of a Changing Population�
   <category>Health and Wellbeing</category>
   <category>Forecasting</category>
   <guid>https://realworlddatascience.net/case-studies/posts/2024/05/08/dpm.html</guid>
-  <pubDate>Wed, 15 May 2024 09:41:59 GMT</pubDate>
+  <pubDate>Wed, 22 May 2024 07:02:22 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/case-studies/posts/2024/05/08/images/doctor-patient-thumbnail.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
@@ -1203,133 +1203,6 @@ Wright, Noah. 2023. “Learning from failure: ‘Red flags’ in body-worn camer
   <media:content url="https://realworlddatascience.net/case-studies/posts/2023/11/16/images/bodycam-monitor.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
-  <title>Food for Thought: The value of competitions for confidential data</title>
-  <dc:creator>Steven Bedrick, Ophir Frieder, Julia Lane, and Philip Resnik</dc:creator>
-  <link>https://realworlddatascience.net/case-studies/posts/2023/08/21/06-value-of-competitions.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>We are witnessing a sea change in data collection practices by both governments and businesses – from purposeful collection (through surveys and censuses, for example) to opportunistic (drawing on web and social media data, and administrative datasets). This shift has made clear the importance of record linkage – a government might, for example, look to link records held by its various departments to understand how citizens make use of the gamut of public services.</p>
-<p>However, creating manual linkages between datasets can be prohibitively expensive, time consuming, and subject to human constraints and bias. Machine learning (ML) techniques offer the potential to combine data better, faster, and more cheaply. But, as the recently released <a href="https://www.ai.gov/wp-content/uploads/2023/01/NAIRR-TF-Final-Report-2023.pdf">National AI Research Resources Task Force report</a> highlights, it is important to have an open and transparent approach to ensure that unintended biases do not occur.</p>
-<p>In other words, ML tools are not a substitute for thoughtful analysis. Both private and public producers of a linked dataset have to determine the level of linkage quality – such as what precision/recall tradeoff is best for the intended purpose (that is, the balance between false-positive links and failure to cover links that should be there), how much processing time and cost is acceptable, and how to address coverage issues. The challenge is made more difficult by the idiosyncrasies of heterogeneous datasets, and more difficult yet when datasets to be linked include confidential data <span class="citation" data-cites="10.1257/jel.20171350 DBLP:books/sp/ChristenRS20">(Christensen and Miguel 2018; Christen, Ranbaduge, and Schnell 2020)</span>.</p>
-<p>And, of course, an ML solution is never the end of the road: many data linkage scenarios are highly dynamic, involving use cases, datasets, and technical ecosystems that change and evolve over time; effective use of ML in practice necessitates an ongoing and continuous investment <span class="citation" data-cites="DBLP:journals/corr/abs-2112-01716">(Koch et al. 2021)</span>. Because techniques are constantly improving, producers need to keep abreast of new approaches. A model that is working well today may no longer work in a year because of changes in the data, or because the organizational needs have changed so that a certain type of error is no longer acceptable. As Sculley et al.&nbsp;point out, “it is remarkably easy to incur massive ongoing maintenance costs at the system level when applying machine learning” <span class="citation" data-cites="43146">(Sculley et al. 2014)</span>.</p>
-<p>Also important is that record linkage is not seen as a technical problem relegated to the realm of computer scientists to solve. The full engagement of domain experts in designing the optimization problem, identifying measures of success, and evaluating the quality of the results is absolutely critical, as is building an understanding of the pros and cons of different measures <span class="citation" data-cites="10.1371/journal.pone.0249833 10.1007/s11222-017-9746-6">(Schafer et al. 2021; Hand and Christen 2018)</span>. There will need to be much learning by doing in “sandbox” environments, and back and forth communication across communities to achieve successful outcomes, as noted in the <a href="https://www.bea.gov/system/files/2022-10/acdeb-year-2-report.pdf">recommendations of the Advisory Committee on Data for Evidence Building</a> (a screenshot of which is shown in Figure 1).</p>
-<p><a href="images/pt6-fig1.png"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt6-fig1.png" class="img-fluid" width="700"></a></p>
-<div class="figure-caption">
-<p><strong>Figure 1:</strong> A recommendation for building an “innovation sandbox” as part of the creation of a new National Secure Data Service in the United States.</p>
-</div>
-<p>Despite the importance of trial and error and transparency about linkage quality, there is no handbook that guides domain experts in how to design such sandboxes. There is a very real need for agreed-upon, domain-independent guidelines, or better yet, official standards to evaluate sandboxes. Those standards would define “who” could and would conduct the evaluation, and help guarantee independence and repeatability. And while innovation challenges have been embraced by the federal government, the devil can be very much in the details <span class="citation" data-cites="4138bca6-f7b7-3af8-a96c-5e2544823c5c">(Williams 2012)</span>.</p>
-<p>It is for this reason that the approach taken in the Food for Thought linkage competition, and described in this compendium, provides an important first step towards a well specified, replicable framework for achieving high quality outcomes. In that respect it joins other recent efforts to bring together community-level research on shared sensitive data <span class="citation" data-cites="macavaney-etal-2021-community tsakalidis-etal-2022-overview">(MacAvaney et al. 2021; Tsakalidis et al. 2022)</span>. This competition, like those, helped bring to the foreground both the opportunities and challenges of doing research in secure sandboxes with sensitive data. Notably, these exercises highlight a kind of cultural tension between secure, managed environments, on the one hand, and unfettered machine learning research, on the other. The need for flexibility and agility in computational research bumps up against the need for advance planning and careful step-by-step processes in environments with well-defined data governance rules, and one of the key lessons learned is that the tradeoffs here need to be recognized and planned for.</p>
-<p>This particular competition was important for a number of other reasons. Thanks to its organization as a competition, complete with prizes and bragging rights for strongly performing teams, it attracted new eyes from computer science and data science to think about how to address a critical real-world linkage problem. It offered the potential to produce approaches that were scalable, transparent, and reproducible. The engagement of domain experts and statisticians meant that it will be possible to conduct an informed error analysis, to explicitly relate the performance metrics in the task to the problem being solved in the real world, and to bring in the expertise of survey methodologists to think about the possible adjustments. And because it identified different approaches of addressing the same problem, it created an environment for new innovative ideas.</p>
-<p>More generally, in addition to the excitement of the new approaches, this exercise laid bare the fragility of linkages in general and highlighted the importance of secure sandboxes for confidential data. While the promise of privacy preserving technologies is alluring as <a href="https://www.bea.gov/system/files/2022-10/acdeb-year-2-report.pdf">an alternative to bringing confidential data together in one place</a>, such approaches are likely too immature to deploy ad hoc until a better understanding is established of how to translate real-world problems and their associated data into well-defined tasks, how to measure quality, and particularly how to assess the impact of match quality on different subgroups <span class="citation" data-cites="10.1145/3433638">(Domingo-Ferrer, Sánchez, and Blanco-Justicia 2021)</span>. The scientific profession has gone through too painful a lesson with the premature application of differential privacy techniques to ignore the lessons that can be learned from a careful and systematic analysis of different approaches <span class="citation" data-cites="10.1145/3433638 van_riper 10.1257/pandp.20191107 giles2022faking">(2021; Van Riper et al. 2020; Ruggles et al. 2019; Giles et al. 2022)</span>.</p>
-<p>We hope that the articles in this collection provide not only the first steps towards a handbook of best practices, but also an inspiration to share lessons learned, so that success can be emulated, and failures understood and avoided.</p>
-<div class="nav-btn-container">
-<div class="grid">
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../case-studies/posts/2023/08/21/05-third-place-winners.html">← Part 5: Third place winners</a></p>
-</div>
-</div>
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../case-studies/index.html">Find more case studies</a></p>
-</div>
-</div>
-</div>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the authors</dt>
-<dd>
-<strong>Steven Bedrick</strong> is an associate professor in Oregon Health and Science University’s Department of Medical Informatics and Clinical Epidemiology.
-</dd>
-<dd>
-<p><strong>Ophir Frieder</strong> is a professor in Georgetown University’s Department of Computer Science, and in the Department of Biostatistics, Bioinformatics &amp; Biomathematics at Georgetown University Medical Center.</p>
-</dd>
-<dd>
-<p><strong>Julia Lane</strong> is a professor at the NYU Wagner Graduate School of Public Service and a NYU Provostial Fellow for Innovation Analytics. She co-founded the Coleridge Initiative.</p>
-</dd>
-</dl>
-<p><strong>Philip Resnik</strong> holds a joint appointment as professor in the University of Maryland Institute for Advanced Computer Studies and the Department of Linguistics, and an affiliate professor appointment in computer science.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Steven Bedrick, Ophir Frieder, Julia Lane, and Philip Resnik
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@alexandru_tugui?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Alexandru Tugui</a> on <a href="https://unsplash.com/photos/-inuQpBGbgI?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Bedrick, Steven, Ophir Frieder, Julia Lane, and Philip Resnik. 2023. “Food for Thought: The value of competitions for confidential data.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/viewpoints/case-studies/posts/2023/08/21/06-value-of-competitions.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
-<div id="ref-DBLP:books/sp/ChristenRS20" class="csl-entry">
-Christen, P., T. Ranbaduge, and R. Schnell. 2020. <em>Linking Sensitive Data - Methods and Techniques for Practical Privacy-Preserving Information Sharing</em>. Springer. <a href="https://doi.org/10.1007/978-3-030-59706-1">https://doi.org/10.1007/978-3-030-59706-1</a>.
-</div>
-<div id="ref-10.1257/jel.20171350" class="csl-entry">
-Christensen, G., and E. Miguel. 2018. <span>“Transparency, Reproducibility, and the Credibility of Economics Research.”</span> <em>Journal of Economic Literature</em> 56 (3): 920–80. <a href="https://doi.org/10.1257/jel.20171350">https://doi.org/10.1257/jel.20171350</a>.
-</div>
-<div id="ref-10.1145/3433638" class="csl-entry">
-Domingo-Ferrer, J., D. Sánchez, and A. Blanco-Justicia. 2021. <span>“The Limits of Differential Privacy (and Its Misuse in Data Release and Machine Learning).”</span> <em>Communications of the ACM</em> 64 (7): 33–35. <a href="https://doi.org/10.1145/3433638">https://doi.org/10.1145/3433638</a>.
-</div>
-<div id="ref-giles2022faking" class="csl-entry">
-Giles, O., K. Hosseini, G. Mingas, O. Strickson, L. Bowler, C. Rangel Smith, H. Wilde, et al. 2022. <span>“Faking Feature Importance: A Cautionary Tale on the Use of Differentially-Private Synthetic Data.”</span> <a href="https://arxiv.org/abs/2203.01363">https://arxiv.org/abs/2203.01363</a>.
-</div>
-<div id="ref-10.1007/s11222-017-9746-6" class="csl-entry">
-Hand, D., and P. Christen. 2018. <span>“A Note on Using the f-Measure for Evaluating Record Linkage Algorithms.”</span> <em>Statistics and Computing</em> 28 (3): 539–47. <a href="https://doi.org/10.1007/s11222-017-9746-6">https://doi.org/10.1007/s11222-017-9746-6</a>.
-</div>
-<div id="ref-DBLP:journals/corr/abs-2112-01716" class="csl-entry">
-Koch, B., E. Denton, A. Hanna, and J. G. Foster. 2021. <span>“Reduced, Reused and Recycled: The Life of a Dataset in Machine Learning Research.”</span> <em>CoRR</em> abs/2112.01716. <a href="https://arxiv.org/abs/2112.01716">https://arxiv.org/abs/2112.01716</a>.
-</div>
-<div id="ref-macavaney-etal-2021-community" class="csl-entry">
-MacAvaney, S., A. Mittu, G. Coppersmith, J. Leintz, and P. Resnik. 2021. <span>“Community-Level Research on Suicidality Prediction in a Secure Environment: Overview of the <span>CLP</span>sych 2021 Shared Task.”</span> In <em>Proceedings of the Seventh Workshop on Computational Linguistics and Clinical Psychology: Improving Access</em>, 70–80. Online: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2021.clpsych-1.7">https://doi.org/10.18653/v1/2021.clpsych-1.7</a>.
-</div>
-<div id="ref-10.1257/pandp.20191107" class="csl-entry">
-Ruggles, S., C. Fitch, D. Magnuson, and J. Schroeder. 2019. <span>“Differential Privacy and Census Data: Implications for Social and Economic Research.”</span> <em>AEA Papers and Proceedings</em> 109 (May): 403–8. <a href="https://doi.org/10.1257/pandp.20191107">https://doi.org/10.1257/pandp.20191107</a>.
-</div>
-<div id="ref-10.1371/journal.pone.0249833" class="csl-entry">
-Schafer, K. M., G. Kennedy, A. Gallyer, and P. Resnik. 2021. <span>“A Direct Comparison of Theory-Driven and Machine Learning Prediction of Suicide: A Meta-Analysis.”</span> <em>PLOS ONE</em> 16 (4): 1–23. <a href="https://doi.org/10.1371/journal.pone.0249833">https://doi.org/10.1371/journal.pone.0249833</a>.
-</div>
-<div id="ref-43146" class="csl-entry">
-Sculley, D., G. Holt, D. Golovin, E. Davydov, T. Phillips, D. Ebner, V. Chaudhary, and M. Young. 2014. <span>“Machine Learning: The High Interest Credit Card of Technical Debt.”</span> In <em>SE4ML: Software Engineering for Machine Learning (NIPS 2014 Workshop)</em>.
-</div>
-<div id="ref-tsakalidis-etal-2022-overview" class="csl-entry">
-Tsakalidis, A., J. Chim, I. M. Bilal, A. Zirikly, D. Atzil-Slonim, F. Nanni, P. Resnik, et al. 2022. <span>“Overview of the <span>CLP</span>sych 2022 Shared Task: Capturing Moments of Change in Longitudinal User Posts.”</span> In <em>Proceedings of the Eighth Workshop on Computational Linguistics and Clinical Psychology</em>, 184–98. Seattle, USA: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2022.clpsych-1.16">https://doi.org/10.18653/v1/2022.clpsych-1.16</a>.
-</div>
-<div id="ref-van_riper" class="csl-entry">
-Van Riper, D., T. Kugler, J. Schroeder, and S. Ruggles. 2020. <span>“Differential Privacy and Racial Residential Segregation.”</span> In <em>2020 APPAM Fall Research Conference</em>.
-</div>
-<div id="ref-4138bca6-f7b7-3af8-a96c-5e2544823c5c" class="csl-entry">
-Williams, H. 2012. <span>“Innovation Inducement Prizes: Connecting Research to Policy.”</span> <em>Journal of Policy Analysis and Management</em> 31 (3): 752–76. <a href="http://www.jstor.org/stable/41653827">http://www.jstor.org/stable/41653827</a>.
-</div>
-</div></section></div> ]]></description>
-  <category>Machine learning</category>
-  <category>Natural language processing</category>
-  <category>Public policy</category>
-  <category>Health and wellbeing</category>
-  <guid>https://realworlddatascience.net/case-studies/posts/2023/08/21/06-value-of-competitions.html</guid>
-  <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/06-value-of-competitions.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
   <title>Food for Thought: Third place winners – Loyola Marymount</title>
   <dc:creator>Yifan Hu and Mandy Korpusik</dc:creator>
   <link>https://realworlddatascience.net/case-studies/posts/2023/08/21/05-third-place-winners.html</link>
@@ -1564,105 +1437,68 @@ Yang, Z., Z. Dai, Y. Yang, J. Carbonell, R. R. Salakhutdinov, and Q. V. Le. 2019
   <media:content url="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/05-lm.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
-  <title>Food for Thought: Second place winners – DeepFFTLink</title>
-  <dc:creator>Yang Wu, Aishwarya Budhkar, Kai Zhang, Xuhong Zhang, and Xiaozhong Liu</dc:creator>
-  <link>https://realworlddatascience.net/case-studies/posts/2023/08/21/04-second-place-winners.html</link>
+  <title>Food for Thought: The importance of the Purchase to Plate Suite</title>
+  <dc:creator>Andrea Carlson and Thea Palmer Zimmerman</dc:creator>
+  <link>https://realworlddatascience.net/case-studies/posts/2023/08/21/01-purchase-to-plate.html</link>
   <description><![CDATA[ 
 
 
 
 
 
-<p>DeepFFTLink team members: Yang Wu and Kai Zhang are PhD students at Worcester Polytechnic Institute. Aishwarya Budhkar is a PhD student at Indiana University Bloomington. Xuhong Zhang is an assistant professor at Indiana University Bloomington. Xiaozhong Liu is an associate professor at Worcester Polytechnic Institute.</p>
-<section id="perspective-on-the-challenge" class="level2">
-<h2 class="anchored" data-anchor-id="perspective-on-the-challenge">Perspective on the challenge</h2>
-<p>Text matching is an essential task in natural language processing <span class="citation" data-cites="DBLP:journals/corr/PangLGXWC16">(NLP, Pang et al. 2016)</span>, while record linkage across different sources is an essential task in data science. Machine learning techniques allow people to combine data faster and cheaper than using manual linkage. However, in the context of the Food for Thought challenge, existing methods for matching universal product codes (UPCs) to ensemble codes (ECs) require every UPC to be compared with every EC code (Figure 1a). Such approaches can be computationally expensive in the training process when data is noisy. Here, we propose an ensemble model with a category-based adapter to tackle this problem, drawing on the category information included in UPC and EC data. The category-based adapter allows UPCs to be first matched with only a small and reliable set of ECs (Figure 1b). Then, an ensemble model will be deployed to make predictions for UPC-EC matching. Our proposed approach can achieve competitive performance compared with state-of-the-art models.</p>
-<div>
-
-</div>
-<div class="quarto-layout-panel" data-layout-ncol="2" style="padding-top: 1em; margin-bottom: 0;">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/pt4-fig1a.png"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt4-fig1a.png" class="img-fluid figure-img" alt="(a)"></a></p>
-<figcaption>(a)</figcaption>
-</figure>
-</div>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/pt4-fig1b.png"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt4-fig1b.png" class="img-fluid figure-img" alt="(b)"></a></p>
-<figcaption>(b)</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="figure-caption">
-<p><strong>Figure 1:</strong> A toy example of our method. Panel (a) shows the traditional matching method, while (b) is our proposed ensemble model with category-based adapter. With the help of the adapter, UPC 1 only needs to be matched with EC 1 and EC 3.</p>
-</div>
-</section>
-<section id="our-approach" class="level2">
-<h2 class="anchored" data-anchor-id="our-approach">Our approach</h2>
-<p>We propose a two-step framework to address this problem. To begin with, we use a category-based adapter to get reliable candidate ECs for each UPC. Then, an ensemble model <span class="citation" data-cites="10.1007/3-540-45014-9_1">(Dietterich 2000)</span> is deployed to make a prediction for each UPC-EC pair.</p>
-<section id="category-based-adapter" class="level5">
-<h5 class="anchored" data-anchor-id="category-based-adapter">Category-based adapter</h5>
-<p>By using 2015–2016 UPC-EC data, we created a knowledge base, which is a UPC category–EC pair-wised table for generating candidate ECs. Within this setting, each UPC category is, on average, related to only 32 ECs. This knowledge base is then used as context to further filter the candidate ECs. Note that there are some new ECs generated year by year, which can also be part of the potential ECs in the UPC-EC matching task, since the contextual information of new ECs does not exist in our knowledge base.</p>
-</section>
-<section id="ensembled-model" class="level5">
-<h5 class="anchored" data-anchor-id="ensembled-model">Ensembled model</h5>
-<p>We ensemble the base-string match and BERT models. BERT is a deep learning model for natural language processing <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805">(Devlin et al. 2018)</span>. In the base-string match model, we used the Term Frequency-Inverse Document Frequency (TFIDF) of each UPC and EC description as features to calculate a pairwise cosine similarity, which is a distance between instances. Meanwhile, we used features extracted from UPC and EC descriptions to fine-tune the BERT base model and calculated the cosine similarity of embeddings between each UPC and EC. Then we rank ECs based on their similarity scores with the UPC.</p>
-<p><a href="images/pt4-fig2.png"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt4-fig2.png" class="img-fluid"></a></p>
-<div class="figure-caption">
-<p><strong>Figure 2:</strong> The framework of our proposed model. A two-step strategy is used to make the final prediction.</p>
-</div>
-<div class="callout callout-style-simple callout-note" style="margin-top: 2rem;">
-<div class="callout-body d-flex">
+<div class="callout callout-style-default callout-important callout-titled" style="margin-top: 0;">
+<div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-body-container">
-<p>Find the code in the <a href="https://github.com/realworlddatascience/realworlddatascience.github.io/tree/main/case-studies/posts/2023/08/21/_code">Real World Data Science GitHub repository</a>.</p>
+<div class="callout-title-container flex-fill">
+Disclaimer
 </div>
 </div>
+<div class="callout-body-container callout-body">
+<p>The findings and conclusions in this publication are those of the authors and should not be construed to represent any official USDA or US Government determination or policy. This research was supported by the US Department of Agriculture’s Economic Research Service and Center for Nutrition, Policy and Promotion. Findings should not be attributed to Circana (formerly IRI).</p>
 </div>
-</section>
-</section>
-<section id="our-results" class="level2">
-<h2 class="anchored" data-anchor-id="our-results">Our results</h2>
-<p>We randomly selected 500 samples from the 2017–2018 UPC-EC data to train the ensembled weight for each model. Two functions were adapted to make a fusion of base-string and BERT models:</p>
-<p><span id="eq-first"><img src="https://latex.codecogs.com/png.latex?%0AC%20=%20a%20*%20X%20+%20b%20*%20Y%20%20%0A%5Ctag%7B1%7D"></span></p>
-<p><span id="eq-second"><img src="https://latex.codecogs.com/png.latex?%0AC%20=%20%20a%20*%20log(X)%20+%20b%20*%20log(Y)%20%5Ctext%7B.%20%7D%0A%5Ctag%7B2%7D"></span></p>
-<p><img src="https://latex.codecogs.com/png.latex?C"> denotes the final confidence score. <img src="https://latex.codecogs.com/png.latex?X"> and <img src="https://latex.codecogs.com/png.latex?Y"> represent <em>base_string_similarity_score</em> and <em>BERT_similarity_score</em>, respectively. <img src="https://latex.codecogs.com/png.latex?a"> and <img src="https://latex.codecogs.com/png.latex?b"> are corresponding model weights for base_string and BERT models.</p>
-<p>A better Success@5 is achieved with function (1). The ensembled weights for the base-string model and BERT model are 0.738 and 0.262, respectively. The experiment result indicates that the base_string model contributes more than the BERT model when the ensemble model makes predictions. The prediction result for the 2017–2018 data is:</p>
+</div>
+<p>About 600,000 <a href="https://www.cdc.gov/nchs/fastats/leading-causes-of-death.htm">deaths per year in the United States</a> are related to chronic diseases that are linked to poor dietary choices. Many other individuals suffer from diet-related health conditions, which may limit their ability to work, learn, and be physically active <span class="citation" data-cites="usda_2020">(US Department of Agriculture and US Department of Health and Human Services 2020)</span>. In recognition of the link between diet and health, in 1974 the Senate Select Committee on Nutrition and Human Needs, originally formed to eliminate hunger, expanded its focus to improving eating habits, nutrition policy and the national diet. Since 1980, the Dietary Guidelines for Americans have been released every five years by the US Departments of Agriculture (USDA) and Health and Human Services (DHHS). The guidelines present “<a href="https://www.dietaryguidelines.gov/">advice on what to eat and drink to meet nutrient needs, promote health, and prevent disease</a>”.</p>
+<p>Because there can be economic and social barriers to maintaining a healthy diet, USDA promotes <a href="https://www.usda.gov/nutrition-security">Food and Nutrition Security</a> so that everyone has consistent and equitable access to healthy, safe, and affordable foods that promote optimal health and well-being. A set of data tools called the <a href="https://www.ers.usda.gov/data-products/purchase-to-plate/">Purchase to Plate Suite</a> (PPS) supports these goals by enabling the update of the <a href="https://www.fns.usda.gov/snap/thriftyfoodplan#:~:text=What%20is%20the%20Thrifty%20Food,lowest%20cost%20of%20the%20four.">Thrifty Food Plan</a> (TFP), which estimates how much a budget-conscious family of four needs to spend on groceries to ensure a healthy diet. The TFP market basket – consisting of the specific amounts of various food categories required by the plan – forms the basis of the maximum allotment for the Supplemental Nutrition Assistance Program (SNAP, formerly known as the “Food Stamps” program), which provided financial support towards the cost of groceries for <a href="https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap">over 41 million individuals in almost 22 million households in fiscal year 2022</a>.</p>
+<p>The 2018 Farm Act (Agriculture Improvement Act of 2018) requires that USDA reevaluate the TFP every five years using current food composition, consumption patterns, dietary guidance, and food prices, and using approved scientific methods. USDA’s Economic Research Service (ERS) was charged with estimating the current food prices using retail food scanner data <span class="citation" data-cites="levin_et_al_2018 muth_et_al_2016">(Levin et al. 2018; Muth et al. 2016)</span> and utilized the PPS for this task. The most recent TFP update was released in August 2021 and the revised cost of the market basket was the first non-inflation adjustment increase in benefits for SNAP in over 40 years <span class="citation" data-cites="thrifty_food_plan_2021">(US Department of Agriculture 2021)</span>.</p>
+<p>The PPS combines datasets to enhance research related to the economics of food and nutrition. There are four primary components of the suite:</p>
 <ul>
-<li>Success@5: 0.727</li>
-<li>NDCG@5: 0.528</li>
+<li>Purchase to Plate Crosswalk (PPC),</li>
+<li>Purchase to Plate Price Tool (PPPT),</li>
+<li>Purchase to Plate National Average Prices (PP-NAP) for the National Health and Nutrition Examination Survey (NHANES), and</li>
+<li>Purchase to Plate Ingredient Tool (PPIT).</li>
 </ul>
-<p>Computation time is 6 hours.</p>
+<p>The PPC allows researchers to measure the healthfulness of store purchases. On average <a href="https://www.ers.usda.gov/data-products/foodaps-national-household-food-acquisition-and-purchase-survey/summary-findings/#calories">US consumers acquire about 75% of their calories from retail stores</a>, and there are a number of studies linking the availability of foods at home to the healthfulness of the overall diet <span class="citation" data-cites="gattshall_et_al_2008 hanson_et_al_2005">(e.g., Gattshall et al. 2008; Hanson et al. 2005)</span>. Thus, understanding the healthfulness of store purchases allows us to understand differences in consumers who purchase healthy versus less healthy foods, and may contribute to better policies that promote healthier food purchases. While healthier diets are linked to a lower risk of disease outcomes <span class="citation" data-cites="REEDY2014881">(Reedy et al. 2014)</span>, other factors such as health care access may also be contributors <span class="citation" data-cites="cleary_et_al_2022">(Cleary, Liu, and Carlson 2022)</span>. The PPC also forms the basis of the price tool, PPPT – which allows researchers to estimate custom prices for dietary recall studies – and a new ERS data product, the <a href="https://www.ers.usda.gov/data-products/purchase-to-plate/">PP-NAP</a>. The national average prices from PP-NAP are used in reevaluating the TFP. By using the PP-NAP with 24-hour dietary recall information from surveys such as What We Eat in America (<a href="https://www.ars.usda.gov/northeast-area/beltsville-md-bhnrc/beltsville-human-nutrition-research-center/food-surveys-research-group/docs/wweianhanes-overview/">WWEIA</a>) – the dietary component of the nationally representative <a href="https://www.cdc.gov/nchs/nhanes/index.htm">National Health and Nutrition Examination Survey</a>(NHANES)<sup>1</sup> – researchers can examine the relationship between the cost of food, dietary intake, and chronic diseases linked to poor diets. The price estimates also allow researchers to develop cost-effective healthy diets such as <a href="https://www.myplate.gov/myplate-kitchen/recipes">MyPlate Kitchen</a>. The final component of the Purchase to Plate Suite, the ingredient tool (PPIT), breaks dietary recall-reported foods back into purchasable ingredients, based on US retail food purchases. The PPIT is also used in the revaluation of the TFP, and by researchers who want to look at the relationship between reported ingestion of grocery items, cost and disease outcomes using WWEIA/NHANES. More information on the development of the PPC is available in two papers by Carlson et al. <span class="citation" data-cites="carlson_et_al_2019 carlson_et_al_2022">(2019, 2022)</span>.</p>
+<p>The Food for Thought competition aimed to support the development of the PPC – and thus policy-oriented research – by linking retail food scanner data to the USDA nutrition data used to analyze NHANES dietary recall data, specifically the Food and Nutrient Database for Dietary Studies (FNDDS) <span class="citation" data-cites="fndds_2018 fndds_2020">(2018, 2020)</span>. In particular, the competition set out to use artificial intelligence (AI) to reduce human resources in creating the links for the PPC, while still maintaining the high-quality standards required for reevaluating the TFP and for data published by ERS (which is one of 13 Principle Statistical Agencies in the United States Federal Government).</p>
+<section id="methods-used-to-date" class="level2">
+<h2 class="anchored" data-anchor-id="methods-used-to-date">Methods used to date</h2>
+<p>On the surface, the linking process may appear simple: both the FNDDS and retail food scanner data are databases of food. But the scanner data are produced for market research, and the FNDDS for dietary studies. The scanner data include about 350,000 items with sales each year, while the FNDDS has only 10,000–15,000 items. Scanner data relates to specific products, while FNDDS items are often more general. Both datasets have different hierarchical structures – the FNDDS hierarchy is based around major food groups: dairy; meat, poultry and seafood; eggs; nuts and legumes; grains; fruits; vegetables; fats and oils; and sugars, sweets, and beverages. Items fall into the groups regardless of preparation method or form. That is, broccoli prepared from frozen and from fresh both appear in the vegetable group, and for some fruits and vegetables, the fresh, frozen, canned and dried form are the same FNDDS item. Vegetable-based mixed dishes, such as broccoli and carrot stir-fry or soup, are also classified in the vegetable group. On the other hand, the scanner data classifies foods by grocery aisle. That is, the fresh and frozen broccoli are classified in different areas: produce and frozen vegetables. Similarly, when sold as a prepared food, the broccoli and carrot stir-fry may be found in the frozen entries, as a kit in either the frozen or produce section, refrigerated foods, or all of these.</p>
+<p>To allow researchers to import the FNDDS nutrient data into the scanner data, a one-to-many match between FNDDS and scanner data items was needed. The food descriptions in the scanner data include brand names and package sizes and are written as a consumer would pronounce them – e.g., fresh and crisp broccoli florets, ready-cut, 10 oz – versus a more general FNDDS description such as “Broccoli, raw”. (Also linked to the “Broccoli, raw” code would be broccoli sold with stems attached, broccoli spears, and any other way raw broccoli is sold.) In the scanner data, the Universal Product Code (UPC) and the European Article Number (EAN) can link items between tables within the scanner data, as well as between datasets of grocery items, such as the USDA Global Branded Foods Product Database, a component of <a href="https://fdc.nal.usda.gov/index.html">USDA’s Food Data Central</a>. However, these codes are not related to the FNDDS codes, or any other column within the FNDDS. In other words, before development of the PPC, there were no established linking identifiers.</p>
+<p>Figure 1 shows the process USDA uses to develop matches between scanner data and FNDDS.</p>
+<p><a href="images/pt1-fig1.png"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt1-fig1.png" class="img-fluid" width="700"></a></p>
+<div class="figure-caption">
+<p><strong>Figure 1:</strong> Process currently used to create the matches between the USDA Food and Nutrient Database for Dietary Studies (FNDDS) and the retail scanner data (labelled “IRI” for the IRI InfoScan and Consumer Network) product dictionaries. Source: Author provided.</p>
+</div>
+<p>We start the linking process by categorizing the scanner data items into homogeneous groups to make the first round of automated matching more efficient. To save time, we use the second lowest hierarchical category in the scanner data which generally divides items within a grocery aisle into homogenous groups such as produce, canned beans, baking mixes, and bread. Once the linking categories for scanner data are established, we select appropriate items from the FNDDS. Since the FNDDS is highly structured, this selection is usually straightforward.</p>
+<p>Our next step is to use semantic matching to create a search table that aligns similar terms within the IRI product dictionary and FNDDS. This first requires that we extract attributes from the FNDDS descriptions into fields similar to those in the scanner data product dictionary. The FNDDS descriptions are found across multiple columns because they are added as the need arises to provide examples of brand names or alternative descriptions of foods which help code the foods WWEIA participants report eating. We manually create matching tables that link terms used in FNDDS to those used in the scanner data, organized by the fields defined in the restructured FNDDS. We then use this table as the basis of a probabilistic matching process. For example, when linking the produce group, “fresh” in the scanner data would be aligned with “raw” and “prepared from fresh” and NOT “prepared from frozen” in the FNDDS, and “broccoli florets” would also be aligned with “raw” and “broccoli”. Since the FNDDS is designed to code the foods individuals report eating, many of the foods in the FNDDS are already prepared and result in descriptions such as “broccoli, steamed, prepared from fresh” or “broccoli, boiled, prepared from frozen”.</p>
+<p>Once the linking table is established, the probabilistic match process returns the single best possible match for each item in the scanner data. For example, a match between fresh broccoli florets and frozen broccoli would have a lower probability score than “broccoli, raw”. Because these matches form the basis of major USDA policies, we cannot accept an error rate of more than 5 percent, and lower is preferred. To reach that goal, nutritionists review every match to make sure the probabilistic match did not return a match between cauliflower florets and fresh broccoli, say, or that a broccoli and carrot stir-fry is not matched to a dish with broccoli, carrots, and chicken. The correct matches, such as the one between fresh broccoli florets and raw broccoli, are set aside while the items with an incorrect match, such as cauliflower florets and the broccoli and carrot stir-fry, are used to revise the search table. Revisions might include adding (NOT chicken) to the broccoli and carrot stir-fry dish. Mixed dishes — such as the broccoli and carrot stir-fry — pose particular challenges because there are a wide variety of similar products available in the grocery store. After a few rounds of revising the search table and running the probabilistic match process, it is more efficient to use a manual match, established by one nutritionist and reviewed by another, after which the match is assumed to be correct.</p>
+<p>The process improved with each new wave of FNDDS and IRI data. Our first creation of the PPC linked the FNDDS 2011/12 to the 2013 IRI retail scanner data. Subsequent waves started with the previous search table and resulting matches were reviewed by nutritionists. We also used more fields in the IRI product dictionary to create the homogeneous linking groups and made modifications to these groups with each wave. During each wave we experimented with the number of rounds of probabilistic matching that was the most cost effective. For some linking groups it took less human time to manually match from the start, while for other groups it was more efficient to do multiple rounds of improvements to the search table. Starting with the most recent wave (matching FNDDS 2017/18 to the 2017 and 2018 retail scanner data), we assumed previous matches appearing in the newer data were correct. Although this assumption was good for most matches, a review demonstrated the need to review previous matches prior to removing the item from the list of scanner data items needing FNDDS matches. In the future we intend to explore methods developed by the participants of the Food for Thought competition.</p>
 </section>
-<section id="future-work" class="level2">
-<h2 class="anchored" data-anchor-id="future-work">Future work</h2>
-<p>Our next step will focus on adding the newly generated EC data into our knowledge base, which allows the model to be more stable to make predictions for UPC-EC matching. Our model is an unsupervised method, which does not need labels for each instance. We use cosine similarity to rank the matches, so no labels are needed in the training process. However, our future work will try to label some instances to handle the UPC-EC matching task in a supervised manner.</p>
-</section>
-<section id="lessons-learned" class="level2">
-<h2 class="anchored" data-anchor-id="lessons-learned">Lessons learned</h2>
-<ol type="1">
-<li><p><strong>If the data is not complex, simple models may outperform complex models.</strong> For example, in our experiment, we found that the base-string model outperforms single RoBERTa <span class="citation" data-cites="DBLP:journals/corr/abs-1907-11692">(Liu et al. 2019)</span> or BERT models. However, our ensemble model can outperform each individual model since model fusion allows information aggregation from multiple models.</p></li>
-<li><p><strong>Multi-label models may not work well on UPC-EC data.</strong> In our early work, we tried to consider the UPC-EC matching task as a multi-label problem, e.g., we labeled each EC as a binary label which indicated whether the EC was an appropriate match or not. We mapped UPC and EC pairs into a multi-label table. However, we find that the UPC and EC keeps a one-to-one relation for most UPCs. The model performance of a multi-label model, i.e., Label-Specific Attention Network <span class="citation" data-cites="xiao-etal-2019-label">(LSAN, Xiao et al. 2019)</span>, is lower than base-string model on both Success@5 and NDCG@5 metrics.</p></li>
-</ol>
+<section id="linking-challenges" class="level2">
+<h2 class="anchored" data-anchor-id="linking-challenges">Linking challenges</h2>
+<p>An ongoing challenge to the linking problem is that both the scanner data and the FNDDS undergo substantive changes each year, meaning that both the previous matches and search tables need to be reviewed and revised with each new effort, as tables that work with one cycle of FNDDS and scanner data will need revisions to use with the next cycle. Changes to the scanner data that impact our current method include dropped and added items, data corrections, and revisions to the categories that form the basis of the homogeneous linking groups. In addition, there are errors such as incorrect food descriptions, conflicting package size information, and changes in the item description from year to year. Since the FNDDS is designed to support dietary recall studies, revisions reflect both changes to available foods and the level of detail respondents can provide. These revisions result in dropped/added food codes, changes to food descriptions that impact which scanner data items match to the FNDDS items, and revisions to recipes used in the nutrient coding which impacts the number of retail ingredients available in the FNDDS.</p>
+<p>Of the four parts of the PPS, establishing the matches is the most time-consuming task and constitutes at least 60 percent of the total budget. In the most recent round, we had 168 categories and each one went through 2-3 automated matching rounds; after each round, nutritionists spent an average of two hours reviewing the matches. This adds up to somewhere between 670 and 1,000 hours of review time. After the automated review, manual matching requires an additional 300 hours. Reducing the amount of time required to establish matches and link the FNDDS and retail scanner datasets may lead to significant time savings, resulting in faster data availability. That, in turn, could allow more timely policy-based research, and the mandated revision of the Thrifty Food Plan can continue with the most recent food price data.</p>
 <div class="nav-btn-container">
 <div class="grid">
 <div class="g-col-12 g-col-sm-6">
 <div class="nav-btn">
-<p><a href="../../../../../case-studies/posts/2023/08/21/03-first-place-winners.html">← Part 3: First place winners</a></p>
+<p><a href="../../../../../case-studies/posts/2023/08/21/00-food-for-thought.html">← Introduction</a></p>
 </div>
 </div>
 <div class="g-col-12 g-col-sm-6">
 <div class="nav-btn">
-<p><a href="../../../../../case-studies/posts/2023/08/21/05-third-place-winners.html">Part 5: Third place winners →</a></p>
+<p><a href="../../../../../case-studies/posts/2023/08/21/02-competition-design.html">Part 2: Competition design →</a></p>
 </div>
 </div>
 </div>
@@ -1673,24 +1509,161 @@ Yang, Z., Z. Dai, Y. Yang, J. Carbonell, R. R. Salakhutdinov, and Q. V. Le. 2019
 <dl>
 <dt>About the authors</dt>
 <dd>
-<strong>Yang Wu</strong> and <strong>Kai Zhang</strong> are PhD students, and <strong>Xiaozhong Liu</strong> is an associate professor at Worcester Polytechnic Institute. <strong>Aishwarya Budhkar</strong> is a PhD student and <strong>Xuhong Zhang</strong> is an assistant professor at Indiana University Bloomington.
+<strong>Andrea Carlson</strong> is an agricultural economist in the Food Markets Branch of the Food Economics Division in USDA’s Economic Research Service. She is the project lead for the Purchase to Plate Suite, which allows users to import USDA nutrient and food composition data into retail food scanner data acquired by USDA and estimate individual food prices for dietary intake data.
+</dd>
+<dd>
+<p><strong>Thea Palmer Zimmerman</strong> is a senior study director and research nutritionist at Westat.</p>
 </dd>
 </dl>
 </div>
 <div class="g-col-12 g-col-md-6">
 <dl>
-<dt>Copyright and licence</dt>
+<dt>Image credit</dt>
 <dd>
-© 2023 Yang Wu, Aishwarya Budhkar, Kai Zhang, Xuhong Zhang, and Xiaozhong Liu
+Thumbnail photo by <a href="https://unsplash.com/@neonbrand?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Kenny Eliason</a> on <a href="https://unsplash.com/photos/SvhXD3kPSTY?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.
 </dd>
 </dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@hansonluu?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Hanson Lu</a> on <a href="https://unsplash.com/photos/sq5P00L7lXc?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
 </div>
 <div class="g-col-12 g-col-md-6">
 <dl>
 <dt>How to cite</dt>
 <dd>
-Wu, Yang, Aishwarya Budhkar, Kai Zhang, Xuhong Zhang, and Xiaozhong Liu. 2023. “Food for Thought: Second place winners – DeepFFTLink.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/viewpoints/case-studies/posts/2023/08/21/04-second-place-winners.html">URL</a>
+Carlson, Andrea, and Thea Palmer Zimmerman. 2023. “Food for Thought: The importance of the Purchase to Plate Suite.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/viewpoints/case-studies/posts/2023/08/21/01-purchase-to-plate.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</section>
+<section id="acknowledgements" class="level2">
+<h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
+<p>The research presented in this compendium supports the Purchase to Plate Suite of data products. Carlson has been privileged to both develop and lead this project over the course of her career, but it is not a solo project. Many thanks to the Linkages Team from USDA’s Economic Research Service (Christopher Lowe, Mark Denbaly Elina Page, and Catherine Cullinane Thomas) the Center for Nutrition Policy and Promotion (Kristin Koegel, Kevin Kuczynski, Kevin Meyers Mathieu, TusaRebecca Pannucci), and our contractor Westat, Inc.&nbsp;(Thea Palmer Zimmerman, Carina E. Tornow, Amber Brown McFadden, Caitlin Carter, Viji Narayanaswamy, Lindsay McDougal, Elisha Lubar, Lynnea Brumby, Raquel Brown, and Maria Tamburri). Many others have supported this project over the years.</p>
+
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="ref-carlson_et_al_2019" class="csl-entry">
+Carlson, A. C., E. T. Page, T. P. Zimmerman, C. E. Tornow, and S. Hermansen. 2019. <span>“Linking USDA Nutrition Databases to IRI Household-Based and Store-Based Scanner Data.”</span> Technical bulletin 1952. US Department of Agriculture, Economic Research Service.
+</div>
+<div id="ref-carlson_et_al_2022" class="csl-entry">
+Carlson, A. C., C. E. Tornow, E. T. Page, A. Brown McFadden, and T. Palmer Zimmerman. 2022. <span>“Development of the Purchase to Plate Crosswalk and Price Tool: Estimating Prices for the National Health and Nutrition Examination Survey (NHANES) Foods and Measuring the Healthfulness of Retail Food Purchases.”</span> <em>Journal of Food Composition and Analysis</em> 106: 104344. <a href="https://doi.org/10.1016/j.jfca.2021.104344">https://doi.org/10.1016/j.jfca.2021.104344</a>.
+</div>
+<div id="ref-cleary_et_al_2022" class="csl-entry">
+Cleary, R., Y. Liu, and A. Carlson. 2022. <span>“Differences in the Distribution of Nutrition Between Households Above and Below Poverty.”</span> Agricultural and Applied Economic Association Annual Meeting. Anaheim, CA. <a href="https://ageconsearch.umn.edu/record/322267">https://ageconsearch.umn.edu/record/322267</a>.
+</div>
+<div id="ref-gattshall_et_al_2008" class="csl-entry">
+Gattshall, M. L., J. A. Shoup, J. A. Marshall, L. A. Crane, and P. A. Estabrooks. 2008. <span>“Validation of a Survey Instrument to Assess Home Environments for Physical Activity and Healthy Eating in Overweight Children.”</span> <em>International Journal of Behavioral Nutrition and Physical Activity</em> 5 (3). <a href="https://doi.org/10.1186/1479-5868-5-3">https://doi.org/10.1186/1479-5868-5-3</a>.
+</div>
+<div id="ref-hanson_et_al_2005" class="csl-entry">
+Hanson, N. I., D. Neumark-Sztainer, M. E. Eisenberg, M. Story, and M. Wall. 2005. <span>“Associations Between Parental Report of the Home Food Environment and Adolescent Intakes of Fruits, Vegetables and Dairy Foods.”</span> <em>Public Health Nutrition</em> 8 (1). <a href="https://doi.org/10.1079/PHN2005661">https://doi.org/10.1079/PHN2005661</a>.
+</div>
+<div id="ref-levin_et_al_2018" class="csl-entry">
+Levin, D., D. Noriega, C. Dicken, A. Okrent, M. Harding, and M. Lovenheim. 2018. <span>“Examining Store Scanner Data: A Comparison of the IRI Infoscan Data with Other Data Sets, 2008-12.”</span> Technical bulletin 1949. US Department of Agriculture, Economic Research Service.
+</div>
+<div id="ref-muth_et_al_2016" class="csl-entry">
+Muth, M. K., M. Sweitzer, D. Brown, K. Capogrossi, S. Karns, D. Levin, A. Okrent, P. Siegel, and C. Zhen. 2016. <span>“Understanding IRI Household-Based and Store-Based Scanner Data.”</span> Technical bulletin 1942. US Department of Agriculture, Economic Research Service.
+</div>
+<div id="ref-REEDY2014881" class="csl-entry">
+Reedy, J., S. M. Krebs-Smith, P. E. Miller, A. D. Liese, L. L. Kahle, Y. Park, and A. F. Subar. 2014. <span>“Higher Diet Quality Is Associated with Decreased Risk of All-Cause, Cardiovascular Disease, and Cancer Mortality Among Older Adults.”</span> <em>The Journal of Nutrition</em> 144 (6): 881–89. <a href="https://doi.org/10.3945/jn.113.189407">https://doi.org/10.3945/jn.113.189407</a>.
+</div>
+<div id="ref-thrifty_food_plan_2021" class="csl-entry">
+US Department of Agriculture. 2021. <span>“Thrifty Food Plan, 2021.”</span> Food and Nutrition Service 916. US Department of Agriculture. <a href="https://FNS.usda.gov/TFP">https://FNS.usda.gov/TFP</a>.
+</div>
+<div id="ref-fndds_2018" class="csl-entry">
+US Department of Agriculture, Agricultural Research Service. 2018. <span>“USDA Food and Nutrient Database for Dietary Studies 2015-2016.”</span> US Department of Agriculture, Agricultural Research Service. <a href="https://www.ars.usda.gov/nea/bhnrc/fsrg">https://www.ars.usda.gov/nea/bhnrc/fsrg</a>.
+</div>
+<div id="ref-fndds_2020" class="csl-entry">
+———. 2020. <span>“USDA Food and Nutrient Database for Dietary Studies 2017-2018.”</span> US Department of Agriculture, Agricultural Research Service. <a href="https://www.ars.usda.gov/nea/bhnrc/fsrg">https://www.ars.usda.gov/nea/bhnrc/fsrg</a>.
+</div>
+<div id="ref-usda_2020" class="csl-entry">
+US Department of Agriculture and US Department of Health and Human Services. 2020. <span>“Dietary Guidelines for Americans, 2020-2025.”</span> 9th edition. <span>US Department of Agriculture and US Department of Health and Human Services</span>. <a href="https://DietaryGuidelines.gov">https://DietaryGuidelines.gov</a>.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>NHANES is a multi-module continuous survey conducted by the Centers for Disease Control and Prevention. In addition to the WWEIA, NHANES includes a four-hour complete medical exam including a health history, and a blood and urine analysis.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>Machine learning</category>
+  <category>Natural language processing</category>
+  <category>Public policy</category>
+  <category>Health and wellbeing</category>
+  <guid>https://realworlddatascience.net/case-studies/posts/2023/08/21/01-purchase-to-plate.html</guid>
+  <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/01-pps.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
+<item>
+  <title>Food for Thought: The value of competitions for confidential data</title>
+  <dc:creator>Steven Bedrick, Ophir Frieder, Julia Lane, and Philip Resnik</dc:creator>
+  <link>https://realworlddatascience.net/case-studies/posts/2023/08/21/06-value-of-competitions.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>We are witnessing a sea change in data collection practices by both governments and businesses – from purposeful collection (through surveys and censuses, for example) to opportunistic (drawing on web and social media data, and administrative datasets). This shift has made clear the importance of record linkage – a government might, for example, look to link records held by its various departments to understand how citizens make use of the gamut of public services.</p>
+<p>However, creating manual linkages between datasets can be prohibitively expensive, time consuming, and subject to human constraints and bias. Machine learning (ML) techniques offer the potential to combine data better, faster, and more cheaply. But, as the recently released <a href="https://www.ai.gov/wp-content/uploads/2023/01/NAIRR-TF-Final-Report-2023.pdf">National AI Research Resources Task Force report</a> highlights, it is important to have an open and transparent approach to ensure that unintended biases do not occur.</p>
+<p>In other words, ML tools are not a substitute for thoughtful analysis. Both private and public producers of a linked dataset have to determine the level of linkage quality – such as what precision/recall tradeoff is best for the intended purpose (that is, the balance between false-positive links and failure to cover links that should be there), how much processing time and cost is acceptable, and how to address coverage issues. The challenge is made more difficult by the idiosyncrasies of heterogeneous datasets, and more difficult yet when datasets to be linked include confidential data <span class="citation" data-cites="10.1257/jel.20171350 DBLP:books/sp/ChristenRS20">(Christensen and Miguel 2018; Christen, Ranbaduge, and Schnell 2020)</span>.</p>
+<p>And, of course, an ML solution is never the end of the road: many data linkage scenarios are highly dynamic, involving use cases, datasets, and technical ecosystems that change and evolve over time; effective use of ML in practice necessitates an ongoing and continuous investment <span class="citation" data-cites="DBLP:journals/corr/abs-2112-01716">(Koch et al. 2021)</span>. Because techniques are constantly improving, producers need to keep abreast of new approaches. A model that is working well today may no longer work in a year because of changes in the data, or because the organizational needs have changed so that a certain type of error is no longer acceptable. As Sculley et al.&nbsp;point out, “it is remarkably easy to incur massive ongoing maintenance costs at the system level when applying machine learning” <span class="citation" data-cites="43146">(Sculley et al. 2014)</span>.</p>
+<p>Also important is that record linkage is not seen as a technical problem relegated to the realm of computer scientists to solve. The full engagement of domain experts in designing the optimization problem, identifying measures of success, and evaluating the quality of the results is absolutely critical, as is building an understanding of the pros and cons of different measures <span class="citation" data-cites="10.1371/journal.pone.0249833 10.1007/s11222-017-9746-6">(Schafer et al. 2021; Hand and Christen 2018)</span>. There will need to be much learning by doing in “sandbox” environments, and back and forth communication across communities to achieve successful outcomes, as noted in the <a href="https://www.bea.gov/system/files/2022-10/acdeb-year-2-report.pdf">recommendations of the Advisory Committee on Data for Evidence Building</a> (a screenshot of which is shown in Figure 1).</p>
+<p><a href="images/pt6-fig1.png"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt6-fig1.png" class="img-fluid" width="700"></a></p>
+<div class="figure-caption">
+<p><strong>Figure 1:</strong> A recommendation for building an “innovation sandbox” as part of the creation of a new National Secure Data Service in the United States.</p>
+</div>
+<p>Despite the importance of trial and error and transparency about linkage quality, there is no handbook that guides domain experts in how to design such sandboxes. There is a very real need for agreed-upon, domain-independent guidelines, or better yet, official standards to evaluate sandboxes. Those standards would define “who” could and would conduct the evaluation, and help guarantee independence and repeatability. And while innovation challenges have been embraced by the federal government, the devil can be very much in the details <span class="citation" data-cites="4138bca6-f7b7-3af8-a96c-5e2544823c5c">(Williams 2012)</span>.</p>
+<p>It is for this reason that the approach taken in the Food for Thought linkage competition, and described in this compendium, provides an important first step towards a well specified, replicable framework for achieving high quality outcomes. In that respect it joins other recent efforts to bring together community-level research on shared sensitive data <span class="citation" data-cites="macavaney-etal-2021-community tsakalidis-etal-2022-overview">(MacAvaney et al. 2021; Tsakalidis et al. 2022)</span>. This competition, like those, helped bring to the foreground both the opportunities and challenges of doing research in secure sandboxes with sensitive data. Notably, these exercises highlight a kind of cultural tension between secure, managed environments, on the one hand, and unfettered machine learning research, on the other. The need for flexibility and agility in computational research bumps up against the need for advance planning and careful step-by-step processes in environments with well-defined data governance rules, and one of the key lessons learned is that the tradeoffs here need to be recognized and planned for.</p>
+<p>This particular competition was important for a number of other reasons. Thanks to its organization as a competition, complete with prizes and bragging rights for strongly performing teams, it attracted new eyes from computer science and data science to think about how to address a critical real-world linkage problem. It offered the potential to produce approaches that were scalable, transparent, and reproducible. The engagement of domain experts and statisticians meant that it will be possible to conduct an informed error analysis, to explicitly relate the performance metrics in the task to the problem being solved in the real world, and to bring in the expertise of survey methodologists to think about the possible adjustments. And because it identified different approaches of addressing the same problem, it created an environment for new innovative ideas.</p>
+<p>More generally, in addition to the excitement of the new approaches, this exercise laid bare the fragility of linkages in general and highlighted the importance of secure sandboxes for confidential data. While the promise of privacy preserving technologies is alluring as <a href="https://www.bea.gov/system/files/2022-10/acdeb-year-2-report.pdf">an alternative to bringing confidential data together in one place</a>, such approaches are likely too immature to deploy ad hoc until a better understanding is established of how to translate real-world problems and their associated data into well-defined tasks, how to measure quality, and particularly how to assess the impact of match quality on different subgroups <span class="citation" data-cites="10.1145/3433638">(Domingo-Ferrer, Sánchez, and Blanco-Justicia 2021)</span>. The scientific profession has gone through too painful a lesson with the premature application of differential privacy techniques to ignore the lessons that can be learned from a careful and systematic analysis of different approaches <span class="citation" data-cites="10.1145/3433638 van_riper 10.1257/pandp.20191107 giles2022faking">(2021; Van Riper et al. 2020; Ruggles et al. 2019; Giles et al. 2022)</span>.</p>
+<p>We hope that the articles in this collection provide not only the first steps towards a handbook of best practices, but also an inspiration to share lessons learned, so that success can be emulated, and failures understood and avoided.</p>
+<div class="nav-btn-container">
+<div class="grid">
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../case-studies/posts/2023/08/21/05-third-place-winners.html">← Part 5: Third place winners</a></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../case-studies/index.html">Find more case studies</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+<strong>Steven Bedrick</strong> is an associate professor in Oregon Health and Science University’s Department of Medical Informatics and Clinical Epidemiology.
+</dd>
+<dd>
+<p><strong>Ophir Frieder</strong> is a professor in Georgetown University’s Department of Computer Science, and in the Department of Biostatistics, Bioinformatics &amp; Biomathematics at Georgetown University Medical Center.</p>
+</dd>
+<dd>
+<p><strong>Julia Lane</strong> is a professor at the NYU Wagner Graduate School of Public Service and a NYU Provostial Fellow for Innovation Analytics. She co-founded the Coleridge Initiative.</p>
+</dd>
+</dl>
+<p><strong>Philip Resnik</strong> holds a joint appointment as professor in the University of Maryland Institute for Advanced Computer Studies and the Department of Linguistics, and an affiliate professor appointment in computer science.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Steven Bedrick, Ophir Frieder, Julia Lane, and Philip Resnik
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@alexandru_tugui?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Alexandru Tugui</a> on <a href="https://unsplash.com/photos/-inuQpBGbgI?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Bedrick, Steven, Ophir Frieder, Julia Lane, and Philip Resnik. 2023. “Food for Thought: The value of competitions for confidential data.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/viewpoints/case-studies/posts/2023/08/21/06-value-of-competitions.html">URL</a>
 </dd>
 </dl>
 </div>
@@ -1699,106 +1672,55 @@ Wu, Yang, Aishwarya Budhkar, Kai Zhang, Xuhong Zhang, and Xiaozhong Liu. 2023. �
 
 
 
-</section>
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
-<div id="ref-DBLP:journals/corr/abs-1810-04805" class="csl-entry">
-Devlin, J., M.-W. Chang, K. Lee, and K. Toutanova. 2018. <span>“<span>BERT:</span> Pre-Training of Deep Bidirectional Transformers for Language Understanding.”</span> <em>CoRR</em> abs/1810.04805. <a href="http://arxiv.org/abs/1810.04805">http://arxiv.org/abs/1810.04805</a>.
+<div id="ref-DBLP:books/sp/ChristenRS20" class="csl-entry">
+Christen, P., T. Ranbaduge, and R. Schnell. 2020. <em>Linking Sensitive Data - Methods and Techniques for Practical Privacy-Preserving Information Sharing</em>. Springer. <a href="https://doi.org/10.1007/978-3-030-59706-1">https://doi.org/10.1007/978-3-030-59706-1</a>.
 </div>
-<div id="ref-10.1007/3-540-45014-9_1" class="csl-entry">
-Dietterich, T. G. 2000. <span>“Ensemble Methods in Machine Learning.”</span> In <em>Multiple Classifier Systems</em>, 1–15. Berlin, Heidelberg: Springer Berlin Heidelberg.
+<div id="ref-10.1257/jel.20171350" class="csl-entry">
+Christensen, G., and E. Miguel. 2018. <span>“Transparency, Reproducibility, and the Credibility of Economics Research.”</span> <em>Journal of Economic Literature</em> 56 (3): 920–80. <a href="https://doi.org/10.1257/jel.20171350">https://doi.org/10.1257/jel.20171350</a>.
 </div>
-<div id="ref-DBLP:journals/corr/abs-1907-11692" class="csl-entry">
-Liu, Y., M. Ott, N. Goyal, J. Du, M. Joshi, D. Chen, O. Levy, M. Lewis, L. Zettlemoyer, and V. Stoyanov. 2019. <span>“RoBERTa: <span>A</span> Robustly Optimized <span>BERT</span> Pretraining Approach.”</span> <em>CoRR</em> abs/1907.11692. <a href="http://arxiv.org/abs/1907.11692">http://arxiv.org/abs/1907.11692</a>.
+<div id="ref-10.1145/3433638" class="csl-entry">
+Domingo-Ferrer, J., D. Sánchez, and A. Blanco-Justicia. 2021. <span>“The Limits of Differential Privacy (and Its Misuse in Data Release and Machine Learning).”</span> <em>Communications of the ACM</em> 64 (7): 33–35. <a href="https://doi.org/10.1145/3433638">https://doi.org/10.1145/3433638</a>.
 </div>
-<div id="ref-DBLP:journals/corr/PangLGXWC16" class="csl-entry">
-Pang, L., Y. Lan, J. Guo, J. Xu, S. Wan, and X. Cheng. 2016. <span>“Text Matching as Image Recognition.”</span> <em>CoRR</em> abs/1602.06359. <a href="http://arxiv.org/abs/1602.06359">http://arxiv.org/abs/1602.06359</a>.
+<div id="ref-giles2022faking" class="csl-entry">
+Giles, O., K. Hosseini, G. Mingas, O. Strickson, L. Bowler, C. Rangel Smith, H. Wilde, et al. 2022. <span>“Faking Feature Importance: A Cautionary Tale on the Use of Differentially-Private Synthetic Data.”</span> <a href="https://arxiv.org/abs/2203.01363">https://arxiv.org/abs/2203.01363</a>.
 </div>
-<div id="ref-xiao-etal-2019-label" class="csl-entry">
-Xiao, L., X. Huang, B. Chen, and L. Jing. 2019. <span>“Label-Specific Document Representation for Multi-Label Text Classification.”</span> In <em>Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)</em>, 466–75. Hong Kong, China: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/D19-1044">https://doi.org/10.18653/v1/D19-1044</a>.
+<div id="ref-10.1007/s11222-017-9746-6" class="csl-entry">
+Hand, D., and P. Christen. 2018. <span>“A Note on Using the f-Measure for Evaluating Record Linkage Algorithms.”</span> <em>Statistics and Computing</em> 28 (3): 539–47. <a href="https://doi.org/10.1007/s11222-017-9746-6">https://doi.org/10.1007/s11222-017-9746-6</a>.
+</div>
+<div id="ref-DBLP:journals/corr/abs-2112-01716" class="csl-entry">
+Koch, B., E. Denton, A. Hanna, and J. G. Foster. 2021. <span>“Reduced, Reused and Recycled: The Life of a Dataset in Machine Learning Research.”</span> <em>CoRR</em> abs/2112.01716. <a href="https://arxiv.org/abs/2112.01716">https://arxiv.org/abs/2112.01716</a>.
+</div>
+<div id="ref-macavaney-etal-2021-community" class="csl-entry">
+MacAvaney, S., A. Mittu, G. Coppersmith, J. Leintz, and P. Resnik. 2021. <span>“Community-Level Research on Suicidality Prediction in a Secure Environment: Overview of the <span>CLP</span>sych 2021 Shared Task.”</span> In <em>Proceedings of the Seventh Workshop on Computational Linguistics and Clinical Psychology: Improving Access</em>, 70–80. Online: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2021.clpsych-1.7">https://doi.org/10.18653/v1/2021.clpsych-1.7</a>.
+</div>
+<div id="ref-10.1257/pandp.20191107" class="csl-entry">
+Ruggles, S., C. Fitch, D. Magnuson, and J. Schroeder. 2019. <span>“Differential Privacy and Census Data: Implications for Social and Economic Research.”</span> <em>AEA Papers and Proceedings</em> 109 (May): 403–8. <a href="https://doi.org/10.1257/pandp.20191107">https://doi.org/10.1257/pandp.20191107</a>.
+</div>
+<div id="ref-10.1371/journal.pone.0249833" class="csl-entry">
+Schafer, K. M., G. Kennedy, A. Gallyer, and P. Resnik. 2021. <span>“A Direct Comparison of Theory-Driven and Machine Learning Prediction of Suicide: A Meta-Analysis.”</span> <em>PLOS ONE</em> 16 (4): 1–23. <a href="https://doi.org/10.1371/journal.pone.0249833">https://doi.org/10.1371/journal.pone.0249833</a>.
+</div>
+<div id="ref-43146" class="csl-entry">
+Sculley, D., G. Holt, D. Golovin, E. Davydov, T. Phillips, D. Ebner, V. Chaudhary, and M. Young. 2014. <span>“Machine Learning: The High Interest Credit Card of Technical Debt.”</span> In <em>SE4ML: Software Engineering for Machine Learning (NIPS 2014 Workshop)</em>.
+</div>
+<div id="ref-tsakalidis-etal-2022-overview" class="csl-entry">
+Tsakalidis, A., J. Chim, I. M. Bilal, A. Zirikly, D. Atzil-Slonim, F. Nanni, P. Resnik, et al. 2022. <span>“Overview of the <span>CLP</span>sych 2022 Shared Task: Capturing Moments of Change in Longitudinal User Posts.”</span> In <em>Proceedings of the Eighth Workshop on Computational Linguistics and Clinical Psychology</em>, 184–98. Seattle, USA: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2022.clpsych-1.16">https://doi.org/10.18653/v1/2022.clpsych-1.16</a>.
+</div>
+<div id="ref-van_riper" class="csl-entry">
+Van Riper, D., T. Kugler, J. Schroeder, and S. Ruggles. 2020. <span>“Differential Privacy and Racial Residential Segregation.”</span> In <em>2020 APPAM Fall Research Conference</em>.
+</div>
+<div id="ref-4138bca6-f7b7-3af8-a96c-5e2544823c5c" class="csl-entry">
+Williams, H. 2012. <span>“Innovation Inducement Prizes: Connecting Research to Policy.”</span> <em>Journal of Policy Analysis and Management</em> 31 (3): 752–76. <a href="http://www.jstor.org/stable/41653827">http://www.jstor.org/stable/41653827</a>.
 </div>
 </div></section></div> ]]></description>
   <category>Machine learning</category>
   <category>Natural language processing</category>
   <category>Public policy</category>
   <category>Health and wellbeing</category>
-  <guid>https://realworlddatascience.net/case-studies/posts/2023/08/21/04-second-place-winners.html</guid>
+  <guid>https://realworlddatascience.net/case-studies/posts/2023/08/21/06-value-of-competitions.html</guid>
   <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/04-deepfftlink.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>The Food for Thought Challenge: Using AI to support evidence-based food and nutrition policy</title>
-  <dc:creator>Brian Tarran and Julia Lane</dc:creator>
-  <link>https://realworlddatascience.net/case-studies/posts/2023/08/21/00-food-for-thought.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>There’s a saying: “You are what you eat.” Its meaning is somewhat open to interpretation, as with many such sayings, but it is typically used to make the point that if you want to <em>be</em> well, you need to eat well. Nutrition scientists and dieticians spend their careers trying to figure out what “eating well” looks like – the foods the human body needs, in what quantities, and how best to consume them. Their research informs advice and guidance issued by health professionals and governments. Ultimately, though, the choice of what to eat falls to us – individuals and families – and our choices are often determined by our tastes, the availability of foodstuffs in our local stores, their price and affordability.</p>
-<p>So, what exactly <em>do</em> we eat? Answers come from a variety of sources. In the United States, there are dietary recall studies such as the <a href="https://www.cdc.gov/nchs/nhanes/index.htm">National Health and Nutrition Examination Survey</a>, which asks a sample of respondents to report their food and beverage consumption over a set period of time. There are also organisations like <a href="https://www.iriworldwide.com/en-gb">IRI</a> that collect point-of-sale data from retail stores on the actual food and drink being sold to consumers. By and large, this information comes from barcodes on product packaging being scanned at checkouts, so it is often referred to as “scanner data”.</p>
-<p>This data – from dietary recall studies and retail scanners – is valuable: once we know what people are eating, we can check the nutritional content of those foods and build up a picture of what the diet of a typical individual or family looks like and how it compares to the diet recommended by doctors and policymakers. And, if we know what other foodstuffs are available, how much they cost, and the nutritional value of those items, we can work out how much families need to spend, and on what, in order to eat well and, hopefully, be well.</p>
-<p>Figuring all this out is where something called the Purchase to Plate Crosswalk (PPC) comes in. It’s a key tool for understanding the “<a href="https://www.sciencedirect.com/science/article/pii/S0889157521005445">healthfulness of retail food purchases</a>” and it does this by linking IRI scanner data on what people buy with data on the nutritional content of those foods, as recorded in the US Department of Agriculture’s Food and Nutrient Database for Dietary Studies (FNDDS). But there’s a catch: scanner data is collected about hundreds of thousands of food products, whereas the FNDDS has nutritional profile information for only a few thousand items. Linking these two datasets therefore gives rise to a one-to-many matching problem – a problem that takes several hundred person-hours to resolve.</p>
-<p>What if machine learning can help? That question inspired a competition, the Food for Thought Challenge, organized by the Coleridge Initiative, a nonprofit organization working with governments to ensure that data are more effectively used for public decision-making. Researchers and data scientists were invited to use machine learning and natural language processing to more efficiently link data on supermarket products to nutrient databases.</p>
-<p>This collection of articles tells the story of the <a href="https://coleridgeinitiative.org/projects/food-for-thought">Food for Thought Challenge</a>. We begin by exploring the <a href="../../../../../case-studies/posts/2023/08/21/01-purchase-to-plate.html">policy issues</a> that drive the development of the PPC – the need to understand the national diet, developing healthy diet plans, and costing up those plans – and the issues posed by record linkage. Next, we learn about <a href="../../../../../case-studies/posts/2023/08/21/02-competition-design.html">the nature of the challenge and the structure of the competition in more detail</a>, and then the <a href="../../../../../case-studies/posts/2023/08/21/03-first-place-winners.html">three</a> <a href="../../../../../case-studies/posts/2023/08/21/04-second-place-winners.html">winning</a> <a href="../../../../../case-studies/posts/2023/08/21/05-third-place-winners.html">teams</a> walk us through their solutions. We end the collection with some closing thoughts on <a href="../../../../../case-studies/posts/2023/08/21/06-value-of-competitions.html">the value of competitions for addressing data scientific challenges in the public sector</a>.</p>
-<div class="nav-btn-container">
-<div class="grid">
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../case-studies/index.html">Find more case studies</a></p>
-</div>
-</div>
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../case-studies/posts/2023/08/21/01-purchase-to-plate.html">Part 1: The Purchase to Plate Suite →</a></p>
-</div>
-</div>
-</div>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the authors</dt>
-<dd>
-<strong>Brian Tarran</strong> is editor of Real World Data Science, and head of data science platform at the Royal Statistical Society.
-</dd>
-<dd>
-<p><strong>Julia Lane</strong> is a professor at the NYU Wagner Graduate School of Public Service and a NYU Provostial Fellow for Innovation Analytics. She co-founded the Coleridge Initiative, whose goal is to use data to transform the way governments access and use data for the social good through training programs, research projects and a secure data facility. She recently served on the Advisory Committee on Data for Evidence Building and the National AI Research Resources Task Force.</p>
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Royal Statistical Society and Julia Lane
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@melaniesylim?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Melanie Lim</a> on <a href="https://unsplash.com/photos/246b6c6IeC0?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Tarran, Brian, and Julia Lane. 2023. “The Food for Thought Challenge: Using AI to support evidence-based food and nutrition policy.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/viewpoints/case-studies/posts/2023/08/21/00-food-for-thought.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-
- ]]></description>
-  <category>Machine learning</category>
-  <category>Natural language processing</category>
-  <category>Public policy</category>
-  <category>Health and wellbeing</category>
-  <guid>https://realworlddatascience.net/case-studies/posts/2023/08/21/00-food-for-thought.html</guid>
-  <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/00-shopping.png" medium="image" type="image/png" height="105" width="144"/>
+  <media:content url="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/06-value-of-competitions.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
   <title>Food for Thought: Competition and challenge design</title>
@@ -1947,6 +1869,80 @@ Macavaney, S., A. Mittu, G. Coppersmith, J. Leintz, and P. Resnik. 2021. <span>�
   <guid>https://realworlddatascience.net/case-studies/posts/2023/08/21/02-competition-design.html</guid>
   <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt2-intro.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
+<item>
+  <title>The Food for Thought Challenge: Using AI to support evidence-based food and nutrition policy</title>
+  <dc:creator>Brian Tarran and Julia Lane</dc:creator>
+  <link>https://realworlddatascience.net/case-studies/posts/2023/08/21/00-food-for-thought.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>There’s a saying: “You are what you eat.” Its meaning is somewhat open to interpretation, as with many such sayings, but it is typically used to make the point that if you want to <em>be</em> well, you need to eat well. Nutrition scientists and dieticians spend their careers trying to figure out what “eating well” looks like – the foods the human body needs, in what quantities, and how best to consume them. Their research informs advice and guidance issued by health professionals and governments. Ultimately, though, the choice of what to eat falls to us – individuals and families – and our choices are often determined by our tastes, the availability of foodstuffs in our local stores, their price and affordability.</p>
+<p>So, what exactly <em>do</em> we eat? Answers come from a variety of sources. In the United States, there are dietary recall studies such as the <a href="https://www.cdc.gov/nchs/nhanes/index.htm">National Health and Nutrition Examination Survey</a>, which asks a sample of respondents to report their food and beverage consumption over a set period of time. There are also organisations like <a href="https://www.iriworldwide.com/en-gb">IRI</a> that collect point-of-sale data from retail stores on the actual food and drink being sold to consumers. By and large, this information comes from barcodes on product packaging being scanned at checkouts, so it is often referred to as “scanner data”.</p>
+<p>This data – from dietary recall studies and retail scanners – is valuable: once we know what people are eating, we can check the nutritional content of those foods and build up a picture of what the diet of a typical individual or family looks like and how it compares to the diet recommended by doctors and policymakers. And, if we know what other foodstuffs are available, how much they cost, and the nutritional value of those items, we can work out how much families need to spend, and on what, in order to eat well and, hopefully, be well.</p>
+<p>Figuring all this out is where something called the Purchase to Plate Crosswalk (PPC) comes in. It’s a key tool for understanding the “<a href="https://www.sciencedirect.com/science/article/pii/S0889157521005445">healthfulness of retail food purchases</a>” and it does this by linking IRI scanner data on what people buy with data on the nutritional content of those foods, as recorded in the US Department of Agriculture’s Food and Nutrient Database for Dietary Studies (FNDDS). But there’s a catch: scanner data is collected about hundreds of thousands of food products, whereas the FNDDS has nutritional profile information for only a few thousand items. Linking these two datasets therefore gives rise to a one-to-many matching problem – a problem that takes several hundred person-hours to resolve.</p>
+<p>What if machine learning can help? That question inspired a competition, the Food for Thought Challenge, organized by the Coleridge Initiative, a nonprofit organization working with governments to ensure that data are more effectively used for public decision-making. Researchers and data scientists were invited to use machine learning and natural language processing to more efficiently link data on supermarket products to nutrient databases.</p>
+<p>This collection of articles tells the story of the <a href="https://coleridgeinitiative.org/projects/food-for-thought">Food for Thought Challenge</a>. We begin by exploring the <a href="../../../../../case-studies/posts/2023/08/21/01-purchase-to-plate.html">policy issues</a> that drive the development of the PPC – the need to understand the national diet, developing healthy diet plans, and costing up those plans – and the issues posed by record linkage. Next, we learn about <a href="../../../../../case-studies/posts/2023/08/21/02-competition-design.html">the nature of the challenge and the structure of the competition in more detail</a>, and then the <a href="../../../../../case-studies/posts/2023/08/21/03-first-place-winners.html">three</a> <a href="../../../../../case-studies/posts/2023/08/21/04-second-place-winners.html">winning</a> <a href="../../../../../case-studies/posts/2023/08/21/05-third-place-winners.html">teams</a> walk us through their solutions. We end the collection with some closing thoughts on <a href="../../../../../case-studies/posts/2023/08/21/06-value-of-competitions.html">the value of competitions for addressing data scientific challenges in the public sector</a>.</p>
+<div class="nav-btn-container">
+<div class="grid">
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../case-studies/index.html">Find more case studies</a></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../case-studies/posts/2023/08/21/01-purchase-to-plate.html">Part 1: The Purchase to Plate Suite →</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+<strong>Brian Tarran</strong> is editor of Real World Data Science, and head of data science platform at the Royal Statistical Society.
+</dd>
+<dd>
+<p><strong>Julia Lane</strong> is a professor at the NYU Wagner Graduate School of Public Service and a NYU Provostial Fellow for Innovation Analytics. She co-founded the Coleridge Initiative, whose goal is to use data to transform the way governments access and use data for the social good through training programs, research projects and a secure data facility. She recently served on the Advisory Committee on Data for Evidence Building and the National AI Research Resources Task Force.</p>
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Royal Statistical Society and Julia Lane
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@melaniesylim?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Melanie Lim</a> on <a href="https://unsplash.com/photos/246b6c6IeC0?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Tarran, Brian, and Julia Lane. 2023. “The Food for Thought Challenge: Using AI to support evidence-based food and nutrition policy.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/viewpoints/case-studies/posts/2023/08/21/00-food-for-thought.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+
+ ]]></description>
+  <category>Machine learning</category>
+  <category>Natural language processing</category>
+  <category>Public policy</category>
+  <category>Health and wellbeing</category>
+  <guid>https://realworlddatascience.net/case-studies/posts/2023/08/21/00-food-for-thought.html</guid>
+  <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/00-shopping.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
   <title>Food for Thought: First place winners – Auburn Big Data</title>
@@ -2191,68 +2187,105 @@ Wang, C., P. Nulty, and D. Lillis. 2021. <span>“A Comparative Study on Word Em
   <media:content url="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/03-auburn.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
-  <title>Food for Thought: The importance of the Purchase to Plate Suite</title>
-  <dc:creator>Andrea Carlson and Thea Palmer Zimmerman</dc:creator>
-  <link>https://realworlddatascience.net/case-studies/posts/2023/08/21/01-purchase-to-plate.html</link>
+  <title>Food for Thought: Second place winners – DeepFFTLink</title>
+  <dc:creator>Yang Wu, Aishwarya Budhkar, Kai Zhang, Xuhong Zhang, and Xiaozhong Liu</dc:creator>
+  <link>https://realworlddatascience.net/case-studies/posts/2023/08/21/04-second-place-winners.html</link>
   <description><![CDATA[ 
 
 
 
 
 
-<div class="callout callout-style-default callout-important callout-titled" style="margin-top: 0;">
-<div class="callout-header d-flex align-content-center">
+<p>DeepFFTLink team members: Yang Wu and Kai Zhang are PhD students at Worcester Polytechnic Institute. Aishwarya Budhkar is a PhD student at Indiana University Bloomington. Xuhong Zhang is an assistant professor at Indiana University Bloomington. Xiaozhong Liu is an associate professor at Worcester Polytechnic Institute.</p>
+<section id="perspective-on-the-challenge" class="level2">
+<h2 class="anchored" data-anchor-id="perspective-on-the-challenge">Perspective on the challenge</h2>
+<p>Text matching is an essential task in natural language processing <span class="citation" data-cites="DBLP:journals/corr/PangLGXWC16">(NLP, Pang et al. 2016)</span>, while record linkage across different sources is an essential task in data science. Machine learning techniques allow people to combine data faster and cheaper than using manual linkage. However, in the context of the Food for Thought challenge, existing methods for matching universal product codes (UPCs) to ensemble codes (ECs) require every UPC to be compared with every EC code (Figure 1a). Such approaches can be computationally expensive in the training process when data is noisy. Here, we propose an ensemble model with a category-based adapter to tackle this problem, drawing on the category information included in UPC and EC data. The category-based adapter allows UPCs to be first matched with only a small and reliable set of ECs (Figure 1b). Then, an ensemble model will be deployed to make predictions for UPC-EC matching. Our proposed approach can achieve competitive performance compared with state-of-the-art models.</p>
+<div>
+
+</div>
+<div class="quarto-layout-panel" style="padding-top: 1em; margin-bottom: 0;" data-layout-ncol="2">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pt4-fig1a.png"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt4-fig1a.png" class="img-fluid figure-img" alt="(a)"></a></p>
+<figcaption>(a)</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pt4-fig1b.png"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt4-fig1b.png" class="img-fluid figure-img" alt="(b)"></a></p>
+<figcaption>(b)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="figure-caption">
+<p><strong>Figure 1:</strong> A toy example of our method. Panel (a) shows the traditional matching method, while (b) is our proposed ensemble model with category-based adapter. With the help of the adapter, UPC 1 only needs to be matched with EC 1 and EC 3.</p>
+</div>
+</section>
+<section id="our-approach" class="level2">
+<h2 class="anchored" data-anchor-id="our-approach">Our approach</h2>
+<p>We propose a two-step framework to address this problem. To begin with, we use a category-based adapter to get reliable candidate ECs for each UPC. Then, an ensemble model <span class="citation" data-cites="10.1007/3-540-45014-9_1">(Dietterich 2000)</span> is deployed to make a prediction for each UPC-EC pair.</p>
+<section id="category-based-adapter" class="level5">
+<h5 class="anchored" data-anchor-id="category-based-adapter">Category-based adapter</h5>
+<p>By using 2015–2016 UPC-EC data, we created a knowledge base, which is a UPC category–EC pair-wised table for generating candidate ECs. Within this setting, each UPC category is, on average, related to only 32 ECs. This knowledge base is then used as context to further filter the candidate ECs. Note that there are some new ECs generated year by year, which can also be part of the potential ECs in the UPC-EC matching task, since the contextual information of new ECs does not exist in our knowledge base.</p>
+</section>
+<section id="ensembled-model" class="level5">
+<h5 class="anchored" data-anchor-id="ensembled-model">Ensembled model</h5>
+<p>We ensemble the base-string match and BERT models. BERT is a deep learning model for natural language processing <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805">(Devlin et al. 2018)</span>. In the base-string match model, we used the Term Frequency-Inverse Document Frequency (TFIDF) of each UPC and EC description as features to calculate a pairwise cosine similarity, which is a distance between instances. Meanwhile, we used features extracted from UPC and EC descriptions to fine-tune the BERT base model and calculated the cosine similarity of embeddings between each UPC and EC. Then we rank ECs based on their similarity scores with the UPC.</p>
+<p><a href="images/pt4-fig2.png"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt4-fig2.png" class="img-fluid"></a></p>
+<div class="figure-caption">
+<p><strong>Figure 2:</strong> The framework of our proposed model. A two-step strategy is used to make the final prediction.</p>
+</div>
+<div class="callout callout-style-simple callout-note" style="margin-top: 2rem;">
+<div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
-<div class="callout-title-container flex-fill">
-Disclaimer
+<div class="callout-body-container">
+<p>Find the code in the <a href="https://github.com/realworlddatascience/realworlddatascience.github.io/tree/main/case-studies/posts/2023/08/21/_code">Real World Data Science GitHub repository</a>.</p>
 </div>
 </div>
-<div class="callout-body-container callout-body">
-<p>The findings and conclusions in this publication are those of the authors and should not be construed to represent any official USDA or US Government determination or policy. This research was supported by the US Department of Agriculture’s Economic Research Service and Center for Nutrition, Policy and Promotion. Findings should not be attributed to Circana (formerly IRI).</p>
 </div>
-</div>
-<p>About 600,000 <a href="https://www.cdc.gov/nchs/fastats/leading-causes-of-death.htm">deaths per year in the United States</a> are related to chronic diseases that are linked to poor dietary choices. Many other individuals suffer from diet-related health conditions, which may limit their ability to work, learn, and be physically active <span class="citation" data-cites="usda_2020">(US Department of Agriculture and US Department of Health and Human Services 2020)</span>. In recognition of the link between diet and health, in 1974 the Senate Select Committee on Nutrition and Human Needs, originally formed to eliminate hunger, expanded its focus to improving eating habits, nutrition policy and the national diet. Since 1980, the Dietary Guidelines for Americans have been released every five years by the US Departments of Agriculture (USDA) and Health and Human Services (DHHS). The guidelines present “<a href="https://www.dietaryguidelines.gov/">advice on what to eat and drink to meet nutrient needs, promote health, and prevent disease</a>”.</p>
-<p>Because there can be economic and social barriers to maintaining a healthy diet, USDA promotes <a href="https://www.usda.gov/nutrition-security">Food and Nutrition Security</a> so that everyone has consistent and equitable access to healthy, safe, and affordable foods that promote optimal health and well-being. A set of data tools called the <a href="https://www.ers.usda.gov/data-products/purchase-to-plate/">Purchase to Plate Suite</a> (PPS) supports these goals by enabling the update of the <a href="https://www.fns.usda.gov/snap/thriftyfoodplan#:~:text=What%20is%20the%20Thrifty%20Food,lowest%20cost%20of%20the%20four.">Thrifty Food Plan</a> (TFP), which estimates how much a budget-conscious family of four needs to spend on groceries to ensure a healthy diet. The TFP market basket – consisting of the specific amounts of various food categories required by the plan – forms the basis of the maximum allotment for the Supplemental Nutrition Assistance Program (SNAP, formerly known as the “Food Stamps” program), which provided financial support towards the cost of groceries for <a href="https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap">over 41 million individuals in almost 22 million households in fiscal year 2022</a>.</p>
-<p>The 2018 Farm Act (Agriculture Improvement Act of 2018) requires that USDA reevaluate the TFP every five years using current food composition, consumption patterns, dietary guidance, and food prices, and using approved scientific methods. USDA’s Economic Research Service (ERS) was charged with estimating the current food prices using retail food scanner data <span class="citation" data-cites="levin_et_al_2018 muth_et_al_2016">(Levin et al. 2018; Muth et al. 2016)</span> and utilized the PPS for this task. The most recent TFP update was released in August 2021 and the revised cost of the market basket was the first non-inflation adjustment increase in benefits for SNAP in over 40 years <span class="citation" data-cites="thrifty_food_plan_2021">(US Department of Agriculture 2021)</span>.</p>
-<p>The PPS combines datasets to enhance research related to the economics of food and nutrition. There are four primary components of the suite:</p>
-<ul>
-<li>Purchase to Plate Crosswalk (PPC),</li>
-<li>Purchase to Plate Price Tool (PPPT),</li>
-<li>Purchase to Plate National Average Prices (PP-NAP) for the National Health and Nutrition Examination Survey (NHANES), and</li>
-<li>Purchase to Plate Ingredient Tool (PPIT).</li>
-</ul>
-<p>The PPC allows researchers to measure the healthfulness of store purchases. On average <a href="https://www.ers.usda.gov/data-products/foodaps-national-household-food-acquisition-and-purchase-survey/summary-findings/#calories">US consumers acquire about 75% of their calories from retail stores</a>, and there are a number of studies linking the availability of foods at home to the healthfulness of the overall diet <span class="citation" data-cites="gattshall_et_al_2008 hanson_et_al_2005">(e.g., Gattshall et al. 2008; Hanson et al. 2005)</span>. Thus, understanding the healthfulness of store purchases allows us to understand differences in consumers who purchase healthy versus less healthy foods, and may contribute to better policies that promote healthier food purchases. While healthier diets are linked to a lower risk of disease outcomes <span class="citation" data-cites="REEDY2014881">(Reedy et al. 2014)</span>, other factors such as health care access may also be contributors <span class="citation" data-cites="cleary_et_al_2022">(Cleary, Liu, and Carlson 2022)</span>. The PPC also forms the basis of the price tool, PPPT – which allows researchers to estimate custom prices for dietary recall studies – and a new ERS data product, the <a href="https://www.ers.usda.gov/data-products/purchase-to-plate/">PP-NAP</a>. The national average prices from PP-NAP are used in reevaluating the TFP. By using the PP-NAP with 24-hour dietary recall information from surveys such as What We Eat in America (<a href="https://www.ars.usda.gov/northeast-area/beltsville-md-bhnrc/beltsville-human-nutrition-research-center/food-surveys-research-group/docs/wweianhanes-overview/">WWEIA</a>) – the dietary component of the nationally representative <a href="https://www.cdc.gov/nchs/nhanes/index.htm">National Health and Nutrition Examination Survey</a>(NHANES)<sup>1</sup> – researchers can examine the relationship between the cost of food, dietary intake, and chronic diseases linked to poor diets. The price estimates also allow researchers to develop cost-effective healthy diets such as <a href="https://www.myplate.gov/myplate-kitchen/recipes">MyPlate Kitchen</a>. The final component of the Purchase to Plate Suite, the ingredient tool (PPIT), breaks dietary recall-reported foods back into purchasable ingredients, based on US retail food purchases. The PPIT is also used in the revaluation of the TFP, and by researchers who want to look at the relationship between reported ingestion of grocery items, cost and disease outcomes using WWEIA/NHANES. More information on the development of the PPC is available in two papers by Carlson et al. <span class="citation" data-cites="carlson_et_al_2019 carlson_et_al_2022">(2019, 2022)</span>.</p>
-<p>The Food for Thought competition aimed to support the development of the PPC – and thus policy-oriented research – by linking retail food scanner data to the USDA nutrition data used to analyze NHANES dietary recall data, specifically the Food and Nutrient Database for Dietary Studies (FNDDS) <span class="citation" data-cites="fndds_2018 fndds_2020">(2018, 2020)</span>. In particular, the competition set out to use artificial intelligence (AI) to reduce human resources in creating the links for the PPC, while still maintaining the high-quality standards required for reevaluating the TFP and for data published by ERS (which is one of 13 Principle Statistical Agencies in the United States Federal Government).</p>
-<section id="methods-used-to-date" class="level2">
-<h2 class="anchored" data-anchor-id="methods-used-to-date">Methods used to date</h2>
-<p>On the surface, the linking process may appear simple: both the FNDDS and retail food scanner data are databases of food. But the scanner data are produced for market research, and the FNDDS for dietary studies. The scanner data include about 350,000 items with sales each year, while the FNDDS has only 10,000–15,000 items. Scanner data relates to specific products, while FNDDS items are often more general. Both datasets have different hierarchical structures – the FNDDS hierarchy is based around major food groups: dairy; meat, poultry and seafood; eggs; nuts and legumes; grains; fruits; vegetables; fats and oils; and sugars, sweets, and beverages. Items fall into the groups regardless of preparation method or form. That is, broccoli prepared from frozen and from fresh both appear in the vegetable group, and for some fruits and vegetables, the fresh, frozen, canned and dried form are the same FNDDS item. Vegetable-based mixed dishes, such as broccoli and carrot stir-fry or soup, are also classified in the vegetable group. On the other hand, the scanner data classifies foods by grocery aisle. That is, the fresh and frozen broccoli are classified in different areas: produce and frozen vegetables. Similarly, when sold as a prepared food, the broccoli and carrot stir-fry may be found in the frozen entries, as a kit in either the frozen or produce section, refrigerated foods, or all of these.</p>
-<p>To allow researchers to import the FNDDS nutrient data into the scanner data, a one-to-many match between FNDDS and scanner data items was needed. The food descriptions in the scanner data include brand names and package sizes and are written as a consumer would pronounce them – e.g., fresh and crisp broccoli florets, ready-cut, 10 oz – versus a more general FNDDS description such as “Broccoli, raw”. (Also linked to the “Broccoli, raw” code would be broccoli sold with stems attached, broccoli spears, and any other way raw broccoli is sold.) In the scanner data, the Universal Product Code (UPC) and the European Article Number (EAN) can link items between tables within the scanner data, as well as between datasets of grocery items, such as the USDA Global Branded Foods Product Database, a component of <a href="https://fdc.nal.usda.gov/index.html">USDA’s Food Data Central</a>. However, these codes are not related to the FNDDS codes, or any other column within the FNDDS. In other words, before development of the PPC, there were no established linking identifiers.</p>
-<p>Figure 1 shows the process USDA uses to develop matches between scanner data and FNDDS.</p>
-<p><a href="images/pt1-fig1.png"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt1-fig1.png" class="img-fluid" width="700"></a></p>
-<div class="figure-caption">
-<p><strong>Figure 1:</strong> Process currently used to create the matches between the USDA Food and Nutrient Database for Dietary Studies (FNDDS) and the retail scanner data (labelled “IRI” for the IRI InfoScan and Consumer Network) product dictionaries. Source: Author provided.</p>
-</div>
-<p>We start the linking process by categorizing the scanner data items into homogeneous groups to make the first round of automated matching more efficient. To save time, we use the second lowest hierarchical category in the scanner data which generally divides items within a grocery aisle into homogenous groups such as produce, canned beans, baking mixes, and bread. Once the linking categories for scanner data are established, we select appropriate items from the FNDDS. Since the FNDDS is highly structured, this selection is usually straightforward.</p>
-<p>Our next step is to use semantic matching to create a search table that aligns similar terms within the IRI product dictionary and FNDDS. This first requires that we extract attributes from the FNDDS descriptions into fields similar to those in the scanner data product dictionary. The FNDDS descriptions are found across multiple columns because they are added as the need arises to provide examples of brand names or alternative descriptions of foods which help code the foods WWEIA participants report eating. We manually create matching tables that link terms used in FNDDS to those used in the scanner data, organized by the fields defined in the restructured FNDDS. We then use this table as the basis of a probabilistic matching process. For example, when linking the produce group, “fresh” in the scanner data would be aligned with “raw” and “prepared from fresh” and NOT “prepared from frozen” in the FNDDS, and “broccoli florets” would also be aligned with “raw” and “broccoli”. Since the FNDDS is designed to code the foods individuals report eating, many of the foods in the FNDDS are already prepared and result in descriptions such as “broccoli, steamed, prepared from fresh” or “broccoli, boiled, prepared from frozen”.</p>
-<p>Once the linking table is established, the probabilistic match process returns the single best possible match for each item in the scanner data. For example, a match between fresh broccoli florets and frozen broccoli would have a lower probability score than “broccoli, raw”. Because these matches form the basis of major USDA policies, we cannot accept an error rate of more than 5 percent, and lower is preferred. To reach that goal, nutritionists review every match to make sure the probabilistic match did not return a match between cauliflower florets and fresh broccoli, say, or that a broccoli and carrot stir-fry is not matched to a dish with broccoli, carrots, and chicken. The correct matches, such as the one between fresh broccoli florets and raw broccoli, are set aside while the items with an incorrect match, such as cauliflower florets and the broccoli and carrot stir-fry, are used to revise the search table. Revisions might include adding (NOT chicken) to the broccoli and carrot stir-fry dish. Mixed dishes — such as the broccoli and carrot stir-fry — pose particular challenges because there are a wide variety of similar products available in the grocery store. After a few rounds of revising the search table and running the probabilistic match process, it is more efficient to use a manual match, established by one nutritionist and reviewed by another, after which the match is assumed to be correct.</p>
-<p>The process improved with each new wave of FNDDS and IRI data. Our first creation of the PPC linked the FNDDS 2011/12 to the 2013 IRI retail scanner data. Subsequent waves started with the previous search table and resulting matches were reviewed by nutritionists. We also used more fields in the IRI product dictionary to create the homogeneous linking groups and made modifications to these groups with each wave. During each wave we experimented with the number of rounds of probabilistic matching that was the most cost effective. For some linking groups it took less human time to manually match from the start, while for other groups it was more efficient to do multiple rounds of improvements to the search table. Starting with the most recent wave (matching FNDDS 2017/18 to the 2017 and 2018 retail scanner data), we assumed previous matches appearing in the newer data were correct. Although this assumption was good for most matches, a review demonstrated the need to review previous matches prior to removing the item from the list of scanner data items needing FNDDS matches. In the future we intend to explore methods developed by the participants of the Food for Thought competition.</p>
 </section>
-<section id="linking-challenges" class="level2">
-<h2 class="anchored" data-anchor-id="linking-challenges">Linking challenges</h2>
-<p>An ongoing challenge to the linking problem is that both the scanner data and the FNDDS undergo substantive changes each year, meaning that both the previous matches and search tables need to be reviewed and revised with each new effort, as tables that work with one cycle of FNDDS and scanner data will need revisions to use with the next cycle. Changes to the scanner data that impact our current method include dropped and added items, data corrections, and revisions to the categories that form the basis of the homogeneous linking groups. In addition, there are errors such as incorrect food descriptions, conflicting package size information, and changes in the item description from year to year. Since the FNDDS is designed to support dietary recall studies, revisions reflect both changes to available foods and the level of detail respondents can provide. These revisions result in dropped/added food codes, changes to food descriptions that impact which scanner data items match to the FNDDS items, and revisions to recipes used in the nutrient coding which impacts the number of retail ingredients available in the FNDDS.</p>
-<p>Of the four parts of the PPS, establishing the matches is the most time-consuming task and constitutes at least 60 percent of the total budget. In the most recent round, we had 168 categories and each one went through 2-3 automated matching rounds; after each round, nutritionists spent an average of two hours reviewing the matches. This adds up to somewhere between 670 and 1,000 hours of review time. After the automated review, manual matching requires an additional 300 hours. Reducing the amount of time required to establish matches and link the FNDDS and retail scanner datasets may lead to significant time savings, resulting in faster data availability. That, in turn, could allow more timely policy-based research, and the mandated revision of the Thrifty Food Plan can continue with the most recent food price data.</p>
+</section>
+<section id="our-results" class="level2">
+<h2 class="anchored" data-anchor-id="our-results">Our results</h2>
+<p>We randomly selected 500 samples from the 2017–2018 UPC-EC data to train the ensembled weight for each model. Two functions were adapted to make a fusion of base-string and BERT models:</p>
+<p><span id="eq-first"><img src="https://latex.codecogs.com/png.latex?%0AC%20=%20a%20*%20X%20+%20b%20*%20Y%20%20%0A%5Ctag%7B1%7D"></span></p>
+<p><span id="eq-second"><img src="https://latex.codecogs.com/png.latex?%0AC%20=%20%20a%20*%20log(X)%20+%20b%20*%20log(Y)%20%5Ctext%7B.%20%7D%0A%5Ctag%7B2%7D"></span></p>
+<p><img src="https://latex.codecogs.com/png.latex?C"> denotes the final confidence score. <img src="https://latex.codecogs.com/png.latex?X"> and <img src="https://latex.codecogs.com/png.latex?Y"> represent <em>base_string_similarity_score</em> and <em>BERT_similarity_score</em>, respectively. <img src="https://latex.codecogs.com/png.latex?a"> and <img src="https://latex.codecogs.com/png.latex?b"> are corresponding model weights for base_string and BERT models.</p>
+<p>A better Success@5 is achieved with function (1). The ensembled weights for the base-string model and BERT model are 0.738 and 0.262, respectively. The experiment result indicates that the base_string model contributes more than the BERT model when the ensemble model makes predictions. The prediction result for the 2017–2018 data is:</p>
+<ul>
+<li>Success@5: 0.727</li>
+<li>NDCG@5: 0.528</li>
+</ul>
+<p>Computation time is 6 hours.</p>
+</section>
+<section id="future-work" class="level2">
+<h2 class="anchored" data-anchor-id="future-work">Future work</h2>
+<p>Our next step will focus on adding the newly generated EC data into our knowledge base, which allows the model to be more stable to make predictions for UPC-EC matching. Our model is an unsupervised method, which does not need labels for each instance. We use cosine similarity to rank the matches, so no labels are needed in the training process. However, our future work will try to label some instances to handle the UPC-EC matching task in a supervised manner.</p>
+</section>
+<section id="lessons-learned" class="level2">
+<h2 class="anchored" data-anchor-id="lessons-learned">Lessons learned</h2>
+<ol type="1">
+<li><p><strong>If the data is not complex, simple models may outperform complex models.</strong> For example, in our experiment, we found that the base-string model outperforms single RoBERTa <span class="citation" data-cites="DBLP:journals/corr/abs-1907-11692">(Liu et al. 2019)</span> or BERT models. However, our ensemble model can outperform each individual model since model fusion allows information aggregation from multiple models.</p></li>
+<li><p><strong>Multi-label models may not work well on UPC-EC data.</strong> In our early work, we tried to consider the UPC-EC matching task as a multi-label problem, e.g., we labeled each EC as a binary label which indicated whether the EC was an appropriate match or not. We mapped UPC and EC pairs into a multi-label table. However, we find that the UPC and EC keeps a one-to-one relation for most UPCs. The model performance of a multi-label model, i.e., Label-Specific Attention Network <span class="citation" data-cites="xiao-etal-2019-label">(LSAN, Xiao et al. 2019)</span>, is lower than base-string model on both Success@5 and NDCG@5 metrics.</p></li>
+</ol>
 <div class="nav-btn-container">
 <div class="grid">
 <div class="g-col-12 g-col-sm-6">
 <div class="nav-btn">
-<p><a href="../../../../../case-studies/posts/2023/08/21/00-food-for-thought.html">← Introduction</a></p>
+<p><a href="../../../../../case-studies/posts/2023/08/21/03-first-place-winners.html">← Part 3: First place winners</a></p>
 </div>
 </div>
 <div class="g-col-12 g-col-sm-6">
 <div class="nav-btn">
-<p><a href="../../../../../case-studies/posts/2023/08/21/02-competition-design.html">Part 2: Competition design →</a></p>
+<p><a href="../../../../../case-studies/posts/2023/08/21/05-third-place-winners.html">Part 5: Third place winners →</a></p>
 </div>
 </div>
 </div>
@@ -2263,91 +2296,58 @@ Disclaimer
 <dl>
 <dt>About the authors</dt>
 <dd>
-<strong>Andrea Carlson</strong> is an agricultural economist in the Food Markets Branch of the Food Economics Division in USDA’s Economic Research Service. She is the project lead for the Purchase to Plate Suite, which allows users to import USDA nutrient and food composition data into retail food scanner data acquired by USDA and estimate individual food prices for dietary intake data.
-</dd>
-<dd>
-<p><strong>Thea Palmer Zimmerman</strong> is a senior study director and research nutritionist at Westat.</p>
+<strong>Yang Wu</strong> and <strong>Kai Zhang</strong> are PhD students, and <strong>Xiaozhong Liu</strong> is an associate professor at Worcester Polytechnic Institute. <strong>Aishwarya Budhkar</strong> is a PhD student and <strong>Xuhong Zhang</strong> is an assistant professor at Indiana University Bloomington.
 </dd>
 </dl>
 </div>
 <div class="g-col-12 g-col-md-6">
 <dl>
-<dt>Image credit</dt>
+<dt>Copyright and licence</dt>
 <dd>
-Thumbnail photo by <a href="https://unsplash.com/@neonbrand?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Kenny Eliason</a> on <a href="https://unsplash.com/photos/SvhXD3kPSTY?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.
+© 2023 Yang Wu, Aishwarya Budhkar, Kai Zhang, Xuhong Zhang, and Xiaozhong Liu
 </dd>
 </dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@hansonluu?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Hanson Lu</a> on <a href="https://unsplash.com/photos/sq5P00L7lXc?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
 </div>
 <div class="g-col-12 g-col-md-6">
 <dl>
 <dt>How to cite</dt>
 <dd>
-Carlson, Andrea, and Thea Palmer Zimmerman. 2023. “Food for Thought: The importance of the Purchase to Plate Suite.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/viewpoints/case-studies/posts/2023/08/21/01-purchase-to-plate.html">URL</a>
+Wu, Yang, Aishwarya Budhkar, Kai Zhang, Xuhong Zhang, and Xiaozhong Liu. 2023. “Food for Thought: Second place winners – DeepFFTLink.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/viewpoints/case-studies/posts/2023/08/21/04-second-place-winners.html">URL</a>
 </dd>
 </dl>
 </div>
 </div>
 </div>
-</section>
-<section id="acknowledgements" class="level2">
-<h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
-<p>The research presented in this compendium supports the Purchase to Plate Suite of data products. Carlson has been privileged to both develop and lead this project over the course of her career, but it is not a solo project. Many thanks to the Linkages Team from USDA’s Economic Research Service (Christopher Lowe, Mark Denbaly Elina Page, and Catherine Cullinane Thomas) the Center for Nutrition Policy and Promotion (Kristin Koegel, Kevin Kuczynski, Kevin Meyers Mathieu, TusaRebecca Pannucci), and our contractor Westat, Inc.&nbsp;(Thea Palmer Zimmerman, Carina E. Tornow, Amber Brown McFadden, Caitlin Carter, Viji Narayanaswamy, Lindsay McDougal, Elisha Lubar, Lynnea Brumby, Raquel Brown, and Maria Tamburri). Many others have supported this project over the years.</p>
 
 
 
 </section>
-
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
-<div id="ref-carlson_et_al_2019" class="csl-entry">
-Carlson, A. C., E. T. Page, T. P. Zimmerman, C. E. Tornow, and S. Hermansen. 2019. <span>“Linking USDA Nutrition Databases to IRI Household-Based and Store-Based Scanner Data.”</span> Technical bulletin 1952. US Department of Agriculture, Economic Research Service.
+<div id="ref-DBLP:journals/corr/abs-1810-04805" class="csl-entry">
+Devlin, J., M.-W. Chang, K. Lee, and K. Toutanova. 2018. <span>“<span>BERT:</span> Pre-Training of Deep Bidirectional Transformers for Language Understanding.”</span> <em>CoRR</em> abs/1810.04805. <a href="http://arxiv.org/abs/1810.04805">http://arxiv.org/abs/1810.04805</a>.
 </div>
-<div id="ref-carlson_et_al_2022" class="csl-entry">
-Carlson, A. C., C. E. Tornow, E. T. Page, A. Brown McFadden, and T. Palmer Zimmerman. 2022. <span>“Development of the Purchase to Plate Crosswalk and Price Tool: Estimating Prices for the National Health and Nutrition Examination Survey (NHANES) Foods and Measuring the Healthfulness of Retail Food Purchases.”</span> <em>Journal of Food Composition and Analysis</em> 106: 104344. <a href="https://doi.org/10.1016/j.jfca.2021.104344">https://doi.org/10.1016/j.jfca.2021.104344</a>.
+<div id="ref-10.1007/3-540-45014-9_1" class="csl-entry">
+Dietterich, T. G. 2000. <span>“Ensemble Methods in Machine Learning.”</span> In <em>Multiple Classifier Systems</em>, 1–15. Berlin, Heidelberg: Springer Berlin Heidelberg.
 </div>
-<div id="ref-cleary_et_al_2022" class="csl-entry">
-Cleary, R., Y. Liu, and A. Carlson. 2022. <span>“Differences in the Distribution of Nutrition Between Households Above and Below Poverty.”</span> Agricultural and Applied Economic Association Annual Meeting. Anaheim, CA. <a href="https://ageconsearch.umn.edu/record/322267">https://ageconsearch.umn.edu/record/322267</a>.
+<div id="ref-DBLP:journals/corr/abs-1907-11692" class="csl-entry">
+Liu, Y., M. Ott, N. Goyal, J. Du, M. Joshi, D. Chen, O. Levy, M. Lewis, L. Zettlemoyer, and V. Stoyanov. 2019. <span>“RoBERTa: <span>A</span> Robustly Optimized <span>BERT</span> Pretraining Approach.”</span> <em>CoRR</em> abs/1907.11692. <a href="http://arxiv.org/abs/1907.11692">http://arxiv.org/abs/1907.11692</a>.
 </div>
-<div id="ref-gattshall_et_al_2008" class="csl-entry">
-Gattshall, M. L., J. A. Shoup, J. A. Marshall, L. A. Crane, and P. A. Estabrooks. 2008. <span>“Validation of a Survey Instrument to Assess Home Environments for Physical Activity and Healthy Eating in Overweight Children.”</span> <em>International Journal of Behavioral Nutrition and Physical Activity</em> 5 (3). <a href="https://doi.org/10.1186/1479-5868-5-3">https://doi.org/10.1186/1479-5868-5-3</a>.
+<div id="ref-DBLP:journals/corr/PangLGXWC16" class="csl-entry">
+Pang, L., Y. Lan, J. Guo, J. Xu, S. Wan, and X. Cheng. 2016. <span>“Text Matching as Image Recognition.”</span> <em>CoRR</em> abs/1602.06359. <a href="http://arxiv.org/abs/1602.06359">http://arxiv.org/abs/1602.06359</a>.
 </div>
-<div id="ref-hanson_et_al_2005" class="csl-entry">
-Hanson, N. I., D. Neumark-Sztainer, M. E. Eisenberg, M. Story, and M. Wall. 2005. <span>“Associations Between Parental Report of the Home Food Environment and Adolescent Intakes of Fruits, Vegetables and Dairy Foods.”</span> <em>Public Health Nutrition</em> 8 (1). <a href="https://doi.org/10.1079/PHN2005661">https://doi.org/10.1079/PHN2005661</a>.
+<div id="ref-xiao-etal-2019-label" class="csl-entry">
+Xiao, L., X. Huang, B. Chen, and L. Jing. 2019. <span>“Label-Specific Document Representation for Multi-Label Text Classification.”</span> In <em>Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)</em>, 466–75. Hong Kong, China: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/D19-1044">https://doi.org/10.18653/v1/D19-1044</a>.
 </div>
-<div id="ref-levin_et_al_2018" class="csl-entry">
-Levin, D., D. Noriega, C. Dicken, A. Okrent, M. Harding, and M. Lovenheim. 2018. <span>“Examining Store Scanner Data: A Comparison of the IRI Infoscan Data with Other Data Sets, 2008-12.”</span> Technical bulletin 1949. US Department of Agriculture, Economic Research Service.
-</div>
-<div id="ref-muth_et_al_2016" class="csl-entry">
-Muth, M. K., M. Sweitzer, D. Brown, K. Capogrossi, S. Karns, D. Levin, A. Okrent, P. Siegel, and C. Zhen. 2016. <span>“Understanding IRI Household-Based and Store-Based Scanner Data.”</span> Technical bulletin 1942. US Department of Agriculture, Economic Research Service.
-</div>
-<div id="ref-REEDY2014881" class="csl-entry">
-Reedy, J., S. M. Krebs-Smith, P. E. Miller, A. D. Liese, L. L. Kahle, Y. Park, and A. F. Subar. 2014. <span>“Higher Diet Quality Is Associated with Decreased Risk of All-Cause, Cardiovascular Disease, and Cancer Mortality Among Older Adults.”</span> <em>The Journal of Nutrition</em> 144 (6): 881–89. <a href="https://doi.org/10.3945/jn.113.189407">https://doi.org/10.3945/jn.113.189407</a>.
-</div>
-<div id="ref-thrifty_food_plan_2021" class="csl-entry">
-US Department of Agriculture. 2021. <span>“Thrifty Food Plan, 2021.”</span> Food and Nutrition Service 916. US Department of Agriculture. <a href="https://FNS.usda.gov/TFP">https://FNS.usda.gov/TFP</a>.
-</div>
-<div id="ref-fndds_2018" class="csl-entry">
-US Department of Agriculture, Agricultural Research Service. 2018. <span>“USDA Food and Nutrient Database for Dietary Studies 2015-2016.”</span> US Department of Agriculture, Agricultural Research Service. <a href="https://www.ars.usda.gov/nea/bhnrc/fsrg">https://www.ars.usda.gov/nea/bhnrc/fsrg</a>.
-</div>
-<div id="ref-fndds_2020" class="csl-entry">
-———. 2020. <span>“USDA Food and Nutrient Database for Dietary Studies 2017-2018.”</span> US Department of Agriculture, Agricultural Research Service. <a href="https://www.ars.usda.gov/nea/bhnrc/fsrg">https://www.ars.usda.gov/nea/bhnrc/fsrg</a>.
-</div>
-<div id="ref-usda_2020" class="csl-entry">
-US Department of Agriculture and US Department of Health and Human Services. 2020. <span>“Dietary Guidelines for Americans, 2020-2025.”</span> 9th edition. <span>US Department of Agriculture and US Department of Health and Human Services</span>. <a href="https://DietaryGuidelines.gov">https://DietaryGuidelines.gov</a>.
-</div>
-</div></section><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>NHANES is a multi-module continuous survey conducted by the Centers for Disease Control and Prevention. In addition to the WWEIA, NHANES includes a four-hour complete medical exam including a health history, and a blood and urine analysis.↩︎</p></li>
-</ol>
-</section></div> ]]></description>
+</div></section></div> ]]></description>
   <category>Machine learning</category>
   <category>Natural language processing</category>
   <category>Public policy</category>
   <category>Health and wellbeing</category>
-  <guid>https://realworlddatascience.net/case-studies/posts/2023/08/21/01-purchase-to-plate.html</guid>
+  <guid>https://realworlddatascience.net/case-studies/posts/2023/08/21/04-second-place-winners.html</guid>
   <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/01-pps.png" medium="image" type="image/png" height="105" width="144"/>
+  <media:content url="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/04-deepfftlink.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
   <title>The road to reproducible research: hazards to avoid and tools to get you there safely</title>
