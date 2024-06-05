@@ -16,8 +16,8 @@
 <height>83</height>
 <width>144</width>
 </image>
-<generator>quarto-1.4.554</generator>
-<lastBuildDate>Tue, 28 May 2024 12:53:48 GMT</lastBuildDate>
+<generator>quarto-1.4.555</generator>
+<lastBuildDate>Wed, 05 Jun 2024 15:22:05 GMT</lastBuildDate>
 <item>
   <title>Forecasting the Health Needs of a Changing Population</title>
   <dc:creator>Luke Shaw (BNSSG ICB), Rich Wood (BNSSG ICB, University of Bath), Christos Vasilakis (University of Bath), Zehra Onen Dumlu (University of Bath)</dc:creator>
@@ -76,7 +76,7 @@ Figure&nbsp;2: Halving-Doubling Effect of the Core Segments
 </ol>
 <p>By synthesising these pieces of data, we create our DPM forecast. Starting from the most up to date Core Segment population breakdown, the model takes yearly time steps into the future, at each time step using the inputs to estimate how many people are to be in each Core Segment. This modelling approach of having discrete time steps and different movements between states can be set up as a Markov chain, although here we have formulated it as a set of difference equations - through which the outflow of each Core Segment population at each time step is deterministic. The design was led by <a href="https://researchportal.bath.ac.uk/en/persons/zehra-onen-dumlu">Zehra</a> and <a href="https://researchportal.bath.ac.uk/en/persons/christos-vasilakis">Christos</a>, through a collaboration between the NHS and the <a href="https://www.bath.ac.uk/research-centres/centre-for-healthcare-innovation-and-improvement-chi2/">Centre for Healthcare Innovation and Improvement (CHI2)</a> at the University of Bath.</p>
 <p>The model can be thought of as having the following inputs:</p>
-<table class="table">
+<table class="caption-top table">
 <colgroup>
 <col style="width: 31%">
 <col style="width: 59%">
@@ -223,8 +223,128 @@ Shaw, Luke et al 2024. “Forecasting the Health Needs of a Changing Population�
   <category>Health and Wellbeing</category>
   <category>Forecasting</category>
   <guid>https://realworlddatascience.net/case-studies/posts/2024/05/08/dpm.html</guid>
-  <pubDate>Tue, 28 May 2024 12:53:48 GMT</pubDate>
+  <pubDate>Wed, 05 Jun 2024 15:22:05 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/case-studies/posts/2024/05/08/images/doctor-patient-thumbnail.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
+<item>
+  <title>AI series: What is “best practice” when working with AI in the real world?</title>
+  <dc:creator>Anna Demming</dc:creator>
+  <link>https://realworlddatascience.net/ideas/posts/2024/06/04/ai-series-6.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/SoOoj9iUTM0" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p>Over the course of the Real World Data Science AI series, we’ve had articles laying out the nitty gritty of what AI is, how it works, or at least how to get an explanation for its output as well as burning issues around the data involved, evaluating these models, ethical considerations, and gauging societal impacts such as changes in workforce demands. The ideas in these articles give a firm footing for establishing what best practice with AI models should look like but there is often a divide between theory and practice, and the same pitfalls can trip people up again and again. Here we discuss how to wrestle with real world limitations and flag these common hazards.</p>
+<p>Our interviewees, in order of appearance, are:</p>
+<p><strong>Ali Al-Sherbaz</strong>, academic director in digital skills at the University of Cambridge in the UK</p>
+<p><strong>Janet Bastiman</strong>, Napier chief data scientist and chair of the Royal Statistical Society Data Science &amp; AI Section</p>
+<p><strong>Jonathan Gillard</strong>, professor of statistics/data science at Cardiff University, and a member of the Real World Data Science Board</p>
+<p><strong>Fatemeh Torabi</strong>, senior research officer and data scientist, health data science at Swansea University, and also a member of the Real World Data Science board</p>
+<p><strong>It is often said that while almost everybody is now trying to leverage AI in their projects, most AI projects fail. What nuggets of wisdom do the panel have for swelling that minority that succeed with their AI projects, and what should you do before you start doing anything?</strong></p>
+<p><strong>Ali Al-Sherbaz</strong>: It’s not easy to start, especially for people who are not aware how AI works. My advice is, first, they have to understand the basics of how AI works because the expectation could be overpromising, and that is a danger. Just 25 years ago, a master dissertation might be about developing a simple – we call it simple now but it was a master’s project 25 years ago – a simple model with a neural network of a combination of nodes to classify data. Whatever the data is – it could be drawing shapes, simple shapes, square, circle triangle – just classifying them was worth an MSc. Now, kids can do it. But that is not the same as understanding what the neural network or the AI is. It’s a matrix of numbers, and actually, for the learning process each does multiple iterations to find the best combination of these numbers – product of sum; sum of product – to classify, to do something, and train them for a certain situation, and that is a supervised learning. Over the last 25 years – especially in the last 10 years – the computational power is getting better, so AI is now working better.</p>
+<p>There are other things people have to learn. There’s the statistics as well, and of course people who would like to work in AI and data science must understand the data, and they should also be experts in the data itself. For instance, I can talk about cybersecurity, I can talk about networking and other things, but if it comes to something regarding health data, or financial services, or stock markets, I’m not an expert in the data. So I’m not going to be actively working on those things even if I use the same AI tools. This is in a nutshell why I think some people fail sometimes using AI, or they succeed using AI. And we should emphasise the human value. The AI is there, and it exists to help us to make a better more accurate decision, but the human value is still there. We have to insist on that.</p>
+<p><strong>Janet Bastiman</strong>: I would just like to build on all of that great stuff that Ali’s just said. When you look at basically the non-data scientist side of it, you often get businesses who think AI can solve a certain problem. They might go out and hire a team – whether that’s directly or indirectly – and get them to try and solve a problem that, as Ali said, they may not have the domain expertise for. The business might not even have the right data for it, and AI might not even be the right way of solving that problem. I think that’s one of the fundamental things to think about – really understanding what you’re trying to solve, and how you’re going to solve it before you start throwing complex tools, and potentially very expensive teams at the problem.</p>
+<p>When you look at a lot of the failures, it’s been because businesses have just gone, we can solve this problem, I’m just going to hire a team and let these intelligent people look at something. And then they’re restricted on the data that they’ve got, which won’t even answer the question; they’re restricted on the resources they have; and even restricted in terms of wider buy in from the company. So really understanding what is it that you want to solve? What are you trying to do? Is AI the right thing? And can you even do it with the resources you have available? And I think that’s, that’s a fundamental starting point. Because, you can have wonderful experts, who have that domain knowledge, who understand the statistics, and all that essential stuff that Ali just said. But then if from a business point of view, if you don’t give them the right data to work on, or you don’t let them do their job and tell you when they can’t do their job, then again, you’re going to be doomed to failure.</p>
+<p><strong>Jonathan Gillard</strong>: Explainability is a big issue when it comes to AI models, as well. They are at the moment, very largely “black box” – data goes in, then these models get trained on dumb data and answers get popped out. And when it works, well, it works fabulously well. And we’ve seen lots of examples of that happening. But often for business, industry or real life, we want to learn. We want to understand the laws of the universe, and to understand the reasons why this answer came about. Because this explainability piece is missing – because everything is hidden away almost – I think that’s a big issue in successful execution. And particularly when it comes to industries where there’s a degree of regulation there as well, if you can’t explain how a particular input arose to a particular output, then how can you justify to regulatory bodies that what you’ve got is satisfactory, ethical, and that you’re learning and you’re doing things in the right way?</p>
+<p><strong>There have been efforts at trying to get explanations from these models. How do you think things are progressing there?</strong></p>
+<p><strong>JG</strong>: Yeah, that’s a good question. I think where we are with explainability is in very simple scenarios, very simple models. This is where traditional statistical models do very well. There’s an explicit model which says if you put these things inside then you’ll get this output. So [for today’s AI] I think we’re actually very far away from having that complete explainability picture, particularly as we fetishise more and more grand models. The AI models are only getting bigger, more complex, and that makes the explainability per se even more challenging. And that’s why I think, as Ali says, at the moment, the human in the loop is absolutely crucial.</p>
+<p>What AI does share with classical statistics (or classical data science if you want to call it that) is it can still only be as good as the data that’s put into it, that’s still a fundamental truth. I think a lot of the assumptions currently with AI models – and this is where there could be a few trip ups is that it can create something from nothing. It’s “artificial intelligence” – almost the wording suggested it’s artificial. But fundamentally, we still need a robust and reliable comprehensive source of data there in order to train these models in the first place.</p>
+<p><strong>In terms of having outsourced expertise for these projects– does that make more problems if you’re then trying to understand what this AI has done?</strong></p>
+<p><strong>JB</strong>: Oh, hugely. Let’s say that domain expertise – that’s something Ali touched on –you’ve got to understand your data. Because even that fundamental initial preparation of data before you try and train anything is absolutely crucial – really looking at where are the gaps? Where are the assumptions? How is this data even being collected? Has it been manipulated before you got to it? If you don’t understand your industry, well enough you won’t know where those pitfalls might be – and a lot of teams do this, they just take the data, and then they just put it in, turn the handle and out comes something and it looks like it’s okay. What they’re really missing there – because they’re not putting that effort in to really understand those inputs, what the models are doing, they’re just turning the handle until they get something that feels about right – what they miss out is where it goes wrong. And there are some industries, where the false positives and false negatives from classification or the bad predictions from running things really have a severe human impact. And if you don’t understand what’s going in, and the potential impact of what comes out, then it’s very, very easy to just churn these things out and go, “it’s 80% accurate, but that’s fine” without really understanding the human impact of the 20% [that it gets wrong].</p>
+<p>Going back to what Jon said about that explainability, it’s so crucial. It is challenging, and it is difficult, but going from these opaque systems to more transparent systems – we need that for trust. As humans, we divulge our trust very differently, depending on the impact. One of the examples I use all the time is, you know, sort of weather prediction stuff, you know, we don’t really care too much, because it’s not got a huge impact. But when you look at sort of financials or medicals, we really, really want to know that that output is good, and how we got to that output. The Turing Institute’s come out with some great research that says, as humans, if we want to understand why when another human has told us something, then we want the same thing from the models, and that can vary from person to person. So building that explainable level into everything we do, has to be one of the things we think about upfront. But you’ve got to really, truly deeply understand that data. And it’s not just a question of offloading a data set to a generalist who can turn that handle, otherwise you will end up with huge, huge problems.</p>
+<p><strong>Fatemeh Torabi</strong>: I very much agree with all the points that my colleagues raised. I also think it’s very important that we know why we are doing things. Having those incremental stages in our planning for any project, and then having a vision of where we see AI can contribute into this process and can give us further efficiency – and how – is very important. If we don’t have defined measures to see how this AI algorithm is contributing to this specific element of the project, we can get really lost bringing these capabilities on board. Yes, it might generate something, but how we are going to measure that something is very important. I think, as members of the scientific community, we must all view AI as a valuable tool. However, it has its own risks and benefits.</p>
+<p>For example, in healthcare when we use AI for risk predictions, it can be a really great tool to aid clinicians to save time. However, in each stage, we need to assess the data quality, how these data are fed into the algorithm, what procedures, what models, and how we generate those models. And then which discriminative models do we use to balance the risk and eventually predict the risk of outcomes in patients? It’s very much a balance between risks and benefits for usefulness of these tools in practice. We have all these brilliant ideas of what best practice is. But in real terms, sometimes it’s a little bit tricky to follow through.</p>
+<p><strong>Could you give us some thoughts on the sort of best practice with data, for example, that doesn’t quite turn out to be quite so easy to follow in practice, and what you might do about it?</strong></p>
+<p><strong>FT</strong>: We always call these AI algorithms, data hungry algorithms, because the models that we fit require us to see patterns in the data that we feed into them so that the learning happens. And then the discriminative functions come in place to balance and kind of give a score to wherever the learning is happening and give an evaluation of each step. However, the data that we put into these algorithms comes first – the quality of that data. Often in healthcare, because of its sensitivity, the data is held within a secure environment. So we cannot, at this point in time, expose an AI algorithm to a very diverse example, specifically for investigating rare diseases or rare conditions. And above that, there is also complexities in the data itself. We need to evaluate and clean the data before we feed it into these algorithms. We need to evaluate the diversity of the data itself – for example, the tabular data, the imaging data, the genomic data – and each one requires its own specific or tailored approach in data cleaning stages.</p>
+<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="The panel. Clockwise from top left: Ali Al-Sherbaz, Janet Bastiman, Fatemeh Torabi and Jonathan Gillard">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/ideas/posts/2024/06/04/images/panel-991.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The panel. Clockwise from top left: Ali Al-Sherbaz, Janet Bastiman, Fatemeh Torabi and Jonathan Gillard">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The panel. Clockwise from top left: Ali Al-Sherbaz, Janet Bastiman, Fatemeh Torabi and Jonathan Gillard
+</figcaption>
+</figure>
+</div>
+<p>We also have another level that is now being discovered in the health data science community, which is the generation of synthetic data. We can give AI models access to these synthetic versions of the data that we hold. However, that also has its own challenges because it requires reading the patterns from real data, and then creating those synthetic versions of data.</p>
+<p>For example, Dementia Platforms UK is one of the pioneers in developing this. We hold a range of cohort data, patients’ data, genomics data and imaging data. In each one of these when we try to develop those processing algorithms, there are specific tailored approaches that we need to consider to ensure we are actually creating a low fidelity level of data that is holding some of the patterns in it for the AI algorithm to allow the learning to happen. However, we also need to consider whether it is safe enough so that we can ensure the data provided are secure to be released for use at a lower governance level compared to the actual data. So there are quite a lot of challenges, and we captured a lot of it in our <a href="https://realworlddatascience.net/ideas/posts/2024/05/07/ai-series-3.html">article</a>.</p>
+<p><strong>A A-S</strong>: I can talk about the cybersecurity and other relevant data network security, the point being the amount of data we receive to analyse. It’s really huge. And when I say huge I mean about one gigabyte, probably in a couple of hours, or one terabyte in a week – that’s huge. One gigabyte of a text file – if I printed out this file with A4 – that would leave me with a stack of A4 paper, three times the Eiffel Tower.</p>
+<p>Now, if I have cyber traffic, and try to detect any cyber attack, AI helps with that. However, if we train this model properly, they have to detect cyber attacks in real time – when I say real time, we’re talking about within microseconds or a millisecond – and the decision has to be correct. AI alone doesn’t work, doesn’t help. Humans should also intervene, but rather than having 100,000 records to check for a suspected breach, AI can reduce that to 100. A human can interact with that. And then in terms of the authentication or verification, humans alongside AI can learn whether this is a false positive, or a real attack or a false negative. This is a challenge in the cybersecurity area.</p>
+<p><strong>JB</strong>: I just wanted to dive in from the finance side – again the data is critical, and we have very large amounts of data. However in addition – and I think we probably suffer from the same sort of problem that Ali does in this – when I’m trying to detect things, there are people on the other side actively working against what I’m trying to detect, which I suppose is a problem that maybe Fatemeh doesn’t have in healthcare.</p>
+<p>When you’re trying to build models to look for patterns, and those patterns are changing underneath you, it can be incredibly difficult. I have an issue that all of my client’s data legally has to be kept separated – some of it has to be kept in certain parts of the world so we can’t put that into one place. We can try and create synthetic data that has the same nuances of the snapshots that we can see at any one point in time, and we can try and put that together in one place, but what we can detect now will very quickly not be what we need to detect in a month’s time. As soon as transactions start getting stopped, as soon as suspicious activity reports are raised, and banks are fined, everything switches and how all of that financial crime occurs, changes. And it’s changing, on a big scale worldwide, but also subtly because, there are a team of data scientists on the other side trying desperately to circumvent the models that me and my team are building. It’s absolutely crazy. So while I would love to be able to pull all of the data that I have access to in one place and get that huge central visual view, legally I can’t do that because of all the worldwide jurisdictional laws around data and keeping it in certain places.</p>
+<p>Then I’ve also got the ethical side of it, which is something that Fatemeh touched on. If I get it wrong, that can have a material impact on usually some of the most marginalised in society. The profile of some of the transactions that are highly correlated with financial crime are also highly correlated with people in borderline poverty, even in Western countries. So false positives in my world have a huge, huge ethical impact. But at the same time, we’re trying really hard to minimise those false negatives – that balance is critical, and the data side of it is such a problem.</p>
+<p>Fatemeh mentioned the synthetic side of it. There’s a huge push, particularly in the UK to get good synthetic data to really showcase some of these things that we’re trying to detect. But by the time you get that pooling, and the synthesising of data that you can ethically use and share around without fear of all the legal repercussions, what we’re trying to detect has already moved on. So we’re constantly several steps behind.</p>
+<p>I imagine Ali has similar problems in the cybercrime space in that as soon as things are detected, the ways in which they work move on. So there’s an awful lot I think that, as an industry, although we have different verticals, we can share best practices on.</p>
+<p><strong>Is there a demand for new types of expertise?</strong></p>
+<p><strong>A A-S</strong>: There is a huge gap in the in the UK, at least and worldwide about finding people working as a data scientist or working with the data. So we created a course in Cambridge, which we call the data science career accelerator for people who work in data, and would like to move on and learn more. We did market research, and we interviewed around 50 people between CEO and head of security and head of data scientists, in science departments and in industry, to tell us – what kind of skills are you after? What problems do you currently have? And then we designed this course.</p>
+<p>We found that first of all there are people who don’t know from where to start – what kind of data they need, what tools they have to learn with… Even if they learn the tools, they still need to learn what kind of machine learning process to use. And then suddenly, we have ChatGPT turned out, and the LLM [large language model] development – all of that in one course, it is a real challenge.</p>
+<p>The course has started now, the first cohort. The big advice from industry we have is that during the course they have to work on real world case studies, on scenarios with data that nobody has touched before – that is, it’s new, not public. We teach them on a public data, but companies also have their own data, and we get consent from them to use that data for the students so we can test the skills they learned on virgin data that nobody has touched before.</p>
+<p>We just started this month, and the students are going to start with the first project now. They are enjoying the course but that is the challenge we have now. How did we handle that? It’s to work together with the industry side by side, even during the delivery. We have an academic from Cambridge, and we have experts from the industry to support the learners to learn to get the best of both worlds.</p>
+<p><strong>The industry has changed so much in the last couple of years. Does that mean that the expertise and demands are also changing very quickly or is there a common thread that you can work with?</strong></p>
+<p><strong>A A-S</strong>: Well, there is a common thread, but having new tools – I mean, Google just released Gemini, and that’s a new skill they have learnt and been tested on, and looked into how others feel about it and compared it to ChatGPT, or Claude 3 or Copilot. That’s all happened in the last 12 months. And then, of course, reacting on that, reflecting on the material, teaching the material – it’s a challenge. It’s not easy and you need to find the right person. Of course, people who have this kind of experience are in demand, and it’s hard to secure these kinds of human resources as well as to deliver the course. So there are challenges and we have to act dynamically and be adaptive.</p>
+<p><strong>What are your thoughts on the evaluation of these models, and how to manage the risk of something that you haven’t thought of before, and the role of regulation.</strong></p>
+<p><strong>JG</strong>: I think a lot of our discussions at the moment are assuming that we’ve got well meaning, well intentioned people and well meaning, well intentioned companies and industries, who are trying to seek to do their best ethically and regulatorily and with appropriate data, and so on. But there is a space here for bad actors in the system.</p>
+<p>Unfortunately, digital transformation of human life will happen in a good and bad way – unfortunately, I think there are going to be those two streams to this. Individuals are very capable now of making their own large language models by following a video guide if they wanted to, and having that data is, of course going to enable them maybe to do bad things with it.</p>
+<p>Data is already a commodity in quite a strong way, but I do think we have to visit data security, and even the risks of open data as well. We live in a country, which I think does very well in producing lots of publicly available data. But that could be twisted in a way that we might not expect. And when I speak of those things, we’re usually thinking of groundwork – writing and implementing your own large language models – but there were recent examples of where just by using very clever prompting of existing large language models, you could get quite dangerous material, shall we say, which circumnavigated inbuilt existing safeguards. Again, that’s an emerging thing that we have to have to try and address as it comes on.</p>
+<p>I think my final point with ethics and regulation is it will rapidly evolve, and it will rapidly change. And a story which I think can illustrate that is, when the first motorcar was introduced into the UK, it was law for a human to walk in front of the motorcar with a large red flag to warn passers-by of the incoming car because people weren’t really familiar with it. Now, of course, that’s in distant memory, right? We don’t have people with red flags, walking in front of cars. I do wonder, in 20 years or 50 years, what will the ethical norms regarding AI and its use be? Likewise, will we have deregulation? That seems to be the common theme in history that when we get more familiar with things, we deregulate because we’re more comfortable with their existence. That makes me quite curious about what the future holds.</p>
+<p><strong>FT</strong>: Jon raised a very interesting point and Janet touched upon keeping financial data in silos but we are facing this in healthcare as well. Data has to be checked within a trusted research environment or secure data environment that’s making the data silos. However, efforts at this point in time are on enhancing these digital platforms to bring data and federal data together. Alongside what is happening in terms of our progression towards development of a new ethical or legal requirement, is documenting what is being practised at the moment, because at the moment there are quite a lot of bubbles. Each institution has their own data and applies their own rules to it. So understanding what it is that we are currently working on – the data flows that are flowing into the secure environments – is building the basis of developments that are going on in terms of developing standardisation and common frameworks. A lot of projects have been focused on understanding the current to develop on it for the future.</p>
+<p>We know for example, the Data Protection Act, put forward some specific requirements, but that was developed in 2018, before we had this massive AI consideration. In my academic capacity as well, we are facing what Jon mentioned, in terms of the diversity of assessments for students. For example, when we ask these questions, even if the data is provided within the course and within this defined governance, we know that the answers can possibly be aided by AI – a model. So we are defining more diverse assessment methods in academic practice to ensure that we have a way to evaluate the outcome that we are receiving by the human eye, rather than being blinded by what we receive from AI, and then calling it high quality output, whether in research practice or in academic practice. So there’s quite a lot of consideration of these issues, I think that is bringing our past knowledge to the current point where we now have to balance between human and machine interactions in every single process that we are facing.</p>
+<p><strong>How does this change the skill set required of data scientists, as AI is getting more and more developed?</strong></p>
+<p><strong>A A-S</strong>: Regarding the terminology of data scientists, when we talk about data we immediately link that with statistics, and statistics is an old topic. There has been an accumulation of expertise for 100 years, to the best of my knowledge or more in statistics, and people who are new to data analysis or data, have to learn about this legacy. And when we develop the course, we should mention these skills in statistics and build this knowledge on top, that is, when we reach the right point, then we talk about learning or machine learning, supervised and unsupervised, and about LLM – these are the new skills they have to learn. As I mentioned, it’s tricky when we teach learners about it, we have to provide them with simple datasets to teach them something complex in statistics because it’s a danger to teach both [data and statistics at the same time] – we will lose them, they will lose concentration and it’s hard to follow up. So, a little bit of statistics – they have to learn the basics like normal distribution, the distribution, the type, and what does it mean when we have these distributions, the meaning of the data – and that is the point I made earlier about how people should have a sense for the numbers. What does it mean, when I say 0.56 in healthcare? Is that a danger? 60% – is that OK? In cybersecurity, if the probability of attack today is 60% should I inform the police? Should I inform someone; is that important? Or for example, for the stock market? Say we have dropped off 10% – Is that something we have to worry about? So making sense of the numbers is part of it.</p>
+<p>That is part of personalised learning because it depends on their background or what they have learned – it’s not straightforward, and it has to be personalised not just for people taking the course now, for instance for someone who is 18 years old coming from their A levels. No, it’s for a wide range. People from diverse courses like to approach this data science course. And now we are in the era of people who are in social science, and engineering, doctors, journalism, art, they are all interested in learning a little bit of data science, and utilising AI for their benefit. So there is no one answer.</p>
+<p><strong>You emphasise that people still need to be able to make sense of numbers. We’re often told that AI will devalue knowledge and devalue experience – it sounds like you don’t feel that’s the case.</strong></p>
+<p><strong>A A-S</strong>: I have to stick with the following: human value is just that – value. AI without humans is worth nothing. I have one example: In 1997, some software was developed for chess, to play against a human, and for the first time, that computer programme (called AI now) beat Kasparov. Guess what happened? Did chess disappear? No, we still value human to human competition. The value of the human is the same for art and for music. So we still have human value, and we have to maintain that for the next generation. They shouldn’t lose this human value, and handover to AI value, which I feel is zero without the human.</p>
+<p><strong>J B</strong>: I think one of the things we are seeing is that diversity in people’s backgrounds coming into data science, which is fantastic, because I think that really helps with the understanding of when things can go wrong, and how things can be misused. If you have this cookie cutter set of people that have all got a degree from the same place and all had the same experience, which is very similar – this happens a lot in the financial industry where there’s like five universities that all feed into the banks – they all think and solve problems in the same way because that’s how they’ve been trained. But as soon as you start bringing in people with different backgrounds, they’re the ones that say, hang on, this is a problem. So having those different backgrounds is really useful.</p>
+<p>But then as Ali said there’s so many people who call themselves a data scientist that don’t understand data, or science. And I think he was absolutely right. If you’ve got a probability of 60%, or you’ve got a small standard deviation, when is that an issue? What do you really understand about that based on your industry, and based on your statistical knowledge? That’s so so key. And it’s something that a lot of people who are self-trained and call themselves data scientists have missed out on. So coming back to your original question about is it harder or is it easier, in some respects, it’s a lot harder, because someone who calls himself a data scientist now needs to do everything from basically fundamental research, trying to make models better, you’ve got to understand statistics, you’ve got to understand machine learning, engineering, production, isolation, efficiencies, effectiveness, ethics – it’s this huge, huge sphere. And it’s too much for one person. So you’ve really got to have well balanced teams and support. Because you can’t keep on top of your game across all of those. It’s just not possible. So I think that becomes really difficult. When I look at how things have changed, there’s so many basic principles from, you know, the 80s and 90s, in standard, good quality computer programming and testing. And I think the one thing that we’re really missing as an industry is a specialist AI testing role. Someone who understands enough about how models work and how they can go wrong and can do the same thing for AI solutions, as good QA analysts can do for standard software engineering models. Someone who can really test them to extremes with what happens when I put the wrong data in.</p>
+<p>We saw this – there were a couple of days under COVID, where all the numbers went wrong, because the data hadn’t been delivered correctly, or not enough of it had been delivered. There were no checks in place to say, actually, we’ve only got 10% of what we were expecting, so don’t automatically publish these results. It’s things like that, that we really need to make sure are built into the systems because those are the things that, again, could cause problems. As soon as you get a model that’s not doing the right thing – going back to our original question – when they do go wrong, you can then find a company pulls that model even though it could be easily fixed. And then they’re disillusioned with AI, and won’t use it. That’s that whole project, and all of the expense and investment on that just thrown away when a bit more testing and understanding could have saved it.</p>
+<div class="article-btn">
+<p><a href="../../../../../ideas/index.html">Explore more data science ideas</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+<strong>Anna Demming</strong> is a freelance science writer and editor based in Bristol, UK. She has a PhD from King’s College London in physics, specifically nanophotonics and how light interacts with the very small, and has been an editor for Nature Publishing Group (now Springer Nature), IOP Publishing and New Scientist. Other publications she contributes to include The Observer, New Scientist, Scientific American, Physics World and Chemistry World..
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<!-- copyright goes to the author, or to Royal Statistical Society if written by staff -->
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2024 Royal Statistical Society
+</dd>
+</dl>
+<!-- confirm licence terms with contributor before publishing - must be Creative Commons licence, but different types of CC licences might be preferred -->
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. <!-- Add thumbnail image credit and any licence terms here --></p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Demming, Anna. 2024. “What is “best practice” when working with AI in the real world?.” Real World Data Science, June 4, 2024. <a href="https://realworlddatascience.net/ideas/posts/2024/05/20/ai-series-6.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<!-- Make sure to update main site homepage (index.qmd) before publishing. See README for details -->
+
+
+
+ ]]></description>
+  <category>AI</category>
+  <category>large language models</category>
+  <category>machine learning</category>
+  <guid>https://realworlddatascience.net/ideas/posts/2024/06/04/ai-series-6.html</guid>
+  <pubDate>Tue, 04 Jun 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/ideas/posts/2024/06/04/images/panel-991.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>AI series: Meeting the unprecedented challenges AI poses in the labour market</title>
@@ -623,7 +743,7 @@ Varley-Winter, O., Author. 2024. “On AI ethics - influencing its use in the de
 <p>Imputing missing values can preserve the whole sample. However, the introduction of noise during the imputation process may compromise the quality of fitted models, contingent upon the proportion of missing records. One way to offset this may be to use larger and larger data sets that might inevitably include a fuller training picture to the algorithm, just as adding dots to a pixelated image makes it more and more clear what is depicted.</p>
 <p>It is often perceived that for certain instances, particularly in the context of deep learning models, such as neural networks, the model itself is capable of handling missing values without explicit imputation or deletion procedures. <sup>6</sup> Is this really true in a real-world scenario? Are these models advanced enough to achieve an optimised performance even when data quality is not at an optimised level? <sup>7</sup> Köse et al.&nbsp;(2020) investigated the effect of two conventional imputation approaches: Multiple imputation (MICE) <sup>8</sup> and Factor analysis of mixed data (FAMD) <sup>9</sup> on performance of deep learning models. Their study endorsed the use of such explicit imputation approaches, showing an enhancement in model performance. <sup>10</sup></p>
 <p>Data imbalance issues, arise within datasets where there is a disproportionate amount of information pertaining to a specific aspect. When imbalanced data, rich in focused information, is used to train an AI model, the model becomes adept at learning about the specific aspect but may struggle to generalise its findings to diverse scenarios, thus fostering overfitting where the model achieves accurate prediction on the training data but loses accuracy for any new test dataset.</p>
-<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Stages involved in AI model development">
+<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Stages involved in AI model development" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/07/images/Stages-of-model-development-724.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Stages involved in AI model development">
@@ -642,7 +762,7 @@ Figure&nbsp;1: Stages involved in AI model development.
 <p>When AI algorithms encounter complex, unstructured data, the task of quality assurance suddenly balloons beyond tackling the three main errors highlighted above. Such circumstances require some kind of quality enhancement procedure, where datasets in the form of images or unstructured text go through a curation process which involves enhancement of the quality and standardisation of the format to the level required for integration into AI algorithms. This process of standardization of data is paramount across various domains, especially in healthcare where complex, unstructured health data holds transformative potential for AI driven advances that revolutionise diagnosis, treatment, and prognosis of diseases. From electronic health records to magnetic resonance imaging (MRI) scans and genetic sequences, this data offers a wealth of insights for AI models to learn from. Adopting standardised formats not only facilitates seamless integration of diverse datasets but also streamlines the development and deployment of AI models. However, unlocking this potential requires a strong foundation in high-quality, processed data which begins with standardisation.</p>
 <p>One category of complex health data is neuroimaging of which a prime example is MRI. Different institutions will often employ different acquisition protocols and different ways of collecting and storing neuroimaging data. Above all, this can make it very difficult to integrate into existing workflows and processing pipelines, but it also makes it challenging to understand, compare and combine with other datasets. To address these challenges, the neuroimaging community has adopted the Brain Imaging Data Structure (BIDS) <sup>13</sup> – a standardised format for organising and naming MRI data which allows compliant data to integrate smoothly with existing workflows and AI models, streamlining processing and analysis. By embracing standardisation, we can pave the way for common processing tools to enable the generation of AI-ready data.</p>
 <p>Next, comes pre-processing. Sticking with the neuroimaging example, MRI scans are susceptible to various forms of noise and artifacts, which can appear as blurring or distortions which, without proper processing, can be misinterpreted by AI models. Pre-processing typically includes steps for spatial normalisation and image registration, involving alignment of brain images from different individuals into a common reference model and alignment of different images of the same subject to a common template. This standardisation facilitates inter-subject and inter-study comparisons, enabling AI models to generalise effectively across diverse datasets. However, the multi-layer aspect of this process means that aligning data to a common template is dependent on the choice of template which itself can introduce bias if the template brain doesn’t accurately reflect the patient’s anatomy (due to age, ethnicity, or disease for example).</p>
-<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Neuroimaging data">
+<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Neuroimaging data" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/07/images/neuroimaging.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Neuroimaging data">
@@ -768,7 +888,7 @@ Torabi, Fatemeh, Hotchkiss, Lewis, Squires, Emma, Thompson, Simon E. and Lyons, 
 
 <p>Generative artificial intelligence (AI) models have taken the world by storm over the past year. The human-like outputs of these systems, and the recent publication of a guideline to determine the degree of consciousness of machines, have again raised the question of whether machines will soon be able to replicate human intelligence. In this article, we discuss some of the merits and limitations of modern machine learning models, and also provide a general view of human intelligence and the position of “intelligent” systems in the constellation of human capabilities.</p>
 <p>Large language models (LLMs) such as ChatGPT are designed to process and understand natural language, and to generate human-like text in response to prompts and questions. This is achieved thanks to a specific type of deep learning architecture called the <em>Transformer</em>, which consists of an encoder and a decoder, each made up of some number <em>N</em> of blocks. Here the input text is eventually transformed into predicted (and contextualised) output text (Figure&nbsp;1).<sup>1</sup> LLMs are trained on complex and large bodies of text so that they can learn complex patterns and relationships between words in sentences, in different contexts.</p>
-<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Architecture of the Transformer. The left-hand block is the Encoder, whereas the right-hand block represents the decoder">
+<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Architecture of the Transformer. The left-hand block is the Encoder, whereas the right-hand block represents the decoder" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/04/29/images/fig1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Architecture of the Transformer. The left-hand block is the Encoder, whereas the right-hand block represents the decoder">
@@ -788,7 +908,7 @@ Figure&nbsp;1: Architecture of the Transformer. The left-hand block is the Encod
 <p>The trophy would not fit in the suitcase because it was too <strong>small/large</strong>.</p>
 </blockquote>
 <p>Humans would infer that if the last word of that sentence is <em>small</em>, then <em>suitcase</em> is the object being described, whereas if the word is <em>large</em> then we are referring to the <em>trophy</em>. ChatGPT v3.5 was unable to make this inference when the question was first put to it (see Figure&nbsp;2), although a later test finds it now can – as can other LLMs. Some suggest that this type of improvement comes from training ChatGPT to do better on some of the tasks that are routinely used to highlight model limitations on social media at the expense of <a href="https://www.searchenginejournal.com/chatgpt-quality-worsened/492145/">giving worse answers in other contexts</a>. But could this improvement be due to ChatGPT and other models suddenly having acquired common sense and an understanding of the physical world? A more complex set of Winograd schema questions, the WinoGrande dataset, suggests not: humans still outperform computers on these tests.<sup>4</sup></p>
-<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Screenshot of author's ChatGPT conversation, prompting the AI chatbot to solve a WinoGrad schema question">
+<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Screenshot of author's ChatGPT conversation, prompting the AI chatbot to solve a WinoGrad schema question" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/04/29/images/fig2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Screenshot of author's ChatGPT conversation, prompting the AI chatbot to solve a WinoGrad schema question">
@@ -808,7 +928,7 @@ Figure&nbsp;2: GPT-3.5’s inconclusive answer to a typical WinoGrad schema ques
 <p>Moreover, machines can be surprisingly easy to fool. For example, placing an object next to the one we are trying to classify can confuse image classification algorithms – a <a href="https://www.youtube.com/watch?v=i1sp4X57TL4">well-known example shows a patch being placed next to a banana</a>, which makes the deep neural network (DNN) classify the banana as a toaster with a high degree of confidence. We can also fool image classification networks <a href="https://arxiv.org/abs/1811.11553">by showing the same object under different lighting conditions and orientations</a>, such as when we flip a school bus on its side (as in an accident). The reason why a DNN cannot do this trivial mental rotation is because learning algorithms cannot generalise knowledge to unseen (or “out of distribution”) examples – imbuing them with no small amount of “brittleness”.<sup>7</sup> Compare this to the human mind, which learns in a semi-supervised manner: we need only be shown a few guiding examples to be able to extrapolate knowledge. This is a clear evolutionary adaptation since most real-world learning is semi-supervised: we do not need to explore every road to learn to drive, nor do every possible differentiation exercise to become confident at calculus. Likewise, we do not need to become fully bilingual in a language before we start combining newly learned words to try to explain complex concepts.</p>
 <p>Next to GPT-4’s <a href="https://arxiv.org/abs/2303.08774">100-trillion parameter model</a>, the human brain seems <a href="https://www.wired.com/story/cerebras-chip-cluster-neural-networks-ai/">much more</a> <a href="https://arxiv.org/pdf/2005.14165">parsimonious</a>. Therefore, progress in AI would perhaps come faster if we could teach machines to learn from a few (or no) labelled examples instead of being so heavily dependent on terabytes of labelled data (supervised learning) and on our own interpretation of the world.<sup>8</sup></p>
 <p>Another major limitation of algorithms for achieving human-like adaptive learning in changing environments is the fact that they cannot keep learning without forgetting previously learned training data. This phenomenon is called <em>catastrophic forgetting</em>,<sup>9</sup> and it occurs because of the <em>stability-plasticity dilemma</em>: this states that a certain degree of plasticity is required for the integration of new knowledge, but also radically new knowledge (e.g.&nbsp;large weight changes in a DNN) disrupts the stability necessary for retaining the previously learned representations (Figure&nbsp;3). In other words, weight stability is synonymous with knowledge retention, but it also introduces the rigidity that prevents the learning of new tasks.<sup>10</sup></p>
-<div id="fig-3" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Illustration of catastrophic forgetting and ideal learning in a two-class classifier">
+<div id="fig-3" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Illustration of catastrophic forgetting and ideal learning in a two-class classifier" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/04/29/images/fig3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Illustration of catastrophic forgetting and ideal learning in a two-class classifier">
@@ -2762,792 +2882,6 @@ Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Spr
   <guid>https://realworlddatascience.net/ideas/tutorials/posts/2023/12/12/xmas-cards.html</guid>
   <pubDate>Tue, 12 Dec 2023 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/ideas/tutorials/posts/2023/12/12/images/xmas-card.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>A Christmas card in R for the Real World Data Science community</title>
-  <dc:creator>Brian Tarran</dc:creator>
-  <link>https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/rwds-xmas-card.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>A few weeks back, I managed to catch Nicola Rennie’s presentation to the <a href="https://www.meetup.com/en-AU/oxford-r-user-group/events/297417319/">Oxford R User Group on how to create Christmas cards in R</a>. It was a fun session, and thanks to Nicola’s clear and concise explanations, I felt emboldened to attempt my own design, using her code as a base.</p>
-<p>If you missed the Meetup session, Nicola has kindly written <a href="../../../../../../ideas/tutorials/posts/2023/12/12/xmas-cards.html">a tutorial for Real World Data Science</a> that walks through all the necessary steps to create a snowman against a snowy night’s sky. You’ll want to read that tutorial first before returning to this blog.</p>
-<p>My design uses the same basic setting as Nicola’s but updates the scene to reflect the Real World Data Science (RWDS) brand colours, and I replace the snowman with a Christmas tree adorned with coloured baubles.</p>
-<section id="snowy-sky" class="level2">
-<h2 class="anchored" data-anchor-id="snowy-sky">Snowy sky</h2>
-<p>We begin by loading in the following packages, adding a couple extra to the ones Nicola uses:</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(ggplot2)</span>
-<span id="cb1-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(ggforce)</span>
-<span id="cb1-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(sf)</span>
-<span id="cb1-4"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(png)</span>
-<span id="cb1-5"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(patchwork) </span></code></pre></div>
-<p>Then we add the sky, now recoloured in RWDS purple using <code>fill</code> and <code>color</code>:</p>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">s1 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ggplot</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb2-2">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">theme_void</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb2-3">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">theme</span>(</span>
-<span id="cb2-4">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">plot.background =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">element_rect</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#939bc9"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">color =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#939bc9"</span>)</span>
-<span id="cb2-5">  )</span>
-<span id="cb2-6">s1</span></code></pre></div>
-<p>We use the same code as Nicola to create the snowflakes, but we do this step first before adding snow on the ground, as we’re using the RWDS site background colour, hex code <code>#f0eeb</code>, to represent our settled snow:</p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># add snowflakes</span></span>
-<span id="cb3-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">set.seed</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">20231225</span>)</span>
-<span id="cb3-3">n <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">100</span></span>
-<span id="cb3-4">snowflakes <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">data.frame</span>(</span>
-<span id="cb3-5">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">runif</span>(n),</span>
-<span id="cb3-6">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">runif</span>(n)</span>
-<span id="cb3-7">)</span>
-<span id="cb3-8">s2 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> s1 <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb3-9">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_point</span>(</span>
-<span id="cb3-10">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">data =</span> snowflakes,</span>
-<span id="cb3-11">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">mapping =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">aes</span>(</span>
-<span id="cb3-12">      <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> x,</span>
-<span id="cb3-13">      <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> y</span>
-<span id="cb3-14">    ),</span>
-<span id="cb3-15">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"white"</span>,</span>
-<span id="cb3-16">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">pch =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">8</span></span>
-<span id="cb3-17">  )</span>
-<span id="cb3-18">s2</span>
-<span id="cb3-19"></span>
-<span id="cb3-20"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># snow on ground</span></span>
-<span id="cb3-21">s3 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> s2 <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb3-22">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">annotate</span>(</span>
-<span id="cb3-23">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">geom =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"rect"</span>,</span>
-<span id="cb3-24">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">xmin =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">xmax =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>,</span>
-<span id="cb3-25">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">ymin =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">ymax =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.2</span>,</span>
-<span id="cb3-26">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#f0eeeb"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#f0eeeb"</span></span>
-<span id="cb3-27">  ) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb3-28">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">xlim</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb3-29">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ylim</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb3-30">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">coord_fixed</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">expand =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">FALSE</span>)</span>
-<span id="cb3-31">s3</span></code></pre></div>
-<div>
-
-</div>
-<div class="quarto-layout-panel" data-layout-ncol="2">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/images/s2.png" class="img-fluid" alt="Purple square with white snowflakes."></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/images/s3.png" class="img-fluid" alt="Purple square with white snowflakes and off-white rectangle at the bottom."></p>
-</div>
-</div>
-</div>
-</section>
-<section id="oh-christmas-tree" class="level2">
-<h2 class="anchored" data-anchor-id="oh-christmas-tree">Oh, Christmas tree</h2>
-<p>To build her snowman, Nicola created a series of circles that were stacked and overlaid. A simple Christmas tree, though, requires a series of triangles. So, taking Nicola’s snowman’s nose (also a triangle) as our starting point, we coded three sets of coordinates – <code>tree_pts1</code>, <code>tree_pts2</code>, and <code>tree_pts3</code> – for three triangles of decreasing size that would sit on top of one another.</p>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># coordinates for tree base</span></span>
-<span id="cb4-2">tree_pts1 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">matrix</span>(</span>
-<span id="cb4-3">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(</span>
-<span id="cb4-4">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.2</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3</span>,</span>
-<span id="cb4-5">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.6</span>,</span>
-<span id="cb4-6">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.8</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3</span>,</span>
-<span id="cb4-7">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.2</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3</span></span>
-<span id="cb4-8">  ),</span>
-<span id="cb4-9">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">ncol =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>,</span>
-<span id="cb4-10">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">byrow =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">TRUE</span></span>
-<span id="cb4-11">)</span>
-<span id="cb4-12"></span>
-<span id="cb4-13"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># coordinates for tree middle</span></span>
-<span id="cb4-14">tree_pts2 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">matrix</span>(</span>
-<span id="cb4-15">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(</span>
-<span id="cb4-16">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>,</span>
-<span id="cb4-17">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.7</span>,</span>
-<span id="cb4-18">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.7</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>,</span>
-<span id="cb4-19">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span></span>
-<span id="cb4-20">  ),</span>
-<span id="cb4-21">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">ncol =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>,</span>
-<span id="cb4-22">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">byrow =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">TRUE</span></span>
-<span id="cb4-23">)</span>
-<span id="cb4-24"></span>
-<span id="cb4-25"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># coordinates for tree top</span></span>
-<span id="cb4-26">tree_pts3 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">matrix</span>(</span>
-<span id="cb4-27">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(</span>
-<span id="cb4-28">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.65</span>,</span>
-<span id="cb4-29">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.75</span>,</span>
-<span id="cb4-30">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.65</span>,</span>
-<span id="cb4-31">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.65</span></span>
-<span id="cb4-32">  ),</span>
-<span id="cb4-33">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">ncol =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>,</span>
-<span id="cb4-34">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">byrow =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">TRUE</span></span>
-<span id="cb4-35">)</span>
-<span id="cb4-36"></span>
-<span id="cb4-37"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># put tree together</span></span>
-<span id="cb4-38">tree <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">st_multipolygon</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">list</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">list</span>(tree_pts1),</span>
-<span id="cb4-39">                             <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">list</span>(tree_pts2),</span>
-<span id="cb4-40">                             <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">list</span>(tree_pts3)))</span>
-<span id="cb4-41">s4 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> s3 <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb4-42">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_sf</span>(</span>
-<span id="cb4-43">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">data =</span> tree,</span>
-<span id="cb4-44">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"chartreuse4"</span>,</span>
-<span id="cb4-45">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"chartreuse4"</span></span>
-<span id="cb4-46">  ) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb4-47">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">coord_sf</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">expand =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">FALSE</span>)</span>
-<span id="cb4-48">s4</span></code></pre></div>
-<p>A tree also requires a trunk, so we borrowed one of the rectangles from Nicola’s snowman’s hat for this purpose:</p>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">s5 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> s4<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb5-2">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">annotate</span>(</span>
-<span id="cb5-3">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">geom =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"rect"</span>,</span>
-<span id="cb5-4">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">xmin =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.45</span>,</span>
-<span id="cb5-5">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">xmax =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.55</span>,</span>
-<span id="cb5-6">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">ymin =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.2</span>,</span>
-<span id="cb5-7">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">ymax =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3</span>,</span>
-<span id="cb5-8">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"brown"</span></span>
-<span id="cb5-9">  )</span>
-<span id="cb5-10">s5</span></code></pre></div>
-<p>And, of course, no Christmas tree is complete without decorations. The “rocks” that formed the buttons and eyes on Nicola’s snowman were updated to become gold and red baubles for our tree:</p>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># add gold baubles</span></span>
-<span id="cb6-2">s6 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> s5 <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb6-3">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_point</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"gold"</span>,</span>
-<span id="cb6-4">             <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">data =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">data.frame</span>(</span>
-<span id="cb6-5">               <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.57</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.62</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.45</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>),</span>
-<span id="cb6-6">               <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.325</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.45</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.35</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.57</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.52</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.7</span>),</span>
-<span id="cb6-7">               <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">size =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">runif</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">4.5</span>)</span>
-<span id="cb6-8">             ),</span>
-<span id="cb6-9">             <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">mapping =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> x, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> y, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">size =</span> size)</span>
-<span id="cb6-10">  ) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb6-11">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">scale_size_identity</span>()</span>
-<span id="cb6-12">s6</span>
-<span id="cb6-13"></span>
-<span id="cb6-14"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># add red baubles</span></span>
-<span id="cb6-15">s7 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> s6 <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb6-16">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_point</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"red3"</span>,</span>
-<span id="cb6-17">             <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">data =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">data.frame</span>(</span>
-<span id="cb6-18">               <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.7</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.525</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.43</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.38</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.55</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>),</span>
-<span id="cb6-19">               <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.375</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.55</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.65</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.43</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.48</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.375</span>),</span>
-<span id="cb6-20">               <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">size =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">runif</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">4.5</span>)</span>
-<span id="cb6-21">             ),</span>
-<span id="cb6-22">             <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">mapping =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> x, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> y, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">size =</span> size)</span>
-<span id="cb6-23">  ) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb6-24">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">scale_size_identity</span>()</span>
-<span id="cb6-25">s7</span></code></pre></div>
-<div>
-
-</div>
-<div class="quarto-layout-panel" data-layout-ncol="3">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/images/s4.png" class="img-fluid" alt="Purple square with white snowflakes and green tree in foreground."></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/images/s5.png" class="img-fluid" alt="Purple square with white snowflakes and green tree in foreground, now with brown trunk at foot of tree."></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/images/s7.png" class="img-fluid" alt="Purple square with white snowflakes and green tree in foreground. Tree is decorated with red and gold baubles of various sizes."></p>
-</div>
-</div>
-</div>
-</section>
-<section id="seasons-greetings" class="level2">
-<h2 class="anchored" data-anchor-id="seasons-greetings">Season’s greetings</h2>
-<p>The final step was to add text to the top of the image, wishing you all a Merry Christmas, and our logo to the bottom, so you know who the card is from:</p>
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># add text</span></span>
-<span id="cb7-2">s8 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> s7 <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb7-3">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">annotate</span>(</span>
-<span id="cb7-4">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">geom =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"text"</span>,</span>
-<span id="cb7-5">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>,</span>
-<span id="cb7-6">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.875</span>,</span>
-<span id="cb7-7">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">label =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Merry Christmas"</span>,</span>
-<span id="cb7-8">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"red3"</span>,</span>
-<span id="cb7-9">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">fontface =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"bold"</span>,</span>
-<span id="cb7-10">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">size =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">18</span></span>
-<span id="cb7-11">  )</span>
-<span id="cb7-12">s8</span>
-<span id="cb7-13"></span>
-<span id="cb7-14"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># add logo </span></span>
-<span id="cb7-15">path <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"images/rwds-logo-150px.png"</span></span>
-<span id="cb7-16">img <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">readPNG</span>(path, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">native =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">TRUE</span>) </span>
-<span id="cb7-17">s9 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> s8 <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span>                   </span>
-<span id="cb7-18">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">inset_element</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">p =</span> img, </span>
-<span id="cb7-19">                <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">left =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3265</span>, </span>
-<span id="cb7-20">                <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">bottom =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.0</span>, </span>
-<span id="cb7-21">                <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">right =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.6735</span>, </span>
-<span id="cb7-22">                <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">top =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.2</span></span>
-<span id="cb7-23">  ) </span>
-<span id="cb7-24">s9</span></code></pre></div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/images/rwds-christmas-card.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Purple square with white snowflakes and green tree in foreground. Tree is decorated with red and gold baubles of various sizes. Text over tree reads Merry Christmas. Under tree is a logo for the Real World Data Science website."></p>
-</figure>
-</div>
-<p>I hope you like the Christmas card! From all of us at Real World Data Science, thank you for your support throughout 2023. Merry Christmas, happy holidays, and best wishes for 2024!</p>
-<div class="article-btn">
-<p><a href="../../../../../../viewpoints/editors-blog/index.html">Back to Editors’ blog</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Royal Statistical Society
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Tarran, Brian. 2023. “A Christmas card in R for the Real World Data Science community.” Real World Data Science, December 12, 2023. <a href="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/rwds-xmas-card.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-</section>
-
- ]]></description>
-  <category>R</category>
-  <category>Data visualisation</category>
-  <category>Updates</category>
-  <guid>https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/rwds-xmas-card.html</guid>
-  <pubDate>Tue, 12 Dec 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/viewpoints/editors-blog/posts/2023/12/12/images/rwds-christmas-card-thumb.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 </channel>
 </rss>
