@@ -16,8 +16,8 @@
 <height>83</height>
 <width>144</width>
 </image>
-<generator>quarto-1.4.555</generator>
-<lastBuildDate>Tue, 11 Jun 2024 16:37:34 GMT</lastBuildDate>
+<generator>quarto-1.4.556</generator>
+<lastBuildDate>Thu, 27 Jun 2024 06:33:52 GMT</lastBuildDate>
 <item>
   <title>Forecasting the Health Needs of a Changing Population</title>
   <dc:creator>Luke Shaw (BNSSG ICB), Rich Wood (BNSSG ICB, University of Bath), Christos Vasilakis (University of Bath), Zehra Onen Dumlu (University of Bath)</dc:creator>
@@ -223,7 +223,7 @@ Shaw, Luke et al 2024. “Forecasting the Health Needs of a Changing Population�
   <category>Health and Wellbeing</category>
   <category>Forecasting</category>
   <guid>https://realworlddatascience.net/case-studies/posts/2024/05/08/dpm.html</guid>
-  <pubDate>Tue, 11 Jun 2024 16:37:34 GMT</pubDate>
+  <pubDate>Thu, 27 Jun 2024 06:33:52 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/case-studies/posts/2024/05/08/images/doctor-patient-thumbnail.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
@@ -1203,6 +1203,559 @@ Wright, Noah. 2023. “Learning from failure: ‘Red flags’ in body-worn camer
   <media:content url="https://realworlddatascience.net/case-studies/posts/2023/11/16/images/bodycam-monitor.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
+  <title>Food for Thought: Competition and challenge design</title>
+  <dc:creator>Zheyuan Zhang and Uyen Le</dc:creator>
+  <link>https://realworlddatascience.net/case-studies/posts/2023/08/21/02-competition-design.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Since 2014, the professional services firm Westat, Inc.&nbsp;has been developing the Purchase to Plate Crosswalk (PPC) for the United States Department of Agriculture (USDA) Economic Research Service (ERS). The PPC links the retail food transactions database from IRI’s InfoScan service and the USDA Food and Nutrient Database for Dietary Studies (FNDDS). However, the current linkage process uses only partly automated data matching, meaning it is resource intensive, time consuming, and requires manual review.</p>
+<p>With sponsorship from ERS, Westat partnered with the Coleridge Initiative to host the Food for Thought competition to challenge researchers and data scientists to use machine learning and natural language processing to find accurate and efficient methods for creating the PPC. Figure 1 provides a visual overview of the challenge set by the competition.</p>
+<p><a href="images/pt2-fig1.png"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt2-fig1.png" class="img-fluid" width="700"></a></p>
+<div class="figure-caption">
+<p><strong>Figure 1:</strong> Overview of the Food for Thought Competition Challenge.</p>
+</div>
+<p>The one-to-many matching task that is central to the competition throws up many challenges for researchers to wrestle with. Because IRI data contains food transactions collected from partnered retail establishments for over 350,000 items, the matchings need to be made based on limited data features, including categories, providers, and semantically inconsistent descriptions that consist of short phrases. Consider this hypothetical example: IRI product-related information about a (fictional) “Cheesy Hashbrowns Hamburger Helper, 5.5 Oz Box” needs to be linked to FNDDS nutrition-related information found under “Mixed dishes – meat, poultry, seafood: Mixed meat dishes”. Figure 2 demonstrates how the two databases are linked with each other to create the PPC. As can be seen, there is no common word that easily indicates that “Cheesy Hashbrowns Hamburger Helper…” should be matched with “Mixed dishes…”, and such cases exist in all IRI tables used for the challenge, from 2012 through 2018.</p>
+<p><a href="images/pt2-fig2.png"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt2-fig2.png" class="img-fluid" width="700"></a></p>
+<div class="figure-caption">
+<p><strong>Figure 2:</strong> Each universal product code (UPC) from the IRI data could match to only one ensemble code (EC) from the FNDDS data, whereas one EC code could match to multiple UPCs.</p>
+</div>
+<p>Also, because nutritionists or food scientists will always need to review the matching, regardless of the matching method used, it was important that our evaluation of proposed matching methods focused both on the accuracy of prediction models and also on metrics that would lead participants to develop models that facilitate qualified reviewers to reduce their workloads.</p>
+<p>Organising the competition was also a challenge in its own right, for data privacy reasons. IRI scanner data contains sensitive information, such as store name, location, unit price, and weekly quantity sold for each item. This ruled out using existing online platforms like Kaggle, DrivenData or AIcrowd to host the competition, and instead required a private secure data enclave to ensure the safe use of sensitive and confidential data assets. The need for such an environment imposed capacity constraints on the competition, meaning only dozens of teams could be invited to take part, whereas on open platforms it is common to have thousands of teams competing and sharing ideas and code.</p>
+<section id="competition-structure" class="level2">
+<h2 class="anchored" data-anchor-id="competition-structure">Competition structure</h2>
+<p>The competition ran over 10 months and consisted of three separate challenges: two interim, one final. Applications opened in September 2021, and the competition started in January 2022. Submission deadlines for the first and second interim challenges were in July and September 2022, respectively. For these rounds, participants submitted preliminary solutions for evaluation based solely on quantitative metrics, and two awards of $10,000 were given to the highest-scoring teams. The deadline for the final challenge was in October 2022. Here, solutions were evaluated by the scientific review board based on three judging criteria: quantitative metrics, transferability, and innovation. First, second, and third place winners received awards of $30,000, $1,500, and $1,000 respectively. Final presentations were given at the Food for Thought symposium in December 2022.</p>
+<p>The competition was run entirely within the Coleridge Initiative’s Administrative Data Research Facility (ADRF), which was established by the United States Census Bureau to inform the decision-making of the Commission on Evidence-Based Policy under the Evidence Act. ADRF follows the Five Safes Framework: safe projects, safe people, safe data, safe settings, and safe outputs.</p>
+<p>In keeping with this framework, participants were provided with ADRF login credentials after signing the relevant data use agreements during the onboarding process. All participants were required to agree to the ADRF terms of use, to complete security training, and to pass a security training assessment prior to accessing the challenge data. Participants’ access within ADRF was limited to the challenge environment and data only. There was no internet access, so Coleridge Initiative ensured that any packages requested by teams were available for use within the environment after passing security review. All codes and documentation were only allowed to be exported outside ADRF after export reviews from both Coleridge Initiative and USDA staff. At the end of each challenge, the teams submitted write-ups and supporting files by placing all the necessary submission files in their ADRF team folder. Detailed submission instructions are available via the <a href="https://github.com/realworlddatascience/realworlddatascience.github.io/tree/main/case-studies/posts/2023/08/21/_code">Real World Data Science GitHub repository</a>.</p>
+</section>
+<section id="metrics" class="level2">
+<h2 class="anchored" data-anchor-id="metrics">Metrics</h2>
+<p>Submissions were evaluated by Coleridge Initiative and technical review and subject review boards based on the following criteria:</p>
+<ul>
+<li><strong>Quantitative metrics</strong> were used to measure the predictive accuracy and runtime of the model.<br>
+</li>
+<li><strong>Transferability</strong> measured the quality of documentation and code, and the ability of individuals who are not involved in model development to replicate and implement the team’s approach.<br>
+</li>
+<li><strong>Innovation</strong> measured novelty and creativity of the model in addressing the linkage problem.</li>
+</ul>
+<p>Technical review was overseen by faculty members from computer science and engineering departments of top US universities. Subject review was handled by subject matter experts from USDA and Westat.</p>
+<p>From a quantitative perspective, the most common way to evaluate machine learning competition submissions is to use model predictive accuracy. However, single metrics are typically incomplete descriptions of real-world tasks, and they can easily hide significant differences between models which simple predictive accuracy cannot capture. To select the most appropriate official challenge metrics, Coleridge Initiative reviewed the literature on the use of evaluation measures in both classification and ranking task machine learning competitions. Success at 5 (S@5) and Normalized Discounted Cumulative Gain at 5 (NDCG@5) scores were ultimately used as the quantitative metrics.</p>
+<p>The metrics were applied as follows: models proposed by each team were tasked with outputting five potential FNDDS matches for each IRI code, with potential FNDDS matches ordered from most likely to least likely. S@5 and NDCG@5 scores are broadly similar – both measure whether a correct match is present in the five proposed matches that participants were asked to identify. However, S@5 does not take rank position into account and only considers whether the five proposed FNDDS matches contain the correct FNDDS response. NDCG@5 does take rank into account and also measures how highly the correct FNDDS response is ranked among the five proposed matches. Both measures range from 0 to 1 (or 0% to 100%). Models get a “full credit” for S@5 as long as they contain the correct FNDDS option. NDCG@5 penalizes models when the correct match is ranked lower on the list of 5 proposed matches.</p>
+</section>
+<section id="technical-description" class="level2">
+<h2 class="anchored" data-anchor-id="technical-description">Technical description</h2>
+<section id="environment-setup" class="level5">
+<h5 class="anchored" data-anchor-id="environment-setup">Environment setup</h5>
+<p>Coleridge Initiative solicited technical requirements from participants at the challenge application stage to prepare the ADRF environment as much as possible before the competition began. Each team was asked to share anticipated workspace specifications and software library requests in their application package. From this we identified, reviewed, and installed the requested Python and R packages, libraries, and library components (e.g., pre-trained models, training data) that were not yet available within ADRF.</p>
+<p>The setup of graphics processing units (GPUs) was also a critical part of competition preparation. We created an environment with 16 gibibyte (GiB) of GPU memory for each team. Our technology team met with multiple teams several times to discuss computing environment configurations to ensure the GPU could work properly. None of these efforts was wasted: without GPU access, it would be impossible for teams to use state-of-the-art pre-trained models such as the Bidirectional Encoder Representations from Transformers <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805">(BERT, Devlin et al. 2018)</span>.</p>
+<p>We completed the setup of new team workspaces, each customized to the individual team’s resource and library requirements, including GPU configuration. The isolation and customization of workspaces was vital because teams may request different versions of libraries that potentially have version conflict with other libraries. We ensured the configurations were all set before the challenge began because such data challenges are bursty in nature <span class="citation" data-cites="macavaney_et_al_2021">(Macavaney et al. 2021)</span>, and handling support requests in the private data enclave risked causing delays. We hoped to avoid receiving too many requests in the beginning phase of the competition in order to give participants a better experience, though we did of course provide participants with instructions on how to request additional libraries during the challenge period.</p>
+</section>
+<section id="supporting-materials" class="level5">
+<h5 class="anchored" data-anchor-id="supporting-materials">Supporting materials</h5>
+<p>In addition to environment preparation, we made available a list of supporting documentation, including IRI, PPC, and FNDDS codebooks, technical reports, and related publications that could help teams understand the challenge datasets. The FNDDS codebook pooled information on variable availability, coding, and descriptions across dataset files and years. It also included internal Westat food category coding difficulty ratings and notes on created PPC codes and provided UPC code, EC code, and general dataset remarks and observations that may take time for analysts to discover on their own.</p>
+<p>We developed a baseline model to demonstrate the challenge task and the expected outputs – both outside of ADRF using FNDDS and fictitious data in place of IRI data, and an analogous model using FNDDS and IRI data within the ADRF secure environment. Moreover, we provided the teams with an evaluation script to read in their submissions and evaluate them for predictive accuracy against the public test set using S@5 and NDCG@5 challenge metrics. Finally, we held multiple webinars during the course of the challenge to explain next steps, address participant questions, solicit feedback, and provide general support. Multiple teams also met with our technology team to clarify ADRF-related questions or troubleshoot technical issues.</p>
+<p>(Baseline model, toolkits, and evaluation script are available from the <a href="https://github.com/realworlddatascience/realworlddatascience.github.io/tree/main/case-studies/posts/2023/08/21/_code">Real World Data Science GitHub repository</a>.)</p>
+</section>
+<section id="data-splitting" class="level5">
+<h5 class="anchored" data-anchor-id="data-splitting">Data splitting</h5>
+<p>To mimic the real-world scenario, the competition used 2012–2016 IRI data as the training set, and the 2017–2018 IRI data as the test set, since the data change over time and USDA could provide the most recent data available. To make sure that models were generalizable and not just overfit to the test set, we split the test set into private and public test sets. In this way, we guaranteed that the models were evaluated on completely hidden data. In order to keep the similar distribution of the two sets, we first divided the data into five quintiles based on EC code frequencies and then randomly sampled 80% of records in each group without repetition for placement into the private test set. Later in the competition, because of the computation limit, we further shrank the private test set to 40% of its original size using the same data-splitting method.</p>
+</section>
+<section id="judging" class="level5">
+<h5 class="anchored" data-anchor-id="judging">Judging</h5>
+<p>In the first two rounds, submissions were evaluated based on the quantitative metrics, as previously mentioned above. Coleridge Initiative was responsible for running the evaluation script, making sure not to re-train the model or modify the configs in any way, and only applying the model to predict the private test set. Prediction results were then compared against ground truth to get the private scores.</p>
+<p>The final challenge was reviewed by the scientific review board on all three judging criteria. Submitted models were first evaluated by Coleridge Initiative in the same way as in the first two rounds. The runtime of models was also recorded as an assessment of model cost. The scientific review boards then assessed the models by the quality of documentation, the quality of code, and the ability to replicate and implement the team’s approach, and scored the models for innovation and creativity in addressing the linkage problem. Lastly, scores were summarized and the scientific review board discussed and decided the winners of the competition.</p>
+</section>
+</section>
+<section id="results" class="level2">
+<h2 class="anchored" data-anchor-id="results">Results</h2>
+<p>The next few articles in this collection walk readers through the solutions proposed by competition finalists. Figure 3 provides a brief summary.</p>
+<p><a href="images/pt2-fig3.png"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt2-fig3.png" class="img-fluid" width="700"></a></p>
+<div class="figure-caption">
+<p><strong>Figure 3:</strong> Top competitors and their solutions to the Food for Thought challenge.</p>
+</div>
+</section>
+<section id="lessons-learned" class="level2">
+<h2 class="anchored" data-anchor-id="lessons-learned">Lessons learned</h2>
+<p>It was undoubtedly challenging for teams to work with highly secured data in a private data enclave for this data challenge. We solicited feedback from teams and summarized the issues that we experienced throughout the competitions, together with the solutions to resolve those issues. Below are our main lessons learned and we hope this summary can serve to inform future competitions.</p>
+<ul>
+<li><p><strong>Environmental factors:</strong> The installation and setup of packages, libraries, and resources, as well as the configuration of GPUs, system dependencies, and workspace design were expected to take a long time as each team had their own needs. To accelerate the process, we requested a list of specific package and environment requirements from the teams in advance. However, due to the complexity of the system configuration required by the teams, environment setup took longer than expected. Thus, the challenge deadlines had to be postponed a few times to accommodate this.</p></li>
+<li><p><strong>Time commitment:</strong> Twelve teams were selected to participate in the challenge, but only three teams remained in the final challenge. Other than one team that was disqualified for violating the ADRF terms of use agreement, eight dropped out because of other commitments and insufficient time to meaningfully participate. To ensure security, ADRF does not allow jobs to run in the backend, which also adds to the time commitment of teams. To encourage teams to participate in the final challenge, we gave out additional awards for second and third places.</p></li>
+<li><p><strong>Computing resource limit:</strong> One issue encountered in evaluating submitted models was computing environment resource limits due to the secured nature of the data enclave. The original private test dataset is four times larger than the public test dataset, making it unfeasible to evaluate. To overcome this issue, given the fixed resource constraints, we decided to reduce the private test set to 40% of its original size. It would have been helpful, though, if the competition had set a model running time limit at the outset, so that participants could build simpler yet effective models.</p></li>
+<li><p><strong>Supporting code:</strong> Although the initial baseline model we provided was extremely simple, we found this helped participants a lot in the initial phase – yet there is space to improve. To be specific, supporting codes should be constructed so that all relevant data tables are used and specify the main function to run the code, especially how the model should be tested. The teams only used the main table, which was the only table that was used in the baseline model, for training and did not touch the other supporting table. If we included the other table in the baseline model, it could help participants to have a better use of this data as well. In addition, a baseline model should be intuitive for the participants to follow, allowing evaluators to easily replace the public test set with the private test set without any programming modifications.</p></li>
+</ul>
+<div class="nav-btn-container">
+<div class="grid">
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../case-studies/posts/2023/08/21/01-purchase-to-plate.html">← Part 1: Purchase to Plate</a></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../case-studies/posts/2023/08/21/03-first-place-winners.html">Part 3: First place winners →</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+<strong>Zheyuan Zhang</strong> and <strong>Uyen Le</strong> are research scientists at the Coleridge Initiative.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Zheyuan Zhang and Uyen Le
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Zhang, Zheyuan, and Uyen Le. 2023. “Food for Thought: Competition and challenge design.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/viewpoints/case-studies/posts/2023/08/21/02-competition-design.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="ref-DBLP:journals/corr/abs-1810-04805" class="csl-entry">
+Devlin, J., M.-W. Chang, K. Lee, and K. Toutanova. 2018. <span>“<span>BERT:</span> Pre-Training of Deep Bidirectional Transformers for Language Understanding.”</span> <em>CoRR</em> abs/1810.04805. <a href="http://arxiv.org/abs/1810.04805">http://arxiv.org/abs/1810.04805</a>.
+</div>
+<div id="ref-macavaney_et_al_2021" class="csl-entry">
+Macavaney, S., A. Mittu, G. Coppersmith, J. Leintz, and P. Resnik. 2021. <span>“Community-Level Research on Suicidality Prediction in a Secure Environment: Overview of the CLPsych 2021 Shared Task.”</span> In Proceedings of the Seventh Workshop on Computational Linguistics and Clinical Psychology: Improving Access.
+</div>
+</div></section></div> ]]></description>
+  <category>Machine learning</category>
+  <category>Natural language processing</category>
+  <category>Public policy</category>
+  <category>Health and wellbeing</category>
+  <guid>https://realworlddatascience.net/case-studies/posts/2023/08/21/02-competition-design.html</guid>
+  <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt2-intro.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
+<item>
+  <title>Food for Thought: Second place winners – DeepFFTLink</title>
+  <dc:creator>Yang Wu, Aishwarya Budhkar, Kai Zhang, Xuhong Zhang, and Xiaozhong Liu</dc:creator>
+  <link>https://realworlddatascience.net/case-studies/posts/2023/08/21/04-second-place-winners.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>DeepFFTLink team members: Yang Wu and Kai Zhang are PhD students at Worcester Polytechnic Institute. Aishwarya Budhkar is a PhD student at Indiana University Bloomington. Xuhong Zhang is an assistant professor at Indiana University Bloomington. Xiaozhong Liu is an associate professor at Worcester Polytechnic Institute.</p>
+<section id="perspective-on-the-challenge" class="level2">
+<h2 class="anchored" data-anchor-id="perspective-on-the-challenge">Perspective on the challenge</h2>
+<p>Text matching is an essential task in natural language processing <span class="citation" data-cites="DBLP:journals/corr/PangLGXWC16">(NLP, Pang et al. 2016)</span>, while record linkage across different sources is an essential task in data science. Machine learning techniques allow people to combine data faster and cheaper than using manual linkage. However, in the context of the Food for Thought challenge, existing methods for matching universal product codes (UPCs) to ensemble codes (ECs) require every UPC to be compared with every EC code (Figure 1a). Such approaches can be computationally expensive in the training process when data is noisy. Here, we propose an ensemble model with a category-based adapter to tackle this problem, drawing on the category information included in UPC and EC data. The category-based adapter allows UPCs to be first matched with only a small and reliable set of ECs (Figure 1b). Then, an ensemble model will be deployed to make predictions for UPC-EC matching. Our proposed approach can achieve competitive performance compared with state-of-the-art models.</p>
+<div>
+
+</div>
+<div class="quarto-layout-panel" data-layout-ncol="2" style="padding-top: 1em; margin-bottom: 0;">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pt4-fig1a.png"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt4-fig1a.png" class="img-fluid figure-img" alt="(a)"></a></p>
+<figcaption>(a)</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/pt4-fig1b.png"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt4-fig1b.png" class="img-fluid figure-img" alt="(b)"></a></p>
+<figcaption>(b)</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<div class="figure-caption">
+<p><strong>Figure 1:</strong> A toy example of our method. Panel (a) shows the traditional matching method, while (b) is our proposed ensemble model with category-based adapter. With the help of the adapter, UPC 1 only needs to be matched with EC 1 and EC 3.</p>
+</div>
+</section>
+<section id="our-approach" class="level2">
+<h2 class="anchored" data-anchor-id="our-approach">Our approach</h2>
+<p>We propose a two-step framework to address this problem. To begin with, we use a category-based adapter to get reliable candidate ECs for each UPC. Then, an ensemble model <span class="citation" data-cites="10.1007/3-540-45014-9_1">(Dietterich 2000)</span> is deployed to make a prediction for each UPC-EC pair.</p>
+<section id="category-based-adapter" class="level5">
+<h5 class="anchored" data-anchor-id="category-based-adapter">Category-based adapter</h5>
+<p>By using 2015–2016 UPC-EC data, we created a knowledge base, which is a UPC category–EC pair-wised table for generating candidate ECs. Within this setting, each UPC category is, on average, related to only 32 ECs. This knowledge base is then used as context to further filter the candidate ECs. Note that there are some new ECs generated year by year, which can also be part of the potential ECs in the UPC-EC matching task, since the contextual information of new ECs does not exist in our knowledge base.</p>
+</section>
+<section id="ensembled-model" class="level5">
+<h5 class="anchored" data-anchor-id="ensembled-model">Ensembled model</h5>
+<p>We ensemble the base-string match and BERT models. BERT is a deep learning model for natural language processing <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805">(Devlin et al. 2018)</span>. In the base-string match model, we used the Term Frequency-Inverse Document Frequency (TFIDF) of each UPC and EC description as features to calculate a pairwise cosine similarity, which is a distance between instances. Meanwhile, we used features extracted from UPC and EC descriptions to fine-tune the BERT base model and calculated the cosine similarity of embeddings between each UPC and EC. Then we rank ECs based on their similarity scores with the UPC.</p>
+<p><a href="images/pt4-fig2.png"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt4-fig2.png" class="img-fluid"></a></p>
+<div class="figure-caption">
+<p><strong>Figure 2:</strong> The framework of our proposed model. A two-step strategy is used to make the final prediction.</p>
+</div>
+<div class="callout callout-style-simple callout-note" style="margin-top: 2rem;">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Find the code in the <a href="https://github.com/realworlddatascience/realworlddatascience.github.io/tree/main/case-studies/posts/2023/08/21/_code">Real World Data Science GitHub repository</a>.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="our-results" class="level2">
+<h2 class="anchored" data-anchor-id="our-results">Our results</h2>
+<p>We randomly selected 500 samples from the 2017–2018 UPC-EC data to train the ensembled weight for each model. Two functions were adapted to make a fusion of base-string and BERT models:</p>
+<p><span id="eq-first"><img src="https://latex.codecogs.com/png.latex?%0AC%20=%20a%20*%20X%20+%20b%20*%20Y%20%20%0A%5Ctag%7B1%7D"></span></p>
+<p><span id="eq-second"><img src="https://latex.codecogs.com/png.latex?%0AC%20=%20%20a%20*%20log(X)%20+%20b%20*%20log(Y)%20%5Ctext%7B.%20%7D%0A%5Ctag%7B2%7D"></span></p>
+<p><img src="https://latex.codecogs.com/png.latex?C"> denotes the final confidence score. <img src="https://latex.codecogs.com/png.latex?X"> and <img src="https://latex.codecogs.com/png.latex?Y"> represent <em>base_string_similarity_score</em> and <em>BERT_similarity_score</em>, respectively. <img src="https://latex.codecogs.com/png.latex?a"> and <img src="https://latex.codecogs.com/png.latex?b"> are corresponding model weights for base_string and BERT models.</p>
+<p>A better Success@5 is achieved with function (1). The ensembled weights for the base-string model and BERT model are 0.738 and 0.262, respectively. The experiment result indicates that the base_string model contributes more than the BERT model when the ensemble model makes predictions. The prediction result for the 2017–2018 data is:</p>
+<ul>
+<li>Success@5: 0.727</li>
+<li>NDCG@5: 0.528</li>
+</ul>
+<p>Computation time is 6 hours.</p>
+</section>
+<section id="future-work" class="level2">
+<h2 class="anchored" data-anchor-id="future-work">Future work</h2>
+<p>Our next step will focus on adding the newly generated EC data into our knowledge base, which allows the model to be more stable to make predictions for UPC-EC matching. Our model is an unsupervised method, which does not need labels for each instance. We use cosine similarity to rank the matches, so no labels are needed in the training process. However, our future work will try to label some instances to handle the UPC-EC matching task in a supervised manner.</p>
+</section>
+<section id="lessons-learned" class="level2">
+<h2 class="anchored" data-anchor-id="lessons-learned">Lessons learned</h2>
+<ol type="1">
+<li><p><strong>If the data is not complex, simple models may outperform complex models.</strong> For example, in our experiment, we found that the base-string model outperforms single RoBERTa <span class="citation" data-cites="DBLP:journals/corr/abs-1907-11692">(Liu et al. 2019)</span> or BERT models. However, our ensemble model can outperform each individual model since model fusion allows information aggregation from multiple models.</p></li>
+<li><p><strong>Multi-label models may not work well on UPC-EC data.</strong> In our early work, we tried to consider the UPC-EC matching task as a multi-label problem, e.g., we labeled each EC as a binary label which indicated whether the EC was an appropriate match or not. We mapped UPC and EC pairs into a multi-label table. However, we find that the UPC and EC keeps a one-to-one relation for most UPCs. The model performance of a multi-label model, i.e., Label-Specific Attention Network <span class="citation" data-cites="xiao-etal-2019-label">(LSAN, Xiao et al. 2019)</span>, is lower than base-string model on both Success@5 and NDCG@5 metrics.</p></li>
+</ol>
+<div class="nav-btn-container">
+<div class="grid">
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../case-studies/posts/2023/08/21/03-first-place-winners.html">← Part 3: First place winners</a></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../case-studies/posts/2023/08/21/05-third-place-winners.html">Part 5: Third place winners →</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+<strong>Yang Wu</strong> and <strong>Kai Zhang</strong> are PhD students, and <strong>Xiaozhong Liu</strong> is an associate professor at Worcester Polytechnic Institute. <strong>Aishwarya Budhkar</strong> is a PhD student and <strong>Xuhong Zhang</strong> is an assistant professor at Indiana University Bloomington.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Yang Wu, Aishwarya Budhkar, Kai Zhang, Xuhong Zhang, and Xiaozhong Liu
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@hansonluu?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Hanson Lu</a> on <a href="https://unsplash.com/photos/sq5P00L7lXc?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Wu, Yang, Aishwarya Budhkar, Kai Zhang, Xuhong Zhang, and Xiaozhong Liu. 2023. “Food for Thought: Second place winners – DeepFFTLink.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/viewpoints/case-studies/posts/2023/08/21/04-second-place-winners.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="ref-DBLP:journals/corr/abs-1810-04805" class="csl-entry">
+Devlin, J., M.-W. Chang, K. Lee, and K. Toutanova. 2018. <span>“<span>BERT:</span> Pre-Training of Deep Bidirectional Transformers for Language Understanding.”</span> <em>CoRR</em> abs/1810.04805. <a href="http://arxiv.org/abs/1810.04805">http://arxiv.org/abs/1810.04805</a>.
+</div>
+<div id="ref-10.1007/3-540-45014-9_1" class="csl-entry">
+Dietterich, T. G. 2000. <span>“Ensemble Methods in Machine Learning.”</span> In <em>Multiple Classifier Systems</em>, 1–15. Berlin, Heidelberg: Springer Berlin Heidelberg.
+</div>
+<div id="ref-DBLP:journals/corr/abs-1907-11692" class="csl-entry">
+Liu, Y., M. Ott, N. Goyal, J. Du, M. Joshi, D. Chen, O. Levy, M. Lewis, L. Zettlemoyer, and V. Stoyanov. 2019. <span>“RoBERTa: <span>A</span> Robustly Optimized <span>BERT</span> Pretraining Approach.”</span> <em>CoRR</em> abs/1907.11692. <a href="http://arxiv.org/abs/1907.11692">http://arxiv.org/abs/1907.11692</a>.
+</div>
+<div id="ref-DBLP:journals/corr/PangLGXWC16" class="csl-entry">
+Pang, L., Y. Lan, J. Guo, J. Xu, S. Wan, and X. Cheng. 2016. <span>“Text Matching as Image Recognition.”</span> <em>CoRR</em> abs/1602.06359. <a href="http://arxiv.org/abs/1602.06359">http://arxiv.org/abs/1602.06359</a>.
+</div>
+<div id="ref-xiao-etal-2019-label" class="csl-entry">
+Xiao, L., X. Huang, B. Chen, and L. Jing. 2019. <span>“Label-Specific Document Representation for Multi-Label Text Classification.”</span> In <em>Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)</em>, 466–75. Hong Kong, China: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/D19-1044">https://doi.org/10.18653/v1/D19-1044</a>.
+</div>
+</div></section></div> ]]></description>
+  <category>Machine learning</category>
+  <category>Natural language processing</category>
+  <category>Public policy</category>
+  <category>Health and wellbeing</category>
+  <guid>https://realworlddatascience.net/case-studies/posts/2023/08/21/04-second-place-winners.html</guid>
+  <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/04-deepfftlink.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
+<item>
+  <title>Food for Thought: First place winners – Auburn Big Data</title>
+  <dc:creator>Alex Knipper, Naman Bansal, Jingyi Zheng, Wenying Li, and Shubhra Kanti Karmaker</dc:creator>
+  <link>https://realworlddatascience.net/case-studies/posts/2023/08/21/03-first-place-winners.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>The Auburn Big Data team from Auburn University consists of five members, including three assistant professors: Dr Wenying Li of the Department of Agricultural Economics and Rural Sociology, Dr Jingyi Zheng of the Department of Mathematics and Statistics, and Dr Shubhra Kanti Karmaker of the Department of Computer Science and Software Engineering. Additionally, the team comprises two PhD students, Naman Bansal and Alex Knipper, who are affiliated with Dr Karmaker’s big data lab at Auburn University.</p>
+<p>It is estimated that our team has spent approximately 1,400 hours on this project.</p>
+<section id="our-perspective-on-the-challenge" class="level2">
+<h2 class="anchored" data-anchor-id="our-perspective-on-the-challenge">Our perspective on the challenge</h2>
+<p>At the start of this competition, we decided to test three general approaches, in the order listed:</p>
+<ol type="1">
+<li><p>A heuristic approach, where we use only the data and a defined similarity metric to predict which FNDDS label a given IRI item should have.</p></li>
+<li><p>A simpler modeling approach, where we train a simple statistical classifier, like a random forest <span class="citation" data-cites="10.1007/978-3-030-03146-6_86">(Parmar, Katariya, and Patel 2019)</span>, logistic regression, etc., to predict the FNDDS label for a given IRI item. For this method, we opted to use a random forest as our statistical model, as it was a simpler model to use as a baseline, having shown decent performance in a wide range of classification tasks. As it turned out, this approach was quite robust and accurate, so we kept it as our main model for this approach.</p></li>
+<li><p>A large language modeling approach, where we train a model like BERT <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805">(Devlin et al. 2018)</span> to map the descriptions for given IRI and FNDDS items to the FNDDS category the supplied IRI item belongs to.</p></li>
+</ol>
+</section>
+<section id="our-approach" class="level2">
+<h2 class="anchored" data-anchor-id="our-approach">Our approach</h2>
+<p>As we explored the data provided, we opted to use the given 2017–2018 PPC dataset as our primary dataset for both training and testing. To ensure a fair evaluation of the model, we randomly split the dataset into 60% training samples and 40% testing samples, making sure our training process never sees the testing dataset. For evaluating our models, we adopted the competition’s metrics: Success@5 and NDCG@5. After months of testing, our statistical classifier (approach #2) proved itself to be the model that both processes the data fastest and achieves the highest performance on our testing metrics.</p>
+<p>This approach, at a high level, takes in the provided data (among other configuration parameters), formats the data in a computer-readable format – converting the IRI and FNDDS descriptions to a numerical representation with word embeddings <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805 mikolov2013efficient pennington-etal-2014-glove">(2018; Mikolov et al. 2013; Pennington, Socher, and Manning 2014)</span> and then using that numerical representation to calculate the distances between each description – and then trains a classification model (random forest <span class="citation" data-cites="10.1007/978-3-030-03146-6_86">(2019)</span>/neural network <span class="citation" data-cites="SCHMIDHUBER201585">(Schmidhuber 2015)</span>) that can predict an FNDDS label for a given IRI item.</p>
+<p>In terms of data, our approach uses the FNDDS/IRI descriptions, combining them into a single “description” field, and the IRI item’s categorical items – department, aisle, category, product, brand, manufacturer, and parent company – to further discern between items.</p>
+<p>While most industrial methods require use of a graphics processing unit (graphics card, or GPU) to perform this kind of processing, our primary method only requires the computer’s internal processor (CPU) to function properly. With that in mind, to achieve the best possible performance on our test metrics, the most time-consuming operations are run in parallel. The time taken to train our primary model can likely be further improved if we parallelize these operations across a GPU, with the only downside being the imposition of a GPU requirement for systems aiming to run this method.</p>
+<p>In addition to our primary method, our team has worked with alternate approaches on the GPU (using BERT <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805">(2018)</span>, neural networks <span class="citation" data-cites="SCHMIDHUBER201585">(2015)</span>, etc.) to either: 1) speed up the time it takes to process and make inferences for the data, achieving similar performance on our test metrics, or 2) achieve higher performance, likely at a cost to the time it takes to process everything. Our reasoning behind doing so is that if a simple statistical model performs well, then a larger language model should be able to demonstrate a higher performance on our test metrics without much of an increase in training time. At the current time, these methods are still unable to match the performance/efficiency tradeoff of our primary method.</p>
+<p>After exploring alternate methods to no avail, our team then decided to focus again on our primary method, the random forest <span class="citation" data-cites="10.1007/978-3-030-03146-6_86">(2019)</span>, and a secondary method, feed-forward neural network mapping our input features (X) to the FNDDS labels (Y) <span class="citation" data-cites="SCHMIDHUBER201585">(2015)</span>, to optimize their training hyperparameters for the dataset. Our aim in this is to see which of our already-implemented, easier-to-run downstream methods would better optimize the performance/efficiency tradeoff after having its training parameters optimized to the fullest. This has resulted in a marginal increase in training time (+20-30 minutes) and a roughly 5% increase in performance for our still-highest performing model, the random forest.</p>
+<p>Overall, our primary method – the random forest – gave us an approximate training time (including data pre-processing) of 4 hours 30 minutes for our ~38,000 IRI item training set, and an approximate inference time of 15 minutes on our testing set of ~15,000 IRI items. Furthermore, our method gave us a Success@5 score of .789 and an NDCG@5 score of .705 on our testing set.</p>
+<section id="key-features" class="level5">
+<h5 class="anchored" data-anchor-id="key-features">Key features</h5>
+<p>Here is a list of the key features we utilize, along with what type of data we treat it as.</p>
+<ul>
+<li>FNDDS
+<ul>
+<li>food_code – identifier</li>
+<li>main_food_description – text</li>
+<li>additional_food_description – text</li>
+<li>ingredient_description – text</li>
+</ul></li>
+<li>IRI
+<ul>
+<li>upc – identifier</li>
+<li>upcdesc – text</li>
+<li>dept – categorical</li>
+<li>aisle – categorical</li>
+<li>category – categorical</li>
+<li>product – categorical</li>
+<li>brand – categorical</li>
+<li>manufacturer – categorical</li>
+<li>parent – categorical</li>
+</ul></li>
+</ul>
+<p>The intuition behind using these particular features is that the text-based descriptions provide the majority of the “meaning” of the item. By converting each description to a numerical representation <span class="citation" data-cites="mikolov2013efficient pennington-etal-2014-glove">(2013; 2014)</span>, we can then calculate the similarity between each “meaning” to determine which FNDDS label is most similar to the IRI item provided. However, that alone is not enough. The categorical features on the IRI item help to further enhance the model’s classifications using the logic and categories people use in places like grocery stores. For example, if given an item whose aisle was “fruit” and brand was “Dole”, the item could be reasonably expected to be something like “peaches” over something like “broccoli”.</p>
+</section>
+<section id="feature-selection" class="level5">
+<h5 class="anchored" data-anchor-id="feature-selection">Feature selection</h5>
+<p>Aforementioned intuition aside, our feature selection was rather naive, in that we manually examined the data and removed any redundant text features before doing anything else. After that, we decided to use description fields as “text” data to comprise the main “meaning” of the item, represented numerically after converting the text using a word embedding <span class="citation" data-cites="mikolov2013efficient pennington-etal-2014-glove">(2013; 2014)</span>. We also decided to use the non-description fields (aisle, category, etc.) as “categorical” data that would be turned into its own numerical representation, allowing our model to more easily discern between items using similar systems to people.</p>
+</section>
+<section id="feature-transformations" class="level5">
+<h5 class="anchored" data-anchor-id="feature-transformations">Feature transformations</h5>
+<p>Our feature transformations are also relatively simple. First, we combine all description fields for each item to make one large description, and then use a word embedding method (like GloVe <span class="citation" data-cites="pennington-etal-2014-glove">(2014)</span> or BERT <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805">(2018)</span>) to convert the description into a numerical representation, resulting in a 300-dimensional GloVe or 768-dimensional BERT vector of numbers for each description. Then, for each IRI item, we calculate the cosine and Euclidean distances from each FNDDS item, resulting in two vectors, both equal in length to the original FNDDS data (in this case, two vectors of length ~7,300). The intuition behind this is that while cosine and Euclidean distances can tell us similar things, providing both of these sets of distances to the model should allow it to pick up on a more nuanced set of relationships between the IRI and FNDDS items.</p>
+<p>For categorical data, we take all unique values in each field and assign them an ID number. While that is often not the best practice for making a numerical representation out of categorical data <span class="citation" data-cites="10.5120/ijca2017915495">(Potdar, Pardawala, and Pai 2017)</span>, it seemed to work for the downstream model.</p>
+<p>Regardless, the aforementioned feature transformations give us (ad hoc) ~14,900 features if we use GloVe and ~15,300 features if we use BERT. Both feature sets can then be sent to the downstream random forest/neural network to start classifying items.</p>
+<p>It should be noted that processing the data is by far the most time-consuming part of our method. The data processing times for each embedding are as follows:</p>
+<ul>
+<li>GloVe: ~3 hours</li>
+<li>BERT: ~6 hours</li>
+</ul>
+<p>Due to BERT both taking so long to process data and performing lower than our GloVe embeddings on the classification task, we opt to use GloVe embeddings for our primary method. Our only theoretical explanation here is that since BERT is better at context-dependent tasks <span class="citation" data-cites="10.1145/3443279.3443304">(Wang, Nulty, and Lillis 2021)</span>, it likely will expect something similar to well-structured sentences as input, which is not what the IRI/FNDDS descriptions are. Rather, GloVe – being a method that depends less on context <span class="citation" data-cites="mikolov2013efficient pennington-etal-2014-glove">(2013; 2014)</span> – should excel better when the input text is not a well-formed sentence.</p>
+</section>
+<section id="training-methods" class="level5">
+<h5 class="anchored" data-anchor-id="training-methods">Training methods</h5>
+<p>Once the data has been processed, we collect the following data for each IRI item:</p>
+<ul>
+<li>UPC code</li>
+<li>Description (converted to numerical representation)</li>
+<li>Categorical variables (converted to numerical representation)</li>
+<li>Distances to each FNDDS item</li>
+</ul>
+<p>Once that has been collected for each IRI item, we can finally use our classification model. We initialize our model and begin the training process with the IRI data mentioned above and the target FNDDS labels for each one, so the model knows what the “correct” answer is for the given data. Once the model has trained on our training dataset, we save the model and it is ready for use.</p>
+<p>This part of training takes much less time than preparing the data, since calculating the embeddings takes a lot more computation than a random forest model. The training times for each method are as follows:</p>
+<ul>
+<li>Random Forest: ~1 hour 15 minutes</li>
+<li>Neural Network: ~25 minutes</li>
+</ul>
+<p>Despite the neural network taking far less time to train than the random forest, it still scores lower on the scoring metrics than the random forest, so we opt to continue using the random forest model as our primary method.</p>
+</section>
+<section id="general-approach-to-developing-the-model" class="level5">
+<h5 class="anchored" data-anchor-id="general-approach-to-developing-the-model">General approach to developing the model</h5>
+<p>Since the linkage problem involves mapping tens of thousands of items to a smaller category set of a few thousand items, we decided to frame this problem as a multi-class classification problem <span class="citation" data-cites="aly2005survey">(Aly 2005)</span>, where we then rank the top “k” most probable class mappings, as requested by the competition ruleset.</p>
+<p>Most of the usable data available to us is text data, so we need a method that can use that text-based information to accurately map classes based on the aforementioned text information. To best accomplish this, we opt to use word embedding techniques to calculate an average numerical representation for each text description (both IRI and FNDDS), so we can calculate distances between each description, giving our model a sense of how similar each description is.</p>
+</section>
+<section id="the-key-trick-to-the-model" class="level5">
+<h5 class="anchored" data-anchor-id="the-key-trick-to-the-model">The key “trick” to the model</h5>
+<p>Since text descriptions hold the most information that can be used to link between an IRI item and an FNDDS item, finding a way to calculate the similarity between each description is paramount to making this method work.</p>
+<p>Both distance calculation methods used in this work, cosine and Euclidean distance, are very similar in the type of information encoded, the only major difference being that cosine distance is implicitly normalized and Euclidean distance is not <span class="citation" data-cites="10.1145/967900.968151">(Qian et al. 2004)</span>.</p>
+</section>
+<section id="notable-observations" class="level5">
+<h5 class="anchored" data-anchor-id="notable-observations">Notable observations</h5>
+<p>Just by building the ranking using the cosine similarities between each IRI item and all FNDDS items, we can achieve a Success@5 performance of 0.234 and an NDCG@5 performance of 0.312. The other features are provided and the random forest classifier is used to add some extra discriminative power to the model.</p>
+</section>
+<section id="data-disclaimer" class="level5">
+<h5 class="anchored" data-anchor-id="data-disclaimer">Data disclaimer</h5>
+<p>Our current method only uses the data readily available from the 2017–2018 dataset, which we acknowledge is intended for testing. To remedy this, we further split this dataset into train/test sets and report results on our unseen test subset for our primary performance metrics. This gives a decent look into how the model will perform on unseen data.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Find the code in the <a href="https://github.com/realworlddatascience/realworlddatascience.github.io/tree/main/case-studies/posts/2023/08/21/_code">Real World Data Science GitHub repository</a>.</p>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="our-results" class="level2">
+<h2 class="anchored" data-anchor-id="our-results">Our results</h2>
+<section id="approximate-training-time" class="level5">
+<h5 class="anchored" data-anchor-id="approximate-training-time">Approximate training time</h5>
+<p>Overall, our approximate training time for our primary method is 4 hours 30 minutes broken down (approximately) as follows:</p>
+<ol type="1">
+<li>Reading data from database: 30 seconds</li>
+<li>Calculating ~7,300 FNDDS description embeddings: 15 minutes 45 seconds</li>
+<li>Calculating ~38,000 IRI description embeddings and similarity scores: 2 hours 20 minutes 45 seconds</li>
+<li>Formatting calculated data for the random forest classifier: 35 minutes</li>
+<li>Training the random forest classifier: 1 hour 15 minutes</li>
+</ol>
+</section>
+<section id="approximate-inference-time" class="level5">
+<h5 class="anchored" data-anchor-id="approximate-inference-time">Approximate inference time</h5>
+<p>Our approximate inference time for our primary method is 15 minutes to make inferences for ~15,000 IRI items.</p>
+</section>
+<section id="s5-ndcg5-performance" class="level5">
+<h5 class="anchored" data-anchor-id="s5-ndcg5-performance">S@5 &amp; NDCG@5 performance</h5>
+<p>This is how our best-performing model (GloVe + random forest) performs at the current time on the testing set:</p>
+<ul>
+<li>NDCG@5: 0.705</li>
+<li>Success@5: 0.789</li>
+</ul>
+<p>When we evaluate that same model on the full PPC dataset we were provided (~38,000 items), we get the following scores:</p>
+<ul>
+<li>NDCG@5: 0.879</li>
+<li>Success@5: 0.916</li>
+</ul>
+<p>(Note: The full PPC dataset contains approximately 15,000 items that we used to train the model, so these scores are not as representative of our method’s performance as the previous scores.)</p>
+</section>
+</section>
+<section id="future-workrefinement" class="level2">
+<h2 class="anchored" data-anchor-id="future-workrefinement">Future work/refinement</h2>
+<p>As mentioned previously, we only used the given 2017–2018 PPC dataset as our primary dataset for both training and testing. Going forward, we would like to include datasets from previous years as well, which we believe would further increase our model performance. Additionally, the datasets generated from this research have the potential to inform and support additional studies from a variety of perspectives, including nutrition, consumer research, and public health. Further research utilizing these datasets has the potential to make significant contributions to our understanding of consumer behavior and the role of food and nutrient consumption in overall health and well-being.</p>
+</section>
+<section id="lessons-learned" class="level2">
+<h2 class="anchored" data-anchor-id="lessons-learned">Lessons learned</h2>
+<p>It was interesting that the random forest model performed better than the vanilla neural network model. This shows that a simple solution can work better, depending on the application. This observation is in line with the well-established principle in machine learning that the choice of model should be guided by the nature of the problem and the characteristics of the data. In this case, the random forest model, being a simpler and more interpretable model, was better suited to the problem at hand and was able to outperform the more complex neural network model. These results underscore the importance of careful model selection and the need to consider both the complexity of the model and the specific requirements of the problem when choosing an algorithm for a particular application.</p>
+<div class="nav-btn-container">
+<div class="grid">
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../case-studies/posts/2023/08/21/02-competition-design.html">← Part 2: Competition design</a></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../case-studies/posts/2023/08/21/04-second-place-winners.html">Part 4: Second place winners →</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+<strong>Alex Knipper</strong> and <strong>Naman Bansal</strong> are PhD students, and <strong>Jingyi Zheng</strong>, <strong>Wenying Li</strong>, and <strong>Shubhra Kanti Karmaker</strong> are assistant professors at Auburn University.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Alex Knipper, Naman Bansal, Jingyi Zheng, Wenying Li, and Shubhra Kanti Karmaker
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@nicotitto?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">nrd</a> on <a href="https://unsplash.com/photos/D6Tu_L3chLE?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Knipper, Alex, Naman Bansal, Jingyi Zheng, Wenying Li, and Shubhra Kanti Karmaker. 2023. “Food for Thought: First place winners – Auburn Big Data.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/viewpoints/case-studies/posts/2023/08/21/03-first-place-winners.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="ref-aly2005survey" class="csl-entry">
+Aly, M. 2005. <span>“Survey on Multiclass Classification Methods, Tech. Rep.”</span> <em>California Institute of Technology</em>.
+</div>
+<div id="ref-DBLP:journals/corr/abs-1810-04805" class="csl-entry">
+Devlin, J., M.-W. Chang, K. Lee, and K. Toutanova. 2018. <span>“<span>BERT:</span> Pre-Training of Deep Bidirectional Transformers for Language Understanding.”</span> <em>CoRR</em> abs/1810.04805. <a href="http://arxiv.org/abs/1810.04805">http://arxiv.org/abs/1810.04805</a>.
+</div>
+<div id="ref-mikolov2013efficient" class="csl-entry">
+Mikolov, Tomas, Kai Chen, Greg Corrado, and Jeffrey Dean. 2013. <span>“Efficient Estimation of Word Representations in Vector Space.”</span> <a href="https://arxiv.org/abs/1301.3781">https://arxiv.org/abs/1301.3781</a>.
+</div>
+<div id="ref-10.1007/978-3-030-03146-6_86" class="csl-entry">
+Parmar, A., R. Katariya, and V. Patel. 2019. <span>“A Review on Random Forest: An Ensemble Classifier.”</span> In <em>International Conference on Intelligent Data Communication Technologies and Internet of Things (ICICI) 2018</em>, edited by J. Hemanth, X. Fernando, P. Lafata, and Z. Baig, 758–63. Cham: Springer International Publishing.
+</div>
+<div id="ref-pennington-etal-2014-glove" class="csl-entry">
+Pennington, J., R. Socher, and C. Manning. 2014. <span>“<span>G</span>lo<span>V</span>e: Global Vectors for Word Representation.”</span> In <em>Proceedings of the 2014 Conference on Empirical Methods in Natural Language Processing (<span>EMNLP</span>)</em>, 1532–43. Doha, Qatar: Association for Computational Linguistics. <a href="https://doi.org/10.3115/v1/D14-1162">https://doi.org/10.3115/v1/D14-1162</a>.
+</div>
+<div id="ref-10.5120/ijca2017915495" class="csl-entry">
+Potdar, K., T. S. Pardawala, and C. D. Pai. 2017. <span>“A Comparative Study of Categorical Variable Encoding Techniques for Neural Network Classifiers.”</span> <em>International Journal of Computer Applications</em> 175 (4): 7–9. <a href="https://doi.org/10.5120/ijca2017915495">https://doi.org/10.5120/ijca2017915495</a>.
+</div>
+<div id="ref-10.1145/967900.968151" class="csl-entry">
+Qian, G., S. Sural, Y. Gu, and S. Pramanik. 2004. <span>“Similarity Between Euclidean and Cosine Angle Distance for Nearest Neighbor Queries.”</span> In <em>Proceedings of the 2004 ACM Symposium on Applied Computing</em>, 1232–37. SAC ’04. New York, NY, USA: Association for Computing Machinery. <a href="https://doi.org/10.1145/967900.968151">https://doi.org/10.1145/967900.968151</a>.
+</div>
+<div id="ref-SCHMIDHUBER201585" class="csl-entry">
+Schmidhuber, J. 2015. <span>“Deep Learning in Neural Networks: An Overview.”</span> <em>Neural Networks</em> 61: 85–117. https://doi.org/<a href="https://doi.org/10.1016/j.neunet.2014.09.003">https://doi.org/10.1016/j.neunet.2014.09.003</a>.
+</div>
+<div id="ref-10.1145/3443279.3443304" class="csl-entry">
+Wang, C., P. Nulty, and D. Lillis. 2021. <span>“A Comparative Study on Word Embeddings in Deep Learning for Text Classification.”</span> In <em>Proceedings of the 4th International Conference on Natural Language Processing and Information Retrieval</em>, 37–46. NLPIR ’20. New York, NY, USA: Association for Computing Machinery. <a href="https://doi.org/10.1145/3443279.3443304">https://doi.org/10.1145/3443279.3443304</a>.
+</div>
+</div></section></div> ]]></description>
+  <category>Machine learning</category>
+  <category>Natural language processing</category>
+  <category>Public policy</category>
+  <category>Health and wellbeing</category>
+  <guid>https://realworlddatascience.net/case-studies/posts/2023/08/21/03-first-place-winners.html</guid>
+  <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/03-auburn.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
+<item>
   <title>Food for Thought: Third place winners – Loyola Marymount</title>
   <dc:creator>Yifan Hu and Mandy Korpusik</dc:creator>
   <link>https://realworlddatascience.net/case-studies/posts/2023/08/21/05-third-place-winners.html</link>
@@ -1596,6 +2149,80 @@ US Department of Agriculture and US Department of Health and Human Services. 202
   <media:content url="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/01-pps.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
+  <title>The Food for Thought Challenge: Using AI to support evidence-based food and nutrition policy</title>
+  <dc:creator>Brian Tarran and Julia Lane</dc:creator>
+  <link>https://realworlddatascience.net/case-studies/posts/2023/08/21/00-food-for-thought.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>There’s a saying: “You are what you eat.” Its meaning is somewhat open to interpretation, as with many such sayings, but it is typically used to make the point that if you want to <em>be</em> well, you need to eat well. Nutrition scientists and dieticians spend their careers trying to figure out what “eating well” looks like – the foods the human body needs, in what quantities, and how best to consume them. Their research informs advice and guidance issued by health professionals and governments. Ultimately, though, the choice of what to eat falls to us – individuals and families – and our choices are often determined by our tastes, the availability of foodstuffs in our local stores, their price and affordability.</p>
+<p>So, what exactly <em>do</em> we eat? Answers come from a variety of sources. In the United States, there are dietary recall studies such as the <a href="https://www.cdc.gov/nchs/nhanes/index.htm">National Health and Nutrition Examination Survey</a>, which asks a sample of respondents to report their food and beverage consumption over a set period of time. There are also organisations like <a href="https://www.iriworldwide.com/en-gb">IRI</a> that collect point-of-sale data from retail stores on the actual food and drink being sold to consumers. By and large, this information comes from barcodes on product packaging being scanned at checkouts, so it is often referred to as “scanner data”.</p>
+<p>This data – from dietary recall studies and retail scanners – is valuable: once we know what people are eating, we can check the nutritional content of those foods and build up a picture of what the diet of a typical individual or family looks like and how it compares to the diet recommended by doctors and policymakers. And, if we know what other foodstuffs are available, how much they cost, and the nutritional value of those items, we can work out how much families need to spend, and on what, in order to eat well and, hopefully, be well.</p>
+<p>Figuring all this out is where something called the Purchase to Plate Crosswalk (PPC) comes in. It’s a key tool for understanding the “<a href="https://www.sciencedirect.com/science/article/pii/S0889157521005445">healthfulness of retail food purchases</a>” and it does this by linking IRI scanner data on what people buy with data on the nutritional content of those foods, as recorded in the US Department of Agriculture’s Food and Nutrient Database for Dietary Studies (FNDDS). But there’s a catch: scanner data is collected about hundreds of thousands of food products, whereas the FNDDS has nutritional profile information for only a few thousand items. Linking these two datasets therefore gives rise to a one-to-many matching problem – a problem that takes several hundred person-hours to resolve.</p>
+<p>What if machine learning can help? That question inspired a competition, the Food for Thought Challenge, organized by the Coleridge Initiative, a nonprofit organization working with governments to ensure that data are more effectively used for public decision-making. Researchers and data scientists were invited to use machine learning and natural language processing to more efficiently link data on supermarket products to nutrient databases.</p>
+<p>This collection of articles tells the story of the <a href="https://coleridgeinitiative.org/projects/food-for-thought">Food for Thought Challenge</a>. We begin by exploring the <a href="../../../../../case-studies/posts/2023/08/21/01-purchase-to-plate.html">policy issues</a> that drive the development of the PPC – the need to understand the national diet, developing healthy diet plans, and costing up those plans – and the issues posed by record linkage. Next, we learn about <a href="../../../../../case-studies/posts/2023/08/21/02-competition-design.html">the nature of the challenge and the structure of the competition in more detail</a>, and then the <a href="../../../../../case-studies/posts/2023/08/21/03-first-place-winners.html">three</a> <a href="../../../../../case-studies/posts/2023/08/21/04-second-place-winners.html">winning</a> <a href="../../../../../case-studies/posts/2023/08/21/05-third-place-winners.html">teams</a> walk us through their solutions. We end the collection with some closing thoughts on <a href="../../../../../case-studies/posts/2023/08/21/06-value-of-competitions.html">the value of competitions for addressing data scientific challenges in the public sector</a>.</p>
+<div class="nav-btn-container">
+<div class="grid">
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../case-studies/index.html">Find more case studies</a></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../case-studies/posts/2023/08/21/01-purchase-to-plate.html">Part 1: The Purchase to Plate Suite →</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+<strong>Brian Tarran</strong> is editor of Real World Data Science, and head of data science platform at the Royal Statistical Society.
+</dd>
+<dd>
+<p><strong>Julia Lane</strong> is a professor at the NYU Wagner Graduate School of Public Service and a NYU Provostial Fellow for Innovation Analytics. She co-founded the Coleridge Initiative, whose goal is to use data to transform the way governments access and use data for the social good through training programs, research projects and a secure data facility. She recently served on the Advisory Committee on Data for Evidence Building and the National AI Research Resources Task Force.</p>
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Royal Statistical Society and Julia Lane
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@melaniesylim?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Melanie Lim</a> on <a href="https://unsplash.com/photos/246b6c6IeC0?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Tarran, Brian, and Julia Lane. 2023. “The Food for Thought Challenge: Using AI to support evidence-based food and nutrition policy.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/viewpoints/case-studies/posts/2023/08/21/00-food-for-thought.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+
+ ]]></description>
+  <category>Machine learning</category>
+  <category>Natural language processing</category>
+  <category>Public policy</category>
+  <category>Health and wellbeing</category>
+  <guid>https://realworlddatascience.net/case-studies/posts/2023/08/21/00-food-for-thought.html</guid>
+  <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/00-shopping.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
+<item>
   <title>Food for Thought: The value of competitions for confidential data</title>
   <dc:creator>Steven Bedrick, Ophir Frieder, Julia Lane, and Philip Resnik</dc:creator>
   <link>https://realworlddatascience.net/case-studies/posts/2023/08/21/06-value-of-competitions.html</link>
@@ -1721,633 +2348,6 @@ Williams, H. 2012. <span>“Innovation Inducement Prizes: Connecting Research to
   <guid>https://realworlddatascience.net/case-studies/posts/2023/08/21/06-value-of-competitions.html</guid>
   <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/06-value-of-competitions.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>Food for Thought: Competition and challenge design</title>
-  <dc:creator>Zheyuan Zhang and Uyen Le</dc:creator>
-  <link>https://realworlddatascience.net/case-studies/posts/2023/08/21/02-competition-design.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>Since 2014, the professional services firm Westat, Inc.&nbsp;has been developing the Purchase to Plate Crosswalk (PPC) for the United States Department of Agriculture (USDA) Economic Research Service (ERS). The PPC links the retail food transactions database from IRI’s InfoScan service and the USDA Food and Nutrient Database for Dietary Studies (FNDDS). However, the current linkage process uses only partly automated data matching, meaning it is resource intensive, time consuming, and requires manual review.</p>
-<p>With sponsorship from ERS, Westat partnered with the Coleridge Initiative to host the Food for Thought competition to challenge researchers and data scientists to use machine learning and natural language processing to find accurate and efficient methods for creating the PPC. Figure 1 provides a visual overview of the challenge set by the competition.</p>
-<p><a href="images/pt2-fig1.png"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt2-fig1.png" class="img-fluid" width="700"></a></p>
-<div class="figure-caption">
-<p><strong>Figure 1:</strong> Overview of the Food for Thought Competition Challenge.</p>
-</div>
-<p>The one-to-many matching task that is central to the competition throws up many challenges for researchers to wrestle with. Because IRI data contains food transactions collected from partnered retail establishments for over 350,000 items, the matchings need to be made based on limited data features, including categories, providers, and semantically inconsistent descriptions that consist of short phrases. Consider this hypothetical example: IRI product-related information about a (fictional) “Cheesy Hashbrowns Hamburger Helper, 5.5 Oz Box” needs to be linked to FNDDS nutrition-related information found under “Mixed dishes – meat, poultry, seafood: Mixed meat dishes”. Figure 2 demonstrates how the two databases are linked with each other to create the PPC. As can be seen, there is no common word that easily indicates that “Cheesy Hashbrowns Hamburger Helper…” should be matched with “Mixed dishes…”, and such cases exist in all IRI tables used for the challenge, from 2012 through 2018.</p>
-<p><a href="images/pt2-fig2.png"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt2-fig2.png" class="img-fluid" width="700"></a></p>
-<div class="figure-caption">
-<p><strong>Figure 2:</strong> Each universal product code (UPC) from the IRI data could match to only one ensemble code (EC) from the FNDDS data, whereas one EC code could match to multiple UPCs.</p>
-</div>
-<p>Also, because nutritionists or food scientists will always need to review the matching, regardless of the matching method used, it was important that our evaluation of proposed matching methods focused both on the accuracy of prediction models and also on metrics that would lead participants to develop models that facilitate qualified reviewers to reduce their workloads.</p>
-<p>Organising the competition was also a challenge in its own right, for data privacy reasons. IRI scanner data contains sensitive information, such as store name, location, unit price, and weekly quantity sold for each item. This ruled out using existing online platforms like Kaggle, DrivenData or AIcrowd to host the competition, and instead required a private secure data enclave to ensure the safe use of sensitive and confidential data assets. The need for such an environment imposed capacity constraints on the competition, meaning only dozens of teams could be invited to take part, whereas on open platforms it is common to have thousands of teams competing and sharing ideas and code.</p>
-<section id="competition-structure" class="level2">
-<h2 class="anchored" data-anchor-id="competition-structure">Competition structure</h2>
-<p>The competition ran over 10 months and consisted of three separate challenges: two interim, one final. Applications opened in September 2021, and the competition started in January 2022. Submission deadlines for the first and second interim challenges were in July and September 2022, respectively. For these rounds, participants submitted preliminary solutions for evaluation based solely on quantitative metrics, and two awards of $10,000 were given to the highest-scoring teams. The deadline for the final challenge was in October 2022. Here, solutions were evaluated by the scientific review board based on three judging criteria: quantitative metrics, transferability, and innovation. First, second, and third place winners received awards of $30,000, $1,500, and $1,000 respectively. Final presentations were given at the Food for Thought symposium in December 2022.</p>
-<p>The competition was run entirely within the Coleridge Initiative’s Administrative Data Research Facility (ADRF), which was established by the United States Census Bureau to inform the decision-making of the Commission on Evidence-Based Policy under the Evidence Act. ADRF follows the Five Safes Framework: safe projects, safe people, safe data, safe settings, and safe outputs.</p>
-<p>In keeping with this framework, participants were provided with ADRF login credentials after signing the relevant data use agreements during the onboarding process. All participants were required to agree to the ADRF terms of use, to complete security training, and to pass a security training assessment prior to accessing the challenge data. Participants’ access within ADRF was limited to the challenge environment and data only. There was no internet access, so Coleridge Initiative ensured that any packages requested by teams were available for use within the environment after passing security review. All codes and documentation were only allowed to be exported outside ADRF after export reviews from both Coleridge Initiative and USDA staff. At the end of each challenge, the teams submitted write-ups and supporting files by placing all the necessary submission files in their ADRF team folder. Detailed submission instructions are available via the <a href="https://github.com/realworlddatascience/realworlddatascience.github.io/tree/main/case-studies/posts/2023/08/21/_code">Real World Data Science GitHub repository</a>.</p>
-</section>
-<section id="metrics" class="level2">
-<h2 class="anchored" data-anchor-id="metrics">Metrics</h2>
-<p>Submissions were evaluated by Coleridge Initiative and technical review and subject review boards based on the following criteria:</p>
-<ul>
-<li><strong>Quantitative metrics</strong> were used to measure the predictive accuracy and runtime of the model.<br>
-</li>
-<li><strong>Transferability</strong> measured the quality of documentation and code, and the ability of individuals who are not involved in model development to replicate and implement the team’s approach.<br>
-</li>
-<li><strong>Innovation</strong> measured novelty and creativity of the model in addressing the linkage problem.</li>
-</ul>
-<p>Technical review was overseen by faculty members from computer science and engineering departments of top US universities. Subject review was handled by subject matter experts from USDA and Westat.</p>
-<p>From a quantitative perspective, the most common way to evaluate machine learning competition submissions is to use model predictive accuracy. However, single metrics are typically incomplete descriptions of real-world tasks, and they can easily hide significant differences between models which simple predictive accuracy cannot capture. To select the most appropriate official challenge metrics, Coleridge Initiative reviewed the literature on the use of evaluation measures in both classification and ranking task machine learning competitions. Success at 5 (S@5) and Normalized Discounted Cumulative Gain at 5 (NDCG@5) scores were ultimately used as the quantitative metrics.</p>
-<p>The metrics were applied as follows: models proposed by each team were tasked with outputting five potential FNDDS matches for each IRI code, with potential FNDDS matches ordered from most likely to least likely. S@5 and NDCG@5 scores are broadly similar – both measure whether a correct match is present in the five proposed matches that participants were asked to identify. However, S@5 does not take rank position into account and only considers whether the five proposed FNDDS matches contain the correct FNDDS response. NDCG@5 does take rank into account and also measures how highly the correct FNDDS response is ranked among the five proposed matches. Both measures range from 0 to 1 (or 0% to 100%). Models get a “full credit” for S@5 as long as they contain the correct FNDDS option. NDCG@5 penalizes models when the correct match is ranked lower on the list of 5 proposed matches.</p>
-</section>
-<section id="technical-description" class="level2">
-<h2 class="anchored" data-anchor-id="technical-description">Technical description</h2>
-<section id="environment-setup" class="level5">
-<h5 class="anchored" data-anchor-id="environment-setup">Environment setup</h5>
-<p>Coleridge Initiative solicited technical requirements from participants at the challenge application stage to prepare the ADRF environment as much as possible before the competition began. Each team was asked to share anticipated workspace specifications and software library requests in their application package. From this we identified, reviewed, and installed the requested Python and R packages, libraries, and library components (e.g., pre-trained models, training data) that were not yet available within ADRF.</p>
-<p>The setup of graphics processing units (GPUs) was also a critical part of competition preparation. We created an environment with 16 gibibyte (GiB) of GPU memory for each team. Our technology team met with multiple teams several times to discuss computing environment configurations to ensure the GPU could work properly. None of these efforts was wasted: without GPU access, it would be impossible for teams to use state-of-the-art pre-trained models such as the Bidirectional Encoder Representations from Transformers <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805">(BERT, Devlin et al. 2018)</span>.</p>
-<p>We completed the setup of new team workspaces, each customized to the individual team’s resource and library requirements, including GPU configuration. The isolation and customization of workspaces was vital because teams may request different versions of libraries that potentially have version conflict with other libraries. We ensured the configurations were all set before the challenge began because such data challenges are bursty in nature <span class="citation" data-cites="macavaney_et_al_2021">(Macavaney et al. 2021)</span>, and handling support requests in the private data enclave risked causing delays. We hoped to avoid receiving too many requests in the beginning phase of the competition in order to give participants a better experience, though we did of course provide participants with instructions on how to request additional libraries during the challenge period.</p>
-</section>
-<section id="supporting-materials" class="level5">
-<h5 class="anchored" data-anchor-id="supporting-materials">Supporting materials</h5>
-<p>In addition to environment preparation, we made available a list of supporting documentation, including IRI, PPC, and FNDDS codebooks, technical reports, and related publications that could help teams understand the challenge datasets. The FNDDS codebook pooled information on variable availability, coding, and descriptions across dataset files and years. It also included internal Westat food category coding difficulty ratings and notes on created PPC codes and provided UPC code, EC code, and general dataset remarks and observations that may take time for analysts to discover on their own.</p>
-<p>We developed a baseline model to demonstrate the challenge task and the expected outputs – both outside of ADRF using FNDDS and fictitious data in place of IRI data, and an analogous model using FNDDS and IRI data within the ADRF secure environment. Moreover, we provided the teams with an evaluation script to read in their submissions and evaluate them for predictive accuracy against the public test set using S@5 and NDCG@5 challenge metrics. Finally, we held multiple webinars during the course of the challenge to explain next steps, address participant questions, solicit feedback, and provide general support. Multiple teams also met with our technology team to clarify ADRF-related questions or troubleshoot technical issues.</p>
-<p>(Baseline model, toolkits, and evaluation script are available from the <a href="https://github.com/realworlddatascience/realworlddatascience.github.io/tree/main/case-studies/posts/2023/08/21/_code">Real World Data Science GitHub repository</a>.)</p>
-</section>
-<section id="data-splitting" class="level5">
-<h5 class="anchored" data-anchor-id="data-splitting">Data splitting</h5>
-<p>To mimic the real-world scenario, the competition used 2012–2016 IRI data as the training set, and the 2017–2018 IRI data as the test set, since the data change over time and USDA could provide the most recent data available. To make sure that models were generalizable and not just overfit to the test set, we split the test set into private and public test sets. In this way, we guaranteed that the models were evaluated on completely hidden data. In order to keep the similar distribution of the two sets, we first divided the data into five quintiles based on EC code frequencies and then randomly sampled 80% of records in each group without repetition for placement into the private test set. Later in the competition, because of the computation limit, we further shrank the private test set to 40% of its original size using the same data-splitting method.</p>
-</section>
-<section id="judging" class="level5">
-<h5 class="anchored" data-anchor-id="judging">Judging</h5>
-<p>In the first two rounds, submissions were evaluated based on the quantitative metrics, as previously mentioned above. Coleridge Initiative was responsible for running the evaluation script, making sure not to re-train the model or modify the configs in any way, and only applying the model to predict the private test set. Prediction results were then compared against ground truth to get the private scores.</p>
-<p>The final challenge was reviewed by the scientific review board on all three judging criteria. Submitted models were first evaluated by Coleridge Initiative in the same way as in the first two rounds. The runtime of models was also recorded as an assessment of model cost. The scientific review boards then assessed the models by the quality of documentation, the quality of code, and the ability to replicate and implement the team’s approach, and scored the models for innovation and creativity in addressing the linkage problem. Lastly, scores were summarized and the scientific review board discussed and decided the winners of the competition.</p>
-</section>
-</section>
-<section id="results" class="level2">
-<h2 class="anchored" data-anchor-id="results">Results</h2>
-<p>The next few articles in this collection walk readers through the solutions proposed by competition finalists. Figure 3 provides a brief summary.</p>
-<p><a href="images/pt2-fig3.png"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt2-fig3.png" class="img-fluid" width="700"></a></p>
-<div class="figure-caption">
-<p><strong>Figure 3:</strong> Top competitors and their solutions to the Food for Thought challenge.</p>
-</div>
-</section>
-<section id="lessons-learned" class="level2">
-<h2 class="anchored" data-anchor-id="lessons-learned">Lessons learned</h2>
-<p>It was undoubtedly challenging for teams to work with highly secured data in a private data enclave for this data challenge. We solicited feedback from teams and summarized the issues that we experienced throughout the competitions, together with the solutions to resolve those issues. Below are our main lessons learned and we hope this summary can serve to inform future competitions.</p>
-<ul>
-<li><p><strong>Environmental factors:</strong> The installation and setup of packages, libraries, and resources, as well as the configuration of GPUs, system dependencies, and workspace design were expected to take a long time as each team had their own needs. To accelerate the process, we requested a list of specific package and environment requirements from the teams in advance. However, due to the complexity of the system configuration required by the teams, environment setup took longer than expected. Thus, the challenge deadlines had to be postponed a few times to accommodate this.</p></li>
-<li><p><strong>Time commitment:</strong> Twelve teams were selected to participate in the challenge, but only three teams remained in the final challenge. Other than one team that was disqualified for violating the ADRF terms of use agreement, eight dropped out because of other commitments and insufficient time to meaningfully participate. To ensure security, ADRF does not allow jobs to run in the backend, which also adds to the time commitment of teams. To encourage teams to participate in the final challenge, we gave out additional awards for second and third places.</p></li>
-<li><p><strong>Computing resource limit:</strong> One issue encountered in evaluating submitted models was computing environment resource limits due to the secured nature of the data enclave. The original private test dataset is four times larger than the public test dataset, making it unfeasible to evaluate. To overcome this issue, given the fixed resource constraints, we decided to reduce the private test set to 40% of its original size. It would have been helpful, though, if the competition had set a model running time limit at the outset, so that participants could build simpler yet effective models.</p></li>
-<li><p><strong>Supporting code:</strong> Although the initial baseline model we provided was extremely simple, we found this helped participants a lot in the initial phase – yet there is space to improve. To be specific, supporting codes should be constructed so that all relevant data tables are used and specify the main function to run the code, especially how the model should be tested. The teams only used the main table, which was the only table that was used in the baseline model, for training and did not touch the other supporting table. If we included the other table in the baseline model, it could help participants to have a better use of this data as well. In addition, a baseline model should be intuitive for the participants to follow, allowing evaluators to easily replace the public test set with the private test set without any programming modifications.</p></li>
-</ul>
-<div class="nav-btn-container">
-<div class="grid">
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../case-studies/posts/2023/08/21/01-purchase-to-plate.html">← Part 1: Purchase to Plate</a></p>
-</div>
-</div>
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../case-studies/posts/2023/08/21/03-first-place-winners.html">Part 3: First place winners →</a></p>
-</div>
-</div>
-</div>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the authors</dt>
-<dd>
-<strong>Zheyuan Zhang</strong> and <strong>Uyen Le</strong> are research scientists at the Coleridge Initiative.
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Zheyuan Zhang and Uyen Le
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Zhang, Zheyuan, and Uyen Le. 2023. “Food for Thought: Competition and challenge design.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/viewpoints/case-studies/posts/2023/08/21/02-competition-design.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
-<div id="ref-DBLP:journals/corr/abs-1810-04805" class="csl-entry">
-Devlin, J., M.-W. Chang, K. Lee, and K. Toutanova. 2018. <span>“<span>BERT:</span> Pre-Training of Deep Bidirectional Transformers for Language Understanding.”</span> <em>CoRR</em> abs/1810.04805. <a href="http://arxiv.org/abs/1810.04805">http://arxiv.org/abs/1810.04805</a>.
-</div>
-<div id="ref-macavaney_et_al_2021" class="csl-entry">
-Macavaney, S., A. Mittu, G. Coppersmith, J. Leintz, and P. Resnik. 2021. <span>“Community-Level Research on Suicidality Prediction in a Secure Environment: Overview of the CLPsych 2021 Shared Task.”</span> In Proceedings of the Seventh Workshop on Computational Linguistics and Clinical Psychology: Improving Access.
-</div>
-</div></section></div> ]]></description>
-  <category>Machine learning</category>
-  <category>Natural language processing</category>
-  <category>Public policy</category>
-  <category>Health and wellbeing</category>
-  <guid>https://realworlddatascience.net/case-studies/posts/2023/08/21/02-competition-design.html</guid>
-  <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt2-intro.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>The Food for Thought Challenge: Using AI to support evidence-based food and nutrition policy</title>
-  <dc:creator>Brian Tarran and Julia Lane</dc:creator>
-  <link>https://realworlddatascience.net/case-studies/posts/2023/08/21/00-food-for-thought.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>There’s a saying: “You are what you eat.” Its meaning is somewhat open to interpretation, as with many such sayings, but it is typically used to make the point that if you want to <em>be</em> well, you need to eat well. Nutrition scientists and dieticians spend their careers trying to figure out what “eating well” looks like – the foods the human body needs, in what quantities, and how best to consume them. Their research informs advice and guidance issued by health professionals and governments. Ultimately, though, the choice of what to eat falls to us – individuals and families – and our choices are often determined by our tastes, the availability of foodstuffs in our local stores, their price and affordability.</p>
-<p>So, what exactly <em>do</em> we eat? Answers come from a variety of sources. In the United States, there are dietary recall studies such as the <a href="https://www.cdc.gov/nchs/nhanes/index.htm">National Health and Nutrition Examination Survey</a>, which asks a sample of respondents to report their food and beverage consumption over a set period of time. There are also organisations like <a href="https://www.iriworldwide.com/en-gb">IRI</a> that collect point-of-sale data from retail stores on the actual food and drink being sold to consumers. By and large, this information comes from barcodes on product packaging being scanned at checkouts, so it is often referred to as “scanner data”.</p>
-<p>This data – from dietary recall studies and retail scanners – is valuable: once we know what people are eating, we can check the nutritional content of those foods and build up a picture of what the diet of a typical individual or family looks like and how it compares to the diet recommended by doctors and policymakers. And, if we know what other foodstuffs are available, how much they cost, and the nutritional value of those items, we can work out how much families need to spend, and on what, in order to eat well and, hopefully, be well.</p>
-<p>Figuring all this out is where something called the Purchase to Plate Crosswalk (PPC) comes in. It’s a key tool for understanding the “<a href="https://www.sciencedirect.com/science/article/pii/S0889157521005445">healthfulness of retail food purchases</a>” and it does this by linking IRI scanner data on what people buy with data on the nutritional content of those foods, as recorded in the US Department of Agriculture’s Food and Nutrient Database for Dietary Studies (FNDDS). But there’s a catch: scanner data is collected about hundreds of thousands of food products, whereas the FNDDS has nutritional profile information for only a few thousand items. Linking these two datasets therefore gives rise to a one-to-many matching problem – a problem that takes several hundred person-hours to resolve.</p>
-<p>What if machine learning can help? That question inspired a competition, the Food for Thought Challenge, organized by the Coleridge Initiative, a nonprofit organization working with governments to ensure that data are more effectively used for public decision-making. Researchers and data scientists were invited to use machine learning and natural language processing to more efficiently link data on supermarket products to nutrient databases.</p>
-<p>This collection of articles tells the story of the <a href="https://coleridgeinitiative.org/projects/food-for-thought">Food for Thought Challenge</a>. We begin by exploring the <a href="../../../../../case-studies/posts/2023/08/21/01-purchase-to-plate.html">policy issues</a> that drive the development of the PPC – the need to understand the national diet, developing healthy diet plans, and costing up those plans – and the issues posed by record linkage. Next, we learn about <a href="../../../../../case-studies/posts/2023/08/21/02-competition-design.html">the nature of the challenge and the structure of the competition in more detail</a>, and then the <a href="../../../../../case-studies/posts/2023/08/21/03-first-place-winners.html">three</a> <a href="../../../../../case-studies/posts/2023/08/21/04-second-place-winners.html">winning</a> <a href="../../../../../case-studies/posts/2023/08/21/05-third-place-winners.html">teams</a> walk us through their solutions. We end the collection with some closing thoughts on <a href="../../../../../case-studies/posts/2023/08/21/06-value-of-competitions.html">the value of competitions for addressing data scientific challenges in the public sector</a>.</p>
-<div class="nav-btn-container">
-<div class="grid">
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../case-studies/index.html">Find more case studies</a></p>
-</div>
-</div>
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../case-studies/posts/2023/08/21/01-purchase-to-plate.html">Part 1: The Purchase to Plate Suite →</a></p>
-</div>
-</div>
-</div>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the authors</dt>
-<dd>
-<strong>Brian Tarran</strong> is editor of Real World Data Science, and head of data science platform at the Royal Statistical Society.
-</dd>
-<dd>
-<p><strong>Julia Lane</strong> is a professor at the NYU Wagner Graduate School of Public Service and a NYU Provostial Fellow for Innovation Analytics. She co-founded the Coleridge Initiative, whose goal is to use data to transform the way governments access and use data for the social good through training programs, research projects and a secure data facility. She recently served on the Advisory Committee on Data for Evidence Building and the National AI Research Resources Task Force.</p>
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Royal Statistical Society and Julia Lane
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@melaniesylim?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Melanie Lim</a> on <a href="https://unsplash.com/photos/246b6c6IeC0?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Tarran, Brian, and Julia Lane. 2023. “The Food for Thought Challenge: Using AI to support evidence-based food and nutrition policy.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/viewpoints/case-studies/posts/2023/08/21/00-food-for-thought.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-
- ]]></description>
-  <category>Machine learning</category>
-  <category>Natural language processing</category>
-  <category>Public policy</category>
-  <category>Health and wellbeing</category>
-  <guid>https://realworlddatascience.net/case-studies/posts/2023/08/21/00-food-for-thought.html</guid>
-  <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/00-shopping.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>Food for Thought: First place winners – Auburn Big Data</title>
-  <dc:creator>Alex Knipper, Naman Bansal, Jingyi Zheng, Wenying Li, and Shubhra Kanti Karmaker</dc:creator>
-  <link>https://realworlddatascience.net/case-studies/posts/2023/08/21/03-first-place-winners.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>The Auburn Big Data team from Auburn University consists of five members, including three assistant professors: Dr Wenying Li of the Department of Agricultural Economics and Rural Sociology, Dr Jingyi Zheng of the Department of Mathematics and Statistics, and Dr Shubhra Kanti Karmaker of the Department of Computer Science and Software Engineering. Additionally, the team comprises two PhD students, Naman Bansal and Alex Knipper, who are affiliated with Dr Karmaker’s big data lab at Auburn University.</p>
-<p>It is estimated that our team has spent approximately 1,400 hours on this project.</p>
-<section id="our-perspective-on-the-challenge" class="level2">
-<h2 class="anchored" data-anchor-id="our-perspective-on-the-challenge">Our perspective on the challenge</h2>
-<p>At the start of this competition, we decided to test three general approaches, in the order listed:</p>
-<ol type="1">
-<li><p>A heuristic approach, where we use only the data and a defined similarity metric to predict which FNDDS label a given IRI item should have.</p></li>
-<li><p>A simpler modeling approach, where we train a simple statistical classifier, like a random forest <span class="citation" data-cites="10.1007/978-3-030-03146-6_86">(Parmar, Katariya, and Patel 2019)</span>, logistic regression, etc., to predict the FNDDS label for a given IRI item. For this method, we opted to use a random forest as our statistical model, as it was a simpler model to use as a baseline, having shown decent performance in a wide range of classification tasks. As it turned out, this approach was quite robust and accurate, so we kept it as our main model for this approach.</p></li>
-<li><p>A large language modeling approach, where we train a model like BERT <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805">(Devlin et al. 2018)</span> to map the descriptions for given IRI and FNDDS items to the FNDDS category the supplied IRI item belongs to.</p></li>
-</ol>
-</section>
-<section id="our-approach" class="level2">
-<h2 class="anchored" data-anchor-id="our-approach">Our approach</h2>
-<p>As we explored the data provided, we opted to use the given 2017–2018 PPC dataset as our primary dataset for both training and testing. To ensure a fair evaluation of the model, we randomly split the dataset into 60% training samples and 40% testing samples, making sure our training process never sees the testing dataset. For evaluating our models, we adopted the competition’s metrics: Success@5 and NDCG@5. After months of testing, our statistical classifier (approach #2) proved itself to be the model that both processes the data fastest and achieves the highest performance on our testing metrics.</p>
-<p>This approach, at a high level, takes in the provided data (among other configuration parameters), formats the data in a computer-readable format – converting the IRI and FNDDS descriptions to a numerical representation with word embeddings <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805 mikolov2013efficient pennington-etal-2014-glove">(2018; Mikolov et al. 2013; Pennington, Socher, and Manning 2014)</span> and then using that numerical representation to calculate the distances between each description – and then trains a classification model (random forest <span class="citation" data-cites="10.1007/978-3-030-03146-6_86">(2019)</span>/neural network <span class="citation" data-cites="SCHMIDHUBER201585">(Schmidhuber 2015)</span>) that can predict an FNDDS label for a given IRI item.</p>
-<p>In terms of data, our approach uses the FNDDS/IRI descriptions, combining them into a single “description” field, and the IRI item’s categorical items – department, aisle, category, product, brand, manufacturer, and parent company – to further discern between items.</p>
-<p>While most industrial methods require use of a graphics processing unit (graphics card, or GPU) to perform this kind of processing, our primary method only requires the computer’s internal processor (CPU) to function properly. With that in mind, to achieve the best possible performance on our test metrics, the most time-consuming operations are run in parallel. The time taken to train our primary model can likely be further improved if we parallelize these operations across a GPU, with the only downside being the imposition of a GPU requirement for systems aiming to run this method.</p>
-<p>In addition to our primary method, our team has worked with alternate approaches on the GPU (using BERT <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805">(2018)</span>, neural networks <span class="citation" data-cites="SCHMIDHUBER201585">(2015)</span>, etc.) to either: 1) speed up the time it takes to process and make inferences for the data, achieving similar performance on our test metrics, or 2) achieve higher performance, likely at a cost to the time it takes to process everything. Our reasoning behind doing so is that if a simple statistical model performs well, then a larger language model should be able to demonstrate a higher performance on our test metrics without much of an increase in training time. At the current time, these methods are still unable to match the performance/efficiency tradeoff of our primary method.</p>
-<p>After exploring alternate methods to no avail, our team then decided to focus again on our primary method, the random forest <span class="citation" data-cites="10.1007/978-3-030-03146-6_86">(2019)</span>, and a secondary method, feed-forward neural network mapping our input features (X) to the FNDDS labels (Y) <span class="citation" data-cites="SCHMIDHUBER201585">(2015)</span>, to optimize their training hyperparameters for the dataset. Our aim in this is to see which of our already-implemented, easier-to-run downstream methods would better optimize the performance/efficiency tradeoff after having its training parameters optimized to the fullest. This has resulted in a marginal increase in training time (+20-30 minutes) and a roughly 5% increase in performance for our still-highest performing model, the random forest.</p>
-<p>Overall, our primary method – the random forest – gave us an approximate training time (including data pre-processing) of 4 hours 30 minutes for our ~38,000 IRI item training set, and an approximate inference time of 15 minutes on our testing set of ~15,000 IRI items. Furthermore, our method gave us a Success@5 score of .789 and an NDCG@5 score of .705 on our testing set.</p>
-<section id="key-features" class="level5">
-<h5 class="anchored" data-anchor-id="key-features">Key features</h5>
-<p>Here is a list of the key features we utilize, along with what type of data we treat it as.</p>
-<ul>
-<li>FNDDS
-<ul>
-<li>food_code – identifier</li>
-<li>main_food_description – text</li>
-<li>additional_food_description – text</li>
-<li>ingredient_description – text</li>
-</ul></li>
-<li>IRI
-<ul>
-<li>upc – identifier</li>
-<li>upcdesc – text</li>
-<li>dept – categorical</li>
-<li>aisle – categorical</li>
-<li>category – categorical</li>
-<li>product – categorical</li>
-<li>brand – categorical</li>
-<li>manufacturer – categorical</li>
-<li>parent – categorical</li>
-</ul></li>
-</ul>
-<p>The intuition behind using these particular features is that the text-based descriptions provide the majority of the “meaning” of the item. By converting each description to a numerical representation <span class="citation" data-cites="mikolov2013efficient pennington-etal-2014-glove">(2013; 2014)</span>, we can then calculate the similarity between each “meaning” to determine which FNDDS label is most similar to the IRI item provided. However, that alone is not enough. The categorical features on the IRI item help to further enhance the model’s classifications using the logic and categories people use in places like grocery stores. For example, if given an item whose aisle was “fruit” and brand was “Dole”, the item could be reasonably expected to be something like “peaches” over something like “broccoli”.</p>
-</section>
-<section id="feature-selection" class="level5">
-<h5 class="anchored" data-anchor-id="feature-selection">Feature selection</h5>
-<p>Aforementioned intuition aside, our feature selection was rather naive, in that we manually examined the data and removed any redundant text features before doing anything else. After that, we decided to use description fields as “text” data to comprise the main “meaning” of the item, represented numerically after converting the text using a word embedding <span class="citation" data-cites="mikolov2013efficient pennington-etal-2014-glove">(2013; 2014)</span>. We also decided to use the non-description fields (aisle, category, etc.) as “categorical” data that would be turned into its own numerical representation, allowing our model to more easily discern between items using similar systems to people.</p>
-</section>
-<section id="feature-transformations" class="level5">
-<h5 class="anchored" data-anchor-id="feature-transformations">Feature transformations</h5>
-<p>Our feature transformations are also relatively simple. First, we combine all description fields for each item to make one large description, and then use a word embedding method (like GloVe <span class="citation" data-cites="pennington-etal-2014-glove">(2014)</span> or BERT <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805">(2018)</span>) to convert the description into a numerical representation, resulting in a 300-dimensional GloVe or 768-dimensional BERT vector of numbers for each description. Then, for each IRI item, we calculate the cosine and Euclidean distances from each FNDDS item, resulting in two vectors, both equal in length to the original FNDDS data (in this case, two vectors of length ~7,300). The intuition behind this is that while cosine and Euclidean distances can tell us similar things, providing both of these sets of distances to the model should allow it to pick up on a more nuanced set of relationships between the IRI and FNDDS items.</p>
-<p>For categorical data, we take all unique values in each field and assign them an ID number. While that is often not the best practice for making a numerical representation out of categorical data <span class="citation" data-cites="10.5120/ijca2017915495">(Potdar, Pardawala, and Pai 2017)</span>, it seemed to work for the downstream model.</p>
-<p>Regardless, the aforementioned feature transformations give us (ad hoc) ~14,900 features if we use GloVe and ~15,300 features if we use BERT. Both feature sets can then be sent to the downstream random forest/neural network to start classifying items.</p>
-<p>It should be noted that processing the data is by far the most time-consuming part of our method. The data processing times for each embedding are as follows:</p>
-<ul>
-<li>GloVe: ~3 hours</li>
-<li>BERT: ~6 hours</li>
-</ul>
-<p>Due to BERT both taking so long to process data and performing lower than our GloVe embeddings on the classification task, we opt to use GloVe embeddings for our primary method. Our only theoretical explanation here is that since BERT is better at context-dependent tasks <span class="citation" data-cites="10.1145/3443279.3443304">(Wang, Nulty, and Lillis 2021)</span>, it likely will expect something similar to well-structured sentences as input, which is not what the IRI/FNDDS descriptions are. Rather, GloVe – being a method that depends less on context <span class="citation" data-cites="mikolov2013efficient pennington-etal-2014-glove">(2013; 2014)</span> – should excel better when the input text is not a well-formed sentence.</p>
-</section>
-<section id="training-methods" class="level5">
-<h5 class="anchored" data-anchor-id="training-methods">Training methods</h5>
-<p>Once the data has been processed, we collect the following data for each IRI item:</p>
-<ul>
-<li>UPC code</li>
-<li>Description (converted to numerical representation)</li>
-<li>Categorical variables (converted to numerical representation)</li>
-<li>Distances to each FNDDS item</li>
-</ul>
-<p>Once that has been collected for each IRI item, we can finally use our classification model. We initialize our model and begin the training process with the IRI data mentioned above and the target FNDDS labels for each one, so the model knows what the “correct” answer is for the given data. Once the model has trained on our training dataset, we save the model and it is ready for use.</p>
-<p>This part of training takes much less time than preparing the data, since calculating the embeddings takes a lot more computation than a random forest model. The training times for each method are as follows:</p>
-<ul>
-<li>Random Forest: ~1 hour 15 minutes</li>
-<li>Neural Network: ~25 minutes</li>
-</ul>
-<p>Despite the neural network taking far less time to train than the random forest, it still scores lower on the scoring metrics than the random forest, so we opt to continue using the random forest model as our primary method.</p>
-</section>
-<section id="general-approach-to-developing-the-model" class="level5">
-<h5 class="anchored" data-anchor-id="general-approach-to-developing-the-model">General approach to developing the model</h5>
-<p>Since the linkage problem involves mapping tens of thousands of items to a smaller category set of a few thousand items, we decided to frame this problem as a multi-class classification problem <span class="citation" data-cites="aly2005survey">(Aly 2005)</span>, where we then rank the top “k” most probable class mappings, as requested by the competition ruleset.</p>
-<p>Most of the usable data available to us is text data, so we need a method that can use that text-based information to accurately map classes based on the aforementioned text information. To best accomplish this, we opt to use word embedding techniques to calculate an average numerical representation for each text description (both IRI and FNDDS), so we can calculate distances between each description, giving our model a sense of how similar each description is.</p>
-</section>
-<section id="the-key-trick-to-the-model" class="level5">
-<h5 class="anchored" data-anchor-id="the-key-trick-to-the-model">The key “trick” to the model</h5>
-<p>Since text descriptions hold the most information that can be used to link between an IRI item and an FNDDS item, finding a way to calculate the similarity between each description is paramount to making this method work.</p>
-<p>Both distance calculation methods used in this work, cosine and Euclidean distance, are very similar in the type of information encoded, the only major difference being that cosine distance is implicitly normalized and Euclidean distance is not <span class="citation" data-cites="10.1145/967900.968151">(Qian et al. 2004)</span>.</p>
-</section>
-<section id="notable-observations" class="level5">
-<h5 class="anchored" data-anchor-id="notable-observations">Notable observations</h5>
-<p>Just by building the ranking using the cosine similarities between each IRI item and all FNDDS items, we can achieve a Success@5 performance of 0.234 and an NDCG@5 performance of 0.312. The other features are provided and the random forest classifier is used to add some extra discriminative power to the model.</p>
-</section>
-<section id="data-disclaimer" class="level5">
-<h5 class="anchored" data-anchor-id="data-disclaimer">Data disclaimer</h5>
-<p>Our current method only uses the data readily available from the 2017–2018 dataset, which we acknowledge is intended for testing. To remedy this, we further split this dataset into train/test sets and report results on our unseen test subset for our primary performance metrics. This gives a decent look into how the model will perform on unseen data.</p>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>Find the code in the <a href="https://github.com/realworlddatascience/realworlddatascience.github.io/tree/main/case-studies/posts/2023/08/21/_code">Real World Data Science GitHub repository</a>.</p>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="our-results" class="level2">
-<h2 class="anchored" data-anchor-id="our-results">Our results</h2>
-<section id="approximate-training-time" class="level5">
-<h5 class="anchored" data-anchor-id="approximate-training-time">Approximate training time</h5>
-<p>Overall, our approximate training time for our primary method is 4 hours 30 minutes broken down (approximately) as follows:</p>
-<ol type="1">
-<li>Reading data from database: 30 seconds</li>
-<li>Calculating ~7,300 FNDDS description embeddings: 15 minutes 45 seconds</li>
-<li>Calculating ~38,000 IRI description embeddings and similarity scores: 2 hours 20 minutes 45 seconds</li>
-<li>Formatting calculated data for the random forest classifier: 35 minutes</li>
-<li>Training the random forest classifier: 1 hour 15 minutes</li>
-</ol>
-</section>
-<section id="approximate-inference-time" class="level5">
-<h5 class="anchored" data-anchor-id="approximate-inference-time">Approximate inference time</h5>
-<p>Our approximate inference time for our primary method is 15 minutes to make inferences for ~15,000 IRI items.</p>
-</section>
-<section id="s5-ndcg5-performance" class="level5">
-<h5 class="anchored" data-anchor-id="s5-ndcg5-performance">S@5 &amp; NDCG@5 performance</h5>
-<p>This is how our best-performing model (GloVe + random forest) performs at the current time on the testing set:</p>
-<ul>
-<li>NDCG@5: 0.705</li>
-<li>Success@5: 0.789</li>
-</ul>
-<p>When we evaluate that same model on the full PPC dataset we were provided (~38,000 items), we get the following scores:</p>
-<ul>
-<li>NDCG@5: 0.879</li>
-<li>Success@5: 0.916</li>
-</ul>
-<p>(Note: The full PPC dataset contains approximately 15,000 items that we used to train the model, so these scores are not as representative of our method’s performance as the previous scores.)</p>
-</section>
-</section>
-<section id="future-workrefinement" class="level2">
-<h2 class="anchored" data-anchor-id="future-workrefinement">Future work/refinement</h2>
-<p>As mentioned previously, we only used the given 2017–2018 PPC dataset as our primary dataset for both training and testing. Going forward, we would like to include datasets from previous years as well, which we believe would further increase our model performance. Additionally, the datasets generated from this research have the potential to inform and support additional studies from a variety of perspectives, including nutrition, consumer research, and public health. Further research utilizing these datasets has the potential to make significant contributions to our understanding of consumer behavior and the role of food and nutrient consumption in overall health and well-being.</p>
-</section>
-<section id="lessons-learned" class="level2">
-<h2 class="anchored" data-anchor-id="lessons-learned">Lessons learned</h2>
-<p>It was interesting that the random forest model performed better than the vanilla neural network model. This shows that a simple solution can work better, depending on the application. This observation is in line with the well-established principle in machine learning that the choice of model should be guided by the nature of the problem and the characteristics of the data. In this case, the random forest model, being a simpler and more interpretable model, was better suited to the problem at hand and was able to outperform the more complex neural network model. These results underscore the importance of careful model selection and the need to consider both the complexity of the model and the specific requirements of the problem when choosing an algorithm for a particular application.</p>
-<div class="nav-btn-container">
-<div class="grid">
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../case-studies/posts/2023/08/21/02-competition-design.html">← Part 2: Competition design</a></p>
-</div>
-</div>
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../case-studies/posts/2023/08/21/04-second-place-winners.html">Part 4: Second place winners →</a></p>
-</div>
-</div>
-</div>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the authors</dt>
-<dd>
-<strong>Alex Knipper</strong> and <strong>Naman Bansal</strong> are PhD students, and <strong>Jingyi Zheng</strong>, <strong>Wenying Li</strong>, and <strong>Shubhra Kanti Karmaker</strong> are assistant professors at Auburn University.
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Alex Knipper, Naman Bansal, Jingyi Zheng, Wenying Li, and Shubhra Kanti Karmaker
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@nicotitto?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">nrd</a> on <a href="https://unsplash.com/photos/D6Tu_L3chLE?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Knipper, Alex, Naman Bansal, Jingyi Zheng, Wenying Li, and Shubhra Kanti Karmaker. 2023. “Food for Thought: First place winners – Auburn Big Data.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/viewpoints/case-studies/posts/2023/08/21/03-first-place-winners.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
-<div id="ref-aly2005survey" class="csl-entry">
-Aly, M. 2005. <span>“Survey on Multiclass Classification Methods, Tech. Rep.”</span> <em>California Institute of Technology</em>.
-</div>
-<div id="ref-DBLP:journals/corr/abs-1810-04805" class="csl-entry">
-Devlin, J., M.-W. Chang, K. Lee, and K. Toutanova. 2018. <span>“<span>BERT:</span> Pre-Training of Deep Bidirectional Transformers for Language Understanding.”</span> <em>CoRR</em> abs/1810.04805. <a href="http://arxiv.org/abs/1810.04805">http://arxiv.org/abs/1810.04805</a>.
-</div>
-<div id="ref-mikolov2013efficient" class="csl-entry">
-Mikolov, Tomas, Kai Chen, Greg Corrado, and Jeffrey Dean. 2013. <span>“Efficient Estimation of Word Representations in Vector Space.”</span> <a href="https://arxiv.org/abs/1301.3781">https://arxiv.org/abs/1301.3781</a>.
-</div>
-<div id="ref-10.1007/978-3-030-03146-6_86" class="csl-entry">
-Parmar, A., R. Katariya, and V. Patel. 2019. <span>“A Review on Random Forest: An Ensemble Classifier.”</span> In <em>International Conference on Intelligent Data Communication Technologies and Internet of Things (ICICI) 2018</em>, edited by J. Hemanth, X. Fernando, P. Lafata, and Z. Baig, 758–63. Cham: Springer International Publishing.
-</div>
-<div id="ref-pennington-etal-2014-glove" class="csl-entry">
-Pennington, J., R. Socher, and C. Manning. 2014. <span>“<span>G</span>lo<span>V</span>e: Global Vectors for Word Representation.”</span> In <em>Proceedings of the 2014 Conference on Empirical Methods in Natural Language Processing (<span>EMNLP</span>)</em>, 1532–43. Doha, Qatar: Association for Computational Linguistics. <a href="https://doi.org/10.3115/v1/D14-1162">https://doi.org/10.3115/v1/D14-1162</a>.
-</div>
-<div id="ref-10.5120/ijca2017915495" class="csl-entry">
-Potdar, K., T. S. Pardawala, and C. D. Pai. 2017. <span>“A Comparative Study of Categorical Variable Encoding Techniques for Neural Network Classifiers.”</span> <em>International Journal of Computer Applications</em> 175 (4): 7–9. <a href="https://doi.org/10.5120/ijca2017915495">https://doi.org/10.5120/ijca2017915495</a>.
-</div>
-<div id="ref-10.1145/967900.968151" class="csl-entry">
-Qian, G., S. Sural, Y. Gu, and S. Pramanik. 2004. <span>“Similarity Between Euclidean and Cosine Angle Distance for Nearest Neighbor Queries.”</span> In <em>Proceedings of the 2004 ACM Symposium on Applied Computing</em>, 1232–37. SAC ’04. New York, NY, USA: Association for Computing Machinery. <a href="https://doi.org/10.1145/967900.968151">https://doi.org/10.1145/967900.968151</a>.
-</div>
-<div id="ref-SCHMIDHUBER201585" class="csl-entry">
-Schmidhuber, J. 2015. <span>“Deep Learning in Neural Networks: An Overview.”</span> <em>Neural Networks</em> 61: 85–117. https://doi.org/<a href="https://doi.org/10.1016/j.neunet.2014.09.003">https://doi.org/10.1016/j.neunet.2014.09.003</a>.
-</div>
-<div id="ref-10.1145/3443279.3443304" class="csl-entry">
-Wang, C., P. Nulty, and D. Lillis. 2021. <span>“A Comparative Study on Word Embeddings in Deep Learning for Text Classification.”</span> In <em>Proceedings of the 4th International Conference on Natural Language Processing and Information Retrieval</em>, 37–46. NLPIR ’20. New York, NY, USA: Association for Computing Machinery. <a href="https://doi.org/10.1145/3443279.3443304">https://doi.org/10.1145/3443279.3443304</a>.
-</div>
-</div></section></div> ]]></description>
-  <category>Machine learning</category>
-  <category>Natural language processing</category>
-  <category>Public policy</category>
-  <category>Health and wellbeing</category>
-  <guid>https://realworlddatascience.net/case-studies/posts/2023/08/21/03-first-place-winners.html</guid>
-  <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/03-auburn.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>Food for Thought: Second place winners – DeepFFTLink</title>
-  <dc:creator>Yang Wu, Aishwarya Budhkar, Kai Zhang, Xuhong Zhang, and Xiaozhong Liu</dc:creator>
-  <link>https://realworlddatascience.net/case-studies/posts/2023/08/21/04-second-place-winners.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>DeepFFTLink team members: Yang Wu and Kai Zhang are PhD students at Worcester Polytechnic Institute. Aishwarya Budhkar is a PhD student at Indiana University Bloomington. Xuhong Zhang is an assistant professor at Indiana University Bloomington. Xiaozhong Liu is an associate professor at Worcester Polytechnic Institute.</p>
-<section id="perspective-on-the-challenge" class="level2">
-<h2 class="anchored" data-anchor-id="perspective-on-the-challenge">Perspective on the challenge</h2>
-<p>Text matching is an essential task in natural language processing <span class="citation" data-cites="DBLP:journals/corr/PangLGXWC16">(NLP, Pang et al. 2016)</span>, while record linkage across different sources is an essential task in data science. Machine learning techniques allow people to combine data faster and cheaper than using manual linkage. However, in the context of the Food for Thought challenge, existing methods for matching universal product codes (UPCs) to ensemble codes (ECs) require every UPC to be compared with every EC code (Figure 1a). Such approaches can be computationally expensive in the training process when data is noisy. Here, we propose an ensemble model with a category-based adapter to tackle this problem, drawing on the category information included in UPC and EC data. The category-based adapter allows UPCs to be first matched with only a small and reliable set of ECs (Figure 1b). Then, an ensemble model will be deployed to make predictions for UPC-EC matching. Our proposed approach can achieve competitive performance compared with state-of-the-art models.</p>
-<div>
-
-</div>
-<div class="quarto-layout-panel" style="padding-top: 1em; margin-bottom: 0;" data-layout-ncol="2">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/pt4-fig1a.png"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt4-fig1a.png" class="img-fluid figure-img" alt="(a)"></a></p>
-<figcaption>(a)</figcaption>
-</figure>
-</div>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/pt4-fig1b.png"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt4-fig1b.png" class="img-fluid figure-img" alt="(b)"></a></p>
-<figcaption>(b)</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="figure-caption">
-<p><strong>Figure 1:</strong> A toy example of our method. Panel (a) shows the traditional matching method, while (b) is our proposed ensemble model with category-based adapter. With the help of the adapter, UPC 1 only needs to be matched with EC 1 and EC 3.</p>
-</div>
-</section>
-<section id="our-approach" class="level2">
-<h2 class="anchored" data-anchor-id="our-approach">Our approach</h2>
-<p>We propose a two-step framework to address this problem. To begin with, we use a category-based adapter to get reliable candidate ECs for each UPC. Then, an ensemble model <span class="citation" data-cites="10.1007/3-540-45014-9_1">(Dietterich 2000)</span> is deployed to make a prediction for each UPC-EC pair.</p>
-<section id="category-based-adapter" class="level5">
-<h5 class="anchored" data-anchor-id="category-based-adapter">Category-based adapter</h5>
-<p>By using 2015–2016 UPC-EC data, we created a knowledge base, which is a UPC category–EC pair-wised table for generating candidate ECs. Within this setting, each UPC category is, on average, related to only 32 ECs. This knowledge base is then used as context to further filter the candidate ECs. Note that there are some new ECs generated year by year, which can also be part of the potential ECs in the UPC-EC matching task, since the contextual information of new ECs does not exist in our knowledge base.</p>
-</section>
-<section id="ensembled-model" class="level5">
-<h5 class="anchored" data-anchor-id="ensembled-model">Ensembled model</h5>
-<p>We ensemble the base-string match and BERT models. BERT is a deep learning model for natural language processing <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805">(Devlin et al. 2018)</span>. In the base-string match model, we used the Term Frequency-Inverse Document Frequency (TFIDF) of each UPC and EC description as features to calculate a pairwise cosine similarity, which is a distance between instances. Meanwhile, we used features extracted from UPC and EC descriptions to fine-tune the BERT base model and calculated the cosine similarity of embeddings between each UPC and EC. Then we rank ECs based on their similarity scores with the UPC.</p>
-<p><a href="images/pt4-fig2.png"><img src="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/pt4-fig2.png" class="img-fluid"></a></p>
-<div class="figure-caption">
-<p><strong>Figure 2:</strong> The framework of our proposed model. A two-step strategy is used to make the final prediction.</p>
-</div>
-<div class="callout callout-style-simple callout-note" style="margin-top: 2rem;">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>Find the code in the <a href="https://github.com/realworlddatascience/realworlddatascience.github.io/tree/main/case-studies/posts/2023/08/21/_code">Real World Data Science GitHub repository</a>.</p>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="our-results" class="level2">
-<h2 class="anchored" data-anchor-id="our-results">Our results</h2>
-<p>We randomly selected 500 samples from the 2017–2018 UPC-EC data to train the ensembled weight for each model. Two functions were adapted to make a fusion of base-string and BERT models:</p>
-<p><span id="eq-first"><img src="https://latex.codecogs.com/png.latex?%0AC%20=%20a%20*%20X%20+%20b%20*%20Y%20%20%0A%5Ctag%7B1%7D"></span></p>
-<p><span id="eq-second"><img src="https://latex.codecogs.com/png.latex?%0AC%20=%20%20a%20*%20log(X)%20+%20b%20*%20log(Y)%20%5Ctext%7B.%20%7D%0A%5Ctag%7B2%7D"></span></p>
-<p><img src="https://latex.codecogs.com/png.latex?C"> denotes the final confidence score. <img src="https://latex.codecogs.com/png.latex?X"> and <img src="https://latex.codecogs.com/png.latex?Y"> represent <em>base_string_similarity_score</em> and <em>BERT_similarity_score</em>, respectively. <img src="https://latex.codecogs.com/png.latex?a"> and <img src="https://latex.codecogs.com/png.latex?b"> are corresponding model weights for base_string and BERT models.</p>
-<p>A better Success@5 is achieved with function (1). The ensembled weights for the base-string model and BERT model are 0.738 and 0.262, respectively. The experiment result indicates that the base_string model contributes more than the BERT model when the ensemble model makes predictions. The prediction result for the 2017–2018 data is:</p>
-<ul>
-<li>Success@5: 0.727</li>
-<li>NDCG@5: 0.528</li>
-</ul>
-<p>Computation time is 6 hours.</p>
-</section>
-<section id="future-work" class="level2">
-<h2 class="anchored" data-anchor-id="future-work">Future work</h2>
-<p>Our next step will focus on adding the newly generated EC data into our knowledge base, which allows the model to be more stable to make predictions for UPC-EC matching. Our model is an unsupervised method, which does not need labels for each instance. We use cosine similarity to rank the matches, so no labels are needed in the training process. However, our future work will try to label some instances to handle the UPC-EC matching task in a supervised manner.</p>
-</section>
-<section id="lessons-learned" class="level2">
-<h2 class="anchored" data-anchor-id="lessons-learned">Lessons learned</h2>
-<ol type="1">
-<li><p><strong>If the data is not complex, simple models may outperform complex models.</strong> For example, in our experiment, we found that the base-string model outperforms single RoBERTa <span class="citation" data-cites="DBLP:journals/corr/abs-1907-11692">(Liu et al. 2019)</span> or BERT models. However, our ensemble model can outperform each individual model since model fusion allows information aggregation from multiple models.</p></li>
-<li><p><strong>Multi-label models may not work well on UPC-EC data.</strong> In our early work, we tried to consider the UPC-EC matching task as a multi-label problem, e.g., we labeled each EC as a binary label which indicated whether the EC was an appropriate match or not. We mapped UPC and EC pairs into a multi-label table. However, we find that the UPC and EC keeps a one-to-one relation for most UPCs. The model performance of a multi-label model, i.e., Label-Specific Attention Network <span class="citation" data-cites="xiao-etal-2019-label">(LSAN, Xiao et al. 2019)</span>, is lower than base-string model on both Success@5 and NDCG@5 metrics.</p></li>
-</ol>
-<div class="nav-btn-container">
-<div class="grid">
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../case-studies/posts/2023/08/21/03-first-place-winners.html">← Part 3: First place winners</a></p>
-</div>
-</div>
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../case-studies/posts/2023/08/21/05-third-place-winners.html">Part 5: Third place winners →</a></p>
-</div>
-</div>
-</div>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the authors</dt>
-<dd>
-<strong>Yang Wu</strong> and <strong>Kai Zhang</strong> are PhD students, and <strong>Xiaozhong Liu</strong> is an associate professor at Worcester Polytechnic Institute. <strong>Aishwarya Budhkar</strong> is a PhD student and <strong>Xuhong Zhang</strong> is an assistant professor at Indiana University Bloomington.
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Yang Wu, Aishwarya Budhkar, Kai Zhang, Xuhong Zhang, and Xiaozhong Liu
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@hansonluu?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Hanson Lu</a> on <a href="https://unsplash.com/photos/sq5P00L7lXc?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Wu, Yang, Aishwarya Budhkar, Kai Zhang, Xuhong Zhang, and Xiaozhong Liu. 2023. “Food for Thought: Second place winners – DeepFFTLink.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/viewpoints/case-studies/posts/2023/08/21/04-second-place-winners.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
-<div id="ref-DBLP:journals/corr/abs-1810-04805" class="csl-entry">
-Devlin, J., M.-W. Chang, K. Lee, and K. Toutanova. 2018. <span>“<span>BERT:</span> Pre-Training of Deep Bidirectional Transformers for Language Understanding.”</span> <em>CoRR</em> abs/1810.04805. <a href="http://arxiv.org/abs/1810.04805">http://arxiv.org/abs/1810.04805</a>.
-</div>
-<div id="ref-10.1007/3-540-45014-9_1" class="csl-entry">
-Dietterich, T. G. 2000. <span>“Ensemble Methods in Machine Learning.”</span> In <em>Multiple Classifier Systems</em>, 1–15. Berlin, Heidelberg: Springer Berlin Heidelberg.
-</div>
-<div id="ref-DBLP:journals/corr/abs-1907-11692" class="csl-entry">
-Liu, Y., M. Ott, N. Goyal, J. Du, M. Joshi, D. Chen, O. Levy, M. Lewis, L. Zettlemoyer, and V. Stoyanov. 2019. <span>“RoBERTa: <span>A</span> Robustly Optimized <span>BERT</span> Pretraining Approach.”</span> <em>CoRR</em> abs/1907.11692. <a href="http://arxiv.org/abs/1907.11692">http://arxiv.org/abs/1907.11692</a>.
-</div>
-<div id="ref-DBLP:journals/corr/PangLGXWC16" class="csl-entry">
-Pang, L., Y. Lan, J. Guo, J. Xu, S. Wan, and X. Cheng. 2016. <span>“Text Matching as Image Recognition.”</span> <em>CoRR</em> abs/1602.06359. <a href="http://arxiv.org/abs/1602.06359">http://arxiv.org/abs/1602.06359</a>.
-</div>
-<div id="ref-xiao-etal-2019-label" class="csl-entry">
-Xiao, L., X. Huang, B. Chen, and L. Jing. 2019. <span>“Label-Specific Document Representation for Multi-Label Text Classification.”</span> In <em>Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)</em>, 466–75. Hong Kong, China: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/D19-1044">https://doi.org/10.18653/v1/D19-1044</a>.
-</div>
-</div></section></div> ]]></description>
-  <category>Machine learning</category>
-  <category>Natural language processing</category>
-  <category>Public policy</category>
-  <category>Health and wellbeing</category>
-  <guid>https://realworlddatascience.net/case-studies/posts/2023/08/21/04-second-place-winners.html</guid>
-  <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/case-studies/posts/2023/08/21/images/04-deepfftlink.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
   <title>The road to reproducible research: hazards to avoid and tools to get you there safely</title>

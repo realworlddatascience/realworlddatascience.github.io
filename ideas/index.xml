@@ -16,8 +16,111 @@
 <height>83</height>
 <width>144</width>
 </image>
-<generator>quarto-1.4.555</generator>
-<lastBuildDate>Tue, 11 Jun 2024 00:00:00 GMT</lastBuildDate>
+<generator>quarto-1.4.556</generator>
+<lastBuildDate>Tue, 25 Jun 2024 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Nowcasting upgrade for better real time estimation of GDP and inflation</title>
+  <dc:creator>Atmajitsinh Gohil</dc:creator>
+  <link>https://realworlddatascience.net/ideas/datasciencebites/posts/2024/6/25/nowcasting-3step.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Governments, policymakers and central banks across the world are wrestling to keep rising prices under control using monetary policies such as interest rate increases. The effectiveness of such policy changes should be assessed by monitoring inflation data as well as studying the impact on real GDP, making timely and accurate access to key economic indicators crucial for policy planning. The delay in publishing economic indicators such as Real GDP, inflation and other labour related series, makes this real time assessment of the economy particularly challenging. Now Menzie Chinn at the University of Wisconsin, Baptiste Meunier at the European Central Bank and Sebastian Stumpner at the Banque de France report an approach for “nowcasting” built on previous research that develops a framework using different machine learning techniques and is flexible and adaptable compared with traditional methods<sup>1</sup>. They report on the accuracy of their 3-step framework for nowcasting global trade volume estimates, showing how it can outperform traditional methods. They also highlight that the 3-step framework can be extended beyond World Trade data.</p>
+<p>Nowcasting, an amalgamation of the term now and forecasting, provides a methodology to assess the current state of the economy by predicting the current value of inflation or Real GDP. The <a href="https://www.newyorkfed.org/research/policy/nowcast#/overview">Federal Reserve Bank of New York</a> and <a href="https://www.atlantafed.org/cqer/research/gdpnow">Federal Reserve Bank of Atlanta</a> have used nowcasting to publish real time GDP estimates, for the USA. Similarly, the <a href="https://www.clevelandfed.org/indicators-and-data/inflation-nowcasting">Federal Reserve Bank of Cleveland estimates real time inflation</a> using nowcasting methods.</p>
+<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" alt="GDP digital drawing. Credit: Shutterstock, Vink Fan" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/ideas/datasciencebites/posts/2024/6/25/images/GDPshutterstock_2302082265-991.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="GDP digital drawing. Credit: Shutterstock, Vink Fan">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Growth of GDP with statistical graph, 3d rendering. Digital drawing. Credit: Shutterstock, Vink Fan
+</figcaption>
+</figure>
+</div>
+<p>The basic principle of nowcasting is utilising information that is published early such as using data published at higher frequency, survey data, financial indicators or economic indicators. For example, the running estimate of Real GDP (aka GDPNow) that the Federal Reserve Bank of Atlanta provides is updated 6 or 7 times a month on weekdays when one of the 7 input data sources are released. Similarly, the real GDP growth estimate that the Federal Reserve Bank of New York provides is based on data releases in categories such as housing and construction, manufacturing, surveys, retail and consumption, income, labour, international trade, prices and others.</p>
+<p>The traditional methods of nowcasting do not provide an integrated framework, and forecasters need to know which variables to use, and select a method for factor extraction and machine learning regression. Chinn, Meunier and Stumpner propose a sequential framework that selects the most important predictors. The selected variables are then summarized using Principal Component Analysis (PCA) and these factors are used as explanatory variables to perform the regression. Although traditional methods of nowcasting also utilized many of these techniques, the authors test various combinations of pre-selection, factor extraction and regression techniques and propose a combination that improves model accuracy.</p>
+<section id="model-framework-improved-flexibility-and-accuracy" class="level2">
+<h2 class="anchored" data-anchor-id="model-framework-improved-flexibility-and-accuracy">Model framework improved flexibility and accuracy:</h2>
+<p>The 3 steps in the framework are chronological steps to be performed in which the first step is pre-selection of the independent variables with the highest predictive power. The independent variables from the first step are then summarised into a few factors using factor extraction methodology in the second step. The final step consists of using the factors from step 2 to perform regression.</p>
+<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored" alt="The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research." data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/ideas/datasciencebites/posts/2024/6/25/images/3step-framework-methods-big.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research.
+</figcaption>
+</figure>
+</div>
+<p>Figure&nbsp;2 summarises the various methods employed at each step in the 3 step framework. In their report Chinn, Meunier and Stumpner aim to propose the best techniques for pre-selection, factor extraction and regression. As such their 3-step framework comprises performing pre-selection using Least Angle Regression (LARS), factor extraction using Principal Component Analysis (PCA) and employing a Macroeconomic Random Forest (MRF) machine learning technique for nowcasting.</p>
+<p>The model performance or accuracy of MRF is compared with traditional methods using Root Mean Square Error (RMSE), a measure of the deviation between the actual data and the predicted data. The 3-step framework model accuracy is tested by holding the preselection and factor extraction fixed to isolate the impact of regression techniques.</p>
+<div id="fig-3" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research." data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/ideas/datasciencebites/posts/2024/6/25/images/method-accuracy-big.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research.
+</figcaption>
+</figure>
+</div>
+<p>Figure&nbsp;3 compares the RMSE of traditional methods, machine learning tree and machine learning regression model for backcasting (t-2 and t-1), nowcasting (t) and forecasting (t+1). It highlights the greater model accuracy of MRF and Gradient Boosting compared with traditional models and tree models for backcasting, nowcasting and forecasting.</p>
+</section>
+<section id="whats-next" class="level2">
+<h2 class="anchored" data-anchor-id="whats-next">What’s Next?</h2>
+<p>Organisations such as <a href="https://nowcastinglab.org/map">The Nowcasting Lab</a> provide GDP estimates for European countries. Such nowcasting techniques have been employed by humanitarian agencies including the United Nations Refugee Agency (UNHCR) which uses nowcasting to estimate the actual forced displaced population. The nowcasting techniques, dashboards and tools have been implemented and accepted as a reliable source of information at government organisations for policy making, central banks, and financial organisations. The 3-step framework, proposed by Chinn, Meunier and Stumpner, is easily adaptable, flexible and provides higher accuracy, which will be valuable to a range of fields employing nowcasting.</p>
+<div class="article-btn">
+<p><a href="../../../../../../ideas/index.html">Explore more data science ideas</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author</dt>
+<dd>
+<strong>Atmajitsinh Gohil</strong> is an independent researcher in the field of AI and ML, specifically managing AI and ML risk. He has worked with consulting firm assisting clients in model risk management. He has graduated from SUNY, Buffalo with a M.S. in Economics.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2024 Atmajitsinh Gohil
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> Text, code, and figures are licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>, except where otherwise noted. Thumbnail image by <a href="https://www.shutterstock.com/image-illustration/growth-gdp-statistical-graph-3d-rendering-2302082265">Shutterstock Van Fink</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Gohil, Atmajitsinh. 2024. “Nowcasting upgrade for better real time estimation of GDP and inflation.” Real World Data Science, June 25, 2024. <a href="https://realworlddatascience.net/ideas/posts/2024/06/25/nowcasting-3step.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">References</h2>
+
+<ol>
+<li id="fn1"><p>Nowcasting World Trade with Machine Learning: a Three-Step Approach Chinn, M. D., Meunier, B. &amp; Stumpner, S. <em>NBER</em> <a href="https://www.nber.org/papers/w31419">DOI 10.3386/w31419</a>) ↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>Forecasting</category>
+  <category>Machine learning</category>
+  <guid>https://realworlddatascience.net/ideas/datasciencebites/posts/2024/6/25/nowcasting-3step.html</guid>
+  <pubDate>Tue, 25 Jun 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/ideas/datasciencebites/posts/2024/6/25/images/GDPshutterstock_2302082265-991.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>AI series: Ensuring new AI technologies help everyone thrive</title>
   <dc:creator>Anna Demming</dc:creator>
@@ -410,7 +513,7 @@ Lane, J., Hirsch, L. and Leonard, A. 2024. “Meeting the unprecedented challeng
 <section id="know-your-goals" class="level2">
 <h2 class="anchored" data-anchor-id="know-your-goals">Know your goals</h2>
 <p>The first point to note is that checking how well the output from an AI model matches the data in the training set is not an adequate indication of how well it will perform once deployed on other data. The problem can be exemplified by considering a simple model based on an equation that best fits a training data set. Data values are inevitably subject to measurement uncertainties and local conditions that add various types of noise, so taking the line defined by the equation identified as best matching the training data and measuring how good that match is falls short of adequate evaluation - the more perfectly a model matches this noisy data, the less perfectly it will fit an alternative set of data, a scenario described as “overfitting”. Similarly, what a machine learning or AI algorithm or model learns when it optimises its fit to the training data may not be generalisable.</p>
-<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart." data-fig-align="center">
+<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/21/images/Evaluation_thumbnail.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart.">
@@ -422,7 +525,7 @@ Figure&nbsp;1: Evaluation plots. The kinds of charts of monitored performance an
 </div>
 <p>There are a number of possible approaches and factors to take into account when sourcing test data but the first thing to consider when drawing up a process for evaluating an AI model is its objective. With this objective in mind it is then possible to pin down an appropriate measure of performance, which will shape how to use the test data to evaluate the model performance. Among the distinguishing factors between different measures used to evaluate how a model performs on test data, some will be suitable when the objective is to classify (e.g high or low risk based on health data?) while others are useful for models that estimate or predict (e.g What is the estimated height of a child given their parents’ heights).</p>
 <p>Classification model performance can be measured using accuracy, confusion matrices, sensitivity, specificity and the receiver operating characteristic (ROC). Classification accuracy summarises the performance of a classification model as the number of cases in which the model correctly classifies divided by the total number of cases used in the test set. However, this can be a blunt tool as there are cases where there is a different cost or consequence depending on the direction of the error. Confusion matrices are helpful to explore how the model performs in correctly classifying the different classes. The confusion matrix sums up the number of cases the model classifies correctly within each of the classes, for example how many actual high-risk cases are correctly classified as high risk by the model. The number of cases the model classifies as high risk, for example, that are not high risk is referred to as the False Positives. In the context of medical tests (e.g the covid lateral flow tests) testing positive for a condition that is not actually there is potentially less damaging than testing negative when the condition is there.</p>
-<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored" alt="The receiver operating characteristic can provide a helpful means of visualising performance. Credit: shutterstock ." data-fig-align="center">
+<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="The receiver operating characteristic can provide a helpful means of visualising performance. Credit: shutterstock .">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/21/images/shutterstock_2377152411.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The receiver operating characteristic can provide a helpful means of visualising performance. Credit: shutterstock .">
@@ -443,7 +546,7 @@ Figure&nbsp;2: The receiver operating characteristic can provide a helpful means
 <p>These data sets also need to have reliable labelling i.e.&nbsp;the rows of data need to be accurate so that the model’s performance can be assessed objectively against a trusted “ground truth”. For example, if we want to evaluate the performance of a fraud transaction classification model using accuracy as the performance metric, then we need a reliable training data set with true fraud transactions to evaluate how good the model is at detecting them. A data set with a list of transactions that are not accurately identified (or labelled) as fraud or not is not helpful. Thinking about how some commercial LLMs are trained on all the data in the “internet” it is worth asking whether a smaller more curated and specific training set would be better for model performance as well as being more ethical and safer.</p>
 <p>Several approaches for generating test data sets take training and test data as distinct subsets from the same initial data set <sup>4</sup>. There are different ways of doing this to make the most of the data to evaluate the model as systematically and exhaustively as possible. Perhaps the simplest example is using a hold-out set, which involves taking all the data available and taking a random subset of the data to use for testing the model. Depending on how much data is available then this can be 50% or less.</p>
 <p>A slightly more sophisticated approach is k-fold cross validation, which involves splitting all the data you have available into k subsets and then doing k iterations where in each iteration a different kth of the data is used as the testing data for evaluation of the model built by training it on the remaining (k-1/k) of the data. This is repeated k times each time using a different one of the k subsets for testing. The performance of the model can then be averaged over the k iterations. (The measure of performance can be, say, accuracy or sensitivity depending on the context). For example, if k is 3 then the data is split into 3, and each iteration will take a different 2/3 of the data as training data to build the model, and the remaining 1/3 as testing data to evaluate the model.</p>
-<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" alt="K fold cross validation can indicate how sensitive a model is to the test data. Credit: Fabian Flöck CC-BY-AS-3.0" data-fig-align="center">
+<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="K fold cross validation can indicate how sensitive a model is to the test data. Credit: Fabian Flöck CC-BY-AS-3.0">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/21/images/k-fold-cross-validation.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="K fold cross validation can indicate how sensitive a model is to the test data. Credit: Fabian Flöck CC-BY-AS-3.0">
@@ -653,7 +756,7 @@ Varley-Winter, O., Author. 2024. “On AI ethics - influencing its use in the de
 <p>Imputing missing values can preserve the whole sample. However, the introduction of noise during the imputation process may compromise the quality of fitted models, contingent upon the proportion of missing records. One way to offset this may be to use larger and larger data sets that might inevitably include a fuller training picture to the algorithm, just as adding dots to a pixelated image makes it more and more clear what is depicted.</p>
 <p>It is often perceived that for certain instances, particularly in the context of deep learning models, such as neural networks, the model itself is capable of handling missing values without explicit imputation or deletion procedures. <sup>6</sup> Is this really true in a real-world scenario? Are these models advanced enough to achieve an optimised performance even when data quality is not at an optimised level? <sup>7</sup> Köse et al.&nbsp;(2020) investigated the effect of two conventional imputation approaches: Multiple imputation (MICE) <sup>8</sup> and Factor analysis of mixed data (FAMD) <sup>9</sup> on performance of deep learning models. Their study endorsed the use of such explicit imputation approaches, showing an enhancement in model performance. <sup>10</sup></p>
 <p>Data imbalance issues, arise within datasets where there is a disproportionate amount of information pertaining to a specific aspect. When imbalanced data, rich in focused information, is used to train an AI model, the model becomes adept at learning about the specific aspect but may struggle to generalise its findings to diverse scenarios, thus fostering overfitting where the model achieves accurate prediction on the training data but loses accuracy for any new test dataset.</p>
-<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Stages involved in AI model development" data-fig-align="center">
+<div id="fig-1" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Stages involved in AI model development">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/07/images/Stages-of-model-development-724.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Stages involved in AI model development">
@@ -672,7 +775,7 @@ Figure&nbsp;1: Stages involved in AI model development.
 <p>When AI algorithms encounter complex, unstructured data, the task of quality assurance suddenly balloons beyond tackling the three main errors highlighted above. Such circumstances require some kind of quality enhancement procedure, where datasets in the form of images or unstructured text go through a curation process which involves enhancement of the quality and standardisation of the format to the level required for integration into AI algorithms. This process of standardization of data is paramount across various domains, especially in healthcare where complex, unstructured health data holds transformative potential for AI driven advances that revolutionise diagnosis, treatment, and prognosis of diseases. From electronic health records to magnetic resonance imaging (MRI) scans and genetic sequences, this data offers a wealth of insights for AI models to learn from. Adopting standardised formats not only facilitates seamless integration of diverse datasets but also streamlines the development and deployment of AI models. However, unlocking this potential requires a strong foundation in high-quality, processed data which begins with standardisation.</p>
 <p>One category of complex health data is neuroimaging of which a prime example is MRI. Different institutions will often employ different acquisition protocols and different ways of collecting and storing neuroimaging data. Above all, this can make it very difficult to integrate into existing workflows and processing pipelines, but it also makes it challenging to understand, compare and combine with other datasets. To address these challenges, the neuroimaging community has adopted the Brain Imaging Data Structure (BIDS) <sup>13</sup> – a standardised format for organising and naming MRI data which allows compliant data to integrate smoothly with existing workflows and AI models, streamlining processing and analysis. By embracing standardisation, we can pave the way for common processing tools to enable the generation of AI-ready data.</p>
 <p>Next, comes pre-processing. Sticking with the neuroimaging example, MRI scans are susceptible to various forms of noise and artifacts, which can appear as blurring or distortions which, without proper processing, can be misinterpreted by AI models. Pre-processing typically includes steps for spatial normalisation and image registration, involving alignment of brain images from different individuals into a common reference model and alignment of different images of the same subject to a common template. This standardisation facilitates inter-subject and inter-study comparisons, enabling AI models to generalise effectively across diverse datasets. However, the multi-layer aspect of this process means that aligning data to a common template is dependent on the choice of template which itself can introduce bias if the template brain doesn’t accurately reflect the patient’s anatomy (due to age, ethnicity, or disease for example).</p>
-<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Neuroimaging data" data-fig-align="center">
+<div id="fig-2" class="quarto-figure quarto-figure-center quarto-float anchored" data-fig-align="center" alt="Neuroimaging data">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/07/images/neuroimaging.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Neuroimaging data">
@@ -2734,16 +2837,16 @@ font-style: inherit;">```</span></span></code></pre></div>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><a href="images/quetelet_1875400.jpg" class="lightbox" data-gallery="Quetelet" data-description="Source:
+<p><a href="images/quetelet_1875400.jpg" class="lightbox" data-description="Source:
 
 <a
 href=&quot;https://en.wikipedia.org/wiki/Adolphe_Quetelet#/media/File:Adolphe_Qu%C3%A9telet_by_Joseph-Arnold_Demannez.jpg&quot;>Wikimedia
-Commons</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/quetelet_1875400.jpg" alt="Portrait of Adolphe Quetelet." height="400"></a></p>
+Commons</a>" data-gallery="Quetelet"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/quetelet_1875400.jpg" class="img-fluid" alt="Portrait of Adolphe Quetelet."></a></p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><a href="images/sur_le_climat400.jpeg" class="lightbox" data-gallery="Quetelet" data-description="Source:
+<p><a href="images/sur_le_climat400.jpeg" class="lightbox" data-description="Source:
 
-<a href=&quot;https://gallica.bnf.fr/ark:/12148/bpt6k95028d&quot;>Gallica</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/sur_le_climat400.jpeg" alt="Title page of Adolphe Quetelet's 'On the climate of Belgium'." height="400"></a></p>
+<a href=&quot;https://gallica.bnf.fr/ark:/12148/bpt6k95028d&quot;>Gallica</a>" data-gallery="Quetelet"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/sur_le_climat400.jpeg" class="img-fluid" alt="Title page of Adolphe Quetelet's 'On the climate of Belgium'."></a></p>
 </div>
 </div>
 </div>
@@ -2754,9 +2857,9 @@ Commons</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/20
 <p>Quetelet was also not the first to study the relationship between temperature and bloom dates. René Réaumur <span class="citation" data-cites="deréaumur_1735">(1735)</span>, an early adopter of the thermometer, noted the relationship before Marsham published his <em>Indications</em>. But Quetelet was the first to systematically study the relationship across a wide variety of plants and derive the amount of heat needed to bloom. An example of Quetelet’s careful record keeping can be seen in Figure 2, one of many tables he reported in his publications.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/quetelet_bloom.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" data-description="Source:
+<p><a href="images/quetelet_bloom.png" class="lightbox" data-description="Source:
 
-<a href=&quot;https://gallica.bnf.fr/ark:/12148/bpt6k95028d&quot;>Gallica</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/quetelet_bloom.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="A table of bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852." width="600"></a></p>
+<a href=&quot;https://gallica.bnf.fr/ark:/12148/bpt6k95028d&quot;>Gallica</a>" data-gallery="quarto-lightbox-gallery-3"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/quetelet_bloom.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="A table of bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852." width="600"></a></p>
 </figure>
 </div>
 <div class="figure-caption">
@@ -2772,22 +2875,22 @@ Commons</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/20
 <div class="quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><a href="images/buds250.jpg" class="lightbox" data-gallery="flowers" data-description="Source:
+<p><a href="images/buds250.jpg" class="lightbox" data-description="Source:
 
 <a href=&quot;https://www.usanpn.org/nn/TrackaLilac&quot;>USA National Phenology
-Network</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/buds250.jpg" alt="Photo of lilac flower buds." height="250"></a></p>
+Network</a>" data-gallery="flowers"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/buds250.jpg" class="img-fluid" alt="Photo of lilac flower buds."></a></p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><a href="images/open_flowers250.jpg" class="lightbox" data-gallery="flowers" data-description="Source:
+<p><a href="images/open_flowers250.jpg" class="lightbox" data-description="Source:
 
 <a href=&quot;https://www.usanpn.org/nn/TrackaLilac&quot;>USA National Phenology
-Network</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/open_flowers250.jpg" alt="Photo of open lilac flowers." height="250"></a></p>
+Network</a>" data-gallery="flowers"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/open_flowers250.jpg" class="img-fluid" alt="Photo of open lilac flowers."></a></p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><a href="images/full_flowers250.jpg" class="lightbox" data-gallery="flowers" data-description="Source:
+<p><a href="images/full_flowers250.jpg" class="lightbox" data-description="Source:
 
 <a href=&quot;https://www.usanpn.org/nn/TrackaLilac&quot;>USA National Phenology
-Network</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/full_flowers250.jpg" alt="Photo of full lilac flowers." height="250"></a></p>
+Network</a>" data-gallery="flowers"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/full_flowers250.jpg" class="img-fluid" alt="Photo of full lilac flowers."></a></p>
 </div>
 </div>
 </div>
@@ -3554,11 +3657,11 @@ font-style: inherit;">  config(displaylogo = FALSE)</span></span>
 <span id="cb5-22"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```</span></span></code></pre></div>
-<p><a href="images/fig4.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" data-description="Author
+<p><a href="images/fig4.png" class="lightbox" data-description="Author
 
 provided,
 
-<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig4.png" class="img-fluid" alt="A line graph of midrange temperature by day, for January to June 1839, with day of last frost (March 8) and day of first bloom (May 11) marked by vertical dashed lines."></a></p>
+<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>" data-gallery="quarto-lightbox-gallery-7"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig4.png" class="img-fluid" alt="A line graph of midrange temperature by day, for January to June 1839, with day of last frost (March 8) and day of first bloom (May 11) marked by vertical dashed lines."></a></p>
 <div class="figure-caption">
 <p><strong>Figure 4:</strong> According to Quetelet’s law, the lilacs bloom when exposed to 4264°C² following the last frost. Author provided, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 </div>
@@ -4666,11 +4769,11 @@ font-style: inherit;">  config(displaylogo = FALSE)</span></span>
 <span id="cb13-18"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```</span></span></code></pre></div>
-<p><a href="images/fig5.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" data-description="Author
+<p><a href="images/fig5.png" class="lightbox" data-description="Author
 
 provided,
 
-<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig5.png" class="img-fluid" alt="This figure plots the predictions made by Quetelet's law against the actual bloom dates scientists observed from US lilac data. Data are represented using blue contours, and a dotted line of equality is drawn through the graph. The dotted line intersects the blue contours at their peak, suggesting that the law derived from Quetelet’s data accurately predicts the typical bloom date of the USA data."></a></p>
+<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>" data-gallery="quarto-lightbox-gallery-8"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig5.png" class="img-fluid" alt="This figure plots the predictions made by Quetelet's law against the actual bloom dates scientists observed from US lilac data. Data are represented using blue contours, and a dotted line of equality is drawn through the graph. The dotted line intersects the blue contours at their peak, suggesting that the law derived from Quetelet’s data accurately predicts the typical bloom date of the USA data."></a></p>
 <div class="figure-caption">
 <p><strong>Figure 5:</strong> Predictions using Quetelet’s law are accurate within about two weeks on average. Author provided, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 </div>
@@ -5240,11 +5343,11 @@ font-style: inherit;">  config(displaylogo = FALSE)</span></span>
 <span id="cb17-21"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```</span></span></code></pre></div>
-<p><a href="images/fig6.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" data-description="Author
+<p><a href="images/fig6.png" class="lightbox" data-description="Author
 
 provided,
 
-<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig6.png" class="img-fluid" alt="A line graph of midrange temperature by day in Brussels for January 1 to February 18 (observed) and February 19 to May 20 (forecast), 2023, with day of last frost (January 27) and predicted day of first bloom (April 19) marked by vertical dashed lines."></a></p>
+<a href=&quot;https://creativecommons.org/licenses/by/4.0/&quot;>CC BY 4.0</a>" data-gallery="quarto-lightbox-gallery-9"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/fig6.png" class="img-fluid" alt="A line graph of midrange temperature by day in Brussels for January 1 to February 18 (observed) and February 19 to May 20 (forecast), 2023, with day of last frost (January 27) and predicted day of first bloom (April 19) marked by vertical dashed lines."></a></p>
 <div class="figure-caption">
 <p><strong>Figure 6:</strong> According to Quetelet’s law, the lilacs will bloom once exposed to 4264°C² following the last frost. Author provided, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 </div>
@@ -5255,11 +5358,11 @@ provided,
 <p>The law of the flowering plants surely stands the test of time. It continues to be used by scientists – with relatively few changes – to plan harvests, manage pests, and study ecosystems stressed by climate change. We speculate the law’s longevity is due to the fact that it balances simplicity with relatively accurate predictions.</p>
 <p>Although Quetelet did not discover the law, he did much to advance it. Quetelet founded an international network for “observations of the periodical phenomena” (in addition to numerous statistical societies and publications, including the precursor to the Royal Statistical Society). Quetelet’s network of 80 stations collected observations throughout Europe from 1841 until 1872. In particular, Quetelet collaborated with Charles Morren – who later coined the term phenology, the name of the field that now studies biological life-cycle events like the timing of flower blooms <span class="citation" data-cites="demarée_rutishauser_2011">(Demarée and Rutishauser 2011)</span>.</p>
 <p>In recent years, the observations collected through phenology networks have become an important resource for understanding the impacts of climate change. For example, the USA National Phenology Network calculates the Spring Bloom Index, which measures the “first day of spring” using the days lilacs are observed to bloom at locations across the United States. The index is then compared to previous years. Figure 7 shows one comparison, called the Return Interval. The Return Interval is much like a p-value, calculating how frequently more extreme spring indices were observed in previous decades. Bloom dates that are uncommonly early (green) or late (purple) may indicate environments stressed by changing climate. Scientists exploit the relationship between temperature and bloom date to extrapolate the index to areas with few observations.</p>
-<p><a href="images/six-bloom-return-interval-2020.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" data-description="Source:
+<p><a href="images/six-bloom-return-interval-2020.png" class="lightbox" data-description="Source:
 
 <a
 href=&quot;https://www.usanpn.org/files/npn/maps/six-bloom-return-interval-2020.png&quot;>USA
-National Phenology Network</a>"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/six-bloom-return-interval-2020.png" class="img-fluid" alt="A map of the United States showing the Spring Bloom Index Return Interval 2020, which measures whether spring is typical when compared to recent decades."></a></p>
+National Phenology Network</a>" data-gallery="quarto-lightbox-gallery-10"><img src="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/images/six-bloom-return-interval-2020.png" class="img-fluid" alt="A map of the United States showing the Spring Bloom Index Return Interval 2020, which measures whether spring is typical when compared to recent decades."></a></p>
 <div class="figure-caption">
 <p><strong>Figure 7:</strong> The Spring Bloom Index Return Interval measures whether spring is typical when compared to recent decades. Source: <a href="https://www.usanpn.org/files/npn/maps/six-bloom-return-interval-2020.png">USA National Phenology Network</a>.</p>
 </div>
