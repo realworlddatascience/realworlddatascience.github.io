@@ -2,15 +2,15 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.4.556">
+<meta name="generator" content="quarto-1.5.55">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Luke Shaw (BNSSG ICB), Rich Wood (BNSSG ICB, University of Bath), Christos Vasilakis (University of Bath), Zehra Onen Dumlu (University of Bath)">
-<meta name="dcterms.date" content="2024-06-27">
+<meta name="dcterms.date" content="2024-08-01">
 <meta name="description" content="Taking NHS usage of the 1 million people in and around Bristol, then combining with population forecasts into a modelling framework has created a sophisticated but interprettable 20-year forecast for use by healthcare leaders.">
 
-<title>Real World Data Science - Forecasting the Health Needs of a Changing Population</title>
+<title>Forecasting the Health Needs of a Changing Population – Real World Data Science</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -85,14 +85,14 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 Ben is on GitHub here: https://github.com/benruijl
 And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
 
-<meta property="og:title" content="Real World Data Science - Forecasting the Health Needs of a Changing Population">
+<meta property="og:title" content="Forecasting the Health Needs of a Changing Population – Real World Data Science">
 <meta property="og:description" content="Taking NHS usage of the 1 million people in and around Bristol, then combining with population forecasts into a modelling framework has created a sophisticated but interprettable 20-year forecast for use by healthcare leaders.">
 <meta property="og:image" content="https://realworlddatascience.net/case-studies/posts/2024/05/08/images/doctor-patient-thumbnail.png">
 <meta property="og:site_name" content="Real World Data Science">
 <meta property="og:image:height" content="724">
 <meta property="og:image:width" content="991">
 <meta property="og:image:alt" content="A doctor takes a blood pressure reading from a patient.">
-<meta name="twitter:title" content="Real World Data Science - Forecasting the Health Needs of a Changing Population">
+<meta name="twitter:title" content="Forecasting the Health Needs of a Changing Population – Real World Data Science">
 <meta name="twitter:description" content="Taking NHS usage of the 1 million people in and around Bristol, then combining with population forecasts into a modelling framework has created a sophisticated but interprettable 20-year forecast for use by healthcare leaders.">
 <meta name="twitter:image" content="https://realworlddatascience.net/case-studies/posts/2024/05/08/images/doctor-patient-thumbnail.png">
 <meta name="twitter:site" content="@rwdatasci">
@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function() {
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
-          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
   <span class="navbar-toggler-icon"></span>
 </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
@@ -156,7 +156,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <span class="menu-text">Viewpoints</span></a>
   </li>  
   <li class="nav-item dropdown ">
-    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="link" data-bs-toggle="dropdown" aria-expanded="false">
  <span class="menu-text">About RWDS</span>
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function() {
   </li>
 </ul>
           </div> <!-- /navcollapse -->
-          <div class="quarto-navbar-tools">
+            <div class="quarto-navbar-tools">
 </div>
       </div> <!-- /container-fluid -->
     </nav>
@@ -215,7 +215,7 @@ document.addEventListener("DOMContentLoaded", function() {
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 27, 2024</p>
+        <p class="date">August 1, 2024</p>
       </div>
     </div>
     
@@ -252,7 +252,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <h2 class="anchored" data-anchor-id="background">Background</h2>
 <p>Decisions around medium and long-term allocation of healthcare resources are fraught with challenges and uncertainties, which explains the use of blunt resource allocations based on across-the-board annual percentage uplifts.</p>
 <p>The Bristol, North Somerset, South Gloucestershire Integrated Care Board (BNSSG ICB - we love elaborate acronyms in the National Health Service!), in the south west of England, is part of the local NHS apparatus responsible for planning the current and future health needs of the one million resident population.</p>
-<div id="fig-bnssg-map" class="quarto-figure quarto-figure-center quarto-float anchored">
+<div id="fig-bnssg-map" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-bnssg-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <div class="tv-iframe-container">
@@ -276,7 +276,7 @@ Figure&nbsp;1: A map of the area covered by BNSSG, a space covered by three loca
 <li><strong>Doubling</strong>: Going up one segment results in roughly twice the NHS monetary spend per person per year</li>
 </ol>
 <p>We can see this in <a href="#fig-halving-doubling" class="quarto-xref">Figure&nbsp;2</a>.</p>
-<div id="fig-halving-doubling" class="quarto-figure quarto-figure-center quarto-float anchored" alt="Table showing the 5 Core Segments with CS1 having a Cambridge Score of <0.09, 52% of the population and £300 mean annual spend per person as the first row. This then changes by row through to CS1 having a Cambridge Score of >2.94 with 3% of the population and £5600 mean annual spend per person as the last row. The propoportion of population column roughly halved row-by-row, the mean annual spend per person roughly doubled row by row.">
+<div id="fig-halving-doubling" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Table showing the 5 Core Segments with CS1 having a Cambridge Score of <0.09, 52% of the population and £300 mean annual spend per person as the first row. This then changes by row through to CS1 having a Cambridge Score of >2.94 with 3% of the population and £5600 mean annual spend per person as the last row. The propoportion of population column roughly halved row-by-row, the mean annual spend per person roughly doubled row by row.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-halving-doubling-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/halving-doubling-no-arrows.png" class="img-fluid figure-img" alt="Table showing the 5 Core Segments with CS1 having a Cambridge Score of <0.09, 52% of the population and £300 mean annual spend per person as the first row. This then changes by row through to CS1 having a Cambridge Score of >2.94 with 3% of the population and £5600 mean annual spend per person as the last row. The propoportion of population column roughly halved row-by-row, the mean annual spend per person roughly doubled row by row.">
@@ -339,7 +339,7 @@ Figure&nbsp;2: Halving-Doubling Effect of the Core Segments
 <h2 class="anchored" data-anchor-id="findings">Findings</h2>
 <p>The first output of the model is the population forecast for each Core Segment, as plotted in <a href="#fig-sankey" class="quarto-xref">Figure&nbsp;3</a>. The visualisation is a type of sankey diagram called an alluvial plot, which shows the proportion of people moving between the Core Segments each year. As it is to be expected, the majority of individuals stay in the same Core Segment year-on-year as the process of acquiring conditions and developing multimorbidity takes places over many years and decades.</p>
 <p>The concerning insight shown in <a href="#fig-sankey" class="quarto-xref">Figure&nbsp;3</a> is that all Core Segments apart from (the most healthy) <span style="color:#77A033;"><strong>Core Segment 1</strong></span> are due to increase in size, with <span style="color:#FF6C53;"><strong>Core Segment 5</strong></span> having the largest percentage increase over the next 20 years. While, at first glance, this could be attributed to the effect an ageing population, in which people are staying alive for longer we will see in the next set of results that this itself does not wholly explain the forecasted Core Segment changes.</p>
-<div id="fig-sankey" class="quarto-figure quarto-figure-center quarto-float anchored" alt="over 20 years when scaled to 1000 population initially we have that population changes in the following ways: CS1 decreases from 520 to 490, CS2 increases from 240 to 310, CS3 increased from 130 to 180, CS4 increases from 70 to 110, CS5 increases from 40 to 60.">
+<div id="fig-sankey" class="quarto-float quarto-figure quarto-figure-center anchored" alt="over 20 years when scaled to 1000 population initially we have that population changes in the following ways: CS1 decreases from 520 to 490, CS2 increases from 240 to 310, CS3 increased from 130 to 180, CS4 increases from 70 to 110, CS5 increases from 40 to 60.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-sankey-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/dpm-sankey-no-title.png" class="img-fluid figure-img" alt="over 20 years when scaled to 1000 population initially we have that population changes in the following ways: CS1 decreases from 520 to 490, CS2 increases from 240 to 310, CS3 increased from 130 to 180, CS4 increases from 70 to 110, CS5 increases from 40 to 60.">
@@ -356,7 +356,7 @@ Figure&nbsp;3: All Core Segments, except the most healthy (CS1), are forecast to
 <li><p>For Community contacts, with the highest proportion of use from <span style="color:#FF6C53;"><strong>Core Segment 5</strong></span> patients, the DPM forecasts the highest increase into the future. This is because, relative to current size, the number of <span style="color:#FF6C53;"><strong>Core Segment 5</strong></span> patients is set to increase the largest and so that has the largest impact on Community contacts, which include home visits to patients to support rehabilitation and services to manage long-term mobility issues such as physiotherapy.</p></li>
 <li><p>Whilst Secondary Elective and Non-Elective activity is forecast to grow at similar rates, the Carbon and Cost values are forecast to grow more for Secondary Non-Elective due to the average Carbon and Cost usage per person in Core Segment 5 being higher. In this context ‘Secondary’ is a hospital stay, with ‘Elective’ being planned and ‘Non-Elective’ being unplanned. For example, a hip replacement is elective whereas an admission following a road traffic accident is non-elective.</p></li>
 </ol>
-<div id="fig-pod-forecasts" class="quarto-figure quarto-figure-center quarto-float anchored" alt="the image shows 15 separate graphs, with the columns being Community, Maternity, Secondary Elective, Secondary Non-Elective and Total, and the rows being Activity, Carbon, and Cost. All graphs have similar overall shape of increase into the future, but with different gradients.">
+<div id="fig-pod-forecasts" class="quarto-float quarto-figure quarto-figure-center anchored" alt="the image shows 15 separate graphs, with the columns being Community, Maternity, Secondary Elective, Secondary Non-Elective and Total, and the rows being Activity, Carbon, and Cost. All graphs have similar overall shape of increase into the future, but with different gradients.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-pod-forecasts-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="images/dpm-pod-forecasts.png" class="img-fluid figure-img" alt="the image shows 15 separate graphs, with the columns being Community, Maternity, Secondary Elective, Secondary Non-Elective and Total, and the rows being Activity, Carbon, and Cost. All graphs have similar overall shape of increase into the future, but with different gradients.">
@@ -475,18 +475,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }
     return false;
   }
-  const clipboard = new window.ClipboardJS('.code-copy-button', {
-    text: function(trigger) {
-      const codeEl = trigger.previousElementSibling.cloneNode(true);
-      for (const childEl of codeEl.children) {
-        if (isCodeAnnotation(childEl)) {
-          childEl.remove();
-        }
-      }
-      return codeEl.innerText;
-    }
-  });
-  clipboard.on('success', function(e) {
+  const onCopySuccess = function(e) {
     // button target
     const button = e.trigger;
     // don't keep focus
@@ -518,7 +507,29 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     }, 1000);
     // clear code selection
     e.clearSelection();
+  }
+  const getTextToCopy = function(trigger) {
+      const codeEl = trigger.previousElementSibling.cloneNode(true);
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+  }
+  const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+    text: getTextToCopy
   });
+  clipboard.on('success', onCopySuccess);
+  if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+    // For code content inside modals, clipBoardJS needs to be initialized with a container option
+    // TODO: Check when it could be a function (https://github.com/zenorocha/clipboard.js/issues/860)
+    const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+      text: getTextToCopy,
+      container: window.document.getElementById('quarto-embedded-source-code-modal')
+    });
+    clipboardModal.on('success', onCopySuccess);
+  }
     var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
     var mailtoRegex = new RegExp(/^mailto:/);
       var filterRegex = new RegExp("https:\/\/realworlddatascience\.net\/");
@@ -526,7 +537,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
         return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
     }
     // Inspect non-navigation links and adorn them if external
- 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool)');
+ 	var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
     for (var i=0; i<links.length; i++) {
       const link = links[i];
       if (!isInternal(link.href)) {
