@@ -17,7 +17,7 @@
 <width>144</width>
 </image>
 <generator>quarto-1.5.57</generator>
-<lastBuildDate>Fri, 20 Sep 2024 08:56:35 GMT</lastBuildDate>
+<lastBuildDate>Thu, 31 Oct 2024 10:32:35 GMT</lastBuildDate>
 <item>
   <title>Forecasting the Health Needs of a Changing Population</title>
   <dc:creator>Luke Shaw (BNSSG ICB), Rich Wood (BNSSG ICB, University of Bath), Christos Vasilakis (University of Bath), Zehra Onen Dumlu (University of Bath)</dc:creator>
@@ -223,8 +223,113 @@ Shaw, Luke et al 2024. “Forecasting the Health Needs of a Changing Population�
   <category>Health and wellbeing</category>
   <category>Forecasting</category>
   <guid>https://realworlddatascience.net/case-studies/posts/2024/05/08/dpm.html</guid>
-  <pubDate>Fri, 20 Sep 2024 08:56:35 GMT</pubDate>
+  <pubDate>Thu, 31 Oct 2024 10:32:35 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/case-studies/posts/2024/05/08/images/doctor-patient-thumbnail.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
+<item>
+  <title>The machine learning victories at the 2024 Nobel Prize Awards and how to explain them</title>
+  <dc:creator>Anna Demming</dc:creator>
+  <link>https://realworlddatascience.net/ideas/posts/2024/10/31/machine-learning-nobel-prizes.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Few saw it coming when on 8th October 2024 the Nobel Committee awarded the <a href="https://www.nobelprize.org/prizes/physics/2024/prize-announcement/">2024 Nobel Prize for Physics</a> to John Hopfield for his Hopfield networks and Geoffrey Hinton for his Boltzmann machines as seminal developments towards machine learning that have statistical physics at the heart of them. The next day machine learning albeit using a different architecture bagged half of the <a href="https://www.nobelprize.org/prizes/chemistry/2024/prize-announcement/">Nobel Prize for Chemistry</a> as well, with the award going to Demis Hassabis and John Jumper for the development of an algorithm that predicts protein folding conformations. The other half of the Chemistry Nobel was awarded to David Baker for successfully building new proteins.</p>
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Close-up of a copy of the Nobel Prize Medal. Photographed on the floor of the Nobel Museum in Old Town, Stockholm. Machine learning came up a winner in both the Physics and Chemistry Nobel Prizes for 2024. Credit: Shutterstock">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/ideas/posts/2024/10/31/images/Nobelpic-shutterstock-991.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Close-up of a copy of the Nobel Prize Medal. Photographed on the floor of the Nobel Museum in Old Town, Stockholm. Machine learning came up a winner in both the Physics and Chemistry Nobel Prizes for 2024. Credit: Shutterstock">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Close-up of a copy of the Nobel Prize Medal. Photographed on the floor of the Nobel Museum in Old Town, Stockholm. Machine learning came up a winner in both the Physics and Chemistry Nobel Prizes for 2024. Credit: Shutterstock
+</figcaption>
+</figure>
+</div>
+<p>While the AI takeover at this year’s Nobel announcements for Physics and Chemistry came as surprise to most, there has been some keen interest on how these apparently different approaches to machine learning might actually reduce to the same thing, revealing new ways of extracting some fundamental explainability from the generative AI algorithms that have so far been considered effectively “black boxes”. The “transformer architectures” behind the likes of ChatGPT and AlphaFold are incredibly powerful but offer little explanation as to how they reach their solutions so that people have resorted to querying the algorithms and adding to them in order to extract information that might offer some insights. “This is a much more conceptual understanding of what’s going on,” says Dmitry Krotov, now a researcher at IBM Research in Cambridge Massachusetts, who working alongside John Hopfield made some of the first steps that helps bring the two types of machine learning algorithm together.</p>
+<section id="collective-phenomena" class="level2">
+<h2 class="anchored" data-anchor-id="collective-phenomena">Collective phenomena</h2>
+<p>Hopfield networks brought some of the mathematical toolbox long applied to extract “collective phenomena” from vast numbers of essentially identical parts such as atoms in a gas or atomic spins in magnetic materials. Although there maybe too many particles to track each individually, properties like temperature and magnetic field can be extracted using statistical physics. Hopfield showed that similarly a useful phenomenon he described as “associative memory” could be constructed from large numbers of artificial neurons by defining a “minimum energy”, which describes the network of neurons. The energy is determined by connections between neurons, which store information about patterns. Thus the network can retrieve the memorized patterns by minimizing that energy, just as stable conformations of atomic spins might be found in a magnetic material<sup>1</sup>. As the energy of the network is then subsequently minimised the pattern gets closer to the one that was memorised, just as when recalling a word or someone’s name we might first run through similar sounding words or names.</p>
+<p>These Hopfield networks proved a seminal step in progressing AI algorithms, enabling a kind of pattern recognition from multiple stored patterns. However, it turned out that the number of patterns that could be stored was fundamentally limited due to what are known as “local” minima. You can imagine a ball rolling down a hill – it will reach the bottom of the hill fine so long as there are no dips for it to get stuck in en route. Algorithms based on Hopfield networks were prone to getting stuck in such dips or undesirable local minima, until Hopfield and Krotov put their heads together to find a way around it. Krotov describes himself as “incredibly lucky” that his research interests aligned so well with Hopfield. “He’s just such a smart and genuine person, and he has been in the field for many years,” he tells Real World Data Science. “He just knows things that no one else in the world knows.” Together they worked out they could address the problem of local minima by toggling the “activation function”.</p>
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Energy Landscape of a Hopfield Network, highlighting the current state of the network (up the hill), an attractor state to which it will eventually converge, a minimum energy level and a basin of attraction shaded in green. Note how the update of the Hopfield Network is always going down in Energy. Credit: Mrazvan22/wikimedia">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/ideas/posts/2024/10/31/images/Energy_landscape.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Energy Landscape of a Hopfield Network, highlighting the current state of the network (up the hill), an attractor state to which it will eventually converge, a minimum energy level and a basin of attraction shaded in green. Note how the update of the Hopfield Network is always going down in Energy. Credit: Mrazvan22/wikimedia">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Energy Landscape of a Hopfield Network, highlighting the current state of the network (up the hill), an attractor state to which it will eventually converge, a minimum energy level and a basin of attraction shaded in green. Note how the update of the Hopfield Network is always going down in Energy. Credit: Mrazvan22/wikimedia
+</figcaption>
+</figure>
+</div>
+<p>In a Hopfield network all the neurons are connected to all the other neurons, however originally the algorithm only considered interactions between two neurons at each point, i.e.&nbsp;the interaction between neuron 1 and neuron 2, neuron 1 and neuron 3 and neuron 2 and neuron 3, but not the interactions among all three altogether. By including such “higher order” interactions between more than two neurons, Krotov and Hopfield found they made the basins of attraction for the true minimum energy states deeper. You can think of it a little like the ball rolling down a steeper hill so that it picks up more momentum along the slope of the main hill and is less prone to falling in little dips en route. This way Krotov and Hopfield increased the memory of Hopfield networks in what they called the Dense Associative Memory, which they described in 2016<sup>2</sup>. Long before then, however, Geoffrey Hinton had found a different tack to follow to increase the power of this kind of neural network.</p>
+</section>
+<section id="generative-ai" class="level2">
+<h2 class="anchored" data-anchor-id="generative-ai">Generative AI</h2>
+<p>Geoffrey Hinton showed that by defining some neurons as a hidden layer and some as a visible layer (a Boltzmann machine<sup>3</sup>) and limiting the connections so that neurons are only connected with neurons in other layers (a restricted Boltzmann machine<sup>4</sup>), finding the most likely network would generate networks with meaningful similarities – a type of generative AI. This and many other contributions by Geoffrey Hinton also proved incredibly useful in the progress of machine learning. However, the generative AI algorithms grabbing headlines today have actually been devised using a “transformer” architecture, which differs from Hopfield networks and Boltzmann machines, or so it seemed initially.</p>
+<p>Transformer algorithms first emerged as a type of language model and were defined by a characteristic termed “attention”. “They say that each word represents a token, and essentially the task of attention is to learn long-range correlations between those tokens,” Krotov explains using the word “bank” as an example. Whether the word means the edge of a river or a financial institution can only be ascertained from the context in which it appears. “You learn these long-range correlations, and that allows you to contextualize and understand the meaning of every word.” The approach was first reported in 2017 in a paper titled “Attention is all you need”<sup>5</sup> by researchers at Google Brain and Google Research.</p>
+<p>It was not long before people figured out that the approach would enable powerful algorithms for tasks beyond language manipulation, including Demis Hassabis and John Jumper at Deep Mind as they worked to figure out an algorithm that could predict the folding conformations of proteins. The algorithm they landed on in 2020 – AlphaFold2 – was capable of protein conformation prediction with a 90% accuracy, way ahead of any other algorithm at the time, including Deep Mind’s previous attempt AlphaFold, which although streaks ahead of the field at the time it was developed in 2018, still only achieved an accuracy of 60%. It was for the extraordinary predictive powers for protein conformations achieved by AlphaFold2 that Hassabis and Jumper were awarded half the 2024 Nobel Prize for Chemistry.</p>
+</section>
+<section id="connecting-the-dots" class="level2">
+<h2 class="anchored" data-anchor-id="connecting-the-dots">Connecting the dots</h2>
+<p>Transformer architectures are undoubtedly hugely powerful but how they operate can seem something of a dark art as although computer scientists know how they are programmed, even they cannot tell how they reach their conclusions in operation. Instead they query the algorithm and add to it to try and get some pointers as to what the trail of logic might have been. Here Hopfield networks have an advantage because people can hope to get a grasp on what energy minima they are converging to, and that way get a handle on their working out. However, in their paper “Hopfield networks is all you need”<sup>6</sup>, researchers in Austria and Norway showed that the activation function, which Hopfield and Krotov had toggled to make Hopfield networks store more memories, can also link them to transformer architectures – essentially if the function is exponential they can reduce to the same thing.</p>
+<p>“We think about attention as learning long-range correlations, and this dense associative memory interpretation of attention tells you that each word creates a basin of attraction,” Krotov explains. “Essentially, the contextualization of the unknown word happens through the attraction to these different memories,” he adds. “That kind of lens of thinking about transformers through the prism of of energy landscapes – it’s opened up this whole new world where you can think about what transformers are doing computationally, and how they perform that computation.”</p>
+<p>“I think it’s great that the power of these tools is being recognised for the impact that they can have in accelerating innovation in new ways,” says Janet Bastiman, RSS Data Science and AI Section Chair and Chief Data Scientist at financial crimes compliance solutions company Napier AI, as she comments on the Nobel Prize awards. Bastiman’s most recent work has been on adding explanation to networks. She notes how the report Hopfield networks is all you need highlights “the difference that layers can have on the final outcomes for specific tasks and a clear need for understanding some of the principles of the layers of networks in order to validate results and be aware of potential difficulties and”best” scenarios for different use cases.”</p>
+<p>Krotov also points out that since Hopfield networks are rooted in neurobiological interpretations, it helps to find “neurobiological ways of interpreting their computation” for transformer algorithms too. As such the vein Hopfield and Hinton tapped into with their seminal advances is proving ever richer in what Krotov describes as “the emerging field of the physics of neural computation”.</p>
+<div class="article-btn">
+<p><a href="../../../../../ideas/index.html">Explore more data science ideas</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author</dt>
+<dd>
+<strong>Anna Demming</strong> is a freelance science writer and editor based in Bristol, UK. She has a PhD from King’s College London in physics, specifically nanophotonics and how light interacts with the very small, and has been an editor for Nature Publishing Group (now Springer Nature), IOP Publishing and New Scientist. Other publications she contributes to include The Observer, New Scientist, Scientific American, Physics World and Chemistry World..
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2024 Anna Demming
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> Text, code, and figures are licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>, except where otherwise noted. Thumbnail image by <a href="https://www.shutterstock.com/image-photo/mute-key-on-neat-white-keyboard-1832448097">Shutterstock/Park Kang Hun</a> <a href="https://creativecommons.org/licenses/by/4.0/">Licenced by CC-BY 4.0</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Demming, Anna. 2024. “The machine learning victories at the 2024 Nobel Prize awards and how to explain them” Real World Data Science, October 31, 2024. <a href="https://realworlddatascience.net/ideas/posts/2024/10/31/machine-learning-nobel-prizes.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">References</h2>
+
+<ol>
+<li id="fn1"><p>Hopfield J J Neural networks and physical systems with emergent collective computational abilities <em>PNAS</em> <strong>79</strong> 2554-2558 (1982) <a href="https://www.pnas.org/doi/pdf/10.1073/pnas.79.8.2554">https://www.pnas.org/doi/pdf/10.1073/pnas.79.8.2554</a>↩︎</p></li>
+<li id="fn2"><p>Krotov D and Hopfield J J Dense Associative Memory for Pattern Recognition <em>NIPS</em> (2016)<a href="https://papers.nips.cc/paper_files/paper/2016/hash/eaae339c4d89fc102edd9dbdb6a28915-Abstract.html">https://papers.nips.cc/paper_files/paper/2016/hash/eaae339c4d89fc102edd9dbdb6a28915-Abstract.html</a>↩︎</p></li>
+<li id="fn3"><p>Ackley D H, Hinton G E and Sejnowski T E A learning algorithm for boltzmann machines <em>Cognitive Science</em> <strong>9</strong> 147-169 (1985) <a href="https://www.sciencedirect.com/science/article/pii/S0364021385800124">https://www.sciencedirect.com/science/article/pii/S0364021385800124</a>↩︎</p></li>
+<li id="fn4"><p>Salakhutdinov R, Mnih A and Hinton G Restricted Boltzmann machines for collaborative filtering <em>ICML ’07: Proceedings of the 24th international conference on Machine learning</em> 791-798 (2007) <a href="https://dl.acm.org/doi/10.1145/1273496.1273596">https://dl.acm.org/doi/10.1145/1273496.1273596</a>↩︎</p></li>
+<li id="fn5"><p>Vaswani A, Shazeer N, Parmar N, Uszkoreit J, Jones L, Gomez A N, Kaiser Ł, Polosukhin I Attention is all you need <em>NIPS</em> (2017)<a href="https://papers.nips.cc/paper_files/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html">https://papers.nips.cc/paper_files/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html</a>↩︎</p></li>
+<li id="fn6"><p>Ramsauer H, Schäfl B, Lehner J, Seidl P, Widrich M, Adler T, Gruber L, Holzleitner M, Pavlović M, Kjetil Sandve G, Greiff V, Kreil D, Kopp M, Klambauer G, Brandstetter J and Hochreiter S <em>arXiv</em> (2020) <a href="https://arxiv.org/abs/2008.02217">https://arxiv.org/abs/2008.02217</a>↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>AI</category>
+  <category>Algorithms</category>
+  <category>Machine Learning</category>
+  <guid>https://realworlddatascience.net/ideas/posts/2024/10/31/machine-learning-nobel-prizes.html</guid>
+  <pubDate>Thu, 31 Oct 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/ideas/posts/2024/10/31/images/Nobelpic-shutterstock-991.png" medium="image" type="image/png" height="96" width="144"/>
 </item>
 <item>
   <title>Are we at risk of muting the female voice in the digital world?</title>
@@ -690,7 +795,7 @@ Demming, Anna. 2024. “Ensuring new AI technologies help everyone thrive .” R
 <p>For example, in healthcare when we use AI for risk predictions, it can be a really great tool to aid clinicians to save time. However, in each stage, we need to assess the data quality, how these data are fed into the algorithm, what procedures, what models, and how we generate those models. And then which discriminative models do we use to balance the risk and eventually predict the risk of outcomes in patients? It’s very much a balance between risks and benefits for usefulness of these tools in practice. We have all these brilliant ideas of what best practice is. But in real terms, sometimes it’s a little bit tricky to follow through.</p>
 <p><strong>Could you give us some thoughts on the sort of best practice with data, for example, that doesn’t quite turn out to be quite so easy to follow in practice, and what you might do about it?</strong></p>
 <p><strong>FT</strong>: We always call these AI algorithms, data hungry algorithms, because the models that we fit require us to see patterns in the data that we feed into them so that the learning happens. And then the discriminative functions come in place to balance and kind of give a score to wherever the learning is happening and give an evaluation of each step. However, the data that we put into these algorithms comes first – the quality of that data. Often in healthcare, because of its sensitivity, the data is held within a secure environment. So we cannot, at this point in time, expose an AI algorithm to a very diverse example, specifically for investigating rare diseases or rare conditions. And above that, there is also complexities in the data itself. We need to evaluate and clean the data before we feed it into these algorithms. We need to evaluate the diversity of the data itself – for example, the tabular data, the imaging data, the genomic data – and each one requires its own specific or tailored approach in data cleaning stages.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The panel. Clockwise from top left: Ali Al-Sherbaz, Janet Bastiman, Fatemeh Torabi and Jonathan Gillard" data-fig-align="center">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="The panel. Clockwise from top left: Ali Al-Sherbaz, Janet Bastiman, Fatemeh Torabi and Jonathan Gillard">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/06/04/images/panel-991.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The panel. Clockwise from top left: Ali Al-Sherbaz, Janet Bastiman, Fatemeh Torabi and Jonathan Gillard">
@@ -931,7 +1036,7 @@ Lane, J., Hirsch, L. and Leonard, A. 2024. “Meeting the unprecedented challeng
 <section id="know-your-goals" class="level2">
 <h2 class="anchored" data-anchor-id="know-your-goals">Know your goals</h2>
 <p>The first point to note is that checking how well the output from an AI model matches the data in the training set is not an adequate indication of how well it will perform once deployed on other data. The problem can be exemplified by considering a simple model based on an equation that best fits a training data set. Data values are inevitably subject to measurement uncertainties and local conditions that add various types of noise, so taking the line defined by the equation identified as best matching the training data and measuring how good that match is falls short of adequate evaluation - the more perfectly a model matches this noisy data, the less perfectly it will fit an alternative set of data, a scenario described as “overfitting”. Similarly, what a machine learning or AI algorithm or model learns when it optimises its fit to the training data may not be generalisable.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart." data-fig-align="center">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/21/images/Evaluation_thumbnail.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart.">
@@ -943,7 +1048,7 @@ Figure&nbsp;1: Evaluation plots. The kinds of charts of monitored performance an
 </div>
 <p>There are a number of possible approaches and factors to take into account when sourcing test data but the first thing to consider when drawing up a process for evaluating an AI model is its objective. With this objective in mind it is then possible to pin down an appropriate measure of performance, which will shape how to use the test data to evaluate the model performance. Among the distinguishing factors between different measures used to evaluate how a model performs on test data, some will be suitable when the objective is to classify (e.g high or low risk based on health data?) while others are useful for models that estimate or predict (e.g What is the estimated height of a child given their parents’ heights).</p>
 <p>Classification model performance can be measured using accuracy, confusion matrices, sensitivity, specificity and the receiver operating characteristic (ROC). Classification accuracy summarises the performance of a classification model as the number of cases in which the model correctly classifies divided by the total number of cases used in the test set. However, this can be a blunt tool as there are cases where there is a different cost or consequence depending on the direction of the error. Confusion matrices are helpful to explore how the model performs in correctly classifying the different classes. The confusion matrix sums up the number of cases the model classifies correctly within each of the classes, for example how many actual high-risk cases are correctly classified as high risk by the model. The number of cases the model classifies as high risk, for example, that are not high risk is referred to as the False Positives. In the context of medical tests (e.g the covid lateral flow tests) testing positive for a condition that is not actually there is potentially less damaging than testing negative when the condition is there.</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The receiver operating characteristic can provide a helpful means of visualising performance. Credit: shutterstock ." data-fig-align="center">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="The receiver operating characteristic can provide a helpful means of visualising performance. Credit: shutterstock .">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/21/images/shutterstock_2377152411.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The receiver operating characteristic can provide a helpful means of visualising performance. Credit: shutterstock .">
@@ -964,7 +1069,7 @@ Figure&nbsp;2: The receiver operating characteristic can provide a helpful means
 <p>These data sets also need to have reliable labelling i.e.&nbsp;the rows of data need to be accurate so that the model’s performance can be assessed objectively against a trusted “ground truth”. For example, if we want to evaluate the performance of a fraud transaction classification model using accuracy as the performance metric, then we need a reliable training data set with true fraud transactions to evaluate how good the model is at detecting them. A data set with a list of transactions that are not accurately identified (or labelled) as fraud or not is not helpful. Thinking about how some commercial LLMs are trained on all the data in the “internet” it is worth asking whether a smaller more curated and specific training set would be better for model performance as well as being more ethical and safer.</p>
 <p>Several approaches for generating test data sets take training and test data as distinct subsets from the same initial data set <sup>4</sup>. There are different ways of doing this to make the most of the data to evaluate the model as systematically and exhaustively as possible. Perhaps the simplest example is using a hold-out set, which involves taking all the data available and taking a random subset of the data to use for testing the model. Depending on how much data is available then this can be 50% or less.</p>
 <p>A slightly more sophisticated approach is k-fold cross validation, which involves splitting all the data you have available into k subsets and then doing k iterations where in each iteration a different kth of the data is used as the testing data for evaluation of the model built by training it on the remaining (k-1/k) of the data. This is repeated k times each time using a different one of the k subsets for testing. The performance of the model can then be averaged over the k iterations. (The measure of performance can be, say, accuracy or sensitivity depending on the context). For example, if k is 3 then the data is split into 3, and each iteration will take a different 2/3 of the data as training data to build the model, and the remaining 1/3 as testing data to evaluate the model.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="K fold cross validation can indicate how sensitive a model is to the test data. Credit: Fabian Flöck CC-BY-AS-3.0" data-fig-align="center">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="K fold cross validation can indicate how sensitive a model is to the test data. Credit: Fabian Flöck CC-BY-AS-3.0">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/21/images/k-fold-cross-validation.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="K fold cross validation can indicate how sensitive a model is to the test data. Credit: Fabian Flöck CC-BY-AS-3.0">
@@ -1174,7 +1279,7 @@ Varley-Winter, O., Author. 2024. “On AI ethics - influencing its use in the de
 <p>Imputing missing values can preserve the whole sample. However, the introduction of noise during the imputation process may compromise the quality of fitted models, contingent upon the proportion of missing records. One way to offset this may be to use larger and larger data sets that might inevitably include a fuller training picture to the algorithm, just as adding dots to a pixelated image makes it more and more clear what is depicted.</p>
 <p>It is often perceived that for certain instances, particularly in the context of deep learning models, such as neural networks, the model itself is capable of handling missing values without explicit imputation or deletion procedures. <sup>6</sup> Is this really true in a real-world scenario? Are these models advanced enough to achieve an optimised performance even when data quality is not at an optimised level? <sup>7</sup> Köse et al.&nbsp;(2020) investigated the effect of two conventional imputation approaches: Multiple imputation (MICE) <sup>8</sup> and Factor analysis of mixed data (FAMD) <sup>9</sup> on performance of deep learning models. Their study endorsed the use of such explicit imputation approaches, showing an enhancement in model performance. <sup>10</sup></p>
 <p>Data imbalance issues, arise within datasets where there is a disproportionate amount of information pertaining to a specific aspect. When imbalanced data, rich in focused information, is used to train an AI model, the model becomes adept at learning about the specific aspect but may struggle to generalise its findings to diverse scenarios, thus fostering overfitting where the model achieves accurate prediction on the training data but loses accuracy for any new test dataset.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Stages involved in AI model development" data-fig-align="center">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Stages involved in AI model development">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/07/images/Stages-of-model-development-724.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Stages involved in AI model development">
@@ -1193,7 +1298,7 @@ Figure&nbsp;1: Stages involved in AI model development.
 <p>When AI algorithms encounter complex, unstructured data, the task of quality assurance suddenly balloons beyond tackling the three main errors highlighted above. Such circumstances require some kind of quality enhancement procedure, where datasets in the form of images or unstructured text go through a curation process which involves enhancement of the quality and standardisation of the format to the level required for integration into AI algorithms. This process of standardization of data is paramount across various domains, especially in healthcare where complex, unstructured health data holds transformative potential for AI driven advances that revolutionise diagnosis, treatment, and prognosis of diseases. From electronic health records to magnetic resonance imaging (MRI) scans and genetic sequences, this data offers a wealth of insights for AI models to learn from. Adopting standardised formats not only facilitates seamless integration of diverse datasets but also streamlines the development and deployment of AI models. However, unlocking this potential requires a strong foundation in high-quality, processed data which begins with standardisation.</p>
 <p>One category of complex health data is neuroimaging of which a prime example is MRI. Different institutions will often employ different acquisition protocols and different ways of collecting and storing neuroimaging data. Above all, this can make it very difficult to integrate into existing workflows and processing pipelines, but it also makes it challenging to understand, compare and combine with other datasets. To address these challenges, the neuroimaging community has adopted the Brain Imaging Data Structure (BIDS) <sup>13</sup> – a standardised format for organising and naming MRI data which allows compliant data to integrate smoothly with existing workflows and AI models, streamlining processing and analysis. By embracing standardisation, we can pave the way for common processing tools to enable the generation of AI-ready data.</p>
 <p>Next, comes pre-processing. Sticking with the neuroimaging example, MRI scans are susceptible to various forms of noise and artifacts, which can appear as blurring or distortions which, without proper processing, can be misinterpreted by AI models. Pre-processing typically includes steps for spatial normalisation and image registration, involving alignment of brain images from different individuals into a common reference model and alignment of different images of the same subject to a common template. This standardisation facilitates inter-subject and inter-study comparisons, enabling AI models to generalise effectively across diverse datasets. However, the multi-layer aspect of this process means that aligning data to a common template is dependent on the choice of template which itself can introduce bias if the template brain doesn’t accurately reflect the patient’s anatomy (due to age, ethnicity, or disease for example).</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Neuroimaging data" data-fig-align="center">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Neuroimaging data">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/07/images/neuroimaging.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Neuroimaging data">
@@ -1319,7 +1424,7 @@ Torabi, Fatemeh, Hotchkiss, Lewis, Squires, Emma, Thompson, Simon E. and Lyons, 
 
 <p>Generative artificial intelligence (AI) models have taken the world by storm over the past year. The human-like outputs of these systems, and the recent publication of a guideline to determine the degree of consciousness of machines, have again raised the question of whether machines will soon be able to replicate human intelligence. In this article, we discuss some of the merits and limitations of modern machine learning models, and also provide a general view of human intelligence and the position of “intelligent” systems in the constellation of human capabilities.</p>
 <p>Large language models (LLMs) such as ChatGPT are designed to process and understand natural language, and to generate human-like text in response to prompts and questions. This is achieved thanks to a specific type of deep learning architecture called the <em>Transformer</em>, which consists of an encoder and a decoder, each made up of some number <em>N</em> of blocks. Here the input text is eventually transformed into predicted (and contextualised) output text (Figure&nbsp;1).<sup>1</sup> LLMs are trained on complex and large bodies of text so that they can learn complex patterns and relationships between words in sentences, in different contexts.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Architecture of the Transformer. The left-hand block is the Encoder, whereas the right-hand block represents the decoder" data-fig-align="center">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Architecture of the Transformer. The left-hand block is the Encoder, whereas the right-hand block represents the decoder">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/04/29/images/fig1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Architecture of the Transformer. The left-hand block is the Encoder, whereas the right-hand block represents the decoder">
@@ -1339,7 +1444,7 @@ Figure&nbsp;1: Architecture of the Transformer. The left-hand block is the Encod
 <p>The trophy would not fit in the suitcase because it was too <strong>small/large</strong>.</p>
 </blockquote>
 <p>Humans would infer that if the last word of that sentence is <em>small</em>, then <em>suitcase</em> is the object being described, whereas if the word is <em>large</em> then we are referring to the <em>trophy</em>. ChatGPT v3.5 was unable to make this inference when the question was first put to it (see Figure&nbsp;2), although a later test finds it now can – as can other LLMs. Some suggest that this type of improvement comes from training ChatGPT to do better on some of the tasks that are routinely used to highlight model limitations on social media at the expense of <a href="https://www.searchenginejournal.com/chatgpt-quality-worsened/492145/">giving worse answers in other contexts</a>. But could this improvement be due to ChatGPT and other models suddenly having acquired common sense and an understanding of the physical world? A more complex set of Winograd schema questions, the WinoGrande dataset, suggests not: humans still outperform computers on these tests.<sup>4</sup></p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Screenshot of author's ChatGPT conversation, prompting the AI chatbot to solve a WinoGrad schema question" data-fig-align="center">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Screenshot of author's ChatGPT conversation, prompting the AI chatbot to solve a WinoGrad schema question">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/04/29/images/fig2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Screenshot of author's ChatGPT conversation, prompting the AI chatbot to solve a WinoGrad schema question">
@@ -1359,7 +1464,7 @@ Figure&nbsp;2: GPT-3.5’s inconclusive answer to a typical WinoGrad schema ques
 <p>Moreover, machines can be surprisingly easy to fool. For example, placing an object next to the one we are trying to classify can confuse image classification algorithms – a <a href="https://www.youtube.com/watch?v=i1sp4X57TL4">well-known example shows a patch being placed next to a banana</a>, which makes the deep neural network (DNN) classify the banana as a toaster with a high degree of confidence. We can also fool image classification networks <a href="https://arxiv.org/abs/1811.11553">by showing the same object under different lighting conditions and orientations</a>, such as when we flip a school bus on its side (as in an accident). The reason why a DNN cannot do this trivial mental rotation is because learning algorithms cannot generalise knowledge to unseen (or “out of distribution”) examples – imbuing them with no small amount of “brittleness”.<sup>7</sup> Compare this to the human mind, which learns in a semi-supervised manner: we need only be shown a few guiding examples to be able to extrapolate knowledge. This is a clear evolutionary adaptation since most real-world learning is semi-supervised: we do not need to explore every road to learn to drive, nor do every possible differentiation exercise to become confident at calculus. Likewise, we do not need to become fully bilingual in a language before we start combining newly learned words to try to explain complex concepts.</p>
 <p>Next to GPT-4’s <a href="https://arxiv.org/abs/2303.08774">100-trillion parameter model</a>, the human brain seems <a href="https://www.wired.com/story/cerebras-chip-cluster-neural-networks-ai/">much more</a> <a href="https://arxiv.org/pdf/2005.14165">parsimonious</a>. Therefore, progress in AI would perhaps come faster if we could teach machines to learn from a few (or no) labelled examples instead of being so heavily dependent on terabytes of labelled data (supervised learning) and on our own interpretation of the world.<sup>8</sup></p>
 <p>Another major limitation of algorithms for achieving human-like adaptive learning in changing environments is the fact that they cannot keep learning without forgetting previously learned training data. This phenomenon is called <em>catastrophic forgetting</em>,<sup>9</sup> and it occurs because of the <em>stability-plasticity dilemma</em>: this states that a certain degree of plasticity is required for the integration of new knowledge, but also radically new knowledge (e.g.&nbsp;large weight changes in a DNN) disrupts the stability necessary for retaining the previously learned representations (Figure&nbsp;3). In other words, weight stability is synonymous with knowledge retention, but it also introduces the rigidity that prevents the learning of new tasks.<sup>10</sup></p>
-<div id="fig-3" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Illustration of catastrophic forgetting and ideal learning in a two-class classifier" data-fig-align="center">
+<div id="fig-3" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Illustration of catastrophic forgetting and ideal learning in a two-class classifier">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/04/29/images/fig3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Illustration of catastrophic forgetting and ideal learning in a two-class classifier">
@@ -2215,60 +2320,6 @@ Tarran, Brian. 2024. “UK government sets out 10 principles for use of generati
   <guid>https://realworlddatascience.net/viewpoints/editors-blog/posts/2024/01/22/gen-ai-framework.html</guid>
   <pubDate>Mon, 22 Jan 2024 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/viewpoints/editors-blog/posts/2024/01/22/images/uk-parliament.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>When will the cherry trees bloom? Get ready to make and share your predictions!</title>
-  <dc:creator>Brian Tarran</dc:creator>
-  <link>https://realworlddatascience.net/viewpoints/editors-blog/posts/2024/01/18/cherry-blossom.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>The <a href="https://competition.statistics.gmu.edu/">2024 International Cherry Blossom Prediction Competition</a> will open for entries on February 1, and Real World Data Science is once again proud to be a sponsor.</p>
-<p>Contestants are invited to submit predictions for the date cherry trees will bloom in 2024 at five different locations – Kyoto, Japan; Liestal-Weideli, Switzerland; Vancouver, Canada; and Washington, DC and New York City, USA.</p>
-<p>The competition organisers will provide all the publicly available data they can find for the bloom dates of cherry trees in these locations, and contestants will then be challenged to use this data “in combination with any other publicly available data (e.g., climate data) to provide reproducible predictions of the peak bloom date.”</p>
-<p>“For this competition, we seek accurate, interpretable predictions that offer strong narratives about the factors that determine when cherry trees bloom and the broader consequences for local and global ecosystems,” say the organisers. “Your task is to predict the peak bloom date for 2024 and to estimate a prediction interval, a lower and upper endpoint of dates during which peak bloom is most probable.”</p>
-<p>So that organisers can reproduce the predictions, entrants must submit all data and code in a <a href="https://quarto.org/">Quarto document</a>.</p>
-<p>There’s cash and prizes on offer for the best entries, including having your work featured on Real World Data Science. <a href="https://competition.statistics.gmu.edu/">Head on over to the competition website for full details and rules</a>.</p>
-<p>And, if you are looking for some inspiration, check out this <a href="https://realworlddatascience.net/ideas/tutorials/posts/2023/04/13/flowers.html">tutorial on the law of the flowering plants</a>, written by Jonathan Auerbach, a co-organiser of the prediction competition.</p>
-<p>Good luck to all entrants!</p>
-<div class="article-btn">
-<p><a href="../../../../../../viewpoints/editors-blog/index.html">Back to Editors’ blog</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2024 Royal Statistical Society
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Photo by <a href="https://unsplash.com/@ajny?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">AJ</a> on <a href="https://unsplash.com/photos/pink-flowers-McsNra2VRQQ?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Unsplash</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Tarran, Brian. 2024. “When will the cherry trees bloom? Get ready to make and share your predictions!” Real World Data Science, January 18, 2024. <a href="https://realworlddatascience.net/viewpoints/editors-blog/posts/2024/01/18/cherry-blossom.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-
- ]]></description>
-  <category>Coding</category>
-  <category>Prediction</category>
-  <category>Reproducible research</category>
-  <category>Statistics</category>
-  <guid>https://realworlddatascience.net/viewpoints/editors-blog/posts/2024/01/18/cherry-blossom.html</guid>
-  <pubDate>Thu, 18 Jan 2024 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/viewpoints/editors-blog/posts/2024/01/18/images/cherry-blossom.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 </channel>
 </rss>
