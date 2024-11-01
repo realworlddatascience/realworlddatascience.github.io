@@ -6,11 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Atmajitsinh Gohil">
-<meta name="dcterms.date" content="2024-06-25">
-<meta name="description" content="Atmajitsinh Gohil describes a recently devised 3 step framework that improves the accuracy of nowcasting.">
+<meta name="author" content="Sallie Keller, Stephanie Shipp, Vicki Lancaster and Joseph Salvo (University of Virginia)">
+<meta name="dcterms.date" content="2024-11-01">
+<meta name="description" content="In this article, we introduce a new approach for the US Census Bureau to produce statistical products using survey, administrative, procedural and opportunity data. This is the first in a series of four articles describing the development of the Curated Data Enterprise Framework.">
 
-<title>Nowcasting upgrade for better real time estimation of GDP and inflation – Real World Data Science</title>
+<title>Advancing Data Science in Official Statistics – The Policy Problem – Real World Data Science</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,28 +23,48 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-</style>
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
 
 
-<script src="../../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../../../../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../../../../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../../../../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../../../../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../../../../../">
-<link href="../../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
-<script src="../../../../../../site_libs/quarto-html/quarto.js"></script>
-<script src="../../../../../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../../../../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
-<link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
-<link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../">
+<link href="../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
+<script src="../../../../../site_libs/quarto-html/quarto.js"></script>
+<script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -85,16 +105,16 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 Ben is on GitHub here: https://github.com/benruijl
 And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
 
-<meta property="og:title" content="Nowcasting upgrade for better real time estimation of GDP and inflation – Real World Data Science">
-<meta property="og:description" content="Atmajitsinh Gohil describes a recently devised 3 step framework that improves the accuracy of nowcasting.">
-<meta property="og:image" content="https://realworlddatascience.net/ideas/datasciencebites/posts/2024/6/25/images/GDPshutterstock_2302082265-991.jpg">
+<meta property="og:title" content="Advancing Data Science in Official Statistics – The Policy Problem – Real World Data Science">
+<meta property="og:description" content="In this article, we introduce a new approach for the US Census Bureau to produce statistical products using survey, administrative, procedural and opportunity data. This is the first in a series of four articles describing the development of the Curated Data Enterprise Framework.">
+<meta property="og:image" content="https://realworlddatascience.net/case-studies/posts/2024/11/01/images/laptop-thumbnail.jpg">
 <meta property="og:site_name" content="Real World Data Science">
-<meta property="og:image:alt" content="Growth of GDP with statistical graph, 3d rendering. Digital drawing. Credit: Shutterstock, Vink Fan">
-<meta name="twitter:title" content="Nowcasting upgrade for better real time estimation of GDP and inflation – Real World Data Science">
-<meta name="twitter:description" content="Atmajitsinh Gohil describes a recently devised 3 step framework that improves the accuracy of nowcasting.">
-<meta name="twitter:image" content="https://realworlddatascience.net/ideas/datasciencebites/posts/2024/6/25/images/GDPshutterstock_2302082265-991.jpg">
+<meta property="og:image:alt" content="A laptop computer showing a variety of data visualisations.">
+<meta name="twitter:title" content="Advancing Data Science in Official Statistics – The Policy Problem – Real World Data Science">
+<meta name="twitter:description" content="In this article, we introduce a new approach for the US Census Bureau to produce statistical products using survey, administrative, procedural and opportunity data. This is the first in a series of four articles describing the development of the Curated Data Enterprise Framework.">
+<meta name="twitter:image" content="https://realworlddatascience.net/case-studies/posts/2024/11/01/images/laptop-thumbnail.jpg">
 <meta name="twitter:site" content="@rwdatasci">
-<meta name="twitter:image:alt" content="Growth of GDP with statistical graph, 3d rendering. Digital drawing. Credit: Shutterstock, Vink Fan">
+<meta name="twitter:image:alt" content="A laptop computer showing a variety of data visualisations.">
 <meta name="twitter:card" content="summary_large_image">
 </head><body class="nav-fixed"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
 
@@ -115,7 +135,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 
-<link rel="stylesheet" href="../../../../../../rwds.css">
+<link rel="stylesheet" href="../../../../../rwds.css">
 
 
 
@@ -125,8 +145,8 @@ document.addEventListener("DOMContentLoaded", function() {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../../../../../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
+    <a href="../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -136,19 +156,19 @@ document.addEventListener("DOMContentLoaded", function() {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../../../../case-studies/index.html"> 
+    <a class="nav-link" href="../../../../../case-studies/index.html"> 
 <span class="menu-text">Case studies</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../../../../ideas/index.html"> 
+    <a class="nav-link" href="../../../../../ideas/index.html"> 
 <span class="menu-text">Ideas</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../../../../careers/index.html"> 
+    <a class="nav-link" href="../../../../../careers/index.html"> 
 <span class="menu-text">Careers</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../../../../viewpoints/index.html"> 
+    <a class="nav-link" href="../../../../../viewpoints/index.html"> 
 <span class="menu-text">Viewpoints</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -157,19 +177,19 @@ document.addEventListener("DOMContentLoaded", function() {
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
         <li>
-    <a class="dropdown-item" href="../../../../../../about-rwds.html">
+    <a class="dropdown-item" href="../../../../../about-rwds.html">
  <span class="dropdown-text">Who we are</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../../../../contributor-docs/call-for-contributions.html">
+    <a class="dropdown-item" href="../../../../../contributor-docs/call-for-contributions.html">
  <span class="dropdown-text">How to contribute</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../../../../CODE_OF_CONDUCT.html">
+    <a class="dropdown-item" href="../../../../../CODE_OF_CONDUCT.html">
  <span class="dropdown-text">Code of conduct</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../../../../contact.html">
+    <a class="dropdown-item" href="../../../../../contact.html">
  <span class="dropdown-text">Contact us</span></a>
   </li>  
     </ul>
@@ -185,15 +205,18 @@ document.addEventListener("DOMContentLoaded", function() {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Nowcasting upgrade for better real time estimation of GDP and inflation</h1>
+      <h1 class="title">Advancing Data Science in Official Statistics – The Policy Problem</h1>
                   <div>
         <div class="description">
-          Atmajitsinh Gohil describes a recently devised 3 step framework that improves the accuracy of nowcasting.
+          <p>In this article, we introduce a new approach for the US Census Bureau to produce statistical products using survey, administrative, procedural and opportunity data. This is the first in a series of four articles describing the development of the Curated Data Enterprise Framework.</p>
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">Forecasting</div>
-                <div class="quarto-category">Machine learning</div>
+                <div class="quarto-category">Public Policy</div>
+                <div class="quarto-category">Data Analysis</div>
+                <div class="quarto-category">Data Integration</div>
+                <div class="quarto-category">Curation</div>
+                <div class="quarto-category">Statistical Products</div>
               </div>
                   </div>
   </div>
@@ -204,14 +227,14 @@ document.addEventListener("DOMContentLoaded", function() {
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Atmajitsinh Gohil </p>
+               <p>Sallie Keller, Stephanie Shipp, Vicki Lancaster and Joseph Salvo (University of Virginia) </p>
             </div>
     </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">June 25, 2024</p>
+        <p class="date">November 1, 2024</p>
       </div>
     </div>
     
@@ -227,10 +250,10 @@ document.addEventListener("DOMContentLoaded", function() {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#model-framework-improved-flexibility-and-accuracy" id="toc-model-framework-improved-flexibility-and-accuracy" class="nav-link active" data-scroll-target="#model-framework-improved-flexibility-and-accuracy">Model framework improved flexibility and accuracy:</a></li>
-  <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next">What’s Next?</a></li>
+  <li><a href="#introduction" id="toc-introduction" class="nav-link active" data-scroll-target="#introduction">Introduction</a></li>
+  <li><a href="#a-new-approach" id="toc-a-new-approach" class="nav-link" data-scroll-target="#a-new-approach">A new approach</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/ideas/datasciencebites/posts/2024/6/25/nowcasting-3step.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/case-studies/posts/2024/11/01/policy-problem.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -239,60 +262,62 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-<p>Governments, policymakers and central banks across the world are wrestling to keep rising prices under control using monetary policies such as interest rate increases. The effectiveness of such policy changes should be assessed by monitoring inflation data as well as studying the impact on real GDP, making timely and accurate access to key economic indicators crucial for policy planning. The delay in publishing economic indicators such as Real GDP, inflation and other labour related series, makes this real time assessment of the economy particularly challenging. Now Menzie Chinn at the University of Wisconsin, Baptiste Meunier at the European Central Bank and Sebastian Stumpner at the Banque de France report an approach for “nowcasting” built on previous research that develops a framework using different machine learning techniques and is flexible and adaptable compared with traditional methods<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. They report on the accuracy of their 3-step framework for nowcasting global trade volume estimates, showing how it can outperform traditional methods. They also highlight that the 3-step framework can be extended beyond World Trade data.</p>
-<p>Nowcasting, an amalgamation of the term now and forecasting, provides a methodology to assess the current state of the economy by predicting the current value of inflation or Real GDP. The <a href="https://www.newyorkfed.org/research/policy/nowcast#/overview">Federal Reserve Bank of New York</a> and <a href="https://www.atlantafed.org/cqer/research/gdpnow">Federal Reserve Bank of Atlanta</a> have used nowcasting to publish real time GDP estimates, for the USA. Similarly, the <a href="https://www.clevelandfed.org/indicators-and-data/inflation-nowcasting">Federal Reserve Bank of Cleveland estimates real time inflation</a> using nowcasting methods.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="GDP digital drawing. Credit: Shutterstock, Vink Fan">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/GDPshutterstock_2302082265-991.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="GDP digital drawing. Credit: Shutterstock, Vink Fan">
+<center>
+Acknowledgments: This research was sponsored by the: <br> United States Census Bureau Agreement No.&nbsp;01-21-MOU-06 and <br> Alfred P. Sloan Foundation Grant No.&nbsp;G-2022-19536
+</center>
+<p><br> <br> <em>The views expressed in this artice are those of the authors and not the Census Bureau.</em></p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Two centuries ago, when the Framers of the US Constitution laid the cornerstone for the federal statistical system, they could not have imagined the complexity of questions future generations would want to ask or the variety of data sources available to address them. Back in 1787, counting the population and apportioning state seats in the House of Representatives were the most urgent tasks before the young nation, and so a requirement for a decennial census was written into the Constitution. Now, 233 years later, the census continues to serve its original purpose – but purposes and uses for census data have exploded.</p>
+<p>Questions we now seek to answer go beyond what the census (or surveys) alone can hope to address. Even with the multitude of other surveys commissioned by today’s US Census Bureau, researchers and policymakers find themselves looking to novel sources of data – from structured numeric data in traditional databases to unstructured text documents scraped from the internet – to explore issues such as understanding how prepared nursing homes and communities are for extreme climate events,eg, hurricanes, wildfires, or floods. Wrangling these sources with traditionally designed data, such as censuses and surveys, can fill data gaps, improve the quality and usefulness of statistical products, speed up their dissemination, and inspire the creation of new types of statistical products.</p>
+<p>That is the impetus for developing the Curated Data Enterprise (CDE), an innovation in data science aimed at creating statistical products from all data types and building the infrastructure to support them. The Curated Data Enterprise, as the name implies, includes an end-to-end curation model to capture the complete statistical product development process. The CDE is designed to enable data discovery and retrieval, data quality assessment across multiple and diverse sources of information, and the reuse of data and models over time to accelerate statistical product development. The US Census Bureau has partnered with the University of Virginia, a working group of former Census Bureau Directors, a Communication Director, and university, non-profit and industry experts to develop this approach.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Growth of GDP with statistical graph, 3d rendering. Digital drawing. Credit: Shutterstock, Vink Fan
-</figcaption>
-</figure>
+<div class="callout-title-container flex-fill">
+The US <a href="https://www.census.gov/">Census Bureau</a>
 </div>
-<p>The basic principle of nowcasting is utilising information that is published early such as using data published at higher frequency, survey data, financial indicators or economic indicators. For example, the running estimate of Real GDP (aka GDPNow) that the Federal Reserve Bank of Atlanta provides is updated 6 or 7 times a month on weekdays when one of the 7 input data sources are released. Similarly, the real GDP growth estimate that the Federal Reserve Bank of New York provides is based on data releases in categories such as housing and construction, manufacturing, surveys, retail and consumption, income, labour, international trade, prices and others.</p>
-<p>The traditional methods of nowcasting do not provide an integrated framework, and forecasters need to know which variables to use, and select a method for factor extraction and machine learning regression. Chinn, Meunier and Stumpner propose a sequential framework that selects the most important predictors. The selected variables are then summarized using Principal Component Analysis (PCA) and these factors are used as explanatory variables to perform the regression. Although traditional methods of nowcasting also utilized many of these techniques, the authors test various combinations of pre-selection, factor extraction and regression techniques and propose a combination that improves model accuracy.</p>
-<section id="model-framework-improved-flexibility-and-accuracy" class="level2">
-<h2 class="anchored" data-anchor-id="model-framework-improved-flexibility-and-accuracy">Model framework improved flexibility and accuracy:</h2>
-<p>The 3 steps in the framework are chronological steps to be performed in which the first step is pre-selection of the independent variables with the highest predictive power. The independent variables from the first step are then summarised into a few factors using factor extraction methodology in the second step. The final step consists of using the factors from step 2 to perform regression.</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/3step-framework-methods-big.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research.">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research.
-</figcaption>
-</figure>
+<div class="callout-body-container callout-body">
+<p>The US Census Bureau provides the latest official statistics, facts, and figures about America’s people, places, and economy. It collects data for 130 surveys annually and the decennial census that gives the Bureau its name. The US Census Bureau collects data from households, businesses, governments and non-profit organizations. For each survey, tabulations and margins of error are published in news releases and reports. Public-use microdata subject to disclosure rules are provided for household and demographic surveys. Microdata for economic and household surveys, without disclosure rules applied, are accessible to researchers through the <a href="https://www.census.gov/about/adrm/fsrdc.html">Federal Statistical Research Data Centers</a>.</p>
+<p>Statistical agencies in other countries are also modernizing their surveys and statistical product development. See a summary of selected countries <span class="citation" data-cites="Lanman2023">(<a href="#ref-Lanman2023" role="doc-biblioref">Lanman, Davis, and Shipp 2023</a>)</span>.</p>
 </div>
-<p><a href="#fig-2" class="quarto-xref">Figure&nbsp;2</a> summarises the various methods employed at each step in the 3 step framework. In their report Chinn, Meunier and Stumpner aim to propose the best techniques for pre-selection, factor extraction and regression. As such their 3-step framework comprises performing pre-selection using Least Angle Regression (LARS), factor extraction using Principal Component Analysis (PCA) and employing a Macroeconomic Random Forest (MRF) machine learning technique for nowcasting.</p>
-<p>The model performance or accuracy of MRF is compared with traditional methods using Root Mean Square Error (RMSE), a measure of the deviation between the actual data and the predicted data. The 3-step framework model accuracy is tested by holding the preselection and factor extraction fixed to isolate the impact of regression techniques.</p>
-<div id="fig-3" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="images/method-accuracy-big.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research.">
 </div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research.
-</figcaption>
-</figure>
-</div>
-<p><a href="#fig-3" class="quarto-xref">Figure&nbsp;3</a> compares the RMSE of traditional methods, machine learning tree and machine learning regression model for backcasting (t-2 and t-1), nowcasting (t) and forecasting (t+1). It highlights the greater model accuracy of MRF and Gradient Boosting compared with traditional models and tree models for backcasting, nowcasting and forecasting.</p>
 </section>
-<section id="whats-next" class="level2">
-<h2 class="anchored" data-anchor-id="whats-next">What’s Next?</h2>
-<p>Organisations such as <a href="https://nowcastinglab.org/map">The Nowcasting Lab</a> provide GDP estimates for European countries. Such nowcasting techniques have been employed by humanitarian agencies including the United Nations Refugee Agency (UNHCR) which uses nowcasting to estimate the actual forced displaced population. The nowcasting techniques, dashboards and tools have been implemented and accepted as a reliable source of information at government organisations for policy making, central banks, and financial organisations. The 3-step framework, proposed by Chinn, Meunier and Stumpner, is easily adaptable, flexible and provides higher accuracy, which will be valuable to a range of fields employing nowcasting.</p>
-<div class="article-btn">
-<p><a href="../../../../../../ideas/index.html">Explore more data science ideas</a></p>
-</div>
+<section id="a-new-approach" class="level2">
+<h2 class="anchored" data-anchor-id="a-new-approach">A new approach</h2>
+<p>To realize the CDE vision, the development of statistical products will address stakeholder questions using all data types – designed surveys and censuses, public and private administrative data, opportunity data scraped from the internet and procedural data <span class="citation" data-cites="keller2022bold">(<a href="#ref-keller2022bold" role="doc-biblioref">Keller et al. 2022</a>)</span>. This new approach aligns with the US Census Bureau’s modernization and transformation <span class="citation" data-cites="thieme2022technology">(<a href="#ref-thieme2022technology" role="doc-biblioref">Thieme 2022</a>)</span> while maintaining the fundamental responsibilities of statistical agencies <span class="citation" data-cites="management2023fundamentals">(<a href="#ref-management2023fundamentals" role="doc-biblioref">OMB 2023</a>)</span>. It is also consistent with a conclusion by the NASEM <em>Panel on the Implications of Using Multiple Data Sources for Major Survey Programs</em>: ‘The quality of statistics produced from multiple data sources depends on properties of the individual sources as well as the methods used to combine them. A new framework of quality standards and guidelines is needed to evaluate such data sources’ fitness for use’ <span class="citation" data-cites="NASEM2023">(<a href="#ref-NASEM2023" role="doc-biblioref">NASEM 2023, 192</a>)</span>.</p>
+<p>The CDE approach provides such a framework to address many of the challenges that official statistics face today, as well as demonstrate that they are poised to adopt a new approach to producing official statistics. For example:</p>
+<ul>
+<li><p>The timeliness and frequency of our official statistics are insufficient when there are shocks to the economy, such as the Covid-19 pandemic, when retrospective survey data were of limited usefulness. Federal agencies responded during the pandemic with relevance and agility by creating and launching fast-response Household Pulse Surveys that met immediate needs for data, trading off timeliness for quality <span class="citation" data-cites="Groshen2021Future">(<a href="#ref-Groshen2021Future" role="doc-biblioref">Groshen 2021</a>)</span>. Public engagement and support for these new relevant and timely data products at a time of crisis were essential to the success of this new statistical product.</p></li>
+<li><p>The policy environment has responded to technological, social, and survey changes by encouraging efficient use of existing data, reuse, sharing and furthering open data principles. Researchers are now creating innovative statistical products using multiple data sources to better address the US’s needs and interests. The Commission on Evidence-Based Policymaking <span class="citation" data-cites="abraham2018promise">(<a href="#ref-abraham2018promise" role="doc-biblioref">Abraham et al. 2018</a>)</span> and the Federal Data Strategy <span class="citation" data-cites="FedDataStrat">(<a href="#ref-FedDataStrat" role="doc-biblioref"><span>“Federal Data Strategy, Leveraging Data as a Strategic Asset”</span> 2021</a>)</span> recommendations encourage agencies to permit access to data to undertake evaluation and research studies.</p></li>
+<li><p>Techniques such as rapid scanning, text recognition, user-friendly uploads, and new devices, sensors, and systems can now record and transcribe data in real time. Using these techniques, governments and corporations now routinely and instantaneously collect and store data on behaviors and states as varied as purchase transactions, climate and road conditions, healthcare plan utilization, and land use and zoning. Extensive digitization and recording, better system connectedness and interactivity, and increased human-computer interaction can result in faster data accumulation, enhancing the usability of private and public administrative data while maintaining privacy and confidentiality <span class="citation" data-cites="brady2019challenge jarmin2019evolving">(<a href="#ref-brady2019challenge" role="doc-biblioref">Brady 2019</a>; <a href="#ref-jarmin2019evolving" role="doc-biblioref">Jarmin 2019</a>)</span>. &nbsp;</p></li>
+<li><p>New techniques and data sources can transform statistical agencies ‘from the 20th-century survey-centric model to a 21st-century model that blends structured survey data with administrative and unstructured alternative digital data sources’, leading to better measures of the gig economy, retail sales, healthcare, workforce, and tools and methods to integrate multiple data sources while maintaining privacy and confidentiality <span class="citation" data-cites="jarmin2019evolving">(<a href="#ref-jarmin2019evolving" role="doc-biblioref">Jarmin 2019</a>)</span>.</p></li>
+</ul>
+<p>The next three articles in this series will:</p>
+<ul>
+<li><p>provide an overview of the CDE and its corresponding framework</p></li>
+<li><p>put the CDE Framework into practice through a demonstration use case on the resilience of skilled nursing facilities</p></li>
+<li><p>describe our next steps for developing the CDE through a use case research program.</p></li>
+</ul>
 <div class="further-info">
 <div class="grid">
 <div class="g-col-12 g-col-md-12">
 <dl>
-<dt>About the author</dt>
+<dt>About the authors</dt>
 <dd>
-<strong>Atmajitsinh Gohil</strong> is an independent researcher in the field of AI and ML, specifically managing AI and ML risk. He has worked with consulting firm assisting clients in model risk management. He has graduated from SUNY, Buffalo with a M.S. in Economics.
+<p><strong>Stephanie Shipp</strong> leads the Curated Data Enterprise research portfolio and collaborates with the US Census. She is an economist with experience in data science, survey statistics, public policy, innovation, ethics, and evaluation.</p>
+</dd>
+<dd>
+<strong>Vicki Lancaster</strong> is a statistician with expertise in experimental design, linear models, computation, visualizations, data analysis, and interpretation. She works with scientists at federal agencies on projects requiring statistical skills and creativity, eg, defining skilled technical workforce using novel data sources.
+</dd>
+<dd>
+<strong>Sallie Keller</strong> is the Chief Scientist and Associate Director of Research and Methodology at the US Census Bureau. She is a statistician with research interest in social and decision informatics, statistics underpinnings of data science, and data access and confidentiality. Sallie Keller was at the University of Virginia when this work was conducted. She is now the Chief Scientist and Associate Director of Research and Methodology at the US Census Bureau.
+</dd>
+<dd>
+<strong>Joseph Salvo</strong> is a demographer with experience in US Census Bureau statistics and data. He makes presentations on demographic subjects to a wide range of groups about managing major demographic projects involving the analysis of large data sets for local applications.
 </dd>
 </dl>
 </div>
@@ -300,16 +325,16 @@ Figure&nbsp;3: Bar chart comparing the accuracy of different methods in terms of
 <dl>
 <dt>Copyright and licence</dt>
 <dd>
-© 2024 Atmajitsinh Gohil
+© 2024 Stephanie Shipp
 </dd>
 </dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> Text, code, and figures are licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>, except where otherwise noted. Thumbnail image by <a href="https://www.shutterstock.com/image-illustration/growth-gdp-statistical-graph-3d-rendering-2302082265">Shutterstock Van Fink</a>.</p>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@goumbik">Lukas Blazek</a> on <a href="https://unsplash.com/photos/turned-on-black-and-grey-laptop-computer-mcSDtbWXUZU">Unsplash</a>.</p>
 </div>
 <div class="g-col-12 g-col-md-6">
 <dl>
 <dt>How to cite</dt>
 <dd>
-Gohil, Atmajitsinh. 2024. “Nowcasting upgrade for better real time estimation of GDP and inflation.” Real World Data Science, June 25, 2024. <a href="https://realworlddatascience.net/ideas/posts/2024/06/25/nowcasting-3step.html">URL</a>
+Shipp S, Lancaster V, Keller S, Salvo J (2024). “Advancing Data Science in Official Statistics: The Policy Problem.” Real World Data Science, September 20, 2024. <a href="https://realworlddatascience.net/case-studies/posts/2024/11/01/policy-problem.html">URL</a>
 </dd>
 </dl>
 </div>
@@ -317,16 +342,43 @@ Gohil, Atmajitsinh. 2024. “Nowcasting upgrade for better real time estimation 
 </div>
 
 
+
 </section>
 
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">References</h2>
-
-<ol>
-<li id="fn1"><p>Nowcasting World Trade with Machine Learning: a Three-Step Approach Chinn, M. D., Meunier, B. &amp; Stumpner, S. <em>NBER</em> <a href="https://www.nber.org/papers/w31419">DOI 10.3386/w31419</a>) <a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
-</ol>
-</section></div></main> <!-- /main -->
-<a href="../../../../../../ideas/datasciencebites/index.html"> <img src="../../../../../../ideas/datasciencebites/datasciencebites-logo.png" alt="DataScienceBites logo. A dark grey circle with bite marks cut out. Overlaid text says, Import grad_students as writers, import new_research_papers as nrp, print(writers + nrp) and the title DataScienceBites." class="dsb"></a>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-abraham2018promise" class="csl-entry" role="listitem">
+Abraham, Katherine G, Ron Haskins, Sherry Glied, Robert M Groves, Robert Hahn, Hilary Hoynes, and KR Wallin. 2018. <span>“The Promise of Evidence-Based Policymaking: Report of the Commission on Evidence-Based Policymaking.”</span> <em>Washington, DC: Commission on Evidence-Based Policymaking</em>. <a href="https://www.cep.gov/ content/dam/cep/report/cep-final-report.pdf">https://www.cep.gov/ content/dam/cep/report/cep-final-report.pdf</a>.
+</div>
+<div id="ref-brady2019challenge" class="csl-entry" role="listitem">
+Brady, Henry E. 2019. <span>“The Challenge of Big Data and Data Science.”</span> <em>Annual Review of Political Science</em> 22: 297–323. <a href="https://www.annualreviews.org/doi/abs/10.1146/annurev-polisci-090216-023229">https://www.annualreviews.org/doi/abs/10.1146/annurev-polisci-090216-023229</a>.
+</div>
+<div id="ref-FedDataStrat" class="csl-entry" role="listitem">
+<span>“Federal Data Strategy, Leveraging Data as a Strategic Asset.”</span> 2021. 2021. <a href="https://strategy.data.gov/">https://strategy.data.gov/</a>.
+</div>
+<div id="ref-Groshen2021Future" class="csl-entry" role="listitem">
+Groshen, Erica L. 2021. <span>“The <span>Future</span> of <span>Official</span> <span>Statistics</span>.”</span> <em>Harvard Data Science Review</em> 3 (4).<a href=" https://doi.org/10.1162/99608f92.591917c6"> https://doi.org/10.1162/99608f92.591917c6</a>.
+</div>
+<div id="ref-jarmin2019evolving" class="csl-entry" role="listitem">
+Jarmin, Ron S. 2019. <span>“Evolving Measurement for an Evolving Economy: Thoughts on 21st Century US Economic Statistics.”</span> <em>Journal of Economic Perspectives</em> 33 (1): 165–84.
+</div>
+<div id="ref-keller2022bold" class="csl-entry" role="listitem">
+Keller, Sallie, Kenneth Prewitt, John Thompson, Steve Jost, Christopher Barrett, Sarah Nusser, Joseph Salvo, and Stephanie Shipp. 2022. <span>“A 21st Century Census Curated Data Enterprise. A Bold New Approach to Create Official Statistics. Technical Report.”</span> <em>Proceedings of the Biocomplexity Institute</em> BI-2022-1115: 297–323. <a href="https://doi.org/10.18130/r174-yk24">https://doi.org/10.18130/r174-yk24</a>.
+</div>
+<div id="ref-Lanman2023" class="csl-entry" role="listitem">
+Lanman, Kathryn, Olivia Davis, and Stephanie Shipp. 2023. <span>“What Can We Learn from Other Countries about How They Are Using Administrative Data to Supplement, Enhance, or Create New Data Products?”</span> <em>Proceedings of the Biocomplexity Institute</em>. <a href="https://doi.org/10.18130/2n54-sc22">https://doi.org/10.18130/2n54-sc22</a>.
+</div>
+<div id="ref-NASEM2023" class="csl-entry" role="listitem">
+NASEM. 2023. <span>“Toward a 21st Century National Data Infrastructure: Enhancing Survey Programs by Using Multiple Data Sources.”</span> <em>National Academies of Science, Engineering, and Medicine</em>. <a href="https://doi.org/10.17226/26804">https://doi.org/10.17226/26804</a>.
+</div>
+<div id="ref-management2023fundamentals" class="csl-entry" role="listitem">
+OMB. 2023. <span>“Fundamental Responsibilities of Recognized Statistical Agencies and Units.”</span> <em>Federal Register: The Daily Journal of the US Government</em>, 56708–44. <a href="https://www.federalregister.gov/documents/2023/08/18/2023-17664/fundamental-responsibilities-of-recognized-statistical-agencies-and-units
+  ">https://www.federalregister.gov/documents/2023/08/18/2023-17664/fundamental-responsibilities-of-recognized-statistical-agencies-and-units </a>.
+</div>
+<div id="ref-thieme2022technology" class="csl-entry" role="listitem">
+Thieme, Michael. 2022. <span>“Technology Transformations at the Census Bureau: Building a Modern, Data-Centric Ecosystem.”</span> <a href="hhttps://www.census.gov/newsroom/blogs/research-matters/2022/10/technology-transformation.html
+  ">hhttps://www.census.gov/newsroom/blogs/research-matters/2022/10/technology-transformation.html </a>.
+</div>
+</div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
 window.document.addEventListener("DOMContentLoaded", function (event) {
   const toggleBodyColorMode = (bsSheetEl) => {
@@ -755,7 +807,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p><a href="../../../../../../LICENCE.html">Copyright © 2024 Royal Statistical Society</a></p>
+<p><a href="../../../../../LICENCE.html">Copyright © 2024 Royal Statistical Society</a></p>
 </div>   
     <div class="nav-footer-center">
       <ul class="footer-items list-unstyled">
@@ -789,15 +841,15 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     </a>
   </li>  
     <li class="nav-item compact">
-    <a class="nav-link" href="../../../../../../feeds.html">
+    <a class="nav-link" href="../../../../../feeds.html">
       <i class="bi bi-rss" role="img" aria-label="RWDS rss">
 </i> 
     </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/ideas/datasciencebites/posts/2024/6/25/nowcasting-3step.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/case-studies/posts/2024/11/01/policy-problem.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
-<p><a href="../../../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
+<p><a href="../../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
 </div>
   </div>
 </footer>

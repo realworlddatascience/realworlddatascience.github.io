@@ -17,7 +17,7 @@
 <width>144</width>
 </image>
 <generator>quarto-1.5.57</generator>
-<lastBuildDate>Thu, 31 Oct 2024 10:32:35 GMT</lastBuildDate>
+<lastBuildDate>Fri, 01 Nov 2024 11:33:40 GMT</lastBuildDate>
 <item>
   <title>Forecasting the Health Needs of a Changing Population</title>
   <dc:creator>Luke Shaw (BNSSG ICB), Rich Wood (BNSSG ICB, University of Bath), Christos Vasilakis (University of Bath), Zehra Onen Dumlu (University of Bath)</dc:creator>
@@ -223,8 +223,144 @@ Shaw, Luke et al 2024. “Forecasting the Health Needs of a Changing Population�
   <category>Health and wellbeing</category>
   <category>Forecasting</category>
   <guid>https://realworlddatascience.net/case-studies/posts/2024/05/08/dpm.html</guid>
-  <pubDate>Thu, 31 Oct 2024 10:32:35 GMT</pubDate>
+  <pubDate>Fri, 01 Nov 2024 11:33:40 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/case-studies/posts/2024/05/08/images/doctor-patient-thumbnail.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
+<item>
+  <title>Advancing Data Science in Official Statistics – The Policy Problem</title>
+  <dc:creator>Sallie Keller, Stephanie Shipp, Vicki Lancaster and Joseph Salvo (University of Virginia)</dc:creator>
+  <link>https://realworlddatascience.net/case-studies/posts/2024/11/01/policy-problem.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<center>
+Acknowledgments: This research was sponsored by the: <br> United States Census Bureau Agreement No.&nbsp;01-21-MOU-06 and <br> Alfred P. Sloan Foundation Grant No.&nbsp;G-2022-19536
+</center>
+<p><br> <br> <em>The views expressed in this artice are those of the authors and not the Census Bureau.</em></p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Two centuries ago, when the Framers of the US Constitution laid the cornerstone for the federal statistical system, they could not have imagined the complexity of questions future generations would want to ask or the variety of data sources available to address them. Back in 1787, counting the population and apportioning state seats in the House of Representatives were the most urgent tasks before the young nation, and so a requirement for a decennial census was written into the Constitution. Now, 233 years later, the census continues to serve its original purpose – but purposes and uses for census data have exploded.</p>
+<p>Questions we now seek to answer go beyond what the census (or surveys) alone can hope to address. Even with the multitude of other surveys commissioned by today’s US Census Bureau, researchers and policymakers find themselves looking to novel sources of data – from structured numeric data in traditional databases to unstructured text documents scraped from the internet – to explore issues such as understanding how prepared nursing homes and communities are for extreme climate events,eg, hurricanes, wildfires, or floods. Wrangling these sources with traditionally designed data, such as censuses and surveys, can fill data gaps, improve the quality and usefulness of statistical products, speed up their dissemination, and inspire the creation of new types of statistical products.</p>
+<p>That is the impetus for developing the Curated Data Enterprise (CDE), an innovation in data science aimed at creating statistical products from all data types and building the infrastructure to support them. The Curated Data Enterprise, as the name implies, includes an end-to-end curation model to capture the complete statistical product development process. The CDE is designed to enable data discovery and retrieval, data quality assessment across multiple and diverse sources of information, and the reuse of data and models over time to accelerate statistical product development. The US Census Bureau has partnered with the University of Virginia, a working group of former Census Bureau Directors, a Communication Director, and university, non-profit and industry experts to develop this approach.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The US <a href="https://www.census.gov/">Census Bureau</a>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The US Census Bureau provides the latest official statistics, facts, and figures about America’s people, places, and economy. It collects data for 130 surveys annually and the decennial census that gives the Bureau its name. The US Census Bureau collects data from households, businesses, governments and non-profit organizations. For each survey, tabulations and margins of error are published in news releases and reports. Public-use microdata subject to disclosure rules are provided for household and demographic surveys. Microdata for economic and household surveys, without disclosure rules applied, are accessible to researchers through the <a href="https://www.census.gov/about/adrm/fsrdc.html">Federal Statistical Research Data Centers</a>.</p>
+<p>Statistical agencies in other countries are also modernizing their surveys and statistical product development. See a summary of selected countries <span class="citation" data-cites="Lanman2023">(Lanman, Davis, and Shipp 2023)</span>.</p>
+</div>
+</div>
+</section>
+<section id="a-new-approach" class="level2">
+<h2 class="anchored" data-anchor-id="a-new-approach">A new approach</h2>
+<p>To realize the CDE vision, the development of statistical products will address stakeholder questions using all data types – designed surveys and censuses, public and private administrative data, opportunity data scraped from the internet and procedural data <span class="citation" data-cites="keller2022bold">(Keller et al. 2022)</span>. This new approach aligns with the US Census Bureau’s modernization and transformation <span class="citation" data-cites="thieme2022technology">(Thieme 2022)</span> while maintaining the fundamental responsibilities of statistical agencies <span class="citation" data-cites="management2023fundamentals">(OMB 2023)</span>. It is also consistent with a conclusion by the NASEM <em>Panel on the Implications of Using Multiple Data Sources for Major Survey Programs</em>: ‘The quality of statistics produced from multiple data sources depends on properties of the individual sources as well as the methods used to combine them. A new framework of quality standards and guidelines is needed to evaluate such data sources’ fitness for use’ <span class="citation" data-cites="NASEM2023">(NASEM 2023, 192)</span>.</p>
+<p>The CDE approach provides such a framework to address many of the challenges that official statistics face today, as well as demonstrate that they are poised to adopt a new approach to producing official statistics. For example:</p>
+<ul>
+<li><p>The timeliness and frequency of our official statistics are insufficient when there are shocks to the economy, such as the Covid-19 pandemic, when retrospective survey data were of limited usefulness. Federal agencies responded during the pandemic with relevance and agility by creating and launching fast-response Household Pulse Surveys that met immediate needs for data, trading off timeliness for quality <span class="citation" data-cites="Groshen2021Future">(Groshen 2021)</span>. Public engagement and support for these new relevant and timely data products at a time of crisis were essential to the success of this new statistical product.</p></li>
+<li><p>The policy environment has responded to technological, social, and survey changes by encouraging efficient use of existing data, reuse, sharing and furthering open data principles. Researchers are now creating innovative statistical products using multiple data sources to better address the US’s needs and interests. The Commission on Evidence-Based Policymaking <span class="citation" data-cites="abraham2018promise">(Abraham et al. 2018)</span> and the Federal Data Strategy <span class="citation" data-cites="FedDataStrat">(<span>“Federal Data Strategy, Leveraging Data as a Strategic Asset”</span> 2021)</span> recommendations encourage agencies to permit access to data to undertake evaluation and research studies.</p></li>
+<li><p>Techniques such as rapid scanning, text recognition, user-friendly uploads, and new devices, sensors, and systems can now record and transcribe data in real time. Using these techniques, governments and corporations now routinely and instantaneously collect and store data on behaviors and states as varied as purchase transactions, climate and road conditions, healthcare plan utilization, and land use and zoning. Extensive digitization and recording, better system connectedness and interactivity, and increased human-computer interaction can result in faster data accumulation, enhancing the usability of private and public administrative data while maintaining privacy and confidentiality <span class="citation" data-cites="brady2019challenge jarmin2019evolving">(Brady 2019; Jarmin 2019)</span>. &nbsp;</p></li>
+<li><p>New techniques and data sources can transform statistical agencies ‘from the 20th-century survey-centric model to a 21st-century model that blends structured survey data with administrative and unstructured alternative digital data sources’, leading to better measures of the gig economy, retail sales, healthcare, workforce, and tools and methods to integrate multiple data sources while maintaining privacy and confidentiality <span class="citation" data-cites="jarmin2019evolving">(Jarmin 2019)</span>.</p></li>
+</ul>
+<p>The next three articles in this series will:</p>
+<ul>
+<li><p>provide an overview of the CDE and its corresponding framework</p></li>
+<li><p>put the CDE Framework into practice through a demonstration use case on the resilience of skilled nursing facilities</p></li>
+<li><p>describe our next steps for developing the CDE through a use case research program.</p></li>
+</ul>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+<p><strong>Stephanie Shipp</strong> leads the Curated Data Enterprise research portfolio and collaborates with the US Census. She is an economist with experience in data science, survey statistics, public policy, innovation, ethics, and evaluation.</p>
+</dd>
+<dd>
+<strong>Vicki Lancaster</strong> is a statistician with expertise in experimental design, linear models, computation, visualizations, data analysis, and interpretation. She works with scientists at federal agencies on projects requiring statistical skills and creativity, eg, defining skilled technical workforce using novel data sources.
+</dd>
+<dd>
+<strong>Sallie Keller</strong> is the Chief Scientist and Associate Director of Research and Methodology at the US Census Bureau. She is a statistician with research interest in social and decision informatics, statistics underpinnings of data science, and data access and confidentiality. Sallie Keller was at the University of Virginia when this work was conducted. She is now the Chief Scientist and Associate Director of Research and Methodology at the US Census Bureau.
+</dd>
+<dd>
+<strong>Joseph Salvo</strong> is a demographer with experience in US Census Bureau statistics and data. He makes presentations on demographic subjects to a wide range of groups about managing major demographic projects involving the analysis of large data sets for local applications.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2024 Stephanie Shipp
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@goumbik">Lukas Blazek</a> on <a href="https://unsplash.com/photos/turned-on-black-and-grey-laptop-computer-mcSDtbWXUZU">Unsplash</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Shipp S, Lancaster V, Keller S, Salvo J (2024). “Advancing Data Science in Official Statistics: The Policy Problem.” Real World Data Science, September 20, 2024. <a href="https://realworlddatascience.net/case-studies/posts/2024/11/01/policy-problem.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="ref-abraham2018promise" class="csl-entry">
+Abraham, Katherine G, Ron Haskins, Sherry Glied, Robert M Groves, Robert Hahn, Hilary Hoynes, and KR Wallin. 2018. <span>“The Promise of Evidence-Based Policymaking: Report of the Commission on Evidence-Based Policymaking.”</span> <em>Washington, DC: Commission on Evidence-Based Policymaking</em>. <a href="https://www.cep.gov/ content/dam/cep/report/cep-final-report.pdf">https://www.cep.gov/ content/dam/cep/report/cep-final-report.pdf</a>.
+</div>
+<div id="ref-brady2019challenge" class="csl-entry">
+Brady, Henry E. 2019. <span>“The Challenge of Big Data and Data Science.”</span> <em>Annual Review of Political Science</em> 22: 297–323. <a href="https://www.annualreviews.org/doi/abs/10.1146/annurev-polisci-090216-023229">https://www.annualreviews.org/doi/abs/10.1146/annurev-polisci-090216-023229</a>.
+</div>
+<div id="ref-FedDataStrat" class="csl-entry">
+<span>“Federal Data Strategy, Leveraging Data as a Strategic Asset.”</span> 2021. 2021. <a href="https://strategy.data.gov/">https://strategy.data.gov/</a>.
+</div>
+<div id="ref-Groshen2021Future" class="csl-entry">
+Groshen, Erica L. 2021. <span>“The <span>Future</span> of <span>Official</span> <span>Statistics</span>.”</span> <em>Harvard Data Science Review</em> 3 (4).<a href=" https://doi.org/10.1162/99608f92.591917c6"> https://doi.org/10.1162/99608f92.591917c6</a>.
+</div>
+<div id="ref-jarmin2019evolving" class="csl-entry">
+Jarmin, Ron S. 2019. <span>“Evolving Measurement for an Evolving Economy: Thoughts on 21st Century US Economic Statistics.”</span> <em>Journal of Economic Perspectives</em> 33 (1): 165–84.
+</div>
+<div id="ref-keller2022bold" class="csl-entry">
+Keller, Sallie, Kenneth Prewitt, John Thompson, Steve Jost, Christopher Barrett, Sarah Nusser, Joseph Salvo, and Stephanie Shipp. 2022. <span>“A 21st Century Census Curated Data Enterprise. A Bold New Approach to Create Official Statistics. Technical Report.”</span> <em>Proceedings of the Biocomplexity Institute</em> BI-2022-1115: 297–323. <a href="https://doi.org/10.18130/r174-yk24">https://doi.org/10.18130/r174-yk24</a>.
+</div>
+<div id="ref-Lanman2023" class="csl-entry">
+Lanman, Kathryn, Olivia Davis, and Stephanie Shipp. 2023. <span>“What Can We Learn from Other Countries about How They Are Using Administrative Data to Supplement, Enhance, or Create New Data Products?”</span> <em>Proceedings of the Biocomplexity Institute</em>. <a href="https://doi.org/10.18130/2n54-sc22">https://doi.org/10.18130/2n54-sc22</a>.
+</div>
+<div id="ref-NASEM2023" class="csl-entry">
+NASEM. 2023. <span>“Toward a 21st Century National Data Infrastructure: Enhancing Survey Programs by Using Multiple Data Sources.”</span> <em>National Academies of Science, Engineering, and Medicine</em>. <a href="https://doi.org/10.17226/26804">https://doi.org/10.17226/26804</a>.
+</div>
+<div id="ref-management2023fundamentals" class="csl-entry">
+OMB. 2023. <span>“Fundamental Responsibilities of Recognized Statistical Agencies and Units.”</span> <em>Federal Register: The Daily Journal of the US Government</em>, 56708–44. <a href="https://www.federalregister.gov/documents/2023/08/18/2023-17664/fundamental-responsibilities-of-recognized-statistical-agencies-and-units
+  ">https://www.federalregister.gov/documents/2023/08/18/2023-17664/fundamental-responsibilities-of-recognized-statistical-agencies-and-units </a>.
+</div>
+<div id="ref-thieme2022technology" class="csl-entry">
+Thieme, Michael. 2022. <span>“Technology Transformations at the Census Bureau: Building a Modern, Data-Centric Ecosystem.”</span> <a href="hhttps://www.census.gov/newsroom/blogs/research-matters/2022/10/technology-transformation.html
+  ">hhttps://www.census.gov/newsroom/blogs/research-matters/2022/10/technology-transformation.html </a>.
+</div>
+</div></section></div> ]]></description>
+  <category>Public Policy</category>
+  <category>Data Analysis</category>
+  <category>Data Integration</category>
+  <category>Curation</category>
+  <category>Statistical Products</category>
+  <guid>https://realworlddatascience.net/case-studies/posts/2024/11/01/policy-problem.html</guid>
+  <pubDate>Fri, 01 Nov 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/case-studies/posts/2024/11/01/images/laptop-thumbnail.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>The machine learning victories at the 2024 Nobel Prize Awards and how to explain them</title>
@@ -237,7 +373,7 @@ Shaw, Luke et al 2024. “Forecasting the Health Needs of a Changing Population�
 
 
 <p>Few saw it coming when on 8th October 2024 the Nobel Committee awarded the <a href="https://www.nobelprize.org/prizes/physics/2024/prize-announcement/">2024 Nobel Prize for Physics</a> to John Hopfield for his Hopfield networks and Geoffrey Hinton for his Boltzmann machines as seminal developments towards machine learning that have statistical physics at the heart of them. The next day machine learning albeit using a different architecture bagged half of the <a href="https://www.nobelprize.org/prizes/chemistry/2024/prize-announcement/">Nobel Prize for Chemistry</a> as well, with the award going to Demis Hassabis and John Jumper for the development of an algorithm that predicts protein folding conformations. The other half of the Chemistry Nobel was awarded to David Baker for successfully building new proteins.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Close-up of a copy of the Nobel Prize Medal. Photographed on the floor of the Nobel Museum in Old Town, Stockholm. Machine learning came up a winner in both the Physics and Chemistry Nobel Prizes for 2024. Credit: Shutterstock">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Close-up of a copy of the Nobel Prize Medal. Photographed on the floor of the Nobel Museum in Old Town, Stockholm. Machine learning came up a winner in both the Physics and Chemistry Nobel Prizes for 2024. Credit: Shutterstock" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/10/31/images/Nobelpic-shutterstock-991.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Close-up of a copy of the Nobel Prize Medal. Photographed on the floor of the Nobel Museum in Old Town, Stockholm. Machine learning came up a winner in both the Physics and Chemistry Nobel Prizes for 2024. Credit: Shutterstock">
@@ -252,7 +388,7 @@ Figure&nbsp;1: Close-up of a copy of the Nobel Prize Medal. Photographed on the 
 <h2 class="anchored" data-anchor-id="collective-phenomena">Collective phenomena</h2>
 <p>Hopfield networks brought some of the mathematical toolbox long applied to extract “collective phenomena” from vast numbers of essentially identical parts such as atoms in a gas or atomic spins in magnetic materials. Although there maybe too many particles to track each individually, properties like temperature and magnetic field can be extracted using statistical physics. Hopfield showed that similarly a useful phenomenon he described as “associative memory” could be constructed from large numbers of artificial neurons by defining a “minimum energy”, which describes the network of neurons. The energy is determined by connections between neurons, which store information about patterns. Thus the network can retrieve the memorized patterns by minimizing that energy, just as stable conformations of atomic spins might be found in a magnetic material<sup>1</sup>. As the energy of the network is then subsequently minimised the pattern gets closer to the one that was memorised, just as when recalling a word or someone’s name we might first run through similar sounding words or names.</p>
 <p>These Hopfield networks proved a seminal step in progressing AI algorithms, enabling a kind of pattern recognition from multiple stored patterns. However, it turned out that the number of patterns that could be stored was fundamentally limited due to what are known as “local” minima. You can imagine a ball rolling down a hill – it will reach the bottom of the hill fine so long as there are no dips for it to get stuck in en route. Algorithms based on Hopfield networks were prone to getting stuck in such dips or undesirable local minima, until Hopfield and Krotov put their heads together to find a way around it. Krotov describes himself as “incredibly lucky” that his research interests aligned so well with Hopfield. “He’s just such a smart and genuine person, and he has been in the field for many years,” he tells Real World Data Science. “He just knows things that no one else in the world knows.” Together they worked out they could address the problem of local minima by toggling the “activation function”.</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Energy Landscape of a Hopfield Network, highlighting the current state of the network (up the hill), an attractor state to which it will eventually converge, a minimum energy level and a basin of attraction shaded in green. Note how the update of the Hopfield Network is always going down in Energy. Credit: Mrazvan22/wikimedia">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Energy Landscape of a Hopfield Network, highlighting the current state of the network (up the hill), an attractor state to which it will eventually converge, a minimum energy level and a basin of attraction shaded in green. Note how the update of the Hopfield Network is always going down in Energy. Credit: Mrazvan22/wikimedia" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/10/31/images/Energy_landscape.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Energy Landscape of a Hopfield Network, highlighting the current state of the network (up the hill), an attractor state to which it will eventually converge, a minimum energy level and a basin of attraction shaded in green. Note how the update of the Hopfield Network is always going down in Energy. Credit: Mrazvan22/wikimedia">
@@ -344,7 +480,7 @@ Demming, Anna. 2024. “The machine learning victories at the 2024 Nobel Prize a
 <p>Knowledge is power and today a lot of that knowledge – not just what you know but who you know – is online. In 2015 the UN General Assembly laid out 17 Sustainable Development Goals (SDGs) that aim to end poverty and other deprivations while improving the welfare of both people and the planet. One of the <a href="https://sdgs.un.org/goals/goal5#targets_and_indicators">SDGs deals with gender equality</a> and emphasises the importance of digital technology for empowering women. Online, a woman can engage in commercial, social, business or networking transactions without the need to be absent from care responsibilities at home or maintain traditional 9-5 working hours or, in some instances, even expose the fact that she is a woman at all – all potentially transformative features of online engagement<sup>1</sup>. Yet the reality for digital technology to empower women is by no means clear cut.</p>
 <p>‘For me, whether digital technologies are able to empower women was fundamentally an empirical question,’’ says professor of demography and computational data science at Oxford University <a href="https://www.sociology.ox.ac.uk/people/ridhi-kashyap">Ridhi Kashyap</a>. She adds that in order to ask these questions of impact, you first need to be able to measure inequalities in digital access. However, the pace of technological change has been a lot faster than the rate at which national censuses – or other kinds of surveys useful to social scientists – update their questions, so they shed little light on the demographics around digital technologies.</p>
 <p>Since then, progress in accruing data on digital access has revealed some stark gender inequalities. However, access is not the only fly in the ointment when it comes to the potential for digital technology to help towards gender equality. ‘The most harmful illegal online content disproportionately affects women and girls,’ says the <a href="https://www.gov.uk/government/publications/online-safety-act-explainer/online-safety-act-explainer#how-the-act-protects-women-and-girls">explainer for the UK’s 2023 Online Safety Act</a>. A <a href="https://www.turing.ac.uk/news/publications/understanding-gender-differences-experiences-and-concerns-surrounding-online">study by the Turing Institute</a> published earlier this year has revealed nuances on this picture, but confirmed that many women feel particularly vulnerable online, suggesting women may be losing a seat at the table as debate and discourse increasingly moves online.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Muted. In the absence of proactive intervention, the shift of debate and discourse online risks muting women and girls as multiple factors exclude them from engaging there as productively as male counterparts. Copyright: Park Kang Hun/Shutterstock.">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Muted. In the absence of proactive intervention, the shift of debate and discourse online risks muting women and girls as multiple factors exclude them from engaging there as productively as male counterparts. Copyright: Park Kang Hun/Shutterstock." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/09/17/images/Minoan-Illustration.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Muted. In the absence of proactive intervention, the shift of debate and discourse online risks muting women and girls as multiple factors exclude them from engaging there as productively as male counterparts. Copyright: Park Kang Hun/Shutterstock.">
@@ -359,7 +495,7 @@ Figure&nbsp;1: Muted. In the absence of proactive intervention, the shift of deb
 <h2 class="anchored" data-anchor-id="gender-disparities-in-internet-access">Gender disparities in internet access</h2>
 <p>A turning point in the conversation around digital technology and gender equality came in 2018 with work by Kashyap and collaborators in the US and Qatar at the time. They found that where traditional survey-based data on internet and mobile gender gaps was available, it correlated well with the gender gap on Facebook, using data extracted for Facebook’s ad platform: When Facebook’s aggregate user counts did not show women, it provided a good signal that women were not online altogether in those countries. As such, the work revealed a potentially useful proxy to gauge the digital gender gap in countries where little traditional survey data was available<sup>3</sup>. <a href="https://www.digitalgendergaps.org/">The results</a> revealed an unexpectedly large gender gap, particularly in parts of South Asia and certain countries in Africa where men were up to twice as likely to have access to the Internet compared with women.</p>
 <p>‘In some sense it was perhaps not surprising,’’ says Kashyap highlighting that having a mobile phone or similar device that grants access to the internet amounts to a kind of asset ownership, and studies for other assets indicate women are less likely to own them. ‘This is broadly reflective of economic gender inequality,’ she adds. Perhaps more surprising is that the gaps have changed very little in the five years since <a href="https://www.digitalgendergaps.org/">their website, which monitors the digital gender gap</a>, was first released, particularly in view of the pace of technological progress in general, and the importance placed on closing the gap. Citing India as an example, Kashyap points out that in 2019 the ratio of access to the internet for men versus women was 0.619 – fewer than two women had access for every three men with access. In the subsequent half decade this digital gender gap has closed by just 7.1% to a ratio of 0.663.</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="The digital gender gap. Ratio of female-to-male internet use estimated using the Facebook Gender Gap Index^[Leasure D R, Yan J, Bondarenko M, Kerr D, Fatehkia M, Weber I &amp; Kashyap R. Digital Gender Gaps Web Application, v1.0.0. Zenodo, GitHub (2023) [doi:10.5281/zenodo.7897491](https://github.com/OxfordDemSci/dgg-www)]">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The digital gender gap. Ratio of female-to-male internet use estimated using the Facebook Gender Gap Index^[Leasure D R, Yan J, Bondarenko M, Kerr D, Fatehkia M, Weber I &amp; Kashyap R. Digital Gender Gaps Web Application, v1.0.0. Zenodo, GitHub (2023) [doi:10.5281/zenodo.7897491](https://github.com/OxfordDemSci/dgg-www)]" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/09/17/images/Digital gender gap.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The digital gender gap. Ratio of female-to-male internet use estimated using the Facebook Gender Gap Index^[Leasure D R, Yan J, Bondarenko M, Kerr D, Fatehkia M, Weber I &amp; Kashyap R. Digital Gender Gaps Web Application, v1.0.0. Zenodo, GitHub (2023) [doi:10.5281/zenodo.7897491](https://github.com/OxfordDemSci/dgg-www)]">
@@ -387,7 +523,7 @@ Figure&nbsp;2: The digital gender gap. Ratio of female-to-male internet use esti
 <p>Challenges to women being heard online seem to go beyond safety issues. Recent research by Kashyap and collaborators at the University of Oxford and collaborators in Iran and Germany has also highlighted differences in how influential women’s professional networks are relative to male counterparts<sup>8</sup>. In previous work with Florianne Verkroost, also at the University of Oxford, Kashyap had investigated the gender gaps in those who have a LinkedIn profile to see how they vary across industries<sup>9</sup>. They found that use of the platform broadly mirrors female-to-male ratios of representation in technical and managerial professions. In reference 8, they then investigated what insights LinkedIn data might provide as to the cause of some of the gender disparities in these professions, and ultimately why women are not progressing in technical and professional jobs as well as male counterparts.</p>
 <p>‘One argument is that that’s often because they don’t have advantageous networks,’ says Kashyap, adding that women may be restricted by the need to resume care commitments at home instead of staying for drinks after work or travelling to attend conferences. One might expect online avenues for networking would be able to mitigate such obstacles. In fact, studies of LinkedIn data did suggest that although women are less likely to be in professional and technical occupations as reflected in the platform’s data, in some instances their numbers exceeded them. Kashyap suggests this could be ‘where they’re using online platforms to make themselves more visible, because other fine forms of networking are less available, or they have less time for it.’ Indeed, women who were on LinkedIn were more likely to report a promotion than their male counterparts, suggesting an element of positive selection among the female LinkedIn user population. However, the potential equalising impact of moving professional networking online seems to have its limits.</p>
 <p>Their study of LinkedIn data showed women were less likely to report a relocation for work, which Kashyap suggests, ‘is a sign that the work family trade-off is probably still remaining acute for this highly selected group.’ In another 2023 study Kashyap and colleagues had also reported a lower mobility for women, specifically among published scientists, researchers and academics based on bibliometric data from over 33 million Scopus publications<sup>10</sup>. In addition, when Kashyap and her colleagues looked at women on LinkedIn working in the tech sector, they found that they had a lower chance of being connected to those working in one of the “big five” firms in the tech sector than men, when not working in one themselves. ‘One way to interpret that is to say that they have maybe less influential online social networks, right, even when they are on the platform.’</p>
-<div id="fig-4" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Leaky pipeline. The proportion of women working in science decreases towards the mid and senior career stages">
+<div id="fig-4" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Leaky pipeline. The proportion of women working in science decreases towards the mid and senior career stages" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/09/17/images/shutterstock_1215562669-h350.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Leaky pipeline. The proportion of women working in science decreases towards the mid and senior career stages">
@@ -553,7 +689,7 @@ Demming, Anna. 2024. “Are we at risk of muting the female voice in the digital
 
 <p>Governments, policymakers and central banks across the world are wrestling to keep rising prices under control using monetary policies such as interest rate increases. The effectiveness of such policy changes should be assessed by monitoring inflation data as well as studying the impact on real GDP, making timely and accurate access to key economic indicators crucial for policy planning. The delay in publishing economic indicators such as Real GDP, inflation and other labour related series, makes this real time assessment of the economy particularly challenging. Now Menzie Chinn at the University of Wisconsin, Baptiste Meunier at the European Central Bank and Sebastian Stumpner at the Banque de France report an approach for “nowcasting” built on previous research that develops a framework using different machine learning techniques and is flexible and adaptable compared with traditional methods<sup>1</sup>. They report on the accuracy of their 3-step framework for nowcasting global trade volume estimates, showing how it can outperform traditional methods. They also highlight that the 3-step framework can be extended beyond World Trade data.</p>
 <p>Nowcasting, an amalgamation of the term now and forecasting, provides a methodology to assess the current state of the economy by predicting the current value of inflation or Real GDP. The <a href="https://www.newyorkfed.org/research/policy/nowcast#/overview">Federal Reserve Bank of New York</a> and <a href="https://www.atlantafed.org/cqer/research/gdpnow">Federal Reserve Bank of Atlanta</a> have used nowcasting to publish real time GDP estimates, for the USA. Similarly, the <a href="https://www.clevelandfed.org/indicators-and-data/inflation-nowcasting">Federal Reserve Bank of Cleveland estimates real time inflation</a> using nowcasting methods.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="GDP digital drawing. Credit: Shutterstock, Vink Fan" data-fig-align="center">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="GDP digital drawing. Credit: Shutterstock, Vink Fan">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/datasciencebites/posts/2024/6/25/images/GDPshutterstock_2302082265-991.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="GDP digital drawing. Credit: Shutterstock, Vink Fan">
@@ -568,7 +704,7 @@ Figure&nbsp;1: Growth of GDP with statistical graph, 3d rendering. Digital drawi
 <section id="model-framework-improved-flexibility-and-accuracy" class="level2">
 <h2 class="anchored" data-anchor-id="model-framework-improved-flexibility-and-accuracy">Model framework improved flexibility and accuracy:</h2>
 <p>The 3 steps in the framework are chronological steps to be performed in which the first step is pre-selection of the independent variables with the highest predictive power. The independent variables from the first step are then summarised into a few factors using factor extraction methodology in the second step. The final step consists of using the factors from step 2 to perform regression.</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research." data-fig-align="center">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/datasciencebites/posts/2024/6/25/images/3step-framework-methods-big.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research.">
@@ -580,7 +716,7 @@ Figure&nbsp;2: The various methods that can be employed in the 3 step framework 
 </div>
 <p>Figure&nbsp;2 summarises the various methods employed at each step in the 3 step framework. In their report Chinn, Meunier and Stumpner aim to propose the best techniques for pre-selection, factor extraction and regression. As such their 3-step framework comprises performing pre-selection using Least Angle Regression (LARS), factor extraction using Principal Component Analysis (PCA) and employing a Macroeconomic Random Forest (MRF) machine learning technique for nowcasting.</p>
 <p>The model performance or accuracy of MRF is compared with traditional methods using Root Mean Square Error (RMSE), a measure of the deviation between the actual data and the predicted data. The 3-step framework model accuracy is tested by holding the preselection and factor extraction fixed to isolate the impact of regression techniques.</p>
-<div id="fig-3" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research." data-fig-align="center">
+<div id="fig-3" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/datasciencebites/posts/2024/6/25/images/method-accuracy-big.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research.">
@@ -913,7 +1049,7 @@ Demming, Anna. 2024. “What is “best practice” when working with AI in the 
 <h2 class="anchored" data-anchor-id="connecting-science-investments-with-jobs">Connecting science investments with jobs</h2>
 <p>The Industry of Ideas approach directly connects investment in science and the labor market, moving beyond the current approach for evaluating investment by studying scientific papers and publications <sup>12</sup> <sup>13</sup> which are disconnected from workers and jobs. The data seeds were sown almost two decades ago. President Bush’s Science Advisor, John Marburger III, who, quite sensibly was unconvinced of the scientific and practical value of relying primarily on document-based, bibliometric approaches to studying science to understand its practical effects, called for a “Science of Science Policy” <sup>14</sup> <sup>15</sup>.</p>
 <p>The Industry of Ideas is testing the potential to securely combine university and state data to measure the link between federal investments on local and regional economies for AI. It uses people-centric data generated by the administrative processes at universities and firms. With this data the Industry of Ideas project can capture the organization of people in science at multiple levels (e.g.&nbsp;individuals, teams, projects, and institutions), their multiple sources of funding (federal scientific and programmatic agencies, philanthropic foundations, industry, and state and local government), inputs into science from vendors (such as computing services, instruments, biological specimens), as well as the dynamics of their careers across time (individual career earnings and employment trajectories).</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The Industry of Ideas Infrastructure (provided by Jason Owen-Smith, IRIS, University of Michigan)" data-fig-align="center">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="The Industry of Ideas Infrastructure (provided by Jason Owen-Smith, IRIS, University of Michigan)">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/28/images/Industry-of-ideas991-724.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The Industry of Ideas Infrastructure (provided by Jason Owen-Smith, IRIS, University of Michigan)">
@@ -1036,7 +1172,7 @@ Lane, J., Hirsch, L. and Leonard, A. 2024. “Meeting the unprecedented challeng
 <section id="know-your-goals" class="level2">
 <h2 class="anchored" data-anchor-id="know-your-goals">Know your goals</h2>
 <p>The first point to note is that checking how well the output from an AI model matches the data in the training set is not an adequate indication of how well it will perform once deployed on other data. The problem can be exemplified by considering a simple model based on an equation that best fits a training data set. Data values are inevitably subject to measurement uncertainties and local conditions that add various types of noise, so taking the line defined by the equation identified as best matching the training data and measuring how good that match is falls short of adequate evaluation - the more perfectly a model matches this noisy data, the less perfectly it will fit an alternative set of data, a scenario described as “overfitting”. Similarly, what a machine learning or AI algorithm or model learns when it optimises its fit to the training data may not be generalisable.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart.">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/21/images/Evaluation_thumbnail.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart.">
@@ -1048,7 +1184,7 @@ Figure&nbsp;1: Evaluation plots. The kinds of charts of monitored performance an
 </div>
 <p>There are a number of possible approaches and factors to take into account when sourcing test data but the first thing to consider when drawing up a process for evaluating an AI model is its objective. With this objective in mind it is then possible to pin down an appropriate measure of performance, which will shape how to use the test data to evaluate the model performance. Among the distinguishing factors between different measures used to evaluate how a model performs on test data, some will be suitable when the objective is to classify (e.g high or low risk based on health data?) while others are useful for models that estimate or predict (e.g What is the estimated height of a child given their parents’ heights).</p>
 <p>Classification model performance can be measured using accuracy, confusion matrices, sensitivity, specificity and the receiver operating characteristic (ROC). Classification accuracy summarises the performance of a classification model as the number of cases in which the model correctly classifies divided by the total number of cases used in the test set. However, this can be a blunt tool as there are cases where there is a different cost or consequence depending on the direction of the error. Confusion matrices are helpful to explore how the model performs in correctly classifying the different classes. The confusion matrix sums up the number of cases the model classifies correctly within each of the classes, for example how many actual high-risk cases are correctly classified as high risk by the model. The number of cases the model classifies as high risk, for example, that are not high risk is referred to as the False Positives. In the context of medical tests (e.g the covid lateral flow tests) testing positive for a condition that is not actually there is potentially less damaging than testing negative when the condition is there.</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="The receiver operating characteristic can provide a helpful means of visualising performance. Credit: shutterstock .">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The receiver operating characteristic can provide a helpful means of visualising performance. Credit: shutterstock ." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/21/images/shutterstock_2377152411.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The receiver operating characteristic can provide a helpful means of visualising performance. Credit: shutterstock .">
@@ -1069,7 +1205,7 @@ Figure&nbsp;2: The receiver operating characteristic can provide a helpful means
 <p>These data sets also need to have reliable labelling i.e.&nbsp;the rows of data need to be accurate so that the model’s performance can be assessed objectively against a trusted “ground truth”. For example, if we want to evaluate the performance of a fraud transaction classification model using accuracy as the performance metric, then we need a reliable training data set with true fraud transactions to evaluate how good the model is at detecting them. A data set with a list of transactions that are not accurately identified (or labelled) as fraud or not is not helpful. Thinking about how some commercial LLMs are trained on all the data in the “internet” it is worth asking whether a smaller more curated and specific training set would be better for model performance as well as being more ethical and safer.</p>
 <p>Several approaches for generating test data sets take training and test data as distinct subsets from the same initial data set <sup>4</sup>. There are different ways of doing this to make the most of the data to evaluate the model as systematically and exhaustively as possible. Perhaps the simplest example is using a hold-out set, which involves taking all the data available and taking a random subset of the data to use for testing the model. Depending on how much data is available then this can be 50% or less.</p>
 <p>A slightly more sophisticated approach is k-fold cross validation, which involves splitting all the data you have available into k subsets and then doing k iterations where in each iteration a different kth of the data is used as the testing data for evaluation of the model built by training it on the remaining (k-1/k) of the data. This is repeated k times each time using a different one of the k subsets for testing. The performance of the model can then be averaged over the k iterations. (The measure of performance can be, say, accuracy or sensitivity depending on the context). For example, if k is 3 then the data is split into 3, and each iteration will take a different 2/3 of the data as training data to build the model, and the remaining 1/3 as testing data to evaluate the model.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="K fold cross validation can indicate how sensitive a model is to the test data. Credit: Fabian Flöck CC-BY-AS-3.0">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="K fold cross validation can indicate how sensitive a model is to the test data. Credit: Fabian Flöck CC-BY-AS-3.0" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/21/images/k-fold-cross-validation.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="K fold cross validation can indicate how sensitive a model is to the test data. Credit: Fabian Flöck CC-BY-AS-3.0">
@@ -2243,83 +2379,6 @@ Tarran, Brian. 2024. “£10m for UK regulators to ‘jumpstart’ AI capabiliti
   <guid>https://realworlddatascience.net/viewpoints/editors-blog/posts/2024/02/08/llms-whitepaper-response.html</guid>
   <pubDate>Thu, 08 Feb 2024 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/viewpoints/editors-blog/posts/2024/02/08/images/parliament-and-thames.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>UK government sets out 10 principles for use of generative AI</title>
-  <dc:creator>Brian Tarran</dc:creator>
-  <link>https://realworlddatascience.net/viewpoints/editors-blog/posts/2024/01/22/gen-ai-framework.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>The UK government has published <a href="https://www.gov.uk/government/publications/generative-ai-framework-for-hmg/generative-ai-framework-for-hmg-html">a framework for the use of generative AI</a>, setting out 10 principles for departments and staff to think about if using, or planning to use, this technology.</p>
-<p>It covers the need to understand what generative AI is and its limitations, the lawful, ethical and secure use of the technology, and a requirement for “meaningful human control.”</p>
-<p>The focus is on large language models (LLMs) as, according to the framework, these have “the greatest level of immediate application in government.”</p>
-<p>It lists a number of promising use cases for LLMs, including the synthesise of complex data, software development, and summaries of text and audio. However, the document cautions against using generative AI for fully automated decision-making or in contexts where data is limited or explainability of decision-making is required. For example, it warns that:</p>
-<blockquote class="blockquote">
-<p>“although LLMs can give the appearance of reasoning, they are simply predicting the next most plausible word in their output, and may produce inaccurate or poorly-reasoned conclusions.”</p>
-</blockquote>
-<p>And on the issue of explainability, it says that:</p>
-<blockquote class="blockquote">
-<p>“generative AI is based on neural networks, which are so-called ‘black boxes’. This makes it difficult or impossible to explain the inner workings of the model which has potential implications if in the future you are challenged to justify decisioning or guidance based on the model.”</p>
-</blockquote>
-<p>The framework goes on to discuss some of the practicalities of building generative AI solutions. It talks specifically about the value a multi-disciplinary team can bring to such projects, and emphasises the role of data scientists:</p>
-<blockquote class="blockquote">
-<p>“data scientists … understand the relevant data, how to use it effectively, and how to build/train and test models.”</p>
-</blockquote>
-<p>It also speaks to the need to “understand how to monitor and mitigate generative AI drift, bias and hallucinations” and to have “a robust testing and monitoring process in place to catch these problems.”</p>
-<p>What do you make of the <a href="https://www.gov.uk/government/publications/generative-ai-framework-for-hmg/generative-ai-framework-for-hmg-html">Generative AI Framework for His Majesty’s Government</a>? What does it get right, and what needs more work?</p>
-<div class="callout callout-style-simple callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-And in case you missed it…
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>New York State issued a policy on the <a href="https://its.ny.gov/acceptable-use-artificial-intelligence-technologies">Acceptable Use of Artificial Intelligence Technologies</a> earlier this month. Similar to the UK government framework, it references the need for human oversight of AI models and rules out use of “automated final decision systems.” There is also discussion of fairness, equity and explainability, and AI risk assessment and management.</p>
-</div>
-</div>
-<div class="article-btn">
-<p><a href="../../../../../../viewpoints/editors-blog/index.html">Back to Editors’ blog</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2024 Royal Statistical Society
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@therawhunter?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Massimiliano Morosinotto</a> on <a href="https://unsplash.com/photos/brown-tower-clock-under-cloudy-sy-paINk01G8Xk?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Unsplash</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Tarran, Brian. 2024. “UK government sets out 10 principles for use of generative AI.” Real World Data Science, January 22, 2024. <a href="https://realworlddatascience.net/viewpoints/editors-blog/posts/2024/01/22/gen-ai-framework.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-
- ]]></description>
-  <category>AI ethics</category>
-  <category>Large language models</category>
-  <category>Monitoring</category>
-  <category>Public policy</category>
-  <category>Risk</category>
-  <guid>https://realworlddatascience.net/viewpoints/editors-blog/posts/2024/01/22/gen-ai-framework.html</guid>
-  <pubDate>Mon, 22 Jan 2024 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/viewpoints/editors-blog/posts/2024/01/22/images/uk-parliament.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 </channel>
 </rss>
