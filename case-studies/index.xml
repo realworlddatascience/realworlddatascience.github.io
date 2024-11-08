@@ -17,7 +17,518 @@
 <width>144</width>
 </image>
 <generator>quarto-1.5.57</generator>
-<lastBuildDate>Mon, 04 Nov 2024 15:00:09 GMT</lastBuildDate>
+<lastBuildDate>Fri, 08 Nov 2024 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Advancing Data Science in Official Statistics – What is the Curated Data Enterprise?</title>
+  <dc:creator>Sallie Keller, Stephanie Shipp, Vicki Lancaster, and Joseph Salvo &lt;br /&gt; University of Virginia</dc:creator>
+  <link>https://realworlddatascience.net/case-studies/posts/2024/11/08/what-is-CDE.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<center>
+Acknowledgments: This research was sponsored by the: <br> Unites States Census Bureau Agreement No.&nbsp;01-21-MOU-06 and <br> Alfred P. Sloan Foundation Grant No.&nbsp;G-2022-19536
+</center>
+<p><br> <br></p>
+<p><em>The views expressed in this perspective are those of the authors and not the Census Bureau.</em></p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Today, official statistics – tables, reports and microdata – are produced using data from a single survey. These surveys are foundational for researchers and policymakers. However, many issues cannot be answered by surveys alone. For example, creating a picture of how prepared skilled nursing facilities (SNFs) are for climate emergencies requires wrangling all types of data about the facilities and their communities.(<em>Note: A skilled nursing facility is a facility that meets specific federal regulatory certification requirements that enable it to provide short-term inpatient care and services to patients who require medical, nursing, or rehabilitative services.</em>) This includes SNF data on the number and dates of inspections, deficiencies, residents’ mental and physical health, the number of nursing staff and where they live, community assets data on the number of shelter facilities, health professionals and emergency service providers, and community risks data on the probability of an extreme climate event. How can we create new statistical products useful to policymakers, emergency responders, skilled nursing facility staff, and others to inform their decisions?</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Official statistics
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Official statistics are essential for a democratic society as they provide economic, demographic, social, and environmental data about the government, the economy, and the environment. Official statistical agencies should compile and make these statistics available impartially to honor the right to public information.</p>
+<p>Objective, reliable, and accessible official statistics instill confidence in the integrity of government and public decision-making regarding a country’s economic, social, and environmental situation at national and international levels. They should be widely available and meet the needs of various users <span class="citation" data-cites="UnitedNations2024">[@UnitedNations2024]</span>.</p>
+</div>
+</div>
+<p>With the explosion of available data, there is an opportunity to combine all types of information to create statistical products that address cross-cutting topics for a wide range of purposes and uses. The US Census Bureau is modernizing and transforming its enterprise system to accommodate a new way to produce statistical products that take advantage of all data types: designed surveys and censuses, public and private administrative data, opportunity data scraped from the internet, and procedural data <span class="citation" data-cites="keller2022bold">[@keller2022bold]</span>.</p>
+<blockquote class="blockquote">
+<p><em>‘We are moving towards a single enterprise, data-centric operation that enables us to funnel data from many sources in a single data lake using common collection and ingestion platforms… This is the essence of <strong>a curated data approach</strong> — assemble, assess, and fill in the gaps to create quality statistical data.’</em></p>
+</blockquote>
+<blockquote class="blockquote">
+<p><strong>Robert Santos,</strong> Director, US Census Bureau</p>
+</blockquote>
+<p>This curated approach is embodied in the Curated Data Enterprise (CDE). The Curated Data Enterprise Framework in Figure&nbsp;1 provides a guide for creating statistical products that enable the full integration of data from many sources <span class="citation" data-cites="keller2020doing">[@keller2020doing]</span>. At the heart of the framework are the purposes and uses that provide the context and driving force for developing the statistical product. The outer rectangle in Figure&nbsp;1 identifies the guiding principles for ethical, transparent and reproducible product development and dissemination. The inner rectangle identifies the steps in the statistical product development, including integrating primary and secondary data sources. The arrows convey that this process may only sometimes be linear. Instead, the process is iterative, where new information may be discovered at any point, requiring reevaluating and updating prior steps. Our Social and Decision Analytics research group in the Biocomplexity Institute developed, tested, and refined the CDE (data science) Framework in our research since 2013 <span class="citation" data-cites="keller2017building keller2020doing">[@keller2017building; @keller2020doing]</span>. The proposed use of the CDE to develop statistical products at the US Census Bureau is in its early stages.</p>
+<div id="fig-cde" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cde-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/case-studies/posts/2024/11/08/images/figure-1.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cde-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The CDE Framework starts with the purposes &amp; uses of the statistical products. The outer rectangle identifies the guiding principles for ethical, transparent, reproducible statistical product development and dissemination. The inner rectangle identifies the statistical product development steps.
+</figcaption>
+</figure>
+</div>
+<p>The next article in this series will put the CDE Framework into practice by demonstrating the use case on skilled nursing facilities’ preparedness for emergencies during extreme climate events. As a prelude to that article, we have created a visual for the statistical product development component of how that process works in action in Figure&nbsp;2.</p>
+<div id="fig-ex" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/case-studies/posts/2024/11/08/images/figure-2.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ex-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Example: Steps in the statistical product development for the skilled nursing facility use case. The diagram describes the steps applied to a use case on the resilience of skilled nursing facilities. Section 3 of this series describes the steps in detail.
+</figcaption>
+</figure>
+</div>
+<p>The CDE Framework’s guiding principles and research steps are described below. To find out more click on a cross reference.</p>
+<p><strong>Guiding principles</strong>:</p>
+<ul>
+<li>Purposes and uses</li>
+<li>Stakeholders</li>
+<li>Curation</li>
+<li>Equity and ethics</li>
+<li>Privacy and confidentiality</li>
+<li>Communications and dissemination</li>
+</ul>
+<p><strong>Research steps</strong>:</p>
+<ul>
+<li>Subject matter input</li>
+<li>Data discovery</li>
+<li>Data ingestion &amp; Governance</li>
+<li>Data wrangling</li>
+<li>Fitness-for-purpose</li>
+<li>Statistics development</li>
+</ul>
+</section>
+<section id="guiding-principles" class="level2">
+<h2 class="anchored" data-anchor-id="guiding-principles">Guiding principles</h2>
+<section id="sec-gp1" class="level3">
+<h3 class="anchored" data-anchor-id="sec-gp1">Purposes and uses</h3>
+<p>The CDE is centered on developing statistical products to meet specific purposes and uses. Researchers and stakeholders propose the purposes and uses, defining the ‘why’ for developing statistics and statistical products. They include questions or issues that the statistics should be designed to support and are clarified by documented best practices, literature reviews and conversations with subject matter experts.</p>
+</section>
+<section id="sec-gp2" class="level3">
+<h3 class="anchored" data-anchor-id="sec-gp2">Stakeholders</h3>
+<p>Stakeholders include individuals, groups, and organizations that have the potential to affect or be affected by the outcome of the research. Engaging stakeholders is crucial for fostering the connection and trust that can lead to better decision making. <span class="citation" data-cites="kujala2022stakeholder">@kujala2022stakeholder</span> best described the principle of stakeholder engagement: ‘Stakeholder engagement refers to the aims, activities, and impacts of stakeholder relations in a moral, strategic, and pragmatic manner.’ When placed within the CDE context and represented in the Framework, collaborative engagement with stakeholders occurs at all stages of product development to better understand what the final product needs to look like. Further, product development is not a linear process but occurs through successive waves of iteration with users.</p>
+<p>Forming partnerships with stakeholders is instrumental in identifying requirements and implementing statistical products. This requires listening to community voices in an active engagement strategy.<sup>1</sup> Of necessity, these partnerships entail collaboration, such as creative and collaborative problem-solving workshops and the development of innovative digital tools vetted by networks of users.<sup>2</sup></p>
+</section>
+<section id="sec-gp3" class="level3">
+<h3 class="anchored" data-anchor-id="sec-gp3">Curation</h3>
+<p>The broad meaning of curation is the act of organizing, documenting and maintaining a collection of artifacts. The artifacts of the development and dissemination of statistics or statistical products include all the components in Figure&nbsp;1, from meeting with stakeholders to formulating the purposes and uses to creating and disseminating the statistical products. Maintaining the artifacts is the essence of the CDE. <em>Every step in the process should be documented and easily accessible in a repository, for example, GitHub, for the work to be transparent and reproducible</em>. Curation in the context of the CDE is an end-to-end activity. It involves documenting the purpose and use, providing the context for acquiring, wrangling, and archiving data from many sources to support the development of statistical products. It will include metadata <span class="citation" data-cites="cannon2013">[@cannon2013]</span>, the code used to read and write the data, and the code that ingested the data from the source and prepared it for analysis.</p>
+<p><em>Curation steps</em></p>
+<ul>
+<li>Document the development of the research questions, why this research is important, and how it supports the purposes and uses and resulting statistical product.</li>
+<li>Document the context for the purposes and uses, ie, a policy directive, stakeholder request, policy evaluation, etc.</li>
+<li>What stakeholder engagement and transparency are built into the process?</li>
+</ul>
+</section>
+<section id="sec-gp4" class="level3">
+<h3 class="anchored" data-anchor-id="sec-gp4">Equity and ethics</h3>
+<p>An ethics review ensures dialogue on this topic throughout the statistical product development and dissemination life cycle. This involves teams of researchers and stakeholders across many areas of expertise, each with its own research integrity norms and practices. This requires that ethics be woven into every aspect of the CDE. An <em>equity</em> review ensures that underserved groups are represented and biases inherent in various data sources are acknowledged.</p>
+<p><em>Curation questions</em></p>
+<ul>
+<li>What are the project’s expected benefits to the ‘public good’? Do they outweigh potential risks to specific sub-populations, eg, individuals, firms and their locations by different levels of geography?</li>
+<li>Are there implicit assumptions and biases regarding the studied communities in framing the project and associated data sources? If yes, how will they be addressed?</li>
+<li>What type of institutional approval process and contracts are needed? What statistical quality standards and confidentiality standards will be needed? For an explanation of the Institution Review Board see Note&nbsp;1.</li>
+</ul>
+<p>An ethics checklist can help with this process. Links to ethics checklists are provided below.</p>
+<ul>
+<li>University of Virginia, Biocomplexity Institute, <a href="https://biocomplexity.virginia.edu/sites/default/files/sda/UVA%20SDAD%20EthicsChecklist%2018May2022.pdf">Social and Decision Analytics Division Data Science Project Ethics Tool</a></li>
+<li>United Kingdom Government, <a href="https://www.gov.uk/government/publications/data-ethics-framework#full-publication-update-history">Data Ethics Framework</a></li>
+</ul>
+</section>
+<section id="sec-gp5" class="level3">
+<h3 class="anchored" data-anchor-id="sec-gp5">Privacy and confidentiality</h3>
+<p>Privacy is about the individual, whereas confidentiality is about the individual’s information. Privacy refers to an individual’s desire to control their information. Confidentiality refers to the researcher’s agreement with the individual, which could be an agency like the Census Bureau, regarding how their information will be handled, managed, and disseminated <span class="citation" data-cites="keller2016does">[@keller2016does]</span>. This is a guiding principle because it needs to be considered and embraced at the earliest possible stages of statistical product development and will impact dissemination choices.</p>
+<p><em>Curation questions</em></p>
+<ul>
+<li>What steps are taken to ensure the privacy and confidentiality of the data?</li>
+<li>What statistical methods (if any) are used to ensure the privacy and confidentiality of the data?</li>
+<li>How do the methods chosen to protect confidentiality affect the purposes and uses of the data?</li>
+<li>What stakeholder engagement and transparency are built into the process?</li>
+<li>Does the context surrounding the purposes, uses, and anticipated data sources require an Institutional Review Board (IRB) review and approval? If yes, is it archived?</li>
+</ul>
+<div id="nte-irb" class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Note&nbsp;1: Institutional Review Board
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>In the United States, institutional review boards (IRBs) assess the ethics and safety of research studies involving human subjects, such as behavioral studies or clinical trials for new drugs or medical devices. Today, the definition of human subjects has evolved to include secondary data, such as administrative data collected for other purposes, eg, local property data collected for tax purposes.</p>
+<p>The Belmont Commission was convened in the late 1970s after the ethical failures of many research projects that involved vulnerable populations surfaced. The Belmont Commission issued three principles for the conduct of ethical research:</p>
+<ul>
+<li><p><strong>Respect for people</strong> — treating people as autonomous and honoring their wishes</p></li>
+<li><p><strong>Beneficence</strong> — understanding the risks and benefits of the study and weighing the balance between (1) doing no harm and (2) maximizing possible benefits and minimizing possible harms</p></li>
+<li><p><strong>Justice</strong> — deciding if the risks and benefits of research are distributed fairly.</p></li>
+</ul>
+<p>These principles were translated to a set of regulations called the Common Rule that govern federally-funded research. The Belmont Commission provided the foundation for IRB principles and focused on research involving human subjects in experiments and studies. IRB approval is required to be eligible for federal grants and contracts. Many universities also require IRB review for research conducted by faculty, students, and researchers <span class="citation" data-cites="shipp2023making">[@shipp2023making]</span>.</p>
+</div>
+</div>
+</section>
+<section id="sec-gp6" class="level3">
+<h3 class="anchored" data-anchor-id="sec-gp6">Communication and dissemination</h3>
+<p>Communication involves sharing data, statistical method choices, well-documented code, working papers, and <em>dissemination</em> through research team meetings, stakeholder engagements, conference presentations, publications, webinars, websites, and social media. As a principle, communication and dissemination are critical to ensure that statistical product development processes and findings are transparent and reproducible <span class="citation" data-cites="berman2016realizing">[@berman2016realizing]</span>. An essential facet of this step is to tell the story of the analysis by conveying the context, purpose, and implications of the research and findings <span class="citation" data-cites="berinato2019data wing2019data nasem2022transparency">[@berinato2019data; @wing2019data; @nasem2022transparency]</span>.</p>
+<p><em>Curation questions</em></p>
+<ul>
+<li>Are the meeting notes, statistical products, code, reports, and presentations archived in a repository?</li>
+<li>Briefly describe what did not work in this process, eg, data wrangling challenges where data sources could not be integrated, data source changes after a fitness-for-purpose assessment, analyses that were changed because assumptions were not met, etc.</li>
+<li>Have project methods and outputs been made as transparent as possible?</li>
+<li>Are the potential limitations of the research clearly presented?</li>
+<li>Why or why not should the research be used as the basis for an institutional or policy action?</li>
+<li>Have the predicted benefits and social costs to all potentially affected communities been considered?</li>
+</ul>
+</section>
+</section>
+<section id="research-steps" class="level2">
+<h2 class="anchored" data-anchor-id="research-steps">Research steps</h2>
+<section id="sec-rs1" class="level3">
+<h3 class="anchored" data-anchor-id="sec-rs1">Subject matter input</h3>
+<p>Subject matter (domain) expertise plays a role in translating the information acquired into understanding the underlying phenomena in the data <span class="citation" data-cites="box1978statistics">[@box1978statistics]</span>. Domain knowledge provides the context to define, evaluate and interpret the findings at each research stage <span class="citation" data-cites="leonelli2019data snee2014follow">[@leonelli2019data; @snee2014follow]</span>. Subject matter input can be obtained through a review of the literature, talking to experts, or learning about their work at conferences or other convenings. Subject matter experts are different than stakeholders. Both provide important input to identifying and clarifying purposes and uses.</p>
+<p><em>Curation steps</em></p>
+<ul>
+<li>Document the meetings with subject matter experts and stakeholders.</li>
+<li>Document the literature search methods and the results of the literature review.</li>
+<li>Document choices are made during the development of the products.</li>
+<li>Were subject matter experts and stakeholders recruited from underrepresented groups?</li>
+</ul>
+</section>
+<section id="sec-rs2" class="level3">
+<h3 class="anchored" data-anchor-id="sec-rs2">Data discovery</h3>
+<p>Data discovery identifies potential sources that address the research goals defined by purposes and uses. Data sources include the following types <span class="citation" data-cites="keller2020doing">[@keller2020doing]</span>.</p>
+<ol type="1">
+<li><p>Designed data are collected using statistically designed methods, such as surveys, censuses, and data generated from an experimental or quasi-experimental design, such as a clinical trial or agricultural field study.</p></li>
+<li><p>Administrative data are collected for the administration of an organization or program by entities such as government agencies.</p></li>
+<li><p>Opportunity data are derived from internet-based information, such as websites, wearable and other sensor devices, and social media, and captured through application programming interfaces (APIs) and web scraping, eg, geocoded place-based data, transportation routes, and other data sources.</p></li>
+<li><p>Procedural data are processes and policies, such as a change in health care coverage, a data repository policy outlining procedures and the metadata required to store data, or a responsible AI policy.</p></li>
+</ol>
+<p>The goal of the data discovery process is to think broadly and imaginatively about all data types and to capture the variety of data sources that could be useful for the problem. There are three steps in the data discovery process <span class="citation" data-cites="keller2016does">[@keller2016does]</span>.</p>
+<ol type="1">
+<li><p>Identify potential data sources and make an inventory.</p></li>
+<li><p>Create a set of questions to screen the data sources to ensure the data meet the criteria for use.</p></li>
+<li><p>Select and acquire the data sources that meet the screening criteria.</p></li>
+</ol>
+<p><em>Curation steps</em></p>
+<ul>
+<li>Describe your data discovery process and reasoning behind the selected data sources.
+<ul>
+<li>Do underrepresented groups have adequate geographic coverage? If not, are there methods, such as synthetic data, you can use to provide adequate coverage?</li>
+<li>Have checks and balances been established to identify and address implicit biases in the data and interpretation of the data? Has the team engaged in discussion and provided insights across their diverse perspectives?</li>
+</ul></li>
+<li>Describe the assumptions that need to be made to use these data sources.</li>
+<li>Identify and document the paradata and metadata that describe each data source. Paradata describe how the data were collected, while metadata are ‘data about data’. It includes information about the data’s content, data dictionaries and technical documents that will help the user assess its fitness for purpose <span class="citation" data-cites="cannon2013 nasem2022transparency">[@cannon2013; @nasem2022transparency]</span>.</li>
+<li>Discuss data sources you would have used if they were available.</li>
+</ul>
+</section>
+<section id="sec-rs3" class="level3">
+<h3 class="anchored" data-anchor-id="sec-rs3">Data ingest and governance</h3>
+<p>Data ingestion is the process of bringing data into the data management platform(s) for use. Data governance establishes and adheres to rules and procedures regarding data access, dissemination and destruction.</p>
+<p><em>Curation steps</em></p>
+<ul>
+<li>Document policies and institutional agreements for data use.
+<ul>
+<li>Have team members reviewed data use agreements, standard operating procedures (SOPs), and data management plans? Are they fair?</li>
+<li>Do additional procedures need to be defined for this project?</li>
+</ul></li>
+<li>Document the code and processes used to ingest the data sources and manage governance.</li>
+</ul>
+</section>
+<section id="sec-rs4" class="level3">
+<h3 class="anchored" data-anchor-id="sec-rs4">Data wrangling</h3>
+<p>Data wrangling includes the activities of data profiling, preparing, linking and exploring used to assess the data’s quality and representativeness and what analyses the data can support.</p>
+<table class="caption-top table">
+<caption>Table 1. Activities of data wrangling</caption>
+<colgroup>
+<col style="width: 31%">
+<col style="width: 14%">
+<col style="width: 30%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: center;">Profiling</th>
+<th style="text-align: center;">Preparing</th>
+<th style="text-align: center;">Linking</th>
+<th style="text-align: center;">Exploring</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: center;"><ul>
+<li>data quality</li>
+<li>data structure</li>
+<li>meta data, paradata, and provenance</li>
+</ul></td>
+<td style="text-align: center;"><ul>
+<li>cleaning</li>
+<li>transforming</li>
+<li>structuring</li>
+</ul></td>
+<td style="text-align: center;"><ul>
+<li>ontology selection &amp; alignment</li>
+<li>entity resolution / harmonization</li>
+</ul></td>
+<td style="text-align: center;"><ul>
+<li>visualizations</li>
+<li>descriptive statistics</li>
+<li>characterizations</li>
+</ul></td>
+</tr>
+</tbody>
+</table>
+<p><em>Curation steps</em></p>
+<ul>
+<li>Describe any data quality issues within the stated purpose and use context and how they were resolved. This can include statistical solutions like imputing missing data, identifying outliers or constructing synthetic populations.
+<ul>
+<li>How representative are the data?</li>
+<li>What populations are and are not covered?</li>
+</ul></li>
+<li>Describe any issues with the wrangling process and how they were resolved.</li>
+<li>Document the code used to wrangle the data and describe how it was validated.</li>
+<li>Document assumptions made regarding the transformation and use of the data.</li>
+</ul>
+</section>
+<section id="sec-rs5" class="level3">
+<h3 class="anchored" data-anchor-id="sec-rs5">Fitness-for-purpose</h3>
+<p>Fitness-for-purpose starts with assessing the constraints imposed on the data by the particular statistical methods used and the population to which the inferences extend. It is a function of the modeling, data quality needs of the models, and data coverage (representativeness) needs of the models. The statistical product’s ‘fitness-for-purpose’ involves those on the receiving end of the data helping identify issues germane to the data application, such as identifying biases affecting equity. For example, given known differences in their availability, does using administrative records lead to better modeling outcomes for some groups more than others? What can be done to compensate for such bias?</p>
+<p><em>Curation steps</em></p>
+<ul>
+<li>Document the constraints and limitations of the data.&nbsp;
+<ul>
+<li>What are the limitations of the results? Are the results useful, given the purpose of the study?</li>
+</ul></li>
+<li>Discuss the populations to which any inferences will generalize.
+<ul>
+<li>Do the statistical results support the potential benefits of the study previously stated?</li>
+<li>Do any data require revisiting the question of potential biases being introduced through the choice of data sets and variables?</li>
+</ul></li>
+</ul>
+</section>
+<section id="sec-rs6" class="level3">
+<h3 class="anchored" data-anchor-id="sec-rs6">Statistics development</h3>
+<p>The development of statistics and statistical products for dissemination is a function of the research questions, the data’s limitations and the assumptions of the statistical method(s) used.</p>
+<p><em>Curation steps</em></p>
+<ul>
+<li>Describe the statistical methods planned and used and how the method assumptions were evaluated.</li>
+<li>Discuss the conclusions of the statistical analyses and any inferences that can be made from the disseminated statistical products.</li>
+<li>Discuss how the statistics support the purposes and uses driving the development of the products.</li>
+</ul>
+<p>Here, we have defined the CDE and provided a conceptual walk through of the framework from Figure&nbsp;1. In the next article, we will put the CDE Framework into practice through a demonstration use case on the resilience of skilled nursing facilities.</p>
+<div class="nav-btn-container">
+<div class="grid">
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../case-studies/posts/2024/11/01/policy-problem.html">← Part 1: The policy problem</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+<strong>Sallie Keller</strong> is the Chief Scientist and Associate Director of Research and Methodology at the US Census Bureau. She is a statistician with research interest in social and decision informatics, statistics underpinnings of data science, and data access and confidentiality. Sallie Keller was at the University of Virginia when this work was conducted.
+</dd>
+<dd>
+<strong>Stephanie Shipp</strong> leads the Curated Data Enterprise research portfolio and collaborates with the US Census. She is an economist with experience in data science, survey statistics, public policy, innovation, ethics, and evaluation.
+</dd>
+<dd>
+<strong>Vicki Lancaster</strong> is a statistician with expertise in experimental design, linear models, computation, visualizations, data analysis, and interpretation. She works with scientists at federal agencies on projects requiring statistical skills and creativity, eg, defining skilled technical workforce using novel data sources.
+</dd>
+<dd>
+<strong>Joseph Salvo</strong> is a demographer with experience in US Census Bureau statistics and data. He makes presentations on demographic subjects to a wide range of groups about managing major demographic projects involving the analysis of large data sets for local applications.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2024 Stephanie Shipp
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://www.shutterstock.com/g/Chaay_Tee">Chay_Tee</a> on <a href="https://www.shutterstock.com/image-photo/back-rear-view-young-asian-woman-2170748613">Shutterstock</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Keller S, Shipp S, Lancaster V, Salvo J (2024). “Advancing Data Science in Official Statistics – What is the Curated Data Enterprise?” Real World Data Science, November 8, 2024. <a href="https://realworlddatascience.net/case-studies/posts/2024/11/08/what-is-CDE.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p><a href="https://www.census.gov/newsroom/blogs/director/2023/01/a-look-ahead-2023.html" class="uri">https://www.census.gov/newsroom/blogs/director/2023/01/a-look-ahead-2023.html</a>&nbsp;↩︎</p></li>
+<li id="fn2"><p><a href="https://www.census.gov/partners/act.html" class="uri">https://www.census.gov/partners/act.html</a>↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>Public Policy</category>
+  <category>Data Analysis</category>
+  <category>Data Integration</category>
+  <category>Curation</category>
+  <category>Statistical Products</category>
+  <guid>https://realworlddatascience.net/case-studies/posts/2024/11/08/what-is-CDE.html</guid>
+  <pubDate>Fri, 08 Nov 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/case-studies/posts/2024/11/08/images/screen.thumbnail.jpg" medium="image" type="image/jpeg"/>
+</item>
+<item>
+  <title>Advancing Data Science in Official Statistics – The Policy Problem</title>
+  <dc:creator>Sallie Keller, Stephanie Shipp, Vicki Lancaster and Joseph Salvo &lt;br /&gt; University of Virginia</dc:creator>
+  <link>https://realworlddatascience.net/case-studies/posts/2024/11/01/policy-problem.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<center>
+Acknowledgments: This research was sponsored by the: <br> United States Census Bureau Agreement No.&nbsp;01-21-MOU-06 and <br> Alfred P. Sloan Foundation Grant No.&nbsp;G-2022-19536
+</center>
+<p><br> <br> <em>The views expressed in this artice are those of the authors and not the Census Bureau.</em></p>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Two centuries ago, when the Framers of the US Constitution laid the cornerstone for the federal statistical system, they could not have imagined the complexity of questions future generations would want to ask or the variety of data sources available to address them. Back in 1787, counting the population and apportioning state seats in the House of Representatives were the most urgent tasks before the young nation, and so a requirement for a decennial census was written into the Constitution. Now, 233 years later, the census continues to serve its original purpose – but purposes and uses for census data have exploded.</p>
+<p>Questions we now seek to answer go beyond what the census (or surveys) alone can hope to address. Even with the multitude of other surveys commissioned by today’s US Census Bureau, researchers and policymakers find themselves looking to novel sources of data – from structured numeric data in traditional databases to unstructured text documents scraped from the internet – to explore issues such as understanding how prepared nursing homes and communities are for extreme climate events,eg, hurricanes, wildfires, or floods. Wrangling these sources with traditionally designed data, such as censuses and surveys, can fill data gaps, improve the quality and usefulness of statistical products, speed up their dissemination, and inspire the creation of new types of statistical products.</p>
+<p>That is the impetus for developing the Curated Data Enterprise (CDE), an innovation in data science aimed at creating statistical products from all data types and building the infrastructure to support them. The Curated Data Enterprise, as the name implies, includes an end-to-end curation model to capture the complete statistical product development process. The CDE is designed to enable data discovery and retrieval, data quality assessment across multiple and diverse sources of information, and the reuse of data and models over time to accelerate statistical product development. The US Census Bureau has partnered with the University of Virginia, a working group of former Census Bureau Directors, a Communication Director, and university, non-profit and industry experts to develop this approach.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+The US <a href="https://www.census.gov/">Census Bureau</a>
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The US Census Bureau provides the latest official statistics, facts, and figures about America’s people, places, and economy. It collects data for 130 surveys annually and the decennial census that gives the Bureau its name. The US Census Bureau collects data from households, businesses, governments and non-profit organizations. For each survey, tabulations and margins of error are published in news releases and reports. Public-use microdata subject to disclosure rules are provided for household and demographic surveys. Microdata for economic and household surveys, without disclosure rules applied, are accessible to researchers through the <a href="https://www.census.gov/about/adrm/fsrdc.html">Federal Statistical Research Data Centers</a>.</p>
+<p>Statistical agencies in other countries are also modernizing their surveys and statistical product development. See a summary of selected countries <span class="citation" data-cites="Lanman2023">(Lanman, Davis, and Shipp 2023)</span>.</p>
+</div>
+</div>
+</section>
+<section id="a-new-approach" class="level2">
+<h2 class="anchored" data-anchor-id="a-new-approach">A new approach</h2>
+<p>To realize the CDE vision, the development of statistical products will address stakeholder questions using all data types – designed surveys and censuses, public and private administrative data, opportunity data scraped from the internet and procedural data <span class="citation" data-cites="keller2022bold">(Keller et al. 2022)</span>. This new approach aligns with the US Census Bureau’s modernization and transformation <span class="citation" data-cites="thieme2022technology">(Thieme 2022)</span> while maintaining the fundamental responsibilities of statistical agencies <span class="citation" data-cites="management2023fundamentals">(OMB 2023)</span>. It is also consistent with a conclusion by the NASEM <em>Panel on the Implications of Using Multiple Data Sources for Major Survey Programs</em>: ‘The quality of statistics produced from multiple data sources depends on properties of the individual sources as well as the methods used to combine them. A new framework of quality standards and guidelines is needed to evaluate such data sources’ fitness for use’ <span class="citation" data-cites="NASEM2023">(NASEM 2023, 192)</span>.</p>
+<p>The CDE approach provides such a framework to address many of the challenges that official statistics face today, as well as demonstrate that they are poised to adopt a new approach to producing official statistics. For example:</p>
+<ul>
+<li><p>The timeliness and frequency of our official statistics are insufficient when there are shocks to the economy, such as the Covid-19 pandemic, when retrospective survey data were of limited usefulness. Federal agencies responded during the pandemic with relevance and agility by creating and launching fast-response Household Pulse Surveys that met immediate needs for data, trading off timeliness for quality <span class="citation" data-cites="Groshen2021Future">(Groshen 2021)</span>. Public engagement and support for these new relevant and timely data products at a time of crisis were essential to the success of this new statistical product.</p></li>
+<li><p>The policy environment has responded to technological, social, and survey changes by encouraging efficient use of existing data, reuse, sharing and furthering open data principles. Researchers are now creating innovative statistical products using multiple data sources to better address the US’s needs and interests. The Commission on Evidence-Based Policymaking <span class="citation" data-cites="abraham2018promise">(Abraham et al. 2018)</span> and the Federal Data Strategy <span class="citation" data-cites="FedDataStrat">(<span>“Federal Data Strategy, Leveraging Data as a Strategic Asset”</span> 2021)</span> recommendations encourage agencies to permit access to data to undertake evaluation and research studies.</p></li>
+<li><p>Techniques such as rapid scanning, text recognition, user-friendly uploads, and new devices, sensors, and systems can now record and transcribe data in real time. Using these techniques, governments and corporations now routinely and instantaneously collect and store data on behaviors and states as varied as purchase transactions, climate and road conditions, healthcare plan utilization, and land use and zoning. Extensive digitization and recording, better system connectedness and interactivity, and increased human-computer interaction can result in faster data accumulation, enhancing the usability of private and public administrative data while maintaining privacy and confidentiality <span class="citation" data-cites="brady2019challenge jarmin2019evolving">(Brady 2019; Jarmin 2019)</span>. &nbsp;</p></li>
+<li><p>New techniques and data sources can transform statistical agencies ‘from the 20th-century survey-centric model to a 21st-century model that blends structured survey data with administrative and unstructured alternative digital data sources’, leading to better measures of the gig economy, retail sales, healthcare, workforce, and tools and methods to integrate multiple data sources while maintaining privacy and confidentiality <span class="citation" data-cites="jarmin2019evolving">(Jarmin 2019)</span>.</p></li>
+</ul>
+<p>The next three articles in this series will:</p>
+<ul>
+<li><p>provide an overview of the CDE and its corresponding framework</p></li>
+<li><p>put the CDE Framework into practice through a demonstration use case on the resilience of skilled nursing facilities</p></li>
+<li><p>describe our next steps for developing the CDE through a use case research program.</p></li>
+</ul>
+<div class="nav-btn-container">
+<div class="grid">
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../case-studies/posts/2024/11/08/what-is-CDE.html">Part 2: What is the Curated Data Enterprise? →</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+<p><strong>Sallie Keller</strong> is the Chief Scientist and Associate Director of Research and Methodology at the US Census Bureau. She is a statistician with research interest in social and decision informatics, statistics underpinnings of data science, and data access and confidentiality. Sallie Keller was at the University of Virginia when this work was conducted.</p>
+</dd>
+<dd>
+<strong>Stephanie Shipp</strong> leads the Curated Data Enterprise research portfolio and collaborates with the US Census. She is an economist with experience in data science, survey statistics, public policy, innovation, ethics, and evaluation.
+</dd>
+<dd>
+<strong>Vicki Lancaster</strong> is a statistician with expertise in experimental design, linear models, computation, visualizations, data analysis, and interpretation. She works with scientists at federal agencies on projects requiring statistical skills and creativity, eg, defining skilled technical workforce using novel data sources.
+</dd>
+<dd>
+<strong>Joseph Salvo</strong> is a demographer with experience in US Census Bureau statistics and data. He makes presentations on demographic subjects to a wide range of groups about managing major demographic projects involving the analysis of large data sets for local applications.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2024 Stephanie Shipp
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@goumbik">Lukas Blazek</a> on <a href="https://unsplash.com/photos/turned-on-black-and-grey-laptop-computer-mcSDtbWXUZU">Unsplash</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Keller S, Shipp S, Lancaster V, Salvo J (2024). “Advancing Data Science in Official Statistics: The Policy Problem.” Real World Data Science, November 01, 2024. <a href="https://realworlddatascience.net/case-studies/posts/2024/11/01/policy-problem.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="ref-abraham2018promise" class="csl-entry">
+Abraham, Katherine G, Ron Haskins, Sherry Glied, Robert M Groves, Robert Hahn, Hilary Hoynes, and KR Wallin. 2018. <span>“The Promise of Evidence-Based Policymaking: Report of the Commission on Evidence-Based Policymaking.”</span> <em>Washington, DC: Commission on Evidence-Based Policymaking</em>. <a href="https://www.cep.gov/ content/dam/cep/report/cep-final-report.pdf">https://www.cep.gov/ content/dam/cep/report/cep-final-report.pdf</a>.
+</div>
+<div id="ref-brady2019challenge" class="csl-entry">
+Brady, Henry E. 2019. <span>“The Challenge of Big Data and Data Science.”</span> <em>Annual Review of Political Science</em> 22: 297–323. <a href="https://www.annualreviews.org/doi/abs/10.1146/annurev-polisci-090216-023229">https://www.annualreviews.org/doi/abs/10.1146/annurev-polisci-090216-023229</a>.
+</div>
+<div id="ref-FedDataStrat" class="csl-entry">
+<span>“Federal Data Strategy, Leveraging Data as a Strategic Asset.”</span> 2021. 2021. <a href="https://strategy.data.gov/">https://strategy.data.gov/</a>.
+</div>
+<div id="ref-Groshen2021Future" class="csl-entry">
+Groshen, Erica L. 2021. <span>“The <span>Future</span> of <span>Official</span> <span>Statistics</span>.”</span> <em>Harvard Data Science Review</em> 3 (4).<a href=" https://doi.org/10.1162/99608f92.591917c6"> https://doi.org/10.1162/99608f92.591917c6</a>.
+</div>
+<div id="ref-jarmin2019evolving" class="csl-entry">
+Jarmin, Ron S. 2019. <span>“Evolving Measurement for an Evolving Economy: Thoughts on 21st Century US Economic Statistics.”</span> <em>Journal of Economic Perspectives</em> 33 (1): 165–84.
+</div>
+<div id="ref-keller2022bold" class="csl-entry">
+Keller, Sallie, Kenneth Prewitt, John Thompson, Steve Jost, Christopher Barrett, Sarah Nusser, Joseph Salvo, and Stephanie Shipp. 2022. <span>“A 21st Century Census Curated Data Enterprise. A Bold New Approach to Create Official Statistics. Technical Report.”</span> <em>Proceedings of the Biocomplexity Institute</em> BI-2022-1115: 297–323. <a href="https://doi.org/10.18130/r174-yk24">https://doi.org/10.18130/r174-yk24</a>.
+</div>
+<div id="ref-Lanman2023" class="csl-entry">
+Lanman, Kathryn, Olivia Davis, and Stephanie Shipp. 2023. <span>“What Can We Learn from Other Countries about How They Are Using Administrative Data to Supplement, Enhance, or Create New Data Products?”</span> <em>Proceedings of the Biocomplexity Institute</em>. <a href="https://doi.org/10.18130/2n54-sc22">https://doi.org/10.18130/2n54-sc22</a>.
+</div>
+<div id="ref-NASEM2023" class="csl-entry">
+NASEM. 2023. <span>“Toward a 21st Century National Data Infrastructure: Enhancing Survey Programs by Using Multiple Data Sources.”</span> <em>National Academies of Science, Engineering, and Medicine</em>. <a href="https://doi.org/10.17226/26804">https://doi.org/10.17226/26804</a>.
+</div>
+<div id="ref-management2023fundamentals" class="csl-entry">
+OMB. 2023. <span>“Fundamental Responsibilities of Recognized Statistical Agencies and Units.”</span> <em>Federal Register: The Daily Journal of the US Government</em>, 56708–44. <a href="https://www.federalregister.gov/documents/2023/08/18/2023-17664/fundamental-responsibilities-of-recognized-statistical-agencies-and-units
+  ">https://www.federalregister.gov/documents/2023/08/18/2023-17664/fundamental-responsibilities-of-recognized-statistical-agencies-and-units </a>.
+</div>
+<div id="ref-thieme2022technology" class="csl-entry">
+Thieme, Michael. 2022. <span>“Technology Transformations at the Census Bureau: Building a Modern, Data-Centric Ecosystem.”</span> <a href="hhttps://www.census.gov/newsroom/blogs/research-matters/2022/10/technology-transformation.html
+  ">hhttps://www.census.gov/newsroom/blogs/research-matters/2022/10/technology-transformation.html </a>.
+</div>
+</div></section></div> ]]></description>
+  <category>Public Policy</category>
+  <category>Data Analysis</category>
+  <category>Data Integration</category>
+  <category>Curation</category>
+  <category>Statistical Products</category>
+  <guid>https://realworlddatascience.net/case-studies/posts/2024/11/01/policy-problem.html</guid>
+  <pubDate>Fri, 01 Nov 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/case-studies/posts/2024/11/01/images/laptop-thumbnail.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>Forecasting the Health Needs of a Changing Population</title>
   <dc:creator>Luke Shaw (BNSSG ICB), Rich Wood (BNSSG ICB, University of Bath), Christos Vasilakis (University of Bath), Zehra Onen Dumlu (University of Bath)</dc:creator>
@@ -223,144 +734,8 @@ Shaw, Luke et al 2024. “Forecasting the Health Needs of a Changing Population�
   <category>Health and wellbeing</category>
   <category>Forecasting</category>
   <guid>https://realworlddatascience.net/case-studies/posts/2024/05/08/dpm.html</guid>
-  <pubDate>Mon, 04 Nov 2024 15:00:09 GMT</pubDate>
+  <pubDate>Wed, 08 May 2024 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/case-studies/posts/2024/05/08/images/doctor-patient-thumbnail.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>Advancing Data Science in Official Statistics – The Policy Problem</title>
-  <dc:creator>Sallie Keller, Stephanie Shipp, Vicki Lancaster and Joseph Salvo (University of Virginia)</dc:creator>
-  <link>https://realworlddatascience.net/case-studies/posts/2024/11/01/policy-problem.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<center>
-Acknowledgments: This research was sponsored by the: <br> United States Census Bureau Agreement No.&nbsp;01-21-MOU-06 and <br> Alfred P. Sloan Foundation Grant No.&nbsp;G-2022-19536
-</center>
-<p><br> <br> <em>The views expressed in this artice are those of the authors and not the Census Bureau.</em></p>
-<section id="introduction" class="level2">
-<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
-<p>Two centuries ago, when the Framers of the US Constitution laid the cornerstone for the federal statistical system, they could not have imagined the complexity of questions future generations would want to ask or the variety of data sources available to address them. Back in 1787, counting the population and apportioning state seats in the House of Representatives were the most urgent tasks before the young nation, and so a requirement for a decennial census was written into the Constitution. Now, 233 years later, the census continues to serve its original purpose – but purposes and uses for census data have exploded.</p>
-<p>Questions we now seek to answer go beyond what the census (or surveys) alone can hope to address. Even with the multitude of other surveys commissioned by today’s US Census Bureau, researchers and policymakers find themselves looking to novel sources of data – from structured numeric data in traditional databases to unstructured text documents scraped from the internet – to explore issues such as understanding how prepared nursing homes and communities are for extreme climate events,eg, hurricanes, wildfires, or floods. Wrangling these sources with traditionally designed data, such as censuses and surveys, can fill data gaps, improve the quality and usefulness of statistical products, speed up their dissemination, and inspire the creation of new types of statistical products.</p>
-<p>That is the impetus for developing the Curated Data Enterprise (CDE), an innovation in data science aimed at creating statistical products from all data types and building the infrastructure to support them. The Curated Data Enterprise, as the name implies, includes an end-to-end curation model to capture the complete statistical product development process. The CDE is designed to enable data discovery and retrieval, data quality assessment across multiple and diverse sources of information, and the reuse of data and models over time to accelerate statistical product development. The US Census Bureau has partnered with the University of Virginia, a working group of former Census Bureau Directors, a Communication Director, and university, non-profit and industry experts to develop this approach.</p>
-<div class="callout callout-style-default callout-note callout-titled">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-The US <a href="https://www.census.gov/">Census Bureau</a>
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The US Census Bureau provides the latest official statistics, facts, and figures about America’s people, places, and economy. It collects data for 130 surveys annually and the decennial census that gives the Bureau its name. The US Census Bureau collects data from households, businesses, governments and non-profit organizations. For each survey, tabulations and margins of error are published in news releases and reports. Public-use microdata subject to disclosure rules are provided for household and demographic surveys. Microdata for economic and household surveys, without disclosure rules applied, are accessible to researchers through the <a href="https://www.census.gov/about/adrm/fsrdc.html">Federal Statistical Research Data Centers</a>.</p>
-<p>Statistical agencies in other countries are also modernizing their surveys and statistical product development. See a summary of selected countries <span class="citation" data-cites="Lanman2023">(Lanman, Davis, and Shipp 2023)</span>.</p>
-</div>
-</div>
-</section>
-<section id="a-new-approach" class="level2">
-<h2 class="anchored" data-anchor-id="a-new-approach">A new approach</h2>
-<p>To realize the CDE vision, the development of statistical products will address stakeholder questions using all data types – designed surveys and censuses, public and private administrative data, opportunity data scraped from the internet and procedural data <span class="citation" data-cites="keller2022bold">(Keller et al. 2022)</span>. This new approach aligns with the US Census Bureau’s modernization and transformation <span class="citation" data-cites="thieme2022technology">(Thieme 2022)</span> while maintaining the fundamental responsibilities of statistical agencies <span class="citation" data-cites="management2023fundamentals">(OMB 2023)</span>. It is also consistent with a conclusion by the NASEM <em>Panel on the Implications of Using Multiple Data Sources for Major Survey Programs</em>: ‘The quality of statistics produced from multiple data sources depends on properties of the individual sources as well as the methods used to combine them. A new framework of quality standards and guidelines is needed to evaluate such data sources’ fitness for use’ <span class="citation" data-cites="NASEM2023">(NASEM 2023, 192)</span>.</p>
-<p>The CDE approach provides such a framework to address many of the challenges that official statistics face today, as well as demonstrate that they are poised to adopt a new approach to producing official statistics. For example:</p>
-<ul>
-<li><p>The timeliness and frequency of our official statistics are insufficient when there are shocks to the economy, such as the Covid-19 pandemic, when retrospective survey data were of limited usefulness. Federal agencies responded during the pandemic with relevance and agility by creating and launching fast-response Household Pulse Surveys that met immediate needs for data, trading off timeliness for quality <span class="citation" data-cites="Groshen2021Future">(Groshen 2021)</span>. Public engagement and support for these new relevant and timely data products at a time of crisis were essential to the success of this new statistical product.</p></li>
-<li><p>The policy environment has responded to technological, social, and survey changes by encouraging efficient use of existing data, reuse, sharing and furthering open data principles. Researchers are now creating innovative statistical products using multiple data sources to better address the US’s needs and interests. The Commission on Evidence-Based Policymaking <span class="citation" data-cites="abraham2018promise">(Abraham et al. 2018)</span> and the Federal Data Strategy <span class="citation" data-cites="FedDataStrat">(<span>“Federal Data Strategy, Leveraging Data as a Strategic Asset”</span> 2021)</span> recommendations encourage agencies to permit access to data to undertake evaluation and research studies.</p></li>
-<li><p>Techniques such as rapid scanning, text recognition, user-friendly uploads, and new devices, sensors, and systems can now record and transcribe data in real time. Using these techniques, governments and corporations now routinely and instantaneously collect and store data on behaviors and states as varied as purchase transactions, climate and road conditions, healthcare plan utilization, and land use and zoning. Extensive digitization and recording, better system connectedness and interactivity, and increased human-computer interaction can result in faster data accumulation, enhancing the usability of private and public administrative data while maintaining privacy and confidentiality <span class="citation" data-cites="brady2019challenge jarmin2019evolving">(Brady 2019; Jarmin 2019)</span>. &nbsp;</p></li>
-<li><p>New techniques and data sources can transform statistical agencies ‘from the 20th-century survey-centric model to a 21st-century model that blends structured survey data with administrative and unstructured alternative digital data sources’, leading to better measures of the gig economy, retail sales, healthcare, workforce, and tools and methods to integrate multiple data sources while maintaining privacy and confidentiality <span class="citation" data-cites="jarmin2019evolving">(Jarmin 2019)</span>.</p></li>
-</ul>
-<p>The next three articles in this series will:</p>
-<ul>
-<li><p>provide an overview of the CDE and its corresponding framework</p></li>
-<li><p>put the CDE Framework into practice through a demonstration use case on the resilience of skilled nursing facilities</p></li>
-<li><p>describe our next steps for developing the CDE through a use case research program.</p></li>
-</ul>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the authors</dt>
-<dd>
-<p><strong>Stephanie Shipp</strong> leads the Curated Data Enterprise research portfolio and collaborates with the US Census. She is an economist with experience in data science, survey statistics, public policy, innovation, ethics, and evaluation.</p>
-</dd>
-<dd>
-<strong>Vicki Lancaster</strong> is a statistician with expertise in experimental design, linear models, computation, visualizations, data analysis, and interpretation. She works with scientists at federal agencies on projects requiring statistical skills and creativity, eg, defining skilled technical workforce using novel data sources.
-</dd>
-<dd>
-<strong>Sallie Keller</strong> is the Chief Scientist and Associate Director of Research and Methodology at the US Census Bureau. She is a statistician with research interest in social and decision informatics, statistics underpinnings of data science, and data access and confidentiality. Sallie Keller was at the University of Virginia when this work was conducted. She is now the Chief Scientist and Associate Director of Research and Methodology at the US Census Bureau.
-</dd>
-<dd>
-<strong>Joseph Salvo</strong> is a demographer with experience in US Census Bureau statistics and data. He makes presentations on demographic subjects to a wide range of groups about managing major demographic projects involving the analysis of large data sets for local applications.
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2024 Stephanie Shipp
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@goumbik">Lukas Blazek</a> on <a href="https://unsplash.com/photos/turned-on-black-and-grey-laptop-computer-mcSDtbWXUZU">Unsplash</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Shipp S, Lancaster V, Keller S, Salvo J (2024). “Advancing Data Science in Official Statistics: The Policy Problem.” Real World Data Science, September 20, 2024. <a href="https://realworlddatascience.net/case-studies/posts/2024/11/01/policy-problem.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
-<div id="ref-abraham2018promise" class="csl-entry">
-Abraham, Katherine G, Ron Haskins, Sherry Glied, Robert M Groves, Robert Hahn, Hilary Hoynes, and KR Wallin. 2018. <span>“The Promise of Evidence-Based Policymaking: Report of the Commission on Evidence-Based Policymaking.”</span> <em>Washington, DC: Commission on Evidence-Based Policymaking</em>. <a href="https://www.cep.gov/ content/dam/cep/report/cep-final-report.pdf">https://www.cep.gov/ content/dam/cep/report/cep-final-report.pdf</a>.
-</div>
-<div id="ref-brady2019challenge" class="csl-entry">
-Brady, Henry E. 2019. <span>“The Challenge of Big Data and Data Science.”</span> <em>Annual Review of Political Science</em> 22: 297–323. <a href="https://www.annualreviews.org/doi/abs/10.1146/annurev-polisci-090216-023229">https://www.annualreviews.org/doi/abs/10.1146/annurev-polisci-090216-023229</a>.
-</div>
-<div id="ref-FedDataStrat" class="csl-entry">
-<span>“Federal Data Strategy, Leveraging Data as a Strategic Asset.”</span> 2021. 2021. <a href="https://strategy.data.gov/">https://strategy.data.gov/</a>.
-</div>
-<div id="ref-Groshen2021Future" class="csl-entry">
-Groshen, Erica L. 2021. <span>“The <span>Future</span> of <span>Official</span> <span>Statistics</span>.”</span> <em>Harvard Data Science Review</em> 3 (4).<a href=" https://doi.org/10.1162/99608f92.591917c6"> https://doi.org/10.1162/99608f92.591917c6</a>.
-</div>
-<div id="ref-jarmin2019evolving" class="csl-entry">
-Jarmin, Ron S. 2019. <span>“Evolving Measurement for an Evolving Economy: Thoughts on 21st Century US Economic Statistics.”</span> <em>Journal of Economic Perspectives</em> 33 (1): 165–84.
-</div>
-<div id="ref-keller2022bold" class="csl-entry">
-Keller, Sallie, Kenneth Prewitt, John Thompson, Steve Jost, Christopher Barrett, Sarah Nusser, Joseph Salvo, and Stephanie Shipp. 2022. <span>“A 21st Century Census Curated Data Enterprise. A Bold New Approach to Create Official Statistics. Technical Report.”</span> <em>Proceedings of the Biocomplexity Institute</em> BI-2022-1115: 297–323. <a href="https://doi.org/10.18130/r174-yk24">https://doi.org/10.18130/r174-yk24</a>.
-</div>
-<div id="ref-Lanman2023" class="csl-entry">
-Lanman, Kathryn, Olivia Davis, and Stephanie Shipp. 2023. <span>“What Can We Learn from Other Countries about How They Are Using Administrative Data to Supplement, Enhance, or Create New Data Products?”</span> <em>Proceedings of the Biocomplexity Institute</em>. <a href="https://doi.org/10.18130/2n54-sc22">https://doi.org/10.18130/2n54-sc22</a>.
-</div>
-<div id="ref-NASEM2023" class="csl-entry">
-NASEM. 2023. <span>“Toward a 21st Century National Data Infrastructure: Enhancing Survey Programs by Using Multiple Data Sources.”</span> <em>National Academies of Science, Engineering, and Medicine</em>. <a href="https://doi.org/10.17226/26804">https://doi.org/10.17226/26804</a>.
-</div>
-<div id="ref-management2023fundamentals" class="csl-entry">
-OMB. 2023. <span>“Fundamental Responsibilities of Recognized Statistical Agencies and Units.”</span> <em>Federal Register: The Daily Journal of the US Government</em>, 56708–44. <a href="https://www.federalregister.gov/documents/2023/08/18/2023-17664/fundamental-responsibilities-of-recognized-statistical-agencies-and-units
-  ">https://www.federalregister.gov/documents/2023/08/18/2023-17664/fundamental-responsibilities-of-recognized-statistical-agencies-and-units </a>.
-</div>
-<div id="ref-thieme2022technology" class="csl-entry">
-Thieme, Michael. 2022. <span>“Technology Transformations at the Census Bureau: Building a Modern, Data-Centric Ecosystem.”</span> <a href="hhttps://www.census.gov/newsroom/blogs/research-matters/2022/10/technology-transformation.html
-  ">hhttps://www.census.gov/newsroom/blogs/research-matters/2022/10/technology-transformation.html </a>.
-</div>
-</div></section></div> ]]></description>
-  <category>Public Policy</category>
-  <category>Data Analysis</category>
-  <category>Data Integration</category>
-  <category>Curation</category>
-  <category>Statistical Products</category>
-  <guid>https://realworlddatascience.net/case-studies/posts/2024/11/01/policy-problem.html</guid>
-  <pubDate>Fri, 01 Nov 2024 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/case-studies/posts/2024/11/01/images/laptop-thumbnail.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Deduplicating and linking large datasets using Splink</title>
