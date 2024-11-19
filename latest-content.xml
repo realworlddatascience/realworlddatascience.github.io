@@ -17,11 +17,368 @@
 <width>144</width>
 </image>
 <generator>quarto-1.5.57</generator>
-<lastBuildDate>Fri, 08 Nov 2024 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 19 Nov 2024 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Translating the Curated Data Model into Practice - Climate resiliency of skilled nursing facilities</title>
+  <dc:creator>Vicki Lancaster, Stephanie Shipp, Sallie Keller, Henning Mortveit, Samarth Swarup, Aaron Schroeder, and Dawen Xie &lt;br /&gt; University of Virginia, Biocomplexity Institute</dc:creator>
+  <link>https://realworlddatascience.net/case-studies/posts/2024/11/19/use-case-2.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<center>
+Acknowledgments: This research was sponsored by the: <br> Unites States Census Bureau Agreement No.&nbsp;01-21-MOU-06 and <br> Alfred P. Sloan Foundation Grant No.&nbsp;G-2022-19536
+</center>
+<p><br> <br></p>
+<section id="introduction" class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
+<p>Here, we demonstrate how the CDE Framework can be implemented for a research use case related to skilled nursing facilities. The framework provides the guiding principles for ethical, transparent, and reproducible research and dissemination and the research process for developing the statistical product.</p>
+<p>Across the US, federally regulated skilled nursing facilities (SNFs) provide essential care, rehabilitation, and related health services to about 1.3 million people. An SNF is a facility that meets specific federal regulatory certification requirements that enable it to provide short-term inpatient care and services to patients who require medical, nursing, or rehabilitative services. Their patients can be among the most vulnerable members of our society, and yet, historically, SNFs have not been incorporated into existing emergency response systems. For example, during the 2004 Florida hurricane season, SNFs were given the same priority as day spas for restoring electricity, telephones, water, and other essential services <span class="citation" data-cites="hyer2006establishing">(Hyer et al. 2006)</span>. Even worse are the deaths of SNF residents in Louisiana following Hurricanes Katrina and Rita in 2005 <span class="citation" data-cites="dosa2008controversy">(Dosa et al. 2008)</span>. This was still an issue in 2021. In Louisiana, 15 SNF residents died when evacuated to a warehouse during Hurricane Ida (2021), and 12 died in Florida as a result of Hurricane Irma (2017). In both instances, the deaths were attributed to extreme heat and lack of electricity <span class="citation" data-cites="skarha2021association">(Skarha et al. 2021)</span>.</p>
+<p>These events prompted the <span class="citation" data-cites="sheet2022protecting">(The White House 2022)</span> initiative, <em>Protecting Seniors by Improving Safety and Quality of Care in the Nation’s Nursing Homes</em>, stating, ‘All people deserve to be treated with dignity and respect and to have access to quality medical care.’</p>
+<p>However, there are questions that need to be addressed to best protect SNFs and their residents. For example, how resilient are SNFs in extreme climate events? This use case demonstration shows how we built a new statistical product to address this question using the CDE Framework <span class="citation" data-cites="lancaster2023CDE">(Lancaster et al. 2023)</span>.</p>
+</section>
+<section id="purposes-and-uses" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="purposes-and-uses"><span class="header-section-number">2</span> Purposes and uses</h2>
+<p>A skilled nursing facility (SNF) is a federally regulated nursing facility with the staff and equipment to provide skilled nursing care, skilled rehabilitation services, and other related health services <span class="citation" data-cites="cmsglossary">(Medicare &amp; Medicaid Services 2023)</span>. The context of this use case is to create a baseline picture of SNFs in Virginia and then integrate information on the risk of extreme flood events to assess facility and community preparedness – for example, how likely are the nursing staff<sup>1</sup> to make it to the facility in the event of a flood?</p>
+<p>This use case has two parts. The first creates a baseline data picture of SNFs, bringing together data about the residents, nursing staff, and SNF characteristics. The second addresses two issues raised in the <span class="citation" data-cites="sheet2022protecting">(The White House 2022)</span> initiative: emergency preparedness and nurse staffing. We frame these issues into three purpose and use questions with the ultimate goal of creating statistical products that address these questions:</p>
+<ol type="1">
+<li><p>Can SNF workers get to work during an extreme flood event?</p></li>
+<li><p>Are SNFs prepared for a flood emergency?</p></li>
+<li><p>Can communities support SNFs during an emergency?</p></li>
+</ol>
+</section>
+<section id="statistical-product-development-stages" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="statistical-product-development-stages"><span class="header-section-number">3</span> Statistical product development stages</h2>
+<p><strong>Subject matter input and literature review</strong></p>
+<p>The subject matter experts consulted included nursing facility administrators, SNF resident advocates, demographers, and researchers. Our discussions and literature review informed us of the many federal policies governing SNFs regarding inspections and data reporting requirements (procedural data). In addition, we were told about non-public data sources on residents and SNF staff that were aggregated to the SNF level and provided to the public under a grant from the National Institute on Aging. This information was important since we had yet to come across this source in our data discovery process. The dialogue with experts and our literature review helped us generate a ‘wish list’ of variables we used to inform our data discovery process that we visualized into a conceptual data map (see Figure&nbsp;1).</p>
+<div id="fig-data" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/case-studies/posts/2024/11/19/images/figure-3.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Conceptual Data Map Aligned to Purpose and Use: The conceptual data map displays the results of our data discovery. The team identifies the data needs informed by expert elicitation and literature review. For this use case the data discovery took three phases: (1) create a data picture of SNF owners, nursing staff, and residents, and the communities the facilities reside in; (2) identify the potential risks of a severe flood events, coastal and riverine; and (3) identify the potential weakness in the SNF’s and community’s ability to respond.
+</figcaption>
+</figure>
+</div>
+<p><strong>Data discovery</strong></p>
+<p>Data discovery focused on identifying data sources to address the purpose and use questions and was informed by the conceptual data map.</p>
+<p>For the first question – Can SNF workers get to work during an extreme flood event? – we discovered and used proprietary synthetic population, transportation routes, building data sources, and publicly available flood data. The <a href="https://developer.here.com/documentation">HERE Premium Streets</a> proprietary data includes information about roads, such as type of road, speed limits, number of lanes, etc. The proprietary synthetic population data, Building Knowledge Base (BKB), are used to identify where SNF workers live and work to map transportation routes from home to work <span class="citation" data-cites="mortveitNSSAC">(Mortveit, Xie, and Marathe 2023)</span>. Publicly available data from the Federal Emergency Management Administration (FEMA) provided flooding risk estimates along the routes from nursing staff homes to the SNF.</p>
+<p>For the second question – Are SNFs prepared for a flood emergency? – we used Center for Medicare and Medicaid (CMS) SNF inspection and deficiency data as a proxy for preparedness. We also examined SNF residents’ physical and mental health to assess SNF emergency preparedness. For example, if most residents faced mobility challenges, the SNF would need more resources available during an emergency to move residents to a safer facility. We used data about residents from the Long Term Care Focus <span class="citation" data-cites="brown2022ltcfocus">(LTCFocus 2022)</span> Public Use Data sponsored by the National Institute on Aging (Brown University 2022).</p>
+<p>We used data to measure community resilience, assets, and risks by geography at the county, city, and census tract levels to address the third question, Can communities support SNFs during an emergency? These data included:</p>
+<ul>
+<li>Health professional shortages area (HRSA 2022)</li>
+<li>Shelter facilities and emergency service providers data <span class="citation" data-cites="dhs2022hifld">(Homeland Security: Geospatial Management Office 2022)</span></li>
+<li>Community Resilience Indicator Analysis and National Risk Index for Natural Hazards <span class="citation" data-cites="FEMA2022a">(FEMA 2022)</span>.</li>
+</ul>
+<p>All data are provided in a <a href="https://github.com/uva-bi-sdad/census_cde_demo_2/tree/main/data">GitHub</a> repository along with their metadata, except for the three proprietary data sources. Articles about how the synthetic estimates are constructed are provided for two of these proprietary data sources. The third data source was obtained from a private-sector vendor whose data and documentation are proprietary; a link is provided to their website.</p>
+<p><strong>Data ingest and governance</strong></p>
+<p>All the public data, metadata, code, statistical products, data processes, and relevant literature on SNF policies and regulations are stored in a <a href="https://github.com/uva-bi-sdad/census_cde_demo_2/tree/main">GitHub</a> repository.</p>
+<p>In our experience, data wrangling is the most time-consuming and challenging part of product development. This speaks directly to the benefit of the CDE; once a researcher has wrangled together multiple data sources, it can be made available to other researchers.</p>
+<p>The two predominant issues with data wrangling for this Use Case included reconciling data sources that contain data on the same topic and creating linkages between data sources. For example, we reviewed three hospital data sources:</p>
+<ol type="1">
+<li><a href="https://hifld-geoplatform.opendata.arcgis.com/">Homeland Security Infrastructure Foundation-Level Data</a> (HIFLD) (DHS 2022)</li>
+<li><a href="https://healthdata.gov/dataset/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/6xf2-c3ie">HealthData.gov - COVID-19 Reported Patient Impact and Hospital Capacity by State</a> (HHS 2022)</li>
+<li><a href="https://vhha.com/about-virginia-hospitals/">Map of VHHA Hospital and Health System Members</a> (Virginia Hospital &amp; Healthcare Association 2022)</li>
+</ol>
+<p>We observed inconsistences and omissions across the three data sources including:&nbsp;</p>
+<ul>
+<li>non-standard hospital names and hospital classification types</li>
+<li>inconsistent availability of hospital IDs (such as Medicare Provider Number) &nbsp;</li>
+<li>conflicting geographic information, including address, latitude, and longitude.</li>
+</ul>
+<p>We did not attempt to reconcile these inconsistencies for the demonstration but decided to use a single source for shelter facility and emergency service provider data. We used <a href="https://hifld-geoplatform.opendata.arcgis.com/">HIFLD</a> data since they provided the most current data (DHS 2022). The use of these data reinforces the purpose of the use case – to illuminate the challenges in creating statistical products and what the Census Bureau would need to consider.</p>
+<p>Similar inconsistencies made it difficult to link data sources using geographic variables. For example, we used shelter facility and emergency service provider data sources from the HIFLD – including hospitals, Red Cross chapter facilities, National Shelter System Facilities, emergency medical service stations, fire stations, and urgent care facilities – to calculate a metric for potential community support. The goal was to place each facility in a Virginia county or independent city. Virginia is divided into 95 counties, and 38 independent cities considered county-equivalents for census purposes, and in some cases, there is a county and a city with the same name (eg, Richmond County and Richmond City, each in different locations in Virginia). It was necessary to <a href="https://en.wikipedia.org/wiki/Canonicalization">canonicalize</a> the county and city names (when available), which meant aligning upper and lower cases, removing unnecessary characters, and distinguishing between county and city.<sup>2</sup></p>
+<p>The challenge with locating shelter facilities and emergency service providers within a county or independent city was using different variables to identify their location (latitude and longitude, address, ZIP code<sup>3</sup>, Federal Information and Processing Standard (FIPS) code, and county/city name). In cases where the data source only had a ZIP or FIPS code, a Department of Housing and Urban Development crosswalk was used to link the two codes; in other cases, a crosswalk that linked non-independent cities and towns to counties was used; and in others, a crosswalk that linked FIP codes to counties and independent cities. Researchers would benefit from exhaustive crosswalks between all variables on the same topic, such as location variables, facility names, and identification numbers, to reduce the time spent on data wrangling.</p>
+<p>Regarding data products related to popular indices, such as climate disaster risks and community resilience, they are operationalized differently across the various departments and agencies within the federal and state governments and private and non-profit sectors. It is an enormous task to review the methodology and technology reports (if available) to understand their differences and decide which versions are most relevant (fitness-for-purpose) for a particular use case. Again, after reviewing the options for this use case, we determined that the National Risk Index for riverine and coastal floods from FEMA was the best option for climate risk estimates. The detailed technical report, <em>National Risk Index Technical Document</em> <span class="citation" data-cites="FEMA2021risk">(FEMA 2021)</span>, provides a clear assessment of the assumptions and limitations of the data and a description of how the risk estimates were derived. Researchers would benefit from guidance on the numerous constructions of indices on the same topic. A use case on a specific index topic could be used to highlight differences and similarities among indices, which would help with data wrangling and fitness-for-use. Ideally, the use case could benchmark the various constructions and provide a statistical assessment.</p>
+<section id="question-1-can-snf-workers-get-to-work-during-an-extreme-flooding-event" class="level3" data-number="3.1">
+<h3 data-number="3.1" class="anchored" data-anchor-id="question-1-can-snf-workers-get-to-work-during-an-extreme-flooding-event"><span class="header-section-number">3.1</span> <strong>Question 1: Can SNF workers get to work during an extreme flooding event?</strong></h3>
+<p>Sufficient nursing staff is of significant concern to assure resident safety and quality of care.</p>
+<p>Since proprietary synthetic population data and commercial sector digitized mapping data were used to construct the routes SNF nursing staff are likely to take from home to work, only an outline of the computational process used to identify the routes is provided. Publicly available data from FEMA were used to estimate flooding risk along a particular route. Below is a general description of the modeling steps and the proprietary data used to assess SNF vulnerability as a function of the nursing staff’s inability to report to work due to the transportation infrastructure <span class="citation" data-cites="choupani2016population">(Choupani and Mamdoohi 2016)</span>.</p>
+<p><strong>Computational modules</strong></p>
+<p>Here is the basic outline of the process that uses proprietary data that starts at network construction and ends with routes. For more details, see the GitHub repository: <a href="https://github.com/uva-bi-sdad/census_cde_demo_2/blob/main/documents/products/processes/commute_vulnerability/algorithm.md">Vulnerability of SNFs concerning Commuting</a>.</p>
+<ol type="1">
+<li>Extract network data from HERE (2021 Q1 in this use case).</li>
+<li>Process the extracted data to form a network suitable for routing. This includes inference of speed limits for road links where such data is missing.</li>
+<li>Prepare origin-destination pairs. In this case, the list of locations pairs a worker’s home and work locations. The person is constructed in the synthetic population pipeline, and residences and workplaces are derived through the data fusion process used to construct the NSSAC building database.</li>
+<li>Construct routes using the Quest router.</li>
+</ol>
+<p>Once the routes to an SNF were established, the expected number of nursing staff at an SNF during a flood event could be calculated as the sum of the probabilities of each worker being able to commute to work during a flood event. A computational model was developed using the following data:</p>
+<ul>
+<li>SNF locations in Virginia from the Centers for Medicare &amp; Medicaid Services (CMS);</li>
+<li>Home locations of workers at each SNF assigned from the synthetic population and Building Knowledge Base <span class="citation" data-cites="beckman1996creating mortveitNSSAC">(Beckman, Baggerly, and McKay 1996; Mortveit, Xie, and Marathe 2023)</span>;</li>
+<li>Virginia road networks; and</li>
+<li>FEMA census tract-level riverine and coastal flood risks.</li>
+</ul>
+<p>Using router software, the Virginia road network was used from the HERE map data to compute each nursing staff’s likely route to their SNF. Routers are commonly used within transportation and traffic simulators. The router software used for this demonstration is a highly parallelizable router previously developed in BI NSSAC, known as the Simba router <span class="citation" data-cites="barrett2013planning">(Barrett et al. 2013)</span>.</p>
+<p>The FEMA risk data provide the riverine and coastal flood risks for each census tract in Virginia. Given the routes, the FEMA riverine and coastal flood risks were used to estimate the probability of the nursing staff making it to work. The FEMA technical document <em>National Risk Index Technical Document</em> <span class="citation" data-cites="FEMA2021risk">(FEMA 2021)</span> provides information on how natural hazard risks are calculated. We use these risk estimates ranging from 0 to 100 as a proxy for the probability a worker can reach the SNF by dividing by 100. For example, we assume a risk is zero if there is zero probability of being unable to reach the SNF due to an extreme flood event.</p>
+<p>In contrast, a risk of 100 indicates the roads are underwater, and the probability of being unable to reach the SNF is one. The maximum risks along transportation routes leading to an SNF range from 0 to 47 for riverine flooding and 0 to 40 for coastal flooding. We assume the combined value of the maximum riverine and coastal flood risks along a worker’s transportation routes, divided by 100, is the worker’s probability of not getting to work during a flooding event.</p>
+<p>Since we do not have data on the exact home locations of the nursing staff, we estimated how many could reach the facility by taking a random sample (whose size is the CMS average daily nursing staff<sup>4</sup> for an SNF) from the possible routes identified using the HERE Virginia road network. We calculated the average with a 95% nonparametric confidence interval. The 283 SNFs used in our research have an average daily nursing staff of 12,609. Using the above approach, we estimated that 10,005 (95% CI: 9,013, 10,700) or 79% can get work during an extreme flood event. The individual SNF nursing staff percentage who can make it to work ranges from 48% to 93%.</p>
+<p>Figure&nbsp;2 visualizes this analysis for the 283 SNFs ordered by the observed average daily nursing staff numbers at the facility from smallest to largest, displayed using the orange line. The black line indicates the expected number in an extreme flood event and the 95% nonparametric confidence interval (grey band). The code for Figure&nbsp;2 is provided in the <a href="https://github.com/uva-bi-sdad/census_cde_demo_2/blob/main/source_code/analyses/VA_Probability_of_Getting_to_SNF.R">GitHub</a> repository.</p>
+<div id="fig-ns" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-ns-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/case-studies/posts/2024/11/19/images/figure-4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="2000">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ns-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: SNF Average Observed and Expected Average Daily Nursing Staff Numbers: The horizontal axis is ordered by the size of the nursing staff at the facility from smallest to largest. The orange line displays the observed average daily nursing staff numbers. The black line displays the estimated numbers in the event of an extreme coastal and/or riverine flood event. The grey band is the 95% nonparametric confidence interval.
+</figcaption>
+</figure>
+</div>
+<p>For example, in King George County, the SNF is Heritage Hall King George (Federal Provider Number 495300 in Figure&nbsp;3), located near the Potomac River, which opens to the Chesapeake Bay. According to CMS, the Heritage Hall King George facility has an average daily skilled nursing staff of 41. Using the HERE Virginia road network, we identified 101 routes the staff could use to reach the facility. The combined maximum coastal and riverine flood risks along these routes ranged from 5.6 to 66.7; a random sample of 41 from the 101 routes gives an average probability of reaching the facility of 0.74 with a 95% nonparametric confidence interval of [0.65, 0.80]. These were used to estimate the average number of nursing staff at the facility, 30, during a flood event, along with a 95% nonparametric confidence interval [14, 38]. Publicly available data from the Federal Emergency Management Administration (FEMA) provided flooding risk estimates along the routes from the nursing staff home to the SNF along with proprietary road and building information<strong>.</strong></p>
+<div id="fig-map" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/case-studies/posts/2024/11/19/images/figure-5.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: An Example of Nursing Staff Routes to Heritage Hall King George SNF: Routes that workers can take to work at Heritage Hall  King George SNF FPN 495300 (identified with the black oval). The risk levels of each road are identified with colors, from low risk (blue), medium-low (yellow), orange (medium), red (medium-high), to high risk (dark red). The risk scores are used to calculate the probability of a worker getting to work during an extreme flood event using publicly available FEMA data and proprietary road and building data.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="question-2.-are-snfs-prepared-for-emergencies" class="level3" data-number="3.2">
+<h3 data-number="3.2" class="anchored" data-anchor-id="question-2.-are-snfs-prepared-for-emergencies"><span class="header-section-number">3.2</span> <strong>Question 2. Are SNFs prepared for emergencies?</strong></h3>
+<p>To address this question, we examined how prepared SNFs are for emergencies using annual inspection and deficiency data as a proxy for preparedness. CMS issues deficiencies to SNFs that fail to meet federal Medicare and Medicaid preparedness standards. Every deficiency is classified into one of 12 categories based on the scope and severity of the deficiency. There are two broad types of non-health-related deficiencies:</p>
+<ul>
+<li><p>Emergency Preparedness Deficiencies – There are four elements of emergency preparedness. They cover an emergency plan, policies and procedures, a communication plan, and training and testing.</p></li>
+<li><p>Fire Life Safety Code – The set of fire protection requirements are designed to provide a reasonable degree of safety from fire. They cover construction, protection, and operational features designed to provide safety from fire, smoke, and panic.</p></li>
+</ul>
+<p>We calculated separate Emergency Preparedness and Fire Life Safety Code deficiency indices to combine them to create a single index to measure SNF preparedness and distinguish between high and low performing SNFs. The computation of the indices has four steps.</p>
+<ol type="1">
+<li><p><em>Number of deficiencies</em>: For each SNF, the total number of deficiencies during the past four years, 2018-2022, was divided by the number of SNF inspections over the same period to estimate the average number of deficiencies per inspection.</p></li>
+<li><p><em>Time to resolve deficiencies</em>: We next computed the average number of days it took to resolve each deficiency.</p></li>
+<li><p><em>Scope and severity of deficiencies</em>: We then transformed the deficiency letter inspection rating for scope and severity to a numerical weight using the CMS technical guide, <em>Care Compare Nursing Home Five-Star Quality Rating System</em> <span class="citation" data-cites="CMS2022design">(Medicare &amp; Medicaid Services 2022)</span>,and averaged the ratings.</p></li>
+<li><p>The estimates from these three steps were summed to compute separate Emergency Preparedness and Fire Life Safety Code deficiency indices (see Figure&nbsp;4) and are provided for reuse in a .csv file on <a href="https://github.com/uva-bi-sdad/census_cde_demo_2/blob/main/documents/products/processes/derived_variables/va_snf_deficiency_indices_k_e.csv">GitHub</a>.</p></li>
+</ol>
+<p>Figure&nbsp;4 displays the results of an exploratory data analysis for each index. These analyses assessed fitness-for-use; we wanted to construct an indicator with sufficient variability to discriminate between high and low-performing SNFs. It is evident we accomplished this in Figure&nbsp;4 there are SNFs with indices outside the main body of the data. We summed the Emergency Preparedness and Fire Life Safety Code indices and categorized them into high, medium, low, and no deficiencies.</p>
+<div id="fig-def" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-def-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/case-studies/posts/2024/11/19/images/figure-6.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="900">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-def-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Exploratory Data Analysis Visualizations for the Emergency Preparedness and Fire Life Safety Code Deficiencies
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="question-3-can-communities-support-snfs-during-emergencies" class="level3" data-number="3.3">
+<h3 data-number="3.3" class="anchored" data-anchor-id="question-3-can-communities-support-snfs-during-emergencies"><span class="header-section-number">3.3</span> <strong>Question 3: Can communities support SNFs during emergencies?</strong></h3>
+<p>To answer this question, we computed a community resiliency index using the US Census American Community Survey and the guidance provided by the <em>Homeland Security document Community Resilience Indicator Analysis: County-Level Analysis of Commonly Used Indicators from Peer-Reviewed Research</em> <span class="citation" data-cites="edgemon2018community">(Edgemon et al. 2018)</span><em>.</em> The index was constructed by summing the county (census tract) level percentages for the following variables:</p>
+<ul>
+<li>fraction employed</li>
+<li>fraction with no disability</li>
+<li>fraction with a high school diploma or greater</li>
+<li>fraction of households with at least one vehicle</li>
+<li>reverse GINI Index – so all indicators are in a positive direction.</li>
+</ul>
+<p>Figure&nbsp;5 displays the combined deficiency indices, Emergency Preparedness + Fire Life Safety Code, for each SNF with the choropleth map for the community resilience index at the census tract level. We also examined the number of shelter facilities and emergency service providers and the availability of medical staff per 10,000 residents. We constructed isochrones to establish the distance from the SNF to these potential sources of support. Working on this component of the use case highlighted the need for cross-agency data, pointing to the utility of future strategic partnering between the US Census Bureau, CMS, and FEMA.</p>
+<div id="fig-cri" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cri-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/case-studies/posts/2024/11/19/images/figure-7.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cri-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;5: 2020 Population Resilience Composite Index for Virginia Census Tracts: The light yellow tracts are the least resilient, and the dark green are the most resilient. The locations of the 283 SNFs are identified with filled circles, orange circles with the highest
+</figcaption>
+</figure>
+</div>
+<p>In addition to describing the population using a resilience index, we also developed a measure to present the number of shelter facilities and emergency service providers (data from Homeland Security / Homeland Infrastructure Foundation Level Data) and the availability of medical doctors (MDs) and Doctor of Osteopathic Medicine (ODs) who provide direct patient care (HRSA 2022) (Figure&nbsp;6).&nbsp;</p>
+<p>The number of MDs and ODs is described as a primary care health professional shortage area. HRSA defines these contiguous areas where primary medical care professionals are overutilized, excessively distant, or inaccessible to the population of the area under consideration. Figure&nbsp;6 (bottom) shows that approximately one-third of the counties and independent cities have health professional shortage areas across their entire boundary, and another 40 percent have shortages within parts of their boundaries.</p>
+<div id="fig-help" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-help-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/case-studies/posts/2024/11/19/images/figure-8.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1000">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-help-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;6: Assessment of the number of shelter facilities and emergency service providers per 10,000 population (top) and medically underserved areas (bottom): On both maps, the lighter the color, the more in need is the population of shelter facilities and emergency services (top chart) or health professionals (bottom chart). The location of the 283 SNFs are identified with filled circles, orange circles are those with the highest deficiency index and grey circles are those with no deficiencies.
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="guiding-principles-for-ethical-transparent-reproducible-statistical-product-development-and-dissemination." class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="guiding-principles-for-ethical-transparent-reproducible-statistical-product-development-and-dissemination."><span class="header-section-number">4</span> Guiding principles for ethical, transparent, reproducible statistical product development and dissemination.</h2>
+<p><strong>Communication</strong></p>
+<p>We communicated results throughout the Demonstration Use Case research with our Census CDE Working Group (composed of former Census Bureau Directors and Communication Director, and academic and industry census experts), with the Census Bureau, at conferences such as the annual Federal Statistical Committee on Methodology, and sharing drafts to seek input and ideas. The discussions and presentations helped to shape ideas and advance our thinking about how best to address the purpose and use questions.</p>
+<p><strong>Stakeholder engagement</strong></p>
+<p>We engaged stakeholders by sharing our research and results through conference presentations at the American Community Survey Data Users Conference and the Applied Public Data Users Conference.&nbsp;We also shared this demonstration project at Listening Sessions with stakeholders as an example of statistical product development. The Listening Sessions bring together 7 to 12 stakeholders by topic (e.g., children’s health) or function (e.g., state demographers) to seek their ideas for new statistical products.</p>
+<p><strong>Equity and ethics</strong></p>
+<p>As described in the Introduction, there are ethics and equity issues that drew us to develop this Use Case. Here we focus on equity and ethics vis-a-vis the data choices and analyses. With regard to ethical considerations with our data discovery process, fitness-for-purpose evaluation, and analyses, two questions arose:</p>
+<ol type="1">
+<li><p>What role does synthetic data have to play, and how do you benchmark it to evaluate fitness-for-purpose?</p></li>
+<li><p>How do you construct and evaluate an index with the goal of identifying vulnerable populations?</p></li>
+</ol>
+<p>Realizing the importance of nursing staff levels, we discussed and questioned whether the synthetic data had biases and were not representative of SNF residents and employees. We benchmarked the synthetic SNF nursing staff numbers against those submitted quarterly to CMS and observed they were biased low, so we decided to use the CMS data. These data were used to estimate the average number of nursing staff that could reach the facility during an extreme flood event (Figure&nbsp;2).</p>
+<p>In this use case, we were fortunate to have the “truth” to benchmark the synthetic data for the average daily nursing staff at each SNF. But this was not the case for the home locations of the nursing staff, therefore, the synthetic locations were not used since we had no way to benchmark them. Ideally, we would use the actual addresses of SNF employees. Instead, we used a simulation to estimate the average risks over routes leading to the SNF. This approach could be replaced with (or benchmarked against) the Census commuting data sets (eg, <a href="https://www.census.gov/topics/employment/commuting/guidance/flows.html">Commuting Flows</a> or the <a href="https://lehd.ces.census.gov/data/">LEHD Origin-Destination Employment Statistics</a>) and the home census tract used as the starting point for each worker. For the number of nursing staff and their home locations, it is impossible to identify potential biases that would result in the inequitable allocation of emergency rescue resources without a thorough understanding of how the synthetic data were generated.</p>
+<p>How one evaluates the equity of an index is a more challenging task. Questions that need to be addressed include:</p>
+<ol type="1">
+<li><p>How do you select the variables used to construct an indicator to guide an equitable allocation of technical assistance?</p></li>
+<li><p>What relationship between these variables is important?</p></li>
+<li><p>What are the differences across the numerous publicly available resilience estimators? Do some lead to a more equitable allocation of technical assistance in the event of an extreme clime event?</p></li>
+<li><p>How do you validate a resilience estimator?</p></li>
+</ol>
+<p>The technical document <em>Community Resilience Indicator Analysis: County-Level Analysis of Commonly Used Indicators from Peer-Reviewed Research</em> <span class="citation" data-cites="edgemon2018community">(Edgemon et al. 2018)</span> identified the 20 most commonly selected variables for constructing resilience estimators from peer-reviewed research. Future research will need to validate these indices against past extreme climate events.</p>
+<p><strong>Privacy and confidentiality</strong></p>
+<p>We did not do a full disclosure review. However, some data are proprietary, and we could not release those data. We discuss how we used these data.</p>
+<p><strong>Dissemination</strong></p>
+<p>We disseminated the final version of the use case in the University of Virginia Libra Open repository <span class="citation" data-cites="lancaster2023CDE">(Lancaster et al. 2023)</span>.</p>
+<p><strong>Curation</strong></p>
+<p>Curation involves documenting all steps of the process so that they can be repeated, validated, reused, or extended. The final report explains the process in words. Curation must also provide the data, metadata, source code, and products. This led us to construct a GitHub repository. A <a href="https://github.com/uva-bi-sdad/census_cde_demo_2/blob/main/README.pdf">README</a> file guides the reader through the material and provides instructions for replicating the research results. Note that the README file must be downloaded for the hyperlinks to work.</p>
+</section>
+<section id="using-the-snf-statistical-product" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="using-the-snf-statistical-product"><span class="header-section-number">5</span> Using the SNF statistical product</h2>
+<p>This potential statistical product has many uses. Federal policymakers and administrators regulate SNFs; however, they only sometimes realize the impacts on costs and the need for increased resources to meet these regulations. For example, by reviewing the aggregate inspection deficiency metrics, policymakers can target resources where they are most needed. Providing additional funding to pay workers more, improve their facilities, and address inspection deficiencies would improve the quality of SNFs.&nbsp;</p>
+<p>The media and advocacy groups play a role in highlighting good and bad cases of SNF care or where communities do not have adequate assets to support SNFs during an emergency event. For example, a <em>New Yorker</em> article <span class="citation" data-cites="rafiei2022private">(Rafiei 2022)</span> highlighted how nursing homes decline dramatically when bought by private equity owners. The GAO (September 22, 2023) recently identified the need for more information about private equity ownership in CMS data – a gap that CMS needs to address. And, of course, researchers and analysts are essential for conducting research that leads to creating and improving statistical products around SNFs. By releasing a regularly scheduled SNF statistical product, the changes in SNFs over time can be monitored.</p>
+</section>
+<section id="what-cde-capabilities-have-this-use-case-demonstrated" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="what-cde-capabilities-have-this-use-case-demonstrated"><span class="header-section-number">6</span> What CDE capabilities have this use case demonstrated?</h2>
+<p>As demonstrated by this use case, the CDE Framework is a powerful process for guiding and curating the development of statistics to address complex purposes and uses. Additionally, use cases help illuminate technical capabilities that should be present in the data enterprise to facilitate and accelerate the reuse of data and methods in the development and dissemination of new statistical products.</p>
+<p>This CDE demonstration is the first of many use cases needed to define and develop CDE capabilities. Underlying each use case is the curation process. Curation documents each step, including decisions that may involve trade-offs. Curation preserves and adds value to the data. This includes organizing to facilitate data discovery and easy access; providing metadata to enable the reuse in scientific and programmatic research; enhancing the value of the data enterprise through linkages between datasets; and mapping the network of interconnections between datasets, research outputs, researchers, and institutions. Over time, a searchable curation system will be needed as a foundation for creating statistical products in the CDE.</p>
+<p>The types of products from a use case that can benefit the larger community are only limited by the creativity of the researchers and stakeholders carrying out the use case. The products from this use case are re-useable code; integrated data sets across diverse topics for each SNF; maps and other visualizations; statistical products such as SNF deficiency indices and various indices that measure community and SNF resilience; the probability of a worker reaching an SNF in the event of extreme flooding; and a GitHub repo that provides easy access to all these products plus relevant metadata, literature, and government documents and regulations.</p>
+<p>Conducting this use case has been an eye-opening experience as to the amount and quality of publicly available data to address our research questions. The statistical capabilities and products flowing from diverse use cases can only be identified as the program progresses.</p>
+<div class="nav-btn-container">
+<div class="grid">
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../case-studies/posts/2024/11/08/what-is-CDE-2.html">← Part 2: What is the CDE?</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+<strong>Vicki Lancaster</strong> is a statistician with expertise in experimental design, linear models, computation, visualizations, data analysis, and interpretation. She works with scientists at federal agencies on projects requiring statistical skills and creativity, eg, defining skilled technical workforce using novel data sources.
+</dd>
+<dd>
+<strong>Stephanie Shipp</strong> leads the Curated Data Enterprise research portfolio and collaborates with the US Census. She is an economist with experience in data science, survey statistics, public policy, innovation, ethics, and evaluation.
+</dd>
+<dd>
+<strong>Sallie Keller</strong> is the Chief Scientist and Associate Director of Research and Methodology at the US Census Bureau. She is a statistician with research interest in social and decision informatics, statistics underpinnings of data science, and data access and confidentiality. Sallie Keller was at the University of Virginia when this work was conducted.
+</dd>
+<dd>
+<strong>Aaron Schroeder</strong> has experience in the technologies and related policies of information and data integration and systems analysis, including policy and program development and implementation.
+</dd>
+<dd>
+<strong>Henning Mortveit</strong> develops massively interacting systems and the mathematics supporting rigorous analysis and understanding of their stability and resiliency.
+</dd>
+<dd>
+<strong>Samarth Swarup</strong> conducts research in computational social science, resiliency and sustainability, and stimulation analytics.
+</dd>
+<dd>
+<strong>Dawen Xie</strong> develops geographic information systems, visual analytics, information management systems, and databases, with a current focus on building dynamic web systems.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2024 Stephanie Shipp
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://www.shutterstock.com/g/Ground+Picture">Ground Picture</a> on <a href="https://www.shutterstock.com/image-photo/lovely-nurse-assisting-senior-man-get-2006404274">Shutterstock</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Lancaster V, Shipp S, Keller S et al.&nbsp;(2024). “Translating the Curated Data Model into Practice - climate resiliency of skilled nursing facilities” Real World Data Science, November 19, 2024. <a href="https://realworlddatascience.net/case-studies/posts/2024/11/19/use-case-2.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="ref-barrett2013planning" class="csl-entry">
+Barrett, Christopher, Keith Bisset, Shridhar Chandan, Jiangzhuo Chen, Youngyun Chungbaek, Stephen Eubank, Yaman Evrenosoğlu, et al. 2013. <span>“Planning and Response in the Aftermath of a Large Crisis: An Agent-Based Informatics Framework.”</span> In <em>2013 Winter Simulations Conference (WSC)</em>, 1515–26. IEEE.
+</div>
+<div id="ref-beckman1996creating" class="csl-entry">
+Beckman, Richard J, Keith A Baggerly, and Michael D McKay. 1996. <span>“Creating Synthetic Baseline Populations.”</span> <em>Transportation Research Part A: Policy and Practice</em> 30 (6): 415–29.
+</div>
+<div id="ref-choupani2016population" class="csl-entry">
+Choupani, Abdoul-Ahad, and Amir Reza Mamdoohi. 2016. <span>“Population Synthesis Using Iterative Proportional Fitting (IPF): A Review and Future Research.”</span> <em>Transportation Research Procedia</em> 17: 223–33.
+</div>
+<div id="ref-dosa2008controversy" class="csl-entry">
+Dosa, David M, Kathryn Hyer, Lisa M Brown, Andrew W Artenstein, LuMarie Polivka-West, and Vincent Mor. 2008. <span>“The Controversy Inherent in Managing Frail Nursing Home Residents During Complex Hurricane Emergencies.”</span> <em>Journal of the American Medical Directors Association</em> 9 (8): 599–604. <a href="https://pubmed.ncbi.nlm.nih.gov/19083295/">https://pubmed.ncbi.nlm.nih.gov/19083295/</a>.
+</div>
+<div id="ref-edgemon2018community" class="csl-entry">
+Edgemon, Lesley, Carol Freeman, Carmella Burdi, Trail, and Kyle Pfeiffer. 2018. <span>“Community Resilience Indicator Analysis: County-Level Analysis of Commonly Used Indicators from Peer-Reviewed Research.”</span> <em>Argonne National Laboratory</em>. <a href="https://www.researchgate.net/publication/331232094_Community_Resilience_Indicator_Analysis_County-Level_Analysis_of_Commonly_Used_Indicators_From_Peer-Reviewed_Research">https://www.researchgate.net/publication/331232094_Community_Resilience_Indicator_Analysis_County-Level_Analysis_of_Commonly_Used_Indicators_From_Peer-Reviewed_Research</a>.
+</div>
+<div id="ref-FEMA2021risk" class="csl-entry">
+FEMA. 2021. <span>“National Risk Index Technical Documentation.”</span> Federal Emergency Management Agency. 2021. <a href="https://www.fema.gov/sites/default/files/documents/fema_national-risk-index_technical-documentation.pdf
+  ">https://www.fema.gov/sites/default/files/documents/fema_national-risk-index_technical-documentation.pdf </a>.
+</div>
+<div id="ref-FEMA2022a" class="csl-entry">
+———. 2022. <span>“Community Resilience Indicator Analysis: Commonly Used Indicators from Peer-Reviewed Research: Updated for Research Published 2003-2021.”</span> Federal Emergency Management Agency. 2022. <a href="hhttps://www.fema.gov/sites/default/files/documents/fema_2022-community-resilience-indicator-analysis.pdf
+  ">hhttps://www.fema.gov/sites/default/files/documents/fema_2022-community-resilience-indicator-analysis.pdf </a>.
+</div>
+<div id="ref-dhs2022hifld" class="csl-entry">
+Homeland Security: Geospatial Management Office, Department of. 2022. <span>“Homeland Security Infrastructure Foundation-Level Data Open Data.”</span> 2022. <a href="https://hifld-geoplatform.opendata.arcgis.com/">https://hifld-geoplatform.opendata.arcgis.com/</a>.
+</div>
+<div id="ref-hyer2006establishing" class="csl-entry">
+Hyer, Kathryn, Lisa M Brown, Amy Berman, and LuMarie Polivka-West. 2006. <span>“Establishing and Refining Hurricane Response Systems for Long-Term Care Facilities: The John a. Hartford Foundation Was the Lead Funder of a Hurricane Summit to Focus on the Neglected Needs of the Elderly.”</span> <em>Health Affairs</em> 25 (Suppl1): W407–11. <a href="https://www.healthaffairs.org/doi/full/10.1377/hlthaff.25.w407?casa_token=XbJ2j-CdtssAAAAA:USJMJsZq_jlYlQlASQt4O4OYJcq_AOKjpXOx5tTMUIZxoNVXZCzj1_ejtQyLHrnTg6B1BygFuuGZ">https://www.healthaffairs.org/doi/full/10.1377/hlthaff.25.w407?casa_token=XbJ2j-CdtssAAAAA:USJMJsZq_jlYlQlASQt4O4OYJcq_AOKjpXOx5tTMUIZxoNVXZCzj1_ejtQyLHrnTg6B1BygFuuGZ</a>.
+</div>
+<div id="ref-lancaster2023CDE" class="csl-entry">
+Lancaster, V., S. Shipp, S. Keller, A. Schroeder, H. Mortveit, S. Swarup, and D. Xie. 2023. <span>“Census Curated Data Enterprise Use Case Demonstration: Climate Resiliency of Skilled Nursing Facilities”</span> TR 2023-53. <a href="https://doi.org/10.18130/ce97-sp05">https://doi.org/10.18130/ce97-sp05</a>.
+</div>
+<div id="ref-brown2022ltcfocus" class="csl-entry">
+LTCFocus, Brown University. 2022. <span>“Who We Are.”</span> 2022. <a href="https://ltcfocus.org/about">https://ltcfocus.org/about</a>.
+</div>
+<div id="ref-CMS2022design" class="csl-entry">
+Medicare &amp; Medicaid Services, Centers for. 2022. <span>“Design for Care Compare Nursing Home Five-Star Quality Rating System: Technical Users’ Guide.”</span> 2022. <a href="https://www.cms.gov/medicare/provider-enrollment-and-certification/certificationandcomplianc/downloads/usersguide.pdf">https://www.cms.gov/medicare/provider-enrollment-and-certification/certificationandcomplianc/downloads/usersguide.pdf</a>.
+</div>
+<div id="ref-cmsglossary" class="csl-entry">
+———. 2023. <span>“CMS Glossary.”</span> 2023. <a href="https://www.cms.gov/glossary?term=skilled+nursing+facility&amp;items_per_page=10&amp;viewmode=grid ">https://www.cms.gov/glossary?term=skilled+nursing+facility&amp;items_per_page=10&amp;viewmode=grid </a>.
+</div>
+<div id="ref-mortveitNSSAC" class="csl-entry">
+Mortveit, H., D. Xie, and M. Marathe. 2023. <span>“NSSAC Building Knowledge Base: Modeling and Implementation.”</span>
+</div>
+<div id="ref-rafiei2022private" class="csl-entry">
+Rafiei, Y. 2022. <span>“When Private Equity Takes over a Nursing Home.”</span> <em>New Yorker</em> 2022: 333. <a href="https://www.newyorker.com/news/dispatch/when-private-equity-takes-over-a-nursing-home">https://www.newyorker.com/news/dispatch/when-private-equity-takes-over-a-nursing-home</a>.
+</div>
+<div id="ref-skarha2021association" class="csl-entry">
+Skarha, Julianne, Lily Gordon, Nazmus Sakib, Joseph June, Dylan J Jester, Lindsay J Peterson, Ross Andel, and David M Dosa. 2021. <span>“Association of Power Outage with Mortality and Hospitalizations Among Florida Nursing Home Residents After Hurricane Irma.”</span> In <em>JAMA Health Forum</em>, 2:e213900–213900. 11. American Medical Association. <a href="https://jamanetwork.com/journals/jama-health-forum/fullarticle/2786665">https://jamanetwork.com/journals/jama-health-forum/fullarticle/2786665</a>.
+</div>
+<div id="ref-sheet2022protecting" class="csl-entry">
+The White House. 2022. <span>“Protecting Seniors by Improving Safety and Quality of Care in the Nation’s Nursing Homes.”</span> 2022. <a href="https://www.whitehouse.gov/briefing-room/statements-releases/2022/02/28/fact-sheet-protecting-seniors-and-people-with-disabilities-by-improving-safety-and-quality-of-care-in-the-nations-nursing-homes/
+  ">https://www.whitehouse.gov/briefing-room/statements-releases/2022/02/28/fact-sheet-protecting-seniors-and-people-with-disabilities-by-improving-safety-and-quality-of-care-in-the-nations-nursing-homes/ </a>.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>Nursing staff includes medical aides and technicians, certified nursing assistants, licensed practical nurses (LPNs), LPNs with administrative duties, registered nurses (RNs), RNs with administrative duties, and the RN director of nursing.↩︎</p></li>
+<li id="fn2"><p>For example, distinguishing county from city when the name is the same could be done using State/County FIPS codes. Richmond County is 51159; Richmond City is 51760.↩︎</p></li>
+<li id="fn3"><p><em>ZIP code is a system of postal codes used by the United States Postal Service. ZIP</em> was chosen to indicate mail travels more quickly when senders use the postal code.↩︎</p></li>
+<li id="fn4"><p>Average Daily Nursing Staff is the daily number of Medical Aides and Technicians, CNAs, LPNs, LPNs with administrative duties, RNs, RNs with administrative duties, and RN Director of Nursing averaged over three months.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>Public Policy</category>
+  <category>Data Analysis</category>
+  <category>Data Integration</category>
+  <category>Curation</category>
+  <category>Statistical Products</category>
+  <guid>https://realworlddatascience.net/case-studies/posts/2024/11/19/use-case-2.html</guid>
+  <pubDate>Tue, 19 Nov 2024 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/case-studies/posts/2024/11/19/images/nurse-thumbnail.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>Advancing Data Science in Official Statistics – What is the Curated Data Enterprise?</title>
   <dc:creator>Sallie Keller, Stephanie Shipp, Vicki Lancaster, and Joseph Salvo &lt;br /&gt; University of Virginia</dc:creator>
-  <link>https://realworlddatascience.net/case-studies/posts/2024/11/08/what-is-CDE.html</link>
+  <link>https://realworlddatascience.net/case-studies/posts/2024/11/08/what-is-CDE-2.html</link>
   <description><![CDATA[ 
 
 
@@ -47,17 +404,17 @@ Official statistics
 </div>
 <div class="callout-body-container callout-body">
 <p>Official statistics are essential for a democratic society as they provide economic, demographic, social, and environmental data about the government, the economy, and the environment. Official statistical agencies should compile and make these statistics available impartially to honor the right to public information.</p>
-<p>Objective, reliable, and accessible official statistics instill confidence in the integrity of government and public decision-making regarding a country’s economic, social, and environmental situation at national and international levels. They should be widely available and meet the needs of various users <span class="citation" data-cites="UnitedNations2024">[@UnitedNations2024]</span>.</p>
+<p>Objective, reliable, and accessible official statistics instill confidence in the integrity of government and public decision-making regarding a country’s economic, social, and environmental situation at national and international levels. They should be widely available and meet the needs of various users <span class="citation" data-cites="UnitedNations2024">(United Nations 2024)</span>.</p>
 </div>
 </div>
-<p>With the explosion of available data, there is an opportunity to combine all types of information to create statistical products that address cross-cutting topics for a wide range of purposes and uses. The US Census Bureau is modernizing and transforming its enterprise system to accommodate a new way to produce statistical products that take advantage of all data types: designed surveys and censuses, public and private administrative data, opportunity data scraped from the internet, and procedural data <span class="citation" data-cites="keller2022bold">[@keller2022bold]</span>.</p>
+<p>With the explosion of available data, there is an opportunity to combine all types of information to create statistical products that address cross-cutting topics for a wide range of purposes and uses. The US Census Bureau is modernizing and transforming its enterprise system to accommodate a new way to produce statistical products that take advantage of all data types: designed surveys and censuses, public and private administrative data, opportunity data scraped from the internet, and procedural data <span class="citation" data-cites="keller2022bold">(Keller et al. 2022)</span>.</p>
 <blockquote class="blockquote">
 <p><em>‘We are moving towards a single enterprise, data-centric operation that enables us to funnel data from many sources in a single data lake using common collection and ingestion platforms… This is the essence of <strong>a curated data approach</strong> — assemble, assess, and fill in the gaps to create quality statistical data.’</em></p>
 </blockquote>
 <blockquote class="blockquote">
 <p><strong>Robert Santos,</strong> Director, US Census Bureau</p>
 </blockquote>
-<p>This curated approach is embodied in the Curated Data Enterprise (CDE). The Curated Data Enterprise Framework in Figure&nbsp;1 provides a guide for creating statistical products that enable the full integration of data from many sources <span class="citation" data-cites="keller2020doing">[@keller2020doing]</span>. At the heart of the framework are the purposes and uses that provide the context and driving force for developing the statistical product. The outer rectangle in Figure&nbsp;1 identifies the guiding principles for ethical, transparent and reproducible product development and dissemination. The inner rectangle identifies the steps in the statistical product development, including integrating primary and secondary data sources. The arrows convey that this process may only sometimes be linear. Instead, the process is iterative, where new information may be discovered at any point, requiring reevaluating and updating prior steps. Our Social and Decision Analytics research group in the Biocomplexity Institute developed, tested, and refined the CDE (data science) Framework in our research since 2013 <span class="citation" data-cites="keller2017building keller2020doing">[@keller2017building; @keller2020doing]</span>. The proposed use of the CDE to develop statistical products at the US Census Bureau is in its early stages.</p>
+<p>This curated approach is embodied in the Curated Data Enterprise (CDE). The Curated Data Enterprise Framework in Figure&nbsp;1 provides a guide for creating statistical products that enable the full integration of data from many sources <span class="citation" data-cites="keller2020doing">(Keller et al. 2020)</span>. At the heart of the framework are the purposes and uses that provide the context and driving force for developing the statistical product. The outer rectangle in Figure&nbsp;1 identifies the guiding principles for ethical, transparent and reproducible product development and dissemination. The inner rectangle identifies the steps in the statistical product development, including integrating primary and secondary data sources. The arrows convey that this process may only sometimes be linear. Instead, the process is iterative, where new information may be discovered at any point, requiring reevaluating and updating prior steps. Our Social and Decision Analytics research group in the Biocomplexity Institute developed, tested, and refined the CDE (data science) Framework in our research since 2013 <span class="citation" data-cites="keller2017building keller2020doing">(Keller, Lancaster, and Shipp 2017; Keller et al. 2020)</span>. The proposed use of the CDE to develop statistical products at the US Census Bureau is in its early stages.</p>
 <div id="fig-cde" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-cde-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -107,12 +464,12 @@ Figure&nbsp;2: Example: Steps in the statistical product development for the ski
 </section>
 <section id="sec-gp2" class="level3">
 <h3 class="anchored" data-anchor-id="sec-gp2">Stakeholders</h3>
-<p>Stakeholders include individuals, groups, and organizations that have the potential to affect or be affected by the outcome of the research. Engaging stakeholders is crucial for fostering the connection and trust that can lead to better decision making. <span class="citation" data-cites="kujala2022stakeholder">@kujala2022stakeholder</span> best described the principle of stakeholder engagement: ‘Stakeholder engagement refers to the aims, activities, and impacts of stakeholder relations in a moral, strategic, and pragmatic manner.’ When placed within the CDE context and represented in the Framework, collaborative engagement with stakeholders occurs at all stages of product development to better understand what the final product needs to look like. Further, product development is not a linear process but occurs through successive waves of iteration with users.</p>
+<p>Stakeholders include individuals, groups, and organizations that have the potential to affect or be affected by the outcome of the research. Engaging stakeholders is crucial for fostering the connection and trust that can lead to better decision making. <span class="citation" data-cites="kujala2022stakeholder">Kujala et al. (2022)</span> best described the principle of stakeholder engagement: ‘Stakeholder engagement refers to the aims, activities, and impacts of stakeholder relations in a moral, strategic, and pragmatic manner.’ When placed within the CDE context and represented in the Framework, collaborative engagement with stakeholders occurs at all stages of product development to better understand what the final product needs to look like. Further, product development is not a linear process but occurs through successive waves of iteration with users.</p>
 <p>Forming partnerships with stakeholders is instrumental in identifying requirements and implementing statistical products. This requires listening to community voices in an active engagement strategy.<sup>1</sup> Of necessity, these partnerships entail collaboration, such as creative and collaborative problem-solving workshops and the development of innovative digital tools vetted by networks of users.<sup>2</sup></p>
 </section>
 <section id="sec-gp3" class="level3">
 <h3 class="anchored" data-anchor-id="sec-gp3">Curation</h3>
-<p>The broad meaning of curation is the act of organizing, documenting and maintaining a collection of artifacts. The artifacts of the development and dissemination of statistics or statistical products include all the components in Figure&nbsp;1, from meeting with stakeholders to formulating the purposes and uses to creating and disseminating the statistical products. Maintaining the artifacts is the essence of the CDE. <em>Every step in the process should be documented and easily accessible in a repository, for example, GitHub, for the work to be transparent and reproducible</em>. Curation in the context of the CDE is an end-to-end activity. It involves documenting the purpose and use, providing the context for acquiring, wrangling, and archiving data from many sources to support the development of statistical products. It will include metadata <span class="citation" data-cites="cannon2013">[@cannon2013]</span>, the code used to read and write the data, and the code that ingested the data from the source and prepared it for analysis.</p>
+<p>The broad meaning of curation is the act of organizing, documenting and maintaining a collection of artifacts. The artifacts of the development and dissemination of statistics or statistical products include all the components in Figure&nbsp;1, from meeting with stakeholders to formulating the purposes and uses to creating and disseminating the statistical products. Maintaining the artifacts is the essence of the CDE. <em>Every step in the process should be documented and easily accessible in a repository, for example, GitHub, for the work to be transparent and reproducible</em>. Curation in the context of the CDE is an end-to-end activity. It involves documenting the purpose and use, providing the context for acquiring, wrangling, and archiving data from many sources to support the development of statistical products. It will include metadata <span class="citation" data-cites="cannon2013">(Cannon 2013)</span>, the code used to read and write the data, and the code that ingested the data from the source and prepared it for analysis.</p>
 <p><em>Curation steps</em></p>
 <ul>
 <li>Document the development of the research questions, why this research is important, and how it supports the purposes and uses and resulting statistical product.</li>
@@ -137,7 +494,7 @@ Figure&nbsp;2: Example: Steps in the statistical product development for the ski
 </section>
 <section id="sec-gp5" class="level3">
 <h3 class="anchored" data-anchor-id="sec-gp5">Privacy and confidentiality</h3>
-<p>Privacy is about the individual, whereas confidentiality is about the individual’s information. Privacy refers to an individual’s desire to control their information. Confidentiality refers to the researcher’s agreement with the individual, which could be an agency like the Census Bureau, regarding how their information will be handled, managed, and disseminated <span class="citation" data-cites="keller2016does">[@keller2016does]</span>. This is a guiding principle because it needs to be considered and embraced at the earliest possible stages of statistical product development and will impact dissemination choices.</p>
+<p>Privacy is about the individual, whereas confidentiality is about the individual’s information. Privacy refers to an individual’s desire to control their information. Confidentiality refers to the researcher’s agreement with the individual, which could be an agency like the Census Bureau, regarding how their information will be handled, managed, and disseminated <span class="citation" data-cites="keller2016does">(Keller, Shipp, and Schroeder 2016)</span>. This is a guiding principle because it needs to be considered and embraced at the earliest possible stages of statistical product development and will impact dissemination choices.</p>
 <p><em>Curation questions</em></p>
 <ul>
 <li>What steps are taken to ensure the privacy and confidentiality of the data?</li>
@@ -163,13 +520,13 @@ Note&nbsp;1: Institutional Review Board
 <li><p><strong>Beneficence</strong> — understanding the risks and benefits of the study and weighing the balance between (1) doing no harm and (2) maximizing possible benefits and minimizing possible harms</p></li>
 <li><p><strong>Justice</strong> — deciding if the risks and benefits of research are distributed fairly.</p></li>
 </ul>
-<p>These principles were translated to a set of regulations called the Common Rule that govern federally-funded research. The Belmont Commission provided the foundation for IRB principles and focused on research involving human subjects in experiments and studies. IRB approval is required to be eligible for federal grants and contracts. Many universities also require IRB review for research conducted by faculty, students, and researchers <span class="citation" data-cites="shipp2023making">[@shipp2023making]</span>.</p>
+<p>These principles were translated to a set of regulations called the Common Rule that govern federally-funded research. The Belmont Commission provided the foundation for IRB principles and focused on research involving human subjects in experiments and studies. IRB approval is required to be eligible for federal grants and contracts. Many universities also require IRB review for research conducted by faculty, students, and researchers <span class="citation" data-cites="shipp2023making">(Shipp, LaLonde, and Martinez 2023)</span>.</p>
 </div>
 </div>
 </section>
 <section id="sec-gp6" class="level3">
 <h3 class="anchored" data-anchor-id="sec-gp6">Communication and dissemination</h3>
-<p>Communication involves sharing data, statistical method choices, well-documented code, working papers, and <em>dissemination</em> through research team meetings, stakeholder engagements, conference presentations, publications, webinars, websites, and social media. As a principle, communication and dissemination are critical to ensure that statistical product development processes and findings are transparent and reproducible <span class="citation" data-cites="berman2016realizing">[@berman2016realizing]</span>. An essential facet of this step is to tell the story of the analysis by conveying the context, purpose, and implications of the research and findings <span class="citation" data-cites="berinato2019data wing2019data nasem2022transparency">[@berinato2019data; @wing2019data; @nasem2022transparency]</span>.</p>
+<p>Communication involves sharing data, statistical method choices, well-documented code, working papers, and <em>dissemination</em> through research team meetings, stakeholder engagements, conference presentations, publications, webinars, websites, and social media. As a principle, communication and dissemination are critical to ensure that statistical product development processes and findings are transparent and reproducible <span class="citation" data-cites="berman2016realizing">(Berman et al. 2016)</span>. An essential facet of this step is to tell the story of the analysis by conveying the context, purpose, and implications of the research and findings <span class="citation" data-cites="berinato2019data wing2019data nasem2022transparency">(Berinato 2019; Wing 2019; NASEM 2022)</span>.</p>
 <p><em>Curation questions</em></p>
 <ul>
 <li>Are the meeting notes, statistical products, code, reports, and presentations archived in a repository?</li>
@@ -185,7 +542,7 @@ Note&nbsp;1: Institutional Review Board
 <h2 class="anchored" data-anchor-id="research-steps">Research steps</h2>
 <section id="sec-rs1" class="level3">
 <h3 class="anchored" data-anchor-id="sec-rs1">Subject matter input</h3>
-<p>Subject matter (domain) expertise plays a role in translating the information acquired into understanding the underlying phenomena in the data <span class="citation" data-cites="box1978statistics">[@box1978statistics]</span>. Domain knowledge provides the context to define, evaluate and interpret the findings at each research stage <span class="citation" data-cites="leonelli2019data snee2014follow">[@leonelli2019data; @snee2014follow]</span>. Subject matter input can be obtained through a review of the literature, talking to experts, or learning about their work at conferences or other convenings. Subject matter experts are different than stakeholders. Both provide important input to identifying and clarifying purposes and uses.</p>
+<p>Subject matter (domain) expertise plays a role in translating the information acquired into understanding the underlying phenomena in the data <span class="citation" data-cites="box1978statistics">(Box et al. 1978)</span>. Domain knowledge provides the context to define, evaluate and interpret the findings at each research stage <span class="citation" data-cites="leonelli2019data snee2014follow">(Leonelli 2019; Snee, DeVeaux, and Hoerl 2014)</span>. Subject matter input can be obtained through a review of the literature, talking to experts, or learning about their work at conferences or other convenings. Subject matter experts are different than stakeholders. Both provide important input to identifying and clarifying purposes and uses.</p>
 <p><em>Curation steps</em></p>
 <ul>
 <li>Document the meetings with subject matter experts and stakeholders.</li>
@@ -196,14 +553,14 @@ Note&nbsp;1: Institutional Review Board
 </section>
 <section id="sec-rs2" class="level3">
 <h3 class="anchored" data-anchor-id="sec-rs2">Data discovery</h3>
-<p>Data discovery identifies potential sources that address the research goals defined by purposes and uses. Data sources include the following types <span class="citation" data-cites="keller2020doing">[@keller2020doing]</span>.</p>
+<p>Data discovery identifies potential sources that address the research goals defined by purposes and uses. Data sources include the following types <span class="citation" data-cites="keller2020doing">(Keller et al. 2020)</span>.</p>
 <ol type="1">
 <li><p>Designed data are collected using statistically designed methods, such as surveys, censuses, and data generated from an experimental or quasi-experimental design, such as a clinical trial or agricultural field study.</p></li>
 <li><p>Administrative data are collected for the administration of an organization or program by entities such as government agencies.</p></li>
 <li><p>Opportunity data are derived from internet-based information, such as websites, wearable and other sensor devices, and social media, and captured through application programming interfaces (APIs) and web scraping, eg, geocoded place-based data, transportation routes, and other data sources.</p></li>
 <li><p>Procedural data are processes and policies, such as a change in health care coverage, a data repository policy outlining procedures and the metadata required to store data, or a responsible AI policy.</p></li>
 </ol>
-<p>The goal of the data discovery process is to think broadly and imaginatively about all data types and to capture the variety of data sources that could be useful for the problem. There are three steps in the data discovery process <span class="citation" data-cites="keller2016does">[@keller2016does]</span>.</p>
+<p>The goal of the data discovery process is to think broadly and imaginatively about all data types and to capture the variety of data sources that could be useful for the problem. There are three steps in the data discovery process <span class="citation" data-cites="keller2016does">(Keller, Shipp, and Schroeder 2016)</span>.</p>
 <ol type="1">
 <li><p>Identify potential data sources and make an inventory.</p></li>
 <li><p>Create a set of questions to screen the data sources to ensure the data meet the criteria for use.</p></li>
@@ -217,7 +574,7 @@ Note&nbsp;1: Institutional Review Board
 <li>Have checks and balances been established to identify and address implicit biases in the data and interpretation of the data? Has the team engaged in discussion and provided insights across their diverse perspectives?</li>
 </ul></li>
 <li>Describe the assumptions that need to be made to use these data sources.</li>
-<li>Identify and document the paradata and metadata that describe each data source. Paradata describe how the data were collected, while metadata are ‘data about data’. It includes information about the data’s content, data dictionaries and technical documents that will help the user assess its fitness for purpose <span class="citation" data-cites="cannon2013 nasem2022transparency">[@cannon2013; @nasem2022transparency]</span>.</li>
+<li>Identify and document the paradata and metadata that describe each data source. Paradata describe how the data were collected, while metadata are ‘data about data’. It includes information about the data’s content, data dictionaries and technical documents that will help the user assess its fitness for purpose <span class="citation" data-cites="cannon2013 nasem2022transparency">(Cannon 2013; NASEM 2022)</span>.</li>
 <li>Discuss data sources you would have used if they were available.</li>
 </ul>
 </section>
@@ -322,6 +679,11 @@ Note&nbsp;1: Institutional Review Board
 <p><a href="../../../../../case-studies/posts/2024/11/01/policy-problem.html">← Part 1: The policy problem</a></p>
 </div>
 </div>
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../case-studies/posts/2024/11/19/use-case-2.html">Part 3: Climate resiliency of skilled nursing facilities →</a></p>
+</div>
+</div>
 </div>
 </div>
 <div class="further-info">
@@ -330,16 +692,16 @@ Note&nbsp;1: Institutional Review Board
 <dl>
 <dt>About the authors</dt>
 <dd>
-<strong>Sallie Keller</strong> is the Chief Scientist and Associate Director of Research and Methodology at the US Census Bureau. She is a statistician with research interest in social and decision informatics, statistics underpinnings of data science, and data access and confidentiality. Sallie Keller was at the University of Virginia when this work was conducted.
+<p><strong>Sallie Keller</strong> is the Chief Scientist and Associate Director of Research and Methodology at the US Census Bureau. She is a statistician with research interest in social and decision informatics, statistics underpinnings of data science, and data access and confidentiality. Sallie Keller was at the University of Virginia when this work was conducted.</p>
 </dd>
 <dd>
-<strong>Stephanie Shipp</strong> leads the Curated Data Enterprise research portfolio and collaborates with the US Census. She is an economist with experience in data science, survey statistics, public policy, innovation, ethics, and evaluation.
+<p><strong>Stephanie Shipp</strong> leads the Curated Data Enterprise research portfolio and collaborates with the US Census. She is an economist with experience in data science, survey statistics, public policy, innovation, ethics, and evaluation.</p>
 </dd>
 <dd>
-<strong>Vicki Lancaster</strong> is a statistician with expertise in experimental design, linear models, computation, visualizations, data analysis, and interpretation. She works with scientists at federal agencies on projects requiring statistical skills and creativity, eg, defining skilled technical workforce using novel data sources.
+<p><strong>Vicki Lancaster</strong> is a statistician with expertise in experimental design, linear models, computation, visualizations, data analysis, and interpretation. She works with scientists at federal agencies on projects requiring statistical skills and creativity, eg, defining skilled technical workforce using novel data sources.</p>
 </dd>
 <dd>
-<strong>Joseph Salvo</strong> is a demographer with experience in US Census Bureau statistics and data. He makes presentations on demographic subjects to a wide range of groups about managing major demographic projects involving the analysis of large data sets for local applications.
+<p><strong>Joseph Salvo</strong> is a demographer with experience in US Census Bureau statistics and data. He makes presentations on demographic subjects to a wide range of groups about managing major demographic projects involving the analysis of large data sets for local applications.</p>
 </dd>
 </dl>
 </div>
@@ -347,16 +709,16 @@ Note&nbsp;1: Institutional Review Board
 <dl>
 <dt>Copyright and licence</dt>
 <dd>
-© 2024 Stephanie Shipp
+<p>© 2024 Stephanie Shipp</p>
 </dd>
 </dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://www.shutterstock.com/g/Chaay_Tee">Chay_Tee</a> on <a href="https://www.shutterstock.com/image-photo/back-rear-view-young-asian-woman-2170748613">Shutterstock</a>.</p>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://www.shutterstock.com/g/Chaay_Tee">Chay_Tee</a> on <a href="https://www.shutterstock.com/image-photo/back-rear-view-young-asian-woman-2170748613">Shutterstock</a>.</p>
 </div>
 <div class="g-col-12 g-col-md-6">
 <dl>
 <dt>How to cite</dt>
 <dd>
-Keller S, Shipp S, Lancaster V, Salvo J (2024). “Advancing Data Science in Official Statistics – What is the Curated Data Enterprise?” Real World Data Science, November 8, 2024. <a href="https://realworlddatascience.net/case-studies/posts/2024/11/08/what-is-CDE.html">URL</a>
+<p>Keller S, Shipp S, Lancaster V, Salvo J (2024). “Advancing Data Science in Official Statistics – What is the Curated Data Enterprise?” Real World Data Science, November 8, 2024. <a href="https://realworlddatascience.net/case-studies/posts/2024/11/08/what-is-CDE-2.html">URL</a></p>
 </dd>
 </dl>
 </div>
@@ -364,11 +726,59 @@ Keller S, Shipp S, Lancaster V, Salvo J (2024). “Advancing Data Science in Off
 </div>
 
 
+
 </section>
 </section>
 
 
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="ref-berinato2019data" class="csl-entry">
+Berinato, Scott. 2019. <span>“Data Science and the Art of Persuasion: Organizations Struggle to Communicate the Insights in All the Information They’ve Amassed. Here’s Why, and How to Fix It.”</span> <em>Harvard Business Review</em> 97 (1). <a href="https://hbr.org/2019/01/data-science-and-the-art-of-persuasion">https://hbr.org/2019/01/data-science-and-the-art-of-persuasion</a>.
+</div>
+<div id="ref-berman2016realizing" class="csl-entry">
+Berman, Francine, Rob Rutenbar, Henrik Christensen, Susan Davidson, Deborah Estrin, Michael Franklin, Brent Hailpern, et al. 2016. <span>“Realizing the Potential of Data Science: Final Report from the National Science Foundation Computer and Information Science and Engineering Advisory Committee Data Science Working Group.”</span> <em>National Science Foundation Computer and Information Science and Engineering Advisory Committee Report</em>.
+</div>
+<div id="ref-box1978statistics" class="csl-entry">
+Box, George EP, William H Hunter, Stuart Hunter, et al. 1978. <em>Statistics for Experimenters</em>. Vol. 664. John Wiley; sons New York.
+</div>
+<div id="ref-cannon2013" class="csl-entry">
+Cannon, Sandra. 2013. <span>“Defining <span>‘Core’</span> Metadata: What Is Needed to Make Data Discoverable. Paper Presented at the Federal CASIC Workshops (Survey Uses of Metadata).”</span> <a href="https://www.census.gov/fedcasic/fc2013/">https://www.census.gov/fedcasic/fc2013/</a>.
+</div>
+<div id="ref-keller2017building" class="csl-entry">
+Keller, Sallie, Vicki Lancaster, and Stephanie Shipp. 2017. <span>“Building Capacity for Data-Driven Governance: Creating a New Foundation for Democracy.”</span> <em>Statistics and Public Policy</em> 4 (1): 1–11.
+</div>
+<div id="ref-keller2022bold" class="csl-entry">
+Keller, Sallie, Kenneth Prewitt, John Thompson, Steve Jost, Christopher Barrett, Sarah Nusser, Joseph Salvo, and Stephanie Shipp. 2022. <span>“A 21st Century Census Curated Data Enterprise. A Bold New Approach to Create Official Statistics. Technical Report.”</span> <em>Proceedings of the Biocomplexity Institute</em> BI-2022-1115: 297–323. <a href="https://doi.org/10.18130/r174-yk24">https://doi.org/10.18130/r174-yk24</a>.
+</div>
+<div id="ref-keller2020doing" class="csl-entry">
+Keller, Sallie, Stephanie S Shipp, Aaron D Schroeder, and Gizem Korkmaz. 2020. <span>“Doing Data Science: A Framework and Case Study.”</span> <em>Harvard Data Science Review</em> 2 (1). <a href="https://doi.org/10.1162/99608f92.2d83f7f5">https://doi.org/10.1162/99608f92.2d83f7f5</a>.
+</div>
+<div id="ref-keller2016does" class="csl-entry">
+Keller, Sallie, Stephanie Shipp, and Aaron Schroeder. 2016. <span>“Does Big Data Change the Privacy Landscape? A Review of the Issues.”</span> <em>Annual Review of Statistics and Its Application</em> 3: 161–80. <a href="https://www.annualreviews.org/content/journals/10.1146/annurev-statistics-041715-033453
+  ">https://www.annualreviews.org/content/journals/10.1146/annurev-statistics-041715-033453 </a>.
+</div>
+<div id="ref-kujala2022stakeholder" class="csl-entry">
+Kujala, Johanna, Sybille Sachs, Heta Leinonen, Anna Heikkinen, and Daniel Laude. 2022. <span>“Stakeholder Engagement: Past, Present, and Future.”</span> <em>Business &amp; Society</em> 61 (5): 1136–96. <a href="https://doi.org/10.1177/00076503211066595">https://doi.org/10.1177/00076503211066595</a>.
+</div>
+<div id="ref-leonelli2019data" class="csl-entry">
+Leonelli, Sabina. 2019. <span>“Data Governance Is Key to Interpretation: Reconceptualizing Data in Data Science.”</span> <a href="https://doi.org/10.1162/99608f92.17405bb6">https://doi.org/10.1162/99608f92.17405bb6</a>.
+</div>
+<div id="ref-nasem2022transparency" class="csl-entry">
+NASEM. 2022. <span>“Transparency in Statistical Information for the National Center for Science and Engineering Statistics and All Federal Statistical Agencies.”</span> <em>National Academies of Science, Engineering, and Medicine</em>. <a href="https://doi.org/10.1162/99608f92.17405bb6">https://doi.org/10.1162/99608f92.17405bb6</a>.
+</div>
+<div id="ref-shipp2023making" class="csl-entry">
+Shipp, Stephanie, Donna LaLonde, and Wendy Martinez. 2023. <span>“Making Ethical Decisions Is Hard!”</span> <em>CHANCE</em> 36 (4): 42–50. <a href="https://www.tandfonline.com/eprint/D5KR3XFRUG2QV4FVCKQI/full?target=10.1080/09332480.2023.2290955">https://www.tandfonline.com/eprint/D5KR3XFRUG2QV4FVCKQI/full?target=10.1080/09332480.2023.2290955</a>.
+</div>
+<div id="ref-snee2014follow" class="csl-entry">
+Snee, Ronald D, Richard D DeVeaux, and Roger W Hoerl. 2014. <span>“Follow the Fundamentals.”</span> <em>Quality Progress</em> 47 (1): 24–28. <a href="https://search-proquest-com.proxy01.its.virginia.edu/docview/1491963574?accountid=14678">https://search-proquest-com.proxy01.its.virginia.edu/docview/1491963574?accountid=14678</a>.
+</div>
+<div id="ref-UnitedNations2024" class="csl-entry">
+United Nations. 2024. <span>“Development of a National Statistical System, Principle 1 - Relevance, Impartiality and Equal Access.”</span> <a href="https://unstats.un.org/unsd/goodprac/bpaboutpr.asp?RecId=1">https://unstats.un.org/unsd/goodprac/bpaboutpr.asp?RecId=1</a>.
+</div>
+<div id="ref-wing2019data" class="csl-entry">
+Wing, Jeannette M. 2019. <span>“The Data Life Cycle.”</span> <em>Harvard Data Science Review</em> 1 (1): 6. <a href="https://doi.org/10.1162/99608f92.e26845b4">https://doi.org/10.1162/99608f92.e26845b4</a>.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
 
 <ol>
 <li id="fn1"><p><a href="https://www.census.gov/newsroom/blogs/director/2023/01/a-look-ahead-2023.html" class="uri">https://www.census.gov/newsroom/blogs/director/2023/01/a-look-ahead-2023.html</a>&nbsp;↩︎</p></li>
@@ -380,7 +790,7 @@ Keller S, Shipp S, Lancaster V, Salvo J (2024). “Advancing Data Science in Off
   <category>Data Integration</category>
   <category>Curation</category>
   <category>Statistical Products</category>
-  <guid>https://realworlddatascience.net/case-studies/posts/2024/11/08/what-is-CDE.html</guid>
+  <guid>https://realworlddatascience.net/case-studies/posts/2024/11/08/what-is-CDE-2.html</guid>
   <pubDate>Fri, 08 Nov 2024 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/case-studies/posts/2024/11/08/images/screen.thumbnail.jpg" medium="image" type="image/jpeg"/>
 </item>
@@ -438,7 +848,7 @@ The US <a href="https://www.census.gov/">Census Bureau</a>
 <div class="grid">
 <div class="g-col-12 g-col-sm-6">
 <div class="nav-btn">
-<p><a href="../../../../../case-studies/posts/2024/11/08/what-is-CDE.html">Part 2: What is the Curated Data Enterprise? →</a></p>
+<p><a href="../../../../../case-studies/posts/2024/11/08/what-is-CDE-2.html">Part 2: What is the Curated Data Enterprise? →</a></p>
 </div>
 </div>
 </div>
@@ -452,13 +862,13 @@ The US <a href="https://www.census.gov/">Census Bureau</a>
 <p><strong>Sallie Keller</strong> is the Chief Scientist and Associate Director of Research and Methodology at the US Census Bureau. She is a statistician with research interest in social and decision informatics, statistics underpinnings of data science, and data access and confidentiality. Sallie Keller was at the University of Virginia when this work was conducted.</p>
 </dd>
 <dd>
-<strong>Stephanie Shipp</strong> leads the Curated Data Enterprise research portfolio and collaborates with the US Census. She is an economist with experience in data science, survey statistics, public policy, innovation, ethics, and evaluation.
+<p><strong>Stephanie Shipp</strong> leads the Curated Data Enterprise research portfolio and collaborates with the US Census. She is an economist with experience in data science, survey statistics, public policy, innovation, ethics, and evaluation.</p>
 </dd>
 <dd>
-<strong>Vicki Lancaster</strong> is a statistician with expertise in experimental design, linear models, computation, visualizations, data analysis, and interpretation. She works with scientists at federal agencies on projects requiring statistical skills and creativity, eg, defining skilled technical workforce using novel data sources.
+<p><strong>Vicki Lancaster</strong> is a statistician with expertise in experimental design, linear models, computation, visualizations, data analysis, and interpretation. She works with scientists at federal agencies on projects requiring statistical skills and creativity, eg, defining skilled technical workforce using novel data sources.</p>
 </dd>
 <dd>
-<strong>Joseph Salvo</strong> is a demographer with experience in US Census Bureau statistics and data. He makes presentations on demographic subjects to a wide range of groups about managing major demographic projects involving the analysis of large data sets for local applications.
+<p><strong>Joseph Salvo</strong> is a demographer with experience in US Census Bureau statistics and data. He makes presentations on demographic subjects to a wide range of groups about managing major demographic projects involving the analysis of large data sets for local applications.</p>
 </dd>
 </dl>
 </div>
@@ -466,16 +876,16 @@ The US <a href="https://www.census.gov/">Census Bureau</a>
 <dl>
 <dt>Copyright and licence</dt>
 <dd>
-© 2024 Stephanie Shipp
+<p>© 2024 Stephanie Shipp</p>
 </dd>
 </dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@goumbik">Lukas Blazek</a> on <a href="https://unsplash.com/photos/turned-on-black-and-grey-laptop-computer-mcSDtbWXUZU">Unsplash</a>.</p>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@goumbik">Lukas Blazek</a> on <a href="https://unsplash.com/photos/turned-on-black-and-grey-laptop-computer-mcSDtbWXUZU">Unsplash</a>.</p>
 </div>
 <div class="g-col-12 g-col-md-6">
 <dl>
 <dt>How to cite</dt>
 <dd>
-Keller S, Shipp S, Lancaster V, Salvo J (2024). “Advancing Data Science in Official Statistics: The Policy Problem.” Real World Data Science, November 01, 2024. <a href="https://realworlddatascience.net/case-studies/posts/2024/11/01/policy-problem.html">URL</a>
+<p>Keller S, Shipp S, Lancaster V, Salvo J (2024). “Advancing Data Science in Official Statistics: The Policy Problem.” Real World Data Science, November 01, 2024. <a href="https://realworlddatascience.net/case-studies/posts/2024/11/01/policy-problem.html">URL</a></p>
 </dd>
 </dl>
 </div>
@@ -540,7 +950,7 @@ Thieme, Michael. 2022. <span>“Technology Transformations at the Census Bureau:
 
 
 <p>Few saw it coming when on 8th October 2024 the Nobel Committee awarded the <a href="https://www.nobelprize.org/prizes/physics/2024/prize-announcement/">2024 Nobel Prize for Physics</a> to John Hopfield for his Hopfield networks and Geoffrey Hinton for his Boltzmann machines as seminal developments towards machine learning that have statistical physics at the heart of them. The next day machine learning albeit using a different architecture bagged half of the <a href="https://www.nobelprize.org/prizes/chemistry/2024/prize-announcement/">Nobel Prize for Chemistry</a> as well, with the award going to Demis Hassabis and John Jumper for the development of an algorithm that predicts protein folding conformations. The other half of the Chemistry Nobel was awarded to David Baker for successfully building new proteins.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Close-up of a copy of the Nobel Prize Medal. Photographed on the floor of the Nobel Museum in Old Town, Stockholm. Machine learning came up a winner in both the Physics and Chemistry Nobel Prizes for 2024. Credit: Shutterstock">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Close-up of a copy of the Nobel Prize Medal. Photographed on the floor of the Nobel Museum in Old Town, Stockholm. Machine learning came up a winner in both the Physics and Chemistry Nobel Prizes for 2024. Credit: Shutterstock" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/10/31/images/Nobelpic-shutterstock-991.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Close-up of a copy of the Nobel Prize Medal. Photographed on the floor of the Nobel Museum in Old Town, Stockholm. Machine learning came up a winner in both the Physics and Chemistry Nobel Prizes for 2024. Credit: Shutterstock">
@@ -555,7 +965,7 @@ Figure&nbsp;1: Close-up of a copy of the Nobel Prize Medal. Photographed on the 
 <h2 class="anchored" data-anchor-id="collective-phenomena">Collective phenomena</h2>
 <p>Hopfield networks brought some of the mathematical toolbox long applied to extract “collective phenomena” from vast numbers of essentially identical parts such as atoms in a gas or atomic spins in magnetic materials. Although there maybe too many particles to track each individually, properties like temperature and magnetic field can be extracted using statistical physics. Hopfield showed that similarly a useful phenomenon he described as “associative memory” could be constructed from large numbers of artificial neurons by defining a “minimum energy”, which describes the network of neurons. The energy is determined by connections between neurons, which store information about patterns. Thus the network can retrieve the memorized patterns by minimizing that energy, just as stable conformations of atomic spins might be found in a magnetic material<sup>1</sup>. As the energy of the network is then subsequently minimised the pattern gets closer to the one that was memorised, just as when recalling a word or someone’s name we might first run through similar sounding words or names.</p>
 <p>These Hopfield networks proved a seminal step in progressing AI algorithms, enabling a kind of pattern recognition from multiple stored patterns. However, it turned out that the number of patterns that could be stored was fundamentally limited due to what are known as “local” minima. You can imagine a ball rolling down a hill – it will reach the bottom of the hill fine so long as there are no dips for it to get stuck in en route. Algorithms based on Hopfield networks were prone to getting stuck in such dips or undesirable local minima, until Hopfield and Krotov put their heads together to find a way around it. Krotov describes himself as “incredibly lucky” that his research interests aligned so well with Hopfield. “He’s just such a smart and genuine person, and he has been in the field for many years,” he tells Real World Data Science. “He just knows things that no one else in the world knows.” Together they worked out they could address the problem of local minima by toggling the “activation function”.</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Energy Landscape of a Hopfield Network, highlighting the current state of the network (up the hill), an attractor state to which it will eventually converge, a minimum energy level and a basin of attraction shaded in green. Note how the update of the Hopfield Network is always going down in Energy. Credit: Mrazvan22/wikimedia">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Energy Landscape of a Hopfield Network, highlighting the current state of the network (up the hill), an attractor state to which it will eventually converge, a minimum energy level and a basin of attraction shaded in green. Note how the update of the Hopfield Network is always going down in Energy. Credit: Mrazvan22/wikimedia" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/10/31/images/Energy_landscape.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Energy Landscape of a Hopfield Network, highlighting the current state of the network (up the hill), an attractor state to which it will eventually converge, a minimum energy level and a basin of attraction shaded in green. Note how the update of the Hopfield Network is always going down in Energy. Credit: Mrazvan22/wikimedia">
@@ -647,7 +1057,7 @@ Demming, Anna. 2024. “The machine learning victories at the 2024 Nobel Prize a
 <p>Knowledge is power and today a lot of that knowledge – not just what you know but who you know – is online. In 2015 the UN General Assembly laid out 17 Sustainable Development Goals (SDGs) that aim to end poverty and other deprivations while improving the welfare of both people and the planet. One of the <a href="https://sdgs.un.org/goals/goal5#targets_and_indicators">SDGs deals with gender equality</a> and emphasises the importance of digital technology for empowering women. Online, a woman can engage in commercial, social, business or networking transactions without the need to be absent from care responsibilities at home or maintain traditional 9-5 working hours or, in some instances, even expose the fact that she is a woman at all – all potentially transformative features of online engagement<sup>1</sup>. Yet the reality for digital technology to empower women is by no means clear cut.</p>
 <p>‘For me, whether digital technologies are able to empower women was fundamentally an empirical question,’’ says professor of demography and computational data science at Oxford University <a href="https://www.sociology.ox.ac.uk/people/ridhi-kashyap">Ridhi Kashyap</a>. She adds that in order to ask these questions of impact, you first need to be able to measure inequalities in digital access. However, the pace of technological change has been a lot faster than the rate at which national censuses – or other kinds of surveys useful to social scientists – update their questions, so they shed little light on the demographics around digital technologies.</p>
 <p>Since then, progress in accruing data on digital access has revealed some stark gender inequalities. However, access is not the only fly in the ointment when it comes to the potential for digital technology to help towards gender equality. ‘The most harmful illegal online content disproportionately affects women and girls,’ says the <a href="https://www.gov.uk/government/publications/online-safety-act-explainer/online-safety-act-explainer#how-the-act-protects-women-and-girls">explainer for the UK’s 2023 Online Safety Act</a>. A <a href="https://www.turing.ac.uk/news/publications/understanding-gender-differences-experiences-and-concerns-surrounding-online">study by the Turing Institute</a> published earlier this year has revealed nuances on this picture, but confirmed that many women feel particularly vulnerable online, suggesting women may be losing a seat at the table as debate and discourse increasingly moves online.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Muted. In the absence of proactive intervention, the shift of debate and discourse online risks muting women and girls as multiple factors exclude them from engaging there as productively as male counterparts. Copyright: Park Kang Hun/Shutterstock.">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Muted. In the absence of proactive intervention, the shift of debate and discourse online risks muting women and girls as multiple factors exclude them from engaging there as productively as male counterparts. Copyright: Park Kang Hun/Shutterstock." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/09/17/images/Minoan-Illustration.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Muted. In the absence of proactive intervention, the shift of debate and discourse online risks muting women and girls as multiple factors exclude them from engaging there as productively as male counterparts. Copyright: Park Kang Hun/Shutterstock.">
@@ -662,7 +1072,7 @@ Figure&nbsp;1: Muted. In the absence of proactive intervention, the shift of deb
 <h2 class="anchored" data-anchor-id="gender-disparities-in-internet-access">Gender disparities in internet access</h2>
 <p>A turning point in the conversation around digital technology and gender equality came in 2018 with work by Kashyap and collaborators in the US and Qatar at the time. They found that where traditional survey-based data on internet and mobile gender gaps was available, it correlated well with the gender gap on Facebook, using data extracted for Facebook’s ad platform: When Facebook’s aggregate user counts did not show women, it provided a good signal that women were not online altogether in those countries. As such, the work revealed a potentially useful proxy to gauge the digital gender gap in countries where little traditional survey data was available<sup>3</sup>. <a href="https://www.digitalgendergaps.org/">The results</a> revealed an unexpectedly large gender gap, particularly in parts of South Asia and certain countries in Africa where men were up to twice as likely to have access to the Internet compared with women.</p>
 <p>‘In some sense it was perhaps not surprising,’’ says Kashyap highlighting that having a mobile phone or similar device that grants access to the internet amounts to a kind of asset ownership, and studies for other assets indicate women are less likely to own them. ‘This is broadly reflective of economic gender inequality,’ she adds. Perhaps more surprising is that the gaps have changed very little in the five years since <a href="https://www.digitalgendergaps.org/">their website, which monitors the digital gender gap</a>, was first released, particularly in view of the pace of technological progress in general, and the importance placed on closing the gap. Citing India as an example, Kashyap points out that in 2019 the ratio of access to the internet for men versus women was 0.619 – fewer than two women had access for every three men with access. In the subsequent half decade this digital gender gap has closed by just 7.1% to a ratio of 0.663.</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="The digital gender gap. Ratio of female-to-male internet use estimated using the Facebook Gender Gap Index^[Leasure D R, Yan J, Bondarenko M, Kerr D, Fatehkia M, Weber I &amp; Kashyap R. Digital Gender Gaps Web Application, v1.0.0. Zenodo, GitHub (2023) [doi:10.5281/zenodo.7897491](https://github.com/OxfordDemSci/dgg-www)]">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The digital gender gap. Ratio of female-to-male internet use estimated using the Facebook Gender Gap Index^[Leasure D R, Yan J, Bondarenko M, Kerr D, Fatehkia M, Weber I &amp; Kashyap R. Digital Gender Gaps Web Application, v1.0.0. Zenodo, GitHub (2023) [doi:10.5281/zenodo.7897491](https://github.com/OxfordDemSci/dgg-www)]" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/09/17/images/Digital gender gap.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The digital gender gap. Ratio of female-to-male internet use estimated using the Facebook Gender Gap Index^[Leasure D R, Yan J, Bondarenko M, Kerr D, Fatehkia M, Weber I &amp; Kashyap R. Digital Gender Gaps Web Application, v1.0.0. Zenodo, GitHub (2023) [doi:10.5281/zenodo.7897491](https://github.com/OxfordDemSci/dgg-www)]">
@@ -690,7 +1100,7 @@ Figure&nbsp;2: The digital gender gap. Ratio of female-to-male internet use esti
 <p>Challenges to women being heard online seem to go beyond safety issues. Recent research by Kashyap and collaborators at the University of Oxford and collaborators in Iran and Germany has also highlighted differences in how influential women’s professional networks are relative to male counterparts<sup>8</sup>. In previous work with Florianne Verkroost, also at the University of Oxford, Kashyap had investigated the gender gaps in those who have a LinkedIn profile to see how they vary across industries<sup>9</sup>. They found that use of the platform broadly mirrors female-to-male ratios of representation in technical and managerial professions. In reference 8, they then investigated what insights LinkedIn data might provide as to the cause of some of the gender disparities in these professions, and ultimately why women are not progressing in technical and professional jobs as well as male counterparts.</p>
 <p>‘One argument is that that’s often because they don’t have advantageous networks,’ says Kashyap, adding that women may be restricted by the need to resume care commitments at home instead of staying for drinks after work or travelling to attend conferences. One might expect online avenues for networking would be able to mitigate such obstacles. In fact, studies of LinkedIn data did suggest that although women are less likely to be in professional and technical occupations as reflected in the platform’s data, in some instances their numbers exceeded them. Kashyap suggests this could be ‘where they’re using online platforms to make themselves more visible, because other fine forms of networking are less available, or they have less time for it.’ Indeed, women who were on LinkedIn were more likely to report a promotion than their male counterparts, suggesting an element of positive selection among the female LinkedIn user population. However, the potential equalising impact of moving professional networking online seems to have its limits.</p>
 <p>Their study of LinkedIn data showed women were less likely to report a relocation for work, which Kashyap suggests, ‘is a sign that the work family trade-off is probably still remaining acute for this highly selected group.’ In another 2023 study Kashyap and colleagues had also reported a lower mobility for women, specifically among published scientists, researchers and academics based on bibliometric data from over 33 million Scopus publications<sup>10</sup>. In addition, when Kashyap and her colleagues looked at women on LinkedIn working in the tech sector, they found that they had a lower chance of being connected to those working in one of the “big five” firms in the tech sector than men, when not working in one themselves. ‘One way to interpret that is to say that they have maybe less influential online social networks, right, even when they are on the platform.’</p>
-<div id="fig-4" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Leaky pipeline. The proportion of women working in science decreases towards the mid and senior career stages">
+<div id="fig-4" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Leaky pipeline. The proportion of women working in science decreases towards the mid and senior career stages" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/09/17/images/shutterstock_1215562669-h350.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Leaky pipeline. The proportion of women working in science decreases towards the mid and senior career stages">
@@ -856,7 +1266,7 @@ Demming, Anna. 2024. “Are we at risk of muting the female voice in the digital
 
 <p>Governments, policymakers and central banks across the world are wrestling to keep rising prices under control using monetary policies such as interest rate increases. The effectiveness of such policy changes should be assessed by monitoring inflation data as well as studying the impact on real GDP, making timely and accurate access to key economic indicators crucial for policy planning. The delay in publishing economic indicators such as Real GDP, inflation and other labour related series, makes this real time assessment of the economy particularly challenging. Now Menzie Chinn at the University of Wisconsin, Baptiste Meunier at the European Central Bank and Sebastian Stumpner at the Banque de France report an approach for “nowcasting” built on previous research that develops a framework using different machine learning techniques and is flexible and adaptable compared with traditional methods<sup>1</sup>. They report on the accuracy of their 3-step framework for nowcasting global trade volume estimates, showing how it can outperform traditional methods. They also highlight that the 3-step framework can be extended beyond World Trade data.</p>
 <p>Nowcasting, an amalgamation of the term now and forecasting, provides a methodology to assess the current state of the economy by predicting the current value of inflation or Real GDP. The <a href="https://www.newyorkfed.org/research/policy/nowcast#/overview">Federal Reserve Bank of New York</a> and <a href="https://www.atlantafed.org/cqer/research/gdpnow">Federal Reserve Bank of Atlanta</a> have used nowcasting to publish real time GDP estimates, for the USA. Similarly, the <a href="https://www.clevelandfed.org/indicators-and-data/inflation-nowcasting">Federal Reserve Bank of Cleveland estimates real time inflation</a> using nowcasting methods.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="GDP digital drawing. Credit: Shutterstock, Vink Fan">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="GDP digital drawing. Credit: Shutterstock, Vink Fan" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/datasciencebites/posts/2024/6/25/images/GDPshutterstock_2302082265-991.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="GDP digital drawing. Credit: Shutterstock, Vink Fan">
@@ -871,7 +1281,7 @@ Figure&nbsp;1: Growth of GDP with statistical graph, 3d rendering. Digital drawi
 <section id="model-framework-improved-flexibility-and-accuracy" class="level2">
 <h2 class="anchored" data-anchor-id="model-framework-improved-flexibility-and-accuracy">Model framework improved flexibility and accuracy:</h2>
 <p>The 3 steps in the framework are chronological steps to be performed in which the first step is pre-selection of the independent variables with the highest predictive power. The independent variables from the first step are then summarised into a few factors using factor extraction methodology in the second step. The final step consists of using the factors from step 2 to perform regression.</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research.">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/datasciencebites/posts/2024/6/25/images/3step-framework-methods-big.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research.">
@@ -883,7 +1293,7 @@ Figure&nbsp;2: The various methods that can be employed in the 3 step framework 
 </div>
 <p>Figure&nbsp;2 summarises the various methods employed at each step in the 3 step framework. In their report Chinn, Meunier and Stumpner aim to propose the best techniques for pre-selection, factor extraction and regression. As such their 3-step framework comprises performing pre-selection using Least Angle Regression (LARS), factor extraction using Principal Component Analysis (PCA) and employing a Macroeconomic Random Forest (MRF) machine learning technique for nowcasting.</p>
 <p>The model performance or accuracy of MRF is compared with traditional methods using Root Mean Square Error (RMSE), a measure of the deviation between the actual data and the predicted data. The 3-step framework model accuracy is tested by holding the preselection and factor extraction fixed to isolate the impact of regression techniques.</p>
-<div id="fig-3" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research.">
+<div id="fig-3" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/datasciencebites/posts/2024/6/25/images/method-accuracy-big.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research.">
@@ -965,7 +1375,7 @@ Gohil, Atmajitsinh. 2024. “Nowcasting upgrade for better real time estimation 
 <h2 class="anchored" data-anchor-id="high-stakes">High stakes</h2>
 <p>When Open AI publicised their Voice Engine’s ability to clone human voices from just 15s of audio, they too flagged the potential benefit for people with poor health conditions, since those with deteriorating speech could find a means to <a href="https://www.euronews.com/next/2024/04/01/openai-unveils-ai-voice-cloning-tech-that-only-needs-a-15-second-sample-to-work">have their speech restored</a>. However, voice clones had already been used to make robot calls to voters imitating the voice of President Joe Biden and <a href="https://news.sky.com/story/fake-ai-generated-joe-biden-robocall-tells-people-in-new-hampshire-not-to-vote-13054446">telling voters to stay at home</a>.</p>
 <p>“The question you have to ask there is what’s the societal benefit of that tool? And what are the risks,” associate director at the Ada Lovelace Institute Andrew Strait told <em>Real World Data Science</em>. “They thankfully decided to not fully release it,” he adds, highlighting how the timing “right before an election year with 40 democracies across the world” could have made the release particularly problematic.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Themis, goddess of justice. External governance is required to ensure the outcomes of AI deployment are safe and just. Credit Shutterstock, Michal Bednarek" data-fig-align="center">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Themis, goddess of justice. External governance is required to ensure the outcomes of AI deployment are safe and just. Credit Shutterstock, Michal Bednarek">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/06/11/images/shutterstock_2436413315.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Themis, goddess of justice. External governance is required to ensure the outcomes of AI deployment are safe and just. Credit Shutterstock, Michal Bednarek">
@@ -990,7 +1400,7 @@ Figure&nbsp;1: Themis, goddess of justice. External governance is required to en
 <h2 class="anchored" data-anchor-id="regulatory-ecosystems">Regulatory ecosystems</h2>
 <p>As has been emphasised throughout the series, making a success of an AI project requires a unique skillset that <a href="https://realworlddatascience.net/ideas/posts/2024/06/04/ai-series-6.html">combines expertise in AI with the domain expertise for the sector</a> the project is contributing to, and there is often a dearth of people that straddle both camps. The same hunt for “unicorns” with useful expertise in the tech sector and policymakers can also be an obstacle for developing “good regulation”. One solution is to bring people from the different disciplines together to develop legislation collaboratively, as was arguably the case with the roll out of General Data Protection Regulations (GDPR) in 2018. “Policymakers and academics, they worked very closely together in the crafting of that law,” says Katell. “It was one of those rare moments in which we saw the boundaries really dissolve between policy and academia in a way that delivered something that I think we can agree was largely a positive outcome.”</p>
 <p>When it comes to AI, an obstacle to that kind of collaboration has been the lack of a common language. In “Defining AI in policy and practice” in 2020<sup>1</sup>, Katell alongside Peaks Krafft at the University of Oxford and co-authors found that AI researchers favoured definitions of AI that “emphasise technical functionality”, whereas policy-makers tended towards definitions that “compare systems to <a href="https://realworlddatascience.net/ideas/posts/2024/04/29/gen-ai-human-intel.html">human thinking and behavior”, which AI systems remain far from achieving</a>. Strait also highlights a recurring theme among those without experience of actually making AI systems in overselling AI capabilities in suggestions that it will “help solve climate change” or “cure cancer”. “How are you measuring that?” he asks. “How are we making a clear sense of the efficacy, the proof behind those kinds of statements? Where are the case studies that actually work, and how are we determining that’s working?”</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Safety first. External governance is required to ensure the outcomes of AI deployment are safe and knock on effects have been considered. Credit Shutterstock, 3rdtimeluckystudio" data-fig-align="center">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Safety first. External governance is required to ensure the outcomes of AI deployment are safe and knock on effects have been considered. Credit Shutterstock, 3rdtimeluckystudio">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/06/11/images/shutterstock_2180417651.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Safety first. External governance is required to ensure the outcomes of AI deployment are safe and knock on effects have been considered. Credit Shutterstock, 3rdtimeluckystudio">
@@ -1339,7 +1749,7 @@ Lane, J., Hirsch, L. and Leonard, A. 2024. “Meeting the unprecedented challeng
 <section id="know-your-goals" class="level2">
 <h2 class="anchored" data-anchor-id="know-your-goals">Know your goals</h2>
 <p>The first point to note is that checking how well the output from an AI model matches the data in the training set is not an adequate indication of how well it will perform once deployed on other data. The problem can be exemplified by considering a simple model based on an equation that best fits a training data set. Data values are inevitably subject to measurement uncertainties and local conditions that add various types of noise, so taking the line defined by the equation identified as best matching the training data and measuring how good that match is falls short of adequate evaluation - the more perfectly a model matches this noisy data, the less perfectly it will fit an alternative set of data, a scenario described as “overfitting”. Similarly, what a machine learning or AI algorithm or model learns when it optimises its fit to the training data may not be generalisable.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart." data-fig-align="center">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/21/images/Evaluation_thumbnail.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart.">
@@ -1351,7 +1761,7 @@ Figure&nbsp;1: Evaluation plots. The kinds of charts of monitored performance an
 </div>
 <p>There are a number of possible approaches and factors to take into account when sourcing test data but the first thing to consider when drawing up a process for evaluating an AI model is its objective. With this objective in mind it is then possible to pin down an appropriate measure of performance, which will shape how to use the test data to evaluate the model performance. Among the distinguishing factors between different measures used to evaluate how a model performs on test data, some will be suitable when the objective is to classify (e.g high or low risk based on health data?) while others are useful for models that estimate or predict (e.g What is the estimated height of a child given their parents’ heights).</p>
 <p>Classification model performance can be measured using accuracy, confusion matrices, sensitivity, specificity and the receiver operating characteristic (ROC). Classification accuracy summarises the performance of a classification model as the number of cases in which the model correctly classifies divided by the total number of cases used in the test set. However, this can be a blunt tool as there are cases where there is a different cost or consequence depending on the direction of the error. Confusion matrices are helpful to explore how the model performs in correctly classifying the different classes. The confusion matrix sums up the number of cases the model classifies correctly within each of the classes, for example how many actual high-risk cases are correctly classified as high risk by the model. The number of cases the model classifies as high risk, for example, that are not high risk is referred to as the False Positives. In the context of medical tests (e.g the covid lateral flow tests) testing positive for a condition that is not actually there is potentially less damaging than testing negative when the condition is there.</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The receiver operating characteristic can provide a helpful means of visualising performance. Credit: shutterstock ." data-fig-align="center">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="The receiver operating characteristic can provide a helpful means of visualising performance. Credit: shutterstock .">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/21/images/shutterstock_2377152411.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The receiver operating characteristic can provide a helpful means of visualising performance. Credit: shutterstock .">
@@ -1372,7 +1782,7 @@ Figure&nbsp;2: The receiver operating characteristic can provide a helpful means
 <p>These data sets also need to have reliable labelling i.e.&nbsp;the rows of data need to be accurate so that the model’s performance can be assessed objectively against a trusted “ground truth”. For example, if we want to evaluate the performance of a fraud transaction classification model using accuracy as the performance metric, then we need a reliable training data set with true fraud transactions to evaluate how good the model is at detecting them. A data set with a list of transactions that are not accurately identified (or labelled) as fraud or not is not helpful. Thinking about how some commercial LLMs are trained on all the data in the “internet” it is worth asking whether a smaller more curated and specific training set would be better for model performance as well as being more ethical and safer.</p>
 <p>Several approaches for generating test data sets take training and test data as distinct subsets from the same initial data set <sup>4</sup>. There are different ways of doing this to make the most of the data to evaluate the model as systematically and exhaustively as possible. Perhaps the simplest example is using a hold-out set, which involves taking all the data available and taking a random subset of the data to use for testing the model. Depending on how much data is available then this can be 50% or less.</p>
 <p>A slightly more sophisticated approach is k-fold cross validation, which involves splitting all the data you have available into k subsets and then doing k iterations where in each iteration a different kth of the data is used as the testing data for evaluation of the model built by training it on the remaining (k-1/k) of the data. This is repeated k times each time using a different one of the k subsets for testing. The performance of the model can then be averaged over the k iterations. (The measure of performance can be, say, accuracy or sensitivity depending on the context). For example, if k is 3 then the data is split into 3, and each iteration will take a different 2/3 of the data as training data to build the model, and the remaining 1/3 as testing data to evaluate the model.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="K fold cross validation can indicate how sensitive a model is to the test data. Credit: Fabian Flöck CC-BY-AS-3.0" data-fig-align="center">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="K fold cross validation can indicate how sensitive a model is to the test data. Credit: Fabian Flöck CC-BY-AS-3.0">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/21/images/k-fold-cross-validation.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="K fold cross validation can indicate how sensitive a model is to the test data. Credit: Fabian Flöck CC-BY-AS-3.0">
@@ -1790,7 +2200,7 @@ Shaw, Luke et al 2024. “Forecasting the Health Needs of a Changing Population�
 <p>Imputing missing values can preserve the whole sample. However, the introduction of noise during the imputation process may compromise the quality of fitted models, contingent upon the proportion of missing records. One way to offset this may be to use larger and larger data sets that might inevitably include a fuller training picture to the algorithm, just as adding dots to a pixelated image makes it more and more clear what is depicted.</p>
 <p>It is often perceived that for certain instances, particularly in the context of deep learning models, such as neural networks, the model itself is capable of handling missing values without explicit imputation or deletion procedures. <sup>6</sup> Is this really true in a real-world scenario? Are these models advanced enough to achieve an optimised performance even when data quality is not at an optimised level? <sup>7</sup> Köse et al.&nbsp;(2020) investigated the effect of two conventional imputation approaches: Multiple imputation (MICE) <sup>8</sup> and Factor analysis of mixed data (FAMD) <sup>9</sup> on performance of deep learning models. Their study endorsed the use of such explicit imputation approaches, showing an enhancement in model performance. <sup>10</sup></p>
 <p>Data imbalance issues, arise within datasets where there is a disproportionate amount of information pertaining to a specific aspect. When imbalanced data, rich in focused information, is used to train an AI model, the model becomes adept at learning about the specific aspect but may struggle to generalise its findings to diverse scenarios, thus fostering overfitting where the model achieves accurate prediction on the training data but loses accuracy for any new test dataset.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Stages involved in AI model development">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Stages involved in AI model development" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/07/images/Stages-of-model-development-724.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Stages involved in AI model development">
@@ -1809,7 +2219,7 @@ Figure&nbsp;1: Stages involved in AI model development.
 <p>When AI algorithms encounter complex, unstructured data, the task of quality assurance suddenly balloons beyond tackling the three main errors highlighted above. Such circumstances require some kind of quality enhancement procedure, where datasets in the form of images or unstructured text go through a curation process which involves enhancement of the quality and standardisation of the format to the level required for integration into AI algorithms. This process of standardization of data is paramount across various domains, especially in healthcare where complex, unstructured health data holds transformative potential for AI driven advances that revolutionise diagnosis, treatment, and prognosis of diseases. From electronic health records to magnetic resonance imaging (MRI) scans and genetic sequences, this data offers a wealth of insights for AI models to learn from. Adopting standardised formats not only facilitates seamless integration of diverse datasets but also streamlines the development and deployment of AI models. However, unlocking this potential requires a strong foundation in high-quality, processed data which begins with standardisation.</p>
 <p>One category of complex health data is neuroimaging of which a prime example is MRI. Different institutions will often employ different acquisition protocols and different ways of collecting and storing neuroimaging data. Above all, this can make it very difficult to integrate into existing workflows and processing pipelines, but it also makes it challenging to understand, compare and combine with other datasets. To address these challenges, the neuroimaging community has adopted the Brain Imaging Data Structure (BIDS) <sup>13</sup> – a standardised format for organising and naming MRI data which allows compliant data to integrate smoothly with existing workflows and AI models, streamlining processing and analysis. By embracing standardisation, we can pave the way for common processing tools to enable the generation of AI-ready data.</p>
 <p>Next, comes pre-processing. Sticking with the neuroimaging example, MRI scans are susceptible to various forms of noise and artifacts, which can appear as blurring or distortions which, without proper processing, can be misinterpreted by AI models. Pre-processing typically includes steps for spatial normalisation and image registration, involving alignment of brain images from different individuals into a common reference model and alignment of different images of the same subject to a common template. This standardisation facilitates inter-subject and inter-study comparisons, enabling AI models to generalise effectively across diverse datasets. However, the multi-layer aspect of this process means that aligning data to a common template is dependent on the choice of template which itself can introduce bias if the template brain doesn’t accurately reflect the patient’s anatomy (due to age, ethnicity, or disease for example).</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Neuroimaging data">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Neuroimaging data" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/ideas/posts/2024/05/07/images/neuroimaging.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Neuroimaging data">
@@ -2493,175 +2903,6 @@ Tarran, Brian. 2024. “Editor’s note: Not saying goodbye, just saying…” R
   <guid>https://realworlddatascience.net/viewpoints/editors-blog/posts/2024/03/editors-note.html</guid>
   <pubDate>Wed, 06 Mar 2024 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/viewpoints/editors-blog/posts/2024/03/images/thank-you.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>What is data science? A closer look at science’s latest priority dispute</title>
-  <dc:creator>Jonathan Auerbach, David Kepplinger, and Nicholas Rios</dc:creator>
-  <link>https://realworlddatascience.net/ideas/posts/2024/02/19/what-is-data-science.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>What is data science, and where did it come from? Is data science a new and exciting set of skills, necessary for analyzing 21st century data? Or is it (as some have claimed) a rebranding of statistics, which has carefully developed time-honored methods for data analysis over the past century?</p>
-<p>Priority disputes – disagreements over who deserves credit for a new scientific theory or method – date back to the beginning of science. Famous examples include the invention of <a href="https://en.wikipedia.org/wiki/Leibniz–Newton_calculus_controversy">calculus</a> and <a href="https://projecteuclid.org/journals/annals-of-statistics/volume-9/issue-3/Gauss-and-the-Invention-of-Least-Squares/10.1214/aos/1176345451.full">ordinary least squares</a>. But this latest dispute calls into question the novelty of an entire discipline.</p>
-<p>In this article, we use two popular data science algorithms to examine the difference between data science, statistics, and other occupations. We find that in terms of the preparation required to become a data scientist, data science reflects both the work of natural sciences managers – individuals who oversee research operations in the natural sciences – and statisticians and mathematicians. This suggests that data science is a shared enterprise among science and math, and thus those trained in the natural sciences have as much claim to data science as those trained in mathematics and statistics.</p>
-<p>In terms of the role a data scientist serves relative to other occupations, however, we find that data science is closest to statistics by far. Both occupations are fast growing and central among the occupations that work with data, suggesting a data scientist serves the same function as a statistician. But this function may be changing. While the centrality of statistics has declined over the past decade relative to other occupations, the centrality of data science has grown. In fact, data science has now surpassed statistics as the most central fast-growing occupation.</p>
-<section id="we-examine-the-role-of-data-science-using-data-science" class="level2">
-<h2 class="anchored" data-anchor-id="we-examine-the-role-of-data-science-using-data-science">We examine the role of data science using data science</h2>
-<p>Everyone seems to agree that data science requires skills traditionally associated with a variety of different occupations. <a href="http://drewconway.com/zia/2013/3/26/the-data-science-venn-diagram">Drew Conway</a>, for example, describes data science as a combination of math and statistics, substantive (domain) expertise, and “hacking” skills (see Figure&nbsp;1). In dispute is the relative importance of those skills. <a href="https://www.statisticsviews.com/article/nate-silver-what-i-need-from-statisticians/">Some</a> <a href="https://imstat.org/2014/10/01/ims-presidential-address-let-us-own-data-science/">have</a> <a href="https://magazine.amstat.org/blog/2013/07/01/datascience/">argued</a> that data science is basically statistics – and that 20th century statisticians like <a href="https://imstat.org/2023/09/30/hand-writing-john-tukey-the-first-data-scientist/">John Tukey</a> have long possessed the data science skills traditionally associated with computer science and the natural sciences. <a href="http://drewconway.com/zia/2013/3/26/the-data-science-venn-diagram">Others</a> <a href="https://statmodeling.stat.columbia.edu/2013/11/14/statistics-least-important-part-data-science/">have</a> <a href="https://web.archive.org/web/20211219192027/http://www.dataists.com/2010/09/a-taxonomy-of-data-science/">argued</a> that data science is truly interdisciplinary, and statistical thinking only plays a small role. But while opinions on data science abound, few appear to be based on data or science.<sup>1</sup></p>
-<div id="fig-conway" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-conway-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://images.squarespace-cdn.com/content/v1/5150aec6e4b0e340ec52710a/1364352051365-HZAS3CLBF7ABLE3F5OBY/Data_Science_VD.png?format=2500w" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-conway-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: <a href="http://drewconway.com/zia/2013/3/26/the-data-science-venn-diagram">Drew Conway</a> describes data science as a combination of math and statistics, substantive (domain) expertise, and “hacking” skills. Conway’s data science venn diagram, reproduced here, is Creative Commons licensed as <a href="https://creativecommons.org/licenses/by-nc/3.0/legalcode">Attribution-NonCommercial</a>.
-</figcaption>
-</figure>
-</div>
-<p>To that end, we use two popular data science algorithms, naïve Bayes and eigen centrality (eigen decomposition), to investigate the question: What is data science? Both algorithms use data listing the training a worker must generally complete to work in an occupation, such as data science. Specifically, we use the <a href="https://nces.ed.gov/ipeds/cipcode/resources.aspx?y=56">CIP SOC Crosswalk</a> provided by the US Bureau of Labor Statistics and US National Center for Education Statistics, which links the <a href="https://nces.ed.gov/ipeds/cipcode/Default.aspx?y=56">Classification of Instructional Programs</a> – the standard classification of educational fields of study into roughly 2,000 instructional programs – with the <a href="https://www.bls.gov/soc/">Standard Occupational Classification</a> – the standard classification of professions into roughly 700 occupations.</p>
-<p>Our main assumption is that the skills required to work in an occupation can be represented by the instructional programs that prepare students to work in that occupation. For example, the occupation “data scientists” is associated with 35 instructional programs, such as data science, statistics, artificial intelligence, computational science, mathematical biology, and econometrics. The occupation “statisticians” is associated with 26 instructional programs, including data science, statistics, and econometrics, but not artificial intelligence, computational science, or mathematical biology.</p>
-<p>The algorithms we employ consider occupations to be similar if they have many instructional programs in common. Data scientists and statisticians share 14 degrees, suggesting they are similar: Half the programs that prepare students to be a statistician also prepare students to be a data scientist. In contrast, data scientists and computer programmers share six degrees in common, suggesting they are less similar; computer programmers have 17 degrees overall so only a third of the programs that prepare students to be a computer programmer also prepare students to be a data scientist.<sup>2</sup></p>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>Data and code to reproduce the analysis and figures are available through <a href="https://github.com/jauerbach/what-is-data-science">GitHub</a>.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="data-science-is-a-shared-enterprise-among-science-and-math" class="level2">
-<h2 class="anchored" data-anchor-id="data-science-is-a-shared-enterprise-among-science-and-math">Data science is a shared enterprise among science and math</h2>
-<p>We use <a href="https://en.wikipedia.org/wiki/Naive_Bayes_classifier#Multinomial_naive_Bayes">naïve Bayes</a> to measure the similarity between each occupation and data science in terms of the preparation required to work in that occupation. Specifically, we first pretend that the occupation “data scientist” did not exist and then use Bayes’ rule to calculate the probability that a hypothetical group of workers with the 35 degrees associated with data science could have come from one of the roughly 700 other occupations. The higher the measure, the more consistent that occupation is with data science.</p>
-<p>The use of Bayes’ rule is appealing because the similarity between a given occupation and data science takes into account the similarities between every other occupation and data science. Our use of Bayes’ rule is naïve in the sense that – before collecting the data – we assume these workers are equally likely to have come from any occupation.</p>
-<p>The occupations with the largest probabilities, and thus most related to data science, are summarized in Figure&nbsp;2. We find that the hypothetical workers have a 50% chance of being natural sciences managers and a 50% chance of being statisticians or mathematicians.<sup>3</sup> We conclude that data science is a shared enterprise among science and math, and thus those trained in natural sciences have as much claim to data science as those trained in mathematics and statistics.</p>
-<div id="fig-naive-bayes" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-naive-bayes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://realworlddatascience.net/ideas/posts/2024/02/19/images/fig-naive-bayes-1.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-naive-bayes-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: We use <a href="https://en.wikipedia.org/wiki/Naive_Bayes_classifier#Multinomial_naive_Bayes">naïve Bayes</a> to measure the similarity between each occupation and data science in terms of the preparation required to work in that occupation. We find that in terms of the preparation required to become a data scientist, data science is a shared enterprise among science and math.
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="data-science-is-closest-to-statistics-in-its-role-among-other-occupations" class="level2">
-<h2 class="anchored" data-anchor-id="data-science-is-closest-to-statistics-in-its-role-among-other-occupations">Data science is closest to statistics in its role among other occupations</h2>
-<p>We use <a href="https://en.wikipedia.org/wiki/Centrality#Eigenvector_centrality">eigen centrality</a> (eigen decomposition) to measure the similarity of each occupation in terms of its role relative to other occupations. Specifically, we calculate the principal right singular vector of the adjacency matrix denoting whether an instructional program (row) is associated with an occupation (column).<sup>4</sup> An occupation has high eigen centrality when the instructional programs that prepare a worker for that occupation also prepare that worker for many other occupations as well. This suggests that the higher the measure, the more central the role of the occupation relative to other occupations.</p>
-<p>The eigen centrality of each occupation is displayed in Figure&nbsp;3. Each point represents an occupation, the x-axis denotes the centrality of the occupation, and the y-axis denotes the percent growth of the occupation as <a href="https://www.bls.gov/emp/">predicted</a> by the US Bureau of Labor Statistics over the next decade. The figure demonstrates that data scientists and statisticians occupy nearly identical positions: Both are fast growing and central to the other occupations that work with data. In contrast, natural sciences managers are central but growing much more slowly, suggesting a role closer to managers. We conclude that – though data scientists are prepared similarly to natural sciences managers – a data scientist serves the same function as a statistician.</p>
-<div id="fig-centrality-growth" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-centrality-growth-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://realworlddatascience.net/ideas/posts/2024/02/19/images/fig-centrality-growth-1.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-centrality-growth-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: We use <a href="https://en.wikipedia.org/wiki/Centrality#Eigenvector_centrality">eigen centrality</a> (eigen decomposition) to measure the similarity of each occupation in terms of its role relative to other occupations. We find that in terms of the role a data scientist serves relative to other occupations, a data scientist functions like a statistician.
-</figcaption>
-</figure>
-</div>
-<p>But this function may be changing. Figure&nbsp;4 shows the centrality (x-axis) of each occupation (y-axis) in 2010 and 2020. Green bars denote increases from 2010 to 2020 while yellow bars denote decreases. We find that the centrality of statisticians has declined over the past decade relative to other occupations, while the centrality of data scientists has grown. In fact, data science has now surpassed statistics as the most central fast-growing occupation. We conclude that though a data scientist and a statistician serve similar roles today, those roles may change as the workforce changes. Note that the occupation classifications changed in 2018, and we used the <a href="https://www.bls.gov/soc/2018/crosswalks_used_by_agencies.htm">crosswalk</a> provided by the US Bureau of Labor Statistics to make these comparisons.</p>
-<div id="fig-centrality-change" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-centrality-change-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://realworlddatascience.net/ideas/posts/2024/02/19/images/fig-centrality-change-1.png" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-centrality-change-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: We use <a href="https://en.wikipedia.org/wiki/Centrality#Eigenvector_centrality">eigen centrality</a> (eigen decomposition) to measure the similarity of each occupation in terms of its role relative to other occupations. We find that the centrality of statisticians has declined over the past decade relative to other occupations, while the centrality of data scientists has grown. Data science has now surpassed statistics as the most central fast-growing occupation. (Occupations predicted to grow more than 20% over the next decade shown.)
-</figcaption>
-</figure>
-</div>
-<p>The findings in this section are based on the adjacency matrix that encodes whether an instructional program (row) is associated with an occupation (column). A more detailed summary of the matrix is provided in Figure&nbsp;5, which depicts the matrix as a network graph. Larger nodes represent occupations that are growing faster, while nodes closer to the center of the network represent more central occupations. The figure is interactive. You can zoom in to see the similar positions between data scientists and statisticians, which are both large (fast growing) and central.</p>
-<div id="fig-interactive-plot" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-interactive-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<div class="tv-iframe-container">
-  <iframe class="responsive-iframe" src="images/network.html" title="fig-interactive-plot"></iframe>
-</div>
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-interactive-plot-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: A visualization of occupations as a network: Occupations are placed according to the instructional programs that train students for that occupation, with occupations closer together sharing more instructional programs in common. We find data scientists and statisticians occupy nearly identical positions at the center of the network. Occupations are colored according to the primary classification of instructional programs that train students for that occupation. Larger nodes represent occupations that are growing faster.
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="is-data-science-statistics" class="level2">
-<h2 class="anchored" data-anchor-id="is-data-science-statistics">Is data science statistics?</h2>
-<p>We conclude that individuals trained in managing natural sciences research – a slow growing occupation – are turning to data science – a much faster growing occupation, and one which currently serves a role like that of a statistician. But if present trends continue, data science is poised to eclipse the historic role of the statistician as central to the occupations that work with data.</p>
-<p>This suggests that while data science may be new and exciting, the role served by the data scientist is not particularly new. This does not mean that data scientists necessarily use the same time-honored methods for data analysis as statisticians. It is the authors’ experience, however, that many data science tools are in fact statistical. Indeed, the two data science algorithms we used in this article are both taught to students as new and exciting, but in reality are centuries-old methods steeped in statistical history.</p>
-<p>Regardless of whether data science is or is not statistics, the occupation “data scientist” has proven immensely popular, capturing a zeitgeist that has eluded statistics. This is best evidenced by the fact that data science – and not statistics – has been crowned the <a href="https://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century">sexiest</a> job of the 21st century. But if statistics has not enjoyed the popularity of data science, perhaps the real question in need of answering is: What is statistics?</p>
-<div class="article-btn">
-<p><a href="../../../../../ideas/index.html">Explore more data science ideas</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the author</dt>
-<dd>
-<strong>Jonathan Auerbach</strong> is an assistant professor in the Department of Statistics at George Mason University. His research covers a wide range of topics at the intersection of statistics and public policy. His interests include the analysis of longitudinal data, particularly for data science and causal inference, as well as urban analytics, open data, and the collection, evaluation, and communication of official statistics.
-</dd>
-<dd>
-<strong>David Kepplinger</strong> is an assistant professor in the Department of Statistics at George Mason University. His research revolves around methods for robust and reliable estimation and inference in the presence of aberrant contamination in high-dimensional, complex data. He has active collaborations with researchers from the medical, biological, and life sciences.
-</dd>
-<dd>
-<strong>Nicholas Rios</strong> is an assistant professor of statistics at George Mason University. He earned his PhD in statistics 2022 from Penn State University, where his dissertation focused on designing optimal mixture experiments. His primary research interests are experimental design and methods for intelligent data collection in the presence of real-world constraints. He is also interested in functional data analysis, computational statistics, compositional data analysis, and the analysis of high-dimensional data.
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Jonathan Auerbach, David Kepplinger, and Nicholas Rios
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> Text, code, and figures are licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>, except where otherwise noted. Thumbnail photo by <a href="https://unsplash.com/@marcsm?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Marc Sendra Martorell</a> on <a href="https://unsplash.com/photos/closeup-photo-of-two-bubbles-2BrdNFxW0UY?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Unsplash</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Auerbach, Jonathan, David Kepplinger, and Nicholas Rios. 2023. “What is data science? A closer look at science’s latest priority dispute.” Real World Data Science, February 19, 2024. <a href="https://doi.org/10.5281/zenodo.10679962"><img src="https://zenodo.org/badge/DOI/10.5281/zenodo.10679962.svg" class="img-fluid" style="vertical-align:text-bottom;" alt="DOI"></a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-
-</section>
-
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
-<div id="ref-donoho201750" class="csl-entry">
-Donoho, David. 2017. <span>“50 Years of Data Science.”</span> <em>Journal of Computational and Graphical Statistics</em> 26 (4): 745–66.
-</div>
-<div id="ref-stigler1981gauss" class="csl-entry">
-Stigler, Stephen M. 1981. <span>“Gauss and the Invention of Least Squares.”</span> <em>The Annals of Statistics</em>, 465–74.
-</div>
-</div></section><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>Descriptions of occupations by government agencies are not particularly helpful in differentiating between data science, statistics, and related occupations. For example, according to the Bureau of Labor Statistics, data scientists use “analytical tools and techniques to extract meaningful insights from data.” This description is similar to mathematicians/statisticians, who “analyze data and apply computational techniques to solve problems,” and operations research analysts who use “mathematics and logic to help solve complex issues.”↩︎</p></li>
-<li id="fn2"><p>Our analysis treats all instructional programs as equal and independent. We do not consider, for example, the number of workers who hold a degree from an instructional program or whether two instructional programs are similar or offered by similar academic departments. Our analysis could be adjusted to account for this or related information, although it is unclear to the authors whether such an adjustment would make the results more accurate.↩︎</p></li>
-<li id="fn3"><p>Note that natural sciences managers share 18 instructional programs with data scientists, while statisticians share 14.↩︎</p></li>
-<li id="fn4"><p>Or alternatively, the principal eigenvector of the adjacency matrix denoting the number of instructional programs each occupation (row) has in common with each other occupation (column).↩︎</p></li>
-</ol>
-</section></div> ]]></description>
-  <category>Algorithms</category>
-  <category>Data science education</category>
-  <category>Skills</category>
-  <category>Training</category>
-  <guid>https://realworlddatascience.net/ideas/posts/2024/02/19/what-is-data-science.html</guid>
-  <pubDate>Mon, 19 Feb 2024 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/ideas/posts/2024/02/19/images/bubbles.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 </channel>
 </rss>
