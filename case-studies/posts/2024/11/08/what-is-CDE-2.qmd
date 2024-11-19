@@ -1,0 +1,304 @@
+---
+title: Advancing Data Science in Official Statistics – What is the Curated Data Enterprise?
+description: |
+  The US Census Bureau faces the challenge of addressing complex questions requiring novel datasets and sources to answer. Official statistical agencies and public- and private-sector organizations worldwide share this challenge. Read on to discover how the Curated Data Enterprise approach might help you address your own research challenges.
+author: Sallie Keller, Stephanie Shipp, Vicki Lancaster, and Joseph Salvo <br /> University of Virginia
+date: 11/08/2024
+image: images/screen.thumbnail.jpg
+image-alt: A young woman working at a laptop
+bibliography: references.bib
+editor: visual
+categories:
+  - Public Policy
+  - Data Analysis
+  - Data Integration
+  - Curation
+  - Statistical Products
+crossref:
+  fig-labels: arabic
+number-sections: false
+toc: true
+---
+
+<center>Acknowledgments: This research was sponsored by the: <br /> Unites States Census Bureau Agreement No. 01-21-MOU-06 and <br /> Alfred P. Sloan Foundation Grant No. G-2022-19536</center>
+
+<br /> <br />
+
+*The views expressed in this perspective are those of the authors and not the Census Bureau.*
+
+## Introduction
+
+Today, official statistics – tables, reports and microdata – are produced using data from a single survey. These surveys are foundational for researchers and policymakers. However, many issues cannot be answered by surveys alone. For example, creating a picture of how prepared skilled nursing facilities (SNFs) are for climate emergencies requires wrangling all types of data about the facilities and their communities.(*Note: A skilled nursing facility is a facility that meets specific federal regulatory certification requirements that enable it to provide short-term inpatient care and services to patients who require medical, nursing, or rehabilitative services.*) This includes SNF data on the number and dates of inspections, deficiencies, residents' mental and physical health, the number of nursing staff and where they live, community assets data on the number of shelter facilities, health professionals and emergency service providers, and community risks data on the probability of an extreme climate event. How can we create new statistical products useful to policymakers, emergency responders, skilled nursing facility staff, and others to inform their decisions?
+
+::: callout-note
+## Official statistics
+
+Official statistics are essential for a democratic society as they provide economic, demographic, social, and environmental data about the government, the economy, and the environment. Official statistical agencies should compile and make these statistics available impartially to honor the right to public information.
+
+Objective, reliable, and accessible official statistics instill confidence in the integrity of government and public decision-making regarding a country's economic, social, and environmental situation at national and international levels. They should be widely available and meet the needs of various users [@UnitedNations2024].
+:::
+
+With the explosion of available data, there is an opportunity to combine all types of information to create statistical products that address cross-cutting topics for a wide range of purposes and uses. The US Census Bureau is modernizing and transforming its enterprise system to accommodate a new way to produce statistical products that take advantage of all data types: designed surveys and censuses, public and private administrative data, opportunity data scraped from the internet, and procedural data [@keller2022bold].
+
+> *'We are moving towards a single enterprise, data-centric operation that enables us to funnel data from many sources in a single data lake using common collection and ingestion platforms... This is the essence of **a curated data approach** — assemble, assess, and fill in the gaps to create quality statistical data.'*
+
+> **Robert Santos,** Director, US Census Bureau
+
+This curated approach is embodied in the Curated Data Enterprise (CDE). The Curated Data Enterprise Framework in @fig-cde provides a guide for creating statistical products that enable the full integration of data from many sources [@keller2020doing]. At the heart of the framework are the purposes and uses that provide the context and driving force for developing the statistical product. The outer rectangle in @fig-cde identifies the guiding principles for ethical, transparent and reproducible product development and dissemination. The inner rectangle identifies the steps in the statistical product development, including integrating primary and secondary data sources. The arrows convey that this process may only sometimes be linear. Instead, the process is iterative, where new information may be discovered at any point, requiring reevaluating and updating prior steps. Our Social and Decision Analytics research group in the Biocomplexity Institute developed, tested, and refined the CDE (data science) Framework in our research since 2013 [@keller2017building; @keller2020doing]. The proposed use of the CDE to develop statistical products at the US Census Bureau is in its early stages.
+
+![The CDE Framework starts with the purposes & uses of the statistical products. The outer rectangle identifies the guiding principles for ethical, transparent, reproducible statistical product development and dissemination. The inner rectangle identifies the statistical product development steps.](images/figure-1.png){#fig-cde fig-align="center"}
+
+The next article in this series will put the CDE Framework into practice by demonstrating the use case on skilled nursing facilities’ preparedness for emergencies during extreme climate events. As a prelude to that article, we have created a visual for the statistical product development component of how that process works in action in @fig-ex.
+
+![Example: Steps in the statistical product development for the skilled nursing facility use case. The diagram describes the steps applied to a use case on the resilience of skilled nursing facilities. Section 3 of this series describes the steps in detail.](images/figure-2.png){#fig-ex fig-align="center"}
+
+The CDE Framework's guiding principles and research steps are described below. To find out more click on a cross reference.
+
+**Guiding principles**:
+
+-   [Purposes and uses](#sec-gp1)
+-   [Stakeholders](#sec-gp2)
+-   [Curation](#sec-gp3)
+-   [Equity and ethics](#sec-gp4)
+-   [Privacy and confidentiality](#sec-gp5)
+-   [Communications and dissemination](#sec-gp6)
+
+**Research steps**:
+
+-   [Subject matter input](#sec-rs1)
+-   [Data discovery](#sec-rs2)
+-   [Data ingestion & Governance](#sec-rs3)
+-   [Data wrangling](#sec-rs4)
+-   [Fitness-for-purpose](#sec-rs5)
+-   [Statistics development](#sec-rs6)
+
+## Guiding principles
+
+### Purposes and uses {#sec-gp1}
+
+The CDE is centered on developing statistical products to meet specific purposes and uses. Researchers and stakeholders propose the purposes and uses, defining the 'why' for developing statistics and statistical products. They include questions or issues that the statistics should be designed to support and are clarified by documented best practices, literature reviews and conversations with subject matter experts.
+
+### Stakeholders {#sec-gp2}
+
+Stakeholders include individuals, groups, and organizations that have the potential to affect or be affected by the outcome of the research. Engaging stakeholders is crucial for fostering the connection and trust that can lead to better decision making. @kujala2022stakeholder best described the principle of stakeholder engagement: 'Stakeholder engagement refers to the aims, activities, and impacts of stakeholder relations in a moral, strategic, and pragmatic manner.' When placed within the CDE context and represented in the Framework, collaborative engagement with stakeholders occurs at all stages of product development to better understand what the final product needs to look like. Further, product development is not a linear process but occurs through successive waves of iteration with users.
+
+Forming partnerships with stakeholders is instrumental in identifying requirements and implementing statistical products. This requires listening to community voices in an active engagement strategy.[^1] Of necessity, these partnerships entail collaboration, such as creative and collaborative problem-solving workshops and the development of innovative digital tools vetted by networks of users.[^2]
+
+[^1]: <https://www.census.gov/newsroom/blogs/director/2023/01/a-look-ahead-2023.html> 
+
+[^2]: <https://www.census.gov/partners/act.html>
+
+### Curation {#sec-gp3}
+
+The broad meaning of curation is the act of organizing, documenting and maintaining a collection of artifacts. The artifacts of the development and dissemination of statistics or statistical products include all the components in @fig-cde, from meeting with stakeholders to formulating the purposes and uses to creating and disseminating the statistical products. Maintaining the artifacts is the essence of the CDE. *Every step in the process should be documented and easily accessible in a repository, for example, GitHub, for the work to be transparent and reproducible*. Curation in the context of the CDE is an end-to-end activity. It involves documenting the purpose and use, providing the context for acquiring, wrangling, and archiving data from many sources to support the development of statistical products. It will include metadata [@cannon2013], the code used to read and write the data, and the code that ingested the data from the source and prepared it for analysis.
+
+*Curation steps*
+
+-   Document the development of the research questions, why this research is important, and how it supports the purposes and uses and resulting statistical product.
+-   Document the context for the purposes and uses, ie, a policy directive, stakeholder request, policy evaluation, etc.
+-   What stakeholder engagement and transparency are built into the process?
+
+### Equity and ethics {#sec-gp4}
+
+An ethics review ensures dialogue on this topic throughout the statistical product development and dissemination life cycle. This involves teams of researchers and stakeholders across many areas of expertise, each with its own research integrity norms and practices. This requires that ethics be woven into every aspect of the CDE. An *equity* review ensures that underserved groups are represented and biases inherent in various data sources are acknowledged.
+
+*Curation questions*
+
+-   What are the project's expected benefits to the 'public good'? Do they outweigh potential risks to specific sub-populations, eg, individuals, firms and their locations by different levels of geography?
+-   Are there implicit assumptions and biases regarding the studied communities in framing the project and associated data sources? If yes, how will they be addressed?
+-   What type of institutional approval process and contracts are needed? What statistical quality standards and confidentiality standards will be needed? For an explanation of the Institution Review Board see @nte-irb.
+
+An ethics checklist can help with this process. Links to ethics checklists are provided below.
+
+-   University of Virginia, Biocomplexity Institute, [Social and Decision Analytics Division Data Science Project Ethics Tool](https://biocomplexity.virginia.edu/sites/default/files/sda/UVA%20SDAD%20EthicsChecklist%2018May2022.pdf)
+-   United Kingdom Government, [Data Ethics Framework](https://www.gov.uk/government/publications/data-ethics-framework#full-publication-update-history)
+
+### Privacy and confidentiality {#sec-gp5}
+
+Privacy is about the individual, whereas confidentiality is about the individual’s information. Privacy refers to an individual’s desire to control their information. Confidentiality refers to the researcher’s agreement with the individual, which could be an agency like the Census Bureau, regarding how their information will be handled, managed, and disseminated [@keller2016does]. This is a guiding principle because it needs to be considered and embraced at the earliest possible stages of statistical product development and will impact dissemination choices.
+
+*Curation questions*
+
+-   What steps are taken to ensure the privacy and confidentiality of the data?
+-   What statistical methods (if any) are used to ensure the privacy and confidentiality of the data?
+-   How do the methods chosen to protect confidentiality affect the purposes and uses of the data?
+-   What stakeholder engagement and transparency are built into the process?
+-   Does the context surrounding the purposes, uses, and anticipated data sources require an Institutional Review Board (IRB) review and approval? If yes, is it archived?
+
+::: {#nte-irb .callout-note}
+## Institutional Review Board
+
+In the United States, institutional review boards (IRBs) assess the ethics and safety of research studies involving human subjects, such as behavioral studies or clinical trials for new drugs or medical devices. Today, the definition of human subjects has evolved to include secondary data, such as administrative data collected for other purposes, eg, local property data collected for tax purposes.
+
+The Belmont Commission was convened in the late 1970s after the ethical failures of many research projects that involved vulnerable populations surfaced. The Belmont Commission issued three principles for the conduct of ethical research:
+
+-   **Respect for people** — treating people as autonomous and honoring their wishes
+
+-   **Beneficence** — understanding the risks and benefits of the study and weighing the balance between (1) doing no harm and (2) maximizing possible benefits and minimizing possible harms
+
+-   **Justice** — deciding if the risks and benefits of research are distributed fairly.
+
+These principles were translated to a set of regulations called the Common Rule that govern federally-funded research. The Belmont Commission provided the foundation for IRB principles and focused on research involving human subjects in experiments and studies. IRB approval is required to be eligible for federal grants and contracts. Many universities also require IRB review for research conducted by faculty, students, and researchers [@shipp2023making].
+:::
+
+### Communication and dissemination {#sec-gp6}
+
+Communication involves sharing data, statistical method choices, well-documented code, working papers, and *dissemination* through research team meetings, stakeholder engagements, conference presentations, publications, webinars, websites, and social media. As a principle, communication and dissemination are critical to ensure that statistical product development processes and findings are transparent and reproducible [@berman2016realizing]. An essential facet of this step is to tell the story of the analysis by conveying the context, purpose, and implications of the research and findings [@berinato2019data; @wing2019data; @nasem2022transparency].
+
+*Curation questions*
+
+-   Are the meeting notes, statistical products, code, reports, and presentations archived in a repository?
+-   Briefly describe what did not work in this process, eg, data wrangling challenges where data sources could not be integrated, data source changes after a fitness-for-purpose assessment, analyses that were changed because assumptions were not met, etc.
+-   Have project methods and outputs been made as transparent as possible?
+-   Are the potential limitations of the research clearly presented?
+-   Why or why not should the research be used as the basis for an institutional or policy action?
+-   Have the predicted benefits and social costs to all potentially affected communities been considered?
+
+## Research steps
+
+### Subject matter input {#sec-rs1}
+
+Subject matter (domain) expertise plays a role in translating the information acquired into understanding the underlying phenomena in the data [@box1978statistics]. Domain knowledge provides the context to define, evaluate and interpret the findings at each research stage [@leonelli2019data; @snee2014follow]. Subject matter input can be obtained through a review of the literature, talking to experts, or learning about their work at conferences or other convenings. Subject matter experts are different than stakeholders. Both provide important input to identifying and clarifying purposes and uses.
+
+*Curation steps*
+
+-   Document the meetings with subject matter experts and stakeholders.
+-   Document the literature search methods and the results of the literature review.
+-   Document choices are made during the development of the products.
+-   Were subject matter experts and stakeholders recruited from underrepresented groups?
+
+### Data discovery {#sec-rs2}
+
+Data discovery identifies potential sources that address the research goals defined by purposes and uses. Data sources include the following types [@keller2020doing].
+
+1.  Designed data are collected using statistically designed methods, such as surveys, censuses, and data generated from an experimental or quasi-experimental design, such as a clinical trial or agricultural field study.
+
+2.  Administrative data are collected for the administration of an organization or program by entities such as government agencies.
+
+3.  Opportunity data are derived from internet-based information, such as websites, wearable and other sensor devices, and social media, and captured through application programming interfaces (APIs) and web scraping, eg, geocoded place-based data, transportation routes, and other data sources.
+
+4.  Procedural data are processes and policies, such as a change in health care coverage, a data repository policy outlining procedures and the metadata required to store data, or a responsible AI policy.
+
+The goal of the data discovery process is to think broadly and imaginatively about all data types and to capture the variety of data sources that could be useful for the problem. There are three steps in the data discovery process [@keller2016does].
+
+1.  Identify potential data sources and make an inventory.
+
+2.  Create a set of questions to screen the data sources to ensure the data meet the criteria for use.
+
+3.  Select and acquire the data sources that meet the screening criteria.
+
+*Curation steps*
+
+-   Describe your data discovery process and reasoning behind the selected data sources.
+    -   Do underrepresented groups have adequate geographic coverage? If not, are there methods, such as synthetic data, you can use to provide adequate coverage?
+    -   Have checks and balances been established to identify and address implicit biases in the data and interpretation of the data? Has the team engaged in discussion and provided insights across their diverse perspectives?
+-   Describe the assumptions that need to be made to use these data sources.
+-   Identify and document the paradata and metadata that describe each data source. Paradata describe how the data were collected, while metadata are 'data about data'. It includes information about the data's content, data dictionaries and technical documents that will help the user assess its fitness for purpose [@cannon2013; @nasem2022transparency].
+-   Discuss data sources you would have used if they were available.
+
+### Data ingest and governance {#sec-rs3}
+
+Data ingestion is the process of bringing data into the data management platform(s) for use. Data governance establishes and adheres to rules and procedures regarding data access, dissemination and destruction.
+
+*Curation steps*
+
+-   Document policies and institutional agreements for data use.
+    -   Have team members reviewed data use agreements, standard operating procedures (SOPs), and data management plans? Are they fair?
+    -   Do additional procedures need to be defined for this project?
+-   Document the code and processes used to ingest the data sources and manage governance.
+
+### Data wrangling {#sec-rs4}
+
+Data wrangling includes the activities of data profiling, preparing, linking and exploring used to assess the data's quality and representativeness and what analyses the data can support.
+
++-----------------------------------------+------------------+---------------------------------------+----------------------------+
+| Profiling                               | Preparing        | Linking                               | Exploring                  |
++:=======================================:+:================:+:=====================================:+:==========================:+
+| -   data quality                        | -   cleaning     | -   ontology selection & alignment    | -   visualizations         |
+| -   data structure                      | -   transforming | -   entity resolution / harmonization | -   descriptive statistics |
+| -   meta data, paradata, and provenance | -   structuring  |                                       | -   characterizations      |
++-----------------------------------------+------------------+---------------------------------------+----------------------------+
+
+: Table 1. Activities of data wrangling
+
+*Curation steps*
+
+-   Describe any data quality issues within the stated purpose and use context and how they were resolved. This can include statistical solutions like imputing missing data, identifying outliers or constructing synthetic populations.
+    -   How representative are the data?
+    -   What populations are and are not covered?
+-   Describe any issues with the wrangling process and how they were resolved.
+-   Document the code used to wrangle the data and describe how it was validated.
+-   Document assumptions made regarding the transformation and use of the data.
+
+### Fitness-for-purpose {#sec-rs5}
+
+Fitness-for-purpose starts with assessing the constraints imposed on the data by the particular statistical methods used and the population to which the inferences extend. It is a function of the modeling, data quality needs of the models, and data coverage (representativeness) needs of the models. The statistical product's 'fitness-for-purpose' involves those on the receiving end of the data helping identify issues germane to the data application, such as identifying biases affecting equity. For example, given known differences in their availability, does using administrative records lead to better modeling outcomes for some groups more than others? What can be done to compensate for such bias?
+
+*Curation steps*
+
+-   Document the constraints and limitations of the data. 
+    -   What are the limitations of the results? Are the results useful, given the purpose of the study?
+-   Discuss the populations to which any inferences will generalize.
+    -   Do the statistical results support the potential benefits of the study previously stated?
+    -   Do any data require revisiting the question of potential biases being introduced through the choice of data sets and variables?
+
+### Statistics development {#sec-rs6}
+
+The development of statistics and statistical products for dissemination is a function of the research questions, the data's limitations and the assumptions of the statistical method(s) used.
+
+*Curation steps*
+
+-   Describe the statistical methods planned and used and how the method assumptions were evaluated.
+-   Discuss the conclusions of the statistical analyses and any inferences that can be made from the disseminated statistical products.
+-   Discuss how the statistics support the purposes and uses driving the development of the products.
+
+Here, we have defined the CDE and provided a conceptual walk through of the framework from @fig-cde. In the next article, we will put the CDE Framework into practice through a demonstration use case on the resilience of skilled nursing facilities.
+
+::: nav-btn-container
+::: grid
+::: {.g-col-12 .g-col-sm-6}
+::: nav-btn
+[← Part 1: The policy problem](/case-studies/posts/2024/11/01/policy-problem.qmd)
+:::
+:::
+
+::: {.g-col-12 .g-col-sm-6}
+::: nav-btn
+[Part 3: Climate resiliency of skilled nursing facilities →](/case-studies/posts/2024/11/19/use-case-2.qmd)
+:::
+:::
+:::
+:::
+
+::: further-info
+::: grid
+::: {.g-col-12 .g-col-md-12}
+
+About the authors
+
+:   **Sallie Keller** is the Chief Scientist and Associate Director of Research and Methodology at the US Census Bureau. She is a statistician with research interest in social and decision informatics, statistics underpinnings of data science, and data access and confidentiality. Sallie Keller was at the University of Virginia when this work was conducted.
+
+:   **Stephanie Shipp** leads the Curated Data Enterprise research portfolio and collaborates with the US Census. She is an economist with experience in data science, survey statistics, public policy, innovation, ethics, and evaluation.
+
+:   **Vicki Lancaster** is a statistician with expertise in experimental design, linear models, computation, visualizations, data analysis, and interpretation. She works with scientists at federal agencies on projects requiring statistical skills and creativity, eg, defining skilled technical workforce using novel data sources.
+
+:   **Joseph Salvo** is a demographer with experience in US Census Bureau statistics and data. He makes presentations on demographic subjects to a wide range of groups about managing major demographic projects involving the analysis of large data sets for local applications.
+:::
+
+::: {.g-col-12 .g-col-md-6}
+
+Copyright and licence
+
+:   © 2024 Stephanie Shipp
+
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"/><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"/></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://www.shutterstock.com/g/Chaay_Tee">Chay_Tee</a> on <a href="https://www.shutterstock.com/image-photo/back-rear-view-young-asian-woman-2170748613">Shutterstock</a>.
+:::
+
+::: {.g-col-12 .g-col-md-6}
+
+How to cite
+
+:   Keller S, Shipp S, Lancaster V, Salvo J (2024). "Advancing Data Science in Official Statistics – What is the Curated Data Enterprise?" Real World Data Science, November 8, 2024. [URL](https://realworlddatascience.net/case-studies/posts/2024/11/08/what-is-CDE-2.html)
+:::
+:::
+:::
