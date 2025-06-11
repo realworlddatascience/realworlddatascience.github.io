@@ -178,7 +178,7 @@ listing:
   - id: latest-content
     contents: 
     - /case-studies
-    - /ideas
+    - /foundation-frontiers
     - /careers
     - /viewpoints
     - "!index.qmd"
@@ -289,7 +289,7 @@ So, if you do plan to use executable code when developing and submitting a draft
 - Data visualisations produced from code should be saved as image files and these image files used for the published version of the article.
 - Interactive graphics produced from code should be saved as html, and the html file embedded as an iframe in the published version of the article.[^2]
 
-[^2]: The [What is data science?](https://realworlddatascience.net/ideas/posts/2024/02/19/what-is-data-science.html) article includes an example of how to do this. See lines 424-512 of the [submitted version](https://github.com/jauerbach/what-is-data-science/blob/main/RWDS_post_template-main/report.qmd) and lines 67-72 of the [published version](https://github.com/realworlddatascience/realworlddatascience.github.io/blob/main/ideas/posts/2024/02/19/what-is-data-science.qmd).
+[^2]: The [What is data science?](https://realworlddatascience.net/foundation-frontiers/posts/2024/02/19/what-is-data-science.html) article includes an example of how to do this. See lines 424-512 of the [submitted version](https://github.com/jauerbach/what-is-data-science/blob/main/RWDS_post_template-main/report.qmd) and lines 67-72 of the [published version](https://github.com/realworlddatascience/realworlddatascience.github.io/blob/main/foundation-frontiers/posts/2024/02/19/what-is-data-science.qmd).
 
 ## Add an article
 Congratulations! Your article has been accepted. Now we need to get it ready for publication. This section walks through the steps the RWDS editor follows when getting ready to publish a new article. But the great thing about building RWDS on GitHub is, you don't need to wait for the editor to do this work. If your article has been accepted and you are comfortable working with Quarto and GitHub, you could complete this process yourself. External contributors can't work directly with the RWDS repo, though, so you'll first need to ["fork" the repository](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/working-with-forks/fork-a-repo), which will create a copy of the repo in your own GitHub account.
@@ -448,7 +448,7 @@ listing:
   - id: latest-content
     contents: 
     - /case-studies
-    - /ideas
+    - /foundation-frontiers
     - /careers
     - /viewpoints
     - "!index.qmd"
@@ -472,9 +472,9 @@ listing:
     max-items: 3
     feed: false
 
-  - id: ideas
+  - id: foundation-frontiers
     contents: 
-    - /ideas
+    - /foundation-frontiers
     - "!index.qmd"
     sort: "date desc"
     type: grid
@@ -562,7 +562,7 @@ listing:
   - id: latest-content
     contents: 
     - /case-studies
-    - /ideas
+    - /foundation-frontiers
     - /careers
     - /viewpoints
     - "!index.qmd"
