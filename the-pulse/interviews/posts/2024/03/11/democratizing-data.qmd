@@ -1,0 +1,123 @@
+---
+title: "Democratizing Data: Using natural language processing and machine learning to capture dataset usage"
+description: |
+  Real World Data Science speaks with Julia Lane, professor at the NYU Wagner Graduate School of Public Service and visiting fellow at RTI International, about an initiative that seeks to improve public understanding of how datasets are used and the value they provide. 
+categories:
+  - AI
+  - Data
+  - Machine learning
+  - Natural language processing
+author: Brian Tarran
+date: 03/11/2024
+image: images/julia-lane-thumb.png
+image-alt: Photo of Julia Lane, professor at the NYU Wagner Graduate School of Public Service and visiting fellow at RTI International.
+toc: false
+aliases: 
+  - /viewpoints/interviews/posts/2024/03/11/democratizing-data.html
+---
+
+Figuring out how much money is spent annually on collecting and publishing datasets is a challenge. According to the World Bank, it is [“painfully hard to obtain”](https://blogs.worldbank.org/opendata/how-much-should-governments-spend-data) information just on government spending on data, never mind all the other bodies and organisations who invest in the creation of data assets. But there's an even more challenging figure to pin down: How much value does all this data provide? By and large, there is very little data -- or systematic collection of data -- on dataset usage. There’s no easy way to find all the users of a particular dataset and to see how the data has been used, or what research topics it may have contributed to.
+
+Writing in the [Harvard Data Science Review in April 2022](https://hdsr.mitpress.mit.edu/pub/g6e8noiy/release/2), [Julia Lane](https://julialane.org/) and others explained that “the current approach to finding what data sets are used to answer scientific questions ... is largely manual and ad hoc.” They went on to argue: “Better information on the use of data is likely to have at least two results: (i) government agencies might use the information to describe the return on investment in data sets and (ii) scientists might use the information to reduce the time taken to search and discover other empirical research.”
+
+This hope for a better understanding of how datasets are used and the value they provide underpins the creation of “Democratizing Data: A Search and Discovery Platform for Public Data Assets.”
+
+As described on [the platform’s homepage](https://democratizingdata.ai/), Democratizing Data “describes how datasets identified by federal agencies have been used in scientific research. It uses machine learning algorithms to search over 90 million documents and find how datasets are cited, in what publications, and what topics they are used to study.”
+
+But this is just the start of what Lane thinks the project could eventually achieve, as she explains in this interview.
+
+::: keyline
+---
+:::
+
+**How did the Democratizing Data platform come about?**  
+It emerged from three things, really, and I can trace the start of it back to 2016, when I was asked to build a secure environment that could host confidential microdata in order to inform the work of the [Commission on Evidence-Based Policymaking](https://obamawhitehouse.archives.gov/omb/management/commission_evidence).^[The Commission on Evidence-Based Policymaking was “charged with examining all aspects of how to increase the availability and use of government data to build evidence and inform program design, while protecting privacy and confidentiality of those data.”] They asked me to lead on this because I had built the [NORC remote access Data Enclave at the University of Chicago](https://www.norc.org/services-solutions/data-enclave.html) 10 years before that.
+
+This was the first step towards Democratizing Data.
+
+The second step was figuring out how to create value from the data in the secure environment, because we knew that if we couldn’t create value, government agencies weren't going to put their data into it.
+
+But how do you figure out what agencies are going to want to do with the data in a secure environment? It's difficult to get them to tell you what they want, so I thought, well, why don't we build training classes, put people in these training classes and have them work on problems with their own data? That way, we’re going to know what problems they have so that we can address them.
+
+So, step 1 was build secure environment. Step 2 was build capacity and identify the questions that are of interest to agencies so that they would put data into the secure environment. That led to the training classes that Frauke Kreuter, Rayid Ghani, and I put together, which are described here.
+
+But then what happened was, people kept coming to me in the classes and asking, “Who else has worked with these data, and who can I go to and ask questions?”
+
+I could give them a list of people, but that list would be biased by my age and race and sex and the people I know. What about those people who are doing really interesting stuff with these data that I happen not to know about?
+
+So, that's how Democratizing Data got started. I thought, really the best way to give a full answer to those sorts of questions is to figure out what datasets are being used in research publications. 
+
+Now, how was I going do that? I could read all the publications and manually write notes about who the authors were, and what the topics were, and what datasets they used. But that's not realistic. So, I thought, well, maybe we could combine natural language processing techniques with machine learning so that you could “read” all these publications and find out how datasets are cited.
+
+::: {.pullquote-container}
+::: grid
+::: {.g-col-12 .g-col-lg-4}
+![Julia Lane, professor at the NYU Wagner Graduate School of Public Service and visiting fellow at RTI International. Image supplied, used with permission.](images/julia-lane-sq.png){fig-alt="Photo of Julia Lane, professor at the NYU Wagner Graduate School of Public Service and visiting fellow at RTI International." fig-align="left"}
+::: 
+::: {.g-col-12 .g-col-lg-8 .pullquote-grid .pullquote}
+![](/images/pullquote-purple.png){width="50px"}
+
+We're searching for ways to measure how datasets are used, how they're valued, and so on. Federal statistical data and Elsevier's Scopus have been a great starting point for us, but the broader vision is to incorporate other datasets and other publication databases.
+:::
+:::
+:::
+
+**Would this have been a problem that needed solving if there were common, established citation standards and practices for datasets?**  
+There *are* great citation practices for datasets, and we’ve had them for 15 years. Back when I was a National Science Foundation (NSF) program officer, everyone was saying, well, if we just get the plumbing right, people will come and use it. Well, they don’t. Even when there are DOIs available and they're relatively easy to cite, people don't. The plumbing's there, we built it, but they didn't come.
+
+So, I think there has to be a demand-side piece, and we talk about that in one of the papers in an upcoming special issue of the [Harvard Data Science Review](https://hdsr.mitpress.mit.edu/): How do you create an incentive structure so that people do provide information about how they've used data? My thinking was that, suppose we can find out who's using what data. Then the incentive structure to an academic is “your name in lights”: you are the world's living expert in orange carrots with green stripes, or whatever. So, we would read the publications, find the datasets, and then you could have a leaderboard of the people who have done the most work in a particular field, and then people would have an incentive both to cite datasets and to let you know when you miss things. And that was when I thought, well, let's put all this information up in a dashboard.
+
+**So, is the grand vision for this to create a platform that, essentially, any data owner -- anyone who publishes datasets -- could plug into, connect to, and understand how other people are using their datasets?**  
+That's right. The grand vision is basically to set up a search and discovery portal. Originally, my thinking was that would be super helpful for people just starting out in a field; for a new graduate student or a postdoc to say, “I want to figure out what work has been done on recidivism of welfare recipients relative to access to jobs and neighborhood characteristics,” for example, and for them to see what datasets are available and how they have been used. 
+
+But from the data producer side it'd also be useful to know: Who’s using the datasets? Where are the gaps? Where are we maybe not reaching as many people as we thought we were, and how can we change that?
+
+So, while the original idea was to build a platform for researchers, plans changed when the [Evidence Act](https://www.govinfo.gov/content/pkg/PLAW-115publ435/pdf/PLAW-115publ435.pdf) passed, and agencies were required to produce usage statistics for their datasets.^[Specifically, the act requires federal agencies to identify and implement methods “for collecting and analyzing digital information on data asset usage by users within and outside of the agency.”]
+
+We started a pilot with the US Department of Agriculture’s (USDA) Economic Research Service (ERS). They have been a huge supporter and helped us work through a lot of the issues. Then, when we began showing around the ERS wireframes and ideas, the NSF National Center for Science and Engineering Statistics joined in, and so did USDA's National Agricultural Statistics Service and the National Center for Education Statistics and the National Oceanic and Atmospheric Administration.
+
+So, we have these agencies involved and they've really been the drivers, the intellectual partners, pushing the design and the structure forward.
+
+**I’ve had a chance to play around with some of the [public dashboards you’ve released on Tableau](https://democratizingdata.ai/tools/dashboards/), and I really like the way you can explore dataset usage from different start points and end up with a list of publications that use those datasets. My question is, though, how have you connected all this up – datasets and publications?**  
+Our start point was scientific publications because these are pretty well curated. We ended up working with Elsevier because Scopus [Elsevier’s abstract and citation database] is a well-curated corpus and they've got the associated publication metadata well curated.
+
+So, we have the Scopus corpus, and we then ran [a Kaggle competition](https://www.kaggle.com/c/coleridgeinitiative-show-us-the-data) to develop machine learning models to identify candidate snippets of text from scientific papers that seem like they might be referring to a dataset.
+
+Human researchers would then validate those snippets as either referring to a dataset or not, and once they've validated the publication-to-dataset dyad, we then pull in all the metadata associated with the publication: authors, institutions, key topics, publication year, countries, etc. – all this information gets piped over to the dashboards.
+
+**You published [a Harvard Data Science Review article about this competition a couple of years ago](https://hdsr.mitpress.mit.edu/pub/g6e8noiy/release/2), and from that I understand that you can actually get quite far with a simple string-matching method for finding datasets, but you would still miss a lot of citations using this approach because of the variability in the way people refer to datasets.**  
+That’s right. There were three different models that were developed, and each one picks up different aspects of how authors mention data in publications, and all three have been extremely useful. We learned a lot about the variety of ways in which researchers cite the data that they use.
+
+It turns out that more people do cite datasets in references than we had originally thought, but usually they don't cite a DOI, they cite the URL or they cite the exact name of the dataset, so string search of references and URLs pulls out quite a lot of information that the DOIs, *per se*, don't.
+
+**What are the next steps for scaling up the Democratizing Data work?**  
+I think it is more of a sociotechnical issue than a technical one. We have the plumbing, but really what we need to do is to figure out the incentives for researchers. We need to build a community around the data, which is what's happened with code and the sharing of code on platforms like GitHub.
+
+Obviously, our initial focus has been on federal statistical data, but there's also a lot of interest in how administrative data or streaming data are being used. 
+
+The advantage of starting with statistical data is that they have names. As we learn more about citation patterns, though, it may be that we don’t need precise names. What may happen is that the community starts converging on common terminologies for datasets. That happens in a lot of fields.
+
+At the moment, it feels a little bit like the Wild West. We're searching for ways to measure how datasets are used, how they're valued, and so on. Federal statistical data and Elsevier's Scopus have been a great starting point for us, but the broader vision is to incorporate other datasets and other publication databases like arXiv and Semantic Scholar. But all those other datasets that are out there, they need to be curated and documented in some way and that’s a huge task, so the solution has got to be community curation and sharing, right?
+
+If we don't build a community around the data, we're just going to have really bad information, really bad analysis, and really bad statistics on the value that our datasets – all these data assets – provide. My colleague [Nancy Potok gave a talk a couple of days ago](https://www.rti.org/event/rti-fellow-program-distinguished-lecture-series-democratizing-data) in which she said that our future depends on this -- and it really does.
+
+::: {.article-btn}
+[Find more Interviews](/the-pulse/interviews/index.qmd)
+:::
+
+::: {.further-info}
+::: grid
+::: {.g-col-12 .g-col-md-6}
+Copyright and licence
+: &copy; 2023 Royal Statistical Society
+
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Photo of Julia Lane is not included in this licence. 
+  
+:::
+
+::: {.g-col-12 .g-col-md-6}
+How to cite
+: Tarran, Brian. 2023. "Democratizing Data: Using natural language processing and machine learning to capture dataset usage." Real World Data Science, March 11, 2024. [URL](https://realworlddatascience.net/the-pulse/interviews/posts/2024/03/11/democratizing-data.html)
+:::
+:::
+:::

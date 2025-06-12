@@ -1,0 +1,257 @@
+---
+title: "A Christmas card in R for the Real World Data Science community"
+description: |
+  Inspired by Nicola Rennie's excellent tutorial on making Christmas cards with R, we've had a go at putting together our own design -- especially for you, the wonderful community of Real World Data Science readers and contributors. Thank you for supporting us this year!
+categories:
+  - R
+  - Data visualisation
+  - Updates
+author: Brian Tarran
+date: 12/12/2023
+toc: true
+image: images/rwds-christmas-card-thumb.png
+image-alt: Purple square with white snowflakes and green tree in foreground. Tree is decorated with red and gold baubles of various sizes.
+execute:
+  eval: false
+  echo: true
+  messages: false
+  error: false
+  warning: false
+aliases: 
+  - /viewpoints/editors-blog/posts/2023/12/12/rwds-xmas-card.html
+---
+
+A few weeks back, I managed to catch Nicola Rennie's presentation to the [Oxford R User Group on how to create Christmas cards in R](https://www.meetup.com/en-AU/oxford-r-user-group/events/297417319/). It was a fun session, and thanks to Nicola's  clear and concise explanations, I felt emboldened to attempt my own design, using her code as a base.
+
+If you missed the Meetup session, Nicola has kindly written [a tutorial for Real World Data Science](/foundation-frontiers/tutorials/posts/2023/12/12/xmas-cards.qmd) that walks through all the necessary steps to create a snowman against a snowy night's sky. You'll want to read that tutorial first before returning to this blog.
+
+My design uses the same basic setting as Nicola's but updates the scene to reflect the Real World Data Science (RWDS) brand colours, and I replace the snowman with a Christmas tree adorned with coloured baubles.
+
+## Snowy sky
+
+We begin by loading in the following packages, adding a couple extra to the ones Nicola uses:
+
+```r
+library(ggplot2)
+library(ggforce)
+library(sf)
+library(png)
+library(patchwork) 
+```
+
+Then we add the sky, now recoloured in RWDS purple using `fill` and `color`:
+
+```r
+s1 <- ggplot() +
+  theme_void() +
+  theme(
+    plot.background = element_rect(fill = "#939bc9", color = "#939bc9")
+  )
+s1
+```
+
+We use the same code as Nicola to create the snowflakes, but we do this step first before adding snow on the ground, as we're using the RWDS site background colour, hex code `#f0eeb`, to represent our settled snow:
+
+```r
+# add snowflakes
+set.seed(20231225)
+n <- 100
+snowflakes <- data.frame(
+  x = runif(n),
+  y = runif(n)
+)
+s2 <- s1 +
+  geom_point(
+    data = snowflakes,
+    mapping = aes(
+      x = x,
+      y = y
+    ),
+    colour = "white",
+    pch = 8
+  )
+s2
+
+# snow on ground
+s3 <- s2 +
+  annotate(
+    geom = "rect",
+    xmin = 0, xmax = 1,
+    ymin = 0, ymax = 0.2,
+    fill = "#f0eeeb", colour = "#f0eeeb"
+  ) +
+  xlim(0, 1) +
+  ylim(0, 1) +
+  coord_fixed(expand = FALSE)
+s3
+```
+
+:::{layout-ncol=2}
+![](images/s2.png){fig-alt="Purple square with white snowflakes."}
+
+![](images/s3.png){fig-alt="Purple square with white snowflakes and off-white rectangle at the bottom."}
+:::
+
+## Oh, Christmas tree
+
+To build her snowman, Nicola created a series of circles that were stacked and overlaid. A simple Christmas tree, though, requires a series of triangles. So, taking Nicola's snowman's nose (also a triangle) as our starting point, we coded three sets of coordinates -- `tree_pts1`, `tree_pts2`, and `tree_pts3` -- for three triangles of decreasing size that would sit on top of one another.
+
+```r
+# coordinates for tree base
+tree_pts1 <- matrix(
+  c(
+    0.2, 0.3,
+    0.5, 0.6,
+    0.8, 0.3,
+    0.2, 0.3
+  ),
+  ncol = 2,
+  byrow = TRUE
+)
+
+# coordinates for tree middle
+tree_pts2 <- matrix(
+  c(
+    0.3, 0.5,
+    0.5, 0.7,
+    0.7, 0.5,
+    0.3, 0.5
+  ),
+  ncol = 2,
+  byrow = TRUE
+)
+
+# coordinates for tree top
+tree_pts3 <- matrix(
+  c(
+    0.4, 0.65,
+    0.5, 0.75,
+    0.6, 0.65,
+    0.4, 0.65
+  ),
+  ncol = 2,
+  byrow = TRUE
+)
+
+# put tree together
+tree <- st_multipolygon(list(list(tree_pts1),
+                             list(tree_pts2),
+                             list(tree_pts3)))
+s4 <- s3 +
+  geom_sf(
+    data = tree,
+    fill = "chartreuse4",
+    colour = "chartreuse4"
+  ) +
+  coord_sf(expand = FALSE)
+s4
+```
+
+A tree also requires a trunk, so we borrowed one of the rectangles from Nicola's snowman's hat for this purpose:
+
+```r
+s5 <- s4+
+  annotate(
+    geom = "rect",
+    xmin = 0.45,
+    xmax = 0.55,
+    ymin = 0.2,
+    ymax = 0.3,
+    fill = "brown"
+  )
+s5
+```
+
+And, of course, no Christmas tree is complete without decorations. The "rocks" that formed the buttons and eyes on Nicola's snowman were updated to become gold and red baubles for our tree:
+
+```r
+# add gold baubles
+s6 <- s5 +
+  geom_point(colour = "gold",
+             data = data.frame(
+               x = c(0.3, 0.4, 0.5, 0.6, 0.57, 0.62, 0.45, 0.5),
+               y = c(0.325, 0.4, 0.45, 0.35, 0.57, 0.52, 0.6, 0.7),
+               size = runif(8, 2, 4.5)
+             ),
+             mapping = aes(x = x, y = y, size = size)
+  ) +
+  scale_size_identity()
+s6
+
+# add red baubles
+s7 <- s6 +
+  geom_point(colour = "red3",
+             data = data.frame(
+               x = c(0.7, 0.6, 0.5, 0.525, 0.43, 0.38, 0.55, 0.5),
+               y = c(0.375, 0.4, 0.55, 0.65, 0.43, 0.48, 0.5, 0.375),
+               size = runif(8, 2, 4.5)
+             ),
+             mapping = aes(x = x, y = y, size = size)
+  ) +
+  scale_size_identity()
+s7
+```
+
+:::{layout-ncol=3}
+![](images/s4.png){fig-alt="Purple square with white snowflakes and green tree in foreground."}
+
+![](images/s5.png){fig-alt="Purple square with white snowflakes and green tree in foreground, now with brown trunk at foot of tree."}
+
+![](images/s7.png){fig-alt="Purple square with white snowflakes and green tree in foreground. Tree is decorated with red and gold baubles of various sizes."}
+:::
+
+## Season's greetings
+
+The final step was to add text to the top of the image, wishing you all a Merry Christmas, and our logo to the bottom, so you know who the card is from:
+
+```r
+# add text
+s8 <- s7 +
+  annotate(
+    geom = "text",
+    x = 0.5,
+    y = 0.875,
+    label = "Merry Christmas",
+    colour = "red3",
+    fontface = "bold",
+    size = 18
+  )
+s8
+
+# add logo 
+path <- "images/rwds-logo-150px.png"
+img <- readPNG(path, native = TRUE) 
+s9 <- s8 +                   
+  inset_element(p = img, 
+                left = 0.3265, 
+                bottom = 0.0, 
+                right = 0.6735, 
+                top = 0.2
+  ) 
+s9
+```
+
+![](images/rwds-christmas-card.png){fig-align="center" fig-alt="Purple square with white snowflakes and green tree in foreground. Tree is decorated with red and gold baubles of various sizes. Text over tree reads Merry Christmas. Under tree is a logo for the Real World Data Science website."}
+
+I hope you like the Christmas card! From all of us at Real World Data Science, thank you for your support throughout 2023. Merry Christmas, happy holidays, and best wishes for 2024!
+
+
+::: {.article-btn}
+[Back to Editors' blog](/the-pulse/editors-blog/index.qmd)
+:::
+
+::: {.further-info}
+::: grid
+::: {.g-col-12 .g-col-md-6}
+Copyright and licence
+: &copy; 2023 Royal Statistical Society
+
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.
+
+:::
+::: {.g-col-12 .g-col-md-6}
+How to cite
+: Tarran, Brian. 2023. "A Christmas card in R for the Real World Data Science community." Real World Data Science, December 12, 2023. [URL](https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/12/12/rwds-xmas-card.html)
+:::
+:::
+:::

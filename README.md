@@ -91,7 +91,7 @@ Here you can see our four main content sections:
 - Case studies
 - Ideas
 - Careers
-- Viewpoints
+- The Pulse
 
 And then there is the "About RWDS" section, which links to those documents containing general information about the site.
 
@@ -180,7 +180,7 @@ listing:
     - /case-studies
     - /foundation-frontiers
     - /careers
-    - /viewpoints
+    - /the-pulse
     - "!index.qmd"
     sort: "date desc"
     type: grid
@@ -441,7 +441,7 @@ date: 04/01/2024 # date is in mm/dd/yyyy format
 And now it's time to...
 
 ## Update the homepage
-To update the RWDS homepage, we need to work with the `index.qmd` file in the root of the repository. As explained in our section on [index files](#index-files-and-listings), the RWDS homepage is essentially a collection of listings that pull from each of the main sections of the site - Case Studies, Ideas, Careers, and Viewpoints - and there's also a Latest Content listing that pulls in content from across all sections. We can see this reflected in the YAML of the `index.qmd` file:
+To update the RWDS homepage, we need to work with the `index.qmd` file in the root of the repository. As explained in our section on [index files](#index-files-and-listings), the RWDS homepage is essentially a collection of listings that pull from each of the main sections of the site - Case Studies, Ideas, Careers, and The Pulse - and there's also a Latest Content listing that pulls in content from across all sections. We can see this reflected in the YAML of the `index.qmd` file:
 
 ```yaml
 listing:
@@ -450,7 +450,7 @@ listing:
     - /case-studies
     - /foundation-frontiers
     - /careers
-    - /viewpoints
+    - /the-pulse
     - "!index.qmd"
     sort: "date desc"
     type: grid
@@ -496,9 +496,9 @@ listing:
     max-items: 3
     feed: false
 
-  - id: viewpoints
+  - id: the-pulse
     contents: 
-    - /viewpoints
+    - /the-pulse
     - "!index.qmd"
     sort: "date desc"
     type: grid
@@ -564,7 +564,7 @@ listing:
     - /case-studies
     - /foundation-frontiers
     - /careers
-    - /viewpoints
+    - /the-pulse
     - "!index.qmd"
     - "!report.qmd"
 ```
