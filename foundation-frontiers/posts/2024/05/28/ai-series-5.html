@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Julia Lane, Lesley Hirsch, and Adam Leonard">
+<meta name="dcterms.date" content="2024-05-28">
+<meta name="description" content="Expanding the deployment of Artificial Intelligence (AI) across various sectors has been widely touted as a significant threat to jobs but so far data to justify these fears or guide a response to them has been lacking. Julia Lane, Lesley Hirsch, and Adam Leonard look at an approach piloted in the US that may offer some insights.">
+
+<title>AI series: Meeting the unprecedented challenges AI poses in the labour market – Real World Data Science</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../">
+<link href="../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
+<script src="../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../site_libs/bootstrap/bootstrap-6cf018941c4e0f11d62ea116a4ebc572.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
+</script>
+<!-- Thank you to Ben Ruijl for the progress bar code!
+Ben is on GitHub here: https://github.com/benruijl
+And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
+
+<meta property="og:title" content="AI series: Meeting the unprecedented challenges AI poses in the labour market – Real World Data Science">
+<meta property="og:description" content="Expanding the deployment of Artificial Intelligence (AI) across various sectors has been widely touted as a significant threat to jobs but so far data to justify these fears or guide a response to them has been lacking. Julia Lane, Lesley Hirsch, and Adam Leonard look at an approach piloted in the US that may offer some insights.">
+<meta property="og:image" content="https://realworlddatascience.net/foundation-frontiers/posts/2024/05/28/images/Industry-of-ideas991-724.png">
+<meta property="og:site_name" content="Real World Data Science">
+<meta property="og:image:height" content="723">
+<meta property="og:image:width" content="989">
+<meta property="og:image:alt" content="The Industry of Ideas Infrastructure (provided by Jason Owen-Smith, IRIS, University of Michigan)">
+<meta name="twitter:title" content="AI series: Meeting the unprecedented challenges AI poses in the labour market – Real World Data Science">
+<meta name="twitter:description" content="Expanding the deployment of Artificial Intelligence (AI) across various sectors has been widely touted as a significant threat to jobs but so far data to justify these fears or guide a response to them has been lacking. Julia Lane, Lesley Hirsch, and Adam Leonard look at an approach piloted in the US that may offer some insights.">
+<meta name="twitter:image" content="https://realworlddatascience.net/foundation-frontiers/posts/2024/05/28/images/Industry-of-ideas991-724.png">
+<meta name="twitter:site" content="@rwdatasci">
+<meta name="twitter:image-height" content="723">
+<meta name="twitter:image-width" content="989">
+<meta name="twitter:image:alt" content="The Industry of Ideas Infrastructure (provided by Jason Owen-Smith, IRIS, University of Michigan)">
+<meta name="twitter:card" content="summary_large_image">
+</head><body class="nav-fixed quarto-light"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
+
+<script id="progressbar" type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const bar = document.querySelector('#progress-bar');
+    const post = document.querySelector('#quarto-content');
+    const html = document.documentElement;
+    
+    const height = post.scrollHeight + post.offsetTop;
+    
+    window.addEventListener('scroll', () => {
+        bar.style.width = (html.scrollTop / (height- html.clientHeight)) * 100 + '%';
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../rwds.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../case-studies/index.html"> 
+<span class="menu-text">Case studies</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../foundation-frontiers/index.html"> 
+<span class="menu-text">Foundation &amp; Frontiers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../people-paths/index.html"> 
+<span class="menu-text">People &amp; Paths</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../viewpoints/index.html"> 
+<span class="menu-text">Viewpoints</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About RWDS</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
+        <li>
+    <a class="dropdown-item" href="../../../../../about-rwds.html">
+ <span class="dropdown-text">Who we are</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../contributor-docs/call-for-contributions.html">
+ <span class="dropdown-text">How to contribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../CODE_OF_CONDUCT.html">
+ <span class="dropdown-text">Code of conduct</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../contact.html">
+ <span class="dropdown-text">Contact us</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">AI series: Meeting the unprecedented challenges AI poses in the labour market</h1>
+                  <div>
+        <div class="description">
+          <p>Expanding the deployment of Artificial Intelligence (AI) across various sectors has been widely touted as a significant threat to jobs but so far data to justify these fears or guide a response to them has been lacking. Julia Lane, Lesley Hirsch, and Adam Leonard look at an approach piloted in the US that may offer some insights.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">AI</div>
+                <div class="quarto-category">Data management</div>
+                <div class="quarto-category">Forecasting</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Julia Lane, Lesley Hirsch, and Adam Leonard </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">May 28, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#how-bad-is-the-problem" id="toc-how-bad-is-the-problem" class="nav-link active" data-scroll-target="#how-bad-is-the-problem">How bad is the problem?</a></li>
+  <li><a href="#a-new-approach" id="toc-a-new-approach" class="nav-link" data-scroll-target="#a-new-approach">A new approach</a></li>
+  <li><a href="#connecting-science-investments-with-jobs" id="toc-connecting-science-investments-with-jobs" class="nav-link" data-scroll-target="#connecting-science-investments-with-jobs">Connecting science investments with jobs</a></li>
+  <li><a href="#tying-information-about-ai-to-skills-needs" id="toc-tying-information-about-ai-to-skills-needs" class="nav-link" data-scroll-target="#tying-information-about-ai-to-skills-needs">Tying information about AI to skills needs</a></li>
+  <li><a href="#new-approaches-to-classifying-industries-industries-of-ideas" id="toc-new-approaches-to-classifying-industries-industries-of-ideas" class="nav-link" data-scroll-target="#new-approaches-to-classifying-industries-industries-of-ideas">New approaches to classifying industries: “Industries of Ideas”</a></li>
+  <li><a href="#the-future" id="toc-the-future" class="nav-link" data-scroll-target="#the-future">The Future</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/foundation-frontiers/posts/2024/05/28/ai-series-5.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>Roughly $280 billion of new funding was authorized to boost research and production of semiconductors in the US under the CHIPS and Science Act in 2022 - an amount greater than the inflation-adjusted initial spending to create the US Interstate Highway System. The legislation was just one of multiple acts engineered to subsidise and support emerging technologies in the US that are bound to have seismic impacts on the labor market. It signifies how swift changes in new and emerging technologies have the potential to profoundly change the demand for skills and the structure of work. Here AI has the potential to be more disruptive than any other technological development since the industrial revolution.</p>
+<p>The US is not alone. Countries across the globe are trying to understand the potential for AI to affect their workforce and economic activity. IPSOS, Group SA, a multinational market research company with headquarters in France, recently attempted to gauge people’s feelings towards AI across the world through a survey across 31 countries and interviews with a small cohort of AI leaders (<a href="https://www.ipsos.com/sites/default/files/ct/news/documents/2023-07/Ipsos%20Global%20AI%202023%20Report-WEB_0.pdf">Global Views on AI 2023</a>). However although extensive, the data retrieved shares the limitations common to all surveys. The OECD’s most recent <a href="https://www.oecd-ilibrary.org/sites/08785bba-en/index.html?itemId=/content/publication/08785bba-en">Employment Outlook</a> devotes six out of seven chapters to understanding the impact of AI on the workforce. But the OECD also notes that “No comprehensive method exists by which to track and compare AI R&amp;D funding across countries and agencies.” <a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> Not surprisingly, the inability to track, let alone compare AI R&amp;D funding, means that it is difficult to make predictions about the R&amp;D induced global labor market consequences.</p>
+<p>The lack of a comprehensive method, and the resultant uncertainty about impact, is a clarion call to action. There are many challenges that need to be addressed. A partial list would include the following: a) a lack of a common definition of AI; b) a lack of information about the needed AI capabilities and how they will change; c) mapping AI capabilities to occupational skillls; and d) an inability to measure the impact of AI on job replacement or job augmentation.</p>
+<p>Fortunately, there is hope, with new partnerships being established in the US by universities, federal, and state agencies. A new data infrastructure is being developed at the Institute for Research on Innovation and Science (IRIS) at the University of Michigan, joint with Ohio State University, in the United States, funded by the federal US National Science Foundation (NSF). The pilot joins up existing data using university and state sources to trace how scientific innovation translates to the labor market <a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. The NSF, which was been charged with the regional implementation of the CHIPS and Science investments, is funding the pilot precisely because it needs “innovative tools to accurately assess the impact of these investments across the U.S. <a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a></p>
+<section id="how-bad-is-the-problem" class="level2">
+<h2 class="anchored" data-anchor-id="how-bad-is-the-problem">How bad is the problem?</h2>
+<p>The lack of data results in conflicting information. Some reports have warned of apocalyptic takeovers of the job market for many professions. Indeed, a heavily cited report by Goldman Sachs <a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> predicted that AI could replace 300 million jobs. But the same BBC report that cited the Goldman Sachs prediction quoted the future-of-work director at Oxford University, Carl Benedikt Frey as saying “The only thing I am sure of is that there is no way of knowing how many jobs will be replaced by generative AI”. Simply put, as the former US Federal CIO, Suzette Kent, said “we lack useful information for informing strategic decisions for national workforce matters.”</p>
+<p>So just how much of a problem is it that there is no information on how investments in science and technology affect the labor market? Why should we worry if we cannot accurately predict the impact of AI on workers, firms, and jobs? One reason is to avoid the mistakes of the past, in which both workers and firms have borne the consequences of bad information. Just in recent history, digitization and globalization resulted in a devastating loss of jobs in many countries. And geographic inequality soared as jobs in the midwestern and northeastern urban centers were lost and a service economy on the coasts burgeoned. Efforts to reduce the loss of jobs and earnings came too little, too late <a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> <a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>. Another reason is to make evidence based policy recommendations. For example, the US National AI Research Resources Taskforce, which was directly charged by the President and Congress with recommending ways to invest in AI research to strengthen and democratize the U.S. AI innovation ecosystem did not have joined up data between science investment and the workforce to inform their final recommendations. <a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a></p>
+<p>In other words, governments need more timely, local, and actionable data so that they can understand changes in the tasks that employers need performed, which types of jobs and firms will be affected, and where. Concomitantly, data will be needed about the effects of AI on different population groups and different geographic areas so that the costs of change are not unfairly distributed. Armed with such information, policy makers can make investments that mitigate or counteract negative impacts and workers can be trained in the new necessary skills and matched with the firms that need them. But the swift pace of change in AI means that the urgency to create timely, local, and actionable labor market information to guide these investments has never been greater.</p>
+</section>
+<section id="a-new-approach" class="level2">
+<h2 class="anchored" data-anchor-id="a-new-approach">A new approach</h2>
+<p>The IRIS approach, called the “Industry of Ideas” builds on the “economics of ideas” framework for which Paul Romer received the 2018 Nobel Prize in Economics”. <a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a> <a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>. People who create ideas – new technologies – that can be reused, form the foundations of new industries. In other words, “the discovery of new ideas lie at center of economic growth…” (Charles Jones describing Paul Romer’s conceptual framework) <a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>.</p>
+<p>The project recognizes that, as Robert Oppenheimer said “the best way to transmit knowledge is to wrap it up in a human being”. <a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> It uses people-centric methods for following the movement of ideas from investments in research into the marketplace. The approach identifies businesses that employ people with deep skills in AI and other emerging technology areas and developing early, never-before-available indicators that can provide alerts associated with potential impacts on current and future workforce. Initially focused on the artificial intelligence and electric vehicle industries in Ohio, the pilot is creating a data system that can be expanded and applied to other industries and other states across the country.</p>
+<p>The new tools are innovative because they build on new opportunities to produce usable information that is local, about relevant industries, and that directly tie investments in new technologies, such as AI, to labor market impacts.</p>
+<p>Another key aspect of the NSF piloted “Industry of Ideas” is the focus on tying innovation at its source - individual data on university research activities - to the local workforce data reported by firms to their state departments of labor. The need for local data is critical because so many labor markets are local, not national in scope. Even in a global economy, many businesses and workers are locally based – as are the training providers that work to ensure that labor demand and supply are well matched. Thus the Industry of Ideas pilot provides policy makers, workers, firms, and educational institutions with access to an array of local, timely, granular, actionable resources to help them make decisions. That way, local leaders who need labor market data don’t need to rely on national unemployment figures, which are reported once a month.</p>
+</section>
+<section id="connecting-science-investments-with-jobs" class="level2">
+<h2 class="anchored" data-anchor-id="connecting-science-investments-with-jobs">Connecting science investments with jobs</h2>
+<p>The Industry of Ideas approach directly connects investment in science and the labor market, moving beyond the current approach for evaluating investment by studying scientific papers and publications <a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a> <a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a> which are disconnected from workers and jobs. The data seeds were sown almost two decades ago. President Bush’s Science Advisor, John Marburger III, who, quite sensibly was unconvinced of the scientific and practical value of relying primarily on document-based, bibliometric approaches to studying science to understand its practical effects, called for a “Science of Science Policy” <a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a> <a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>.</p>
+<p>The Industry of Ideas is testing the potential to securely combine university and state data to measure the link between federal investments on local and regional economies for AI. It uses people-centric data generated by the administrative processes at universities and firms. With this data the Industry of Ideas project can capture the organization of people in science at multiple levels (e.g.&nbsp;individuals, teams, projects, and institutions), their multiple sources of funding (federal scientific and programmatic agencies, philanthropic foundations, industry, and state and local government), inputs into science from vendors (such as computing services, instruments, biological specimens), as well as the dynamics of their careers across time (individual career earnings and employment trajectories).</p>
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The Industry of Ideas Infrastructure (provided by Jason Owen-Smith, IRIS, University of Michigan)" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/Industry-of-ideas991-724.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The Industry of Ideas Infrastructure (provided by Jason Owen-Smith, IRIS, University of Michigan)">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The Industry of Ideas Infrastructure (provided by Jason Owen-Smith, IRIS, University of Michigan)
+</figcaption>
+</figure>
+</div>
+<p>The IRIS infrastructure, developed over the past decade, provides administrative records on more than 41% of U.S. total R &amp; D spending at universities <a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a>. The infrastructure also provides links to survey data, as well as data from private sector suppliers <a href="#fn17" class="footnote-ref" id="fnref17" role="doc-noteref"><sup>17</sup></a>, and can trace the flows of university funded researchers into the private sector <a href="#fn18" class="footnote-ref" id="fnref18" role="doc-noteref"><sup>18</sup></a> by joining up the university administrative data with state workforce data.</p>
+</section>
+<section id="tying-information-about-ai-to-skills-needs" class="level2">
+<h2 class="anchored" data-anchor-id="tying-information-about-ai-to-skills-needs">Tying information about AI to skills needs</h2>
+<p>How is it possible to tie changes in AI to changing needs for skills? State leaders in workforce and education agencies have identified new ways to collaborate, build staff capacity, and develop solutions, services, and products that respond to local need. An example of how to use data to get better information that more accurately connects workers with firms in the swiftly changing labor market is the New Jersey Career Navigator. It provides job seekers recommendations on new careers, available job postings, and relevant training programs based on skills similarity, labor market demand, and wage impacts observed in the underlying data. These recommendations, which are in themselvers generated by AI, show how AI technology can be used to navigate the changes in the labour market AI may cause. The New Jersey Career Navigator draws on millions of wage records, providing earnings and industry information on all workers covered by unemployment insurance in New Jersey firms; employment and wage outcomes from hundreds of thousands of graduates of occupational skills training programs in New Jersey; several years of online job postings from the National Labor Exchange Research Hub (NLx); and the resumes of 400,000 New Jersey residents.</p>
+<p>In other words, as the Industry of Ideas pilot evolves, new ideas from states like New Jersey can be used not only to trace the flows of ideas from academia to the workplace but also to develop a new system that targets reskilling efforts once the type and location of skills needs have been identified. The new joined up data and evidence can be used to address challenges such as low labor force participation, and supplies education and training providers the data they need to align their programs with the needs of the labor market. Such a system would help government, business, educators, and workers adjust regional talent pipelines continuously in response to the changes in AI and enable workers to successfully navigate the changes that it brings.</p>
+</section>
+<section id="new-approaches-to-classifying-industries-industries-of-ideas" class="level2">
+<h2 class="anchored" data-anchor-id="new-approaches-to-classifying-industries-industries-of-ideas">New approaches to classifying industries: “Industries of Ideas”</h2>
+<p>An important outcome of the new NSF pilot is the potential to transform the way in which we classify firms into industries. The current industry classifications are rule based. They are designed for the economy as it was organized 40 years ago, so are not designed to describe AI. A case in point is the state of Texas – a state that anecdotally has generated a lot of high tech jobs. Current industry data for Texas is limited because firms are grouped into industries that are defined by what they produce, or how they produce it, rather than describing what new technology is being developed or utilized by those firms. As a result, the main source of labor market data in Texas provides an implausibly low picture of AI activity <a href="#fn19" class="footnote-ref" id="fnref19" role="doc-noteref"><sup>19</sup></a>.</p>
+<p>The Industries of Ideas approach could provide states with a new way to classify firms, based on clever new ideas of how firms can do their business, and by grouping firms by the people who created and use the technologies they will adopt <a href="#fn20" class="footnote-ref" id="fnref20" role="doc-noteref"><sup>20</sup></a>. Examples just for Ohio include funding to use AI to improve the ways in which medicine is delivered, and advancing digital agricuture , which includes things like precision livestock farming, or precision agriculture that reduces waste and improves productivity more generally. As they interact with farmers, the clustering of university researchers and the ideas embodied in them alongside the farms that adopt those ideas represents this new type of industry cluster . Such a classification framework is a sea change from earlier industrial classifications based on what goods are physically produced - like manufacturing and agriculture <a href="#fn21" class="footnote-ref" id="fnref21" role="doc-noteref"><sup>21</sup></a>.</p>
+</section>
+<section id="the-future" class="level2">
+<h2 class="anchored" data-anchor-id="the-future">The Future</h2>
+<p>Such a bottom-up classification and analysis system, based on local links between researchers and firms, could be designed locally but scaled nationally. It could address the challenges identified at the beginning of this piece. The definition of AI firms could evolve and be defined by the links between AI researchers and the firms with which they work. The lack of information about the needed AI capabilities would be resolved by the direct mapping of firm skill demand and their hiring patterns, as exemplified in New Jersey. The same New Jersey mapping could tie AI capabilities to occupational skills. And the direct impact of AI on job replacement or job augmentation could be mapped from the joined up university and workforce data.</p>
+<p>Of course, much needs to be done. The implementation will depend on the success of the pilot, and the ability to build on existing assets. Not all states and universities have the capacity to build a similar system, but the fact that 30 universities and 15 state agencies are participating in advisory boards for the NSF Industry of Ideas pilot is grounds for hope. Indeed, a new generation of data leaders is leading the way, not only at the local and regional government level but also at universities and professional associations (Advisory Committee on Data for Evidence Building) <a href="#fn22" class="footnote-ref" id="fnref22" role="doc-noteref"><sup>22</sup></a>.</p>
+<p>We began this paper by noting that the urgency to create timely, local, and actionable labor market information has never been greater. We close by arguing that our capacity to fundamentally change the way in which we can use data and information to understand the demand for skills and the structure of work has also never been greater. The opportunity is ours for the taking.</p>
+<!-- article text to go here -->
+<div class="article-btn">
+<p><a href="../../../../../foundation-frontiers/index.html">Explore more data science ideas</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+<strong>Julia Lane</strong> is a Professor at New York University’s Wagner Graduate School of Public Service. She was a senior advisor in the Office of the Federal CIO at the White House, supporting the implementation of the Federal Data Strategy. She recently served on two White House committees: the Advisory Committee on Data for Evidence Building and the National AI Research Resources Task Force.
+</dd>
+<dd>
+<p><strong>Adam Leonard</strong> is the Chief Analytics Officer &amp; Director of the Division of Information Innovation &amp; Insight (I|3) for the Texas Workforce Commission (TWC). Adam envisioned and founded I|3 to help TWC leverage its most important untapped resource - its data – to help the agency and its partners better help employers, individuals, families, and communities achieve &amp; maintain prosperity.</p>
+</dd>
+<dd>
+<p><strong>Lesley Hirsch</strong> is the Assistant Commissioner of Research and Information at the New Jersey Department of Labor and Workforce Development. Her vision for the department is to bring cutting-edge digital tools to bear to deliver labor market intelligence to the department’s internal and external customers where, when, and how they need it and to mine every data source so it can tell its full story.</p>
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<!-- copyright goes to the author, or to Royal Statistical Society if written by staff -->
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2024 Royal Statistical Society
+</dd>
+</dl>
+<!-- confirm licence terms with contributor before publishing - must be Creative Commons licence, but different types of CC licences might be preferred -->
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. <!-- Add thumbnail image credit and any licence terms here --></p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Lane, J., Hirsch, L. and Leonard, A. 2024. “Meeting the unprecedented challenges AI poses in the labour market.” Real World Data Science, May 28, 2024. <a href="https://realworlddatascience.net/foundation-frontiers/posts/2024/05/13/ai-series-5.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<!-- Make sure to update main site homepage (index.qmd) before publishing. See README for details. -->
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>A new approach to measuring government investment in AI-related R&amp;D. Galindo-Rueda, F. &amp; Cairns, S. <em>oecd.ai</em> (2021)<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p><a href="https://www.aei.org/research-products/report/the-industry-of-ideas-measuring-how-artificial-intelligence-changes-labor-markets/">The Industry of Ideas: Measuring How Artificial Intelligence Changes Labor Markets</a> Lane, J. AEI (2023)<a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p><a href="https://www.aei.org/research-products/report/the-industry-of-ideas-measuring-how-artificial-intelligence-changes-labor-markets/">NSF launches pilot to assess the impact of strategic investments on regional jobs</a> *new.nsf.gov (2023)<a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p><a href="https://www.bbc.co.uk/news/technology-65102150">AI could replace equivalent of 300 million jobs - report</a> Vallance, C. <em>BBC news</em> (2023)<a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p><a href="https://www.aeaweb.org/articles?id=10.1257/aer.103.5.1553">The Growth of Low-Skill Service Jobs and the Polarization of the US Labor Market</a> Autor, D. H. &amp; Dorn, D. <em>American Economic Review</em> <strong>103</strong> pp.&nbsp;1553-97 (2013)<a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p><a href="https://www.aeaweb.org/articles?id=10.1257/aer.104.8.2509">Explaining Job Polarization: Routine-Biased Technological Change and Offshoring</a> Goos, M., Manning, A. &amp; Salomons, A. <em>American Economic Review</em> <strong>104</strong> 2509-26 (2014)<a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p><a href="https://www.ai.gov/wp-content/uploads/2023/01/NAIRR-TF-Final-Report-2023.pdf">Strengthening and Democratizing the U.S. Artificial Intelligence Innovation Ecosystem</a> Office of Science and Technology Policy (2023)<a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p><a href="https://paulromer.net/deep_structure_growth/">The Deep Structure of Economic Growth</a> Romer, P. <em>paulromer.net</em> (2019)<a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p><a href="https://hdsr.mitpress.mit.edu/pub/zgu2u8y6/release/2">Interview With Paul Romer</a> Romer, P. &amp; Lane, J. (2022)<a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p><a href="https://onlinelibrary.wiley.com/doi/abs/10.1111/sjoe.12370">Paul Romer: Ideas, nonrivalry, and endogenous growth</a>(Jones, C. I. <em>The Scandinavian Journal of Economics</em> <strong>121</strong> 859-883 (2019)<a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p><a href="https://www.science.org/doi/10.1126/science.aac5949">Wrapping it up in a person: Examining employment and earnings outcomes for Ph.D.&nbsp;recipients</a> Zolas, N. <em>et al.</em> <em>Science</em> **350 1367-1371 (2015)<a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p><a href="https://www.nature.com/articles/464488a">Let’s make science metrics more scientific</a> Lane, J. <em>Nature</em> <strong>464</strong> 488–489 (2010)<a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p><a href="https://issues.org/democratizing-government-data-lane/">A Vision for Democratizing Government Data</a> Lane, J. <em>Issues in Science and Technology</em> <strong>XXXIX</strong> (2022)<a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p><a href="https://www.nature.com/articles/464488a">Let’s make science metrics more scientific</a> Lane, J. <em>Nature</em> <strong>464</strong> 488–489 (2010)<a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p><a href="https://www.science.org/doi/10.1126/science.1114801">Wanted: Better Benchmarks</a> Marburger III, J. H. <em>Science</em> <strong>308</strong> p1087(2005)<a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16"><p><a href="https://iris.isr.umich.edu/research-data/2022datarelease-summarydoc/">The Institute for Research on Innovation &amp; Science (IRIS). Summary Documentation for the IRIS UMETRICS 2022 Data Release</a> Nicholls, N., Brown, C. A., Ku, R. L. and Owen-Smith, J. D. <em>Ann Arbor, MI: The Institute for Research on Innovation &amp; Science</em> (2022) doi: 10.21987/df2a-ha30<a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn17"><p><a href="https://hdsr.mitpress.mit.edu/pub/u073rjxs/release/3">A Linked Data Mosaic for Policy-Relevant Research on Science and Innovation: Value, Transparency, Rigor, and Community</a> Chang, W.-Y., Garner, M., Basner, J., Weinberg, B. and Owen-Smith, J. <em>Harvard Data Science Review</em> (2022) doi: 10.1162/99608f92.1e23fb3f<a href="#fnref17" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn18"><p><a href="https://www.aei.org/research-products/report/the-industry-of-ideas-measuring-how-artificial-intelligence-changes-labor-markets/">The Industry of Ideas: Measuring How Artificial Intelligence Changes Labor Markets</a> Lane,J. <em>American Enterprise institute</em> (2023)<a href="#fnref18" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn19"><p>[Outside of the Box Use of Administra4ve and Wage Data in Texas] (https://digitaleconomy.stanford.edu/wp-content/uploads/2024/03/Adam-Leonard.pdf) Leonard, A. <em>digitaleconomy.standford.edu</em> (2024)<a href="#fnref19" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn20"><p><a href="https://www.aei.org/research-products/report/the-industry-of-ideas-measuring-how-artificial-intelligence-changes-labor-markets/">The Industry of Ideas: Measuring How Artificial Intelligence Changes Labor Markets</a> Lane,J. <em>American Enterprise institute</em> (2023)<a href="#fnref20" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn21"><p><a href="https://www.bea.gov/system/files/papers/P2007-7.pdf">Converting historical industry time series data from SIC to NAICS. The Federal Committee on Statistical Methodology</a> Yuskavage, R. <em>Federal Committee on Statistical Methodology</em> (2007)) – or by how services and goods are produced – like the delivery of health, financial, and investment services <a href="https://www.jstor.org/stable/23487551">The Statistics Corner: The NAICS Is Coming. Will We Be Ready?</a> Haver, M. A. <em>Business Economics</em> <strong>32</strong> 63-65 (1997)<a href="#fnref21" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn22"><p><a href="https://www.bea.gov/system/files/2022-10/supplemental-acdeb-year-2-report.pdf">Year 2 Report Supplemental Information</a> Advisory Committee on Data for Evidence Building (ACDEB) (2022)<a href="#fnref22" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/realworlddatascience\.net\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "realworlddatascience/realworlddatascience.github.io";
+    script.dataset.repoId = "R_kgDOILnnig";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDOILnnis4CSt2s";
+    script.dataset.mapping = "title";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><a href="../../../../../LICENCE.html">Copyright © 2024 Royal Statistical Society</a></p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/realworlddatascience">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience">
+<p><i class="ai  ai-zenodo ai-2xl"></i></p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/rwdatasci">
+      <i class="bi bi-twitter-x" role="img" aria-label="Twitter/X">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@rwdatasci">
+      <i class="bi bi-mastodon" role="img" aria-label="Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="../../../../../feeds.html">
+      <i class="bi bi-rss" role="img" aria-label="RWDS rss">
+</i> 
+    </a>
+  </li>  
+</ul>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/foundation-frontiers/posts/2024/05/28/ai-series-5.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p><a href="../../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

@@ -1,0 +1,844 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Anna Demming">
+<meta name="dcterms.date" content="2024-04-22">
+<meta name="description" content="AI has become a hot topic of debate but these discussions can circulate fears and fantasies more than a meaningful analysis of real world data. In this special issue we canvas the expertise of statisticians and data specialists to pin down the key issues, starting with what AI is, and what we do and don’t know about it.">
+
+<title>AI series: What is AI? Shedding light on the method and madness in these algorithms – Real World Data Science</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../">
+<link href="../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
+<script src="../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../site_libs/bootstrap/bootstrap-6cf018941c4e0f11d62ea116a4ebc572.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
+</script>
+<!-- Thank you to Ben Ruijl for the progress bar code!
+Ben is on GitHub here: https://github.com/benruijl
+And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
+
+<meta property="og:title" content="AI series: What is AI? Shedding light on the method and madness in these algorithms – Real World Data Science">
+<meta property="og:description" content="AI has become a hot topic of debate but these discussions can circulate fears and fantasies more than a meaningful analysis of real world data. In this special issue we canvas the expertise of statisticians and data specialists to pin down the key issues, starting with what AI is, and what we do and don’t know about it.">
+<meta property="og:image" content="https://realworlddatascience.net/foundation-frontiers/posts/2024/04/22/images/neuralnetworks.jpg">
+<meta property="og:site_name" content="Real World Data Science">
+<meta property="og:image:alt" content="A schematic of a neural network depicted with circles connected with lines or arrows.">
+<meta name="twitter:title" content="AI series: What is AI? Shedding light on the method and madness in these algorithms – Real World Data Science">
+<meta name="twitter:description" content="AI has become a hot topic of debate but these discussions can circulate fears and fantasies more than a meaningful analysis of real world data. In this special issue we canvas the expertise of statisticians and data specialists to pin down the key issues, starting with what AI is, and what we do and don’t know about it.">
+<meta name="twitter:image" content="https://realworlddatascience.net/foundation-frontiers/posts/2024/04/22/images/neuralnetworks.jpg">
+<meta name="twitter:site" content="@rwdatasci">
+<meta name="twitter:image:alt" content="A schematic of a neural network depicted with circles connected with lines or arrows.">
+<meta name="twitter:card" content="summary_large_image">
+</head><body class="nav-fixed quarto-light"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
+
+<script id="progressbar" type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const bar = document.querySelector('#progress-bar');
+    const post = document.querySelector('#quarto-content');
+    const html = document.documentElement;
+    
+    const height = post.scrollHeight + post.offsetTop;
+    
+    window.addEventListener('scroll', () => {
+        bar.style.width = (html.scrollTop / (height- html.clientHeight)) * 100 + '%';
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../rwds.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../case-studies/index.html"> 
+<span class="menu-text">Case studies</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../foundation-frontiers/index.html"> 
+<span class="menu-text">Foundation &amp; Frontiers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../people-paths/index.html"> 
+<span class="menu-text">People &amp; Paths</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../viewpoints/index.html"> 
+<span class="menu-text">Viewpoints</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About RWDS</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
+        <li>
+    <a class="dropdown-item" href="../../../../../about-rwds.html">
+ <span class="dropdown-text">Who we are</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../contributor-docs/call-for-contributions.html">
+ <span class="dropdown-text">How to contribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../CODE_OF_CONDUCT.html">
+ <span class="dropdown-text">Code of conduct</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../contact.html">
+ <span class="dropdown-text">Contact us</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">AI series: What is AI? Shedding light on the method and madness in these algorithms</h1>
+                  <div>
+        <div class="description">
+          <p>AI has become a hot topic of debate but these discussions can circulate fears and fantasies more than a meaningful analysis of real world data. In this special issue we canvas the expertise of statisticians and data specialists to pin down the key issues, starting with what AI is, and what we do and don’t know about it.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">AI</div>
+                <div class="quarto-category">algorithms</div>
+                <div class="quarto-category">statistics</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Anna Demming </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">April 22, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#demystifying-machine-learning" id="toc-demystifying-machine-learning" class="nav-link active" data-scroll-target="#demystifying-machine-learning">Demystifying machine learning</a></li>
+  <li><a href="#taking-the-world-by-storm" id="toc-taking-the-world-by-storm" class="nav-link" data-scroll-target="#taking-the-world-by-storm">Taking the world by storm</a></li>
+  <li><a href="#managing-expectations" id="toc-managing-expectations" class="nav-link" data-scroll-target="#managing-expectations">Managing expectations</a></li>
+  <li><a href="#explain-yourself" id="toc-explain-yourself" class="nav-link" data-scroll-target="#explain-yourself">Explain yourself</a></li>
+  <li><a href="#also-in-the-ai-series" id="toc-also-in-the-ai-series" class="nav-link" data-scroll-target="#also-in-the-ai-series">Also in the AI series</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/foundation-frontiers/posts/2024/04/22/ai-series-1.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<!-- article text to go here -->
+<p>What do <a href="https://www.simmons-simmons.com/en/publications/clq2gkar900fcu2ewb904uhrj/inappropriate-use-of-chatgpt-exposed-in-tax-case">defence cases in litigation</a>, statistical analyses, book summaries and a description of <a href="https://twitter.com/jimalkhalili/status/1621454981097209857/photo/1">Young’s double slit experiment in the manner of poet Robert Burns</a> have in common? They are all tasks that people have rightly or wrongly attempted to delegate to large language models.</p>
+<p>The playground of generative AI algorithms based on large language models extends well beyond the space of generating text-based language but includes creating images, videos and even music from prompts. The capabilities of these algorithms, and the ubiquity of tasks that large language models like OpenAI’s Generative Pre-trained Transformer (GPT) models can have a go at is striking. These large language models and the chatbots and so on based on them have also been catapulted into the centre of mainstream public attention with huge success – who has not heard of ChatGPT? The net result has been something akin to a feeding frenzy as individuals and businesses alike strive to be among the first to benefit from them.</p>
+<p>Like others, many data scientists closely familiar with these kinds of algorithms share some enthusiasm for their potential utility, but many also advocate an element of caution. There are some obvious caveats, including accuracy and cost – not just financially but also in terms of the huge energy costs to run these algorithms, a real world consequence that is affecting the planet in the present day but is often eclipsed by fears that AI might take over the world some time in the future. Another concern is security. Should you be sharing the information you are working from with a third party anyway? However, while a lot of attention has focused on what these algorithms can do, fewer have been asking what they actually do – what we know about the initial programming, the training data, the final algorithm and the range of possible outputs, all of which provide useful pointers as to whether a particular algorithm is appropriate for the task in hand, and how best to benefit from it.</p>
+<section id="demystifying-machine-learning" class="level2">
+<h2 class="anchored" data-anchor-id="demystifying-machine-learning">Demystifying machine learning</h2>
+<p>Definitions of artificial intelligence vary, often circling around the theme of a system reaching an “intelligent” decision or output based on multiple inputs, although how “intelligent” might be defined can be hairier still. Nonetheless, there is currently largely a consensus that some kind of machine learning is a route to achieving it. Through machine learning “you are letting the computer adjust the importance of its inputs, and their relationships, to determine an appropriate output” as Napier chief data scientist and chair of the Royal Statistical Society DS &amp; AI Section <a href="https://www.linkedin.com/in/janetbastiman/?originalSubdomain=uk">Janet Bastiman</a> describes it. The term “machine learning” was first proposed by IBM scientist Arthur Samuel in 1952, and it has largely been achieved by two approaches. One is “random forests”, based on constructing multiple decision trees. The other is the neural networks first devised by American psychologist Frank Rosenblatt and simulated at IBM in 1957. Here, a set of artificial neurons – components closer to a capacitor than a biological neuron – is connected to another layer of neurons, which is connected to another layer of neurons, and so on (Figure 1). Crucially the connections are strengthened or not through “learning” based on training data that allows the network to recognise patterns and extract meaningful features.</p>
+<div id="fig-neuralnetworks" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-neuralnetworks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/neuralnetworks.jpg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-neuralnetworks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: A <a href="https://commons.wikimedia.org/wiki/File:Visualizing_Artificial_Neural_Networks_%28ANNs%29_with_python_library-ANN_Visualizer.jpg">schematic of a neural network</a> depicted with circles connected with lines or arrows.
+</figcaption>
+</figure>
+</div>
+<p>“Machine learning is just like linear regression with tonnes of bells and whistles,” says <a href="https://www.danielawitten.com/">Daniela Witten</a>, professor of mathematical statistics at the University of Washington in the US, referring to a statistical method for fitting a line to a set of data points that dates back over a hundred years. There are many other traditional approaches to statistical learning that may be nonlinear and so on, but as an example of the “bells and whistles” Witten describes, whereas a traditional regression model might have 5 inputs or variables, the machine learning version might have 15 million, and instead of assuming it is linear the fit is allowed to be more flexible and so on. However, the fundamental statistical ideas underlying both sets of models are the same. For this reason, although some may beg to differ, she feels doing machine learning before you understand statistics is like trying to jump rope before you can walk. “It’s not that you can’t do it but why would you?” she adds.</p>
+<p>Broadly speaking, machine learning can be classified two ways. One is “supervised”, which means that the training data is somehow labelled, for instance with a known output collected from real world records. The alternative is “unsupervised” where the algorithm is set the task of finding a way to learn relationships between input data itself. There are also neural network approaches that fall somewhere between the two, such as reinforcement learning where an algorithm may generate outputs for a task at random such that its performance is initially poor but improves with feedback to reinforce generation of outputs that are closer to those desired. An approach that enjoyed great popularity for a time used another machine learning algorithm to provide this feedback, which would initially also be a poor judge but improve as pitted against the algorithm learning to do the task – generative adversarial networks (<a href="https://proceedings.neurips.cc/paper_files/paper/2014/file/5ca3e9b122f61f8f06494c97b1afccf3-Paper.pdf">GANs</a>). GANs are still used a lot, but usually in a pipeline and may be pre-trained so they are not starting from scratch like they used to.</p>
+<p>As the number of layers increased from just a few, the term “deep learning” was adopted along with alternative structures. The first models operated with every neuron in each layer connected to every neuron in the previous layer. “This is very wasteful because not every part of your input relates to each other that much,” says <a href="https://petar-v.com/">Petar Veličković</a>, staff research scientist at Google DeepMind and affiliated lecturer at the University of Cambridge. He cites images as among the first scenarios where people began to implement a tweak to the approach in what is called a convolutional neural network. Based on the assumption that the pixels for each object in an image sit adjacent to each other rather than at opposing corners of the image, the neurons in a convolutional neural network connect only with the neurons in the next layer that are nearby in the image space. In this way the convolutional neural network assumes a kind of structure in the input data – that the image is contiguous, so the pixels for edges and so on are in contact.</p>
+<div id="fig-Attentionfigure2" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-Attentionfigure2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/Attentionfigure2.jpg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-Attentionfigure2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Schematics for (left) Scaled Dot-Product Attention and (right) Multi-Head Attention, which consists of several attention layers running in parallel.
+</figcaption>
+</figure>
+</div>
+<p>“Transformers are also a neural network but they encode a different kind of structure,” Veličković tells Real World Data Science, as he describes the data architecture at the heart of the large language models creating such a buzz at present. Language has structure too – the letters make up words, which then make up sentences and so on. So it makes sense to program some of that structure into the algorithm rather than leaving it to work it all out. “You would need a lot more training data than there is on the internet to train a system without such structure by itself,” adds Veličković. Transformers structure the training data into tokens, and a key component first reported in 2017 is the way each token then connects with or <a href="https://papers.nips.cc/paper_files/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html">“attends” to all other similar tokens</a> . Here whether they are “similar” is determined by their dot products, a multiplication technique for the kind of vector format of input numbers used for these tokens (Figure 2). Exploiting this “dot product attention” significantly improves the efficiency of the training process.</p>
+</section>
+<section id="taking-the-world-by-storm" class="level2">
+<h2 class="anchored" data-anchor-id="taking-the-world-by-storm">Taking the world by storm</h2>
+<p>The transformer architecture proved very powerful as has been seen in the surge to prominence of various AI systems based on generative pre-trained transformer algorithms, such as ChatGPT, BERT and PaLM, although this likely has at least as much to do with the marketing of the recent releases as it does with the algorithm itself. “It was a small evolution rather than a revolution,” says Bastiman in reference to recent GPT releases, explaining that there was an increase in parameter size and the amount of data used for training that gave rise to something that could provide broader answers and was ready for mass market. Nonetheless she adds, “There had been GPT2, GPT1 and all the other previous ones had been released quietly and had all been quite good.”</p>
+<p>The marketing spin has not stopped with the product releases as terms like “<a href="https://realworlddatascience.net/viewpoints/editors-blog/posts/2022/11/23/LLM-content-warning.html">hallucination</a>” have entered the lexicon to describe instances when the output is wrong and potentially dangerous. (Figure 3) “The language we are using to describe these models is different to how we describe human intelligence to deliberately instil the sense this is better,” adds Bastiman. “So even if the model is incorrect these terms imply that it is still doing something amazing.”</p>
+<div id="fig-hallucinatedreferences" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hallucinatedreferences-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/hallucinatedreferences.jpg" class="img-fluid figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hallucinatedreferences-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: “Hallucinated” references. A study found that out of the 178 references cited by ChatGPT, 69 did not have a DOI. Upon extensive internet search, 41 out of these 69 reference articles were found to exist.
+</figcaption>
+</figure>
+</div>
+<p>The success of this marketing does have its advantages as Veličković points out, thrusting AI in the spotlight, inviting people to try the algorithms, which thanks to a growth in web-based user interfaces like ChatGPT can reach a much broader audience. This is not only encouraging developers they are doing something potentially useful but prompting important discussions around the potential bias and ethics issues, which many would argue ought to be considered before anything else. Nonetheless Veličković also doubts whether the current AI fanfare can be attributed to advances in the algorithms they use alone, pointing out that neural networks have been around since the 1950s, and the 1980s and 1990s saw the invention of most of the building blocks we need to scale such systems up: the backpropagation algorithm, convolutional and recurrent neural networks, long-short term memory networks, and early variants of linear self-attention and graph neural networks. “It’s just that we needed gamers,” he tells <em>Real World Data Science</em>, suggesting that hardware and engineering have been key to the recent successes of AI. “We needed people to drive the development of graphics cards which are really good hardware for training these things.”</p>
+<p>Clearly advances in processing power and the hardware such as GPUs to manage it so that it is possible to compute these algorithms massively affects their potential impact. Although the field no longer relies on GPUs developed for gamers, GPUs are still widely used, as they offer such a good return on investment and are easier to get hold of than alternatives like tensor processing units. Certainly a significant development over the past decade or so is the increase in size of not just the data sets but the algorithms themselves. Implementing algorithms at such colossal scales that require data centres imposes incredibly challenging requirements on the hardware and the electrical and computational engineering involved to set them running and keep them from failure. “When you have a data centre, failure is a common thing,” says Veličković, listing multiple vulnerabilities that balloon at scale such as hardware failures, electrical failures, even apparently exotic events like solar flares can flip bits and scramble data leading to nonsense output. “People underestimate this but good engineering is now the bread and butter of how these systems work.”</p>
+</section>
+<section id="managing-expectations" class="level2">
+<h2 class="anchored" data-anchor-id="managing-expectations">Managing expectations</h2>
+<p>The explosion in scale has also created fundamental distinctions from how people work with machine learning algorithms versus statistical methods. Witten highlights “the ability to gauge uncertainty” by quantifying parameters such as confidence intervals and error bars as a key contribution of statistics. “Often with these machine learning models things get very complicated and we do not yet have a way to quantify that uncertainty.”</p>
+<p>This quantifying of finite parameters contrasts with the kind of output achieved with the generative AI applications that have grabbed media focus recently. For instance, asking a large language model to describe Young’s double slit experiment in the style of Robert Burns may sound quite a specific prompt, and it may seem impressive if the algorithm returns something akin to what was asked, but the number of possible responses that could be deemed “correct” are infinite. A lot of applications of generative AI – many with more real world impact than describing iconic experiments in archaic scotch rhyme – similarly have a vast set of reasonable outputs.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/Gamers.jpg" class="img-fluid figure-img"></p>
+<figcaption>Gamers drove the development of GPUs which have proven invaluable for training machine learning algorithms</figcaption>
+</figure>
+</div>
+<p>“We shouldn’t be surprised if ChatGPT does well with a question that has a million reasonable answers,” says Witten, contrasting these scenarios with questions that she suggests might have more real-world importance, like whether a patient with breast cancer will respond to a particular treatment. “Actually ChatGPT often gets into trouble if there is a problem with just one answer, and that answer is not part of the training set.”</p>
+<p>For predictive AI there is often only one useful answer – the outcome that will come to pass. This has implications if machine learning is used for predictions, particularly if it is in real world settings that affect real people. “If you are deploying an AI model for some healthcare application like what breast cancer treatment you are going to respond best to, we really better make sure that the model works, and that we understand the uncertainty of those predictions,” says Witten. She feels that over the past few years, the machine learning community has increasingly recognized the importance of bringing statistical thinking to bear within the context of complex machine learning/AI algorithms: in particular, interpretability and uncertainty quantification have become major areas of interest in machine learning. Witten suggests that statistics is making progress here citing as an example conformal inference, “which allows recalibration of the predictions of a machine learning model in order to quantify uncertainty appropriately.”</p>
+</section>
+<section id="explain-yourself" class="level2">
+<h2 class="anchored" data-anchor-id="explain-yourself">Explain yourself</h2>
+<p>Understanding the uncertainties of output is one thing, but many of these algorithms have now reached the kind of scale that totally obfuscates what they are doing with the input data to reach their outputs. There may be specialists who understand how they are programmed but there are just too many variables to track so that even for them, the final process the algorithm lands on for generating its output from the various inputs is a black box with no neat mathematical description, unlike statistical techniques like regression.</p>
+<p>“You can draw a picture with circles and arrows, and arrows cross in a certain way, but you don’t have a clear idea of how one feature that you started with maps to the output,” says Witten. “On an actual quantitative level of scientific understanding we don’t have that.” If decisions are being made for and about people based on AI, people will also sometimes want to know how that conclusion was drawn. “When we want to make decisions there’s a level of deferred trust,” says Bastiman citing a <a href="https://www.turing.ac.uk/research/research-projects/project-explain#:~:text=This%20gap%20in%20AI%20explainability,robust%2C%20reliable%2C%20and%20safe">work by the Alan Turing Institute</a> that began in the late 2010s. “We as humans want explanations from machines in the same scenarios that we want them from humans but that’s not going to be the same for all people.” For example, a person who has had a bad experience in the past will need more convincing than one who has not. Janet suggests that a very normal cognitive bias can be generalised as most people wanting more explanation if the model output is not in their favour. “Similarly, a person accepted for a job where AI is used, may not require any explanation, while another candidate the AI rejected may challenge the decision and want to know why.”</p>
+<p>Hybrid implementations including a human in the loop may help to a degree. However, to get a handle on the workings of the algorithm itself, Bastiman points out that it is possible to introduce layers in the algorithm that will help extract how the output is reached even for unsupervised neural networks. “That’s where a lot of effort goes from data scientists and machine learning engineers to make sure the model has that level of transparency and makes sense,” she adds, emphasising the need to ensure a model has these features before it is released and put in use. The process is far from straightforward as the explanation needs to be at the right level and with the right terminology for a range of audiences, be they data scientists, quality assurance professionals, decision makers, end users or impacted individuals. “People say you can’t explain things when what they really mean is that it’s difficult.”</p>
+<p>Veličković suggests a lot could be gained in terms of being able to analyse AI algorithms by marrying them with elements of classical algorithms, which are “nicely implemented and interpretable.” Classical algorithms are also impervious to changes in the input data such as an increase by a factor of 10, which can completely throw an algorithm based on machine learning. “The problem is they are trained to be really useful and give you an answer at all times so they won’t even give you a confidence estimate, they will just try to answer even if the answer is completely broken,” he adds. A lot of his research has focused on “<a href="https://www.sciencedirect.com/science/article/pii/S2666389921000994">out-of-distribution generalisation</a>” – the way classical algorithms work with any input data – to see how these features might be sewn into AI to extract the best of both worlds. “There’s a lot of research to be done still but our findings so far indicate that if you want out-of-distribution generalisation you need to look at what makes your problem special and put some of those properties inside your neural network model.”</p>
+<p>Even what we know about the way the algorithm reaches a decision has caused concern when it comes to critical real-world applications – for example, <a href="https://www.bu.edu/articles/2023/do-algorithms-reduce-bias-in-criminal-justice/">to determine the likelihood that someone convicted of a crime will reoffend</a>. (More on this to come in the special issue article on ethics). With many commercial algorithms the details of the training data are unknown or essentially constitute the whole internet, which as Witten points out is “a pretty bad place a lot of the time.” While ChatGPT may seem an unlikely choice for anything like gauging risk for recidivism or cancer treatments, concerns remain over biases propagating in AI generated content we might consume through marketing campaigns and other activities. “Even just thinking about deploying AI/machine learning models in critical real-world settings without the associated statistical understanding is just very deeply problematic,” says Witten, emphasising the importance of not just statisticians but also ethicists for tackling these challenges.</p>
+<p>The fact is many of us are already interacting with multiple machine learning/AI models on a daily basis through recommendations, search engines and predictive text. “If we are going to deploy these [machine learning algorithms] at scale in a way that will affect human lives, then we first need to understand the implications for humans of these models,” says Witten. “This includes both statistical and ethical considerations.”</p>
+<p>Coming up: Forthcoming articles in this special issue will look at machine learning and human-level intelligence, issues around data, techniques for evaluation, gauging workforce impact, governance, best practice and living with AI</p>
+</section>
+<section id="also-in-the-ai-series" class="level2">
+<h2 class="anchored" data-anchor-id="also-in-the-ai-series">Also in the AI series</h2>
+<p><a href="https://realworlddatascience.net/foundation-frontiers/posts/2024/04/29/gen-ai-human-intel.html">Generative AI models and the quest for human-level artificial intelligence</a> <a href="https://realworlddatascience.net/foundation-frontiers/posts/2024/05/07/ai-series-3.html">datasets for optimised AI performance</a></p>
+<div class="article-btn">
+<p><a href="../../../../../foundation-frontiers/index.html">Explore more data science ideas</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+<strong>Anna Demming</strong> is a freelance science writer and editor based in Bristol, UK. She has a PhD from King’s College London in physics, specifically nanophotonics and how light interacts with the very small, and has been an editor for Nature Publishing Group (now Springer Nature), IOP Publishing and New Scientist. Other publications she contributes to include The Observer, New Scientist, Scientific American, Physics World and Chemistry World.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<!-- copyright goes to the author, or to Royal Statistical Society if written by staff -->
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2024 Anna Demming
+</dd>
+</dl>
+<!-- confirm licence terms with contributor before publishing - must be Creative Commons licence, but different types of CC licences might be preferred -->
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. <!-- Add thumbnail image credit and any licence terms here -->Thumbnail image courtesy of Serenechan3 reproduced under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a></p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Demming Anna. 2024. “What is AI? Shedding light on the method and madness in these algorithms .” Real World Data Science, April 22, 2024. <a href="https://realworlddatascience.net/foundation-frontiers/posts/2024/04/22/ai-series-1.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<!-- Make sure to update main site homepage (index.qmd) before publishing. See README for details. -->
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/realworlddatascience\.net\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "realworlddatascience/realworlddatascience.github.io";
+    script.dataset.repoId = "R_kgDOILnnig";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDOILnnis4CSt2s";
+    script.dataset.mapping = "title";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><a href="../../../../../LICENCE.html">Copyright © 2024 Royal Statistical Society</a></p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/realworlddatascience">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience">
+<p><i class="ai  ai-zenodo ai-2xl"></i></p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/rwdatasci">
+      <i class="bi bi-twitter-x" role="img" aria-label="Twitter/X">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@rwdatasci">
+      <i class="bi bi-mastodon" role="img" aria-label="Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="../../../../../feeds.html">
+      <i class="bi bi-rss" role="img" aria-label="RWDS rss">
+</i> 
+    </a>
+  </li>  
+</ul>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/foundation-frontiers/posts/2024/04/22/ai-series-1.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p><a href="../../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

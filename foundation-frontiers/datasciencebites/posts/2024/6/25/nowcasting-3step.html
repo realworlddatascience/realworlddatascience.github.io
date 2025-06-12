@@ -1,0 +1,813 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Atmajitsinh Gohil">
+<meta name="dcterms.date" content="2024-06-25">
+<meta name="description" content="Atmajitsinh Gohil describes a recently devised 3 step framework that improves the accuracy of nowcasting.">
+
+<title>Nowcasting upgrade for better real time estimation of GDP and inflation – Real World Data Science</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../../">
+<link href="../../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
+<script src="../../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../../site_libs/bootstrap/bootstrap-6cf018941c4e0f11d62ea116a4ebc572.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
+</script>
+<!-- Thank you to Ben Ruijl for the progress bar code!
+Ben is on GitHub here: https://github.com/benruijl
+And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
+
+<meta property="og:title" content="Nowcasting upgrade for better real time estimation of GDP and inflation – Real World Data Science">
+<meta property="og:description" content="Atmajitsinh Gohil describes a recently devised 3 step framework that improves the accuracy of nowcasting.">
+<meta property="og:image" content="https://realworlddatascience.net/foundation-frontiers/datasciencebites/posts/2024/6/25/images/GDPshutterstock_2302082265-991.jpg">
+<meta property="og:site_name" content="Real World Data Science">
+<meta property="og:image:alt" content="Growth of GDP with statistical graph, 3d rendering. Digital drawing. Credit: Shutterstock, Vink Fan">
+<meta name="twitter:title" content="Nowcasting upgrade for better real time estimation of GDP and inflation – Real World Data Science">
+<meta name="twitter:description" content="Atmajitsinh Gohil describes a recently devised 3 step framework that improves the accuracy of nowcasting.">
+<meta name="twitter:image" content="https://realworlddatascience.net/foundation-frontiers/datasciencebites/posts/2024/6/25/images/GDPshutterstock_2302082265-991.jpg">
+<meta name="twitter:site" content="@rwdatasci">
+<meta name="twitter:image:alt" content="Growth of GDP with statistical graph, 3d rendering. Digital drawing. Credit: Shutterstock, Vink Fan">
+<meta name="twitter:card" content="summary_large_image">
+</head><body class="nav-fixed quarto-light"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
+
+<script id="progressbar" type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const bar = document.querySelector('#progress-bar');
+    const post = document.querySelector('#quarto-content');
+    const html = document.documentElement;
+    
+    const height = post.scrollHeight + post.offsetTop;
+    
+    window.addEventListener('scroll', () => {
+        bar.style.width = (html.scrollTop / (height- html.clientHeight)) * 100 + '%';
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../../rwds.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../case-studies/index.html"> 
+<span class="menu-text">Case studies</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../foundation-frontiers/index.html"> 
+<span class="menu-text">Foundation &amp; Frontiers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../people-paths/index.html"> 
+<span class="menu-text">People &amp; Paths</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../viewpoints/index.html"> 
+<span class="menu-text">Viewpoints</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About RWDS</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
+        <li>
+    <a class="dropdown-item" href="../../../../../../about-rwds.html">
+ <span class="dropdown-text">Who we are</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../../contributor-docs/call-for-contributions.html">
+ <span class="dropdown-text">How to contribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../../CODE_OF_CONDUCT.html">
+ <span class="dropdown-text">Code of conduct</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../../contact.html">
+ <span class="dropdown-text">Contact us</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Nowcasting upgrade for better real time estimation of GDP and inflation</h1>
+                  <div>
+        <div class="description">
+          Atmajitsinh Gohil describes a recently devised 3 step framework that improves the accuracy of nowcasting.
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Forecasting</div>
+                <div class="quarto-category">Machine learning</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Atmajitsinh Gohil </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">June 25, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#model-framework-improved-flexibility-and-accuracy" id="toc-model-framework-improved-flexibility-and-accuracy" class="nav-link active" data-scroll-target="#model-framework-improved-flexibility-and-accuracy">Model framework improved flexibility and accuracy:</a></li>
+  <li><a href="#whats-next" id="toc-whats-next" class="nav-link" data-scroll-target="#whats-next">What’s Next?</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/foundation-frontiers/datasciencebites/posts/2024/6/25/nowcasting-3step.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>Governments, policymakers and central banks across the world are wrestling to keep rising prices under control using monetary policies such as interest rate increases. The effectiveness of such policy changes should be assessed by monitoring inflation data as well as studying the impact on real GDP, making timely and accurate access to key economic indicators crucial for policy planning. The delay in publishing economic indicators such as Real GDP, inflation and other labour related series, makes this real time assessment of the economy particularly challenging. Now Menzie Chinn at the University of Wisconsin, Baptiste Meunier at the European Central Bank and Sebastian Stumpner at the Banque de France report an approach for “nowcasting” built on previous research that develops a framework using different machine learning techniques and is flexible and adaptable compared with traditional methods<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. They report on the accuracy of their 3-step framework for nowcasting global trade volume estimates, showing how it can outperform traditional methods. They also highlight that the 3-step framework can be extended beyond World Trade data.</p>
+<p>Nowcasting, an amalgamation of the term now and forecasting, provides a methodology to assess the current state of the economy by predicting the current value of inflation or Real GDP. The <a href="https://www.newyorkfed.org/research/policy/nowcast#/overview">Federal Reserve Bank of New York</a> and <a href="https://www.atlantafed.org/cqer/research/gdpnow">Federal Reserve Bank of Atlanta</a> have used nowcasting to publish real time GDP estimates, for the USA. Similarly, the <a href="https://www.clevelandfed.org/indicators-and-data/inflation-nowcasting">Federal Reserve Bank of Cleveland estimates real time inflation</a> using nowcasting methods.</p>
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="GDP digital drawing. Credit: Shutterstock, Vink Fan" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/GDPshutterstock_2302082265-991.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="GDP digital drawing. Credit: Shutterstock, Vink Fan">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Growth of GDP with statistical graph, 3d rendering. Digital drawing. Credit: Shutterstock, Vink Fan
+</figcaption>
+</figure>
+</div>
+<p>The basic principle of nowcasting is utilising information that is published early such as using data published at higher frequency, survey data, financial indicators or economic indicators. For example, the running estimate of Real GDP (aka GDPNow) that the Federal Reserve Bank of Atlanta provides is updated 6 or 7 times a month on weekdays when one of the 7 input data sources are released. Similarly, the real GDP growth estimate that the Federal Reserve Bank of New York provides is based on data releases in categories such as housing and construction, manufacturing, surveys, retail and consumption, income, labour, international trade, prices and others.</p>
+<p>The traditional methods of nowcasting do not provide an integrated framework, and forecasters need to know which variables to use, and select a method for factor extraction and machine learning regression. Chinn, Meunier and Stumpner propose a sequential framework that selects the most important predictors. The selected variables are then summarized using Principal Component Analysis (PCA) and these factors are used as explanatory variables to perform the regression. Although traditional methods of nowcasting also utilized many of these techniques, the authors test various combinations of pre-selection, factor extraction and regression techniques and propose a combination that improves model accuracy.</p>
+<section id="model-framework-improved-flexibility-and-accuracy" class="level2">
+<h2 class="anchored" data-anchor-id="model-framework-improved-flexibility-and-accuracy">Model framework improved flexibility and accuracy:</h2>
+<p>The 3 steps in the framework are chronological steps to be performed in which the first step is pre-selection of the independent variables with the highest predictive power. The independent variables from the first step are then summarised into a few factors using factor extraction methodology in the second step. The final step consists of using the factors from step 2 to perform regression.</p>
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research." data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/3step-framework-methods-big.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-2" class="quarto-xref">Figure&nbsp;2</a> summarises the various methods employed at each step in the 3 step framework. In their report Chinn, Meunier and Stumpner aim to propose the best techniques for pre-selection, factor extraction and regression. As such their 3-step framework comprises performing pre-selection using Least Angle Regression (LARS), factor extraction using Principal Component Analysis (PCA) and employing a Macroeconomic Random Forest (MRF) machine learning technique for nowcasting.</p>
+<p>The model performance or accuracy of MRF is compared with traditional methods using Root Mean Square Error (RMSE), a measure of the deviation between the actual data and the predicted data. The 3-step framework model accuracy is tested by holding the preselection and factor extraction fixed to isolate the impact of regression techniques.</p>
+<div id="fig-3" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research." data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/method-accuracy-big.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research.
+</figcaption>
+</figure>
+</div>
+<p><a href="#fig-3" class="quarto-xref">Figure&nbsp;3</a> compares the RMSE of traditional methods, machine learning tree and machine learning regression model for backcasting (t-2 and t-1), nowcasting (t) and forecasting (t+1). It highlights the greater model accuracy of MRF and Gradient Boosting compared with traditional models and tree models for backcasting, nowcasting and forecasting.</p>
+</section>
+<section id="whats-next" class="level2">
+<h2 class="anchored" data-anchor-id="whats-next">What’s Next?</h2>
+<p>Organisations such as <a href="https://nowcastinglab.org/map">The Nowcasting Lab</a> provide GDP estimates for European countries. Such nowcasting techniques have been employed by humanitarian agencies including the United Nations Refugee Agency (UNHCR) which uses nowcasting to estimate the actual forced displaced population. The nowcasting techniques, dashboards and tools have been implemented and accepted as a reliable source of information at government organisations for policy making, central banks, and financial organisations. The 3-step framework, proposed by Chinn, Meunier and Stumpner, is easily adaptable, flexible and provides higher accuracy, which will be valuable to a range of fields employing nowcasting.</p>
+<div class="article-btn">
+<p><a href="../../../../../../foundation-frontiers/index.html">Explore more data science ideas</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author</dt>
+<dd>
+<strong>Atmajitsinh Gohil</strong> is an independent researcher in the field of AI and ML, specifically managing AI and ML risk. He has worked with consulting firm assisting clients in model risk management. He has graduated from SUNY, Buffalo with a M.S. in Economics.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2024 Atmajitsinh Gohil
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> Text, code, and figures are licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>, except where otherwise noted. Thumbnail image by <a href="https://www.shutterstock.com/image-illustration/growth-gdp-statistical-graph-3d-rendering-2302082265">Shutterstock Van Fink</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Gohil, Atmajitsinh. 2024. “Nowcasting upgrade for better real time estimation of GDP and inflation.” Real World Data Science, June 25, 2024. <a href="https://realworlddatascience.net/foundation-frontiers/posts/2024/06/25/nowcasting-3step.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">References</h2>
+
+<ol>
+<li id="fn1"><p>Nowcasting World Trade with Machine Learning: a Three-Step Approach Chinn, M. D., Meunier, B. &amp; Stumpner, S. <em>NBER</em> <a href="https://www.nber.org/papers/w31419">DOI 10.3386/w31419</a>) <a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<a href="../../../../../../foundation-frontiers/datasciencebites/index.html"> <img src="../../../../../../foundation-frontiers/datasciencebites/datasciencebites-logo.png" alt="DataScienceBites logo. A dark grey circle with bite marks cut out. Overlaid text says, Import grad_students as writers, import new_research_papers as nrp, print(writers + nrp) and the title DataScienceBites." class="dsb"></a>
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/realworlddatascience\.net\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "realworlddatascience/realworlddatascience.github.io";
+    script.dataset.repoId = "R_kgDOILnnig";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDOILnnis4CSt2s";
+    script.dataset.mapping = "title";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><a href="../../../../../../LICENCE.html">Copyright © 2024 Royal Statistical Society</a></p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/realworlddatascience">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience">
+<p><i class="ai  ai-zenodo ai-2xl"></i></p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/rwdatasci">
+      <i class="bi bi-twitter-x" role="img" aria-label="Twitter/X">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@rwdatasci">
+      <i class="bi bi-mastodon" role="img" aria-label="Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="../../../../../../feeds.html">
+      <i class="bi bi-rss" role="img" aria-label="RWDS rss">
+</i> 
+    </a>
+  </li>  
+</ul>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/foundation-frontiers/datasciencebites/posts/2024/6/25/nowcasting-3step.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p><a href="../../../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

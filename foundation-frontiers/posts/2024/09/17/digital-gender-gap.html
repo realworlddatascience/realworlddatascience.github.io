@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.31">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Anna Demming">
+<meta name="dcterms.date" content="2024-09-17">
+<meta name="description" content="Anna Demming reports on recent insights into the interplay between gender disparities on and offline and what might help to close the gap.">
+
+<title>Are we at risk of muting the female voice in the digital world? – Real World Data Science</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../">
+<link href="../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
+<script src="../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-e1a5c8363afafaef2c763b6775fbf3ca.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../site_libs/bootstrap/bootstrap-6cf018941c4e0f11d62ea116a4ebc572.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
+</script>
+<!-- Thank you to Ben Ruijl for the progress bar code!
+Ben is on GitHub here: https://github.com/benruijl
+And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
+
+<meta property="og:title" content="Are we at risk of muting the female voice in the digital world? – Real World Data Science">
+<meta property="og:description" content="Anna Demming reports on recent insights into the interplay between gender disparities on and offline and what might help to close the gap.">
+<meta property="og:image" content="https://realworlddatascience.net/foundation-frontiers/posts/2024/09/17/images/Minoan-Illustration-991.jpg">
+<meta property="og:site_name" content="Real World Data Science">
+<meta property="og:image:alt" content="Muted. In the absence of proactive intervention, the shift of debate and discourse online risks muting women and girls as multiple factors exclude them from engaging there as productively as male counterparts. Copyright Park Kang Hun/Shutterstock.">
+<meta name="twitter:title" content="Are we at risk of muting the female voice in the digital world? – Real World Data Science">
+<meta name="twitter:description" content="Anna Demming reports on recent insights into the interplay between gender disparities on and offline and what might help to close the gap.">
+<meta name="twitter:image" content="https://realworlddatascience.net/foundation-frontiers/posts/2024/09/17/images/Minoan-Illustration-991.jpg">
+<meta name="twitter:site" content="@rwdatasci">
+<meta name="twitter:image:alt" content="Muted. In the absence of proactive intervention, the shift of debate and discourse online risks muting women and girls as multiple factors exclude them from engaging there as productively as male counterparts. Copyright Park Kang Hun/Shutterstock.">
+<meta name="twitter:card" content="summary_large_image">
+</head><body class="nav-fixed quarto-light"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
+
+<script id="progressbar" type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const bar = document.querySelector('#progress-bar');
+    const post = document.querySelector('#quarto-content');
+    const html = document.documentElement;
+    
+    const height = post.scrollHeight + post.offsetTop;
+    
+    window.addEventListener('scroll', () => {
+        bar.style.width = (html.scrollTop / (height- html.clientHeight)) * 100 + '%';
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../rwds.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../case-studies/index.html"> 
+<span class="menu-text">Case studies</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../foundation-frontiers/index.html"> 
+<span class="menu-text">Foundation &amp; Frontiers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../people-paths/index.html"> 
+<span class="menu-text">People &amp; Paths</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../viewpoints/index.html"> 
+<span class="menu-text">Viewpoints</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About RWDS</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
+        <li>
+    <a class="dropdown-item" href="../../../../../about-rwds.html">
+ <span class="dropdown-text">Who we are</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../contributor-docs/call-for-contributions.html">
+ <span class="dropdown-text">How to contribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../CODE_OF_CONDUCT.html">
+ <span class="dropdown-text">Code of conduct</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../contact.html">
+ <span class="dropdown-text">Contact us</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Are we at risk of muting the female voice in the digital world?</h1>
+                  <div>
+        <div class="description">
+          <p>Anna Demming reports on recent insights into the interplay between gender disparities on and offline and what might help to close the gap.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">gender equality</div>
+                <div class="quarto-category">skills</div>
+                <div class="quarto-category">ethics</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Anna Demming </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">September 17, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#gender-disparities-in-internet-access" id="toc-gender-disparities-in-internet-access" class="nav-link active" data-scroll-target="#gender-disparities-in-internet-access">Gender disparities in internet access</a></li>
+  <li><a href="#gender-disparities-in-fears-of-online-harms" id="toc-gender-disparities-in-fears-of-online-harms" class="nav-link" data-scroll-target="#gender-disparities-in-fears-of-online-harms">Gender disparities in ‘fears’ of online harms</a></li>
+  <li><a href="#gender-disparities-for-making-an-impact-online" id="toc-gender-disparities-for-making-an-impact-online" class="nav-link" data-scroll-target="#gender-disparities-for-making-an-impact-online">Gender disparities for making an impact online</a></li>
+  <li><a href="#real-world-gender-disparities-in-career-development" id="toc-real-world-gender-disparities-in-career-development" class="nav-link" data-scroll-target="#real-world-gender-disparities-in-career-development">Real world gender disparities in career development</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/foundation-frontiers/posts/2024/09/17/digital-gender-gap.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>Knowledge is power and today a lot of that knowledge – not just what you know but who you know – is online. In 2015 the UN General Assembly laid out 17 Sustainable Development Goals (SDGs) that aim to end poverty and other deprivations while improving the welfare of both people and the planet. One of the <a href="https://sdgs.un.org/goals/goal5#targets_and_indicators">SDGs deals with gender equality</a> and emphasises the importance of digital technology for empowering women. Online, a woman can engage in commercial, social, business or networking transactions without the need to be absent from care responsibilities at home or maintain traditional 9-5 working hours or, in some instances, even expose the fact that she is a woman at all – all potentially transformative features of online engagement<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a>. Yet the reality for digital technology to empower women is by no means clear cut.</p>
+<p>‘For me, whether digital technologies are able to empower women was fundamentally an empirical question,’’ says professor of demography and computational data science at Oxford University <a href="https://www.sociology.ox.ac.uk/people/ridhi-kashyap">Ridhi Kashyap</a>. She adds that in order to ask these questions of impact, you first need to be able to measure inequalities in digital access. However, the pace of technological change has been a lot faster than the rate at which national censuses – or other kinds of surveys useful to social scientists – update their questions, so they shed little light on the demographics around digital technologies.</p>
+<p>Since then, progress in accruing data on digital access has revealed some stark gender inequalities. However, access is not the only fly in the ointment when it comes to the potential for digital technology to help towards gender equality. ‘The most harmful illegal online content disproportionately affects women and girls,’ says the <a href="https://www.gov.uk/government/publications/online-safety-act-explainer/online-safety-act-explainer#how-the-act-protects-women-and-girls">explainer for the UK’s 2023 Online Safety Act</a>. A <a href="https://www.turing.ac.uk/news/publications/understanding-gender-differences-experiences-and-concerns-surrounding-online">study by the Turing Institute</a> published earlier this year has revealed nuances on this picture, but confirmed that many women feel particularly vulnerable online, suggesting women may be losing a seat at the table as debate and discourse increasingly moves online.</p>
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Muted. In the absence of proactive intervention, the shift of debate and discourse online risks muting women and girls as multiple factors exclude them from engaging there as productively as male counterparts. Copyright: Park Kang Hun/Shutterstock.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/Minoan-Illustration.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Muted. In the absence of proactive intervention, the shift of debate and discourse online risks muting women and girls as multiple factors exclude them from engaging there as productively as male counterparts. Copyright: Park Kang Hun/Shutterstock.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Muted. In the absence of proactive intervention, the shift of debate and discourse online risks muting women and girls as multiple factors exclude them from engaging there as productively as male counterparts. Copyright: Park Kang Hun/Shutterstock.
+</figcaption>
+</figure>
+</div>
+<p>The digital gender gap has a cost estimated at $126 billion USD for the 32 low- and low-to-middle-income countries analysed by the Alliance for Affordable Internet (A4AI)<a href="#fn2" class="footnote-ref" id="fnref2" role="doc-noteref"><sup>2</sup></a>. This is due to the ‘untold wealth of cultural, social, and scientific knowledge lost because of the exclusion of women’s and girls’ voices from the online world.’ Focus on this issue has brought a little more clarity to the size of the problem. However, while the UK’s Online Safety Act marks some progress, questions remain as to what can be done, and whether the hope of digital technologies helping towards gender equality is still justified.</p>
+<section id="gender-disparities-in-internet-access" class="level2">
+<h2 class="anchored" data-anchor-id="gender-disparities-in-internet-access">Gender disparities in internet access</h2>
+<p>A turning point in the conversation around digital technology and gender equality came in 2018 with work by Kashyap and collaborators in the US and Qatar at the time. They found that where traditional survey-based data on internet and mobile gender gaps was available, it correlated well with the gender gap on Facebook, using data extracted for Facebook’s ad platform: When Facebook’s aggregate user counts did not show women, it provided a good signal that women were not online altogether in those countries. As such, the work revealed a potentially useful proxy to gauge the digital gender gap in countries where little traditional survey data was available<a href="#fn3" class="footnote-ref" id="fnref3" role="doc-noteref"><sup>3</sup></a>. <a href="https://www.digitalgendergaps.org/">The results</a> revealed an unexpectedly large gender gap, particularly in parts of South Asia and certain countries in Africa where men were up to twice as likely to have access to the Internet compared with women.</p>
+<p>‘In some sense it was perhaps not surprising,’’ says Kashyap highlighting that having a mobile phone or similar device that grants access to the internet amounts to a kind of asset ownership, and studies for other assets indicate women are less likely to own them. ‘This is broadly reflective of economic gender inequality,’ she adds. Perhaps more surprising is that the gaps have changed very little in the five years since <a href="https://www.digitalgendergaps.org/">their website, which monitors the digital gender gap</a>, was first released, particularly in view of the pace of technological progress in general, and the importance placed on closing the gap. Citing India as an example, Kashyap points out that in 2019 the ratio of access to the internet for men versus women was 0.619 – fewer than two women had access for every three men with access. In the subsequent half decade this digital gender gap has closed by just 7.1% to a ratio of 0.663.</p>
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="The digital gender gap. Ratio of female-to-male internet use estimated using the Facebook Gender Gap Index^[Leasure D R, Yan J, Bondarenko M, Kerr D, Fatehkia M, Weber I &amp; Kashyap R. Digital Gender Gaps Web Application, v1.0.0. Zenodo, GitHub (2023) [doi:10.5281/zenodo.7897491](https://github.com/OxfordDemSci/dgg-www)]">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/Digital gender gap.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The digital gender gap. Ratio of female-to-male internet use estimated using the Facebook Gender Gap Index^[Leasure D R, Yan J, Bondarenko M, Kerr D, Fatehkia M, Weber I &amp; Kashyap R. Digital Gender Gaps Web Application, v1.0.0. Zenodo, GitHub (2023) [doi:10.5281/zenodo.7897491](https://github.com/OxfordDemSci/dgg-www)]">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: The digital gender gap. Ratio of female-to-male internet use estimated using the Facebook Gender Gap Index<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a>
+</figcaption>
+</figure>
+</div>
+<p>In countries where the gender disparity for access to the internet is large, there is evidence to suggest that those women who do have access are of the more affluent echelons of society. Analysis of the type of device used, which can also be retrieved from the Facebook ad platform, highlighted that where women are less likely to be online, the relative proportion of iOS users tends to be higher among women than among men, and as Kashyap points out, ‘iOS users are on average wealthier’. Fortunately, among the stakeholders starting to see the benefit of closing the gap in access to the internet between the genders are the mobile network providers, who are looking for ways to tap into this part of the market through incentives and discounts on SIMs for women. However, it is unclear to what extent these types of schemes are ultimately beneficial in closing the wider gap.</p>
+<p>Kashyap and her colleagues also found that a key predictor of the digital gender gap was the gender gap in educational attainment. ‘I think that’s quite telling, because it’s showing that accessing education and going to educational institutions is also a pathway to becoming more digitally integrated,’ says Kashyap, flagging that schools and educational institutions are where women and girls often access computers and digital technologies. She highlights that beyond giving people a device ‘more of the challenge’ is helping them make good use of it by ‘giving people skills to feel that this is actually meaningful for them, and allows them to do things that they wouldn’t be able to do otherwise, and feeling confident and safe and secure.’ She emphasises the importance of men valuing gender equality, highlighting work from South Asia that shows that even when women have a device, their use of it may be curtailed or scrutinised by male members of the household, sometimes on the grounds of <a href="https://www.gsma.com/solutions-and-impact/connectivity-for-good/mobile-for-development/blog/the-mobile-gender-gap-in-south-asia-is-now-widening/">doubts over women’s safety online</a>.</p>
+</section>
+<section id="gender-disparities-in-fears-of-online-harms" class="level2">
+<h2 class="anchored" data-anchor-id="gender-disparities-in-fears-of-online-harms">Gender disparities in ‘fears’ of online harms</h2>
+<p>Safety can be a knotty issue when it comes to enabling women to have a voice online. A study by the Alan Turing Institute<a href="#fn5" class="footnote-ref" id="fnref5" role="doc-noteref"><sup>5</sup></a> earlier this year suggested just 23% of women in general feel comfortable expressing political opinions online, compared with 40% of men. This might be down to women in general being exposed to online violence more than men, as previous studies of online harms have suggested. Indeed, a key takeaway from the Alan Turing Institute’s study was that women reported greater fears of exposure for all categories of harm, although this included types of harm that women reported experiencing less frequently than men.</p>
+<p>Previous studies have largely surveyed women-only sample-groups so that their conclusions were drawn without data on men against which to compare. In contrast, the researchers at the Alan Turing Institute, including researcher <a href="https://www.turing.ac.uk/people/researchers/tvesha-sippy">Tvesha Sippy</a>, took a nationally representative survey of 2,000 men and women. They investigated whether they had been exposed to various types of online harms, their fears surrounding such exposure, the psychological impact of those experiences in general, tendencies to use protective tools for digital activities, and how comfortable they felt with online behaviours such as expressing opinions and sharing information online. The study revealed that women were more likely to report experiencing some harms, such as online misogyny, cyberflashing, cyberstalking, image-based abuse and eating disorder content to a significantly greater extent than men. However, there were several harms that men reported being the direct targets of to a greater extent than women, such as hate speech, misinformation, trolling and threats of physical violence.</p>
+<p>By using a representative cohort, the Alan Turing Institute study tells a more nuanced story than those sampling women only and highlights challenges in similar assessments for minority groups. For example, those identifying as non-binary were excluded from the analysis by the Alan Turing Institute because, although as Sippy emphasises, ‘We do want to look at minoritised genders,’ they did not have sufficient numbers of respondents in this category within their nationally representative survey to do any meaningful analysis. Ultimately, a higher budget enabling larger samples would allow analysis of minority groups as well.</p>
+<p>As for the greater fears for all online harms reported by women, ‘it’s a very complex phenomenon,’’ Sippy tells Real World Data Science, highlighting the need for further research. She points to several possible explanations such as differences in the impacts of the harms experienced more by women versus men, as well as innate fearfulness potentially from the offline world translating to behaviour online. Sippy also highlights the differences in how men and women experience online harms, which may offer clues. Women were more likely to report that their fears stem from the experience of a public figure (35% of the women surveyed compared with 26% of the men) or a female friend (37% of the women compared with 27% of the men). Furthermore, the experience of a male friend was much less often cited as the source of online fears for both groups (8% of the women and 14% of the men). There is also the possibility that women’s adaptive behaviours make them less exposed to future online harms than men, since women were more likely to make use of protective tools from disabling location-sharing on a device, and limiting who can engage with images, posts and tweets, or even find their profile. While protective, such adaptive behaviours could also dampen the influence women have in online discourse.</p>
+<p>Rather than relying on adaptive behaviour for self-protection, it would seem a lot of people are keen to see more action from social media companies and governments to help people to feel safer online. In 2023, researchers at the Turing Institute led by senior research associate Florence Enock published a study investigating <a href="https://www.turing.ac.uk/news/publications/experiences-online-harms">attitudes to online interventions</a>. They found that 79% thought social media platforms should ban or suspend users who create harmful content and 73% thought that platforms should remove harmful content. According to the report ‘this was consistent across age, gender, educational background, income and political ideology.’</p>
+<p>There are some complications for social media companies who need to balance privacy needs with protection, as well as having the resources required to handle multilingual posts when investigating what action to take. However, Sippy feels there remains a need to have a civil remedy in place so that a user can request a platform take down content which is harmful without having to pursue criminal proceedings and get the police involved. Where the additional resources needed for social media companies to take corrective action and a lack of business incentive pose an obstacle, government legislation may help. The same study into attitudes to online interventions also reported that for platforms that fail to deal with harmful content online more than 70% of respondents felt the government should be able to issue large fines, and 66% thought that legal action should be taken.</p>
+<p>‘The Online Safety Act is a really good start,’ adds Sippy, also highlighting the importance of proposals by the previous UK government to criminalise the creation of sexually explicit deep fakes. She points to a 2019 report by AI firm Deeptrace, suggesting that of 15,000 deep fake videos they found online, 96% constituted nonconsensual pornography with women disproportionately targeted<a href="#fn6" class="footnote-ref" id="fnref6" role="doc-noteref"><sup>6</sup></a>. In a recent Alan Turing Institute survey 90% of respondents expressed concerns about deepfakes increasing misogyny and online violence against women and girls<a href="#fn7" class="footnote-ref" id="fnref7" role="doc-noteref"><sup>7</sup></a>. ‘I do see there’s more advocacy, but it remains to be seen what approach the new Government will take.’</p>
+</section>
+<section id="gender-disparities-for-making-an-impact-online" class="level2">
+<h2 class="anchored" data-anchor-id="gender-disparities-for-making-an-impact-online">Gender disparities for making an impact online</h2>
+<p>Challenges to women being heard online seem to go beyond safety issues. Recent research by Kashyap and collaborators at the University of Oxford and collaborators in Iran and Germany has also highlighted differences in how influential women’s professional networks are relative to male counterparts<a href="#fn8" class="footnote-ref" id="fnref8" role="doc-noteref"><sup>8</sup></a>. In previous work with Florianne Verkroost, also at the University of Oxford, Kashyap had investigated the gender gaps in those who have a LinkedIn profile to see how they vary across industries<a href="#fn9" class="footnote-ref" id="fnref9" role="doc-noteref"><sup>9</sup></a>. They found that use of the platform broadly mirrors female-to-male ratios of representation in technical and managerial professions. In reference 8, they then investigated what insights LinkedIn data might provide as to the cause of some of the gender disparities in these professions, and ultimately why women are not progressing in technical and professional jobs as well as male counterparts.</p>
+<p>‘One argument is that that’s often because they don’t have advantageous networks,’ says Kashyap, adding that women may be restricted by the need to resume care commitments at home instead of staying for drinks after work or travelling to attend conferences. One might expect online avenues for networking would be able to mitigate such obstacles. In fact, studies of LinkedIn data did suggest that although women are less likely to be in professional and technical occupations as reflected in the platform’s data, in some instances their numbers exceeded them. Kashyap suggests this could be ‘where they’re using online platforms to make themselves more visible, because other fine forms of networking are less available, or they have less time for it.’ Indeed, women who were on LinkedIn were more likely to report a promotion than their male counterparts, suggesting an element of positive selection among the female LinkedIn user population. However, the potential equalising impact of moving professional networking online seems to have its limits.</p>
+<p>Their study of LinkedIn data showed women were less likely to report a relocation for work, which Kashyap suggests, ‘is a sign that the work family trade-off is probably still remaining acute for this highly selected group.’ In another 2023 study Kashyap and colleagues had also reported a lower mobility for women, specifically among published scientists, researchers and academics based on bibliometric data from over 33 million Scopus publications<a href="#fn10" class="footnote-ref" id="fnref10" role="doc-noteref"><sup>10</sup></a>. In addition, when Kashyap and her colleagues looked at women on LinkedIn working in the tech sector, they found that they had a lower chance of being connected to those working in one of the “big five” firms in the tech sector than men, when not working in one themselves. ‘One way to interpret that is to say that they have maybe less influential online social networks, right, even when they are on the platform.’</p>
+<div id="fig-4" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Leaky pipeline. The proportion of women working in science decreases towards the mid and senior career stages">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/shutterstock_1215562669-h350.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Leaky pipeline. The proportion of women working in science decreases towards the mid and senior career stages">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: Leaky pipeline. The proportion of women working in science decreases towards the mid and senior career stages.
+</figcaption>
+</figure>
+</div>
+<p>Kashyap suggests several reasons why women may have less influential networks online. For one, online networks are still likely to be influenced by the scenarios playing out offline, since referrals on these networks are based on the people you already know. The difference may also be based on the types of companies women tend to work in and the positions they hold. For instance, women are more likely to work in IT service support than programming-intensive occupations, and here once again Kashyap suggests the work family trade off plays a role in women seeking less intensive or more flexible jobs. She highlights that girls equal or exceed the achievement of male counterparts through school and continue to match them in their early careers before their numbers start to drop off dramatically. ‘I think now there’s a growing recognition that this is actually a real conflict, the work family conflict,’ she tells Real World Data Science. Today’s young women are socialised to have ‘high achieving aspirations’, which can be hard to reconcile with ‘regressive norms’ for women to shoulder the bulk of caring responsibilities, particularly when starting a family.</p>
+</section>
+<section id="real-world-gender-disparities-in-career-development" class="level2">
+<h2 class="anchored" data-anchor-id="real-world-gender-disparities-in-career-development">Real world gender disparities in career development</h2>
+<p>Neuroscientist Joanne Kenney has also been following data on the gender gap in the science and tech sectors and co-authored ‘A Snapshot of Female Representation in Twelve Academic Psychiatry Institutions Around the World’<a href="#fn11" class="footnote-ref" id="fnref11" role="doc-noteref"><sup>11</sup></a> with Assistant Professor of Psychiatry at Harvard Medical School Elisabetta del Re. The figures published here also show that globally women represent a large majority of early career scientists, but their numbers steadily decrease towards the mid and senior career stages so that there is a negative correlation between career stages and female presence in science, often referred to as the ‘leaky pipeline’ or ‘sticky floor’. ‘You don’t always hear their stories or the reasons why they’ve left,’ says Kenney who highlights that in her experience in academia exit interviews are rare. Just 24% of the UK total workforce in the tech sector are women, while black women account for only 0.7% of IT professionals according to the 2024 UN Women UK and Kearney Consulting report <a href="https://www.kearney.com/about/diversity-equity-and-inclusion/gap-to-gateway">‘Gap to Gateway: diversity in tech as the key to the future’</a> for which Kenney was an external collaborator. Kenney is currently working on another project with a team of scientists from Europe, Africa, and North and South America led by del Re to gather stories from women and other underrepresented groups in academic institutions around the world through focus groups aimed at better understanding their experiences of working in science.</p>
+<p>For those who stick at it, the career path appears to be a steeper hike for women than their male counterparts. There is a citation-bias favouring male-authored articles<a href="#fn12" class="footnote-ref" id="fnref12" role="doc-noteref"><sup>12</sup></a>. Women also take on average nine years to transition to senior author whereas men take five<a href="#fn13" class="footnote-ref" id="fnref13" role="doc-noteref"><sup>13</sup></a>, and women are less likely to be promoted to leadership positions<a href="#fn14" class="footnote-ref" id="fnref14" role="doc-noteref"><sup>14</sup></a>. While women in science bear a measurably unequal career impact on entering parenthood<a href="#fn15" class="footnote-ref" id="fnref15" role="doc-noteref"><sup>15</sup></a>, some of these inequalities may also stem from sexism, which can range from fewer opportunities for mentorship and collaboration to outright harassment<a href="#fn16" class="footnote-ref" id="fnref16" role="doc-noteref"><sup>16</sup></a>.</p>
+<p>‘I think a lack of mentorship and sponsorship are two big ones,’ says Kenney when it comes to the key discouraging factors for women at the mid-career point in tech and academia. In AI, in particular, less than 3% of venture capital funding deals involving AI startups go to women-founded companies. The gender pay gap, which at 16% in the sector exceeds the overall pay gap of 11.6% may be another disincentive.</p>
+<p>In short there is evidence of various patriarchal subcultures at play, both in the tech and science sectors and the world in general that can still pose a significant disadvantage to women. As Sippy points out, ‘Those subcultures also translate to the online world.’ Ultimately while digital technologies may offer creative loopholes for side-stepping some aspects of gender bias and disadvantage, gender inequality needs to be tackled in both spaces in tandem.</p>
+<div class="article-btn">
+<p><a href="../../../../../foundation-frontiers/index.html">Explore more data science ideas</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author</dt>
+<dd>
+<strong>Anna Demming</strong> is a freelance science writer and editor based in Bristol, UK. She has a PhD from King’s College London in physics, specifically nanophotonics and how light interacts with the very small, and has been an editor for Nature Publishing Group (now Springer Nature), IOP Publishing and New Scientist. Other publications she contributes to include The Observer, New Scientist, Scientific American, Physics World and Chemistry World..
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2024 Anna Demming
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> Text, code, and figures are licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>, except where otherwise noted. Thumbnail image by <a href="https://www.shutterstock.com/image-photo/mute-key-on-neat-white-keyboard-1832448097">Shutterstock/Park Kang Hun</a> <a href="https://creativecommons.org/licenses/by/4.0/">Licenced by CC-BY 4.0</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Demming, Anna. 2024. “Are we at risk of muting the female voice in the digital world?” Real World Data Science, September 17, 2024. <a href="https://realworlddatascience.net/foundation-frontiers/posts/2024/09/17/digital-gender-gap.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">References</h2>
+
+<ol>
+<li id="fn1"><p>Sicat M, Xu A, Mehetaj E, Ferrantino M &amp; Chemutai V Leveraging ICT Technologies in Closing the Gender Gap World Bank <em>World Bank Group, Washington DC</em> (2020) <a href="https://documents1.worldbank.org/curated/en/891391578289050252">https://documents1.worldbank.org/curated/en/891391578289050252</a><a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn2"><p>Web Foundation. The Costs of Exclusion: Economic Consequences of the Digital Gender Gap. Alliance for Affordable Internet (2021) <a href="https://a4ai.org/report/the-costs-of-exclusion-economic-consequences-of-the-digital-gender-gap/">https://a4ai.org/report/the-costs-of-exclusion-economic-consequences-of-the-digital-gender-gap/</a><a href="#fnref2" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn3"><p>Fatehkia M, Kashyap R &amp; Ingmar Weber I Using Facebook ad data to track the global digital gender gap <em>World Development</em> <strong>107</strong> 189-209 (2018) <a href="https://www.sciencedirect.com/science/article/pii/S0305750X18300883">https://www.sciencedirect.com/science/article/pii/S0305750X18300883</a><a href="#fnref3" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn4"><p>Leasure D R, Yan J, Bondarenko M, Kerr D, Fatehkia M, Weber I &amp; Kashyap R. Digital Gender Gaps Web Application, v1.0.0. Zenodo, GitHub (2023) <a href="https://github.com/OxfordDemSci/dgg-www">doi:10.5281/zenodo.7897491</a><a href="#fnref4" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn5"><p>Stevens F, Enock F E, Sippy T, Bright J, Cross M, Johansson P, Wajcman J, Margetts H Z Understanding gender differences in experiences and concerns surrounding online harms: A nationally representative survey of UK adults Alan Turing Institute (2024) <a href="https://www.turing.ac.uk/news/publications/understanding-gender-differences-experiences-and-concerns-surrounding-online">https://www.turing.ac.uk/news/publications/understanding-gender-differences-experiences-and-concerns-surrounding-online</a><a href="#fnref5" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn6"><p>Ajder H, Patrini G, Cavalli F &amp; Cullen L The State of Deepfakes: Landscape, Threats, and Impact, (2019) <a href="https://regmedia.co.uk/2019/10/08/deepfake_report.pdf">https://regmedia.co.uk/2019/10/08/deepfake_report.pdf</a><a href="#fnref6" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn7"><p>Sippy T, Enock F E, Bright J &amp; Margetts H Z Behind the Deepfake: 8% Create; 90% Concerned Alan Turing Institute (2024) <a href="https://www.turing.ac.uk/news/publications/behind-deepfake-8-create-90-concerned">https://www.turing.ac.uk/news/publications/behind-deepfake-8-create-90-concerned</a><a href="#fnref7" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn8"><p>Kalhor G, Gardner H, Weber I, Kashyap R <em>Proceedings of the Eighteenth International AAAI Conference on Web and Social Media</em> <strong>18</strong> (2024) <a href="https://ojs.aaai.org/index.php/ICWSM/article/view/31353">https://ojs.aaai.org/index.php/ICWSM/article/view/31353</a><a href="#fnref8" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn9"><p>Kashyap R &amp; Verkroost F C J Analysing global professional gender gaps using LinkedIn advertising data EPJ Data Science <strong>10</strong> 39 (2021) <a href="https://epjds.epj.org/articles/epjdata/abs/2021/01/13688_2021_Article_294/13688_2021_Article_294.html">https://doi.org/10.1140/epjds/s13688-021-00294-7</a><a href="#fnref9" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn10"><p>Zhao X , Akbaritabar A, Kashyap R &amp; Zagheni E A gender perspective on the global migration of scholars <em>PNAS</em> <strong>120</strong> e2214664120 <a href="https://www.pnas.org/doi/10.1073/pnas.2214664120">https://doi.org/10.1073/pnas.2214664120</a><a href="#fnref10" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn11"><p>Kenney J, Ochoa S, Alnor M A, Ben-Azu B, Diaz-Cutraro L, Folarin R, Hutch A, Luckhoff H K, Prokopez C R, Rychagov N, Surajudeen B, Walsh L, Watts T, Del Re E C A Snapshot of Female Representation in Twelve Academic Psychiatry Institutions Around the World <em>Psychiatry Research</em> (2021) <a href="https://pubmed.ncbi.nlm.nih.gov/34986430/">doi: 10.1016/j.psychres.2021.114358</a><a href="#fnref11" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn12"><p>Dworkin J D, Linn K A, Teich E G, Zurn P, Shinohara R T &amp; Bassett D S The extent and drivers of gender imbalance in neuroscience reference lists <em>Nature</em> <strong>23</strong> 918-926 (2020) <a href="https://www.nature.com/articles/s41593-020-0658-y">https://www.nature.com/articles/s41593-020-0658-y</a><a href="#fnref12" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn13"><p>Bearden C E Accelerating the Bending Arc Toward Equality: A Commentary on Gender Trends in Authorship in Psychiatry Journals <em>Biological Psychiatry</em> <strong>86</strong> 575-576 (2019)<a href="https://www.biologicalpsychiatryjournal.com/article/S0006-3223(19)31588-4/abstract">https://www.biologicalpsychiatryjournal.com/article/S0006-3223(19)31588-4/abstract</a><a href="#fnref13" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn14"><p>Clark J &amp; Horton R A coming of age for gender in global health <em>The Lancet</em> <strong>393</strong> p2367-2369 (2019) <a href="https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(19)30986-9/abstract">https://www.thelancet.com/journals/lancet/article/PIIS0140-6736(19)30986-9/abstract</a><a href="#fnref14" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn15"><p>Morgan A C, Way S F, Hoefer M J D, Larremore D B, Galesic M &amp; Clauset A The unequal impact of parenthood in academia <em>Science Advnaces</em> <strong>7</strong> eabd1996 <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC7904257/">doi: 10.1126/sciadv.abd1996</a><a href="#fnref15" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+<li id="fn16"><p>O’Connor P s gendered power irrelevant in higher educational institutions? Understanding the persistence of gender inequality *Interdisciplinary Science Reviews” <strong>48</strong> 669-686 (2023) <a href="https://www.tandfonline.com/doi/full/10.1080/03080188.2023.2253667#d1e144">https://doi.org/10.1080/03080188.2023.2253667</a><a href="#fnref16" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/realworlddatascience\.net\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "realworlddatascience/realworlddatascience.github.io";
+    script.dataset.repoId = "R_kgDOILnnig";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDOILnnis4CSt2s";
+    script.dataset.mapping = "title";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><a href="../../../../../LICENCE.html">Copyright © 2024 Royal Statistical Society</a></p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/realworlddatascience">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience">
+<p><i class="ai  ai-zenodo ai-2xl"></i></p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/rwdatasci">
+      <i class="bi bi-twitter-x" role="img" aria-label="Twitter/X">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@rwdatasci">
+      <i class="bi bi-mastodon" role="img" aria-label="Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="../../../../../feeds.html">
+      <i class="bi bi-rss" role="img" aria-label="RWDS rss">
+</i> 
+    </a>
+  </li>  
+</ul>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/foundation-frontiers/posts/2024/09/17/digital-gender-gap.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p><a href="../../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
