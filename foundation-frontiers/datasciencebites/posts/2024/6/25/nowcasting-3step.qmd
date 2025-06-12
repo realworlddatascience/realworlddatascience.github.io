@@ -1,0 +1,73 @@
+---
+title: "Nowcasting upgrade for better real time estimation of GDP and inflation"
+description: Atmajitsinh Gohil describes a recently devised 3 step framework that improves the accuracy of nowcasting. 
+categories:
+  - Forecasting
+  - Machine learning
+author: Atmajitsinh Gohil
+date: 06/25/2024
+toc: true
+image: images/GDPshutterstock_2302082265-991.jpg
+image-alt: "Growth of GDP with statistical graph, 3d rendering. Digital drawing. Credit: Shutterstock, Vink Fan"
+language: 
+    section-title-footnotes: References
+aliases: 
+  - /ideas/datasciencebites/posts/2024/6/25/nowcasting-3step.html
+---
+
+
+
+Governments, policymakers and central banks across the world are wrestling to keep rising prices under control using monetary policies such as interest rate increases. The effectiveness of such policy changes should be assessed by monitoring inflation data as well as studying the impact on real GDP, making timely and accurate access to key economic indicators crucial for policy planning. The delay in publishing  economic indicators such as Real GDP, inflation and other labour related series, makes this real time assessment of the economy particularly challenging. Now Menzie Chinn at the University of Wisconsin, Baptiste Meunier at the European Central Bank and Sebastian Stumpner at the Banque de France report an approach for “nowcasting” built on previous research that develops a framework using different machine learning techniques and is flexible and adaptable compared with traditional methods^[Nowcasting World Trade with Machine Learning: a Three-Step Approach Chinn, M. D., Meunier, B. & Stumpner, S. *NBER* [DOI 10.3386/w31419](https://www.nber.org/papers/w31419)) ]. They report on the accuracy of their 3-step framework for nowcasting global trade volume estimates, showing how it can outperform traditional methods. They also highlight that the 3-step framework can be extended beyond World Trade data.
+
+Nowcasting, an amalgamation of the term now and forecasting, provides a methodology to assess the current state of the economy by predicting the current value of inflation or Real GDP. The [Federal Reserve Bank of New York](https://www.newyorkfed.org/research/policy/nowcast#/overview) and [Federal Reserve Bank of Atlanta](https://www.atlantafed.org/cqer/research/gdpnow) have used nowcasting to publish real time GDP estimates, for the USA. Similarly, the [Federal Reserve Bank of Cleveland estimates real time inflation](https://www.clevelandfed.org/indicators-and-data/inflation-nowcasting) using nowcasting methods. 
+
+![Growth of GDP with statistical graph, 3d rendering. Digital drawing. Credit: Shutterstock, Vink Fan](images/GDPshutterstock_2302082265-991.jpg){#fig-1 fig-align="center" fig-alt="GDP digital drawing. Credit: Shutterstock, Vink Fan"}
+
+
+The basic principle of nowcasting is utilising information that is published early such as using data published at higher frequency, survey data, financial indicators or economic indicators. For example, the running estimate of Real GDP (aka GDPNow) that the Federal Reserve Bank of Atlanta provides is updated 6 or 7 times a month on weekdays when one of the 7 input data sources are released. Similarly, the real GDP growth estimate that the Federal Reserve Bank of New York provides is based on data releases in categories such as housing and construction, manufacturing, surveys, retail and consumption, income, labour, international trade, prices and others. 
+
+The traditional methods of nowcasting do not provide an integrated framework, and forecasters need to know which variables to use, and select a method for factor extraction and machine learning regression. Chinn, Meunier and Stumpner propose a sequential framework that selects the most important predictors. The selected variables are then summarized using Principal Component Analysis (PCA) and these factors are used as explanatory variables to perform the regression. Although traditional methods of nowcasting also utilized many of these techniques, the authors test various combinations of pre-selection, factor extraction and regression techniques and propose a combination that improves model accuracy.  
+
+## Model framework improved flexibility and accuracy:
+
+The 3 steps in the framework are chronological steps to be performed in which the first step is pre-selection of the independent variables with the highest predictive power. The independent variables from the first step are then summarised into a few factors using factor extraction methodology in the second step. The final step consists of using the factors from step 2 to perform regression. 
+
+![The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research.](images/3step-framework-methods-big.png){#fig-2 fig-align="center" fig-alt="The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research."}
+
+@fig-2 summarises the various methods employed at each step in the 3 step framework. In their report Chinn, Meunier and Stumpner aim to propose the best techniques for pre-selection, factor extraction and regression.  As such their 3-step framework comprises performing pre-selection using Least Angle Regression (LARS), factor extraction using Principal Component Analysis (PCA) and employing a Macroeconomic Random Forest (MRF) machine learning technique for nowcasting.
+ 
+The model performance or accuracy of MRF is compared with traditional methods using Root Mean Square Error (RMSE), a measure of the deviation between the actual data and the predicted data. The 3-step framework model accuracy is tested by holding the preselection and factor extraction fixed to isolate the impact of regression techniques.
+
+![Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research.](images/method-accuracy-big.png){#fig-3 fig-align="center" fig-alt="Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research."}
+
+@fig-3 compares the RMSE of  traditional methods, machine learning tree and machine learning regression model for backcasting (t-2 and t-1), nowcasting (t) and forecasting (t+1). It highlights the greater model accuracy of MRF and Gradient Boosting compared with traditional models and tree models for backcasting, nowcasting and forecasting.
+ 
+## What’s Next?
+ 
+Organisations such as [The Nowcasting Lab](https://nowcastinglab.org/map) provide GDP estimates for European countries. Such nowcasting techniques have been employed by humanitarian agencies including the United Nations Refugee Agency (UNHCR) which uses nowcasting to estimate the actual forced displaced population. The nowcasting techniques, dashboards and tools have been implemented and accepted as a reliable source of information at government organisations for policy making, central banks, and financial organisations. The 3-step framework, proposed by Chinn, Meunier and Stumpner, is easily adaptable, flexible and provides higher accuracy, which will be valuable to a range of fields employing nowcasting.
+
+
+::: article-btn
+[Explore more data science ideas](/foundation-frontiers/index.qmd)
+:::
+
+::: {.further-info}
+::: grid
+::: {.g-col-12 .g-col-md-12}
+About the author
+: **Atmajitsinh Gohil** is an independent researcher in the field of AI and ML, specifically managing AI and ML risk. He has worked with consulting firm assisting clients in model risk management. He has graduated from SUNY, Buffalo with a M.S. in Economics.
+:::
+::: {.g-col-12 .g-col-md-6}
+Copyright and licence
+: &copy; 2024 Atmajitsinh Gohil
+
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> Text, code, and figures are licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>, except where otherwise noted. Thumbnail image by <a href="https://www.shutterstock.com/image-illustration/growth-gdp-statistical-graph-3d-rendering-2302082265">Shutterstock Van Fink</a>.
+
+:::
+::: {.g-col-12 .g-col-md-6}
+How to cite
+: Gohil, Atmajitsinh. 2024. "Nowcasting upgrade for better real time estimation of GDP and inflation." Real World Data Science, June 25, 2024. [URL](https://realworlddatascience.net/foundation-frontiers/posts/2024/06/25/nowcasting-3step.html)
+:::
+:::
+:::
+

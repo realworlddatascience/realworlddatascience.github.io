@@ -1,0 +1,113 @@
+---
+title: What is data science? A closer look at science’s latest priority dispute
+description: |
+  Two popular data science algorithms -- naïve Bayes and eigen centrality -- are used to examine the difference between data scientists, statisticians, and other occupations.
+categories:
+  - Algorithms
+  - Data science education
+  - Skills
+  - Training
+author: Jonathan Auerbach, David Kepplinger, and Nicholas Rios
+date: 02/19/2024
+toc: true
+bibliography: references.bib
+nocite: '@*'
+image: images/bubbles.png
+image-alt: Two bubbles overlapping on a black background.
+aliases: 
+  - /ideas/posts/2024/02/19/what-is-data-science.html
+---
+
+What is data science, and where did it come from? Is data science a new and exciting set of skills, necessary for analyzing 21st century data? Or is it (as some have claimed) a rebranding of statistics, which has carefully developed time-honored methods for data analysis over the past century? 
+
+Priority disputes -- disagreements over who deserves credit for a new scientific theory or method -- date back to the beginning of science. Famous examples include the invention of [calculus](https://en.wikipedia.org/wiki/Leibniz–Newton_calculus_controversy) and [ordinary least squares](https://projecteuclid.org/journals/annals-of-statistics/volume-9/issue-3/Gauss-and-the-Invention-of-Least-Squares/10.1214/aos/1176345451.full). But this latest dispute calls into question the novelty of an entire discipline. 
+
+In this article, we use two popular data science algorithms to examine the difference between data science, statistics, and other occupations. We find that in terms of the preparation required to become a data scientist, data science reflects both the work of natural sciences managers -- individuals who oversee research operations in the natural sciences -- and statisticians and mathematicians. This suggests that data science is a shared enterprise among science and math, and thus those trained in the natural sciences have as much claim to data science as those trained in mathematics and statistics. 
+
+In terms of the role a data scientist serves relative to other occupations, however, we find that data science is closest to statistics by far. Both occupations are fast growing and central among the occupations that work with data, suggesting a data scientist serves the same function as a statistician. But this function may be changing. While the centrality of statistics has declined over the past decade relative to other occupations, the centrality of data science has grown. In fact, data science has now surpassed statistics as the most central fast-growing occupation.
+
+## We examine the role of data science using data science 
+
+Everyone seems to agree that data science requires skills traditionally associated with a variety of different occupations. [Drew Conway](http://drewconway.com/zia/2013/3/26/the-data-science-venn-diagram), for example, describes data science as a combination of math and statistics, substantive (domain) expertise, and “hacking” skills (see @fig-conway). In dispute is the relative importance of those skills. [Some](https://www.statisticsviews.com/article/nate-silver-what-i-need-from-statisticians/) [have](https://imstat.org/2014/10/01/ims-presidential-address-let-us-own-data-science/) [argued](https://magazine.amstat.org/blog/2013/07/01/datascience/) that data science is basically statistics -- and that 20th century statisticians like [John Tukey](https://imstat.org/2023/09/30/hand-writing-john-tukey-the-first-data-scientist/) have long possessed the data science skills traditionally associated with computer science and the natural sciences. [Others](http://drewconway.com/zia/2013/3/26/the-data-science-venn-diagram) [have](https://statmodeling.stat.columbia.edu/2013/11/14/statistics-least-important-part-data-science/) [argued](https://web.archive.org/web/20211219192027/http://www.dataists.com/2010/09/a-taxonomy-of-data-science/) that data science is truly interdisciplinary, and statistical thinking only plays a small role. But while opinions on data science abound, few appear to be based on data or science.^[Descriptions of occupations by government agencies are not particularly helpful in differentiating between data science, statistics, and related occupations. For example, according to the Bureau of Labor Statistics, data scientists use “analytical tools and techniques to extract meaningful insights from data.” This description is similar to mathematicians/statisticians, who “analyze data and apply computational techniques to solve problems,” and operations research analysts who use “mathematics and logic to help solve complex issues.”] 
+
+![[Drew Conway](http://drewconway.com/zia/2013/3/26/the-data-science-venn-diagram) describes data science as a combination of math and statistics, substantive (domain) expertise, and “hacking” skills. Conway's data science venn diagram, reproduced here, is Creative Commons licensed as [Attribution-NonCommercial](https://creativecommons.org/licenses/by-nc/3.0/legalcode).](https://images.squarespace-cdn.com/content/v1/5150aec6e4b0e340ec52710a/1364352051365-HZAS3CLBF7ABLE3F5OBY/Data_Science_VD.png?format=2500w){#fig-conway}
+
+To that end, we use two popular data science algorithms, naïve Bayes and eigen centrality (eigen decomposition), to investigate the question: What is data science? Both algorithms use data listing the training a worker must generally complete to work in an occupation, such as data science. Specifically, we use the [CIP SOC Crosswalk](https://nces.ed.gov/ipeds/cipcode/resources.aspx?y=56) provided by the US Bureau of Labor Statistics and US National Center for Education Statistics, which links the [Classification of Instructional Programs](https://nces.ed.gov/ipeds/cipcode/Default.aspx?y=56) -- the standard classification of educational fields of study into roughly 2,000 instructional programs -- with the [Standard Occupational Classification](https://www.bls.gov/soc/) -- the standard classification of professions into roughly 700 occupations. 
+
+Our main assumption is that the skills required to work in an occupation can be represented by the instructional programs that prepare students to work in that occupation. For example, the occupation “data scientists” is associated with 35 instructional programs, such as data science, statistics, artificial intelligence, computational science, mathematical biology, and econometrics. The occupation “statisticians” is associated with 26 instructional programs, including data science, statistics, and econometrics, but not artificial intelligence, computational science, or mathematical biology.  
+
+The algorithms we employ consider occupations to be similar if they have many instructional programs in common. Data scientists and statisticians share 14 degrees, suggesting they are similar: Half the programs that prepare students to be a statistician also prepare students to be a data scientist. In contrast, data scientists and computer programmers share six degrees in common, suggesting they are less similar; computer programmers have 17 degrees overall so only a third of the programs that prepare students to be a computer programmer also prepare students to be a data scientist.^[Our analysis treats all instructional programs as equal and independent. We do not consider, for example, the number of workers who hold a degree from an instructional program or whether two instructional programs are similar or offered by similar academic departments. Our analysis could be adjusted to account for this or related information, although it is unclear to the authors whether such an adjustment would make the results more accurate.] 
+
+::: {.callout-note appearance="simple" collapse="true"}
+Data and code to reproduce the analysis and figures are available through [GitHub](https://github.com/jauerbach/what-is-data-science).
+:::
+
+## Data science is a shared enterprise among science and math 
+
+We use [naïve Bayes](https://en.wikipedia.org/wiki/Naive_Bayes_classifier#Multinomial_naive_Bayes) to measure the similarity between each occupation and data science in terms of the preparation required to work in that occupation. Specifically, we first pretend that the occupation "data scientist" did not exist and then use Bayes’ rule to calculate the probability that a hypothetical group of workers with the 35 degrees associated with data science could have come from one of the roughly 700 other occupations. The higher the measure, the more consistent that occupation is with data science.
+
+The use of Bayes’ rule is appealing because the similarity between a given occupation and data science takes into account the similarities between every other occupation and data science. Our use of Bayes’ rule is naïve in the sense that -- before collecting the data -- we assume these workers are equally likely to have come from any occupation. 
+
+The occupations with the largest probabilities, and thus most related to data science, are summarized in @fig-naive-bayes. We find that the hypothetical workers have a 50% chance of being natural sciences managers and a 50% chance of being statisticians or mathematicians.^[Note that natural sciences managers share 18 instructional programs with data scientists, while statisticians share 14.] We conclude that data science is a shared enterprise among science and math, and thus those trained in natural sciences have as much claim to data science as those trained in mathematics and statistics. 
+
+![We use [naïve Bayes](https://en.wikipedia.org/wiki/Naive_Bayes_classifier#Multinomial_naive_Bayes) to measure the similarity between each occupation and data science in terms of the preparation required to work in that occupation. We find that in terms of the preparation required to become a data scientist, data science is a shared enterprise among science and math.](images/fig-naive-bayes-1.png){#fig-naive-bayes}
+
+## Data science is closest to statistics in its role among other occupations 
+
+We use [eigen centrality](https://en.wikipedia.org/wiki/Centrality#Eigenvector_centrality) (eigen decomposition) to measure the similarity of each occupation in terms of its role relative to other occupations. Specifically, we calculate the principal right singular vector of the adjacency matrix denoting whether an instructional program (row) is associated with an occupation (column).^[Or alternatively, the principal eigenvector of the adjacency matrix denoting the number of instructional programs each occupation (row) has in common with each other occupation (column).] An occupation has high eigen centrality when the instructional programs that prepare a worker for that occupation also prepare that worker for many other occupations as well. This suggests that the higher the measure, the more central the role of the occupation relative to other occupations. 
+
+The eigen centrality of each occupation is displayed in @fig-centrality-growth. Each point represents an occupation, the x-axis denotes the centrality of the occupation, and the y-axis denotes the percent growth of the occupation as [predicted](https://www.bls.gov/emp/) by the US Bureau of Labor Statistics over the next decade. The figure demonstrates that data scientists and statisticians occupy nearly identical positions: Both are fast growing and central to the other occupations that work with data. In contrast, natural sciences managers are central but growing much more slowly, suggesting a role closer to managers. We conclude that -- though data scientists are prepared similarly to natural sciences managers -- a data scientist serves the same function as a statistician.
+
+![We use [eigen centrality](https://en.wikipedia.org/wiki/Centrality#Eigenvector_centrality) (eigen decomposition) to measure the similarity of each occupation in terms of its role relative to other occupations. We find that in terms of the role a data scientist serves relative to other occupations, a data scientist functions like a statistician.](images/fig-centrality-growth-1.png){#fig-centrality-growth}
+
+But this function may be changing. @fig-centrality-change shows the centrality (x-axis) of each occupation (y-axis) in 2010 and 2020. Green bars denote increases from 2010 to 2020 while yellow bars denote decreases. We find that the centrality of statisticians has declined over the past decade relative to other occupations, while the centrality of data scientists has grown. In fact, data science has now surpassed statistics as the most central fast-growing occupation. We conclude that though a data scientist and a statistician serve similar roles today, those roles may change as the workforce changes. Note that the occupation classifications changed in 2018, and we used the [crosswalk](https://www.bls.gov/soc/2018/crosswalks_used_by_agencies.htm) provided by the US Bureau of Labor Statistics to make these comparisons.
+
+![We use [eigen centrality](https://en.wikipedia.org/wiki/Centrality#Eigenvector_centrality) (eigen decomposition) to measure the similarity of each occupation in terms of its role relative to other occupations. We find that the centrality of statisticians has declined over the past decade relative to other occupations, while the centrality of data scientists has grown. Data science has now surpassed statistics as the most central fast-growing occupation. (Occupations predicted to grow more than 20% over the next decade shown.)](images/fig-centrality-change-1.png){#fig-centrality-change}
+
+The findings in this section are based on the adjacency matrix that encodes whether an instructional program (row) is associated with an occupation (column). A more detailed summary of the matrix is provided in @fig-interactive-plot, which depicts the matrix as a network graph. Larger nodes represent occupations that are growing faster, while nodes closer to the center of the network represent more central occupations. The figure is interactive. You can zoom in to see the similar positions between data scientists and statisticians, which are both large (fast growing) and central.
+
+::: {#fig-interactive-plot}
+```{=html}
+<div class="tv-iframe-container">
+  <iframe class="responsive-iframe" src="images/network.html" title="fig-interactive-plot"></iframe>
+</div>
+```
+
+A visualization of occupations as a network: Occupations are placed according to the instructional programs that train students for that occupation, with occupations closer together sharing more instructional programs in common. We find data scientists and statisticians occupy nearly identical positions at the center of the network. Occupations are colored according to the primary classification of instructional programs that train students for that occupation. Larger nodes represent occupations that are growing faster.
+:::
+
+## Is data science statistics? 
+
+We conclude that individuals trained in managing natural sciences research -- a slow growing occupation -- are turning to data science -- a much faster growing occupation, and one which currently serves a role like that of a statistician. But if present trends continue, data science is poised to eclipse the historic role of the statistician as central to the occupations that work with data.  
+
+This suggests that while data science may be new and exciting, the role served by the data scientist is not particularly new. This does not mean that data scientists necessarily use the same time-honored methods for data analysis as statisticians. It is the authors’ experience, however, that many data science tools are in fact statistical. Indeed, the two data science algorithms we used in this article are both taught to students as new and exciting, but in reality are centuries-old methods steeped in statistical history. 
+
+Regardless of whether data science is or is not statistics, the occupation "data scientist" has proven immensely popular, capturing a zeitgeist that has eluded statistics. This is best evidenced by the fact that data science -- and not statistics -- has been crowned the [sexiest](https://hbr.org/2012/10/data-scientist-the-sexiest-job-of-the-21st-century) job of the 21st century. But if statistics has not enjoyed the popularity of data science, perhaps the real question in need of answering is: What is statistics?
+
+::: article-btn
+[Explore more data science ideas](/foundation-frontiers/index.qmd)
+:::
+
+::: {.further-info}
+::: grid
+::: {.g-col-12 .g-col-md-12}
+About the author
+: **Jonathan Auerbach** is an assistant professor in the Department of Statistics at George Mason University. His research covers a wide range of topics at the intersection of statistics and public policy. His interests include the analysis of longitudinal data, particularly for data science and causal inference, as well as urban analytics, open data, and the collection, evaluation, and communication of official statistics.
+: **David Kepplinger** is an assistant professor in the Department of Statistics at George Mason University. His research revolves around methods for robust and reliable estimation and inference in the presence of aberrant contamination in high-dimensional, complex data. He has active collaborations with researchers from the medical, biological, and life sciences.
+: **Nicholas Rios** is an assistant professor of statistics at George Mason University. He earned his PhD in statistics 2022 from Penn State University, where his dissertation focused on designing optimal mixture experiments. His primary research interests are experimental design and methods for intelligent data collection in the presence of real-world constraints. He is also interested in functional data analysis, computational statistics, compositional data analysis, and the analysis of high-dimensional data.
+:::
+::: {.g-col-12 .g-col-md-6}
+Copyright and licence
+: &copy; 2023 Jonathan Auerbach, David Kepplinger, and Nicholas Rios
+
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> Text, code, and figures are licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>, except where otherwise noted. Thumbnail photo by <a href="https://unsplash.com/@marcsm?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Marc Sendra Martorell</a> on <a href="https://unsplash.com/photos/closeup-photo-of-two-bubbles-2BrdNFxW0UY?utm_content=creditCopyText&utm_medium=referral&utm_source=unsplash">Unsplash</a>.
+  
+  
+:::
+
+::: {.g-col-12 .g-col-md-6}
+How to cite
+: Auerbach, Jonathan, David Kepplinger, and Nicholas Rios. 2023. "What is data science? A closer look at science’s latest priority dispute." Real World Data Science, February 19, 2024. [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.10679962.svg){style="vertical-align:text-bottom;"}](https://doi.org/10.5281/zenodo.10679962)
+:::
+:::
+:::
