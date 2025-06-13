@@ -29,7 +29,7 @@ function Meta(m)
         share_text = share_text ..
             '<a href="https://twitter.com/share?url=' ..
             share_url ..
-            '&text=' .. post_title .. '" target="_blank" class="twitter"><i class="fab fa-twitter fa-fw fa-lg"></i></a>'
+            '&text=' .. post_title .. '" target="_blank" class="twitter"><i class="fab fa-x-twitter fa-fw fa-lg"></i></a>'
     end
     if m.share.linkedin then
         share_text = share_text ..
