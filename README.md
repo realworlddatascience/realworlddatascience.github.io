@@ -403,7 +403,7 @@ The code for this footer is below. For your `report.qmd`, edit the various secti
 
 ```markdown
 ::: {.article-btn}
-[Find more case studies](/case-studies/index.qmd)
+[Find more case studies](/applied-insights/case-studies/index.qmd)
 :::
 
 ::: {.further-info}
@@ -423,7 +423,7 @@ Copyright and licence
 
 ::: {.g-col-12 .g-col-md-6}
 How to cite
-: Linacre, Robin. 2023. "Deduplicating and linking large datasets using Splink." Real World Data Science, November 22, 2023. [URL](https://realworlddatascience.net/case-studies/posts/2023/11/22/splink.html)
+: Linacre, Robin. 2023. "Deduplicating and linking large datasets using Splink." Real World Data Science, November 22, 2023. [URL](https://realworlddatascience.net/applied-insights/case-studies/posts/2023/11/22/splink.html)
 :::
 :::
 :::
