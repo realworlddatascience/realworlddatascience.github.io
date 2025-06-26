@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Andrea Carlson and Thea Palmer Zimmerman">
+<meta name="dcterms.date" content="2023-08-21">
+<meta name="description" content="Andrea Carlson and Thea Palmer Zimmerman outline the policy issues driving the development of the Purchase to Plate Suite of data products and why linking retail scanner data to nutrition information is a time-consuming but crucial task.">
+
+<title>Food for Thought: The importance of the Purchase to Plate Suite – Real World Data Science</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../../">
+<link href="../../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
+<script src="../../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../../site_libs/bootstrap/bootstrap-3901242a6163a083287a72b055a46663.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
+</script>
+<!-- Thank you to Ben Ruijl for the progress bar code!
+Ben is on GitHub here: https://github.com/benruijl
+And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
+
+<meta property="og:title" content="Food for Thought: The importance of the Purchase to Plate Suite – Real World Data Science">
+<meta property="og:description" content="Andrea Carlson and Thea Palmer Zimmerman outline the policy issues driving the development of the Purchase to Plate Suite of data products and why linking retail scanner data to nutrition information is a time-consuming but crucial task.">
+<meta property="og:image" content="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/01-pps.png">
+<meta property="og:site_name" content="Real World Data Science">
+<meta property="og:image:height" content="724">
+<meta property="og:image:width" content="991">
+<meta property="og:image:alt" content="Dairy products lined up on refrigerator shelves in a farmers market in the United States.">
+<meta name="twitter:title" content="Food for Thought: The importance of the Purchase to Plate Suite – Real World Data Science">
+<meta name="twitter:description" content="Andrea Carlson and Thea Palmer Zimmerman outline the policy issues driving the development of the Purchase to Plate Suite of data products and why linking retail scanner data to nutrition information is a time-consuming but crucial task.">
+<meta name="twitter:image" content="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/01-pps.png">
+<meta name="twitter:site" content="@rwdatasci">
+<meta name="twitter:image-height" content="724">
+<meta name="twitter:image-width" content="991">
+<meta name="twitter:image:alt" content="Dairy products lined up on refrigerator shelves in a farmers market in the United States.">
+<meta name="twitter:card" content="summary_large_image">
+</head><body class="nav-fixed quarto-light"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
+
+<script id="progressbar" type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const bar = document.querySelector('#progress-bar');
+    const post = document.querySelector('#quarto-content');
+    const html = document.documentElement;
+    
+    const height = post.scrollHeight + post.offsetTop;
+    
+    window.addEventListener('scroll', () => {
+        bar.style.width = (html.scrollTop / (height- html.clientHeight)) * 100 + '%';
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../../rwds.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../the-pulse/index.html"> 
+<span class="menu-text">The Pulse</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../applied-insights/index.html"> 
+<span class="menu-text">Applied Insights</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../foundation-frontiers/index.html"> 
+<span class="menu-text">Foundation &amp; Frontiers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../people-paths/index.html"> 
+<span class="menu-text">People &amp; Paths</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About RWDS</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
+        <li>
+    <a class="dropdown-item" href="../../../../../../about-rwds.html">
+ <span class="dropdown-text">Who we are</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../../contributor-docs/call-for-contributions.html">
+ <span class="dropdown-text">How to contribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../../CODE_OF_CONDUCT.html">
+ <span class="dropdown-text">Code of conduct</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../../contact.html">
+ <span class="dropdown-text">Contact us</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Food for Thought: The importance of the Purchase to Plate Suite</h1>
+                  <div>
+        <div class="description">
+          <p>Andrea Carlson and Thea Palmer Zimmerman outline the policy issues driving the development of the Purchase to Plate Suite of data products and why linking retail scanner data to nutrition information is a time-consuming but crucial task.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Machine learning</div>
+                <div class="quarto-category">Natural language processing</div>
+                <div class="quarto-category">Public policy</div>
+                <div class="quarto-category">Health and wellbeing</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Andrea Carlson and Thea Palmer Zimmerman </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 21, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#methods-used-to-date" id="toc-methods-used-to-date" class="nav-link active" data-scroll-target="#methods-used-to-date">Methods used to date</a></li>
+  <li><a href="#linking-challenges" id="toc-linking-challenges" class="nav-link" data-scroll-target="#linking-challenges">Linking challenges</a></li>
+  <li><a href="#acknowledgements" id="toc-acknowledgements" class="nav-link" data-scroll-target="#acknowledgements">Acknowledgements</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/applied-insights/case-studies/posts/2023/08/21/01-purchase-to-plate.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<div class="callout callout-style-default callout-important callout-titled" style="margin-top: 0;">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+Disclaimer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The findings and conclusions in this publication are those of the authors and should not be construed to represent any official USDA or US Government determination or policy. This research was supported by the US Department of Agriculture’s Economic Research Service and Center for Nutrition, Policy and Promotion. Findings should not be attributed to Circana (formerly IRI).</p>
+</div>
+</div>
+<p>About 600,000 <a href="https://www.cdc.gov/nchs/fastats/leading-causes-of-death.htm">deaths per year in the United States</a> are related to chronic diseases that are linked to poor dietary choices. Many other individuals suffer from diet-related health conditions, which may limit their ability to work, learn, and be physically active <span class="citation" data-cites="usda_2020">(<a href="#ref-usda_2020" role="doc-biblioref">US Department of Agriculture and US Department of Health and Human Services 2020</a>)</span>. In recognition of the link between diet and health, in 1974 the Senate Select Committee on Nutrition and Human Needs, originally formed to eliminate hunger, expanded its focus to improving eating habits, nutrition policy and the national diet. Since 1980, the Dietary Guidelines for Americans have been released every five years by the US Departments of Agriculture (USDA) and Health and Human Services (DHHS). The guidelines present “<a href="https://www.dietaryguidelines.gov/">advice on what to eat and drink to meet nutrient needs, promote health, and prevent disease</a>”.</p>
+<p>Because there can be economic and social barriers to maintaining a healthy diet, USDA promotes <a href="https://www.usda.gov/nutrition-security">Food and Nutrition Security</a> so that everyone has consistent and equitable access to healthy, safe, and affordable foods that promote optimal health and well-being. A set of data tools called the <a href="https://www.ers.usda.gov/data-products/purchase-to-plate/">Purchase to Plate Suite</a> (PPS) supports these goals by enabling the update of the <a href="https://www.fns.usda.gov/snap/thriftyfoodplan#:~:text=What%20is%20the%20Thrifty%20Food,lowest%20cost%20of%20the%20four.">Thrifty Food Plan</a> (TFP), which estimates how much a budget-conscious family of four needs to spend on groceries to ensure a healthy diet. The TFP market basket – consisting of the specific amounts of various food categories required by the plan – forms the basis of the maximum allotment for the Supplemental Nutrition Assistance Program (SNAP, formerly known as the “Food Stamps” program), which provided financial support towards the cost of groceries for <a href="https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap">over 41 million individuals in almost 22 million households in fiscal year 2022</a>.</p>
+<p>The 2018 Farm Act (Agriculture Improvement Act of 2018) requires that USDA reevaluate the TFP every five years using current food composition, consumption patterns, dietary guidance, and food prices, and using approved scientific methods. USDA’s Economic Research Service (ERS) was charged with estimating the current food prices using retail food scanner data <span class="citation" data-cites="levin_et_al_2018 muth_et_al_2016">(<a href="#ref-levin_et_al_2018" role="doc-biblioref">Levin et al. 2018</a>; <a href="#ref-muth_et_al_2016" role="doc-biblioref">Muth et al. 2016</a>)</span> and utilized the PPS for this task. The most recent TFP update was released in August 2021 and the revised cost of the market basket was the first non-inflation adjustment increase in benefits for SNAP in over 40 years <span class="citation" data-cites="thrifty_food_plan_2021">(<a href="#ref-thrifty_food_plan_2021" role="doc-biblioref">US Department of Agriculture 2021</a>)</span>.</p>
+<p>The PPS combines datasets to enhance research related to the economics of food and nutrition. There are four primary components of the suite:</p>
+<ul>
+<li>Purchase to Plate Crosswalk (PPC),</li>
+<li>Purchase to Plate Price Tool (PPPT),</li>
+<li>Purchase to Plate National Average Prices (PP-NAP) for the National Health and Nutrition Examination Survey (NHANES), and</li>
+<li>Purchase to Plate Ingredient Tool (PPIT).</li>
+</ul>
+<p>The PPC allows researchers to measure the healthfulness of store purchases. On average <a href="https://www.ers.usda.gov/data-products/foodaps-national-household-food-acquisition-and-purchase-survey/summary-findings/#calories">US consumers acquire about 75% of their calories from retail stores</a>, and there are a number of studies linking the availability of foods at home to the healthfulness of the overall diet <span class="citation" data-cites="gattshall_et_al_2008 hanson_et_al_2005">(e.g., <a href="#ref-gattshall_et_al_2008" role="doc-biblioref">Gattshall et al. 2008</a>; <a href="#ref-hanson_et_al_2005" role="doc-biblioref">Hanson et al. 2005</a>)</span>. Thus, understanding the healthfulness of store purchases allows us to understand differences in consumers who purchase healthy versus less healthy foods, and may contribute to better policies that promote healthier food purchases. While healthier diets are linked to a lower risk of disease outcomes <span class="citation" data-cites="REEDY2014881">(<a href="#ref-REEDY2014881" role="doc-biblioref">Reedy et al. 2014</a>)</span>, other factors such as health care access may also be contributors <span class="citation" data-cites="cleary_et_al_2022">(<a href="#ref-cleary_et_al_2022" role="doc-biblioref">Cleary, Liu, and Carlson 2022</a>)</span>. The PPC also forms the basis of the price tool, PPPT – which allows researchers to estimate custom prices for dietary recall studies – and a new ERS data product, the <a href="https://www.ers.usda.gov/data-products/purchase-to-plate/">PP-NAP</a>. The national average prices from PP-NAP are used in reevaluating the TFP. By using the PP-NAP with 24-hour dietary recall information from surveys such as What We Eat in America (<a href="https://www.ars.usda.gov/northeast-area/beltsville-md-bhnrc/beltsville-human-nutrition-research-center/food-surveys-research-group/docs/wweianhanes-overview/">WWEIA</a>) – the dietary component of the nationally representative <a href="https://www.cdc.gov/nchs/nhanes/index.htm">National Health and Nutrition Examination Survey</a>(NHANES)<a href="#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> – researchers can examine the relationship between the cost of food, dietary intake, and chronic diseases linked to poor diets. The price estimates also allow researchers to develop cost-effective healthy diets such as <a href="https://www.myplate.gov/myplate-kitchen/recipes">MyPlate Kitchen</a>. The final component of the Purchase to Plate Suite, the ingredient tool (PPIT), breaks dietary recall-reported foods back into purchasable ingredients, based on US retail food purchases. The PPIT is also used in the revaluation of the TFP, and by researchers who want to look at the relationship between reported ingestion of grocery items, cost and disease outcomes using WWEIA/NHANES. More information on the development of the PPC is available in two papers by Carlson et al. <span class="citation" data-cites="carlson_et_al_2019 carlson_et_al_2022">(<a href="#ref-carlson_et_al_2019" role="doc-biblioref">2019</a>, <a href="#ref-carlson_et_al_2022" role="doc-biblioref">2022</a>)</span>.</p>
+<p>The Food for Thought competition aimed to support the development of the PPC – and thus policy-oriented research – by linking retail food scanner data to the USDA nutrition data used to analyze NHANES dietary recall data, specifically the Food and Nutrient Database for Dietary Studies (FNDDS) <span class="citation" data-cites="fndds_2018 fndds_2020">(<a href="#ref-fndds_2018" role="doc-biblioref">2018</a>, <a href="#ref-fndds_2020" role="doc-biblioref">2020</a>)</span>. In particular, the competition set out to use artificial intelligence (AI) to reduce human resources in creating the links for the PPC, while still maintaining the high-quality standards required for reevaluating the TFP and for data published by ERS (which is one of 13 Principle Statistical Agencies in the United States Federal Government).</p>
+<section id="methods-used-to-date" class="level2">
+<h2 class="anchored" data-anchor-id="methods-used-to-date">Methods used to date</h2>
+<p>On the surface, the linking process may appear simple: both the FNDDS and retail food scanner data are databases of food. But the scanner data are produced for market research, and the FNDDS for dietary studies. The scanner data include about 350,000 items with sales each year, while the FNDDS has only 10,000–15,000 items. Scanner data relates to specific products, while FNDDS items are often more general. Both datasets have different hierarchical structures – the FNDDS hierarchy is based around major food groups: dairy; meat, poultry and seafood; eggs; nuts and legumes; grains; fruits; vegetables; fats and oils; and sugars, sweets, and beverages. Items fall into the groups regardless of preparation method or form. That is, broccoli prepared from frozen and from fresh both appear in the vegetable group, and for some fruits and vegetables, the fresh, frozen, canned and dried form are the same FNDDS item. Vegetable-based mixed dishes, such as broccoli and carrot stir-fry or soup, are also classified in the vegetable group. On the other hand, the scanner data classifies foods by grocery aisle. That is, the fresh and frozen broccoli are classified in different areas: produce and frozen vegetables. Similarly, when sold as a prepared food, the broccoli and carrot stir-fry may be found in the frozen entries, as a kit in either the frozen or produce section, refrigerated foods, or all of these.</p>
+<p>To allow researchers to import the FNDDS nutrient data into the scanner data, a one-to-many match between FNDDS and scanner data items was needed. The food descriptions in the scanner data include brand names and package sizes and are written as a consumer would pronounce them – e.g., fresh and crisp broccoli florets, ready-cut, 10 oz – versus a more general FNDDS description such as “Broccoli, raw”. (Also linked to the “Broccoli, raw” code would be broccoli sold with stems attached, broccoli spears, and any other way raw broccoli is sold.) In the scanner data, the Universal Product Code (UPC) and the European Article Number (EAN) can link items between tables within the scanner data, as well as between datasets of grocery items, such as the USDA Global Branded Foods Product Database, a component of <a href="https://fdc.nal.usda.gov/index.html">USDA’s Food Data Central</a>. However, these codes are not related to the FNDDS codes, or any other column within the FNDDS. In other words, before development of the PPC, there were no established linking identifiers.</p>
+<p>Figure 1 shows the process USDA uses to develop matches between scanner data and FNDDS.</p>
+<p><a href="images/pt1-fig1.png"><img src="images/pt1-fig1.png" class="img-fluid" width="700"></a></p>
+<div class="figure-caption">
+<p><strong>Figure 1:</strong> Process currently used to create the matches between the USDA Food and Nutrient Database for Dietary Studies (FNDDS) and the retail scanner data (labelled “IRI” for the IRI InfoScan and Consumer Network) product dictionaries. Source: Author provided.</p>
+</div>
+<p>We start the linking process by categorizing the scanner data items into homogeneous groups to make the first round of automated matching more efficient. To save time, we use the second lowest hierarchical category in the scanner data which generally divides items within a grocery aisle into homogenous groups such as produce, canned beans, baking mixes, and bread. Once the linking categories for scanner data are established, we select appropriate items from the FNDDS. Since the FNDDS is highly structured, this selection is usually straightforward.</p>
+<p>Our next step is to use semantic matching to create a search table that aligns similar terms within the IRI product dictionary and FNDDS. This first requires that we extract attributes from the FNDDS descriptions into fields similar to those in the scanner data product dictionary. The FNDDS descriptions are found across multiple columns because they are added as the need arises to provide examples of brand names or alternative descriptions of foods which help code the foods WWEIA participants report eating. We manually create matching tables that link terms used in FNDDS to those used in the scanner data, organized by the fields defined in the restructured FNDDS. We then use this table as the basis of a probabilistic matching process. For example, when linking the produce group, “fresh” in the scanner data would be aligned with “raw” and “prepared from fresh” and NOT “prepared from frozen” in the FNDDS, and “broccoli florets” would also be aligned with “raw” and “broccoli”. Since the FNDDS is designed to code the foods individuals report eating, many of the foods in the FNDDS are already prepared and result in descriptions such as “broccoli, steamed, prepared from fresh” or “broccoli, boiled, prepared from frozen”.</p>
+<p>Once the linking table is established, the probabilistic match process returns the single best possible match for each item in the scanner data. For example, a match between fresh broccoli florets and frozen broccoli would have a lower probability score than “broccoli, raw”. Because these matches form the basis of major USDA policies, we cannot accept an error rate of more than 5 percent, and lower is preferred. To reach that goal, nutritionists review every match to make sure the probabilistic match did not return a match between cauliflower florets and fresh broccoli, say, or that a broccoli and carrot stir-fry is not matched to a dish with broccoli, carrots, and chicken. The correct matches, such as the one between fresh broccoli florets and raw broccoli, are set aside while the items with an incorrect match, such as cauliflower florets and the broccoli and carrot stir-fry, are used to revise the search table. Revisions might include adding (NOT chicken) to the broccoli and carrot stir-fry dish. Mixed dishes — such as the broccoli and carrot stir-fry — pose particular challenges because there are a wide variety of similar products available in the grocery store. After a few rounds of revising the search table and running the probabilistic match process, it is more efficient to use a manual match, established by one nutritionist and reviewed by another, after which the match is assumed to be correct.</p>
+<p>The process improved with each new wave of FNDDS and IRI data. Our first creation of the PPC linked the FNDDS 2011/12 to the 2013 IRI retail scanner data. Subsequent waves started with the previous search table and resulting matches were reviewed by nutritionists. We also used more fields in the IRI product dictionary to create the homogeneous linking groups and made modifications to these groups with each wave. During each wave we experimented with the number of rounds of probabilistic matching that was the most cost effective. For some linking groups it took less human time to manually match from the start, while for other groups it was more efficient to do multiple rounds of improvements to the search table. Starting with the most recent wave (matching FNDDS 2017/18 to the 2017 and 2018 retail scanner data), we assumed previous matches appearing in the newer data were correct. Although this assumption was good for most matches, a review demonstrated the need to review previous matches prior to removing the item from the list of scanner data items needing FNDDS matches. In the future we intend to explore methods developed by the participants of the Food for Thought competition.</p>
+</section>
+<section id="linking-challenges" class="level2">
+<h2 class="anchored" data-anchor-id="linking-challenges">Linking challenges</h2>
+<p>An ongoing challenge to the linking problem is that both the scanner data and the FNDDS undergo substantive changes each year, meaning that both the previous matches and search tables need to be reviewed and revised with each new effort, as tables that work with one cycle of FNDDS and scanner data will need revisions to use with the next cycle. Changes to the scanner data that impact our current method include dropped and added items, data corrections, and revisions to the categories that form the basis of the homogeneous linking groups. In addition, there are errors such as incorrect food descriptions, conflicting package size information, and changes in the item description from year to year. Since the FNDDS is designed to support dietary recall studies, revisions reflect both changes to available foods and the level of detail respondents can provide. These revisions result in dropped/added food codes, changes to food descriptions that impact which scanner data items match to the FNDDS items, and revisions to recipes used in the nutrient coding which impacts the number of retail ingredients available in the FNDDS.</p>
+<p>Of the four parts of the PPS, establishing the matches is the most time-consuming task and constitutes at least 60 percent of the total budget. In the most recent round, we had 168 categories and each one went through 2-3 automated matching rounds; after each round, nutritionists spent an average of two hours reviewing the matches. This adds up to somewhere between 670 and 1,000 hours of review time. After the automated review, manual matching requires an additional 300 hours. Reducing the amount of time required to establish matches and link the FNDDS and retail scanner datasets may lead to significant time savings, resulting in faster data availability. That, in turn, could allow more timely policy-based research, and the mandated revision of the Thrifty Food Plan can continue with the most recent food price data.</p>
+<div class="nav-btn-container">
+<div class="grid">
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/00-food-for-thought.html">← Introduction</a></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/02-competition-design.html">Part 2: Competition design →</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+<strong>Andrea Carlson</strong> is an agricultural economist in the Food Markets Branch of the Food Economics Division in USDA’s Economic Research Service. She is the project lead for the Purchase to Plate Suite, which allows users to import USDA nutrient and food composition data into retail food scanner data acquired by USDA and estimate individual food prices for dietary intake data.
+</dd>
+<dd>
+<p><strong>Thea Palmer Zimmerman</strong> is a senior study director and research nutritionist at Westat.</p>
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Image credit</dt>
+<dd>
+Thumbnail photo by <a href="https://unsplash.com/@neonbrand?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Kenny Eliason</a> on <a href="https://unsplash.com/photos/SvhXD3kPSTY?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Carlson, Andrea, and Thea Palmer Zimmerman. 2023. “Food for Thought: The importance of the Purchase to Plate Suite.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/the-pulse/case-studies/posts/2023/08/21/01-purchase-to-plate.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</section>
+<section id="acknowledgements" class="level2">
+<h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
+<p>The research presented in this compendium supports the Purchase to Plate Suite of data products. Carlson has been privileged to both develop and lead this project over the course of her career, but it is not a solo project. Many thanks to the Linkages Team from USDA’s Economic Research Service (Christopher Lowe, Mark Denbaly Elina Page, and Catherine Cullinane Thomas) the Center for Nutrition Policy and Promotion (Kristin Koegel, Kevin Kuczynski, Kevin Meyers Mathieu, TusaRebecca Pannucci), and our contractor Westat, Inc.&nbsp;(Thea Palmer Zimmerman, Carina E. Tornow, Amber Brown McFadden, Caitlin Carter, Viji Narayanaswamy, Lindsay McDougal, Elisha Lubar, Lynnea Brumby, Raquel Brown, and Maria Tamburri). Many others have supported this project over the years.</p>
+
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-carlson_et_al_2019" class="csl-entry" role="listitem">
+Carlson, A. C., E. T. Page, T. P. Zimmerman, C. E. Tornow, and S. Hermansen. 2019. <span>“Linking USDA Nutrition Databases to IRI Household-Based and Store-Based Scanner Data.”</span> Technical bulletin 1952. US Department of Agriculture, Economic Research Service.
+</div>
+<div id="ref-carlson_et_al_2022" class="csl-entry" role="listitem">
+Carlson, A. C., C. E. Tornow, E. T. Page, A. Brown McFadden, and T. Palmer Zimmerman. 2022. <span>“Development of the Purchase to Plate Crosswalk and Price Tool: Estimating Prices for the National Health and Nutrition Examination Survey (NHANES) Foods and Measuring the Healthfulness of Retail Food Purchases.”</span> <em>Journal of Food Composition and Analysis</em> 106: 104344. <a href="https://doi.org/10.1016/j.jfca.2021.104344">https://doi.org/10.1016/j.jfca.2021.104344</a>.
+</div>
+<div id="ref-cleary_et_al_2022" class="csl-entry" role="listitem">
+Cleary, R., Y. Liu, and A. Carlson. 2022. <span>“Differences in the Distribution of Nutrition Between Households Above and Below Poverty.”</span> Agricultural and Applied Economic Association Annual Meeting. Anaheim, CA. <a href="https://ageconsearch.umn.edu/record/322267">https://ageconsearch.umn.edu/record/322267</a>.
+</div>
+<div id="ref-gattshall_et_al_2008" class="csl-entry" role="listitem">
+Gattshall, M. L., J. A. Shoup, J. A. Marshall, L. A. Crane, and P. A. Estabrooks. 2008. <span>“Validation of a Survey Instrument to Assess Home Environments for Physical Activity and Healthy Eating in Overweight Children.”</span> <em>International Journal of Behavioral Nutrition and Physical Activity</em> 5 (3). <a href="https://doi.org/10.1186/1479-5868-5-3">https://doi.org/10.1186/1479-5868-5-3</a>.
+</div>
+<div id="ref-hanson_et_al_2005" class="csl-entry" role="listitem">
+Hanson, N. I., D. Neumark-Sztainer, M. E. Eisenberg, M. Story, and M. Wall. 2005. <span>“Associations Between Parental Report of the Home Food Environment and Adolescent Intakes of Fruits, Vegetables and Dairy Foods.”</span> <em>Public Health Nutrition</em> 8 (1). <a href="https://doi.org/10.1079/PHN2005661">https://doi.org/10.1079/PHN2005661</a>.
+</div>
+<div id="ref-levin_et_al_2018" class="csl-entry" role="listitem">
+Levin, D., D. Noriega, C. Dicken, A. Okrent, M. Harding, and M. Lovenheim. 2018. <span>“Examining Store Scanner Data: A Comparison of the IRI Infoscan Data with Other Data Sets, 2008-12.”</span> Technical bulletin 1949. US Department of Agriculture, Economic Research Service.
+</div>
+<div id="ref-muth_et_al_2016" class="csl-entry" role="listitem">
+Muth, M. K., M. Sweitzer, D. Brown, K. Capogrossi, S. Karns, D. Levin, A. Okrent, P. Siegel, and C. Zhen. 2016. <span>“Understanding IRI Household-Based and Store-Based Scanner Data.”</span> Technical bulletin 1942. US Department of Agriculture, Economic Research Service.
+</div>
+<div id="ref-REEDY2014881" class="csl-entry" role="listitem">
+Reedy, J., S. M. Krebs-Smith, P. E. Miller, A. D. Liese, L. L. Kahle, Y. Park, and A. F. Subar. 2014. <span>“Higher Diet Quality Is Associated with Decreased Risk of All-Cause, Cardiovascular Disease, and Cancer Mortality Among Older Adults.”</span> <em>The Journal of Nutrition</em> 144 (6): 881–89. <a href="https://doi.org/10.3945/jn.113.189407">https://doi.org/10.3945/jn.113.189407</a>.
+</div>
+<div id="ref-thrifty_food_plan_2021" class="csl-entry" role="listitem">
+US Department of Agriculture. 2021. <span>“Thrifty Food Plan, 2021.”</span> Food and Nutrition Service 916. US Department of Agriculture. <a href="https://FNS.usda.gov/TFP">https://FNS.usda.gov/TFP</a>.
+</div>
+<div id="ref-fndds_2018" class="csl-entry" role="listitem">
+US Department of Agriculture, Agricultural Research Service. 2018. <span>“USDA Food and Nutrient Database for Dietary Studies 2015-2016.”</span> US Department of Agriculture, Agricultural Research Service. <a href="https://www.ars.usda.gov/nea/bhnrc/fsrg">https://www.ars.usda.gov/nea/bhnrc/fsrg</a>.
+</div>
+<div id="ref-fndds_2020" class="csl-entry" role="listitem">
+———. 2020. <span>“USDA Food and Nutrient Database for Dietary Studies 2017-2018.”</span> US Department of Agriculture, Agricultural Research Service. <a href="https://www.ars.usda.gov/nea/bhnrc/fsrg">https://www.ars.usda.gov/nea/bhnrc/fsrg</a>.
+</div>
+<div id="ref-usda_2020" class="csl-entry" role="listitem">
+US Department of Agriculture and US Department of Health and Human Services. 2020. <span>“Dietary Guidelines for Americans, 2020-2025.”</span> 9th edition. <span>US Department of Agriculture and US Department of Health and Human Services</span>. <a href="https://DietaryGuidelines.gov">https://DietaryGuidelines.gov</a>.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>NHANES is a multi-module continuous survey conducted by the Centers for Disease Control and Prevention. In addition to the WWEIA, NHANES includes a four-hour complete medical exam including a health history, and a blood and urine analysis.<a href="#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/realworlddatascience\.net\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "realworlddatascience/realworlddatascience.github.io";
+    script.dataset.repoId = "R_kgDOILnnig";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDOILnnis4CSt2s";
+    script.dataset.mapping = "title";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><a href="../../../../../../LICENCE.html">Copyright © 2025 Royal Statistical Society</a></p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/realworlddatascience">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience">
+<p><i class="ai  ai-zenodo ai-2xl"></i></p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/rwdatasci">
+      <i class="bi bi-twitter-x" role="img" aria-label="Twitter/X">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@rwdatasci">
+      <i class="bi bi-mastodon" role="img" aria-label="Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="../../../../../../feeds.html">
+      <i class="bi bi-rss" role="img" aria-label="RWDS rss">
+</i> 
+    </a>
+  </li>  
+</ul>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/applied-insights/case-studies/posts/2023/08/21/01-purchase-to-plate.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p><a href="../../../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

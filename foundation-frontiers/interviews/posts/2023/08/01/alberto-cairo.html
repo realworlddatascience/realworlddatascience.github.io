@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Brian Tarran">
+<meta name="dcterms.date" content="2023-08-01">
+<meta name="description" content="In his upcoming new book, journalist and designer Alberto Cairo explores the idea of ‘data visualization as language’, one with many different dialects – statistical, journalistic, artistic, and so on. These dialects are not mutually exclusive, he says. So, what might they learn from each other?">
+
+<title>The many ‘dialects’ of data visualization: Alberto Cairo and ‘The Art of Insight’ – Real World Data Science</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../../">
+<link href="../../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
+<script src="../../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../../site_libs/bootstrap/bootstrap-3901242a6163a083287a72b055a46663.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../../site_libs/quarto-contrib/social-share-1.0.0/social-share.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-contrib/social-share-1.0.0/all.min.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
+</script>
+<!-- Thank you to Ben Ruijl for the progress bar code!
+Ben is on GitHub here: https://github.com/benruijl
+And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
+
+<meta property="og:title" content="The many ‘dialects’ of data visualization: Alberto Cairo and ‘The Art of Insight’ – Real World Data Science">
+<meta property="og:description" content="In his upcoming new book, journalist and designer Alberto Cairo explores the idea of ‘data visualization as language’, one with many different dialects – statistical, journalistic, artistic, and so on. These dialects are not mutually exclusive, he says. So, what might they learn from each other?">
+<meta property="og:image" content="https://realworlddatascience.net/foundation-frontiers/interviews/posts/2023/08/01/images/alberto-cairo.png">
+<meta property="og:site_name" content="Real World Data Science">
+<meta property="og:image:height" content="724">
+<meta property="og:image:width" content="991">
+<meta property="og:image:alt" content="Portrait photo of Alberto Cairo by JCA Photography">
+<meta name="twitter:title" content="The many ‘dialects’ of data visualization: Alberto Cairo and ‘The Art of Insight’ – Real World Data Science">
+<meta name="twitter:description" content="In his upcoming new book, journalist and designer Alberto Cairo explores the idea of ‘data visualization as language’, one with many different dialects – statistical, journalistic, artistic, and so on. These dialects are not mutually exclusive, he says. So, what might they learn from each other?">
+<meta name="twitter:image" content="https://realworlddatascience.net/foundation-frontiers/interviews/posts/2023/08/01/images/alberto-cairo.png">
+<meta name="twitter:site" content="@rwdatasci">
+<meta name="twitter:image-height" content="724">
+<meta name="twitter:image-width" content="991">
+<meta name="twitter:image:alt" content="Portrait photo of Alberto Cairo by JCA Photography">
+<meta name="twitter:card" content="summary_large_image">
+</head><body class="nav-fixed fullcontent quarto-light"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
+
+<script id="progressbar" type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const bar = document.querySelector('#progress-bar');
+    const post = document.querySelector('#quarto-content');
+    const html = document.documentElement;
+    
+    const height = post.scrollHeight + post.offsetTop;
+    
+    window.addEventListener('scroll', () => {
+        bar.style.width = (html.scrollTop / (height- html.clientHeight)) * 100 + '%';
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../../rwds.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../the-pulse/index.html"> 
+<span class="menu-text">The Pulse</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../applied-insights/index.html"> 
+<span class="menu-text">Applied Insights</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../foundation-frontiers/index.html"> 
+<span class="menu-text">Foundation &amp; Frontiers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../people-paths/index.html"> 
+<span class="menu-text">People &amp; Paths</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About RWDS</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
+        <li>
+    <a class="dropdown-item" href="../../../../../../about-rwds.html">
+ <span class="dropdown-text">Who we are</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../../contributor-docs/call-for-contributions.html">
+ <span class="dropdown-text">How to contribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../../CODE_OF_CONDUCT.html">
+ <span class="dropdown-text">Code of conduct</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../../contact.html">
+ <span class="dropdown-text">Contact us</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">The many ‘dialects’ of data visualization: Alberto Cairo and ‘The Art of Insight’</h1>
+                  <div>
+        <div class="description">
+          <p>In his upcoming new book, journalist and designer Alberto Cairo explores the idea of ‘data visualization as language’, one with many different dialects – statistical, journalistic, artistic, and so on. These dialects are not mutually exclusive, he says. So, what might they learn from each other?</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Data visualisation</div>
+                <div class="quarto-category">Communication</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Brian Tarran </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 1, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+<div class="page-columns page-rows-contents page-layout-article"><div class="social-share"><a href="https://twitter.com/share?url=https://realworlddatascience.net/foundation-frontiers/interviews/posts/2023/08/01/alberto-cairo.html&amp;text=The many ‘dialects’ of data visualization: Alberto Cairo and ‘The Art of Insight’" target="_blank" class="twitter"><i class="fab fa-x-twitter fa-fw fa-lg"></i></a><a href="https://www.linkedin.com/shareArticle?url=https://realworlddatascience.net/foundation-frontiers/interviews/posts/2023/08/01/alberto-cairo.html&amp;title=The many ‘dialects’ of data visualization: Alberto Cairo and ‘The Art of Insight’" target="_blank" class="linkedin"><i class="fa-brands fa-linkedin-in fa-fw fa-lg"></i></a>  <a href="mailto:?subject=The many ‘dialects’ of data visualization: Alberto Cairo and ‘The Art of Insight’&amp;body=Check out this link:https://realworlddatascience.net/foundation-frontiers/interviews/posts/2023/08/01/alberto-cairo.html" target="_blank" class="email"><i class="fa-solid fa-envelope fa-fw fa-lg"></i></a><a href="https://bsky.app/intent/compose?text=https://realworlddatascience.net/foundation-frontiers/interviews/posts/2023/08/01/alberto-cairo.html The many ‘dialects’ of data visualization: Alberto Cairo and ‘The Art of Insight’" target="_blank" class="bsky"><i class="fa-brands fa-bluesky"></i></a></div></div>
+
+
+
+
+
+<p>Alberto Cairo is Knight Chair in Visual Journalism at the School of Communication of the University of Miami (UM). He’s also the director of visualization at UM’s Institute for Data Science and Computing. He joins Real World Data Science to discuss his upcoming book, <em>The Art of Insight: How Great Visualization Designers Think</em>, in which Cairo reflects on his conversations with data artists, data journalists, and information designers.</p>
+<p>“If we can conceptualise data visualization as language, this language can have multiple dialects,” says Cairo. “And these dialects – let’s say the statistical dialect, the data journalism dialect, the art dialect – they are not mutually exclusive. They exist, or they should exist, ideally, in constant conversation with each other. So, we can borrow ideas from each other, learn from each other.”</p>
+<p>Listen to the full interview below or on <a href="https://www.youtube.com/watch?v=htUWWVzYTUI">YouTube</a>.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/htUWWVzYTUI" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p>Find out more about Cairo’s work and his upcoming book at <a href="http://www.thefunctionalart.com/">thefunctionalart.com</a>.</p>
+<section id="transcript" class="level2">
+<h2 class="anchored" data-anchor-id="transcript">Transcript</h2>
+<div class="callout callout-style-simple callout-warning" style="margin-top: 0.75rem;">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>This transcript has been produced using <a href="https://otter.ai/">speech-to-text transcription software</a>. It has been only lightly edited to correct mistranscriptions and remove some repetitions.</p>
+</div>
+</div>
+</div>
+<p><strong>Brian Tarran</strong><br>
+Hello, and welcome to Real World Data Science. I’m Brian Tarran. And today I’m joined by Alberto Cairo, Knight chair in visual journalism at the School of Communication of the University of Miami. He’s also the director of visualization at UM’s Institute for data science and computing. Alberto, welcome. Thanks for joining us.</p>
+<p><strong>Alberto Cairo</strong><br>
+Hi, Brian. Very nice to be here. Thank you for inviting me.</p>
+<p><strong>Brian Tarran</strong><br>
+No worries. Well, today we’re excited to be discussing your new book, The Art of Insight: How Great Visualization Designers Think. I think it’s a really– I’ve not read all of it yet. I’ve dipped in and out of some chapters that you kindly sent me ahead of time. I think it’s really interesting and unique. I think the thing that struck me was often when we talk about visualization design, we tend to concentrate on what designers do, not necessarily about how they think about what they do, or how they think generally. And so, that was to be my first question for you is like, what aspects of their thought processes, these experts, what were you really trying to understand and why?</p>
+<p><strong>Alberto Cairo</strong><br>
+Yeah, yeah, this latest book of mine is very different to the previous one that I– that I wrote. The book is not out yet, by the way, the book will be out in November of 2023. I am in the process of copy editing it, getting rid of typos. But as you said, I mean the book focuses not so much on the– on the work itself, but more on the people who produce the work and the motivations and values that lie behind the work that they do. It is also, in comparison to my previous books, it is also a shift of perspective, I would say because my previous books, particularly The Truthful Art and How Charts Lie which came out in 2019, focus mostly on statistical visualization. Right, so it has a very strong, they both have a very strong statistical focus – how to make sure that your graphs and your data maps don’t deceive people. I teach elementary principles of visualization, of communication through visualization. But visualization is much more than that. And that is what I wanted to convey with this book. More and more throughout the years, I have come to understand data visualization not so much as a representation of data for insight or for communication, but as a language, a language that can be used for many different purposes. And I try to reflect that in the book. Obviously, a great part of the book is devoted to people who come from the same world where I come from, the professional world where I come from, the world of data journalism, so plenty of them are data journalists. Many of them are data analysts and statisticians and researchers. But a good portion of the book is devoted to people who use– who use visualization for other purposes such as self expression, self discovery, art in some cases. I wanted to provide a sort of like a broader understanding of the language of visualization and I also talk about– I also discussed the fact that if we can conceptualize data visualization as language, this language can have multiple dialects. And that is what I wanted to convey in the book. And these are not, these dialects – let’s say the statistical dialect, the data journalism dialect, the art dialect – they are not mutually exclusive. They exist, or they should exist, ideally, in constant conversation with each other. So we can borrow ideas from each other, learn from each other. So I wanted to provide sort of like an overview of the huge diversity that exists in the world of visualization – in terms of people, in terms of race, in terms of gender, but also in terms of the dialects that people use.</p>
+<p><strong>Brian Tarran</strong><br>
+Yeah, and is that almost pushing back a little bit at this idea that, you know, if visualization is a language in the same way that English is or Spanish is or whatever it might be, that there are– there must be rules that people have to follow?</p>
+<p><strong>Alberto Cairo</strong><br>
+Yeah, I push back against that a little bit in the book because obviously, I mean, what I have taught and what I continue talking– talking about at the– talking about at the University of Miami, what I teach my classes, is what you could call let’s say standard data visualization, right? Data visualization for communication. I discuss a lot about, you know, cognitive science, you know, perception, you know, how to apply that, colour palettes – I just do standard data visualization. But that is just one of the dialects that data visualization has, right? Data visualization can be used for journalism, for business analytics, for statistics, for art, for expression, for self discovery – some of the people who I interviewed, plot their own data, for example, their own health metrics, as a way to reduce their own anxiety. So I interviewed, for example, a person who has gone through– who in the past went through very serious health problems like cancer, brain cancer and other health problems, and he discovered that the process of designing visualizations based on his own data was similar to– had similar effects as meditating about your own thoughts, right. It was a way to pour your anxiety and your dark feelings onto the graphic, so they will not overburden your mind. I find that absolutely fascinating. And it shows you that, I believe, that’s what I– what I reflect in the book, that there are really no universal rules in data visualization. There are parochial rules that are applicable to different– to the different dialects. But it is it is wrong, it is a mistake, to apply the standards of one of the dialects of data visualization to a completely different dialect of data visualization. Every visualization, I feel or I think, should be judged according to their own terms, to the terms in which they were created.</p>
+<p><strong>Brian Tarran</strong><br>
+The book is essentially set out as a series of discussions with these visualization designers, right. And then it’s your interspersed reflections on the conversations and things that you’re sort of taking away from them. And when you were saying in the introduction about why you wanted to have these conversations, you say you were kind of looking to, or needing to, rekindle your love for the design of information. So I wanted to ask you, maybe I’ve misjudged that sentence, but you know, had you fallen out of love with the design of information? Or did you just kind of get to that point where you thought, oh, there must be more to it than this, the way I– the way I work. What was the– what was the motivating force driving you down this path?</p>
+<p><strong>Alberto Cairo</strong><br>
+It’s not that I stopped, you know, being in love with data visualization, or more broadly with information design, because I teach information design – data visualization is one of the branches of information design. So I also teach, you know, illustration driven visual explanations – how an airplane works, and you do a cutaway of the airplane and you show the engines and how they work. I also do that type of information design. So it’s not that I ever stopped being in love with– with the work that I do. As I explain, by the way, in the conclusions of the book, in the epilogue of the book, which circles back to the themes in the prologue, information design and data visualization are a great part of who I am as a person. To me, it’s a way of life. I use visualization not only to communicate with other people, I use visualization also to study. When I am reading a book, I am probably producing a visualization of the book, like some sort of network diagram, in which I plot all the ideas from the book. That’s a technique, a mnemonic technique, that I learned from my– from my father, who is a medical doctor, but also a humanist. He taught me this technique to study: when you’re reading a book, just write down the concepts that you’re learning about, and then connect them with arrows make little comments on the side. Indirectly he was teaching me to make data visualization. So data visualization, information design has permeated my life since I was very, very young – since I– since I didn’t have the language to talk about what I was doing. But at the same time, in the past three or four years, many personal circumstances led me to feel, let’s say, my morale went down quite a lot, the pandemic also and then some personal problems and stuff. And I started feeling a little bit disillusioned with my own– with my own work, like having self doubts, right? Am I doing the right thing? Am I in the right career? Should I be doing something else? Have I written everything that I wanted to write about this field? Have I designed every graphic that was worthy to be designed? And I felt the need to connect with other people. Because something that I discovered throughout the years is that we human beings, we don’t think well when we are alone, we think better when we are in connection with others. So my conversations with the many friends that are showcased in the book, obviously I wanted to give their work and their lives and their values visibility because I believe that they are worthy to be explored and understood by readers. But it was also a way for me to sort of like recover a little bit of the passion that I had about information design in the past – and I was successful. I mean, I went out of– The process of writing a book can be grueling. So, while you’re writing a book, you’re always thinking, you know, this is crap. What is it that I’m doing? I don’t know where I’m going. But in hindsight, now that the book is written, and I am reviewing it, I am thinking, hmm, this is not bad. This is not bad, right? And I discovered that I was– I felt energized, thanks to all these conversations with tons of inspiring people from all over the world.</p>
+<p><strong>Brian Tarran</strong><br>
+I think I can sort of sympathize with that, you know, the process of creating – I don’t do data visualization myself – but creating content, it can be quite a lonely process sometimes. And you do have that, I always talk about the roller coaster of emotions – of the peaks, were you think you’re doing a great job, and then the troughs where you’re like, Oh, my God, why or I should just throw it all in. So actually being able to sit down and talk to people and share ideas does inspire you, does sort of bring you back up again, doesn’t it? But I was worried, actually, that because the last time we spoke was, I think, around the time that How Charts Lie had come out, and you were interviewed by one of our freelance writers on Significance magazine – where I was at the time – and I thought, oh, no, maybe– maybe all that encountering the dark side of data visualization and all that misinformation that was out there…</p>
+<p><strong>Alberto Cairo</strong><br>
+That I felt depressed, right, because the book was useless, or not useless. But I mean, it was not read by the people – How Charts Lie, I mean – it was not read by the people who needed to read the book.</p>
+<p><strong>Brian Tarran</strong><br>
+That is always the case with these books, isn’t it? So they– they’re really valuable, if only you could get them in the hands of the right people. That’s the challenge.</p>
+<p><strong>Alberto Cairo</strong><br>
+We preach– We preach to the choir a little bit with these type of books, unfortunately, yeah.</p>
+<p><strong>Brian Tarran</strong><br>
+Well, I still enjoyed it anyway. And it’s always valuable to, to listen to experts like yourself and take learnings from those. So the, the things that– the interviews I’ve read, I’ve not read all of them, but I think the things that jumped out for me – the interviews with people like Ed Hawkins, talking about the Warming Stripes, you know, talking about how their focus is less about – and tell me if I’m mischaracterizing this – it’s less about direct communication of information or data, it’s more about conveying like a feeling or an intuitive understanding of something. And obviously, warming stripes, most people have seen those, you know – the kind of plots of changes in temperature against a baseline over time and the kind of rapid shift to deeper, darker shades of red as we get closer to the present, you know – I think they do create a sense of the urgency of the climate crisis when you just look at them. But what lessons do you as a kind of, you know, as a data visualization designer, a journalistic data visualization designer, what do you take from those sorts of examples, where it isn’t direct communication, of information or data, it’s about feeling? What can you– what can you take from that and bring to your own work?</p>
+<p><strong>Alberto Cairo</strong><br>
+Well, the fact, as I was saying before, that not all visualizations are alike, as I explained in that chapter. Hawkins got a little bit of pushback, because that visualization broke some rules – and I’m doing sort of like scare quotes with my fingers right now, right? It broke some rules because it doesn’t have axes, it doesn’t have scales. It’s just a beautiful picture. But that is valuable, that is valuable, and it’s proven that it is valuable. It’s one of the most popular data visualizations in history already. And he, it’s a perfect example of a match between purpose and outcomes. And that is what needs to be explored when evaluating a data visualization. So, Hawkins told me when I interviewed him that he didn’t want to create an analytical data visualization. If he wanted to do that, he will do a line chart with like error bars or whatever, right? Something that you could publish in a paper. He has done thousands of those types of graphs. But this graphic was originally designed to bring to a festival, to be displayed in the background while there was a conversation going on about climate change. So it was designed with the specific and explicit purpose not to provide an analytical tool to explore the data but as something that brought attention to the information, something that ignited curiosity in the viewers. And I think that if that is the purpose, the outcomes actually match really well what he had in mind, and therefore the visualization works. That’s a visualization that works. So that’s just one of the many examples that appear in the book, of graphics that somehow defy conventions but at the same time, according to their own predefined purposes, work pretty well. So we have the example, for example, from Jaime Serra, who is a designer from Spain who is a– he’s a data visualization designer, he has worked for many, many years for newspapers. But the type of graphics that he creates blend the artistic with the– with the statistical and the analytical. He uses objects, for example, to create data visualizations to– he comes up with these beautiful pieces that sometimes he has showcased in exhibits all over the– all over the world. But then I also talked to people who produce what we could call more conventional data visualizations, right – people who work in public health, right, people who work in data journalism, people who live in countries where, you know, producing accurate and truthful data visualization can be dangerous to your career, right? I talk, for example, to Attila Bátorfy, who is a data journalist working in Hungary, and obviously Hungary, right now, considering the Viktor Orban regime, it’s not very friendly to journalists who want to be accurate and truthful. And he tries to be, and he’s very successful in Hungary right now, right? He’s a, he’s a voice against authoritarianism in his country. Or Anatoly Bondarenko, who is a data journalist and data visualization designer from Ukraine, who years ago created an organization called Texty, which is an investigative reporting newsroom in Ukraine, a nonprofit in Ukraine, to investigate corruption in the Ukrainian government but also Russian interference in Ukraine prior to the war. And, and that is one of my favorite chapters, because I’m Anatoly is a good friend of mine, and he’s, he’s fighting. He’s part of the Ukrainian army. And I think about him on a regular basis. And I am in touch with him just to make sure that he’s– that he’s safe, that he’s doing good. That chapter begins with a sentence that says that I sometimes wake up in shock thinking about, you know, my friend is at war, right? That’s such a strange thought and his work is so valuable, it’s so impressive. Again, what I find inspiring in all the people I talk to, I talk with, in the book is not just the work itself, it’s the values and the motivations behind the work and sometimes the resilience of the people producing that work. That’s what I find inspiring.</p>
+<p><strong>Brian Tarran</strong><br>
+Yeah, yeah, I was– when you were talking there about the Hawkins warming stripes examples, the– the idea of evaluating visualizations, you know, on their own terms, on their kind of their stated purposes, I think is quite important. But do you think people creating data visualizations, do they spend enough time thinking through generally – not the experts you’ve talked to, obviously, they’re the maybe the exception – but about what the purpose– what is it that I want to achieve with this data visualization? Is that kind of one of the things that all your interviewees have in common, a very clear sense of purpose?</p>
+<p><strong>Alberto Cairo</strong><br>
+They do. They do have that sense of purpose. That doesn’t mean that they don’t sometimes create these great visualizations out of a whim – say, I’m gonna just create a pretty graphic based on that, no purpose whatsoever. And that’s perfectly fine. Again, the analogy with writing. Not all writing can be technical writing. That’s just one of the types of writing that we could use. And conventional, traditional visualization is analogous to technical writing – you want to communicate something effectively, clearly, and therefore you try to create something that doesn’t use too many words, or too many, you know, verbal flourishes, you just go directly to the point and try to communicate directly. But that’s not the only way you can use writing. You can write poetry, so why not using data visualization to create visual poetry? That’s perfectly, perfectly fine. Again, every visualization needs to be judged based on their own– on their own stated purposes. As to the question of whether people in general – like, not the people I talked to in the book, for the book – but, you know, people in general think about purpose when designing data visualizations, that’s a question that I cannot answer. But that’s the core of my classes and workshops. It’s like my classes and workshops outline, both at the university but also as a consultant, put a lot of emphasis on the purpose part. I mean, just list what do you want to communicate? What do you want to achieve? Create an actually a bullet point list of what you want to communicate, and based on that list, then you can make choices. The way that I teach data visualization these days is not about teaching rules, right? Like, you know, use a bar graph to compare, use this graphic for that, use a scatterplot to show associations between, you know, continuous variables or whatever. No, that’s not the way I teach visualization. I teach visualization based on a process of reasoning, right? Reason that takes you from the purpose to the outcome. And every decision down the road in between those two points needs to be somehow justified. You need to justify every decision that you make in the visualization in a way that is– that can be persuasive to other people who may be in your team. I use this colour palette because, and what comes after the because is the important part. I use this type of graphic because, and what comes after the because is the important part, and so on and so forth.</p>
+<p><strong>Brian Tarran</strong><br>
+Yeah, there’s something that struck me. I think it was a podcast producer who came up this idea of the XY story formula – that’s how you assess the value of a kind of an article pitch. Now, I’m writing a story about X, and it is interesting because Y – and it’s the bit that follows after the “because” that determines– you have to work on that and refine that, and that’s what shapes your story and your outputs. I’m glad you brought up teaching as well, because I was reading through the epilogue, and it said about you having “anarchic leanings and sympathies” and I was kind of curious about how those sympathies and leanings manifest in your work or in your teaching. And obviously, you said you don’t teach rules. So maybe that’s part of it. But…</p>
+<p><strong>Alberto Cairo</strong><br>
+What sympathies are you referring to?</p>
+<p><strong>Brian Tarran</strong><br>
+I don’t know. It was just that phrase jumped out: I have, I have anarchic– I think it’s “despite my anarchic leanings and sympathies”, and I was kind of curious as to what are those, and how do they– how do they manifest?</p>
+<p><strong>Alberto Cairo</strong><br>
+Well, one of the points that I make, particularly in the epilogue, which I think that is the most important part of the book, because it’s where I lay out my own thinking – is that, one of the points that I make is that you cannot really separate the work from the people. And I make the analogy with philosophy, I read a lot of philosophy. There is this book that I absolutely love about philosophy, titled “What is Ancient Philosophy?” by Pierre Hadott, who was, I think that he was French – wonderful book, absolutely wonderful book if you’re interested in the ancient history of philosophy, that book is amazing. Talks about the Hellenistic tradition of philosophy. I could go on and on and talk about that book. I absolutely love it. I think that I read it four times, something like that. And the point that Hadott makes in “What is Ancient Philosophy?” is that it takes you a long way to understand the philosophy of the, you know, the classics – Plato, Aristotle, and then the Hellenists like the Epicureans, or the Stoics, or whatever – it takes you a long way if you sort of like understand the temperament of those people, and their lived experiences, what they went through in their lives, right? If you understand, for example, what Plato lived, his times and his temperament, and also the history of the times when he lived, you can understand the Republic better, his best book, right? You, you sort of like guess where it comes from, right, where his thinking comes from. And I think that’s something similar can be said about visualization, right? I have my own temperament. I have a– I have a very driven temperament. So I’m quite a strong will – when I decide that I’m going to do something, I usually put the energy to do it. But at the same time, I’m quite anarchic, not in the sense of being disorganized, but in the sense that I don’t deal with authority well. I just want to be left alone, right? Just leave me alone. I will figure things out on my own. I work well with other people, right. But in horizontal organizations, I enjoy horizontal teams, rather than hierarchical teams, right. I work really well in horizontal teams. And that is somehow reflected, I think, in the way that I think about data visualization. I somehow rebelled against, you know, the 1980s, 1990s tradition of data visualization teaching around what I call the Tuftean – after Edward Tufte – the Tuftean tradition of saying, this is the only way to do visualization well, these are the rules of data visualization. Well, why? Why are those the rules? Tell me what is this based on, or is it just your own opinion? I mean, I enjoy reading Tufte and I enjoy reading, you know, people like Steven Few, who is a friend of mine, etc. But at the same time I rebelled against that tradition, because in many cases, as I explain in The Art of Insight, many of those so called rules are merely the opinions of people. This is just my opinion. I like this stuff. I like this style, and therefore, I’m going to try to pass my own opinion as if it were a rule of design. I think that we need to be a little bit more honest about what we are doing. Many of those rules are not really grounded on any sort of empirical evidence, and therefore they are still valuable – I think that people should keep reading Tufte, they should keep reading [unclear] and many of the, we should keep reading them. But always with a pinch of salt, taking everything that we read with a pinch of salt, and this applies to my own books as well. We need to be a little bit more skeptical, a little bit more flexible in some sense, knowing that we are on these together and what really matters, I think, is the conversation between people in the field. Conversation is a word that appears a lot in The Art of Insight. I see my work, and I see the work of everybody else who writes or thinks or makes data visualizations as part of an ongoing conversation between people in which we can learn from each other, borrow from each other – always understanding that our opinions can be strongly stated, but sometimes they have very, very shaky foundations.</p>
+<p><strong>Brian Tarran</strong><br>
+What you’re saying about the importance of still reading these kinds of texts, where the rules – again, in inverted commas – are set, the importance of doing that, that kind of reminded me of like in my, in my own world of, you know, the written word, people like James Ellroy, the author of American Tabloid, you know, about understanding the rules of grammar so that you know how to break them for effect and for impact and things like that. So I can see how that applies to data visualization.</p>
+<p><strong>Alberto Cairo</strong><br>
+It is, yeah, that’s sort of like already has become a cliche, right: learn the rules, so you can break them. I think that that is valuable. But at the same time, I think that we need to go beyond that and say, there are really no rules. I mean, there are a few things that could be considered rules. For example, we know that, you know, if you want to compare numbers, a bar graph is usually superior to a pie chart, for example. We know that, there is empirical evidence behind that, so you can sort of like derive a principle out of that, right? But beyond those very basic things, there are really not many rules. What there are is a lot of conventions, inherited conventions, right, that historically have developed and we have– we have inherited. So we could say, you know, it’s good to learn the conventions. It is still good to learn about perception and cognition to guide your decisions. But after you do that, all that matters is the choices that you make with the knowledge that you have, and with the guesses that you can make. Right? So it’s not that you’re breaking the rules, you’re creating your own path, based on the inherited knowledge that you have under your belt.</p>
+<p><strong>Brian Tarran</strong><br>
+Yeah. My last question for you – because I don’t want to take up too much of your time, I know you are very busy, Alberto – is, you mentioned, again, going back to the previous question, or two, the people that you work with, and one of those sometime collaborators is Shirley Wu, who you refer to in your introduction, and I was really struck by the description of the installation, the number of COVID deaths each week, and this this dripping valve. I think what struck me most was that, you know, obviously, Shirley had this idea that the drips would represent the number of COVID deaths each week, these drips into a bowl, but that this wasn’t explicitly stated to people viewing the installation, right? She created space for viewers to bring their own interpretations, and they did. And again, it’s one of these things that I think is a beautiful idea – being able to, to withhold some information – but I don’t know, how does that manifest if you’re, you know, a data scientist or whatever, and you’re trying to create visualizations for, you know, an internal client or whatever it might be. How do you kind of bring some of that, that flavor and that interpretation and that space, to a graphic? I think that’s something that I was thinking about when reading that book, that part of the book.</p>
+<p><strong>Alberto Cairo</strong><br>
+There are many examples like that in the book. For example, in the chapter about Jaime Serra, Jaime created once a graphic in which– he drinks a lot of coffee, and he wanted to – remember that one – he wanted to, he wanted to see how much coffee he was actually drinking throughout a year. And if I have to do that, I will, you know, I will get my mug, the mug that I use every day to drink my coffee, I will draw a scale on top of that, and then I will measure the number of ounces of coffee that I’m drinking. At the end of the year, I will probably design a line graph, a time series line graph, to see whether there is any seasonality in my coffee consumption. I will design an analytical chart or so to speak, right, a graphic to analyze my own data. But he wanted to design something a little bit more fun, a little bit more expressive, a little more artistic and what he did was to create a graphic in which he plotted the amount of coffee that he drinks throughout a year through coffee stains. He got 12 pieces of paper, each one of them corresponding to a month. He folded those pieces of paper to subdivide them into quadrants, each one corresponding to a day. And then whenever he was drinking coffee, he tried to leave a coffee stain on the corresponding quadrant of the corresponding paper. And the result was sort of like it was a physic– it’s a physical data visualization. And it is amazing. Now, does that mean that you can insert that type of graphic, let’s say, in a business dashboard, or on a quarterly report in a company? No, that’s not the purpose of that type of visualization. The way that I usually explain the value of that type of visualization is to create this sort of like hypothetical scenario. And I have used these many times with clients when presenting you know, Shirley’s work or Jaime’s work. I say this is not the type of graphic that you use for analysis, right. For analysis, you need to use line graphs, bar graphs, scatter plots, traditional conventional data visualizations. But let’s suppose that you, for some reason, one year you conduct a survey internally in your company to analyze how much coffee people drink in the company, right? And you do sort of like this beautiful report that you print out as a hardcover book to give to your own clients as a gift when they come to visit you. What do you put inside of the book? The analytical graphics, right? The analytical charts that slice and dice the data by gender, by location, by whatever? You put all the conventional traditional graphics? What do you put on the cover? What you put on the cover is the beautiful artistic data visualization, which is still a data visualization. And same thing with Shirley’s work, right. Shirley’s installation about COVID: true, it’s not a graphic. It’s not a visualization. It’s not really a graphic because it’s physical. It’s a physical installation. But it is not a visualization that is intended to communicate the data in any sort of like, with accuracy or anything, it just tries to create a feeling. So again, imagine that you work for let’s say, a company focusing on public health or whatever. And every day, what you produce will be conventional charts and graphs and maps. That’s what we need to use to analyze data. But let’s suppose that you want to create some sort of like beautiful piece of artwork to display in your headquarters. That will be an amazing piece to display in your headquarters. It will get people– it will get visitors curious about what you do, it may drive– it may lead you to conversations about the data that they deal with everyday, the same way that Ed Hawkins’s warming stripes graphic did. It’s just a different type of data visualization that needs to be judged according to its own purposes, under its own terms.</p>
+<p><strong>Brian Tarran</strong><br>
+Yeah, fantastic. Well, that’s a really nice idea to end on. Hope some people take it forward, and future visits to offices will be more visually appealing as we get to explore those spaces. So, Alberto, thank you very much. So the book is out in November, yes?</p>
+<p><strong>Alberto Cairo</strong><br>
+November the 15th. Yeah.</p>
+<p><strong>Brian Tarran</strong><br>
+Is there a website yet that people can go and find out more details?</p>
+<p><strong>Alberto Cairo</strong><br>
+No, still working on it. For now, there is some information in my weblog, which is the title of my first book, The Functional Art. So, it’s thefunctionalart.com. That’s my web blog. And there’s some information about The Art of Insight there, including some, you know, some sneak peeks.</p>
+<p><strong>Brian Tarran</strong><br>
+Excellent. Well, we’ll put a link to that in the in the show notes. So, Alberto, thank you for joining us today. Best of luck finishing up the book and the website. And I hope you can join us again soon because there’s so much more that I could discuss about the book with you, but it’s been great talking to you today.</p>
+<p><strong>Alberto Cairo</strong><br>
+Thank you, Brian.</p>
+<div class="article-btn">
+<p><a href="../../../../../../foundation-frontiers/interviews/index.html">Find more Interviews</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Royal Statistical Society
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This interview is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Images are not covered by this licence. Photo of Alberto Cairo is copyright JCA Photography.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Tarran, Brian. 2023. “The many ‘dialects’ of data visualization: Alberto Cairo and ‘The Art of Insight.’” Real World Data Science, August 1, 2023. <a href="https://realworlddatascience.net/foundation-frontiers/interviews/posts/2023/08/01/alberto-cairo.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/realworlddatascience\.net\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "realworlddatascience/realworlddatascience.github.io";
+    script.dataset.repoId = "R_kgDOILnnig";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDOILnnis4CSt2s";
+    script.dataset.mapping = "title";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><a href="../../../../../../LICENCE.html">Copyright © 2025 Royal Statistical Society</a></p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/realworlddatascience">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience">
+<p><i class="ai  ai-zenodo ai-2xl"></i></p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/rwdatasci">
+      <i class="bi bi-twitter-x" role="img" aria-label="Twitter/X">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@rwdatasci">
+      <i class="bi bi-mastodon" role="img" aria-label="Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="../../../../../../feeds.html">
+      <i class="bi bi-rss" role="img" aria-label="RWDS rss">
+</i> 
+    </a>
+  </li>  
+</ul>
+    <div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/foundation-frontiers/interviews/posts/2023/08/01/alberto-cairo.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p><a href="../../../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

@@ -90,115 +90,6 @@
   <media:content url="https://realworlddatascience.net/the-pulse/posts/2024/08/01/images/RSS-DS-AI-cover.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
-  <title>Democratizing Data: Using natural language processing and machine learning to capture dataset usage</title>
-  <dc:creator>Brian Tarran</dc:creator>
-  <link>https://realworlddatascience.net/the-pulse/interviews/posts/2024/03/11/democratizing-data.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>Figuring out how much money is spent annually on collecting and publishing datasets is a challenge. According to the World Bank, it is <a href="https://blogs.worldbank.org/opendata/how-much-should-governments-spend-data">“painfully hard to obtain”</a> information just on government spending on data, never mind all the other bodies and organisations who invest in the creation of data assets. But there’s an even more challenging figure to pin down: How much value does all this data provide? By and large, there is very little data – or systematic collection of data – on dataset usage. There’s no easy way to find all the users of a particular dataset and to see how the data has been used, or what research topics it may have contributed to.</p>
-<p>Writing in the <a href="https://hdsr.mitpress.mit.edu/pub/g6e8noiy/release/2">Harvard Data Science Review in April 2022</a>, <a href="https://julialane.org/">Julia Lane</a> and others explained that “the current approach to finding what data sets are used to answer scientific questions … is largely manual and ad hoc.” They went on to argue: “Better information on the use of data is likely to have at least two results: (i) government agencies might use the information to describe the return on investment in data sets and (ii) scientists might use the information to reduce the time taken to search and discover other empirical research.”</p>
-<p>This hope for a better understanding of how datasets are used and the value they provide underpins the creation of “Democratizing Data: A Search and Discovery Platform for Public Data Assets.”</p>
-<p>As described on <a href="https://democratizingdata.ai/">the platform’s homepage</a>, Democratizing Data “describes how datasets identified by federal agencies have been used in scientific research. It uses machine learning algorithms to search over 90 million documents and find how datasets are cited, in what publications, and what topics they are used to study.”</p>
-<p>But this is just the start of what Lane thinks the project could eventually achieve, as she explains in this interview.</p>
-<div class="keyline">
-<hr>
-</div>
-<p><strong>How did the Democratizing Data platform come about?</strong><br>
-It emerged from three things, really, and I can trace the start of it back to 2016, when I was asked to build a secure environment that could host confidential microdata in order to inform the work of the <a href="https://obamawhitehouse.archives.gov/omb/management/commission_evidence">Commission on Evidence-Based Policymaking</a>.<sup>1</sup> They asked me to lead on this because I had built the <a href="https://www.norc.org/services-solutions/data-enclave.html">NORC remote access Data Enclave at the University of Chicago</a> 10 years before that.</p>
-<p>This was the first step towards Democratizing Data.</p>
-<p>The second step was figuring out how to create value from the data in the secure environment, because we knew that if we couldn’t create value, government agencies weren’t going to put their data into it.</p>
-<p>But how do you figure out what agencies are going to want to do with the data in a secure environment? It’s difficult to get them to tell you what they want, so I thought, well, why don’t we build training classes, put people in these training classes and have them work on problems with their own data? That way, we’re going to know what problems they have so that we can address them.</p>
-<p>So, step 1 was build secure environment. Step 2 was build capacity and identify the questions that are of interest to agencies so that they would put data into the secure environment. That led to the training classes that Frauke Kreuter, Rayid Ghani, and I put together, which are described here.</p>
-<p>But then what happened was, people kept coming to me in the classes and asking, “Who else has worked with these data, and who can I go to and ask questions?”</p>
-<p>I could give them a list of people, but that list would be biased by my age and race and sex and the people I know. What about those people who are doing really interesting stuff with these data that I happen not to know about?</p>
-<p>So, that’s how Democratizing Data got started. I thought, really the best way to give a full answer to those sorts of questions is to figure out what datasets are being used in research publications.</p>
-<p>Now, how was I going do that? I could read all the publications and manually write notes about who the authors were, and what the topics were, and what datasets they used. But that’s not realistic. So, I thought, well, maybe we could combine natural language processing techniques with machine learning so that you could “read” all these publications and find out how datasets are cited.</p>
-<div class="pullquote-container">
-<div class="grid">
-<div class="g-col-12 g-col-lg-4">
-<div class="quarto-figure quarto-figure-left">
-<figure class="figure">
-<p><img src="https://realworlddatascience.net/the-pulse/interviews/posts/2024/03/11/images/julia-lane-sq.png" class="img-fluid figure-img" alt="Photo of Julia Lane, professor at the NYU Wagner Graduate School of Public Service and visiting fellow at RTI International."></p>
-<figcaption>Julia Lane, professor at the NYU Wagner Graduate School of Public Service and visiting fellow at RTI International. Image supplied, used with permission.</figcaption>
-</figure>
-</div>
-</div>
-<div class="g-col-12 g-col-lg-8 pullquote-grid pullquote">
-<p><img src="https://realworlddatascience.net/images/pullquote-purple.png" class="img-fluid" width="50"></p>
-<p>We’re searching for ways to measure how datasets are used, how they’re valued, and so on. Federal statistical data and Elsevier’s Scopus have been a great starting point for us, but the broader vision is to incorporate other datasets and other publication databases.</p>
-</div>
-</div>
-</div>
-<p><strong>Would this have been a problem that needed solving if there were common, established citation standards and practices for datasets?</strong><br>
-There <em>are</em> great citation practices for datasets, and we’ve had them for 15 years. Back when I was a National Science Foundation (NSF) program officer, everyone was saying, well, if we just get the plumbing right, people will come and use it. Well, they don’t. Even when there are DOIs available and they’re relatively easy to cite, people don’t. The plumbing’s there, we built it, but they didn’t come.</p>
-<p>So, I think there has to be a demand-side piece, and we talk about that in one of the papers in an upcoming special issue of the <a href="https://hdsr.mitpress.mit.edu/">Harvard Data Science Review</a>: How do you create an incentive structure so that people do provide information about how they’ve used data? My thinking was that, suppose we can find out who’s using what data. Then the incentive structure to an academic is “your name in lights”: you are the world’s living expert in orange carrots with green stripes, or whatever. So, we would read the publications, find the datasets, and then you could have a leaderboard of the people who have done the most work in a particular field, and then people would have an incentive both to cite datasets and to let you know when you miss things. And that was when I thought, well, let’s put all this information up in a dashboard.</p>
-<p><strong>So, is the grand vision for this to create a platform that, essentially, any data owner – anyone who publishes datasets – could plug into, connect to, and understand how other people are using their datasets?</strong><br>
-That’s right. The grand vision is basically to set up a search and discovery portal. Originally, my thinking was that would be super helpful for people just starting out in a field; for a new graduate student or a postdoc to say, “I want to figure out what work has been done on recidivism of welfare recipients relative to access to jobs and neighborhood characteristics,” for example, and for them to see what datasets are available and how they have been used.</p>
-<p>But from the data producer side it’d also be useful to know: Who’s using the datasets? Where are the gaps? Where are we maybe not reaching as many people as we thought we were, and how can we change that?</p>
-<p>So, while the original idea was to build a platform for researchers, plans changed when the <a href="https://www.govinfo.gov/content/pkg/PLAW-115publ435/pdf/PLAW-115publ435.pdf">Evidence Act</a> passed, and agencies were required to produce usage statistics for their datasets.<sup>2</sup></p>
-<p>We started a pilot with the US Department of Agriculture’s (USDA) Economic Research Service (ERS). They have been a huge supporter and helped us work through a lot of the issues. Then, when we began showing around the ERS wireframes and ideas, the NSF National Center for Science and Engineering Statistics joined in, and so did USDA’s National Agricultural Statistics Service and the National Center for Education Statistics and the National Oceanic and Atmospheric Administration.</p>
-<p>So, we have these agencies involved and they’ve really been the drivers, the intellectual partners, pushing the design and the structure forward.</p>
-<p><strong>I’ve had a chance to play around with some of the <a href="https://democratizingdata.ai/tools/dashboards/">public dashboards you’ve released on Tableau</a>, and I really like the way you can explore dataset usage from different start points and end up with a list of publications that use those datasets. My question is, though, how have you connected all this up – datasets and publications?</strong><br>
-Our start point was scientific publications because these are pretty well curated. We ended up working with Elsevier because Scopus [Elsevier’s abstract and citation database] is a well-curated corpus and they’ve got the associated publication metadata well curated.</p>
-<p>So, we have the Scopus corpus, and we then ran <a href="https://www.kaggle.com/c/coleridgeinitiative-show-us-the-data">a Kaggle competition</a> to develop machine learning models to identify candidate snippets of text from scientific papers that seem like they might be referring to a dataset.</p>
-<p>Human researchers would then validate those snippets as either referring to a dataset or not, and once they’ve validated the publication-to-dataset dyad, we then pull in all the metadata associated with the publication: authors, institutions, key topics, publication year, countries, etc. – all this information gets piped over to the dashboards.</p>
-<p><strong>You published <a href="https://hdsr.mitpress.mit.edu/pub/g6e8noiy/release/2">a Harvard Data Science Review article about this competition a couple of years ago</a>, and from that I understand that you can actually get quite far with a simple string-matching method for finding datasets, but you would still miss a lot of citations using this approach because of the variability in the way people refer to datasets.</strong><br>
-That’s right. There were three different models that were developed, and each one picks up different aspects of how authors mention data in publications, and all three have been extremely useful. We learned a lot about the variety of ways in which researchers cite the data that they use.</p>
-<p>It turns out that more people do cite datasets in references than we had originally thought, but usually they don’t cite a DOI, they cite the URL or they cite the exact name of the dataset, so string search of references and URLs pulls out quite a lot of information that the DOIs, <em>per se</em>, don’t.</p>
-<p><strong>What are the next steps for scaling up the Democratizing Data work?</strong><br>
-I think it is more of a sociotechnical issue than a technical one. We have the plumbing, but really what we need to do is to figure out the incentives for researchers. We need to build a community around the data, which is what’s happened with code and the sharing of code on platforms like GitHub.</p>
-<p>Obviously, our initial focus has been on federal statistical data, but there’s also a lot of interest in how administrative data or streaming data are being used.</p>
-<p>The advantage of starting with statistical data is that they have names. As we learn more about citation patterns, though, it may be that we don’t need precise names. What may happen is that the community starts converging on common terminologies for datasets. That happens in a lot of fields.</p>
-<p>At the moment, it feels a little bit like the Wild West. We’re searching for ways to measure how datasets are used, how they’re valued, and so on. Federal statistical data and Elsevier’s Scopus have been a great starting point for us, but the broader vision is to incorporate other datasets and other publication databases like arXiv and Semantic Scholar. But all those other datasets that are out there, they need to be curated and documented in some way and that’s a huge task, so the solution has got to be community curation and sharing, right?</p>
-<p>If we don’t build a community around the data, we’re just going to have really bad information, really bad analysis, and really bad statistics on the value that our datasets – all these data assets – provide. My colleague <a href="https://www.rti.org/event/rti-fellow-program-distinguished-lecture-series-democratizing-data">Nancy Potok gave a talk a couple of days ago</a> in which she said that our future depends on this – and it really does.</p>
-<div class="article-btn">
-<p><a href="../../../../../../the-pulse/interviews/index.html">Find more Interviews</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Royal Statistical Society
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Photo of Julia Lane is not included in this licence.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Tarran, Brian. 2023. “Democratizing Data: Using natural language processing and machine learning to capture dataset usage.” Real World Data Science, March 11, 2024. <a href="https://realworlddatascience.net/the-pulse/interviews/posts/2024/03/11/democratizing-data.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>The Commission on Evidence-Based Policymaking was “charged with examining all aspects of how to increase the availability and use of government data to build evidence and inform program design, while protecting privacy and confidentiality of those data.”↩︎</p></li>
-<li id="fn2"><p>Specifically, the act requires federal agencies to identify and implement methods “for collecting and analyzing digital information on data asset usage by users within and outside of the agency.”↩︎</p></li>
-</ol>
-</section></div> ]]></description>
-  <category>AI</category>
-  <category>Data</category>
-  <category>Machine learning</category>
-  <category>Natural language processing</category>
-  <guid>https://realworlddatascience.net/the-pulse/interviews/posts/2024/03/11/democratizing-data.html</guid>
-  <pubDate>Mon, 11 Mar 2024 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/the-pulse/interviews/posts/2024/03/11/images/julia-lane-thumb.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
   <title>Editor’s note: Not saying goodbye, just saying…</title>
   <dc:creator>Brian Tarran</dc:creator>
   <link>https://realworlddatascience.net/the-pulse/editors-blog/posts/2024/03/editors-note.html</link>
@@ -281,7 +172,7 @@ Tarran, Brian. 2024. “Editor’s note: Not saying goodbye, just saying…” R
 <blockquote class="blockquote">
 <p>“Urgency is certainly warranted, and the directive for key regulators to disclose their approach in the coming months is a positive development. Ensuring consistency and coherence not only among key regulators but also those who follow is crucial.”</p>
 </blockquote>
-<p>Garrett also <a href="https://realworlddatascience.net/the-pulse/interviews/posts/2023/10/25/evaluating-ai.html">reiterated the need for government to engage with statisticians and data scientists</a>, particularly through its <a href="https://realworlddatascience.net/the-pulse/posts/2023/12/06/ai-fringe.html">new AI Safety Institute</a> (AISI). In the white paper consultation response, AISI is billed as being “fundamental to informing the UK’s regulatory framework”: it will “advance the world’s knowledge of AI safety by carefully examining, evaluating, and testing new frontier AI systems” and will also “research new techniques for understanding and mitigating AI risk.” Garrett said:</p>
+<p>Garrett also <a href="https://realworlddatascience.net/foundation-frontiers/interviews/posts/2023/10/25/evaluating-ai.html">reiterated the need for government to engage with statisticians and data scientists</a>, particularly through its <a href="https://realworlddatascience.net/the-pulse/posts/2023/12/06/ai-fringe.html">new AI Safety Institute</a> (AISI). In the white paper consultation response, AISI is billed as being “fundamental to informing the UK’s regulatory framework”: it will “advance the world’s knowledge of AI safety by carefully examining, evaluating, and testing new frontier AI systems” and will also “research new techniques for understanding and mitigating AI risk.” Garrett said:</p>
 <blockquote class="blockquote">
 <p>“As always, fostering diversity of representation within government and regulatory bodies remains paramount; it cannot solely rely on input from major tech companies. It is especially important that the AI Safety Institute engages with a diverse array of voices, including statisticians and data scientists who play a pivotal role in both the development of AI systems and novel evaluation methodologies.”</p>
 </blockquote>
@@ -433,7 +324,7 @@ Tarran, Brian. 2024. “UK government sets out 10 principles for use of generati
 <p>“For this competition, we seek accurate, interpretable predictions that offer strong narratives about the factors that determine when cherry trees bloom and the broader consequences for local and global ecosystems,” say the organisers. “Your task is to predict the peak bloom date for 2024 and to estimate a prediction interval, a lower and upper endpoint of dates during which peak bloom is most probable.”</p>
 <p>So that organisers can reproduce the predictions, entrants must submit all data and code in a <a href="https://quarto.org/">Quarto document</a>.</p>
 <p>There’s cash and prizes on offer for the best entries, including having your work featured on Real World Data Science. <a href="https://competition.statistics.gmu.edu/">Head on over to the competition website for full details and rules</a>.</p>
-<p>And, if you are looking for some inspiration, check out this <a href="https://realworlddatascience.net/foundation-frontiers/tutorials/posts/2023/04/13/flowers.html">tutorial on the law of the flowering plants</a>, written by Jonathan Auerbach, a co-organiser of the prediction competition.</p>
+<p>And, if you are looking for some inspiration, check out this <a href="https://realworlddatascience.net/applied-insights/tutorials/posts/2023/04/13/flowers.html">tutorial on the law of the flowering plants</a>, written by Jonathan Auerbach, a co-organiser of the prediction competition.</p>
 <p>Good luck to all entrants!</p>
 <div class="article-btn">
 <p><a href="../../../../../../the-pulse/editors-blog/index.html">Back to Editors’ blog</a></p>
@@ -470,106 +361,6 @@ Tarran, Brian. 2024. “When will the cherry trees bloom? Get ready to make and 
   <guid>https://realworlddatascience.net/the-pulse/editors-blog/posts/2024/01/18/cherry-blossom.html</guid>
   <pubDate>Thu, 18 Jan 2024 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/the-pulse/editors-blog/posts/2024/01/18/images/cherry-blossom.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>‘We absolutely have to transform and modernise our operation’ – US Census Bureau director Robert Santos</title>
-  <dc:creator>Brian Tarran (with Anna Britten)</dc:creator>
-  <link>https://realworlddatascience.net/the-pulse/interviews/posts/2024/01/15/census-bureau.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>A month ago now, Real World Data Science published <a href="https://realworlddatascience.net/the-pulse/interviews/posts/2023/12/15/ian-diamond.html">an interview with UK national statistician Professor Sir Ian Diamond</a>. In the process of preparing the text of that interview for publication, I found myself reflecting on a conversation I’d been part of earlier in the year with Robert Santos, director of the US Census Bureau.</p>
-<p>I met Santos in Toronto, Canada, in August – a few hours before his <a href="https://www.youtube.com/watch?v=SmljZLfqIbI">President’s Invited Address at the 2023 Joint Statistical Meetings</a>. The meeting was arranged as a joint interview with Anna Britten, editor of our sister publication <em>Significance</em> magazine, and Santos was joined by Sallie Ann Keller, the Census Bureau’s chief scientist and associate director for research and methodology, and Michael Hawes, senior advisor for data access and privacy.</p>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/SmljZLfqIbI?si=QEAN6QpbTlwPs20" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<p>The interview with Santos, Keller, and Hawes was published in <a href="https://academic.oup.com/jrssig/article/20/5/40/7296065">the October issue of <em>Significance</em></a>, so you may have already read it. But, following on from our Sir Ian Diamond interview, I thought it worth highlighting some of what Santos <em>et al.</em> had to say, particularly where key themes, challenges, and opportunities seem to resonate across both the US Census Bureau and the UK Office for National Statistics.</p>
-<p>I’ve also gone back to the original interview recording to pick out some previously unpublished comments.</p>
-<div class="keyline">
-<hr>
-</div>
-<section id="on-the-scale-of-the-challenge-santos-inherited-on-becoming-director-of-the-us-census-bureau-in-january-2022" class="level3">
-<h3 class="anchored" data-anchor-id="on-the-scale-of-the-challenge-santos-inherited-on-becoming-director-of-the-us-census-bureau-in-january-2022">On the scale of the challenge Santos inherited on becoming director of the US Census Bureau in January 2022</h3>
-<p><strong>Robert Santos:</strong> Certainly it was formidable – although I’m comforted in knowing, after a year and a half, that the career staff [of the Census Bureau] were well positioned to accept this challenge anyway, and were working on it. But the challenge was real. We had the pandemic. We had to, basically, not redesign but scramble and adapt to a really threatening situation where the entirety of the 2020 census was conducted before there was a vaccine, and when people didn’t know the nature of the beast. A huge chunk of this operation was conducted when society was shut down. And not only did the Census Bureau need to rethink, nimbly and quickly, how to do its operation, but so did all of the different community partners – which was really enlightening because we realised that, at the end of the day, we could not have completed this job alone. And now our position is that we cannot complete our mission without the external community. They’re the extra folks we need in order to understand better what the needs are, and therefore improve our methods and data and the relevance of what we’re doing.</p>
-<p>So, we see our role now as having a continuous engagement with the entire country at all levels – be it elected officials, universities and professors and the research community, or data users like policy users and policy researchers, or local community organisations that are doing neighbourhood stuff. And so we’re actively working between censuses to engage them and show them the value of the data that we’ve collected – not just decennial [census data], but also our flagship American Community Survey and our Current Population Study and all the 130 other business, economic as well as household types of studies that we’re doing.</p>
-</section>
-<section id="on-the-need-to-transform-census-bureau-operations" class="level3">
-<h3 class="anchored" data-anchor-id="on-the-need-to-transform-census-bureau-operations">On the need to transform Census Bureau operations</h3>
-<p><strong>Robert Santos:</strong> We absolutely have to transform and modernise our operation, from what was historically this transactional survey type of data collection – where we go to somebody that’s randomly sampled and we say, “Please give me your information” – and realise the value of taking that information, blending it with existing data, administrative data, even third-party private sector data, into a huge data pool and linking it together, and that will create new data products that will serve the public in ways that we never imagined before. And we already have some great examples of that. So, that transformation process is an incredible priority that we have to do, regardless of what our funding situation is. If we don’t do that, we’re not going to be able to serve the public in the way that we need to.</p>
-</section>
-<section id="on-laying-the-groundwork-for-the-2030-census-and-an-increased-use-of-administrative-data" class="level3">
-<h3 class="anchored" data-anchor-id="on-laying-the-groundwork-for-the-2030-census-and-an-increased-use-of-administrative-data">On laying the groundwork for the 2030 census and an increased use of administrative data</h3>
-<p><strong>Robert Santos:</strong> There are a couple of things going on. One is that we’re obliged, because of our values of scientific integrity, objectivity, transparency, and independence, to let folks know what we’re doing in terms of our use of administrative records, and we’ve done that and we will continue doing that. The big lift was really in preparing for the last decennial [census], where we took the use of administrative records to new heights in terms of their utility – not only to help us for some enumeration of households, but, more importantly, to help us predict which households were occupied or not, or to predict which households would benefit from the use of administrative record enumeration versus which ones wouldn’t, or how many times should we knock on the door before we do something else. And now, with that knowledge, we’re looking back at 2020 and saying, what worked? What didn’t? How can we exploit it? And we’re kind of moving the dial to say, “What can we take more advantage of for 2030?”, with full recognition that there were some subpopulations, there’s some segments of society, that we really need to focus and hone in on to make sure we get a good count.</p>
-<div class="pullquote-container">
-<div class="grid">
-<div class="g-col-12 g-col-lg-4">
-<div class="quarto-figure quarto-figure-left">
-<figure class="figure">
-<p><img src="https://realworlddatascience.net/the-pulse/interviews/posts/2024/01/15/images/robert-santos-sq.png" class="img-fluid figure-img" alt="Official photograph of US Census Bureau director Robert Santos, with US flag in background."></p>
-<figcaption>Robert Santos, director, US Census Bureau</figcaption>
-</figure>
-</div>
-</div>
-<div class="g-col-12 g-col-lg-8 pullquote-grid pullquote">
-<p><img src="https://realworlddatascience.net/images/pullquote-purple.png" class="img-fluid" width="50"></p>
-<p>We absolutely have to transform and modernise our operation, and realise the value of taking [survey] information, blending it with existing data, administrative data, even third-party private sector data, into a huge data pool and linking it together, and that will create new data products that will serve the public in ways that we never imagined before.</p>
-</div>
-</div>
-</div>
-</section>
-<section id="on-addressing-public-concerns-about-data-collection-and-data-privacy" class="level3">
-<h3 class="anchored" data-anchor-id="on-addressing-public-concerns-about-data-collection-and-data-privacy">On addressing public concerns about data collection and data privacy</h3>
-<p><strong>Michael Hawes:</strong> Even though the decennial census is mandatory under law, we rely on voluntary participation. We’re relying on people being willing to respond to their census. In the lead up to each census, we do an extensive survey of what are the attitudes or motivators that will encourage people to respond or to not respond. And one of the recurring themes in that is concerns about privacy, concerns about how their data can be used. So, in order to help encourage people who have those concerns – and this is a sizable percentage of the population – we do need to have strong messaging about how their data are protected, how they can only be used for statistical purposes, and so on. But that has to be in very easy-to-consume sound bites, because a lot of people don’t have a background in statistical disclosure control or even in the legal conceptions about what privacy is. So, that is a real challenge for us. How do we convey the fact that we are taking this very seriously, and that their data are protected, in a way that people can kind of internalise and respond to?</p>
-</section>
-<section id="on-making-sure-statistics-serve-the-public-good-and-the-role-of-the-census-bureau-in-supporting-data-literacy" class="level3">
-<h3 class="anchored" data-anchor-id="on-making-sure-statistics-serve-the-public-good-and-the-role-of-the-census-bureau-in-supporting-data-literacy">On making sure statistics serve the public good, and the role of the Census Bureau in supporting data literacy</h3>
-<p><strong>Sallie Ann Keller:</strong> In the US over the last decade, there’s been a really large movement around data for the public good, data science for the public good, and it’s really focused at trying to engage researchers and scholars – and we’re talking about high school students, community college students, undergraduates, graduate students – trying to engage them with civic engagement around data and data insights. That’s happening all over the country – really trying to democratise data and bring it in service of the public good. And I think that’s very exciting.</p>
-<p><strong>Michael Hawes:</strong> We have a whole programme called Statistics in Schools which is about taking census data and making it valuable to teachers in the classroom, and allowing students at various levels – from elementary school through high school – to be able to engage with the data and use it to inform their own learning, and to learn about their own communities. That is especially profound in the years around the actual census, because that also serves as a catalyst for getting households to respond. If the kids are using the census data within the classroom, then they go home and say, “Hey, have you filled out your census form?”</p>
-<p><strong>Robert Santos:</strong> It’s really important to start young, but then there’s also folks who want to use the data who are adults. So, we have something called the Census Academy, where you can go on to YouTube and get tutorials that show you visually somebody trying to use census data. And the second thing we do is, we really have a strong commitment for creating easier platforms for folks to access and utilise various types of data produced by the Census Bureau. We’re creating these data visualisation tools that bring together the demographic data that we collect, the economic data that we collect, and visualise it down to the census tract level so that local communities can pull that up. And then finally, in terms of the public good, there’s also work that we’re doing with the Federal Emergency Management Agency and the National Oceanic and Atmospheric Administration on our community resilience estimates to create the same type of data visualisations that can show where the potential worrisome geographic spots are.</p>
-</section>
-<section id="on-the-opportunities-for-bringing-together-census-bureau-data-and-large-language-models" class="level3">
-<h3 class="anchored" data-anchor-id="on-the-opportunities-for-bringing-together-census-bureau-data-and-large-language-models">On the opportunities for bringing together Census Bureau data and large language models</h3>
-<p><strong>Sallie Ann Keller:</strong> We’re not going to be in the business of building generative AI models. But what we want is the statistics that we put out, the data that we put out, to be picked up by these large language models – to be kind of an input into generative AI. So, we are focused on that in terms of really looking at the structure of how we’re disseminating statistics, and how we’re disseminating things like data tables. How harvestable are they for AI? What are the guardrails we should put around that? We’re looking at and considering issues on data integrity, because when questions are posed, we would like our official statistics to be answering those questions, not our statistics translated through three other parties. Data integrity is really a huge issue, because we don’t want false data and infiltration happening that gets branded as our statistics. I don’t know where we’ll take it all, but I think we’d also like to be incredibly creative here. So, let’s suppose you ask a question and some statistic comes back. Well, why not have that be an experience, so that not just a statistic comes back but maybe a question or two comes back, to try to assess the context that you’re really asking about, so that we can not only have our data coming to you, but we can have the right data coming to you?</p>
-<p><strong>Michael Hawes:</strong> Even with some of our more traditional statistical data products, informing users of the limitations and the the uncertainty baked into a lot of those estimates has historically been a challenge – even for some more sophisticated users. The number of people who ignore margins of error on data tables, even in our data products, is not insubstantial. And so, when we get into an AI-driven data dissemination kind of framework, how can we use the flexibility of those platforms to not just provide the answers to the questions people are asking, but also to educate and inform about what the limitations of those answers are?</p>
-<div class="article-btn">
-<p><a href="../../../../../../the-pulse/interviews/index.html">Find more Interviews</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Royal Statistical Society
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Photo of Robert Santos is excluded from this licence; it is a US Government work.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Tarran, Brian. 2023. “‘We absolutely have to transform and modernise our operation’ – US Census Bureau director Robert Santos.” Real World Data Science, January 15, 2024. <a href="https://realworlddatascience.net/the-pulse/interviews/posts/2024/01/15/census-bureau.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-</section>
-
- ]]></description>
-  <category>Data</category>
-  <category>Data privacy</category>
-  <category>Data literacy</category>
-  <category>Education</category>
-  <category>Public engagement</category>
-  <category>AI</category>
-  <guid>https://realworlddatascience.net/the-pulse/interviews/posts/2024/01/15/census-bureau.html</guid>
-  <pubDate>Mon, 15 Jan 2024 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/the-pulse/interviews/posts/2024/01/15/images/robert-santos.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
   <title>Creating a web publication with Quarto: the Real World Data Science origin story</title>
@@ -622,107 +413,6 @@ Tarran, Brian. 2024. “Creating a web publication with Quarto: the Real World D
   <media:content url="https://realworlddatascience.net/the-pulse/editors-blog/posts/2024/01/03/images/video-grab.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
-  <title>‘I was pretty clear in my mind that we were into a no-going-back situation’</title>
-  <dc:creator>Brian Tarran</dc:creator>
-  <link>https://realworlddatascience.net/the-pulse/interviews/posts/2023/12/15/ian-diamond.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>For many people, six months into a new job is about the time you start to feel fully on top of things. You’ve figured out how the organisation works and your place in it. You’ve met all of your colleagues and got to know your way around the office. The job makes sense, everything’s under control. But then, a pandemic hits! What do you do? What is going through your head?</p>
-<p>That’s a question we put to Professor Sir Ian Diamond, UK national statistician, who was only six months into the job when Covid-19 upended everything. He said: “My overall sense at all times was one of, ‘What needs to be done? What role can we play in helping to do it? And how do we make sure that we are doing things at pace?’”</p>
-<p>There was no “flapping,” he said, but there was a real risk of exhaustion. “I could see pretty quickly that this was going to be a marathon, not a sprint, and while we had a lot to do,” he explained, “the last thing on earth we needed was for people to start burning out.”</p>
-<p>Almost four years have passed since that time, but the effects of the pandemic continue to be felt – not least within the Office for National Statistics (ONS), the organisation Sir Ian leads. The Covid experience helped shape his thinking about how the ONS would operate post-pandemic, as he explains in this interview.</p>
-<p>When we spoke with Sir Ian, he was six months into a second term as national statistician. By the end of that term, in 2028, what kind of organisation will the ONS be? Read on to find out.</p>
-<div class="keyline">
-<hr>
-</div>
-<p><strong>What was your experience of the Covid pandemic, being only six months into the role of national statistician at the time?</strong><br>
-It was all-consuming and required an enormous amount of focus. At the beginning of the pandemic, huge amounts of data were flying in every different direction. I felt we were in a data deluge, and we needed to move to [delivering] insight, and really working hard early on to change the agenda towards a situation where we were asking questions – really serious and sensible questions – and working out if we had the data, or how we answered those questions.</p>
-<p><strong>On the whole, ONS and the Government Statistical Service were praised for the way they responded to Covid. Did the pandemic experience inform your thinking about how the statistical system should operate once we moved out of that crisis situation?</strong><br>
-Yes, in a number of areas. One was that we should not be completely dependent on data collected traditionally. For example, as we went into the pandemic, our ways of calculating inflation were pretty much dependent on people with clipboards going into supermarkets and shops and writing down the prices of things. We already had a project which was starting to think long term of using scanner data. But actually, being able to pivot very quickly to using web scraping to get data was incredibly important. We were also able to use web scraping early on to understand the availability of various goods in what we might call “adaptive purchasing,” or some would call “stockpiling.” And so, identifying that there were new ways of doing things and new data sources, I was pretty clear in my mind that we were into a no-going-back situation.</p>
-<p>The second thing we demonstrated was that we could set things up very agilely and very quickly. And one final thing that I thought we absolutely have to continue with all the time is improved communication. You may recall that there were press conferences every day [during the early part of the pandemic], and I think during the start of those press conferences, the graphs and the slides were not always as brilliant as I would want them to be. We embedded a team into the Government Communication Service to work on the slides, and I thought that team did a great job. Improving the communication of statistics was incredibly important, because one of the things to come out of this dreadful pandemic was that people across the country became more data literate, and more demanding of data, and more able to interpret data. That was a good thing which I wanted to make sure we continued.</p>
-<p><strong>In terms of embedding the lessons or the learnings of the pandemic into the ONS going forward, how much of it is culture change? How much is about rethinking the systems and the processes?</strong><br>
-Was it culture? Was it improved processes? Was it better methods? All of the above. As an organisation, our main role in life is to measure the economy and society, and if you take that as your starting point, and then you ask the question, “In your lifetime, has the economy ever stood still? Has society ever stood still?” In my lifetime, I would argue, no. Therefore, we have to be an organisation which is constantly changing in order to reflect what is going on in the economy and in society. We have to change how we do things, and to ask questions about whether there are better ways of doing things, and that, I think, has been a really important reflection for us over the period both during and since the pandemic. We’ve learned a lot about the use of, for example, reproducible analytic pipelines to really improve the quality of our data at large, to improve the quality of our processes, and to enable us to do things more efficiently and effectively. We’ve learned a lot about new data sources, and we’ve really built on the opportunities and the skills so that you can now link data to be able to address questions that I could only have dreamt of 20 years ago.</p>
-<p>And so, I do think we have changed the culture, changed our techniques, and changed our data. But does that mean that we’ve metaphorically thrown away the baby with the bathwater? Absolutely not. What we have now are appropriate methodologies to answer appropriate questions. Do we still use qualitative data? A hundred percent, when it is necessary to do so. Do we still use surveys? Yes, we’ve got some of the best surveys in the world. But equally, we also use digital data, administrative data, and we use very modern techniques of analysing those data. And we use data science in its broadest sense as often as we can.</p>
-<p>So, I do think it’s been a major change in what we do, and that will continue. But underlying it all is a total commitment to quality, a total commitment to making sure that we have the best data to answer the question that we are trying to answer, and that all the time we are using the best approach to answer the questions.</p>
-<div class="pullquote-container">
-<div class="grid">
-<div class="g-col-12 g-col-lg-4">
-<div class="quarto-figure quarto-figure-left">
-<figure class="figure">
-<p><img src="https://realworlddatascience.net/the-pulse/interviews/posts/2023/12/15/images/ian-diamond-sq.png" class="img-fluid figure-img" alt="Photo of national statistician Professor Sir Ian Diamond, standing, with microphone, during a talk."></p>
-<figcaption>Professor Sir Ian Diamond, UK national statistician. Image supplied, used with permission.</figcaption>
-</figure>
-</div>
-</div>
-<div class="g-col-12 g-col-lg-8 pullquote-grid pullquote">
-<p><img src="https://realworlddatascience.net/images/pullquote-purple.png" class="img-fluid" width="50"></p>
-<p>We have changed the culture, our techniques, and our data. What we have now are appropriate methodologies to answer appropriate questions. Do we still use qualitative data? A hundred percent, when it is necessary to do so. Do we still use surveys? Yes, we’ve got some of the best surveys in the world. But equally, we also use digital data, administrative data, and we use very modern techniques of analysing those data.</p>
-</div>
-</div>
-</div>
-<p><strong>As well as changing the culture and the processes within the ONS itself, has some of your work also been about trying to bring the user community with you? When I first started reporting on official statistics 20 years ago, there was a sense that users of the data valued consistency in methodology, because that meant they could go back and look at the time series. But now, with this emphasis on innovation and looking at different ways of producing insight from different sources of data, has there been a tension, if you like, between these two cultures?</strong><br>
-That whole question of “we’ve always done it this way” against “we can now do it better” is a super important one. And the length of time series is also important. When we change the ways of doing things, we need to take our user community with us, and we do. At the same time, we also need a very strong narrative (a) about why what we are doing gives us better data, and (b) about what the changes in the time series mean. So, just this year, with regard to prices and inflation, we’ve been able to bring in much better data than we had previously on rail ticket prices by using electronic data. It’s really super exciting. But we didn’t just bring them in and say, “Hey, we’ve got this new way of doing train prices and we’re planning to do the same again next year with used car prices using electronic data!” What we do is we dual run, and we work with our prices advisory committee to ensure that we understand what the implications of this change are, and we understand how to communicate them. But, you’ve got to be measuring the economy in the very, very best way that you can. We should not shy away from improving what we do.</p>
-<p><strong>To what extent can the changes in thinking, the changes of approach, be credited to the experimentation and innovation work that is coming out of the ONS Data Science Campus?</strong><br>
-The Data Science Campus has been absolutely brilliant. But at the same time, innovation does not only take place in the Data Science Campus. What we’ve built is a culture of innovation right across the organisation. Is that culture of innovation driven by the Data Science Campus? Not so much driven, but certainly helped, and certainly in partnership, and the fact that it is there encourages that culture of innovation.</p>
-<p>I do think it is important to recognise, as I say to my colleagues many times, that we are not a blue-sky research institute, we are a national statistics institute, and our job is to produce economic and social statistics. Therefore, we need to be in the business of not just research but research and development – and thinking through how the research on new data that we do will enable improved economic measurement is, for us, incredibly exciting.</p>
-<p>I’ll give you an example. We’ve [recently] signed a contract to get telephony data – a few years historically, and then regular data going forward. Now, this is entirely anonymised, but it will enable us to understand much more about, for example, commuting. It means that we will now need to do research on how to use those mobility data, and we’ll be really pushing that forward very quickly. But, at the same time, it’s not just about what can we do that’s interesting in this area; we need to have a very clear vision of what success looks like and the measurements, the economic measurements, that we are going to improve.</p>
-<p><strong>How do you see that innovation mindset rolling out across government as a whole?</strong><br>
-It’s worth saying two things. Firstly, my job is not only national statistician, I also have an extra couple of hats: one is head of the Government Analysis Function, and one is head of the Government Digital Service. I take those roles very seriously because I do think we need to propagate good practice and innovation right across government departments. It’s no use if it just sits in ONS.</p>
-<p>We try really, really hard to have innovation meetings and innovation months, and I try to speak at as many as I’m invited to. And I think it is incredibly important that we really see ourselves – right across the Government Statistical Service, right across the Government Analysis Function – as seeking to propagate good practice.</p>
-<p><strong>You mentioned there about the Government Statistical Service and the Government Analysis Function. Is there scope one day for a Data Science Service within government?</strong><br>
-The answer is yes. Under both the leadership of Laura Gilbert, who is head of 10 Downing Street’s data science, called 10DS, and Osama Rahman, who heads the Data Science Campus, we recently held a town hall for data scientists right across government to discuss, fundamentally, the question of what data scientists want from the analysis function, but equally [what they want] from a community of data scientists. Part of that is a question as to whether there should be, in government, a data science profession. I stress we haven’t come to the conclusion for that yet, but I would have to say it was a very successful town hall – many, many people attended, we had a really good discussion, and Laura and Osama will be taking forward that discussion over the next couple of months.</p>
-<p><strong>You gave a keynote address at the RSS Conference in September, and one of the things you mentioned that I was particularly excited about was “Stat Chat.” I understand this is in the very early stages, and I have a very rudimentary understanding that it might well be a large language model trained on the ONS website and the data resources available, as a way to query the website. Can you tell me a bit more about the project?</strong><br>
-We’re in private beta, and so there’s a whole set of agendas there. But we started it as a much better way to enable people to interrogate a pretty complex website with an enormous amount of data on, and to not only get to the datasets but to get to the existing metadata that are attached to them. What we wanted to do was to use open-source models, where the underlying data and the research behind them are made publicly available, so there’s nothing secret about this at the moment, and it’s very early stage. But we see the potential, as we move forward, as being able to really make it much easier for people to interrogate the data that we own and the data that we have published. If we can actually use large language models to enable people to be able to ask questions and then to get an authoritative answer from publicly available data, that seems to me to be a good place to be.</p>
-<p><strong>I imagine, though, that when you’re dealing with something like national statistics, you need to be very alive to the danger of <a href="https://realworlddatascience.net/the-pulse/editors-blog/posts/2022/11/23/LLM-content-warning.html#qa">the hallucination problem in large language models</a>; that if you’re querying something, it doesn’t throw up an invented statistic?</strong><br>
-I couldn’t agree more. And that’s why we’re in private beta, working very hard to make sure that (a) it is working properly, (b) that it’s got the right security around it, and (c) that it is actually really useful.</p>
-<p><strong>The hallucination issue in LLMs leads us onto the topic of trust in information, and obviously the ONS is very keen to ensure that there is trust in official statistics and in the data that is produced. This is a wider problem than anything the ONS can hope to address by itself, but what are the kinds of conversations you’re having internally about distrust in official sources of information?</strong><br>
-This is something I say to my colleagues a lot: We should not expect people to trust us. We have to demonstrate to people that we are trustworthy. That’s incredibly important. A lot of it is about transparency. A lot of it is about absolute openness, showing your working, explaining where your data came from, and explaining your motivation for doing something. People say to me, “You might write a really strong methodological piece, but not many people read it.” Yes, but it’s there. And I’m a huge believer in research integrity, and in open data, and enabling data to be available for secondary analysis. And I think the more you are transparent, the more you work with people, the better.</p>
-<p>A critical part, also, of demonstrating that you are trustworthy is engaging with the public. And that’s not telling the public; it’s engaging with the public. We put a lot of time into working with the public to say, “Well, what if we did this? What if we did that?” and getting their input. I don’t have any kind of switch to make people feel that we are trustworthy. It’s a continuous process of transparency and openness, where people feel that they have everything they need [to know] about what we do and about our data.</p>
-<p>We also are absolutely passionate about explaining uncertainty. Don’t tell me the answer is 62% – the answer has some uncertainty about it, and we need to really think about how we display that uncertainty. And I have to say, I think some of the techniques now to display uncertainty are just so beautiful – unbelievably beautiful – and we need to do that, not in a gimmicky way, but in a way that really explains the uncertainty in any data that we present.</p>
-<p><strong>Final question: by the end of your second term as national statistician, where do you think ONS will be as an organisation?</strong><br>
-I hope it will be an innovative, agile organisation which is using evermore diverse types of information, but doing so in a transparent and open and rigorous way to improve economic and social statistics which can impact positively on the lives of our fellow citizens.</p>
-<div class="article-btn">
-<p><a href="../../../../../../the-pulse/interviews/index.html">Find more Interviews</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Royal Statistical Society
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Photo of Professor Sir Ian Diamond is not included in this licence.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Tarran, Brian. 2023. “‘I was pretty clear in my mind that we were into a no-going-back situation.’” Real World Data Science, December 15, 2023. <a href="https://realworlddatascience.net/the-pulse/interviews/posts/2023/12/15/ian-diamond.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-
- ]]></description>
-  <category>Data</category>
-  <category>People</category>
-  <category>Innovation</category>
-  <category>Data literacy</category>
-  <category>Public engagement</category>
-  <guid>https://realworlddatascience.net/the-pulse/interviews/posts/2023/12/15/ian-diamond.html</guid>
-  <pubDate>Fri, 15 Dec 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/the-pulse/interviews/posts/2023/12/15/images/ian-diamond.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
   <title>A Christmas card in R for the Real World Data Science community</title>
   <dc:creator>Brian Tarran</dc:creator>
   <link>https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/12/12/rwds-xmas-card.html</link>
@@ -733,7 +423,7 @@ Tarran, Brian. 2023. “‘I was pretty clear in my mind that we were into a no-
 
 
 <p>A few weeks back, I managed to catch Nicola Rennie’s presentation to the <a href="https://www.meetup.com/en-AU/oxford-r-user-group/events/297417319/">Oxford R User Group on how to create Christmas cards in R</a>. It was a fun session, and thanks to Nicola’s clear and concise explanations, I felt emboldened to attempt my own design, using her code as a base.</p>
-<p>If you missed the Meetup session, Nicola has kindly written <a href="../../../../../../foundation-frontiers/tutorials/posts/2023/12/12/xmas-cards.html">a tutorial for Real World Data Science</a> that walks through all the necessary steps to create a snowman against a snowy night’s sky. You’ll want to read that tutorial first before returning to this blog.</p>
+<p>If you missed the Meetup session, Nicola has kindly written <a href="../../../../../../applied-insights/tutorials/posts/2023/12/12/xmas-cards.html">a tutorial for Real World Data Science</a> that walks through all the necessary steps to create a snowman against a snowy night’s sky. You’ll want to read that tutorial first before returning to this blog.</p>
 <p>My design uses the same basic setting as Nicola’s but updates the scene to reflect the Real World Data Science (RWDS) brand colours, and I replace the snowman with a Christmas tree adorned with coloured baubles.</p>
 <section id="snowy-sky" class="level2">
 <h2 class="anchored" data-anchor-id="snowy-sky">Snowy sky</h2>
@@ -1755,95 +1445,6 @@ Tarran, Brian. 2023. “Evaluating artificial intelligence: How data science and
   <media:content url="https://realworlddatascience.net/the-pulse/posts/2023/12/06/images/llm-3d-shapes.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
-  <title>‘I would like modellers to be less ambitious in developing monster models that are impossible to inspect’</title>
-  <dc:creator>Brian Tarran</dc:creator>
-  <link>https://realworlddatascience.net/the-pulse/interviews/posts/2023/11/24/politics-of-modelling.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>It was during the first wave of the Covid-19 pandemic, when citizens in many countries around the world were confined to their homes, that Andrea Saltelli and colleagues were inspired to write “a manifesto for responsible modelling.” The television news was, Saltelli recalls, dominated by models of Covid infections, hospitalisations, and deaths. Politicians pointed to charts showing those model projections and spoke of “flattening the curve” – driving down case numbers – so as not to overwhelm healthcare systems.</p>
-<p>While all this was going on, Saltelli came into contact “with a fantastic group of people,” he says, “all of whom were, in a sense, concerned by the sudden eruption of mathematical modelling into everyday life.”</p>
-<p>“We were concerned that this [modelling] was not being done properly, that too much importance was given to those numbers, too much certainty was attached to them, and nobody seemed to realise that the selection of certain numbers rather than others would eventually and dramatically bias the message that was given.”</p>
-<p>In June 2020, Saltelli – along with Monica Di Fiore, Deborah Mayo, Theodore Porter, Philip Stark and others – published in <em>Nature</em> their manifesto setting out “<a href="https://www.nature.com/articles/d41586-020-01812-9">Five ways to ensure that models serve society</a>.” The ideas proposed in that three-page comment piece have now been given a book-length treatment, so we sat down with Saltelli to discuss <a href="https://global.oup.com/academic/product/the-politics-of-modelling-9780198872412?cc=gb&amp;lang=en&amp;"><em>The Politics of Modelling: Numbers Between Science and Policy</em></a>.</p>
-<div class="keyline">
-<hr>
-</div>
-<p><strong>Can you tell our readers a little about yourself?</strong><br>
-I am a chemist. I got my degree in chemistry, but for most of my life I have worked as a mathematical modeller and applied statistician. More recently, let’s say in the last 10 years or so, I have also moved into issues of epistemology – meaning, how do we decide that we know what we know, and how do we do that when the source of the knowledge is represented by a mathematical model?</p>
-<p><strong>I’d like to dig into the title of your new book. What should people understand about <em>The Politics of Modelling</em>?</strong><br>
-It starts from a broader discussion of a state of exception enjoyed by mathematical modelling. One point we try to make in the book is that models are exceptional because they have an incredible palette of methodologies – even more than statistics. They are not a discipline, because everyone does modelling in their own craft in a different way. Modelling even escapes the gaze of sociologists most of the time because sociologists are more interested in algorithms and statistics. And, as a consequence of this state of exception, models enjoy many privileges, including a better defence of the pretence of neutrality, and they maintain, in a certain sense, a lapse of symmetry between developers and users. They also have a very strong grip on policy, whereby models can enjoy a high epistemic authority, and this epistemic authority seems to be proportional to the dimension of the model or the base of data on which the model has been calibrated. All of this creates a situation which leads to a problem – a problem for society, on the one hand, because models are used to suggest policies which are not optimal, and on the other hand, trust is consumed, trust is lost, and this may have been happening as a result of the Covid-19 epidemic and the way mathematical modelling was used in the context of the epidemic.</p>
-<p><strong>The book emerged out of the “manifesto for responsible modelling” that you published in <em>Nature</em> a few years back. Could you describe that manifesto?</strong><br>
-The manifesto was something which came out of the pandemic, in fact, because we were all locked up at home and we could spend some time reflecting and writing. We tried to produce a set of recommendations for both society and the modellers: for society to be a bit more circumspect in accepting results from mathematical modelling, and for modellers to be more cautious in formulating their predictions. But, beyond the issue of apparent precision of mathematical models, there was also the issue that models are built on a series of assumptions, each of which may have a great bearing on the result. And not only that but also, at the point where you formulate a mathematical model, you assume that you have already decided what is the problem, what is the direction of progress. So, there are really many normative assumptions which are embedded into that. Then there is the issue that mathematical models are not done by everyone; they are done by specific groups of people who belong to, normally, a certain identified class, some kind of elite – not a financial elite, but an elite in terms of competencies and knowledge. And this also creates bias, because – to put it brutally – if you can work at home with your laptop, the epidemic doesn’t affect you so much. But if you work in a plant and the plant is closed, and you are not paid, this destroys your life, or the life of your family. This asymmetry – or inequality, let’s say, or implicit bias – in those who are producing the analysis, this was, for many of us, an issue which needed to be brought to the attention of the public.</p>
-<div class="pullquote-container">
-<div class="grid">
-<div class="g-col-12 g-col-lg-4">
-<div class="quarto-figure quarto-figure-left">
-<figure class="figure">
-<p><img src="https://realworlddatascience.net/the-pulse/interviews/posts/2023/11/24/images/andrea-saltelli-sq.png" class="img-fluid figure-img" alt="Andrea Saltelli, co-editor of 'The Politics of Modelling'"></p>
-<figcaption>Andrea Saltelli, co-editor of ‘The Politics of Modelling.’</figcaption>
-</figure>
-</div>
-</div>
-<div class="g-col-12 g-col-lg-8 pullquote-grid pullquote">
-<p><img src="https://realworlddatascience.net/images/pullquote-purple.png" class="img-fluid" width="50"></p>
-<p>The manifesto was something which came out of the pandemic… We tried to produce a set of recommendations for both society and the modellers: for society to be a bit more circumspect in accepting results from mathematical modelling, and for modellers to be more cautious in formulating their predictions.</p>
-</div>
-</div>
-</div>
-<p><strong>Surely the urgency of the Covid situation prevented people from taking a step back and thinking more deeply about how models are constructed. Is it not forgivable in a situation like that? Or, is your argument that we should be doing this at all times, regardless of the urgency, regardless of the time pressures?</strong><br>
-I am tempted to say both yes and no. Yes, because surely the situation was urgent, and many things which were done in a way which one would consider suboptimal were later justified on the grounds of urgency. We noted incredible differences in the measures adopted in several countries, so for us it was obvious that even though everyone was claiming to “follow the science,” they seemed to be following different sciences, or perhaps they were following “the science” which was more instrumental or more convenient to justify what was simply politically expedient.</p>
-<p>Beyond that, I would say: it’s always urgent, no? We are very often in these kinds of situations. One might say that even the regulation of artificial intelligence today is urgent. Regulation of pesticides is urgent. Not to mention geopolitics… Everything seems to be urgent, and this seems to be a constant in our relationship with technology in particular: we don’t want to kill innovation, but if we wait to see what a new piece of technology does before we regulate it, then maybe it’s too late to change it. This is exploited by many people, not least [Mark] Zuckerberg [CEO of Facebook owner Meta]. He says, “Move fast and break things,” but once things are broken, they’re broken.</p>
-<p>And talking about things being broken, what we discuss in the book is also this issue of broken trust. People are losing faith in expertise – not in all countries in the same way; there are national differences that are important. But, in general, if you measure trust in science – which is still very high – it’s taken quite a dent during the pandemic, and we argue that this was in part due to abuse of mathematical models.</p>
-<p><strong>The book, which you’ve edited with Monica Di Fiore, breaks down the manifesto for responsible modelling into extended essays from different contributors, looking at different aspects of modelling – the framing of models, the assumptions, the consequences. For these essays, you draw on experts from different fields: sociology, philosophy, statistics, civil engineering, geography, law, environmental sciences, and others. Why was it important to get such diverse perspectives on these various aspects of modelling?</strong><br>
-There is a major divide between social science – humanities – on the one hand and natural sciences on the other hand, with lots of suspicion between the two fields and sometimes open hostility. Mathematical modelling is particularly impenetrable, as we argue, to the gaze coming from a social scientist – at least, more impenetrable than statistics or algorithms, which have been very much studied in recent years. And so, it was important to allow the two fields, the two big communities, to communicate and to speak to one another in a critical way.</p>
-<p><strong>You write in your introduction to the book that the field of statistics has spent more time thinking more deeply about questions of data ethics, model assumptions, and so on. Can you give an example?</strong><br>
-There is a book by a group of French statisticians, <em>Statactivisme</em>, which is rich with examples of how a statistician could make a difference by simply producing better numbers. They don’t say, “Throw away the model, throw away the numbers,” but simply be careful of what numbers you use. And I think models and modellers need something like this, some kind of systematic debate – a societal debate – with other disciplines on what they’re doing.</p>
-<p><strong>One of the quotes that jumped out at me from the book was, “Models are underexplained but overinterpreted.” How do we reset that balance?</strong><br>
-This is more easily said than done. The remedies to this are, maybe we should spend some time thinking about reproducibility, even in mathematical modelling. This is not done. We talk about the reproducibility of data but very few people talk about the reproducibility of a mathematical model. Another thing which I think would be useful is to think more about how to interpret models and less about how to make them bigger. And then, of course, there is the practice of “assumption hunting.” If you use a model, go and hunt for the assumptions contributing to its construction.</p>
-<p>To the modellers we say, engage yourself in something that might be called “modelling of the model process,” which means, try to imagine what would happen if you took a different branch in the construction of the model. In this we make an analogy to the “garden of the forking paths,” something that statisticians discuss, because they understand that when they build a statistical construction, they can take one way or another way, and when they measure the impact of taking a different path – as, for instance, when they give the same data to different teams – they find an amazing diversity of results that are totally unexpected. We are learning now that not only in statistics and mathematical modelling but in the laboratory, too – conducting physical experiments, not numerical ones – you can have a diverging set of outcomes depending on who is doing the analysis.</p>
-<p>All this should call for a science that is more humble – one that accepts this kind of possibility and works actively to make these issues evident but also solves them in order to produce knowledge that is useful.</p>
-<p><strong>Earlier, you spoke about modellers coming from a specific group or class of people – an elite. We interviewed, earlier this year, <a href="https://realworlddatascience.net/the-pulse/interviews/posts/2023/01/25/erica-thompson.html">Erica Thompson</a>, author of the book <em>Escape from Model Land</em>, and one of the points Erica discussed was how to bring more diversity of thought and of voices into the modelling process. How do we engage broader communities in the construction of models – maybe not building the model itself, but thinking about what is important, what needs to be measured, what are we looking to understand?</strong><br>
-This could be achieved if models were used in a context of what we, the authors, call an “extended peer community.” In other words, this is the idea that when you are discussing an issue, you should talk to the people directly affected by the issue because they have some knowledge about it. For this to take place, the model must be one instrument, which the community can get together to discuss, and so the model must not be too complex.</p>
-<p><strong>Now that your book is out, what do you hope will be its impact?</strong><br>
-Looking from the point of view of the modellers, I would like them to be more humble and less ambitious in developing monster models that are impossible to inspect and explore. From society I would like to see a more circumspect attitude, as I said before. Society has been trained to be sceptical of statistical information, but we should also be circumspect about the output of mathematical modelling. Ask more questions; ask, for instance, for the uncertainty range for a given number, or whether the number tells the entire story.</p>
-<div class="article-btn">
-<p><a href="../../../../../../the-pulse/interviews/index.html">Find more Interviews</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Royal Statistical Society
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Tarran, Brian. 2023. “‘I would like modellers to be less ambitious in developing monster models that are impossible to inspect.’” Real World Data Science, November 24, 2023. <a href="https://realworlddatascience.net/the-pulse/interviews/posts/2023/11/24/politics-of-modelling.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-
- ]]></description>
-  <category>Modelling</category>
-  <category>Public policy</category>
-  <guid>https://realworlddatascience.net/the-pulse/interviews/posts/2023/11/24/politics-of-modelling.html</guid>
-  <pubDate>Fri, 24 Nov 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/the-pulse/interviews/posts/2023/11/24/images/andrea-saltelli.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
   <title>How data science and statistics can shape the UK’s AI strategy</title>
   <dc:creator>Brian Tarran</dc:creator>
   <link>https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/10/30/ai-conf-panel.html</link>
@@ -1897,106 +1498,6 @@ Tarran, Brian. 2023. “How data science and statistics can shape the UK’s AI 
   <guid>https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/10/30/ai-conf-panel.html</guid>
   <pubDate>Mon, 30 Oct 2023 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/10/30/images/panel.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>‘Statistics and data science are at the heart of the AI movement – we want to be a strong voice in the debate’</title>
-  <dc:creator>Brian Tarran</dc:creator>
-  <link>https://realworlddatascience.net/the-pulse/interviews/posts/2023/10/25/evaluating-ai.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>Next week, the Royal Statistical Society (RSS) is hosting a panel debate on <a href="https://rss.org.uk/training-events/events/events-2023/rss-events/evaluating-artificial-intelligence-how-data-scienc/#fulleventinfo">“Evaluating artificial intelligence: How data science and statistics can make sense of AI models.”</a> The event forms part of the <a href="https://aifringe.org/">AI Fringe programme of activities</a> and is timed to precede the <a href="https://www.gov.uk/government/publications/ai-safety-summit-introduction">UK government’s AI Safety Summit at Bletchley Park</a>.</p>
-<p>RSS president Andrew Garrett is chairing this free, in-person event on 31 October, and he’ll be joined by five panellists to discuss big questions around AI model development, evaluation, risk and benefits:</p>
-<ul>
-<li>Mihaela van der Schaar, John Humphrey Plummer professor of machine learning, artificial intelligence and medicine at the University of Cambridge and a fellow at The Alan Turing Institute</li>
-<li><a href="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/01/27/talking-chatgpt.html">Detlef Nauck</a>, head of AI and data science research, BT</li>
-<li><a href="https://realworlddatascience.net/the-pulse/interviews/posts/2023/04/28/stephanie-hare.html">Stephanie Hare</a>, researcher, broadcaster, and author of <em>Technology is Not Neutral</em></li>
-<li>Mark Levene, principal scientist, department of data science, National Physical Laboratory</li>
-<li><a href="https://realworlddatascience.net/the-pulse/posts/2023/10/20/ai-for-humanity.html">Martin Goodson</a>, chief executive, Evolution AI, and former chair of the RSS Data Science and AI Section</li>
-</ul>
-<p>We sat down with Andy for a quick-fire Q&amp;A to hear more of what’s in store for next week’s event.</p>
-<div class="keyline">
-<hr>
-</div>
-<p><strong>The RSS event takes place one day before the UK government’s AI Safety Summit. Why is it so important for statisticians and data scientists to be involved in the debate over AI safety?</strong><br>
-Statistics and data science are at the heart of the AI movement – it’s really a question of taking data and information, and using statistical algorithms to create outputs. That’s at the core of what we do as statisticians and data scientists. Although it’s called AI, it uses mathematical and statistical methods.</p>
-<p><strong>The AI Safety Summit focuses on risks posed by certain types of AI systems. Where do you see the biggest risk?</strong><br>
-Risk depends upon the purpose and the impact of the AI. It’s very different whether something is being used to inform or recommend or persuade or decide. If it’s a decision-making system, say, there is a bigger risk associated with it if the decision to be made will have an important impact on your life – so, that might be a medical decision or a decision on whether you’re to receive benefits or housing, or how you’re treated in the judicial system. It’s important to understand what the AI is being used for and how much control you have over it, and also how much oversight there is. Will the decision be made solely by an algorithm, or is there human oversight?</p>
-<p>There is a particular concern moving forward around misinformation and disinformation. That is a genuine concern, particularly with big elections coming up in the UK and beyond. People are sharing things that they don’t realise are disinformation, so it is really important to understand where the information is coming from, its provenance; that’s incredibly important. We’ve seen with hallucinogenic AI that sometimes there are references given for outputs that don’t actually exist. So we need to constantly scrutinise where information sources are coming from and, if sources are quoted, do they really exist?</p>
-<p><strong>The <a href="https://rss.org.uk/RSS/media/File-library/Policy/2023/RSS-AI-white-paper-response-v2-2.pdf">RSS policy response</a> to the UK government’s <a href="https://www.gov.uk/government/publications/ai-regulation-a-pro-innovation-approach/white-paper">AI regulation whitepaper</a> urges investment in a Centre for AI Evaluation Methodology. What informed this recommendation?</strong><br>
-The white paper uses the word “proportionate” many, many times. When you talk about safety, inevitably you move into the area of risk, and if you want safety measures to be proportionate, and you want those measures to be based upon risk, then – effectively – you have to understand how you evaluate risk, how you evaluate the probability of something happening, and what the impact might be if it does happen. That naturally lends itself to needing to evaluate both the potential harm but also the potential benefit of using AI. I think the summit is focused more around harm, and the concerns around potential harms, rather than the trade off between harm and benefit. But that was certainly the reason we got into talking about the importance of evaluation, and evaluation is used in other industries where there is high risk. Drug development is an example, as is healthcare, where treatments and new methods are evaluated so that people are informed about both the potential harms and the potential benefits.</p>
-<div class="pullquote-container">
-<div class="grid">
-<div class="g-col-12 g-col-lg-4">
-<div class="quarto-figure quarto-figure-left">
-<figure class="figure">
-<p><img src="https://realworlddatascience.net/the-pulse/interviews/posts/2023/10/25/images/andy-garrett-crop.png" class="img-fluid figure-img" alt="Portrait photo of Andrew Garrett"></p>
-<figcaption>Andrew Garrett, president, Royal Statistical Society</figcaption>
-</figure>
-</div>
-</div>
-<div class="g-col-12 g-col-lg-8 pullquote-grid pullquote">
-<p><img src="https://realworlddatascience.net/images/pullquote-purple.png" class="img-fluid" width="50"></p>
-<p>We have a really important role to play in focusing attention not only on AI outputs but on inputs. That is an area that hasn’t received enough attention but it is one that statisticians understand incredibly well.</p>
-</div>
-</div>
-</div>
-<p><strong>A lot of the focus of the AI debate is on outputs. Should we be talking more about inputs – the data the models are trained on, where the data is coming from, and issues of quality and bias, etc.?</strong><br>
-There should be more discussion of this, yes. Statisticians and data scientists, but statisticians in particular, are trained very much around the data generating process, so we naturally think about how data is gathered, the potential biases in a dataset, and the representation that you need for a study. We understand that the data going in is as important as the outputs produced. And I think it’s becoming more and more necessary to understand where exactly the data is coming from, whether it’s diverse, whether it’s representative of the populations you want to study, and so on. This is an incredibly important area, and provenance of data – like provenance of information – will become ever more important. So, with a large language model, for example, what information is it trained on? Did the developers have permission to use that information? How representative is that information? These sorts of questions need to be addressed, because your outputs will only ever be as good as your inputs.</p>
-<p><strong>AI systems are having wide-reaching effects across society. What impact are AI tools having on the work of statisticians and data scientists, and how would you evaluate the impacts so far: good, bad, or neutral?</strong><br>
-You have to be a cynic and an evangelist at the same time. There is some very good work being done but also some very naive work. AI is not magic. It requires the same thoroughness and lifecycle management as anything else. Certainly in terms of pattern recognition, image recognition, it’s been very useful. On MRI images, for example, can you reduce the amount of time humans need to spend looking at the data because you have an AI tool helping with the assessment? Of course, the challenge is then, when you have an AI assessment, what do you compare it to? You could compare it to what an expert would assess, but is that a suitable reference point for saying something is a good system, knowing that humans themselves are not perfect? AI systems are able to handle large datasets, large images, very quickly. And so the speed of being able to do that has a potential advantage, although it depends on the level of human oversight. Where we’re seeing these tools being advantageous, I think, is where you have some human oversight but some of the heavy lifting is being done by the AI systems.</p>
-<p><strong>What do you hope will emerge from the panel debate at the RSS next week? Reaching consensus on such a big, broad topic is unlikely, perhaps, but what are the kinds of things that you’re hoping to learn and take away from the discussion?</strong><br>
-We’ve got some very good practitioners on the panel, and I’m hoping that we’ll generate some really good discussion from the panel and some really good questions from the audience. When it comes to the AI conversation generally, there’s a danger that it has focused too much so far on either the academic view of things or the large tech company perspective, so we’re probably missing out a whole tranche of people who are working at the coalface on these things, working in smaller companies. So, I’d like to understand a little bit more about what is happening in that part of industry. I know there’s a big focus on things like building out capability in the UK, and that’s not simply a question of having people with expertise – it’s about having access to things like the right sort of computing environments. So, I think there’s going to be some interesting discussion around what’s holding back industry. Overall, though, what I’d like to see come out of this meeting is a more proportionate response, from people who are working on this on a day-to-day basis. Statisticians are good at that – at coming up with a measured response, an informed response. Do we have the same concerns about the existential threat of AI that have been discussed by some of the larger companies, for example?</p>
-<p><strong>Aside from coming along and contributing to this panel discussion, how else can statisticians and data scientists engage with the AI debate and help shape a collective response to this major issue?</strong><br>
-I’d certainly encourage them to join the RSS and be a part of our work on this. We want to be a strong voice in the debate on AI because it is underpinned by statistical and mathematical techniques, as I mentioned at the start. We have a really important role to play in focusing attention not only on AI outputs but on inputs. That is an area that hasn’t received enough attention but it is one that statisticians understand incredibly well – and it’s one that brings into discussion issues such as ethics, consent, copyright, etc., and that’s very much where we should be engaging as well.</p>
-<div class="callout callout-style-simple callout-note">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>Register now for <a href="https://rss.org.uk/training-events/events/events-2023/rss-events/evaluating-artificial-intelligence-how-data-scienc/#fulleventinfo">“Evaluating artificial intelligence: How data science and statistics can make sense of AI models,”</a> a free, in-person debate at the RSS offices in London, 4 pm – 6 pm, Tuesday, October 31.</p>
-</div>
-</div>
-</div>
-<div class="article-btn">
-<p><a href="../../../../../../the-pulse/interviews/index.html">Find more Interviews</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Royal Statistical Society
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Tarran, Brian. 2023. “‘Statistics and data science are at the heart of the AI movement – we want to be a strong voice in the debate.’” Real World Data Science, October 25, 2023. <a href="https://realworlddatascience.net/the-pulse/interviews/posts/2023/10/25/evaluating-ai.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-
- ]]></description>
-  <category>AI</category>
-  <category>Events</category>
-  <category>Algorithms</category>
-  <category>Risk</category>
-  <guid>https://realworlddatascience.net/the-pulse/interviews/posts/2023/10/25/evaluating-ai.html</guid>
-  <pubDate>Wed, 25 Oct 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/the-pulse/interviews/posts/2023/10/25/images/andy-garrett.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
   <title>An AI for humanity</title>
@@ -2105,129 +1606,6 @@ Tarran, Brian. 2023. “‘Statistics and data science are at the heart of the A
   <guid>https://realworlddatascience.net/the-pulse/posts/2023/10/20/ai-for-humanity.html</guid>
   <pubDate>Fri, 20 Oct 2023 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/the-pulse/posts/2023/10/20/images/etienne-girardet-_HO6LmpGDl8-unsplash.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>‘Feelings about sharing data can be context and time dependent – you can’t just do one survey or focus group’</title>
-  <dc:creator>Brian Tarran</dc:creator>
-  <link>https://realworlddatascience.net/the-pulse/interviews/posts/2023/10/16/data-sharing-in-gov.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>This summer, the UK Office for Statistics Regulation (OSR) published its report on <a href="https://osr.statisticsauthority.gov.uk/publication/data-sharing-and-linkage-for-the-public-good/">Data Sharing and Linkage for the Public Good</a>. In the report, the OSR notes that the value of sharing and linking data has become widely recognised within government, though there remain areas of challenge and uncertainties about “the public’s attitude to, and confidence in, data sharing.”</p>
-<p>The report also warns that “unless significant changes are implemented… progress that has been made could be lost and the potential for data sharing and linkage to deliver public good will not be achieved.”</p>
-<p>To find out more about the report and its recommendations for change, we sat down with Helen Miller-Bakewell, OSR’s head of development and impact. Listen to the full interview below or on YouTube.</p>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/72eqvS34n7c?si=tzoiivVk-m4su1aT" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<section id="transcript" class="level2">
-<h2 class="anchored" data-anchor-id="transcript">Transcript</h2>
-<div class="callout callout-style-simple callout-warning" style="margin-top: 0.75rem;">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>This transcript has been produced using <a href="https://otter.ai/">speech-to-text transcription software</a>. It has been only lightly edited to correct mistranscriptions and remove some repetitions.</p>
-</div>
-</div>
-</div>
-<p><strong>Brian Tarran</strong><br>
-Hello, I’m Brian Tarran, editor of realworlddatascience.net. And welcome to another Real World Data Science interview. Today I’m speaking with Helen Miller-Bakewell of the Office for Statistics Regulation. And we’re talking about the Office’s July 2023 report, Data Sharing and Linkage for the Public Good. In this report, the OSR reviews progress that has been made towards sharing and linking data for the public good. It says that the value of sharing and linking data has become widely recognised within government, though there remain areas of challenge and uncertainties about, quote, the public’s attitude to and confidence in data sharing. The report warns that quote, unless significant changes are implemented, the OSR is concerned that progress that has been made could be lost and the potential for data sharing and linkage to deliver public good will not be achieved. In my interview with Helen, we talk about some of the key highlights and findings of the report some of its main recommendations, some examples of data sharing and linkage that are going on now within government. So let’s hand over now to Helen, who will begin by introducing herself, her role within OSR and some of the background to the report.</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-So I’m Helen, Helen Miller-Bakewell, I have an official title of head of development and impact within OSR. OSR as a whole, our kind of formal job is to regulate statistics produced by government, we are the regulatory arm of the UK Statistics Authority. And our aim is to work towards statistics that serves the public good, and a government that produces and uses statistics analysis in a way that means the public can feel confident in them, and the analysis that that’s done and how they’re used. Within OSR, I used to be a regulator of statistics, I was out there looking at official statistics on crime and security, holding them up against our code of practice for statistics, which sets the standards that we would like to see government statistics meet. In my role now I actually oversee a few of our cross organisation functions, that all are designed to try and improve the way that OSR as a whole works, and to do work that can support the statistical system as a whole. And the most relevant one for today is the data and methods function. And a key piece of work that that function has been working on for the last year is looking at how data sharing and linkage is done across government, and that supports one of OSR’s wider interests and ambitions. One of our ambitions for the current five years is to make greater data available in a secure way for research and evaluation. That’s what this report that we’re going to be talking about has contributed to.</p>
-<p><strong>Brian Tarran</strong><br>
-Before we get stuck into the report, maybe it’s worth setting out what does OSR mean when it’s talking about data sharing and linkage? What’s the driver for this being a kind of a priority, something that OSR wants to encourage and to see happen? What are the public benefits that you hope to accrue from it?</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-The general premise that’s underpinned the report, and the reason that we have been a champion and advocate for date sharing and linkage for a while, is that we think data can be more powerful when it’s linked, and when it’s made accessible, in a secure way, to a wider audience for analysis. And it can offer more insights and better fulfil its potential to serve the public goods. And again, I keep saying serve the public goods. Within OSR, we very much think that statistics analysis, it shouldn’t just be for government, for decision makers in government, it should be available to the public, to all stakeholders, really, who wants to use it to make decisions hold government to account.</p>
-<p><strong>Brian Tarran</strong><br>
-So for people reading this or listening to this, who haven’t yet had a chance to dig into the report – and it’s very interesting report – what are the key messages that you want to share with people? What is the, I guess, what’s the assessment of the current state of data sharing and linkage?</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-I think some of the key messages do echo what other reports have said in this space, which is that there really has been some excellent progress in terms of data sharing and data linkage. We last reported on data sharing and linkage back in 2018 and 2019, when the DA was kind of coming into force and things were starting to move slowly.</p>
-<p><strong>Brian Tarran</strong><br>
-Sorry to interrupt you. But what is the DEA did you say?</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-It’s the Digital Economy Act. So there was some amendments to the DEA, it created new, new powers to enable greater sharing of data for research and statistics, and it put the Office for National Statistics at the centre of those powers. It kind of gave ONS greater powers to ask other departments across the government to share data with them for research and statistical purposes. And the UK Statistics Authority as well have powers to accredit researcher and accredit processing environments so that people can have access to more data as well across governments.</p>
-<p><strong>Brian Tarran</strong><br>
-So your last report was in 2018, 2019 time. There’s been good progress, you say, since then. I wanted to ask you about some good examples of data linkage that you’ve seen in that time. Maybe the obvious one is Covid, I’m guessing. The pandemic, that offered a lot of opportunities for linking different datasets together. But are there– is that it? Or are there others that you want to highlight?</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-I think the pandemic definitely provided a really strong impetus to share data, to link data. And I think, you know, we saw things done which hadn’t been possible previously, it broke down barriers, and was a kind of an excellent enabler, which is fantastic, because it was a crisis situation. And actually, yes, one of the examples that I would highlight, and I know others in OSR would highlight that was doing Covid, was Office for National Statistics estimates of Covid-19 mortality rates among different ethnic groups, and that drew on census data, it drew on death registration data at your on hospital episode statistics, it drew on data from lots of different places to create some really, really important analysis. It’s exciting to be able to say now that there are good examples of data sharing and linkage across different topic areas and different organisations. And I think if you spoke to regulators in OSR working in different domains, they will each have like their favourite examples of, of data sharing and linkage. Having worked in crime and security regulation myself, the one that comes straight to mind is Data First, which is data linkage project led by Ministry of Justice, working with ADR UK – another one, I don’t have to say full often, Administrative Data Research UK – and that’s done a fantastic job of kind of opening up access again, in a secure way, a real focus on security, to a wealth of data from across MOJ systems, sometimes horrible, clunky legacy systems – I hope none won’t be offended if I say that – but making it valuable because people can, you know, to a greater extent now link it and link it to data from other departments as well.</p>
-<p>I did ask a couple of colleagues if they wanted to throw me any other examples of data sharing and linkage that they particularly think highly of, and another one that came up was the Registration and Population Interaction Database, RAPID database, which has been created by DWP [Department for Work and Pensions]. And that provides that brings together data, information from DWP, HMRC [His Majesty’s Revenue &amp; Customs] and local authorities to try and give a view of citizens’ interactions across the breadth of DWP services. What the report does say is, although we have these good examples, there are still barriers and challenges to doing data sharing and linkage. And that, that can, can be true across the whole process, right from getting support for the idea, through the practical steps of finding out what data is available, where, who owns it, how you can get to it, and then actually doing the linkage bit technically at the end. So we’ve been in a situation where things definitely have improved. But it’s, in many cases, it is not easy or efficient yet to share or link data. Our report talks about different barriers we heard about during the course of interviews with stakeholders, that we’ve encountered through our regulatory work as well. And we make 16 – to be precise – recommendations for how we could, or how government could, could start to chip away at those to, to improve the situation going forward.</p>
-<p><strong>Brian Tarran</strong><br>
-Yeah, and I would like to talk about some of those recommendations, I guess the more technical side of the recommendations, a bit, a bit later. One thing I wanted to ask you now about was about a word that sort of jumped out at me in, in the report was this idea of needing there to be a social licence for data sharing. And in the report, social licence has, has been defined as the, like, the level of acceptance or approval in local communities for data linkage projects. Now, I guess for something like the pandemic, right, you can argue that there is a kind of an implicit social licence, it was an emergency situation, there was, you know, people at risk. So that sort of use case was kind of justified, but I was curious about how social licences for these things can best be established and, and maintained, because that’s about kind of interaction with the public, right? You know, you could put a load of government statisticians and data scientists into a room and say, what could you do with this, all this data and how you could, could you link it all together? And they’d get very excited about it? But actually, then, how do you then take that to the public and convince them that it’s a good idea, or are there other ways of making sure this social licence has been obtained?</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-So, social licence and public engagement were one of the topics that was good, most consistently mentioned across the interview– interviews we held. And yeah, there just seemed to be a consensus which we would support that those working on data sharing and linkage should be prioritising public engagement around their work, both to kind of gauge the amount of social licence that there might be, or any sticking points, and potentially start to build social licence as well. And I think, you know, it’s really great to see people thinking like that, and I would actually say as well, it seems to be a recurring theme. And it’s really nice to see that having prominence. Another finding from the interviews was, you know, the flip side of this, yes, people think it’s important, but often people can not quite know how to approach public engagement, building social licence. And there are actually a few examples we highlight in the report where we, where we think public engagement has been done, done well, hopefully, to kind of inspire people. I would say, you know, I have a few kind of overarching thoughts on what can be important. And I think it, it comes so much to trust and trustworthiness. And I think the way, some ways that you can support trust with the public are transparency, saying what you’re going to do and why, and how, and actually the outcomes as well, when possible, let’s sit closing the circle. Thinking about this interview, I remembered OSR ran a public dialogue last year with ADR UK. And we were trying to talk to members of the public about what they understand by the public good of statistics and data. And one of the messages that came up there was people want to feel the impact their data and feel that outcome. And they don’t always feel they get that knowledge back. Like, what, what was, so what was the outcome of you having my data and doing these things that you kind of said you would do? So yeah, transparency, and then kind of linked to that, I guess, like continuous engagement, and considered engagement. And the public is not a homogenous group, there will be different groups that are important to engage for different data sharing, different data linkage projects, and you kind of need to consider who are the people you need to really engage with for your specific initiatives. And then it’s, I’m afraid you can’t just do one survey or one focus group, there needs to be some kind of mechanism for getting more continuous engagement to keep an eye on actually, how are people feeling now, because we know that social licence and people’s feelings about sharing data, it can be context dependent, it can be time dependent. And actually the first couple of recommendations in the report, so right there at one and two, number one is about the value of trackers like CDEI’s [Centre for Data Ethics and Innovation] Public Attitudes Survey, which, you know, are run on a semi-regular basis to try and track how the public are feeling at a high level about questions around data. And then our second recommendation is about having an organisation that can do more to produce guidance and support people doing research to do public engagement well.</p>
-<p><strong>Brian Tarran</strong><br>
-Does the mission statement of statistics for the public good, does that kind of help guide the approach, right? So any data linkage, data sharing project, you need to understand, you need to think about okay, what’s the public good that we’re trying to achieve here? And then that becomes your, almost the point, the focal point of the discussion with the public about why we want to do this and why we think there’ll be a benefit.</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-Absolutely. This focus on the public good is what we always come back to in, in OSR. And again, it is something that can sometimes slightly differentiate us from other organisations in this space where there may be a very internal government focus. Yeah, absolutely. What’s the outcome that’s seeking to be achieved? And will we achieve it? Did we achieve it?</p>
-<p><strong>Brian Tarran</strong><br>
-One of the parts of the report that I was quite interested in was the four future scenarios. The task you set yourself was to look five years from, from now at where we might be, and I guess give a range of, like, scenarios in which data linkage is great, and everyone’s doing it and it’s fully supported, down to it’s, you know, it’s happening on a piecemeal basis or not at all. So what I wanted to understand was, how those scena– whether any of those scenarios are more likely than others to emerge, and whether the kind of likelihood of those scenarios emerging are dependent on certain of your recommendations.</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-The scenarios just allowed us to explore in a theoretical way, like, yeah, where, where could we end up? We hope the 16 recommendations we’ve made, taken together, if they could all be fully delivered, could lead us towards that ultimate scenario of data sharing and linkage for the public good. And you can put quite neatly different recommendations against different bits of that scenario to help get, get us there. I think if, if I reflect on the scenarios like right now, the one that feels like most familiar to me is data sharing and linkage in silos. We’ve kind of spoken a little bit earlier already about how there are some areas of government and some topic areas and some organisations that are doing some really brilliant work. And I could see quite a realistic scenario where that kind of becomes more entrenched over, over the next five years. But, you know, maybe that’s actually just realistic, right? Maybe it’s unrealistic to expect that every organisation [in] government with different, different sizes, different funding, different priorities, could, could end up in exactly the same place on date sharing and linkage, all at the kind of, the top level. But I do, I do think if we can chip away at the recommendations we’ve made, then every organisation could improve on their starting point and move towards that, that scenario.</p>
-<p><strong>Brian Tarran</strong><br>
-Okay, so let’s talk about some of the recommendations of how we get there. And there were a couple of areas I particularly wanted to focus on. One was talking about career frameworks, and having those kind of reflect, and I guess, reward the skills of those who are working on data and data linkage projects. So I was kind of wondering, you know, are there, are these skills that are kind of currently either underserved or under recognised within the existing career frameworks? And if so, how do we change that? Or was that is that beyond the scope of your report to recommend that?</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-I think the situation across government is perhaps relatively complicated here. And I think what we, what we’d really like to see, essentially, is a situation where people in roles, in data roles, basically feel valued, and they can see a clear career pathway for them within government. And I think what we have at the moment is a variety of career frameworks that support people working in in roles with data and a decentralised pay model. Which means pay scales across, across roles can, can – and frameworks – can vary. You can see intuitively, how that has the potential to kind of create confusion for individuals – like well, which career framework should I look at – and, and then on the pay side, the potential to create kind of skills sink, where people want to go and work particular areas simply because they can be paid more, and in some cases it’s a considerable amount more, actually. And the reason I say it’s complicated is because, I mean, to some extent, this, what we have, is appropriate. People who work on data and sharing and linkage projects can come from lots of different analytical backgrounds – like, you could have a statistician or a social researcher or a data scientist or data architect, they could all be working on a, on a data sharing project, shall we say. And actually, it kind of makes sense that people in those kind of different roles might have different career frameworks and paths. And similarly, as I say, pay is decentralised, I don’t think OSR has much power to change too much there. But, you can see there are arguments for departments being able to have their own say on what skills they need to kind of pay more for in different circumstances at different times to, to bolster things. However, what we have said in the report, what we call for, and what we will try and speak to people who own frameworks to try and facilitate, is just a bit more awareness between people who own different frameworks about what else is out there, and a bit more consistency, therefore, about how different data skills perhaps are reflected and where they’re reflected in different frameworks. So we’re not asking for one single framework, I don’t think that would be practical, or particularly serve people working in data very well. But yeah, like more awareness, better joined up working, more consistent use of frameworks in, in job adverts, for example, just to help people see more clarity about their careers and where they can take them.</p>
-<p><strong>Brian Tarran</strong><br>
-I was at an event recently where, you know, people working in, in data science or data, data kind of roles in government, were talking about how, like, the sort of career pathways and that there’s a feeling that technical skills, or growing technical skills aren’t always as well rewarded as greater sort of managerial responsibilities, so that if you become a, someone who’s excellent at being able to solve the, the knotty problems of data linkage and sharing, right, you might not be as well compensated for that as you might be if you were, say, running a team of 20, 30 people and sort of not actually applying those technical skills on a day-to-day basis. So it’s, I guess that was where my question was coming from was, is it that sort of thing that we kind of need to, need to address in some way? But, again, that might be beyond the scope of, you know, what you were looking at it on this particular matter?</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-Well, I think it’s something for us to think more about, if I’m honest. We have committed ourselves to a follow on report for this. And we want to kind of take a look at the recommendations next year and see, you know, how far everything’s got. So, you know, any, any additional bits that we haven’t covered in this first report are good for us to think about. I think the situation you’ve just outlined sounds very familiar, to be honest, and not just across data science, across a whole load of roles where, yeah, actually your technical skills, they take you really well to middle management, but then there often comes a point where, if you want to go higher and have greater remuneration, you might have to move more to those softer skills, those managerial skills. That’s something we can think a bit more about, actually. And when we do have conversations with those who we kind of pointed to for the frameworks recommendation, maybe have a look into it a bit more.</p>
-<p><strong>Brian Tarran</strong><br>
-This is, I guess, some somewhat related to the previous point. But the other aspect of the recommendations that jumped out to me were the discussion around quality metadata and documentation, standardisation and things like that as being priorities for effective data linkage, these are the things that need to be in place. But again, when you chat to researchers, not just in government but all over the place, these less glamorous aspects of data management are kind of underappreciated. And often teams are, the way that, the way teams work, the way projects work is you finish one, you move on to the next, you don’t really want to think too much about the one that you just worked on, because you’ve got a new priority or a new round of funding or whatever it is. So how do we convince senior leaders that, that there are sufficient resources for this sort of work that needs to be done? It might not sort of deliver necessarily immediate value and benefits, but it’s about kind of accruing the kind of infrastructure, I guess, to, to make sure that data sharing and linkage, you can achieve your, you know, your most optimistic vision of data sharing and linkage being widespread in government.</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-Yeah, I think it’s a really important question. And yeah, having worked as a statistician as well, before I came into this world of regulation, yep, I recognise what you just described. And, you know, I think it’s always going to be a challenge in these kind of fast-paced multiple priority environments, where often people are resource stretched in terms of people, time, money, all those things together. Though, I think there’s a couple of tacks. One, I think, is maybe improving the data literacy of senior leaders, and trying to give them a greater understanding of, of data, how it’s used, and around these issues of kind of standardisation, and why they’re why they’re so important. And, actually, a couple of the recommendations earlier on in the report, in the people section, are around improving the– or strengthening the statistical literacy and the data literacy of senior leaders and recommending they go on, for example, the Data Science Campus in ONS run a master class for senior leaders across the service. So I think there was a kind of a bit of a, an education thing. And yeah, I guess, you know, part of that is setting out, like, what are the benefits? And what are the risks of not doing this? I think that, you know, here comes a role for people like OSR in setting expectations, especially in the world of official statistics, it is completely within our power to set the expectation for what government statistics should be doing with regards to metadata, or kind of following, following best practice and things like that. Our code of practice for statistics does do that to some extent already. And us as well, there’s a role for us in demonstrating the benefits and saying why we’re asking people to do these things and, and what’s good when it, when it goes well. I was thinking about this, and it drew to mind the EAST Framework. I don’t know if you’ve come across that. It’s a framework that was introduced to me by the Behavioural Insights Team for bringing about change and what you– what interventions need to be if they’re going to be successful, and it’s Easy, Attractive, Social and Timely. And I think when we and when other organisations who are kind of working on metadata standardisation, like the Central Digital Data Office, like Department for Science, Innovation and Technology, there’s, you know, there’s a few players here. We need to be keeping these, the EAST in mind as we design to try and help people kind of come on board with things more easily. And yeah, recommendation 16 in the report, the final one, is about standardisation and about, there are lots of players in this space and can we, can we bring them together a bit to be even more effective? So that’s, that’s definitely something we’ll be looking at in the coming months.</p>
-<p><strong>Brian Tarran</strong><br>
-And you said that there’ll be a follow up report soon. When is that? When are you targeting?</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-We’re planning next summer. So last time when we did our first report on Joined-up Data in 2018. And then we did a follow on one year on in 2019. We found that was quite an effective way to, for us and others, to kind of build and maintain momentum. And yeah, again, you know, feels a bit unfair almost to just put out a load of recommendations, and then then leave, leave the world to it. We’d like to see if we can help facilitate and then tell people how we’ve been getting on.</p>
-<p><strong>Brian Tarran</strong><br>
-And I’m guessing it’s not, you’re not looking for all recommend– 16 recommendations to be implemented by next year. But it’s, are we making steps towards some of them? Are we are we heading in the right direction?</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-You know, let’s practice what we preach. A bit of transparency. Yeah, are we heading in the right direction? And if we’re not, you know, is there a plan? I’d love to be optimistic. That optimistic. I wouldn’t expect that we can just put ticks against all 16 recommendations next year. But hopefully, yeah, we can, we could do some progress bars.</p>
-<p><strong>Brian Tarran</strong><br>
-Excellent. Well, we should probably schedule a follow up interview for a year’s time then. But Helen, thank you very much for your time today.</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-Oh, you’re very welcome. And if anyone, any of your listeners interested in, in the report, please do get in touch with OSR. We’d be very happy to talk about the report that we’ve just written or about, you know what we’re doing. Following on from that? Yeah, thank you.</p>
-<p><strong>Brian Tarran</strong><br>
-So we’ll definitely put a link to the report in the show notes. So once again, Helen, thank you very much for joining us.</p>
-<p><strong>Helen Miller-Bakewell</strong><br>
-Oh, you’re welcome. Thank you.</p>
-<div class="article-btn">
-<p><a href="../../../../../../the-pulse/interviews/index.html">Find more Interviews</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Royal Statistical Society
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This interview is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Tarran, Brian. 2023. “‘Feelings about sharing data can be context and time dependent – you can’t just do one survey or focus group.’” Real World Data Science, October 16, 2023. <a href="https://realworlddatascience.net/the-pulse/interviews/posts/2023/10/16/data-sharing-in-gov.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-</section>
-
- ]]></description>
-  <category>Data sharing</category>
-  <category>Data linkage</category>
-  <category>Public engagement</category>
-  <guid>https://realworlddatascience.net/the-pulse/interviews/posts/2023/10/16/data-sharing-in-gov.html</guid>
-  <pubDate>Mon, 16 Oct 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/the-pulse/interviews/posts/2023/10/16/images/helen-miller-bakewell.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
   <title>Join Real World Data Science at three events this October!</title>
@@ -2752,6 +2130,486 @@ Tarran, Brian. 2023. “Live from Chicago: Real World Data Science at posit::con
   <guid>https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/09/19/positconf-blog.html</guid>
   <pubDate>Wed, 27 Sep 2023 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/09/19/images/chicago-theatre.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
+<item>
+  <title>‘Pseudo data science’ and other pitfalls: lessons from the UK’s stats regulator on how not to be misleading</title>
+  <dc:creator>Ed Humpherson</dc:creator>
+  <link>https://realworlddatascience.net/the-pulse/posts/2023/09/18/pseudo-data-science.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>A typical article on data science hails new data sources, new tools, and new visualisations, and thereby supports the case for the value of data science.</p>
+<p>But this article takes a different angle: it talks about potential pitfalls that can face data scientists. It is based on our work as the Office for Statistics Regulation (OSR), the UK’s regulator for official statistics. We see lots of great work done by statisticians in government. But we also see some of the challenges they face – and data scientists are also likely to encounter the same challenges.</p>
+<p>The problems arise from the fact that neither statisticians nor data scientists do their work in isolation. The work usually takes places within organisations – businesses, government bodies, think tanks, academic institutions – and as a result, the statisticians and/or data scientists are not the only players who get to influence how data science is presented and used.</p>
+<p>What are the pitfalls we see in our work as regulator?</p>
+<section id="pseudo-data-science" class="level2">
+<h2 class="anchored" data-anchor-id="pseudo-data-science">Pseudo data science</h2>
+<p>The first type of pitfall is pseudo data science.</p>
+<p>Pseudo data science is a term we use to describe attempts to pass off crude work as being more data science-y than it really is. That reflects a sense in public life that data science is new, innovative, somehow the Future. In this context, people who are not data scientists can be tempted to dress themselves up in the clothes of data science to enhance their credibility. This dressing up is usually well-intentioned – communications professionals who want to illuminate and explain complex issues in an engaging way.</p>
+<p>The trouble is, it can sometimes backfire. In our work at OSR, we have over the last year seen several examples where organisations have sought to publish visualisations that look like they are the product of in-depth data analysis – when in fact they have been drawn by communications staff using graphic design packages. Examples include <a href="https://osr.statisticsauthority.gov.uk/correspondence/ed-humpherson-to-david-pares-treasury-inflation-infographic/">inflation</a>, <a href="https://uksa.statisticsauthority.gov.uk/correspondence/response-from-sir-robert-chote-to-andrew-gwynne-mp-dhsc-chart-on-nurses-pay/">nurses pay</a>, and <a href="https://uksa.statisticsauthority.gov.uk/correspondence/letter-to-rachel-reeves-mp-gdp-growth-chart/">comparisons of UK economic performance with other countries</a>. To be fair, whenever we have pointed out issues like this, organisations have responded well, putting in place new procedures to ensure that analysts sign off on this kind of visualisations. Nevertheless, we suspect that the temptations to indulge in pseudo data science will remain strong – and we may need to intervene on similar cases in future.</p>
+</section>
+<section id="unintelligent-transparency" class="level2">
+<h2 class="anchored" data-anchor-id="unintelligent-transparency">Unintelligent transparency</h2>
+<p>The second pitfall is a failure of <a href="https://osr.statisticsauthority.gov.uk/publication/regulatory-guidance-on-intelligent-transparency/">intelligent transparency</a>.</p>
+<p>There is a raw form of transparency – quoting a single number (a naked number we call it); or dumping data out into the public domain with no explanation. This is not intelligent transparency. The latter involves being clear where data come from, what their source is, and making underlying data available so that others can understand and verify the statements that are being made. Raw transparency and naked numbers treat an audience with little respect; intelligent transparency helps the audience understand and appreciate what sits behind high level claims.</p>
+<p>Data science outputs can sometimes seem to communications teams easy to cherry pick for the most attractive number. Again, like pseudo data science, this reflects largely good intentions – to communicate complex things through ideas. But it becomes easy for a single, unsupported number to be used and reused until it loses most of its meaning. We call this weaponization of data, and it is the antithesis of intelligent transparency. And there is a lot of it about – for example the way in which the former Prime Minister of the UK talked repeatedly about <a href="https://uksa.statisticsauthority.gov.uk/correspondence/sir-david-norgrove-to-prime-minister-employment-statistics/">employment</a>; or <a href="https://uksa.statisticsauthority.gov.uk/correspondence/response-from-sir-robert-chote-to-alex-cole-hamilton-msp-scottish-renewable-energy-statistics/">claims</a> about Scotland’s capacity for <a href="https://uksa.statisticsauthority.gov.uk/correspondence/sir-robert-chote-to-stephen-kerr-msp-renewable-energy/">renewable energy</a>. These examples indicate the pathology of weaponization that can impact data science outputs. They also act as a reminder that data scientists can counter weaponization of their own outputs by delivering engaging and insightful communication.</p>
+</section>
+<section id="context-collapse" class="level2">
+<h2 class="anchored" data-anchor-id="context-collapse">Context collapse</h2>
+<p>The third type of pitfall surrounds context collapse.</p>
+<p>This idea comes from the work of the philosopher <a href="http://lucymcdonald.co.uk/wp-content/uploads/2023/02/Context-Collapse-Online-LMcDonald.pdf">Lucy McDonald</a> (who in turn has built on the ideas of <a href="https://www.danah.org/">danah boyd</a>). What is context collapse? Imagine a swimming pool – with neat divisions of the pool into different lanes. All is clearly labelled – fast, medium, slow – for lane swimmers, who are in turn separated from the splash area for families and the deep end for divers. Removing the lanes, and thus taking away any signposting, increases the likelihood for things to go wrong. The fast swimmers doing front crawl clash with the slower breaststroke swimmers; both are constantly having to avoid the families with young children; and all need to watch for the periodic big splashes created by the divers. This is the online communication environment, in which formerly private and casual statements can go viral; in which a brief statement in a media environment can be picked up on and circulated many times; and in which some bad actors (the divers) may wish to disrupt deliberately the debate by breaking all the rules.</p>
+<p>How can this affect data science? It happens when individual bits of data are taken from their context, and used in service of a different, and bigger, argument. A good example is data on Covid vaccinations. Here, UK organisations like the Office for National Statistics and the UK Health Security Agency published comprehensive data in good faith about vaccinations and their impact. Some of the underlying data, however, was taken out of the broader context and used in isolation to support criticisms of vaccines – criticisms that the wider evidence base did not support.</p>
+<p>The challenge then became how the organisations should respond. At an organisational level, they did not wish to withdraw the data – because that would reduce transparency. Instead they sought to both caveat their data more clearly; and directly rebut the more egregious misuses of the data. In a sense, then, what began as an individual analytical output became part of a broader organisational judgement on positioning in the face of misinformation.</p>
+<p>It is fair to say that, against this third pitfall, there is not yet a clear consensus on how to address it. Practice is emerging all the time and we at OSR continue to support producers of data as they grapple with it.</p>
+<p>There are other potential pitfalls to using data science. But what unites these three – pseudo data science; unintelligent transparency; and context collapse – is that they relate to situations where data science rubs up against broader organisational dynamics, around communications, presentation and organisational strategy.</p>
+<p>And the meta-message is this: for data scientists to thrive in organisations, they need to be good at more than data science. They need to be skilled at working alongside and influencing colleagues from other functions. Only through this form of <a href="https://osr.statisticsauthority.gov.uk/analytical-leadership/">data leadership</a> can the pitfalls be dealt with effectively.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>This article is based on a presentation at the <a href="https://www.datascienceforhealthequity.com/">Data Science for Health Equity</a> group in May 2023.</p>
+</div>
+</div>
+</div>
+<div class="article-btn">
+<p><a href="../../../../../the-pulse/index.html">Discover more The Pulse</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author</dt>
+<dd>
+<strong>Ed Humpherson</strong> is head of the Office for Statistics Regulation, which provides independent regulation of all official statistics in the UK. The aim of OSR is to enhance public confidence in the trustworthiness, quality and value of statistics produced by government.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Ed Humpherson
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Humpherson, Ed. 2023. “‘Pseudo data science’ and other pitfalls: lessons from the UK’s stats regulator on how not to be misleading.” Real World Data Science, September 18, 2023. <a href="https://realworlddatascience.net/the-pulse/posts/2023/09/18/pseudo-data-science.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <category>Communication</category>
+  <category>Leadership</category>
+  <category>Transparency</category>
+  <guid>https://realworlddatascience.net/the-pulse/posts/2023/09/18/pseudo-data-science.html</guid>
+  <pubDate>Mon, 18 Sep 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/the-pulse/posts/2023/09/18/images/distorted-data.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
+<item>
+  <title>Contributors: check out the new Real World Data Science template repo on GitHub</title>
+  <dc:creator>Brian Tarran</dc:creator>
+  <link>https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/09/12/template.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Thinking of contributing to Real World Data Science but not sure how to get started? Help is at hand, thanks to <a href="https://github.com/finnoh">Finn-Ole Höner</a>. The Amsterdam-based business data science student has created <a href="https://github.com/finnoh/RWDS_post_template">a template repository on GitHub</a> that allows anyone to create Real World Data Science content in our house style and format.</p>
+<p>In this repository you’ll find two example Quarto (.qmd) documents, which is the main file type we use for generating site content. The “content-brief.qmd” file is a template for developing article ideas to discuss with our site editors, and the “report.qmd” file is a standard article template. Within that article template you’ll find examples of the range of Quarto features that we use, as well as the code you need to make use of them yourself.</p>
+<p>These documents can be edited using tools including Visual Studio Code and R Studio. For details on how to work with Quarto documents, see the <a href="https://quarto.org/">Quarto website</a>. Once article drafts are finished they can be rendered into HTML format, and the output files will be displayed in the Real World Data Science style, thanks to the inclusion of our stylesheets in the template repository. This is a great way for contributors to see what their content will look like on Real World Data Science before anything is published.</p>
+<p>To get started, head on over to the <a href="https://github.com/finnoh/RWDS_post_template">RWDS_post_template repository</a> and click the “Use this template” button. Also, be sure to <a href="https://realworlddatascience.net/contributor-docs/contributor-guidelines.html">review our contributor guidelines</a> for advice on how to integrate the .qmd templates into the content development and submission workflow.</p>
+<p>Huge thanks to Finn-Ole Höner for building this valuable resource for Real World Data Science contributors.</p>
+<div class="article-btn">
+<p><a href="../../../../../../the-pulse/editors-blog/index.html">Back to Editors’ blog</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Royal Statistical Society
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@synkevych?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Roman Synkevych</a> on <a href="https://unsplash.com/photos/UT8LMo-wlyk?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Tarran, Brian. 2023. “Contributors: check out the new Real World Data Science template repository on GitHub.” Real World Data Science, September 12, 2023. <a href="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/09/12/template.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+
+ ]]></description>
+  <category>Call for contributions</category>
+  <category>Tools</category>
+  <category>Updates</category>
+  <guid>https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/09/12/template.html</guid>
+  <pubDate>Tue, 12 Sep 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/09/12/images/roman-synkevych-UT8LMo-wlyk-unsplash.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
+<item>
+  <title>For minorities, biased AI algorithms can damage almost every part of life</title>
+  <dc:creator>Arshin Adib-Moghaddam</dc:creator>
+  <link>https://realworlddatascience.net/the-pulse/posts/2023/09/06/biased-algorithms.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Bad data does not only produce bad outcomes. It can also help to suppress sections of society, for instance vulnerable women and minorities.</p>
+<p>This is the argument of <a href="https://www.bloomsbury.com/us/is-artificial-intelligence-racist-9781350374423/">my new book</a> on the relationship between various forms of racism and sexism and artificial intelligence (AI). The problem is acute. Algorithms generally need to be exposed to data – often taken from the internet – in order to improve at whatever they do, such as <a href="https://www.theguardian.com/us-news/2022/may/11/artitifical-intelligence-job-applications-screen-robot-recruiters">screening job applications</a>, or underwriting mortgages.</p>
+<p>But the training data often contains many of the biases that exist in the real world. For example, algorithms could learn that most people in a particular job role are male and therefore favour men in job applications. Our data is polluted by a set of myths from the age of <a href="https://en.wikipedia.org/wiki/Age_of_Enlightenment#:%7E:text=The%20Enlightenment%20included%20a%20range,separation%20of%20church%20and%20state.">“enlightenment”</a>, including biases that lead to <a href="https://www.gaytascience.com/transphobic-algorithms/">discrimination based on gender and sexual identity</a>.</p>
+<p>Judging from the history in societies where racism has played a role in <a href="https://sk.sagepub.com/books/racism-from-slavery-to-advanced-capitalism">establishing the social and political order</a>, extending privileges to white males –- in Europe, North America and Australia, for instance –- it is simple science to assume that residues of racist discrimination feed into our technology.</p>
+<p>In my research for the book, I have documented some prominent examples. Face recognition software <a href="https://www.washingtonpost.com/technology/2019/12/19/federal-study-confirms-racial-bias-many-facial-recognition-systems-casts-doubt-their-expanding-use/">more commonly misidentified black and Asian minorities</a>, leading to false arrests in the US and elsewhere.</p>
+<p>Software used in the criminal justice system has predicted that black offenders would have <a href="https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing">higher recidivism rates</a> than they did. There have been false healthcare decisions. <a href="https://www.science.org/doi/10.1126/science.aax2342">A study found that</a> of the black and white patients assigned the same health risk score by an algorithm used in US health management, the black patients were often sicker than their white counterparts.</p>
+<p>This reduced the number of black patients identified for extra care by more than half. Because less money was spent on black patients who have the same level of need as white ones, the algorithm falsely concluded that black patients were healthier than equally sick white patients. Denial of mortgages for minority populations is facilitated by biased data sets. The list goes on.</p>
+<section id="machines-dont-lie" class="level2">
+<h2 class="anchored" data-anchor-id="machines-dont-lie">Machines don’t lie?</h2>
+<p>Such oppressive algorithms intrude on almost every <a href="https://www.newscientist.com/article/mg25033390-200-the-essential-guide-to-the-algorithms-that-run-your-life/">area of our lives</a>. AI is making matters worse, as it is sold to us as essentially unbiased. We are told that machines don’t lie. Therefore, the logic goes, no one is to blame.</p>
+<p>This pseudo-objectiveness is central to the AI-hype created by the Silicon Valley tech giants. It is easily discernible from the speeches of Elon Musk, Mark Zuckerberg and Bill Gates, even if now and then they <a href="https://futureoflife.org/open-letter/pause-giant-ai-experiments/">warn us about the projects</a> that they themselves are responsible for.</p>
+<p>There are various unaddressed legal and ethical issues at stake. Who is accountable for the mistakes? Could someone claim compensation for an algorithm denying them parole based on their ethnic background in the same way that one might for a toaster that exploded in a kitchen?</p>
+<p>The <a href="https://umdearborn.edu/news/ais-mysterious-black-box-problem-explained#:%7E:text=This%20inability%20for%20us%20to,when%20they%20produce%20unwanted%20outcomes.">opaque nature of AI technology</a> poses serious challenges to legal systems which have been built around individual or human accountability. On a more fundamental level, basic human rights are threatened, as legal accountability is blurred by the maze of technology placed between perpetrators and the various forms of discrimination that can be conveniently blamed on the machine.</p>
+<p>Racism has always been a systematic strategy to order society. It builds, legitimises and enforces hierarchies between the haves and have nots.</p>
+</section>
+<section id="ethical-and-legal-vacuum" class="level2">
+<h2 class="anchored" data-anchor-id="ethical-and-legal-vacuum">Ethical and legal vacuum</h2>
+<p>In such a world, where it’s difficult to disentangle truth and reality from untruth, our privacy needs to be legally protected. The right to privacy and the concomitant ownership of our virtual and real-life data needs to be codified as a human right, not least in order to harvest the real opportunities that good AI harbours for human security.</p>
+<p>But as it stands, the innovators are far ahead of us. Technology has outpaced legislation. The ethical and legal vacuum thus created is readily exploited by criminals, as this brave new AI world is largely anarchic.</p>
+<p>Blindfolded by the mistakes of the past, we have entered a wild west without any sheriffs to police the violence of the digital world that’s enveloping our everyday lives. The tragedies are already happening on a daily basis.</p>
+<p>It is time to counter the ethical, political and social costs with a concerted social movement in support of legislation. The first step is to educate ourselves about what is happening right now, as our lives will never be the same. It is our responsibility to plan the course of action for this new AI future. Only in this way can a good use of AI be codified in local, national and global institutions.</p>
+<!-- Below is The Conversation's page counter tag. Please DO NOT REMOVE. -->
+<p><img src="https://counter.theconversation.com/content/211778/count.gif?distributor=republish-lightbox-basic" alt="The Conversation" width="1" height="1" style="border: none !important; box-shadow: none !important; margin: 0 !important; max-height: 1px !important; max-width: 1px !important; min-height: 1px !important; min-width: 1px !important; opacity: 0 !important; outline: none !important; padding: 0 !important" referrerpolicy="no-referrer-when-downgrade"></p>
+<!-- End of code. If you don't see any code above, please get new code from the Advanced tab after you click the republish button. The page counter does not collect any personal data. More info: https://theconversation.com/republishing-guidelines -->
+<div class="article-btn">
+<p><a href="../../../../../the-pulse/index.html">Discover more The Pulse</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author</dt>
+<dd>
+<a href="https://theconversation.com/profiles/arshin-adib-moghaddam-211780">Arshin Adib-Moghaddam</a> is professor in global thought and comparative philosophies, <a href="https://theconversation.com/institutions/soas-university-of-london-975">SOAS, University of London</a>.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+This article is republished from <a href="https://theconversation.com">The Conversation</a> under a Creative Commons license. Read the <a href="https://theconversation.com/for-minorities-biased-ai-algorithms-can-damage-almost-every-part-of-life-211778">original article</a>.
+</dd>
+<dd>
+<p>Image by <a href="http://alanwarburton.co.uk/">Alan Warburton</a> / © BBC / <a href="https://www.betterimagesofai.org">Better Images of AI</a> / Quantified Human / <a href="https://creativecommons.org/licenses/by/4.0/">Licenced by CC-BY 4.0</a>.</p>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <category>AI</category>
+  <category>AI ethics</category>
+  <category>Bias</category>
+  <category>Ethics</category>
+  <guid>https://realworlddatascience.net/the-pulse/posts/2023/09/06/biased-algorithms.html</guid>
+  <pubDate>Wed, 06 Sep 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/the-pulse/posts/2023/09/06/images/AlanWarburton-QuantifiedHuman-991x724.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
+<item>
+  <title>RSS Conference preview: Evaluating AI, machine learning, and data visualisation</title>
+  <dc:creator>Brian Tarran</dc:creator>
+  <link>https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/08/24/rss-conference.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>The Royal Statistical Society International Conference takes place in Harrogate, England, this September (Monday 4 to Thursday 7). Real World Data Science will be in attendance, and we’ve helped organise a couple of sessions we’d like to tell you about.</p>
+<section id="evaluating-ai-how-data-science-and-statistics-can-shape-the-uks-ai-strategy" class="level3">
+<h3 class="anchored" data-anchor-id="evaluating-ai-how-data-science-and-statistics-can-shape-the-uks-ai-strategy">Evaluating AI: How data science and statistics can shape the UK’s AI strategy</h3>
+<p><strong>Date:</strong> 6 September <strong>Time:</strong> 9:00 am - 10:20 am <strong>Room:</strong> Auditorium (moved from Queens Suite 8)</p>
+<p>The launch of ChatGPT less than a year ago is a milestone moment in the story of artificial intelligence. Overnight, large language models were transformed from research projects into consumer products, now used by millions each month. <a href="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/07/19/code-interpreter.html">The capabilities are impressive</a>, <a href="https://realworlddatascience.net/people-paths/posts/2023/05/11/chatgpt-data-science-pt1.html">the productivity gains undeniable</a>. But, what of the downsides? These are issues <a href="https://realworlddatascience.net/foundation-frontiers/interviews/posts/2023/04/28/stephanie-hare.html">societies, governments, and individuals are now starting to reckon with</a>.</p>
+<p>In March 2023, <a href="https://www.gov.uk/government/publications/ai-regulation-a-pro-innovation-approach/white-paper">the UK government published a white paper promising a “pro-innovation approach” to AI regulation</a>, while also acknowledging the risks AI poses to “people’s privacy, their human rights or their safety” and “concerns about the fairness of using AI tools to make decisions which impact people’s lives”. <a href="https://rss.org.uk/RSS/media/File-library/Policy/2023/RSS-AI-white-paper-response-v2-2.pdf">The Royal Statistical Society, in response, has called for investment in a centre for AI evaluation methodology</a>, arguing that users of AI systems should be able to judge the trustworthiness of claims made by AI companies as well as the outputs of their systems.</p>
+<p>What should AI evaluation look like? How will it work in practice? What metrics are most important, and – crucially – who gets to decide this? Join us for <a href="https://virtual.oxfordabstracts.com/#/event/4019/program?session=66677&amp;s=700">a special panel debate at the RSS International Conference</a>, where these questions, and more, will be discussed.</p>
+</section>
+<section id="best-practices-for-data-visualisation-how-to-make-data-outputs-more-readable-accessible-and-impactful" class="level3">
+<h3 class="anchored" data-anchor-id="best-practices-for-data-visualisation-how-to-make-data-outputs-more-readable-accessible-and-impactful">Best Practices for Data Visualisation: How to make data outputs more readable, accessible, and impactful</h3>
+<p><strong>Date:</strong> 5 September <strong>Time:</strong> 11:40 am - 1:00 pm <strong>Room:</strong> Auditorium</p>
+<p>The Royal Statistical Society (RSS) has published a new guide, “<a href="https://royal-statistical-society.github.io/datavisguide/">Best Practices for Data Visualisation</a>”, containing insights, advice, and examples (with code) to make data outputs more readable, accessible, and impactful. The guide is written primarily for contributors to Royal Statistical Society publications – including <em>Significance</em> magazine, the <em>Journal of the Royal Statistical Society Series A</em>, and Real World Data Science – but the information and advice within is also of broad relevance and use for any data visualisation task.</p>
+<p>In the first half of this conference session, authors Andreas Krause, <a href="https://nrennie.rbind.io/">Nicola Rennie</a>, and Brian Tarran will introduce the guide and its key recommendations, and there will be a short demo of how to use the new <a href="https://github.com/nrennie/RSSthemes">{RSSthemes} R package</a>. For the second half of the session, attendees will be invited to share feedback with the authors, propose ideas, and start developing new and expanded sections of the guide. Attendees will be shown how to work with the guide’s source files and collaborate via GitHub, so feel free to bring along a laptop and become a contributor!</p>
+<p>For more information, see <a href="https://royal-statistical-society.github.io/datavisguide/">rss.org.uk/datavisguide</a> and the <a href="https://virtual.oxfordabstracts.com/#/event/4019/program?session=65937&amp;s=0">RSS Conference website</a>.</p>
+</section>
+<section id="discussion-meeting-probabilistic-and-statistical-aspects-of-machine-learning" class="level3">
+<h3 class="anchored" data-anchor-id="discussion-meeting-probabilistic-and-statistical-aspects-of-machine-learning">Discussion Meeting: Probabilistic and statistical aspects of machine learning</h3>
+<p><strong>Date:</strong> 6 September <strong>Time:</strong> 5:00pm - 7:00 pm <strong>Room:</strong> Auditorium</p>
+<p>We haven’t helped organise this session, but we are interested to see it. Two papers will be presented for discussion and debate. Paper 1 is “Automatic Change-Point Detection in Time Series via Deep Learning” by Jie Li, Paul Fearnhead, Piotr Fryzlewicz, and Tengyao Wang, while Paper 2 is “From Denoising Diffusions to Denoising Markov Models” by Joe Benton, Yuyang Shi, Valentin De Bortoli, George Deligiannidis, and Arnaud Doucet. Preprints of both papers are available now via the <a href="https://rss.org.uk/training-events/events/discussion-papers/">RSS Discussion Meetings webpage</a>, and you can also hear more about the session in this interview with Adam Sykulski, RSS Discussion Papers editor.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/1UL1H21v-Q0?si=WPftzqltawRknPPM" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<div class="article-btn">
+<p><a href="../../../../../../the-pulse/editors-blog/index.html">Back to Editors’ blog</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Royal Statistical Society
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail image by <a href="https://flic.kr/p/YzNWJw">jcw1967</a>, licenced under a Creative Commons Attribution 2.0 Generic (CC BY 2.0) <a href="https://creativecommons.org/licenses/by/2.0/">licence</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Tarran, Brian. 2023. “RSS Conference preview: Evaluating AI, machine learning, and data visualisation.” Real World Data Science, August 24, 2023. <a href="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/08/24/rss-conference.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <category>AI</category>
+  <category>Machine learning</category>
+  <category>Data visualisation</category>
+  <category>Events</category>
+  <guid>https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/08/24/rss-conference.html</guid>
+  <pubDate>Thu, 24 Aug 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/08/24/images/harrogate-conference-centre.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
+<item>
+  <title>Where do AI, data science, and computer games intersect?</title>
+  <dc:creator>Alice-Maria Toader and Liam Brierley</dc:creator>
+  <link>https://realworlddatascience.net/the-pulse/posts/2023/08/17/data-science-and-games.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Game studios have cemented their place among the fastest-growing media industries. In recognition of this, we hosted an event in June through the <a href="https://rss.org.uk/membership/rss-groups-and-committees/groups/merseyside/">Royal Statistical Society (RSS) Merseyside Local Group</a> to explore AI and data science in computer game development. This was an amazing opportunity to engage with a different, in-vogue domain that has unique ties to data science. We showcased two fantastic presentations covering both academic and industry perspectives.</p>
+<p>Stanley Wang, a data scientist at SEGA Europe, opened the event by showing the methods that SEGA uses to collect, process, and apply data on player decisions in-game. It was a revealing glimpse at how smoothly in-game data collection is integrated into SEGA’s digital platforms and the ways these data can be used to engage game-centred communities – for example, running special celebrations once milestones are hit for in-game events (revenue made, goals scored, etc.) or offering real-time integration with streaming platforms so viewers can see detailed statistics on in-game progress. Stanley showed one particular example where data collection fed directly into development decisions for <em>Endless Space</em>, a competitive strategy game where players vie for galactic conquest. During the beta (a period where a game is available to play but still considered in-testing before commercial release), SEGA were able to monitor how well-balanced the playable alien factions were based on real-time win rate data, which led to improvements to game mechanics for the final release.</p>
+<p>We also learned how SEGA’s data science teams are using clustering methods to identify different game-playing behaviours in <em>Two Point Hospital</em>, a simulation game where players design, build, and manage a hospital through various scenarios. After compiling high-dimensional in-game data such as objectives achieved, treatment of staff, and even furniture choices, various clustering algorithms (including <a href="https://towardsdatascience.com/a-practical-guide-on-k-means-clustering-ca3bef3c853d">k-means clustering</a>) were used to identify common sets of player behaviour. Stanley highlighted that when using these sorts of <em>unsupervised learning methods</em>, it’s useful to get insights from multiple models to inform methodological decisions like number of clusters chosen or how to treat outliers. SEGA identified four distinct types of player from these analyses, which you can hear more about from Stanley in the video below. The approach allowed the company to better understand gamers’ motivations and experiences with a view to designing future game content.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/KAg3YDHvvqE" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<p>Our second speaker, Dr Konstantinos Tsakalidis, a lecturer in the Department of Computer Science at the University of Liverpool, presented exciting new ideas to teach computer games developers of the future. Dr Tsakalidis walked us through the curriculum for a dynamic new undergraduate program that reflects the latest software development technologies and the theory behind them. The course outline was designed around building knowledge and practice from the fundamentals upwards, starting from game physics as a prerequisite for game mechanics, game mechanics being a prerequisite for game content, and game content being a prerequisite for game AI. Combined with the continuous active involvement of students at each stage, this represented a great model of <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8049623/">constructivist teaching</a>. Dr Tsakalidis also proposed that practical game development (and subsequent assessments) should follow the latest <a href="https://www.datacamp.com/podcast/data-science-and-ai-in-the-gaming-industry">research on data science and AI in computer games</a>.</p>
+<div class="article-btn">
+<p><a href="../../../../../the-pulse/index.html">Discover more The Pulse</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author</dt>
+<dd>
+<strong>Alice-Maria Toader</strong> is a PhD student at the University of Liverpool and a committee member of the RSS Merseyside Local Group. <strong>Liam Brierley</strong> is a research fellow in health data science at the University of Liverpool and chair of the RSS Merseyside Local Group.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Alice-Maria Toader and Liam Brierley
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail image by <a href="https://unsplash.com/@jezar?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Jezael Melgoza</a> on <a href="https://unsplash.com/photos/FOx3_4_2O1E?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Toader, Alice-Maria and Liam Brierley. 2023. “Where do AI, data science, and computer games intersect?” Real World Data Science, August 17, 2023. <a href="https://realworlddatascience.net/the-pulse/posts/2023/08/17/data-science-and-games.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+
+ ]]></description>
+  <category>Events</category>
+  <category>Video games</category>
+  <category>Education</category>
+  <guid>https://realworlddatascience.net/the-pulse/posts/2023/08/17/data-science-and-games.html</guid>
+  <pubDate>Thu, 17 Aug 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/the-pulse/posts/2023/08/17/images/sega-store.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
+<item>
+  <title>Live from Toronto: Real World Data Science at the Joint Statistical Meetings</title>
+  <dc:creator>Brian Tarran</dc:creator>
+  <link>https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/08/06/jsm-blog.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<section id="sunday-august-6" class="level2">
+<h2 class="anchored" data-anchor-id="sunday-august-6">Sunday, August 6</h2>
+<section id="use-of-color-in-statistical-charts" class="level3">
+<h3 class="anchored" data-anchor-id="use-of-color-in-statistical-charts">Use of color in statistical charts</h3>
+<p><em>Haley Jeppson, Danielle Albers Szafir, and Ian Lyttle</em></p>
+<p>JSM 2023 is underway, and the first session I attended today was this panel on the use of colour in statistical charts.</p>
+<p>The topic appealed to me for two reasons:</p>
+<ul>
+<li>Before my trip to Toronto, I interviewed <a href="https://realworlddatascience.net/foundation-frontiers/interviews/posts/2023/08/01/alberto-cairo.html">Alberto Cairo about the many “dialects” of data visualisation</a>.</li>
+<li>I’ve recently been working with Andreas Krause and Nicola Rennie to create new guidance for improving statistical graphics, titled “<a href="https://royal-statistical-society.github.io/datavisguide/">Best Practices for Data Visualisation</a>”.</li>
+</ul>
+<p>The “Best Practices…” guide links to several useful data visualisation tools, and this session today has put a few more on my radar:</p>
+<ul>
+<li><p><a href="https://cmci.colorado.edu/visualab/ColorCrafting/">Color Crafting</a>, by Stephen Smart, Keke Wu, and Danielle Albers Szafir. The authors write: “Visualizations often encode numeric data using sequential and diverging color ramps. Effective ramps use colors that are sufficiently discriminable, align well with the data, and are aesthetically pleasing. Designers rely on years of experience to create high-quality color ramps. However, it is challenging for novice visualization developers that lack this experience to craft effective ramps as most guidelines for constructing ramps are loosely defined qualitative heuristics that are often difficult to apply. Our goal is to enable visualization developers to readily create effective color encodings using a single seed color.”</p></li>
+<li><p><a href="https://observablehq.com/collection/@ijlyttle/color">Computing on color</a>, a collection of Observable notebooks by Ian Lyttle that allow users to see how different colour spaces and colour scales work with different types of colour vision deficiency.</p></li>
+</ul>
+</section>
+</section>
+<section id="monday-august-7" class="level2">
+<h2 class="anchored" data-anchor-id="monday-august-7">Monday, August 7</h2>
+<section id="astronomers-speak-statistics" class="level3">
+<h3 class="anchored" data-anchor-id="astronomers-speak-statistics">Astronomers Speak Statistics</h3>
+<p>Astrophysicist Joel Leja kicked off his JSM talk with a video of the launch of the James Webb Space Telescope – an inspiring way to start the day, and a prelude to a discussion of the statistical challenges involved in studying the deep universe.</p>
+<p>James Webb, since launch, has “completely expanded our point of view”, said Leja, allowing astronomers to explore the first stars and galaxies at greater resolution than ever before.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/08/06/images/james-webb.png" class="img-fluid figure-img" alt="Image from the James Webb telescope showing two galaxies in the process of merging, twisting each other out of shape." width="500"></p>
+<figcaption>Image from the James Webb telescope showing two galaxies in the process of merging, twisting each other out of shape. Credit: ESA/Webb, NASA &amp; CSA, L. Armus, A. Evan, licenced under CC BY 2.0.</figcaption>
+</figure>
+</div>
+<p>Already, after only 13 months of operation, the images and data sent back by the telescope have left observers astounded: for example, finding suspected early galaxies that are bigger than thought possible based on extreme value analysis.</p>
+<p>But the big challenge facing those studying the early universe is trying to work out how early galaxies evolved over time. “We can’t watch this happen,” said Leja, joking that this process lasts longer than a typical PhD. So, instead, he said, “We need to use statistics to understand this, to figure out how they grow up.”</p>
+</section>
+<section id="teaching-statistics-in-higher-education-with-active-learning" class="level3">
+<h3 class="anchored" data-anchor-id="teaching-statistics-in-higher-education-with-active-learning">Teaching statistics in higher education with active learning</h3>
+<p>Great talk from Nathaniel T. Stevens of the University of Waterloo, explaining how a posting for a Netflix job inspired the creation of a final project for students to learn response surface methodology.</p>
+<p>The job ad in question “really opened my eyes” to the use of online controlled experiments by companies, said Stevens. He told delegates how LinkedIn, the business social networking site, runs over 400 experiments per day, trying to optimise user experience and other aspects of site engagement.</p>
+<p>Netflix’s job ad highlighted just how sophisticated these experiments are, said Stevens. People might hear companies refer to their use of A/B tests, but the term trivialises what’s involved, Stevens explained.</p>
+<p>Having encountered a job ad from Netflix, looking for someone to design, run, and analyse experiments and support internal methodological research, Stevens was inspired to present students with a hypothetical business problem, based on the Netflix homepage. That homepage, for those not familiar, features rows and rows of movies and TV shows sorted by theme, each show presented as a tile that, when hovered over, leads to a pop-up with a video preview and a match score – a prediction of how likely a viewer is to enjoy the show.</p>
+<p>Stevens explained the hypothetical goal as trying to minimise “browsing time” – the time it takes a Netflix user to pick something to watch. Browsing time was defined as time spent scrolling and searching, not including time spent watching previews.</p>
+<p>Students were given four factors that might influence browsing time – tile size, match score, preview length, and preview type – and through a sequence of experiments based on data generated by a Shiny app, students sought to minimise browsing time.</p>
+<p>The response from the students? Two Netflix-style thumbs up. Ta-dum!</p>
+</section>
+</section>
+<section id="tuesday-august-8" class="level2">
+<h2 class="anchored" data-anchor-id="tuesday-august-8">Tuesday, August 8</h2>
+<section id="the-next-50-years-of-data-science" class="level3">
+<h3 class="anchored" data-anchor-id="the-next-50-years-of-data-science">The Next 50 Years of Data Science</h3>
+<p>Stanford University’s David Donoho wrestled with the question of whether a singularity is approaching in this post-lunch session on the future of data science.</p>
+<p>Taking his cue from the 2005 Ray Kurzweil book, <em>The Singularity is Near</em>, Donoho reviewed recent – and sometimes rapid – advances in data science and artificial intelligence to argue that a singularity may have already arrived, just not in the way Kurzweil supposed.</p>
+<p>Kurzweil’s book argues that at some point after the 2030s, machine intelligence will supersede human intelligence, leading to a takeover or disruption of life as we know it.</p>
+<p>At JSM, Donoho argued that we have certainly seen a “massive scaling” of compute over the past decade, along with expanded communications infrastructure and the wider spread of information – all of which is having an impact on human behaviour.</p>
+<p>That human behaviour can often now be directly measured thanks to the proliferation of digital devices with data collection capabilities, and this in turn is leading to a major scaling in datasets and performance scaling for machine learning models.</p>
+<p>But does this mean that an AI singularity is near? Not according to Donoho. The notion of an AI singularity “is a kind of misdirection”, he said. Something very profound is happening, Donoho argued, and it is the culmination of three long-term initiatives in data science that have come together in recent years. “They constitute a singularity on their own.”</p>
+<p>These three initiatives, as Donoho described, are: datafication and data sharing; adherence to the “challenge problem” paradigm; and documentation and sharing of code. These are solid achievements that came out of the last decade, said Donoho, and they are “truly revolutionary” when they come together to form what he refers to as “frictionless reproducibility.”</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="images/donoho-talk.png"><img src="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/08/06/images/donoho-talk.png" class="img-fluid figure-img" alt="Slide text reads: Today's data scientists: typical interactions: What's your package name? What's your URL? QR Code? What's your stack? Today's data scientists: implicit demands: Data sharing, Specific numerical performance measures, Code sharing, Single-click access. Frictionless replications." width="500"></a></p>
+<figcaption>Photo of David Donoho’s slide, describing the scientific revolution of the “data science decade”. Photo by Brian Tarran, licenced under CC BY 4.0.</figcaption>
+</figure>
+</div>
+<p>Frictionless reproducibility, when achieved, leads to a “reproducibility singularity” – the moment where it takes almost no time at all for an idea to spread. “If there is an AI singularity,” said Donoho, “it will be because this came first.”</p>
+</section>
+</section>
+<section id="wednesday-august-9" class="level2">
+<h2 class="anchored" data-anchor-id="wednesday-august-9">Wednesday, August 9</h2>
+<section id="new-frontiers-of-statistics-in-trustworthy-machine-learning" class="level3">
+<h3 class="anchored" data-anchor-id="new-frontiers-of-statistics-in-trustworthy-machine-learning">New frontiers of statistics in trustworthy machine learning</h3>
+<p>Data, data everywhere, but is it safe to “drink”? A presentation this morning from Yaoliang Yu of the University of Waterloo looked at the issue of data poisoning attacks on algorithms and the effectiveness of current approaches.</p>
+<p>Yu began by explaining how machine learning algorithms require a lot of data for training, and that large amounts of data can be obtained cheaply by scraping the web.</p>
+<p>But, he said, when researchers download this cheap data, they are bound to worry about the quality of it. Drawing an analogy to food poisoning, Yu asked: What if the data we “feed” to algorithms is not clean? What is the impact of that?</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/08/06/images/data-hazards.png" class="img-fluid figure-img" alt="A person is illustrated in a warm, cartoon-like style in green. They are looking up thoughtfully from the bottom left at a large hazard symbol in the middle of the image. The hazard symbol is a bright orange square tilted 45 degrees, with a black and white illustration of an exclamation mark in the middle where the exclamation mark shape is made up of tiny 1s and 0s like binary code. To the right-hand side of the image a small character made of lines and circles (like nodes and edges on a graph) is standing with its ‘arms’ and ‘legs’ stretched out, and two antenna sticking up. It faces off to the right-hand side of the image." width="500"></p>
+<figcaption>Illustration by Yasmin Dwiputri &amp; Data Hazards Project / Better Images of AI / Managing Data Hazards / Licenced by CC-BY 4.0.</figcaption>
+</figure>
+</div>
+<p>As a real-world example of a data poisoning attack, Yu pointed to TayTweets, the Microsoft Twitter chatbot that spewed racism within hours of launch <a href="https://www.theverge.com/2016/3/24/11297050/tay-microsoft-chatbot-racist">after Twitter users began engaging with it</a>.</p>
+<p>Yu then walked delegates through some experiments showing how, generally, indiscriminate data poisoning attacks are ineffective when the ratio of poisoned data to clean data is small. A poisoning rate of 3%, for example, leads to model accuracy drops of 1.5%–2%, Yu said.</p>
+<p>However, he then put forward the idea of “parameter corruption” – an attack that seeks to modify a model directly. Yu showed that this would be more effective in terms of accuracy loss, though – fortunately – perhaps less practical to implement.</p>
+</section>
+<section id="data-science-and-product-analysis-at-google" class="level3">
+<h3 class="anchored" data-anchor-id="data-science-and-product-analysis-at-google">Data Science and Product Analysis at Google</h3>
+<p>Our final session at JSM 2023, before heading home, was a whistle-stop tour of various data science projects at Google, covering YouTube, Google Maps, and Google Search.</p>
+<p>Jacopo Soriano kicked us off with a brief intro to the role and responsibilities of statisticians and data scientists at Google, and within YouTube specifically – the main task being to make good decisions based on uncertain data.</p>
+<p>Soriano also spoke about the key role randomised experiments play in product development – harking back to Nathaniel Stevens’ earlier talk on this subject. YouTube runs hundreds, if not thousands, of concurrent experiments, Soriano said; statisticians can’t, therefore, be involved in each one. As Soriano’s colleague, Angela Schoergendorfer, explained later in the session, the role of the data scientist is to build methodology and metrics that others in the business can use to run their own experiments.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/08/06/images/google-sign.png" class="img-fluid figure-img" alt="Google logo on top of building, against a blue sky." width="500"></p>
+<figcaption>Photo by Pawel Czerwinski on Unsplash.</figcaption>
+</figure>
+</div>
+<p>For every experiment YouTube runs, a portion of its voluminous daily traffic will be assigned to control arms and treatment arms, with traffic able to be diverted to different groups based on user type, creators, videos, advertisers, etc. Once experiments are running, metrics such as search clickthrough rates, watch time using specific devices, or daily active user numbers are monitored. Teams tend to look at percentage change as the scale to measure whether something is working or not, said Soriano, rather than comparing treatment to control group.</p>
+<p>Next up was Lee Richardson, who spoke about the use of proxy metrics. Technology companies like Google are often guided by so-called “<a href="https://www.forbes.com/sites/forbesbusinesscouncil/2022/11/11/what-is-your-startups-north-star-metric/">north star metrics</a>”, which executive leadership use to guide the overall strategy and priorities of an organisation. However, Richardson said, these can be hard to design experiments around, and so proxy metrics stand in for the north star metrics. Proxies need to be sensitive, he said, and move in the same direction as, e.g., a long-term positive user experience.</p>
+<p>On the subject of user experience, Christopher Haulk then explained how YouTube measures user satisfaction through single-question surveys – typically asking a YouTube user to rate the video they just watched. The company doesn’t send out that many surveys, Haulk said, and response rates are in the single-digit percentage range, so it can be hard to evaluate whether changes YouTube makes to, e.g., its video recommendation algorithm are working to improve user satisfaction. Haulk then went on to explain a modelling approach the company uses to predict how users are likely to respond in order to “fill in” for missing responses.</p>
+<p>Over at Google Search, user feedback is also regularly sought to help support the evolution of the product. Angela Schoergendorfer explained how, with so many people already using Google Search, statistically significant changes in top-line metrics like daily active users can take months to see. Decision metics should ideally capture user value quickly, said Schoergendorfer – within days. For this, Google has 10,000 trained “search quality” raters they can call on. Random samples of user search queries and results are sent to these raters, who are asked to evaluate the quality of the search results. Users can also be asked in the moment, or offline through the Google Rewards app.</p>
+<p>In 2021, Schoergendorfer said, Google conducted approximately 800,000 experiments and quality tests. But perhaps the most impressive statistic of the day came from Sam Morris, who works on Google Maps. Something, somewhere, is always changing in the world, said Morris – be it a road closure or a change to business hours. The Maps team cannot evaluate every single piece of data – a lot of changes are automated or algorithmic, he explained. “So far this year, we have probably processed 16 billion changes to the map,” said Morris – a staggering figure!</p>
+<div class="article-btn">
+<p><a href="../../../../../../the-pulse/editors-blog/index.html">Back to Editors’ blog</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Royal Statistical Society
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Tarran, Brian. 2023. “Live from Toronto: Real World Data Science at the Joint Statistical Meetings.” Real World Data Science, August 6, 2023, updated August 15, 2023. <a href="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/08/06/jsm-blog.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+</section>
+</section>
+
+ ]]></description>
+  <category>Conferences</category>
+  <category>Events</category>
+  <guid>https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/08/06/jsm-blog.html</guid>
+  <pubDate>Tue, 15 Aug 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/08/06/images/google-sign.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 </channel>
 </rss>

@@ -1,0 +1,851 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Steven Bedrick, Ophir Frieder, Julia Lane, and Philip Resnik">
+<meta name="dcterms.date" content="2023-08-21">
+<meta name="description" content="The Food for Thought Challenge attracted new eyes from computer science and data science to think about how to address a critical real-world data linkage problem. And, in identifying different ways of addressing the same problem, it created an environment for new innovative ideas.">
+
+<title>Food for Thought: The value of competitions for confidential data – Real World Data Science</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for citations */
+div.csl-bib-body { }
+div.csl-entry {
+  clear: both;
+  margin-bottom: 0em;
+}
+.hanging-indent div.csl-entry {
+  margin-left:2em;
+  text-indent:-2em;
+}
+div.csl-left-margin {
+  min-width:2em;
+  float:left;
+}
+div.csl-right-inline {
+  margin-left:2em;
+  padding-left:1em;
+}
+div.csl-indent {
+  margin-left: 2em;
+}</style>
+
+
+<script src="../../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../../">
+<link href="../../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
+<script src="../../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../../site_libs/bootstrap/bootstrap-3901242a6163a083287a72b055a46663.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
+</script>
+<!-- Thank you to Ben Ruijl for the progress bar code!
+Ben is on GitHub here: https://github.com/benruijl
+And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
+
+<meta property="og:title" content="Food for Thought: The value of competitions for confidential data – Real World Data Science">
+<meta property="og:description" content="The Food for Thought Challenge attracted new eyes from computer science and data science to think about how to address a critical real-world data linkage problem. And, in identifying different ways of addressing the same problem, it created an environment for new innovative ideas.">
+<meta property="og:image" content="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/06-value-of-competitions.png">
+<meta property="og:site_name" content="Real World Data Science">
+<meta property="og:image:height" content="724">
+<meta property="og:image:width" content="991">
+<meta property="og:image:alt" content="Close up of shopping trolleys linked together.">
+<meta name="twitter:title" content="Food for Thought: The value of competitions for confidential data – Real World Data Science">
+<meta name="twitter:description" content="The Food for Thought Challenge attracted new eyes from computer science and data science to think about how to address a critical real-world data linkage problem. And, in identifying different ways of addressing the same problem, it created an environment for new innovative ideas.">
+<meta name="twitter:image" content="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/06-value-of-competitions.png">
+<meta name="twitter:site" content="@rwdatasci">
+<meta name="twitter:image-height" content="724">
+<meta name="twitter:image-width" content="991">
+<meta name="twitter:image:alt" content="Close up of shopping trolleys linked together.">
+<meta name="twitter:card" content="summary_large_image">
+</head><body class="nav-fixed fullcontent quarto-light"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
+
+<script id="progressbar" type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const bar = document.querySelector('#progress-bar');
+    const post = document.querySelector('#quarto-content');
+    const html = document.documentElement;
+    
+    const height = post.scrollHeight + post.offsetTop;
+    
+    window.addEventListener('scroll', () => {
+        bar.style.width = (html.scrollTop / (height- html.clientHeight)) * 100 + '%';
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../../rwds.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../the-pulse/index.html"> 
+<span class="menu-text">The Pulse</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../applied-insights/index.html"> 
+<span class="menu-text">Applied Insights</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../foundation-frontiers/index.html"> 
+<span class="menu-text">Foundation &amp; Frontiers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../people-paths/index.html"> 
+<span class="menu-text">People &amp; Paths</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About RWDS</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
+        <li>
+    <a class="dropdown-item" href="../../../../../../about-rwds.html">
+ <span class="dropdown-text">Who we are</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../../contributor-docs/call-for-contributions.html">
+ <span class="dropdown-text">How to contribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../../CODE_OF_CONDUCT.html">
+ <span class="dropdown-text">Code of conduct</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../../contact.html">
+ <span class="dropdown-text">Contact us</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Food for Thought: The value of competitions for confidential data</h1>
+                  <div>
+        <div class="description">
+          <p>The Food for Thought Challenge attracted new eyes from computer science and data science to think about how to address a critical real-world data linkage problem. And, in identifying different ways of addressing the same problem, it created an environment for new innovative ideas.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Machine learning</div>
+                <div class="quarto-category">Natural language processing</div>
+                <div class="quarto-category">Public policy</div>
+                <div class="quarto-category">Health and wellbeing</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Steven Bedrick, Ophir Frieder, Julia Lane, and Philip Resnik </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 21, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>We are witnessing a sea change in data collection practices by both governments and businesses – from purposeful collection (through surveys and censuses, for example) to opportunistic (drawing on web and social media data, and administrative datasets). This shift has made clear the importance of record linkage – a government might, for example, look to link records held by its various departments to understand how citizens make use of the gamut of public services.</p>
+<p>However, creating manual linkages between datasets can be prohibitively expensive, time consuming, and subject to human constraints and bias. Machine learning (ML) techniques offer the potential to combine data better, faster, and more cheaply. But, as the recently released <a href="https://www.ai.gov/wp-content/uploads/2023/01/NAIRR-TF-Final-Report-2023.pdf">National AI Research Resources Task Force report</a> highlights, it is important to have an open and transparent approach to ensure that unintended biases do not occur.</p>
+<p>In other words, ML tools are not a substitute for thoughtful analysis. Both private and public producers of a linked dataset have to determine the level of linkage quality – such as what precision/recall tradeoff is best for the intended purpose (that is, the balance between false-positive links and failure to cover links that should be there), how much processing time and cost is acceptable, and how to address coverage issues. The challenge is made more difficult by the idiosyncrasies of heterogeneous datasets, and more difficult yet when datasets to be linked include confidential data <span class="citation" data-cites="10.1257/jel.20171350 DBLP:books/sp/ChristenRS20">(<a href="#ref-10.1257/jel.20171350" role="doc-biblioref">Christensen and Miguel 2018</a>; <a href="#ref-DBLP:books/sp/ChristenRS20" role="doc-biblioref">Christen, Ranbaduge, and Schnell 2020</a>)</span>.</p>
+<p>And, of course, an ML solution is never the end of the road: many data linkage scenarios are highly dynamic, involving use cases, datasets, and technical ecosystems that change and evolve over time; effective use of ML in practice necessitates an ongoing and continuous investment <span class="citation" data-cites="DBLP:journals/corr/abs-2112-01716">(<a href="#ref-DBLP:journals/corr/abs-2112-01716" role="doc-biblioref">Koch et al. 2021</a>)</span>. Because techniques are constantly improving, producers need to keep abreast of new approaches. A model that is working well today may no longer work in a year because of changes in the data, or because the organizational needs have changed so that a certain type of error is no longer acceptable. As Sculley et al.&nbsp;point out, “it is remarkably easy to incur massive ongoing maintenance costs at the system level when applying machine learning” <span class="citation" data-cites="43146">(<a href="#ref-43146" role="doc-biblioref">Sculley et al. 2014</a>)</span>.</p>
+<p>Also important is that record linkage is not seen as a technical problem relegated to the realm of computer scientists to solve. The full engagement of domain experts in designing the optimization problem, identifying measures of success, and evaluating the quality of the results is absolutely critical, as is building an understanding of the pros and cons of different measures <span class="citation" data-cites="10.1371/journal.pone.0249833 10.1007/s11222-017-9746-6">(<a href="#ref-10.1371/journal.pone.0249833" role="doc-biblioref">Schafer et al. 2021</a>; <a href="#ref-10.1007/s11222-017-9746-6" role="doc-biblioref">Hand and Christen 2018</a>)</span>. There will need to be much learning by doing in “sandbox” environments, and back and forth communication across communities to achieve successful outcomes, as noted in the <a href="https://www.bea.gov/system/files/2022-10/acdeb-year-2-report.pdf">recommendations of the Advisory Committee on Data for Evidence Building</a> (a screenshot of which is shown in Figure 1).</p>
+<p><a href="images/pt6-fig1.png"><img src="images/pt6-fig1.png" class="img-fluid" width="700"></a></p>
+<div class="figure-caption">
+<p><strong>Figure 1:</strong> A recommendation for building an “innovation sandbox” as part of the creation of a new National Secure Data Service in the United States.</p>
+</div>
+<p>Despite the importance of trial and error and transparency about linkage quality, there is no handbook that guides domain experts in how to design such sandboxes. There is a very real need for agreed-upon, domain-independent guidelines, or better yet, official standards to evaluate sandboxes. Those standards would define “who” could and would conduct the evaluation, and help guarantee independence and repeatability. And while innovation challenges have been embraced by the federal government, the devil can be very much in the details <span class="citation" data-cites="4138bca6-f7b7-3af8-a96c-5e2544823c5c">(<a href="#ref-4138bca6-f7b7-3af8-a96c-5e2544823c5c" role="doc-biblioref">Williams 2012</a>)</span>.</p>
+<p>It is for this reason that the approach taken in the Food for Thought linkage competition, and described in this compendium, provides an important first step towards a well specified, replicable framework for achieving high quality outcomes. In that respect it joins other recent efforts to bring together community-level research on shared sensitive data <span class="citation" data-cites="macavaney-etal-2021-community tsakalidis-etal-2022-overview">(<a href="#ref-macavaney-etal-2021-community" role="doc-biblioref">MacAvaney et al. 2021</a>; <a href="#ref-tsakalidis-etal-2022-overview" role="doc-biblioref">Tsakalidis et al. 2022</a>)</span>. This competition, like those, helped bring to the foreground both the opportunities and challenges of doing research in secure sandboxes with sensitive data. Notably, these exercises highlight a kind of cultural tension between secure, managed environments, on the one hand, and unfettered machine learning research, on the other. The need for flexibility and agility in computational research bumps up against the need for advance planning and careful step-by-step processes in environments with well-defined data governance rules, and one of the key lessons learned is that the tradeoffs here need to be recognized and planned for.</p>
+<p>This particular competition was important for a number of other reasons. Thanks to its organization as a competition, complete with prizes and bragging rights for strongly performing teams, it attracted new eyes from computer science and data science to think about how to address a critical real-world linkage problem. It offered the potential to produce approaches that were scalable, transparent, and reproducible. The engagement of domain experts and statisticians meant that it will be possible to conduct an informed error analysis, to explicitly relate the performance metrics in the task to the problem being solved in the real world, and to bring in the expertise of survey methodologists to think about the possible adjustments. And because it identified different approaches of addressing the same problem, it created an environment for new innovative ideas.</p>
+<p>More generally, in addition to the excitement of the new approaches, this exercise laid bare the fragility of linkages in general and highlighted the importance of secure sandboxes for confidential data. While the promise of privacy preserving technologies is alluring as <a href="https://www.bea.gov/system/files/2022-10/acdeb-year-2-report.pdf">an alternative to bringing confidential data together in one place</a>, such approaches are likely too immature to deploy ad hoc until a better understanding is established of how to translate real-world problems and their associated data into well-defined tasks, how to measure quality, and particularly how to assess the impact of match quality on different subgroups <span class="citation" data-cites="10.1145/3433638">(<a href="#ref-10.1145/3433638" role="doc-biblioref">Domingo-Ferrer, Sánchez, and Blanco-Justicia 2021</a>)</span>. The scientific profession has gone through too painful a lesson with the premature application of differential privacy techniques to ignore the lessons that can be learned from a careful and systematic analysis of different approaches <span class="citation" data-cites="10.1145/3433638 van_riper 10.1257/pandp.20191107 giles2022faking">(<a href="#ref-10.1145/3433638" role="doc-biblioref">2021</a>; <a href="#ref-van_riper" role="doc-biblioref">Van Riper et al. 2020</a>; <a href="#ref-10.1257/pandp.20191107" role="doc-biblioref">Ruggles et al. 2019</a>; <a href="#ref-giles2022faking" role="doc-biblioref">Giles et al. 2022</a>)</span>.</p>
+<p>We hope that the articles in this collection provide not only the first steps towards a handbook of best practices, but also an inspiration to share lessons learned, so that success can be emulated, and failures understood and avoided.</p>
+<div class="nav-btn-container">
+<div class="grid">
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/05-third-place-winners.html">← Part 5: Third place winners</a></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../../applied-insights/case-studies/index.html">Find more case studies</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+<strong>Steven Bedrick</strong> is an associate professor in Oregon Health and Science University’s Department of Medical Informatics and Clinical Epidemiology.
+</dd>
+<dd>
+<p><strong>Ophir Frieder</strong> is a professor in Georgetown University’s Department of Computer Science, and in the Department of Biostatistics, Bioinformatics &amp; Biomathematics at Georgetown University Medical Center.</p>
+</dd>
+<dd>
+<p><strong>Julia Lane</strong> is a professor at the NYU Wagner Graduate School of Public Service and a NYU Provostial Fellow for Innovation Analytics. She co-founded the Coleridge Initiative.</p>
+</dd>
+</dl>
+<p><strong>Philip Resnik</strong> holds a joint appointment as professor in the University of Maryland Institute for Advanced Computer Studies and the Department of Linguistics, and an affiliate professor appointment in computer science.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Steven Bedrick, Ophir Frieder, Julia Lane, and Philip Resnik
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@alexandru_tugui?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Alexandru Tugui</a> on <a href="https://unsplash.com/photos/-inuQpBGbgI?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Bedrick, Steven, Ophir Frieder, Julia Lane, and Philip Resnik. 2023. “Food for Thought: The value of competitions for confidential data.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/the-pulse/case-studies/posts/2023/08/21/06-value-of-competitions.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="ref-DBLP:books/sp/ChristenRS20" class="csl-entry" role="listitem">
+Christen, P., T. Ranbaduge, and R. Schnell. 2020. <em>Linking Sensitive Data - Methods and Techniques for Practical Privacy-Preserving Information Sharing</em>. Springer. <a href="https://doi.org/10.1007/978-3-030-59706-1">https://doi.org/10.1007/978-3-030-59706-1</a>.
+</div>
+<div id="ref-10.1257/jel.20171350" class="csl-entry" role="listitem">
+Christensen, G., and E. Miguel. 2018. <span>“Transparency, Reproducibility, and the Credibility of Economics Research.”</span> <em>Journal of Economic Literature</em> 56 (3): 920–80. <a href="https://doi.org/10.1257/jel.20171350">https://doi.org/10.1257/jel.20171350</a>.
+</div>
+<div id="ref-10.1145/3433638" class="csl-entry" role="listitem">
+Domingo-Ferrer, J., D. Sánchez, and A. Blanco-Justicia. 2021. <span>“The Limits of Differential Privacy (and Its Misuse in Data Release and Machine Learning).”</span> <em>Communications of the ACM</em> 64 (7): 33–35. <a href="https://doi.org/10.1145/3433638">https://doi.org/10.1145/3433638</a>.
+</div>
+<div id="ref-giles2022faking" class="csl-entry" role="listitem">
+Giles, O., K. Hosseini, G. Mingas, O. Strickson, L. Bowler, C. Rangel Smith, H. Wilde, et al. 2022. <span>“Faking Feature Importance: A Cautionary Tale on the Use of Differentially-Private Synthetic Data.”</span> <a href="https://arxiv.org/abs/2203.01363">https://arxiv.org/abs/2203.01363</a>.
+</div>
+<div id="ref-10.1007/s11222-017-9746-6" class="csl-entry" role="listitem">
+Hand, D., and P. Christen. 2018. <span>“A Note on Using the f-Measure for Evaluating Record Linkage Algorithms.”</span> <em>Statistics and Computing</em> 28 (3): 539–47. <a href="https://doi.org/10.1007/s11222-017-9746-6">https://doi.org/10.1007/s11222-017-9746-6</a>.
+</div>
+<div id="ref-DBLP:journals/corr/abs-2112-01716" class="csl-entry" role="listitem">
+Koch, B., E. Denton, A. Hanna, and J. G. Foster. 2021. <span>“Reduced, Reused and Recycled: The Life of a Dataset in Machine Learning Research.”</span> <em>CoRR</em> abs/2112.01716. <a href="https://arxiv.org/abs/2112.01716">https://arxiv.org/abs/2112.01716</a>.
+</div>
+<div id="ref-macavaney-etal-2021-community" class="csl-entry" role="listitem">
+MacAvaney, S., A. Mittu, G. Coppersmith, J. Leintz, and P. Resnik. 2021. <span>“Community-Level Research on Suicidality Prediction in a Secure Environment: Overview of the <span>CLP</span>sych 2021 Shared Task.”</span> In <em>Proceedings of the Seventh Workshop on Computational Linguistics and Clinical Psychology: Improving Access</em>, 70–80. Online: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2021.clpsych-1.7">https://doi.org/10.18653/v1/2021.clpsych-1.7</a>.
+</div>
+<div id="ref-10.1257/pandp.20191107" class="csl-entry" role="listitem">
+Ruggles, S., C. Fitch, D. Magnuson, and J. Schroeder. 2019. <span>“Differential Privacy and Census Data: Implications for Social and Economic Research.”</span> <em>AEA Papers and Proceedings</em> 109 (May): 403–8. <a href="https://doi.org/10.1257/pandp.20191107">https://doi.org/10.1257/pandp.20191107</a>.
+</div>
+<div id="ref-10.1371/journal.pone.0249833" class="csl-entry" role="listitem">
+Schafer, K. M., G. Kennedy, A. Gallyer, and P. Resnik. 2021. <span>“A Direct Comparison of Theory-Driven and Machine Learning Prediction of Suicide: A Meta-Analysis.”</span> <em>PLOS ONE</em> 16 (4): 1–23. <a href="https://doi.org/10.1371/journal.pone.0249833">https://doi.org/10.1371/journal.pone.0249833</a>.
+</div>
+<div id="ref-43146" class="csl-entry" role="listitem">
+Sculley, D., G. Holt, D. Golovin, E. Davydov, T. Phillips, D. Ebner, V. Chaudhary, and M. Young. 2014. <span>“Machine Learning: The High Interest Credit Card of Technical Debt.”</span> In <em>SE4ML: Software Engineering for Machine Learning (NIPS 2014 Workshop)</em>.
+</div>
+<div id="ref-tsakalidis-etal-2022-overview" class="csl-entry" role="listitem">
+Tsakalidis, A., J. Chim, I. M. Bilal, A. Zirikly, D. Atzil-Slonim, F. Nanni, P. Resnik, et al. 2022. <span>“Overview of the <span>CLP</span>sych 2022 Shared Task: Capturing Moments of Change in Longitudinal User Posts.”</span> In <em>Proceedings of the Eighth Workshop on Computational Linguistics and Clinical Psychology</em>, 184–98. Seattle, USA: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/2022.clpsych-1.16">https://doi.org/10.18653/v1/2022.clpsych-1.16</a>.
+</div>
+<div id="ref-van_riper" class="csl-entry" role="listitem">
+Van Riper, D., T. Kugler, J. Schroeder, and S. Ruggles. 2020. <span>“Differential Privacy and Racial Residential Segregation.”</span> In <em>2020 APPAM Fall Research Conference</em>.
+</div>
+<div id="ref-4138bca6-f7b7-3af8-a96c-5e2544823c5c" class="csl-entry" role="listitem">
+Williams, H. 2012. <span>“Innovation Inducement Prizes: Connecting Research to Policy.”</span> <em>Journal of Policy Analysis and Management</em> 31 (3): 752–76. <a href="http://www.jstor.org/stable/41653827">http://www.jstor.org/stable/41653827</a>.
+</div>
+</div></section></div></main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/realworlddatascience\.net\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "realworlddatascience/realworlddatascience.github.io";
+    script.dataset.repoId = "R_kgDOILnnig";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDOILnnis4CSt2s";
+    script.dataset.mapping = "title";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><a href="../../../../../../LICENCE.html">Copyright © 2025 Royal Statistical Society</a></p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/realworlddatascience">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience">
+<p><i class="ai  ai-zenodo ai-2xl"></i></p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/rwdatasci">
+      <i class="bi bi-twitter-x" role="img" aria-label="Twitter/X">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@rwdatasci">
+      <i class="bi bi-mastodon" role="img" aria-label="Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="../../../../../../feeds.html">
+      <i class="bi bi-rss" role="img" aria-label="RWDS rss">
+</i> 
+    </a>
+  </li>  
+</ul>
+    <div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/applied-insights/case-studies/posts/2023/08/21/06-value-of-competitions.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p><a href="../../../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>

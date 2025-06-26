@@ -1,0 +1,853 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.32">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Brian Tarran">
+<meta name="dcterms.date" content="2023-02-03">
+<meta name="description" content="Real World Data Science speaks with statistician and data scientist Heidi Seibold about open science: what it means, the benefits of it, and how to move towards it.">
+
+<title>Why open science is ‘just good science in a digital era’ – Real World Data Science</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../../">
+<link href="../../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
+<script src="../../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-html/quarto-syntax-highlighting-37eea08aefeeee20ff55810ff984fec1.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../../site_libs/bootstrap/bootstrap-3901242a6163a083287a72b055a46663.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
+</script>
+<!-- Thank you to Ben Ruijl for the progress bar code!
+Ben is on GitHub here: https://github.com/benruijl
+And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
+
+<meta property="og:title" content="Why open science is ‘just good science in a digital era’ – Real World Data Science">
+<meta property="og:description" content="Real World Data Science speaks with statistician and data scientist Heidi Seibold about open science: what it means, the benefits of it, and how to move towards it.">
+<meta property="og:image" content="https://realworlddatascience.net/foundation-frontiers/interviews/posts/2023/02/03/images/heidi-seibold.png">
+<meta property="og:site_name" content="Real World Data Science">
+<meta property="og:image:height" content="361">
+<meta property="og:image:width" content="494">
+<meta property="og:image:alt" content="Photo of Heidi Seibold">
+<meta name="twitter:title" content="Why open science is ‘just good science in a digital era’ – Real World Data Science">
+<meta name="twitter:description" content="Real World Data Science speaks with statistician and data scientist Heidi Seibold about open science: what it means, the benefits of it, and how to move towards it.">
+<meta name="twitter:image" content="https://realworlddatascience.net/foundation-frontiers/interviews/posts/2023/02/03/images/heidi-seibold.png">
+<meta name="twitter:site" content="@rwdatasci">
+<meta name="twitter:image-height" content="361">
+<meta name="twitter:image-width" content="494">
+<meta name="twitter:image:alt" content="Photo of Heidi Seibold">
+<meta name="twitter:card" content="summary_large_image">
+</head><body class="nav-fixed quarto-light"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
+
+<script id="progressbar" type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const bar = document.querySelector('#progress-bar');
+    const post = document.querySelector('#quarto-content');
+    const html = document.documentElement;
+    
+    const height = post.scrollHeight + post.offsetTop;
+    
+    window.addEventListener('scroll', () => {
+        bar.style.width = (html.scrollTop / (height- html.clientHeight)) * 100 + '%';
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../../rwds.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../the-pulse/index.html"> 
+<span class="menu-text">The Pulse</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../applied-insights/index.html"> 
+<span class="menu-text">Applied Insights</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../foundation-frontiers/index.html"> 
+<span class="menu-text">Foundation &amp; Frontiers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../people-paths/index.html"> 
+<span class="menu-text">People &amp; Paths</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About RWDS</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
+        <li>
+    <a class="dropdown-item" href="../../../../../../about-rwds.html">
+ <span class="dropdown-text">Who we are</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../../contributor-docs/call-for-contributions.html">
+ <span class="dropdown-text">How to contribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../../CODE_OF_CONDUCT.html">
+ <span class="dropdown-text">Code of conduct</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../../contact.html">
+ <span class="dropdown-text">Contact us</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Why open science is ‘just good science in a digital era’</h1>
+                  <div>
+        <div class="description">
+          <p>Real World Data Science speaks with statistician and data scientist Heidi Seibold about open science: what it means, the benefits of it, and how to move towards it.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Open science</div>
+                <div class="quarto-category">Reproducible research</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Brian Tarran </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">February 3, 2023</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#timestamps" id="toc-timestamps" class="nav-link active" data-scroll-target="#timestamps">Timestamps</a></li>
+  <li><a href="#quotes" id="toc-quotes" class="nav-link" data-scroll-target="#quotes">Quotes</a></li>
+  <li><a href="#transcript" id="toc-transcript" class="nav-link" data-scroll-target="#transcript">Transcript</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/foundation-frontiers/interviews/posts/2023/02/03/heidi-seibold.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>Years are often dedicated to different causes and aims by different organisations. The United Nations, for example, has designated 2023 the <a href="https://www.undocs.org/en/A/RES/77/32">International Year of Dialogue as a Guarantee of Peace</a>, while for the European Commission it is the <a href="https://ec.europa.eu/commission/presscorner/detail/en/ip_22_6086">European Year of Skills</a>. But over at the White House Office of Science and Technology Policy, 2023 has been declared the <a href="https://www.whitehouse.gov/ostp/news-updates/2023/01/11/fact-sheet-biden-harris-administration-announces-new-actions-to-advance-open-and-equitable-research/">Year of Open Science</a>.</p>
+<p>To discuss what this means for science generally and data science in particular, Real World Data Science invited <a href="https://heidiseibold.com/">Heidi Seibold</a> for an interview. Seibold is a statistician and data scientist, and also an open science trainer and consultant, and we talked about how she became involved in open science, what it means to her, the benefits of it, and how academic and industry researchers can move towards it.</p>
+<p>Check out our full conversation below or on <a href="https://youtu.be/GD2g7cJ_yE4">YouTube</a>.</p>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/GD2g7cJ_yE4" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+<section id="timestamps" class="level2">
+<h2 class="anchored" data-anchor-id="timestamps">Timestamps</h2>
+<ul>
+<li>How did Heidi become interested in open science? (<a href="https://youtu.be/GD2g7cJ_yE4?t=106">1:46</a>)</li>
+<li>What does open data science mean to Heidi? (<a href="https://youtu.be/GD2g7cJ_yE4?t=470">7:50</a>)</li>
+<li>Working with PhD students on open science (<a href="https://youtu.be/GD2g7cJ_yE4?t=720">12:00</a>)</li>
+<li>How do open data science principles fit into an industry environment? (<a href="https://youtu.be/GD2g7cJ_yE4?t=850">14:10</a>)</li>
+<li>Knowledge transfer and public science (<a href="https://youtu.be/GD2g7cJ_yE4?t=1049">17:29</a>)</li>
+<li>Year of Open Science initiatives and lasting impacts (<a href="https://youtu.be/GD2g7cJ_yE4?t=1268">21:08</a>)</li>
+</ul>
+</section>
+<section id="quotes" class="level2">
+<h2 class="anchored" data-anchor-id="quotes">Quotes</h2>
+<p>“Reproducibility [is] just like this minimum standard in research quality, where we say, ‘When we have the same data and the same analysis, we also want to see the same results’, and being able to check that from others is really, really important.” (<a href="https://youtu.be/GD2g7cJ_yE4?t=165">2:45</a>)</p>
+<p>“On the back of my wall here in my office I have written, ‘Open science is just good science in a digital era’… Before, we only had the printing press, and we had to print journals in order to distribute the knowledge that we have.” (<a href="https://youtu.be/GD2g7cJ_yE4?t=323">5:23</a>)</p>
+<p>“For me, open data science entails the part of the scientific process that focuses on everything that happens on the computer: the data processing and the data analysis, and then getting from the data analysis – getting the results and the knowledge, really – in sort of a pipeline where you go from one step to the next. And so the image that I have in my head, when I think about open data science, is of a pipeline.” (<a href="https://youtu.be/GD2g7cJ_yE4?t=616">10:16</a>)</p>
+<p>“Nobody’s perfect from the beginning. And open science and reproducible research is really hard, and it requires a lot of technical knowledge. And I always feel like people are so scared, because on one hand, they don’t know how to do it yet, and the goal is so far away. And so I always like [to say], you don’t have to be perfect right away; going one step into the right direction is super important.” (<a href="https://youtu.be/GD2g7cJ_yE4?t=754">12:34</a>)</p>
+<p>“If we think of companies, for example, like Microsoft – they put a lot of money right now into open source: they bought GitHub, they publish open source software, they put money into open source software projects like R, for example. So, somehow, this must be a good way of making profits.” (<a href="https://youtu.be/GD2g7cJ_yE4?t=909">15:09</a>)</p>
+<p>“[Open science for the public has value because] we don’t know what ideas people will have. There’s so many skilled people out there that probably will do amazing things… We have this with the software Stable Diffusion right now. That’s an AI that generates images from text, and it runs on my computer here. And I don’t need AI skills to be able to do that. And people are building such incredible images out of this, and it’s really fun to see.” (<a href="https://youtu.be/GD2g7cJ_yE4?t=1130">18:50</a>)</p>
+</section>
+<section id="transcript" class="level2">
+<h2 class="anchored" data-anchor-id="transcript">Transcript</h2>
+<div class="callout callout-style-simple callout-warning" style="margin-top: 0.75rem;">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>This transcript has been produced using <a href="https://otter.ai/">speech-to-text transcription software</a>. It has been only lightly edited to correct mistranscriptions and remove repetitions.</p>
+</div>
+</div>
+</div>
+<p><strong>Brian Tarran</strong><br>
+Hello, and welcome to another Real World Data Science interview. I’m Brian Tarran. And today I’m joined by Heidi Seibold, a statistician and data scientist. I invited Heidi along to speak about open science, what it means, the benefits of it, and how to move towards it. So welcome, Heidi, how are you?</p>
+<p><strong>Heidi Seibold</strong><br>
+Hello, thanks for having me. I’m good.</p>
+<p><strong>Brian Tarran</strong><br>
+Excellent. Excellent. Well, Heidi, I contacted you because, you know, I know you have a real deep interest in open science. And the conversation I think was really motivated by the White House Office of Science and Technology Policy declaring 2023 to be the year of open science. So first off, I wanted to get your reaction to that announcement.</p>
+<p><strong>Heidi Seibold</strong><br>
+Yeah, I think in general, that’s a really cool thing for open science to happen. Right? We, there’s this movement that’s been going on for a while, and people have been doing these grassroots communities and growing open science from the bottom up. And now we see more and more also top down decisions, which I think is a very good sign for, yeah, quality of science, really.</p>
+<p><strong>Brian Tarran</strong><br>
+Yeah, definitely. So I mean, we’ll get into some of the details of the initiatives a little later, maybe, but I thought that maybe we could kick off by asking you what you thought of the official definition of open science that the US government has come up with, and, and for the benefit of people watching that’s, in quotes, the principle and practice of making research products and processes available to all while respecting diverse cultures, maintaining security and privacy and fostering collaborations, reproducibility and equity. So as definitions go, does that, you know, does that hit the mark, for you, do you think?</p>
+<p><strong>Heidi Seibold</strong><br>
+Yeah, I think given that this is a federal definition, right, from the US. And they have to like, yeah, take so many opinions into account, I think it’s a great definition. I also asked like on social media, what people thought about it, and I think the response generally was pretty good. What I liked especially is that they focus on collaboration, reproducibility, and equity, which aligns very much with how I personally see open science. So collaboration means like, I always think of the term like building on the shoulders of giants, right. So this is what we want to do in research, we want to build on the work of others. They might be like famous people, but they might also be our colleagues next door. And it’s so important to take that into focus. And also reproducibility, just like this minimum standard in research quality, where we say, when we have the same data and the same analysis, we also want to see the same results, and being able to check that from others is really, really important. And so I think, this focus, I personally like it a lot.</p>
+<p><strong>Brian Tarran</strong><br>
+Excellent. Excellent. So can you tell me a little bit about your background and how you became interested, and I think committed to open science would be a great way of describing it, right?</p>
+<p><strong>Heidi Seibold</strong><br>
+Yeah, so I’m a trained statistician, I studied statistics. And then how did I get into this whole open science thing was, for me, really through reproducible research. So my first research project was during my master’s programme, and we wrote a paper and it was a very computationally complex project, and we had lots of files and folders, and, you know, scripts and stuff like this. And then, at some point, it just all got so messy. And I felt like, oh, no, I’m the worst scientist in the world. And then I told my colleague who I was working with on this project. And he was like, No, this is normal. And I was like, No, this can’t be normal. I want to be on top of things when I do research. And I want to be sure that, like, the code that I’m using for this is the correct code that I actually wanted to use, right. So that must be like a minimum standard that we have. And so through that, I learned about reproducible research and good coding practices. And then I also thought more and more about like, well, if I do all this, I should also publish it so that others can actually check that I’m good doing good work here. Right. And so through that I got more and more into open science and really always felt like that’s the right thing to do, especially if you’re funded through public money.</p>
+<p><strong>Brian Tarran</strong><br>
+Yeah, yeah. Can I ask you what you think is kind of driving the shift to open science because the way you’ve described open science to me just there, you know, that sounds like to me like, just good scientific practice, and the fact that it’s not something that’s been done before, I wonder whether is it a cultural change, a philosophical change, a technological development, that’s kind of spurring this shift?</p>
+<p><strong>Heidi Seibold</strong><br>
+Yeah. So that’s a really, really good and deep question. So on the back of my wall here in my office, I have written open science is just good science in a digital era. And I think that describes the answer to your question pretty well. So there was a technological change, right? Before, we only had the printing press. And we had to print journals in order to distribute the knowledge that we have. And of course, that costs money. So journals cost money historically. But now, journal costs are really super low, because nobody needs them printed anyhow. And you only ever want to read like one or two articles out of one issue. So it doesn’t really make sense anymore, right. And also publishing data and code. It’s just like, the cost is so so low, that now in this digital age of the internet, really, we have such a low burden of, of doing the right thing. But on the other hand, we need to make this social shift, because we’ve been always, like, researchers have always done it a certain way. And there are especially certain fields that are really into, like, they feel like this is my data. This is my code. This is my research. Why should I share it? But I feel like the young generation of researchers are like, well, because it’s the right thing to do. And the reason why we’re in research is because we want to have scientific progress and scientific progress comes when we can build upon each other’s work.</p>
+<p><strong>Brian Tarran</strong><br>
+Of course, and you mentioned, obviously, journal publications, but I wonder to what extent is it that the scale of science has almost kind of outgrown the ability to kind of condense it all down into a, even if it’s a 20 or 30 page, academic paper, right? Because it’s not just about, you know, setting out the research question describing the methods, you know, presenting a table of the data, all that stuff can’t be published now, or it can be, but it can’t be fit within the framework of an academic paper, it has to be on a GitHub repository or in a Jupyter notebook or something like that. So kind of open science encourages us to, to think about distributing that knowledge in different ways.</p>
+<p><strong>Heidi Seibold</strong><br>
+I think that’s completely true. So, research now is so much more complex than it used to be right. There used to be single researchers who did like, yeah, such breakthroughs within one paper. And now, we already have so much knowledge, and the questions are so much more detailed and complicated. And also the data is so much more and the things that we can do is so much more complex. And so I feel like one paper doesn’t– isn’t enough to describe the research that we’re doing. And we did this one project with, with a group of students, actually, where we took 11 papers that were related to the topic that we were teaching about. And we took these 11 papers and data was available for the papers. And so we thought, well, we try to reproduce the results that they have there. And we found that it is really hard if we don’t have the code, because the method section in papers is really super short, right? It’s a super short section, if it’s not like a statistics paper. And it’s impossible to describe all the intricate steps that you took from the data to the complex model and analysis that you did. It’s just not enough space within the paper. And the code is the perfect description of what you did, right? So why not publish it with it, and especially in cases where data privacy is not an issue, then, and you already publish the data, then it just makes so much sense to also publish the code, because the code is not like there’s no privacy issues to that – usually at least.</p>
+<p><strong>Brian Tarran</strong><br>
+So is there a kind of you know– when we say open data science, you know, what does that look like? And do you have a kind of example or simplified example of what that would look like, right? And how it’s more than just, you know, the finished paper, the product of the science scientific process?</p>
+<p><strong>Heidi Seibold</strong><br>
+Yeah, so for me, open data science entails the process of– the part of the scientific process that focuses on everything that happens on the computer. So the data processing and the data analysis, and then getting from the data analysis, getting the results and the knowledge really, in sort of, yeah, in sort of a pipeline where you go from one step to the next. And so what the image that I have, in my head, when I think about open data science, I really think of a of a pipeline where you stick the different parts of the pipeline together, in a consecutive order. But of course, research projects are really complicated. And the pipeline just looks really messy, in some ways, but if you still manage to organise it in a way that the different bits all fit together, then you can make it so that in the end, you can imagine something that goes from the start to the finish. And you really understand every step of this pipeline every step of the way, from the raw data to the paper.</p>
+<p><strong>Brian Tarran</strong><br>
+Yeah. So the idea would be that people provide almost like a framework for you to recreate that yourself if you want to either check the results or yeah, replicate, just replicate the process generally. Right? So is your– so your job now is, I guess, as an open science trainer and consultant, so are you the person that goes into organisations and kind of shows them how to build that pipeline? Or how to, you know, map it out and to present that to people?</p>
+<p><strong>Heidi Seibold</strong><br>
+Yeah, so what I do a lot is do workshops and trainings with PhD students. So graduate programmes will ask me to come in for a day, or, also, we do longer trainings, which are often more useful, because people can in between take the steps that I recommend. And then we just, like, work together on ideas and steps that they can actually take. And I think what’s always important there is to know that nobody’s perfect from the beginning. And open science and reproducible research is really hard. And it requires a lot of technical knowledge. And I always feel like people are so scared, because on one hand, they don’t know how to do it yet. And the goal is so far away. And so I always like, you don’t have to be perfect right away, going one step into the right direction is super important. And that also helps with like the social change, because then the question is, well, I do want to do this, but my supervisor doesn’t know the technology, what do I do? And then we always try to find like one step that they can take, rather than trying to be perfect right away.</p>
+<p><strong>Brian Tarran</strong><br>
+And it’s, I guess, it’s encouraging to see people like you being brought in to work with people on graduate programmes. So you’re, we’re trying to almost train the next generation of scientists to be thinking, open science first, rather than, you know, falling into bad habits or old habits that, you know, we are trying to do away with.</p>
+<p><strong>Heidi Seibold</strong><br>
+Yeah, and really, the young researchers, my feeling so far has been that the only pushback I get for my work is from established researchers who feel like well, this is the way I did it, and so it has to be the right way. But the younger generation for them, it’s super obvious that this is the way we should go in order to achieve scientific progress and good scientific practice.</p>
+<p><strong>Brian Tarran</strong><br>
+Yeah, yeah. A lot of data science now is obviously now done within industry. I wondered how open data science or open science principles fit in an environment you know, where competitive advantages is linked to keeping things in house and confidential and not wanting to share too much. Do you see a conflict there or can the two work together?</p>
+<p><strong>Heidi Seibold</strong><br>
+So I think there’s– first of all, I think, if we, if we get it done in academia, I’d be already super happy, right? If we get it done in the space where we have public funded projects that then are available for the public, I’d be already like super stoked. But in industry, it’s really interesting because a lot of the work that is done in industry is already done pretty well. So we if we think of, for example, companies, for example, like Microsoft, right, they put a lot of money right now into open source, they bought GitHub, they publish open source software, they put money into open source software projects like R, for example, right. So somehow, this must be a good way of making profits as well. And we see lots of companies investing in open source. So why not think about other research products, like data, and so on, also in the same line as we do of open source, because software is just a similar product. And I don’t think that there’s, I mean, there is some software, or some products, where it makes sense to have a patent or a trade secret or something. But sometimes it’s just more profitable, to have something where people can look into it and trust it. And I’d also helps like finding the next coders, and the next researchers to work on these projects, because, well, we like looking into what we’re going to do next. Right. And also, if we look, for example, into pharma industry, there, we see that a lot of the work they’re doing is already pretty good. For example, if we look at clinical trial transparency, pharma is doing better than academia there. And also, they’re pretty good on reproducible research, because they have to stick to certain rules. And when we look on the other side, so industry also benefits from open science, right? Because if we do open science, in academia, and publicly funded projects, then this will help companies make more money, because they have access to more knowledge and maybe interesting ideas as well, that they don’t have right now. So I think this is a win-win situation for companies as well. And I feel like if academia gives more to the industry, then eventually there will be like a mindset change. And industry will also give more back as well.</p>
+<p><strong>Brian Tarran</strong><br>
+Yeah, I see– I can see that and I guess it’s, you know, knowledge transfer is a big objective of a lot of academic institutions, right, we want our outputs to be of use to wider society, and that includes business and industry, right. So if people can pick those things up, you know, download it off of the web without having to, you know, make one-to-one links with the researchers who’ve done that project, it just it smooths that transition, and that that knowledge transfer becomes a lot more straightforward. You did, you mentioned about, you know, open science is about public science, essentially putting these, when it’s publicly funded research, this data and this work goes into the public space. You know, I’m guessing that, to a large extent, a lot of, you know, regular members of the public aren’t going to be interacting with open science. They’re not going to be downloading the datasets, they’re not going to be rebuilding the pipelines and rerunning the analysis. But do you still see that there’s a value there for the public in that information being there should they need it? And where are the kind of areas of value that you think the public will exploit?</p>
+<p><strong>Heidi Seibold</strong><br>
+Yeah, I think that’s an interesting question. And I think the biggest answer to that is that we don’t, we don’t know what ideas people will have, right? There’s so many skilled people out there, that probably will do amazing things. And we see that over and over again, when we put stuff out there, that people just get the super cool ideas. So we have this with the software Stable Diffusion right now, right? So that’s an AI that generates images from text, and it runs on my computer here. And I don’t need AI skills to be able to do that. And people are building such incredible images out of this. And it’s really fun to see. So I think, yeah, we just don’t know what’s going to happen. And on the other hand, I think, well, I am a researcher, but I’m also the public, right? And so if I have a question about something that concerns my private life or my friends’ private life, then I can also– I do have the skills to go into this and look at some research for example, I don’t know, how to best raise children or whatever. Um, that’s– so I have a friend, she’s an epidemiologist, and she always goes and looks at research on like, how to feed her child best and what to do. There’s, there’s all kinds of questions you have as a mother. And she, as a researcher can just go into the research and figure out, like, what is the best path for me to take. And I think the more we do open science, the more we can also do, like science communication, that adds on to that as well. Right? So if we have her now, she could now help other mothers make the same good decisions as well. And she would be sort of a science communicator for research that isn’t even hers. Um, so that is pretty cool, I think.</p>
+<p><strong>Brian Tarran</strong><br>
+I think so, and it’s speaks to me of breaking down silos that, and I guess, blurring the lines between our roles, our professional roles and our personal lives, right. It’s about bringing science into that kind of public sphere, so I can see why the benefits would accrue from doing so. Just to wrap up, let’s go back to that year of open science, that was announced by the White House, are there any other specific initiatives in that big long list that constituted the announcement that you’re excited about?</p>
+<p><strong>Heidi Seibold</strong><br>
+Yeah, there is. I think, especially what I really liked was that, yeah, federally funded research, um, needs to be accessible, including the data when possible. So again, there’s open when possible, closed when necessary. But I think this is a very good first step, to say, okay, it depends on the funding, if it’s publicly funded, then it should also be publicly available. And I think that’s a really good sign. And then also, these, the statement had like, mentioned all these open science initiatives in different fields, which I really liked. So for example, from NASA, they have this transform to open science programme, and they’re already super active. And it’s really cool to see what comes out of that. For medicine, they have requirements for data management plans, which I think is a very solid step towards open science in medicine, because they are we have the issue of data privacy. And we really have to think from the get-go of a project about what should we do in terms of best practices of data management and having a requirement on that is, I think, a really, really solid step. And also, I’m thinking about open science in the field of like federal government even, because open data and federal government is a huge topic, right. And it, that’s definitely something that a lot of people will be interested in as well.</p>
+<p><strong>Brian Tarran</strong><br>
+Last question for you, then Heidi, you know, what would you want the lasting impact of an initiative like this to be? And you know, would you like to see this sort of thing replicated in other countries around the world? If indeed, you know, other countries may already be doing this and have already done this?</p>
+<p><strong>Heidi Seibold</strong><br>
+I think in general, it’s a very, very good sign that we’re seeing right now. We’ve seen lots of movement, for example, in the Netherlands – Netherlands is really big on open science – and seeing such a big country [the US] that also plays such an important role in the world, doing– taking this step, is a great sign for the entire, like all of research, really. And yeah, I think it’s also nice to see that we’re going from like, Oh, this is a niche topic that only experts are interested in, and people that are like advocates and nerds focus on, to something that really governments are thinking about.</p>
+<p><strong>Brian Tarran</strong><br>
+So, open science is going mainstream, I think is the message. And let’s hope that it continues to do so. So Heidi, thank you very much for your time today. Where can people find you online, if f they want to find out more about you and your work and your thoughts on open science?</p>
+<p><strong>Heidi Seibold</strong><br>
+Yeah, thank you so much for having me. It was wonderful. And I always like talking about open science, so people can find me on my website, heidiseibold.com. And I’m also on Mastodon, Twitter, LinkedIn, YouTube, wherever your search for Heidi Seibold, you’ll find me.</p>
+<p><strong>Brian Tarran</strong><br>
+Excellent. Excellent. Well, thank you again. And thank you to those of you who are tuning in today. Make sure to check realworlddatascience.net for more interviews. Take care.</p>
+<div class="article-btn">
+<p><a href="../../../../../../foundation-frontiers/interviews/index.html">Find more Interviews</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Royal Statistical Society
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This work is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>, except where otherwise noted.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Tarran, Brian. 2023. “Why open science is ‘just good science in a digital era’.” Real World Data Science, February 3, 2023. <a href="https://realworlddatascience.net/news-and-views/interviews/posts/02/03/heidi-seibold.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/realworlddatascience\.net\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "realworlddatascience/realworlddatascience.github.io";
+    script.dataset.repoId = "R_kgDOILnnig";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDOILnnis4CSt2s";
+    script.dataset.mapping = "title";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><a href="../../../../../../LICENCE.html">Copyright © 2025 Royal Statistical Society</a></p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/realworlddatascience">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience">
+<p><i class="ai  ai-zenodo ai-2xl"></i></p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/rwdatasci">
+      <i class="bi bi-twitter-x" role="img" aria-label="Twitter/X">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@rwdatasci">
+      <i class="bi bi-mastodon" role="img" aria-label="Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="../../../../../../feeds.html">
+      <i class="bi bi-rss" role="img" aria-label="RWDS rss">
+</i> 
+    </a>
+  </li>  
+</ul>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/foundation-frontiers/interviews/posts/2023/02/03/heidi-seibold.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p><a href="../../../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
