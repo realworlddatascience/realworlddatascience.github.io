@@ -17,7 +17,83 @@
 <width>144</width>
 </image>
 <generator>quarto-1.7.32</generator>
-<lastBuildDate>Mon, 07 Jul 2025 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 07 May 2027 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>From medical history to medical foresight: why the NHS needs its own foundation AI model for prevention</title>
+  <link>https://realworlddatascience.net/the-pulse/posts/2025/07/28/NHS-foundation-AI.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>The point of this article is to, in a mildly entertaining way, persuade you that developing a sovereign foundation AI model should be a priority for the NHS, professional bodies and patients but we need to get the research right.</p>
+<p><strong>Risk is personal</strong></p>
+<p>How do we move from treating disease to preventing disease? The traditional approach has been to publicise well evidenced public health interventions; don’t smoke, drink less, eat vegetables, exercise, vaccinate, wear sunscreen. This is all very good advice at the population level but for the individual it’s hard to know what to worry about and what to prioritise. I, being a clumsy man with bad ankles and a lack of spatial awareness, am at risk of going to A&amp;E with (another) concussion. You will be different.</p>
+<p><strong>A little bit of history</strong></p>
+<p>Individualised risk models in healthcare are not new. Traditional statistical approaches have used tabular data to predict healthcare events and have done a good job. These models are converted into questionnaires that clinicians can use to make decisions based on your risk. If you have had the NHS health check; a clinician will have measured blood pressure, cholesterol, height, weight and a few questions on your medical history. They will then feed this into a model and the output is the risk of you having a heart attack or stroke over the next ten years (1). There are also automated approaches built into the systems your GP uses that help stratify the population based on individual risk of things like frailty (2).</p>
+<p>These kind of models are usually based on a snapshot of data and require bespoke data pipelines and engineering to massage the data into the right shape for the model, wonderful news for data scientists and statisticians as it leads to a proliferation of finely tuned models which can keep us in gainful employment for many years. However, each one has significant costs to develop, test, validate, deploy and integrate into clinical practice.</p>
+<p>Another issue with these traditional models is that they squash a medical history into a single row of data for each patient, losing the chronology of health. Intuitively, we would expect that the sequence of events matters in predicting healthcare outcomes and traditional approaches struggle to capture this.</p>
+<p><strong>Using a sequence of events to predict a sequence of events</strong></p>
+<p>Sequences of events are easier for data engineers too. It’s much simpler to join together all the data into a sequence than perform a series of complex aggregations and transformations for every model. The simpler the data engineering needed to create the inputs the easier it is to scale as you are making fewer assumptions about the data.</p>
+<p>So, if they are easier to engineer, and they capture more information why are they not the standard way of predicting health outcomes? Because modelling sequences is harder than modelling a row of data. As the model sees more of a sequence it has to hold that memory somewhere so that the model can accumulate the appropriate information. Models that could do this started appearing in machine learning literature in the early 1990’s (3) but for a long time we had neither the data, the computing power nor quite the right kind of algorithms to make them useful. Today they have become feasible in healthcare due to the rise in electronic healthcare records, standardised codes for classifying events and the rise of the transformer model. Transformer models combine the ability to hold an internal “memory” of the sequence with the capacity to pay attention to different aspects of the sequence, which basically make them magic.</p>
+<p>These models have demonstrated state of the art accuracy in predicting future events using electronic patient histories. Examples for those interested in reading more include BEHRT (4), Med-Bert (5), TransformerEHR (6) and the more recent generative transformer model ETHOS (7). These can be used for a range of healthcare prediction tasks whilst delivering state of the art predictive accuracy, again, magic.</p>
+<p>A recent preprint (8) from Microsoft has also demonstrated that these EHR models act in a similar way to the large language models like those backing ChatGPT; their performance scales predictably with processing power, data and the size of the model. This means that more data will probably lead to a better model and we can optimise this model performance to a given computational budget.</p>
+<p><strong>So what?</strong></p>
+<p>Why should you care about this? If we can take these architectures and train them on data at the scale of the NHS then each individual patient could have a relatively accurate prediction of their most likely next healthcare events(9). It would be your medical history projected forward, providing a narrative that is easier to understand than a page of risk scores. It’s your potential medical future. This could help with changing behaviour to reduce future risk, something we all struggle with. I think of it like the medical version of the ghost of Christmas future but using a chain of events rather than clinking ghost chains.</p>
+<p>We are already seeing heavy usage of publicly available large language models for healthcare. 10% of a representative sample of Australians used ChatGPT for medical advice rising to 26% of 25-34 year olds (10) , I assume the UK is similar. It seems that the public is much more ready than the health system to use these models and regulation is struggling to keep up, and for good reason, they may not actually help.</p>
+<p><strong>The underwhelming evidence</strong></p>
+<p>As of August 2024 there were 950 AI models approved by the FDA, with a significant proportion of those for clinical decision support, but only 2.4% of these are supported by randomised controlled trials (11).</p>
+<p>This is important, as what works on a machine learning researcher’s infrastructure may not work in a clinical setting. In 2018, a comprehensive health economic evaluation of a risk prediction model for identifying people at risk of hospital admission found that those in the treatment arm had a higher healthcare cost and there was no significant impact on the number of people being admitted to hospital, despite accurate predictions (12). Some prediction models even cause harmful self-fulfilling prophecies when used for decision making (the paper is well worth a read) (13).</p>
+<p><strong>The prize</strong></p>
+<p>The UK government is clear about the ambition to be an “AI maker” not an “AI taker”. Given the expected improvement in accuracy from scaling these EHR models, there is an opportunity for the UK to leverage what should be one of its greatest data assets (decades of longitudinal electronic healthcare records from cradle to grave) and create a sovereign foundational model that supports patient care. These are being developed now in the US and elsewhere. A meta-analysis in 2023 found over 80 foundational healthcare models, there are many more today and there is concern that at some point it will be cheaper for the NHS to bring one in and pay for it than to train its own.</p>
+<p><strong>Foresight</strong></p>
+<p>Fortunately we have made some progress in the UK with NHS data. Foresight (14), a transformer model developed in London on data from 1.4 million patients has demonstrated impressive results . This model has been taken on for covid research to see if the same approach can better predict disease/COVID-19 onset, hospitalisation and death, for all individuals, across all backgrounds and diseases using national data made available during the pandemic for research specifically on covid. This is being done through the British heart foundation’s collaboration with NHS England’s secure data environment (15).</p>
+<p>However, just because we can do this, it does not mean that we should. Researchers need to be careful to stay within the bounds of their project and make extraordinary efforts to engage with the public. We have to ensure that our data is not being exploited inappropriately for commercial gain. The Royal College of General Practitioners has raised concerns that this model goes beyond what they agreed to, Professor Kamila Hawthorne, Chair of the Royal College of GPs, said “As data controllers, GPs take the management of their patients’ medical data very seriously, and we want to be sure data isn’t being used beyond its scope, in this case to train an AI programme.” The project has been paused for the time being despite being approved and specifically targeted at covid for research.</p>
+<p>The best model for predicting outcomes from covid or the risk factors involved in covid is likely to be a population scale generative transformer model. This research will determine whether that hypothesis is true and whether this kind of data could provide more accurate predictions for patients. The NHS data and the model are kept inside a secure data environment with personal identifiers stripped out. No patient details are passed to researchers and no data or code leaves that environment without explicit permission. This research seems like something we should do.</p>
+<p>Despite the potential of AI assisted clinicians for differential diagnosis (with recent evidence that they perform better than both clinicians alone and clinicians using search (16) and the attractiveness of having your medical history and your medical future in your pocket, we are a way off this reality. The gap between research and demonstrating the cost-effectiveness of AI solutions in the real world is significant but all the component parts needed to close this gap exist; the data, the models, the research capability and the political will.</p>
+<p>We will get there. Foundational models in healthcare are no longer a theoretical possibility, but an imminent reality. The UK has a rare opportunity to lead, not follow, by building a sovereign AI model trained on NHS data to accelerate the transition from treating disease to preventing disease. To get there, we must confront hard questions about patient engagement and real-world benefit. But to stop research based solely on the sophistication of the method is to misunderstand the moment. I think patients expect us to do better.</p>
+<div class="keyline">
+<hr>
+</div>
+<p><strong>References</strong> 1. Hippisley-Cox, J., Coupland, C.A.C., Bafadhel, M. et al.&nbsp;Development and validation of a new algorithm for improved cardiovascular risk prediction. Nat Med 30, 1440–1447 (2024). https://doi.org/10.1038/s41591-024-02905-y 2. Clegg A, Bates C, Young J, Ryan R, Nichols L, Ann Teale E, Mohammed MA, Parry J, Marshall T. Development and validation of an electronic frailty index using routine primary care electronic health record data. Age Ageing, May;45(3):353-60, (2016) https://doi.org/10.1093/ageing/afw039. 3. Jeffrey L. Elman,Finding structure in time,Cognitive Science,Volume 14, 179-211, (1990). https://doi.org/10.1016/0364-0213(90)90002-E 4. Li, Y., Rao, S., Solares, J.R.A. et al.&nbsp;BEHRT: Transformer for Electronic Health Records. Sci Rep 10, 7155 (2020). https://doi.org/10.1038/s41598-020-62922-y 5. Rasmy, L., Xiang, Y., Xie, Z. et al.&nbsp;Med-BERT: pretrained contextualized embeddings on large-scale structured electronic health records for disease prediction. npj Digit. Med. 4, 86 (2021). https://doi.org/10.1038/s41746-021-00455-y 6. Yang, Z., Mitra, A., Liu, W. et al.&nbsp;TransformEHR: transformer-based encoder-decoder generative model to enhance prediction of disease outcomes using electronic health records. Nat Commun 14, 7857 (2023). https://doi.org/10.1038/s41467-023-43715-z 7. Renc, P., Jia, Y., Samir, A.E. et al.&nbsp;Zero shot health trajectory prediction using transformer. npj Digit. Med. 7, 256 (2024). https://doi.org/10.1038/s41746-024-01235-0 8. Grout R, Gupta R, Bryant R, Elmahgoub MA, Li Y, Irfanullah K, Patel RF, Fawkes J, Inness C. Predicting disease onset from electronic health records for population health management: a scalable and explainable Deep Learning approach. Front Artif Intell. 2024 Jan 8;6:1287541. doi: 10.3389/frai.2023.1287541. 9. Sheng Zhang et al.&nbsp;Exploring Scaling Laws for EHR Foundation Models (2025) arXiv:2505.22964v1 10. Julie Ayre, Erin Cvejic and Kirsten J McCaffery. Use of ChatGPT to obtain health information in Australia, 2024: insights from a nationally representative survey Med J Aust (2025). doi: 10.5694/mja2.52598 11. Windecker D, Baj G, Shiri I, Kazaj PM, Kaesmacher J, Gräni C, Siontis GCM. Generalizability of FDA-Approved AI-Enabled Medical Devices for Clinical Use. JAMA Netw Open. 2025 Apr 1;8(4):e258052. doi: 10.1001 12. Snooks H et al.&nbsp;Predictive risk stratification model: a randomised stepped-wedge trial in primary care (PRISMATIC). Southampton (UK): NIHR Journals Library; 2018 Jan.&nbsp;PMID: 29356470. 13. van Amsterdam WAC, van Geloven N, Krijthe JH, Ranganath R, Cinà G. When accurate prediction models yield harmful self-fulfilling prophecies. Patterns (N Y). 2025 Apr 11;6(4):101229. doi: 10.1016/j.patter.2025.101229. 14. Kraljevic, Zeljko et al.&nbsp;Foresight—a generative pretrained transformer for modelling of patient timelines using electronic health records: a retrospective modelling study. The Lancet Digital Health, Volume 6, Issue 4, e281 - e290 15. CVD-COVID-UK/COVID-IMPACT: Projects CCU078: Foresight: a generative AI model of patient trajectories across the COVID-19 pandemic https://bhfdatasciencecentre.org/projects/ccu078/ 16. McDuff, D., Schaekermann, M., Tu, T. et al.&nbsp;Towards accurate differential diagnosis with large language models. Nature 642, 451–457 (2025). https://doi.org/10.1038/s41586-025-08869-4</p>
+<div class="article-btn">
+<p><a href="../../../../../the-pulse/index.html">Discover more The Pulse</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>About the author</dt>
+<dd>
+<a href="https://www.linkedin.com/in/will-browne-391b1930/">Will Browne</a> is co-founder of healthcare technology company <a href="https://www.emrys.health/">Emrys Health</a>, where he works on the development of infrastructure for transformative, equitable and accessible healthcare. He is Events Secretary of the <a href="https://rss.org.uk/membership/rss-groups-and-committees/sections/data-science-section/">RSS Data Science and AI section</a> and a member of the <a href="https://rss.org.uk/policy-campaigns/policy-groups/ai-task-force/">RSS AI Taskforce</a>. Copyright and licence
+</dd>
+<dd>
+© 2025 Royal Statistical Society
+</dd>
+<dd>
+Thumbnail image by <a href="https://unsplash.com/@tugcegungormezler?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Tugce Gungormezler</a> / on Unsplash. <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+
+</div>
+</div>
+</div>
+
+
+
+ ]]></description>
+  <category>AI</category>
+  <category>Data Science</category>
+  <category>Machine learning</category>
+  <category>Deep learning</category>
+  <category>Econometrics</category>
+  <guid>https://realworlddatascience.net/the-pulse/posts/2025/07/28/NHS-foundation-AI.html</guid>
+  <pubDate>Fri, 07 May 2027 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/the-pulse/posts/2025/07/28/images/NHS.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>We’re Back: Real World Data Science Relaunches</title>
   <dc:creator>Editorial Board</dc:creator>
@@ -2501,73 +2577,6 @@ This article is republished from <a href="https://theconversation.com">The Conve
   <guid>https://realworlddatascience.net/the-pulse/posts/2023/09/06/biased-algorithms.html</guid>
   <pubDate>Wed, 06 Sep 2023 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/the-pulse/posts/2023/09/06/images/AlanWarburton-QuantifiedHuman-991x724.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>RSS Conference preview: Evaluating AI, machine learning, and data visualisation</title>
-  <dc:creator>Brian Tarran</dc:creator>
-  <link>https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/08/24/rss-conference.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>The Royal Statistical Society International Conference takes place in Harrogate, England, this September (Monday 4 to Thursday 7). Real World Data Science will be in attendance, and we’ve helped organise a couple of sessions we’d like to tell you about.</p>
-<section id="evaluating-ai-how-data-science-and-statistics-can-shape-the-uks-ai-strategy" class="level3">
-<h3 class="anchored" data-anchor-id="evaluating-ai-how-data-science-and-statistics-can-shape-the-uks-ai-strategy">Evaluating AI: How data science and statistics can shape the UK’s AI strategy</h3>
-<p><strong>Date:</strong> 6 September <strong>Time:</strong> 9:00 am - 10:20 am <strong>Room:</strong> Auditorium (moved from Queens Suite 8)</p>
-<p>The launch of ChatGPT less than a year ago is a milestone moment in the story of artificial intelligence. Overnight, large language models were transformed from research projects into consumer products, now used by millions each month. <a href="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/07/19/code-interpreter.html">The capabilities are impressive</a>, <a href="https://realworlddatascience.net/people-paths/posts/2023/05/11/chatgpt-data-science-pt1.html">the productivity gains undeniable</a>. But, what of the downsides? These are issues <a href="https://realworlddatascience.net/foundation-frontiers/interviews/posts/2023/04/28/stephanie-hare.html">societies, governments, and individuals are now starting to reckon with</a>.</p>
-<p>In March 2023, <a href="https://www.gov.uk/government/publications/ai-regulation-a-pro-innovation-approach/white-paper">the UK government published a white paper promising a “pro-innovation approach” to AI regulation</a>, while also acknowledging the risks AI poses to “people’s privacy, their human rights or their safety” and “concerns about the fairness of using AI tools to make decisions which impact people’s lives”. <a href="https://rss.org.uk/RSS/media/File-library/Policy/2023/RSS-AI-white-paper-response-v2-2.pdf">The Royal Statistical Society, in response, has called for investment in a centre for AI evaluation methodology</a>, arguing that users of AI systems should be able to judge the trustworthiness of claims made by AI companies as well as the outputs of their systems.</p>
-<p>What should AI evaluation look like? How will it work in practice? What metrics are most important, and – crucially – who gets to decide this? Join us for <a href="https://virtual.oxfordabstracts.com/#/event/4019/program?session=66677&amp;s=700">a special panel debate at the RSS International Conference</a>, where these questions, and more, will be discussed.</p>
-</section>
-<section id="best-practices-for-data-visualisation-how-to-make-data-outputs-more-readable-accessible-and-impactful" class="level3">
-<h3 class="anchored" data-anchor-id="best-practices-for-data-visualisation-how-to-make-data-outputs-more-readable-accessible-and-impactful">Best Practices for Data Visualisation: How to make data outputs more readable, accessible, and impactful</h3>
-<p><strong>Date:</strong> 5 September <strong>Time:</strong> 11:40 am - 1:00 pm <strong>Room:</strong> Auditorium</p>
-<p>The Royal Statistical Society (RSS) has published a new guide, “<a href="https://royal-statistical-society.github.io/datavisguide/">Best Practices for Data Visualisation</a>”, containing insights, advice, and examples (with code) to make data outputs more readable, accessible, and impactful. The guide is written primarily for contributors to Royal Statistical Society publications – including <em>Significance</em> magazine, the <em>Journal of the Royal Statistical Society Series A</em>, and Real World Data Science – but the information and advice within is also of broad relevance and use for any data visualisation task.</p>
-<p>In the first half of this conference session, authors Andreas Krause, <a href="https://nrennie.rbind.io/">Nicola Rennie</a>, and Brian Tarran will introduce the guide and its key recommendations, and there will be a short demo of how to use the new <a href="https://github.com/nrennie/RSSthemes">{RSSthemes} R package</a>. For the second half of the session, attendees will be invited to share feedback with the authors, propose ideas, and start developing new and expanded sections of the guide. Attendees will be shown how to work with the guide’s source files and collaborate via GitHub, so feel free to bring along a laptop and become a contributor!</p>
-<p>For more information, see <a href="https://royal-statistical-society.github.io/datavisguide/">rss.org.uk/datavisguide</a> and the <a href="https://virtual.oxfordabstracts.com/#/event/4019/program?session=65937&amp;s=0">RSS Conference website</a>.</p>
-</section>
-<section id="discussion-meeting-probabilistic-and-statistical-aspects-of-machine-learning" class="level3">
-<h3 class="anchored" data-anchor-id="discussion-meeting-probabilistic-and-statistical-aspects-of-machine-learning">Discussion Meeting: Probabilistic and statistical aspects of machine learning</h3>
-<p><strong>Date:</strong> 6 September <strong>Time:</strong> 5:00pm - 7:00 pm <strong>Room:</strong> Auditorium</p>
-<p>We haven’t helped organise this session, but we are interested to see it. Two papers will be presented for discussion and debate. Paper 1 is “Automatic Change-Point Detection in Time Series via Deep Learning” by Jie Li, Paul Fearnhead, Piotr Fryzlewicz, and Tengyao Wang, while Paper 2 is “From Denoising Diffusions to Denoising Markov Models” by Joe Benton, Yuyang Shi, Valentin De Bortoli, George Deligiannidis, and Arnaud Doucet. Preprints of both papers are available now via the <a href="https://rss.org.uk/training-events/events/discussion-papers/">RSS Discussion Meetings webpage</a>, and you can also hear more about the session in this interview with Adam Sykulski, RSS Discussion Papers editor.</p>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/1UL1H21v-Q0?si=WPftzqltawRknPPM" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<div class="article-btn">
-<p><a href="../../../../../../the-pulse/editors-blog/index.html">Back to Editors’ blog</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Royal Statistical Society
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail image by <a href="https://flic.kr/p/YzNWJw">jcw1967</a>, licenced under a Creative Commons Attribution 2.0 Generic (CC BY 2.0) <a href="https://creativecommons.org/licenses/by/2.0/">licence</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Tarran, Brian. 2023. “RSS Conference preview: Evaluating AI, machine learning, and data visualisation.” Real World Data Science, August 24, 2023. <a href="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/08/24/rss-conference.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-</section>
-
- ]]></description>
-  <category>AI</category>
-  <category>Machine learning</category>
-  <category>Data visualisation</category>
-  <category>Events</category>
-  <guid>https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/08/24/rss-conference.html</guid>
-  <pubDate>Thu, 24 Aug 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/08/24/images/harrogate-conference-centre.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 </channel>
 </rss>
