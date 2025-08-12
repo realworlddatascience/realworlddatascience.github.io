@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.7.33">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="dcterms.date" content="2024-08-12">
+<meta name="description" content="AI scientist and researcher Francis Osei investigates what happens when Agentic AI systems are used in real projects where trust and reproducibility are not optional.">
+
+<title>Deploying Agentic AI - What Worked, What Broke, and What We Learned – Real World Data Science</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../../">
+<link href="../../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
+<script src="../../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-html/quarto-syntax-highlighting-ea385d0e468b0dd5ea5bf0780b1290d9.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../../site_libs/bootstrap/bootstrap-4f1a91649ebfb1f8acb7c2e721c39a12.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
+</script>
+<!-- Thank you to Ben Ruijl for the progress bar code!
+Ben is on GitHub here: https://github.com/benruijl
+And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
+
+<meta property="og:title" content="Deploying Agentic AI - What Worked, What Broke, and What We Learned – Real World Data Science">
+<meta property="og:description" content="AI scientist and researcher Francis Osei investigates what happens when Agentic AI systems are used in real projects where trust and reproducibility are not optional.">
+<meta property="og:image" content="https://realworlddatascience.net/applied-insights/case-studies/posts/2025/08/12/images/agentic-ai.jpg">
+<meta property="og:site_name" content="Real World Data Science">
+<meta property="og:image:alt" content="The Curated Data Enterprise Framework">
+<meta name="twitter:title" content="Deploying Agentic AI - What Worked, What Broke, and What We Learned – Real World Data Science">
+<meta name="twitter:description" content="AI scientist and researcher Francis Osei investigates what happens when Agentic AI systems are used in real projects where trust and reproducibility are not optional.">
+<meta name="twitter:image" content="https://realworlddatascience.net/applied-insights/case-studies/posts/2025/08/12/images/agentic-ai.jpg">
+<meta name="twitter:site" content="@rwdatasci">
+<meta name="twitter:image:alt" content="The Curated Data Enterprise Framework">
+<meta name="twitter:card" content="summary_large_image">
+</head><body class="nav-fixed quarto-light"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
+
+<script id="progressbar" type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const bar = document.querySelector('#progress-bar');
+    const post = document.querySelector('#quarto-content');
+    const html = document.documentElement;
+    
+    const height = post.scrollHeight + post.offsetTop;
+    
+    window.addEventListener('scroll', () => {
+        bar.style.width = (html.scrollTop / (height- html.clientHeight)) * 100 + '%';
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../../rwds.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../the-pulse/index.html"> 
+<span class="menu-text">The Pulse</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../applied-insights/index.html"> 
+<span class="menu-text">Applied Insights</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../foundation-frontiers/index.html"> 
+<span class="menu-text">Foundations &amp; Frontiers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../../people-paths/index.html"> 
+<span class="menu-text">People &amp; Paths</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About RWDS</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
+        <li>
+    <a class="dropdown-item" href="../../../../../../about-rwds.html">
+ <span class="dropdown-text">Who we are</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../../contributor-docs/call-for-contributions.html">
+ <span class="dropdown-text">How to contribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../../CODE_OF_CONDUCT.html">
+ <span class="dropdown-text">Code of conduct</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../../contact.html">
+ <span class="dropdown-text">Contact us</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Deploying Agentic AI - What Worked, What Broke, and What We Learned</h1>
+                  <div>
+        <div class="description">
+          <p>AI scientist and researcher Francis Osei investigates what happens when Agentic AI systems are used in real projects where trust and reproducibility are not optional.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Reproducibility</div>
+                <div class="quarto-category">Data Analysis</div>
+                <div class="quarto-category">Machine learning</div>
+                <div class="quarto-category">Statistics</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Francis Osei </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">August 12, 2024</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#we-built-agentic-systems.-heres-what-broke." id="toc-we-built-agentic-systems.-heres-what-broke." class="nav-link active" data-scroll-target="#we-built-agentic-systems.-heres-what-broke."><span class="header-section-number">1</span> We Built Agentic Systems. Here’s What Broke.</a></li>
+  <li><a href="#what-agentic-ai-looks-like-in-practice" id="toc-what-agentic-ai-looks-like-in-practice" class="nav-link" data-scroll-target="#what-agentic-ai-looks-like-in-practice"><span class="header-section-number">2</span> What Agentic AI Looks Like in Practice</a></li>
+  <li><a href="#case-study-monitoring-protocol-deviations-with-agentic-ai" id="toc-case-study-monitoring-protocol-deviations-with-agentic-ai" class="nav-link" data-scroll-target="#case-study-monitoring-protocol-deviations-with-agentic-ai"><span class="header-section-number">3</span> Case Study: Monitoring Protocol Deviations with Agentic AI</a></li>
+  <li><a href="#a-call-for-practical-evaluation-standards" id="toc-a-call-for-practical-evaluation-standards" class="nav-link" data-scroll-target="#a-call-for-practical-evaluation-standards"><span class="header-section-number">4</span> A Call for Practical Evaluation Standards</a></li>
+  <li><a href="#closing-thoughts-from-the-field" id="toc-closing-thoughts-from-the-field" class="nav-link" data-scroll-target="#closing-thoughts-from-the-field"><span class="header-section-number">5</span> Closing Thoughts from the Field</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/applied-insights/case-studies/posts/2025/08/12/deploying-agentic-ai.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<section id="we-built-agentic-systems.-heres-what-broke." class="level2" data-number="1">
+<h2 data-number="1" class="anchored" data-anchor-id="we-built-agentic-systems.-heres-what-broke."><span class="header-section-number">1</span> We Built Agentic Systems. Here’s What Broke.</h2>
+<p>When Agentic AI started dominating research papers, demos, and conference talks, I was curious but cautious. The idea of intelligent agents, autonomous systems powered by large language models that can plan, reason, and take actions using tools, sounded brilliant in theory. But I wanted to know what happened when you used them. Not in a toy notebook or a slick demo, but in real projects, with real constraints, where things needed to work reliably and repeatably.</p>
+<p>In my role as Clinical AI &amp; Data Scientist at Bayezian Limited, I work at the intersection of data science, statistical modelling, and clinical AI governance, with a strong emphasis on regulatory-aligned standards such as CDISC. I have been directly involved in deploying agentic systems into environments where trust and reproducibility are not optional. These include real-time protocol compliance, CDISC mapping, and regulatory workflows. We gave agents real jobs. We let them loose on messy documents. And then we watched them work, fail, learn, and (sometimes) recover.</p>
+<p>This article is not a critique of Agentic AI as a concept. I believe Agentic AI has potential value, but I also believe it demands more critical evaluation. That means assessing these systems in conditions that mirror the real world, not in benchmark papers filled with sanitised datasets. It means observing what happens when agents are under pressure, when they face ambiguity, and when their outputs have real consequences. What follows is not speculation about what Agentic AI might become a decade from now. It is a candid reflection on what it feels like to use these systems today. It is about watching a chain of prompts unravel or a multi-agent system drop the baton halfway through a task. If we want Agentic AI to be trustworthy, robust, and practical, then our standards for evaluating it must be shaped by lived experience rather than theoretical ideals.</p>
+</section>
+<section id="what-agentic-ai-looks-like-in-practice" class="level2" data-number="2">
+<h2 data-number="2" class="anchored" data-anchor-id="what-agentic-ai-looks-like-in-practice"><span class="header-section-number">2</span> What Agentic AI Looks Like in Practice</h2>
+<p>If you’re imagining robots in lab coats, that’s not quite what this is. It is more like releasing a highly motivated intern into a complex archive with partial instructions, limited supervision, and the freedom to decide which filing cabinets, databases, or tools to open next. It is messy. It is unpredictable. And it sometimes surprises you with just how resourceful or confused it can get. Agentic AI systems are purpose-built setups where a large language model is given a task and enough autonomy to decide how to approach it. That might mean choosing which tools to use, when to use them, and how to adapt when things go off-script. You are not just sending one prompt and getting an answer. You are watching a system reason, remember, call APIs, retry when things go wrong, and ideally, get to a useful result.</p>
+<p>At Bayezian, we have explored this in several internal projects, including generating clinical codes from statistical analysis plans and study specifications, monitoring synthetic Electronic Health Records (EHRs) for rule violations, and running chained reasoning loops to validate document alignment. These efforts reflect the reality of building LLM agents into safety-critical and compliance-heavy workflows. Across these deployments, the question is never just “can it do the task” but “can it do the task reliably, interpretably, and safely in context”.</p>
+<p>Broader research has followed similar directions. In clinical pharmacology and translational sciences, researchers have explored how AI agents can automate modelling and trial design while keeping a human in the loop, and offering blueprints for scalable, compliant agentic workflows link. In the context of patient-facing systems, agentic retrieval-augmented generation has improved the quality and safety of educational materials, with LLMs acting as both generators and validators of content link. Other teams have used multi-agent systems to simulate cross-disciplinary collaboration, where each AI agent brings a different scientific role to design and validate therapeutic molecules like SARS-CoV-2 nanobodies link.</p>
+<p>Some of the systems we built used agent frameworks like LangChain or LlamaIndex. Others were bespoke combinations of APIs, function libraries, memory stores, and prompt stacks wired together to mimic workflow behavior. Regardless of the architecture, the core structure remained the same. The agent was given a task, a bit of autonomy, and access to tools, and then left to figure things out. Sometimes it worked. Sometimes it did not. That gap between intention and execution is where most of the interesting lessons sit.</p>
+<p>In the next section, I describe one of those deployments in more detail: a multi-agent system used to monitor data flow in a simulated clinical trial setting.</p>
+</section>
+<section id="case-study-monitoring-protocol-deviations-with-agentic-ai" class="level2" data-number="3">
+<h2 data-number="3" class="anchored" data-anchor-id="case-study-monitoring-protocol-deviations-with-agentic-ai"><span class="header-section-number">3</span> Case Study: Monitoring Protocol Deviations with Agentic AI</h2>
+<p><strong>Why We Built It</strong></p>
+<p>Clinical trials generate a stream of complex data, from scheduled lab results to adverse event logs. Hidden in that stream are subtle signs that something may be off: a visit occurred too late, a test was skipped, or a dose changed when it shouldn’t have. These are protocol deviations, and catching them quickly matters. They can affect safety, skew outcomes, and trigger regulatory scrutiny.</p>
+<p>Traditionally, reviewing these events is a painstaking task. Study teams trawl through spreadsheets and timelines, cross-referencing against lengthy protocol documents. It is time-consuming, easy to miss context, and prone to delay. We wondered whether an AI-driven approach could act like a vigilant reviewer. Not to replace the team, but to help it focus on what truly needed attention.</p>
+<p>Our motivation was twofold. First, to introduce earlier, more consistent detection without relying on rule-based systems that often buckle under real-world variability. Second, to test whether a group of coordinated language model agents, each with a clear focus, could carry out this work at scale while still being interpretable and auditable.</p>
+<p>To do that, we built the system from the ground up. We designed a pipeline that could ingest clinical documents, extract key protocol elements, embed them for semantic search, and store them in structured form. That created the foundation for agents to work not just as readers of data, but as context-aware monitors. Understanding whether a missed Electrocardiogram (ECG) or a delayed Day 7 visit violated the protocol required more than lookup tables. It required reasoning. It required memory. It required agents built with intent.</p>
+<p>What emerged was a system designed not just to scan data, but to think with constraints, assess context, and escalate issues when the boundaries of the trial were breached. The goal was not perfection, but partnership. A system that could flag what mattered, explain why, and stay open to human feedback.</p>
+<p><strong>How It Was Set Up</strong></p>
+<p>The system was built around a group of focused agents, each responsible for checking a specific type of protocol rule. Rather than relying on one large model to do everything, we broke the task into smaller parts. One agent reviewed visit timing. Another checked medication use. Others handled inclusion criteria, missed procedures, or serious adverse events. This made each agent easier to understand, easier to test, and less likely to be overwhelmed by conflicting information.</p>
+<p>Before any agents could be activated, however, an early classifier was introduced to determine what type of document had arrived. Was it a screening form or a post-randomisation visit report? That initial decision shaped the downstream path. If it was a screening file, the system activated the inclusion and exclusion criteria checker. If it was a visit document, it was handed off to agents responsible for tracking timing, treatment exposure, scheduled procedures, and adverse events.</p>
+<p>These agents did not operate in isolation. They worked on top of a pipeline that handled the messy reality of clinical data. Documents in different formats were extracted, cleaned, and converted into structured representations. Tables and free text were processed together. Key elements from study protocols were embedded and stored to allow flexible retrieval later. This gave the agents access to a searchable memory of what the trial actually required.</p>
+<p>While many agentic systems today rely heavily on frameworks like LangChain or LlamaIndex, our system was built from the ground up to suit the demands of clinical oversight and regulatory traceability. We avoided packaged orchestration frameworks. Instead, we constructed a lightweight pipeline using well-tested Python tools, giving us more control over transparency and integration. For semantic memory and search, protocol content was indexed using FAISS, a vector store optimised for fast similarity-based retrieval. This allowed each agent to fetch relevant rules dynamically and reason through them with appropriate context.</p>
+<p>When patient data flowed in, the classifier directed the document to the appropriate agents. If any agent spotted something unusual, it could escalate the case to a second agent responsible for suggesting possible actions. That might mean logging the issue, generating a report, or prompting a review from the study team. Throughout, a human remained involved to validate decisions and interpret edge cases that needed nuance.</p>
+<p>We did not assume the agents would get everything right. The idea was to create a process where AI could handle the repetitive scanning and flagging, leaving people to focus on the work that demanded clinical judgement. The combination of structured memory, clear responsibilities, document classification, and human oversight formed the backbone of the system.</p>
+<p>Figure 1 illustrates a two-phase agentic system architecture, where protocol documents are first parsed, structured, and embedded into a searchable memory (green), enabling real-time agents (orange) to classify incoming clinical data from the Clinical Trial Management System (CTMS), reason over protocol rules, detect deviations, and escalate issues with human oversight.</p>
+<div id="fig-cde" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-cde-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/figure-1-sa.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cde-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Figure 1: System Architecture and Agent Flow
+</figcaption>
+</figure>
+</div>
+<p><strong>Where It Got Complicated</strong></p>
+<p>In early tests, the system did what it was built to do. It scanned incoming records, spotted missing data, flagged unexpected medication use, and pointed out deviations that might otherwise have slipped through. On structured examples, it handled the checks with speed and consistency.</p>
+<p>But as we moved closer to real trial conditions, the gaps started to show. The agents were trained to recognise rules, but real-world data rarely plays by the book. Information arrived out of order. Visit dates overlapped. Exceptions buried in footnotes became critical. Suddenly, a task that looked simple in isolation became tangled in edge cases.</p>
+<p>One of the most frequent problems was handover failure. A deviation might be correctly identified by the first agent, only to be lost or misunderstood by the next. A flagged issue would travel halfway through the chain and then disappear or be misclassified because the follow-up agent missed a piece of context. These were not coding errors. They were coordination breakdowns, small lapses in memory between steps that led to big differences in outcome.</p>
+<p>We also found that decisions based on time windows were especially fragile. An agent could recognise that a visit was missing, but not always remember whether the protocol allowed a buffer. That kind of reasoning depended on holding specific details in working memory. Without it, the agents began to misfire, sometimes raising the alarm too early, other times not at all.</p>
+<p>None of this was surprising. We had built the system to learn from its own limitations. But seeing those moments play out across agents, in ways that were subtle and sometimes difficult to trace, helped surface the exact places where autonomy met ambiguity and where structure gave way to noise.</p>
+<p><strong>A Glimpse Into the Details</strong></p>
+<p>One case brought the system’s limits into focus. A monitoring agent flagged a protocol deviation for a missing lab test on Day 14. On the surface, it looked like a valid call. The entry for that day was missing, and the protocol required a test at that visit. The alert was logged, and the case moved on to the next agent in the chain.</p>
+<p>But there was a catch.</p>
+<p>The protocol did call for a Day 14 lab, but it also allowed a two-day window either side. That detail had been extracted earlier and embedded in the system’s memory. However, at the moment of evaluation, that context was not carried through. The agent saw an empty cell for Day 14 and treated it as a breach. It did not recall that a test on Day 13, which had already been recorded, fulfilled the requirement.</p>
+<p>This was not a failure of logic. It was a failure of coordination. The information the agent needed was available, but not in the right place at the right time. The memory had thinned just enough between steps to turn a routine variation into a false positive.</p>
+<p>From a human perspective, the decision would have been easy. A reviewer would glance at the timeline, check the visit window, and move on. But for the agent, the absence of a test on the exact date triggered a response. It did not understand flexibility unless that flexibility was made explicit in the prompt it received.</p>
+<p>That small oversight rippled through the process. It triggered an unnecessary escalation, pulled attention away from genuine issues, and reminded us that autonomy without memory is not the same as understanding.</p>
+<p><strong>How We Measured Success</strong></p>
+<p>To understand how well the system was performing, we needed something to compare it against. So we asked clinical reviewers to go through a set of patient records and mark any protocol deviations they spotted. This gave us a reference set, a gold standard, that we could use to test the agents.</p>
+<p>We then ran the same data through the system and tracked how often it matched the human reviewers. When the agent flagged something that was also noted by a reviewer, we counted it as a hit. If it missed something important or raised a false alarm, we marked it accordingly. This gave us basic measures like sensitivity and specificity, in plain terms, how good the system was at picking up real issues and how well it avoided false ones.</p>
+<p>But we also looked at the process itself. It was not just about whether a single agent made the right call, but whether the information made it through the chain. We tracked handovers between agents, how often a detected issue was correctly passed along, whether follow-up steps were triggered, and whether the right output was produced in the end.</p>
+<p>This helped us see where the system worked as intended and where things broke down, even when the core detection was accurate. It was never just a question of getting the right answer. It was also about getting it to the right place.</p>
+<p><strong>What We Changed Along the Way</strong></p>
+<p>Once we understood where things were going wrong, we made a few targeted changes to steady the system.</p>
+<p>First, we introduced structured memory snapshots. These acted like running notes that captured key protocol rules and exceptions at each stage. Rather than expecting every agent to remember what came before, we gave them a shared space to refer back to. This made it easier to hold onto details like visit windows or exemption clauses, even as the task moved between agents.</p>
+<p>We also moved beyond rigid prompt templates. Early versions of the system leaned heavily on predefined phrasing, which limited the agents’ flexibility. Over time, we allowed the agents to generate their own sets of questions and reason through the answers independently. This gave them more space to interpret ambiguous situations and respond with a clearer sense of context, rather than relying on tightly scripted instructions. Alongside this, we rewrote prompts to be clearer and more grounded in the original trial language. Ambiguity in wording was often enough to derail performance, so small tweaks, phrasing things the way a study nurse might, made a noticeable difference. We then added stronger handoff signals. These were markers that told the next agent what had just happened, what context was essential, and what action was expected. It was a bit like writing a handover note for a colleague. Without that, agents sometimes acted without full context or missed the point altogether. Finally, we built in simple checks to track what happened after an alert was raised. Did the follow-up agent respond? Was the right report generated? If not, where did the thread break? These checks gave us better visibility into system behaviour and helped us spot patterns that weren’t obvious from the output alone.</p>
+<p>None of these changes made the system perfect. But they helped close the loop. Errors became easier to trace. Fixes became faster to test. And confidence grew that when something went wrong, we would know where to look.</p>
+<p><strong>What It Taught Us</strong></p>
+<p>The system did not live up to the hype, and it was not flawless, but it proved genuinely useful. It spotted patterns early. It highlighted things we might have overlooked. And, just as importantly, it changed how people interacted with the data. Rather than spending hours checking every line, reviewers began focusing on the edge cases and thinking more critically about how to respond. The role shifted from manual detective work to something closer to intelligent triage.</p>
+<p>What agentic AI brought to the table was not magic, but structure. It added pace to routine checks, consistency to decisions, and visibility into what had been flagged and why. Every alert came with a traceable rationale, every step with a record. That made it easier to explain what the system had done and why, which in turn made it easier to trust.</p>
+<p>At the same time, it reminded us what agents still cannot do. They do not infer the way people do. They do not fill in blanks or read between the lines. But they do follow instructions. They do handle repetition. They do maintain logic across complex checks. And in clinical research, where consistency matters just as much as cleverness, that counts for a lot.</p>
+<p>This experience did not make us think agentic systems were ready to run trials alone. But it did show us they could support the process in a way that was measurable, transparent, and worth building on.</p>
+<p><strong>What This Taught Us About Evaluation</strong></p>
+<p>Working with agentic systems made one thing especially clear. The way most people assess language models does not prepare you for what happens when those models are placed inside a real workflow.</p>
+<p>It is easy enough to test for accuracy or coherence in response to a single prompt. But those surface checks do not reflect what it takes to complete a task that unfolds over time. When an agent is making decisions, juggling memory, switching between tools, and coordinating with others, a different kind of evaluation is needed.</p>
+<p>We began paying attention to the sorts of things that rarely make it into research papers. Could the agent perform the same task consistently across repeated attempts? Did it remember what had just happened a few steps earlier? When one component passed information to another, did it land correctly? Did the agent use the right tool when the moment called for it, even without being told explicitly?</p>
+<p>These were not academic concerns. They were practical indicators of whether the system would hold up under pressure. So we built simple ways to track them.</p>
+<p>We looked at how stable the agent remained from one run to the next. We measured how often a person needed to step in. We checked whether the agent could retrieve details it had already encountered. And we monitored how information moved through the system, from one part to another, without being lost or altered along the way.</p>
+<p>None of this required complex metrics. But each of these signals told us more about how the system behaved in real use than any benchmark ever did.</p>
+</section>
+<section id="a-call-for-practical-evaluation-standards" class="level2" data-number="4">
+<h2 data-number="4" class="anchored" data-anchor-id="a-call-for-practical-evaluation-standards"><span class="header-section-number">4</span> A Call for Practical Evaluation Standards</h2>
+<p>If we want reliable ways to judge these systems, we need to start from what happens when they are used in the real world. Much of the current thinking around evaluating agentic AI remains too abstract. It often focuses on what the system is supposed to do in principle, not what it manages to do in practice. But the most useful insights emerge when things fall apart. When an agent loses track of its task, forgets what just happened, or takes an unexpected turn under pressure.</p>
+<p><a href="https://sakana.ai/ai-scientist/">A recent assessment of Sakana.ai’s AI Scientist</a> made this point sharply. The system promised end-to-end research automation, from forming hypotheses to writing up results. It was an ambitious step forward. But <a href="https://arxiv.org/html/2502.14297v1">when tested</a>, it fell short in important ways. It skimmed literature without depth, misunderstood experimental methods, and stitched together reports that looked complete but were riddled with basic errors. One reviewer said it read like something written in a hurry by a student who had not done the reading. The outcome was not a failure of intent, but a reminder that sophisticated language does not always reflect sound reasoning.</p>
+<p>Instead of designing evaluation methods in isolation, we should begin with real scenarios. That means observing where agents stumble, how they recover, and whether they can carry through when steps are long and outcomes matter. It means showing the messy bits, not just polished results. Tools that help us retrace decisions, inspect memory, and understand what went wrong are just as important as the outputs themselves.</p>
+<p>Only by starting from lived use with its uncertainty, complexity, and human oversight, can we build evaluation methods that truly reflect what it means for these systems to be useful.</p>
+</section>
+<section id="closing-thoughts-from-the-field" class="level2" data-number="5">
+<h2 data-number="5" class="anchored" data-anchor-id="closing-thoughts-from-the-field"><span class="header-section-number">5</span> Closing Thoughts from the Field</h2>
+<p>Agentic AI carries genuine promise, but even a single deployment can reveal how much distance there is between ambition and execution. These systems can be impressively capable in some moments and surprisingly brittle in others. And in domains where decisions must be precise and timelines matter, that brittleness is more than an inconvenience; it introduces real risk.</p>
+<p>The lessons from our experience were not abstract. They came from watching one system try to handle a demanding, high-context task and seeing where it stumbled. It was not a matter of poor design or unrealistic expectations. The complexity was built in, the kind that only becomes visible once a system moves beyond isolated prompts and into continuous workflows.</p>
+<p>That is why evaluation needs to begin with real use. With lived attempts, not controlled tests. With unexpected behaviours, not just benchmark scores. As practitioners, we have a front-row seat to what breaks, what improves with small tweaks, and what truly helps. That view should help shape how the field evolves.</p>
+<p>If agentic systems are to mature, the stories of where they struggled and how we adapted cannot sit on the sidelines. They are part of how progress happens. And they may be the clearest indicators of what needs to change next.</p>
+<dl>
+<dt>About the authors</dt>
+<dd>
+<a href="https://www.linkedin.com/in/francis-osei-b2b02116a/"><strong>Francis Osei</strong></a> is the Lead Clinical AI Scientist and Researcher at Bayezian Limited, where he designs and builds intelligent systems to support clinical trial automation, regulatory compliance, and the safe, transparent use of AI in healthcare. His work brings together data science, statistical modelling, and real-world clinical insight to help organisations adopt AI they can understand, trust, and act on :::
+</dd>
+</dl>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2025 Francis Osei
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://www.shutterstock.com/g/donut8449">khunkornStudio</a> on <a href="https://www.shutterstock.com/image-photo/ai-chatbot-technology-virtual-assistant-customer-2582430481">Shutterstock</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Osei, F. (2025). “Deploying Agentic AI: What Worked, What Broke, and What We Learned”, Real World Data Science, August 12, 20245. <a href="https://realworlddatascience.net/applied-insights/case-studies/posts/2025/08/12/deploying-agentic-ai.html">URL</a>
+</dd>
+</dl>
+</div>
+<p>::: :::</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+        const codeEl = trigger.previousElementSibling.cloneNode(true);
+        for (const childEl of codeEl.children) {
+          if (isCodeAnnotation(childEl)) {
+            childEl.remove();
+          }
+        }
+        return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/realworlddatascience\.net\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "realworlddatascience/realworlddatascience.github.io";
+    script.dataset.repoId = "R_kgDOILnnig";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDOILnnis4CSt2s";
+    script.dataset.mapping = "title";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><a href="../../../../../../LICENCE.html">Copyright © 2025 Royal Statistical Society</a></p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/realworlddatascience">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience">
+<p><i class="ai  ai-zenodo ai-2xl"></i></p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/rwdatasci">
+      <i class="bi bi-twitter-x" role="img" aria-label="Twitter/X">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@rwdatasci">
+      <i class="bi bi-mastodon" role="img" aria-label="Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="../../../../../../feeds.html">
+      <i class="bi bi-rss" role="img" aria-label="RWDS rss">
+</i> 
+    </a>
+  </li>  
+</ul>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/applied-insights/case-studies/posts/2025/08/12/deploying-agentic-ai.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p><a href="../../../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
