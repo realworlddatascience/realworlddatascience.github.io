@@ -16,7 +16,7 @@
 <height>83</height>
 <width>144</width>
 </image>
-<generator>quarto-1.7.34</generator>
+<generator>quarto-1.8.24</generator>
 <lastBuildDate>Tue, 12 Aug 2025 00:00:00 GMT</lastBuildDate>
 <item>
   <title>Deploying Agentic AI - What Worked, What Broke, and What We Learned</title>
@@ -705,7 +705,7 @@ Acknowledgments: This research was sponsored by the: <br> Unites States Census B
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Official statistics
+<span class="screen-reader-only">Note</span>Official statistics
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1125,7 +1125,7 @@ Acknowledgments: This research was sponsored by the: <br> United States Census B
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-The US <a href="https://www.census.gov/">Census Bureau</a>
+<span class="screen-reader-only">Note</span>The US <a href="https://www.census.gov/">Census Bureau</a>
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -1467,7 +1467,7 @@ Shaw, Luke et al 2024. “Forecasting the Health Needs of a Changing Population�
 
 <p>When you think about data visualisation in R <span class="citation" data-cites="R-base">(R Core Team 2022)</span>, you’d be forgiven for not jumping straight to thinking about creating Christmas cards. However, the package and functions we often use to create bar charts and line graphs can be repurposed to create festive images. This tutorial provides a step-by-step guide to creating a Christmas card featuring a snowman – entirely in R. Though this seems like just a fun exercise, the functions and techniques you learn in this tutorial can also transfer into more traditional data visualisations created using {ggplot2} <span class="citation" data-cites="ggplot2">(Wickham 2016)</span> in R.</p>
 <p>The code in this tutorial relies on the following packages:</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">library</span>(ggplot2)</span>
 <span id="cb1-2"><span class="fu" style="color: #4758AB;
@@ -1475,7 +1475,7 @@ background-color: null;
 font-style: inherit;">library</span>(ggforce)</span>
 <span id="cb1-3"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">library</span>(sf)</span></code></pre></div>
+font-style: inherit;">library</span>(sf)</span></code></pre></div></div>
 <blockquote class="blockquote">
 <p>You may also have seen this tutorial presented at the <a href="https://github.com/nrennie/oxford-RUG-christmas-cards">Oxford R User Group November 2023 Meetup</a>.</p>
 </blockquote>
@@ -1490,7 +1490,7 @@ font-style: inherit;">library</span>(sf)</span></code></pre></div>
 <p>Let’s start with the background. The easiest way to start with a blank canvas in {ggplot2} is to create an empty plot using <code>ggplot()</code> with no arguments. We can also remove all theme elements (such as the grey background and grid lines) with <code>theme_void()</code>. To change the background colour to a dark blue for the night sky, we can edit the <code>plot.background</code> element of the theme using <code>element_rect()</code> (since the background is essentially just a big rectangle).</p>
 <p>In {ggplot2} <code>fill</code> is the inner colour of shapes whilst <code>colour</code> is the outline colour. You can specify colours in different ways in R: either via the <code>rgb()</code> function, using a character string for a hex colour such as <code>"#000000"</code>, or using a named colour. If you run <code>colors()</code>, you’ll see all the valid named colours you can use. Here, we’ve picked <code>"midnightblue"</code>.</p>
 <p>Let’s save this initial plot as an object <code>s1</code> that we’ll keep adding layers to. Saving plots in different stages of styling as objects can help to keep your code more modular.</p>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">s1 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">s1 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -1517,11 +1517,11 @@ background-color: null;
 font-style: inherit;">"midnightblue"</span></span>
 <span id="cb2-6">      )</span>
 <span id="cb2-7">  )</span>
-<span id="cb2-8">s1</span></code></pre></div>
+<span id="cb2-8">s1</span></code></pre></div></div>
 <p>Next we’ll add some snow on the ground. We’ll do this by drawing a white rectangle along the bottom of the plot. There are two different functions that we could use to add a rectangle: <code>geom_rect()</code> or <code>annotate()</code>. The difference between the two is that <code>geom_rect()</code> maps columns of a <code>data.frame</code> to different elements of a plot whereas <code>annotate()</code> can take values passed in as vectors. Most of the {ggplot2} graphs you’ll see will use <code>geom_*()</code> functions. However, if you’re only adding one or two elements to a plot then <code>annotate()</code> might be quicker.</p>
 <p>Since we’re only adding one rectangle for the snow, it’s easier to use <code>annotate()</code> with the <code>"rect"</code> geometry. This requires four arguments: the minimum and maximum x and y coordinates of the rectangle – essentially specifying where the corners are. We can also change the colour of the rectangle and its outline using the <code>fill</code> and <code>colour</code> arguments. Here, I’ve used a very light grey instead of white.</p>
 <p>If we don’t set the axis limits using <code>xlim()</code> and <code>ylim()</code>, the plot area will resize to fit the area of the snow rectangle. The night sky background will disappear. You can choose any axis limits you wish here – but the unit square will make it easier to find the right coordinates when deciding where to position other elements. Finally, we add <code>coord_fixed()</code> to fix the 1:1 aspect ratio and make sure our grid is actually square with <code>expand = FALSE</code> to remove the additional padding at the sides of the plot.</p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">s2 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1">s2 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> s1 <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -1590,7 +1590,7 @@ background-color: null;
 font-style: inherit;">expand =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
 font-style: inherit;">FALSE</span>)</span>
-<span id="cb3-12">s2</span></code></pre></div>
+<span id="cb3-12">s2</span></code></pre></div></div>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -1604,7 +1604,7 @@ font-style: inherit;">FALSE</span>)</span>
 <p>To finish off the background, we’ll add some falling snowflakes. We first need to decide where on the plot the snowflakes will appear. We’ll be plotting lots of snowflakes, so manually typing out the coordinates of where they’ll be would be very inefficient. Instead, we can use functions to generate the locations randomly. For this we’ll use the uniform distribution. The uniform distribution has two parameters – the lower and upper bounds where any values between the bounds are equally likely. You can generate samples from a uniform distribution in R using the <code>runif()</code> function.</p>
 <p>When generating random numbers in R (or any other programming language), it’s important to set a seed. This means that if you give your code to someone else, they’ll get the same random numbers as you. Some people choose to use the date as the random seed and since we’re making Christmas cards, we’ll use Christmas day as the random seed – in <code>yyyymmdd</code> format, of course!</p>
 <p>We create a variable <code>n</code> specifying how many snowflakes we’ll create. Creating a variable rather than hard coding the variables makes it easier to vary how many snowflakes we want. Since our plot grid goes between 0 and 1 in both the x and y directions, we generate random numbers between 0 and 1 for both the x and y coordinates and store the values in a <code>data.frame</code> called <code>snowflakes</code>.</p>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">set.seed</span>(<span class="dv" style="color: #AD0000;
 background-color: null;
@@ -1637,9 +1637,9 @@ background-color: null;
 font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">1</span>)</span>
-<span id="cb4-6">)</span></code></pre></div>
+<span id="cb4-6">)</span></code></pre></div></div>
 <p>Now we can plot the <code>snowflakes</code> data using <code>geom_point()</code> – the same function you’d use for a scatter plot. Since we’re using a <code>geom_*()</code> function, we need to tell {ggplot2} which columns go on the <code>x</code> and <code>y</code> axes inside the <code>aes()</code> function. To plot the snowflakes, we’re going to make using of R’s different point characters. The default when plotting with <code>geom_point()</code> is a small black dot, but we can choose to use a small star (close enough to a snowflake!) by setting <code>pch = 8</code> and changing the <code>colour</code> to <code>"white"</code>.</p>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">s3 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">s3 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> s2 <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -1673,10 +1673,10 @@ font-style: inherit;">pch =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">8</span></span>
 <span id="cb5-10">  )</span>
-<span id="cb5-11">s3</span></code></pre></div>
+<span id="cb5-11">s3</span></code></pre></div></div>
 <p>Now comes the part where we start rolling up some snowballs! Or, in the case of an R snowman, we draw some circles. Unfortunately, there isn’t a built-in <code>geom_*()</code> function in {ggplot2} for plotting circles. We could use <code>geom_point()</code> here and increase the size of the points but this approach can look a little bit <em>fuzzy</em> when the points are very large. Instead, we’ll turn to a {ggplot2} extension package for some additional <code>geom_*</code> functions - {ggforce} <span class="citation" data-cites="ggforce">(Pedersen 2022)</span>.</p>
 <p>The <code>geom_circle()</code> function requires at least three elements mapped to the aesthetics inside <code>aes()</code>: the coordinates of the centre of the circle given by <code>x0</code> and <code>y0</code>, and the radii of each of the circles, <code>r</code>. Instead of creating a separate data frame and passing it into <code>geom_circle()</code>, we can alternatively create the data frame inside the function. The <code>fill</code> and <code>colour</code> arguments work as they do in {ggplot2} and we can set both to <code>"white"</code>.</p>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">s4 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1">s4 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> s3 <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -1739,7 +1739,7 @@ font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"white"</span></span>
 <span id="cb6-11">  )</span>
-<span id="cb6-12">s4</span></code></pre></div>
+<span id="cb6-12">s4</span></code></pre></div></div>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -1752,7 +1752,7 @@ font-style: inherit;">"white"</span></span>
 </div>
 <p>We can use <code>geom_point()</code> again to add some more points to represent the buttons and the eyes. Here, we’ll manually specify the coordinates of the points. For the buttons we add them in a vertical line in the middle of the snowman’s body circle, and for the eyes we add them in a horizontal line in the middle of the head circle.</p>
 <p>Since no two rocks are exactly the same size, we can add some random variation to the size of the points using <code>runif()</code> again. We generate five different sizes between 2 and 4.5. For reference, the default point size is 1.5. Adding <code>scale_size_identity()</code> means that the sizes of the points are actually equally to the sizes we generated from <code>runif()</code> and removes the legend that is automatically added when we add <code>size</code> inside <code>aes()</code>.</p>
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">s5 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1">s5 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> s4 <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -1824,10 +1824,10 @@ font-style: inherit;">+</span></span>
 <span id="cb7-10">  <span class="fu" style="color: #4758AB;
 background-color: null;
 font-style: inherit;">scale_size_identity</span>()</span>
-<span id="cb7-11">s5</span></code></pre></div>
+<span id="cb7-11">s5</span></code></pre></div></div>
 <p>To add sticks for arms, we can make use of <code>geom_segment()</code> to draw some lines. We could also use <code>geom_path()</code> but that is designed to connect points across multiple cases, whereas <code>geom_segment()</code> draws a single line per row of data – and we don’t want to join the snowman’s arms together!</p>
 <p>To use <code>geom_segment()</code> we need to create a data frame containing the x and y coordinates for the start and end of each line, and then pass this into the aesthetic mapping with <code>aes()</code>. We can control the colour and width of the lines using the <code>colour</code> and <code>linewidth</code> arguments. Setting the <code>lineend</code> argument to <code>"round"</code> means that the ends of the lines will be rounded rather than the default straight edge.</p>
-<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">s6 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1">s6 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> s5 <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -1906,7 +1906,7 @@ font-style: inherit;">linewidth =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">2</span></span>
 <span id="cb8-13">  )</span>
-<span id="cb8-14">s6</span></code></pre></div>
+<span id="cb8-14">s6</span></code></pre></div></div>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -1919,7 +1919,7 @@ font-style: inherit;">2</span></span>
 </div>
 <p>We’ll now add a (very simple) hat to our snowman, fashioned out of two rectangles. We can add the rectangles as we did before using the <code>annotate()</code> function and specifying the locations of the corners of the rectangles. We start with a shorter wider rectangle for the brim of the hat, and then a taller, narrower rectangle for the crown of the hat. Since we’ll colour them both <code>"brown"</code>, it doesn’t matter if they overlap a little bit.</p>
 <p>This <em>might</em> be one of the situations we should have used <code>geom_rect()</code> instead of <code>annotate()</code> but it might take a lot of trial and error to position the hat exactly where we want it, and this seemed a little easier with <code>annotate()</code>.</p>
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">s7 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1">s7 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> s6 <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -1990,10 +1990,10 @@ font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
 background-color: null;
 font-style: inherit;">"brown"</span></span>
 <span id="cb9-13">  )</span>
-<span id="cb9-14">s7</span></code></pre></div>
+<span id="cb9-14">s7</span></code></pre></div></div>
 <p>Now we can move on to the final component of building a snowman – the carrot for his nose! We’re going to use a triangle for the nose. Unfortunately, there are no built-in triangle geoms in {ggplot2} so we’ll have to make our own. There are different ways to do this, but here we’re going to make use of the {sf} package <span class="citation" data-cites="sf">(Pebesma 2018)</span>. The {sf} package (short for <em>simple features</em>) is designed for working with spatial data. Although we’re not working with maps, we can still use {sf} to make shapes – including polygons.</p>
 <p>We start by constructing a matrix with two columns – one for x coordinates and one for y. The x coordinates start in the middle of the head and go slightly to the right for the triangle point. The y coordinates take a little bit more trial and error to get right. Note that although triangles only have three corners, we have four rows of points. The last row must be the same as the first to make the polygon <em>closed</em>. The matrix is then converted into a spatial object using the <code>st_polygon()</code> function, and we can check how it looks using <code>plot()</code>.</p>
-<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">nose_pts <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1">nose_pts <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
 background-color: null;
@@ -2042,7 +2042,7 @@ background-color: null;
 font-style: inherit;">list</span>(nose_pts))</span>
 <span id="cb10-12"><span class="fu" style="color: #4758AB;
 background-color: null;
-font-style: inherit;">plot</span>(nose)</span></code></pre></div>
+font-style: inherit;">plot</span>(nose)</span></code></pre></div></div>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -2055,7 +2055,7 @@ font-style: inherit;">plot</span>(nose)</span></code></pre></div>
 </div>
 <p>We can plot <code>sf</code> objects with {ggplot2} using <code>geom_sf()</code>. <code>geom_sf()</code> is a slightly special <code>geom</code> since we don’t need to specify an aesthetic mapping for the <code>x</code> and <code>y</code> axes – they are determined automatically from the <code>sf</code> object along with which type of geometry to draw. If your <code>sf</code> object has points, points will be drawn. If it has country shapes, polygons will be drawn. Like other <code>geom_*()</code> functions, we can change the <code>colour</code> and <code>fill</code> arguments to a different colour – in this case <code>"orange"</code> to represent a carrot!</p>
 <p>You should see a <code>Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code> message when you run the following code. The is because <code>geom_sf</code> forces it’s own coordinate system on the plot overriding our previous code specifying <code>coord_fixed()</code>. If you run it without the <code>coord_sf(expand = FALSE)</code>, the extra space around the plot will reappear. We can remove it again with <code>expand = FALSE</code>.</p>
-<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1">s8 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1">s8 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> s7 <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -2086,12 +2086,12 @@ background-color: null;
 font-style: inherit;">expand =</span> <span class="cn" style="color: #8f5902;
 background-color: null;
 font-style: inherit;">FALSE</span>)</span>
-<span id="cb11-8">s8</span></code></pre></div>
+<span id="cb11-8">s8</span></code></pre></div></div>
 <blockquote class="blockquote">
 <p>You <em>could</em> skip the <code>sf</code> part of this completely and pass the coordinates directly into <code>geom_polygon()</code> instead. However, I’ve often found it quicker and easier to tinker with polygon shapes using <code>sf</code>.</p>
 </blockquote>
 <p>A key part of any Christmas card is the message wishing recipients a Merry Christmas! We can add text to our plot using the <code>annotate()</code> function and the <code>"text"</code> geometry (you could instead use <code>geom_text()</code> if you prefer). When adding text, we require at least three arguments: the <code>x</code> and <code>y</code> coordinates of where the text should be added, and the <code>label</code> denoting what text should appear. We can supply additional arguments to <code>annotate()</code> to style the text, such as: <code>colour</code> (which changes the colour of the text); <code>family</code> (to define which font to use); <code>fontface</code> (which determines if the font is bold or italic, for example); and <code>size</code> (which changes the size of the text). The <code>"mono"</code> option for <code>family</code> tells {ggplot2} to use the default system monospace font.</p>
-<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">s9 <span class="ot" style="color: #003B4F;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1">s9 <span class="ot" style="color: #003B4F;
 background-color: null;
 font-style: inherit;">&lt;-</span> s8 <span class="sc" style="color: #5E5E5E;
 background-color: null;
@@ -2138,7 +2138,7 @@ font-style: inherit;">size =</span> <span class="dv" style="color: #AD0000;
 background-color: null;
 font-style: inherit;">7</span></span>
 <span id="cb12-9">  )</span>
-<span id="cb12-10">s9</span></code></pre></div>
+<span id="cb12-10">s9</span></code></pre></div></div>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -2320,7 +2320,7 @@ Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Spr
 <section id="using-splink" class="level2">
 <h2 class="anchored" data-anchor-id="using-splink">Using Splink</h2>
 <p><a href="https://moj-analytical-services.github.io/splink/">Full documentation</a> and <a href="https://moj-analytical-services.github.io/splink/demos/tutorials/00_Tutorial_Introduction.html">a tutorial</a> are available for Splink, but the following snippet gives a simple example of Splink in action:</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><span class="im" style="color: #00769E;
 background-color: null;
 font-style: inherit;">from</span> splink.datasets <span class="im" style="color: #00769E;
 background-color: null;
@@ -2454,7 +2454,7 @@ font-style: inherit;">0.95</span></span>
 background-color: null;
 font-style: inherit;">=</span><span class="dv" style="color: #AD0000;
 background-color: null;
-font-style: inherit;">5</span>)</span></code></pre></div>
+font-style: inherit;">5</span>)</span></code></pre></div></div>
 <p>The example shows the flexibility of Splink, and how various types of configuration can be used:</p>
 <ul>
 <li><strong>How should different data fields be compared?</strong> In this example, the Jaro-Winkler distance is used for names, whereas Levenshtein is used for date of birth since Jaro-Winkler is not appropriate for numeric data.</li>
@@ -2534,12 +2534,12 @@ Linacre, Robin. 2023. “Deduplicating and linking large datasets using Splink.�
 
 <p>Incarcerated youth are an exceptionally vulnerable population, and body-worn cameras are an important tool of accountability both for those incarcerated and the staff who supervise them. In 2018 the Texas Juvenile Justice Department (TJJD) deployed body-worn cameras for the first time, and this is a case study of how the agency developed a methodology for measuring the success of the camera rollout. This is also a case study of analysis failure, as it became clear that real-world implementation problems were corrupting the data and rendering the methodology unusable. However, the process of working through the causes of this failure helped the agency identify previously unrecognized problems and ultimately proved to be of great benefit. The purpose of this case study is to demonstrate how negative findings can still be incredibly useful in real-world settings.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Why body-worn cameras?
+<span class="screen-reader-only">Note</span>Why body-worn cameras?
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -2597,12 +2597,12 @@ Why body-worn cameras?
 <h2 class="anchored" data-anchor-id="analysis-part-1-quality-control-and-footage-analysis">Analysis, part 1: Quality control and footage analysis</h2>
 <p>For this analysis, I gathered the most recent three weeks of body-worn camera data – which, at the time, covered April 1–21, 2019. I also pulled data from Shifthound (our shift management software) covering the same time period. Finally, I gathered HR data from CAPPS, the system that most of the State of Texas used at the time for personnel management and finance.<sup>1</sup> I then performed some quality control work, summarized in the dropdown box below.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Initial quality control steps
+<span class="screen-reader-only">Note</span>Initial quality control steps
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -2707,7 +2707,7 @@ Initial quality control steps
 <summary>
 Show the code
 </summary>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb1-2"><span class="fu" style="color: #4758AB;
@@ -2778,7 +2778,7 @@ background-color: null;
 font-style: inherit;">"free"</span>)</span>
 <span id="cb1-12"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 </details>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
@@ -2884,7 +2884,7 @@ font-style: inherit;">```</span></span></code></pre></div>
 <summary>
 Show the code
 </summary>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb2-2"><span class="fu" style="color: #4758AB;
@@ -3093,7 +3093,7 @@ font-style: inherit;">return</span>(Interval_Data_Table)</span>
 <span id="cb2-34">}</span>
 <span id="cb2-35"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 </details>
 <div class="table-responsive">
 <table class="caption-top table">
@@ -3275,12 +3275,12 @@ font-style: inherit;">```</span></span></code></pre></div>
 </ul>
 <p>The shift data was, unsurprisingly, even worse, and it was here we came across our most important finding. While the evidence showed that there wasn’t any widespread non-compliance with the use of the cameras, there <em>was</em> widespread non-compliance with the use of our shift management software. Details are included in the dropdown box below.</p>
 <div class="callout callout-style-simple callout-note callout-titled">
-<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-3-contents" aria-controls="callout-3" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Quality issues in shift tracking data
+<span class="screen-reader-only">Note</span>Quality issues in shift tracking data
 </div>
 <div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
 </div>
@@ -3367,7 +3367,7 @@ Wright, Noah. 2023. “Learning from failure: ‘Red flags’ in body-worn camer
 <i class="callout-icon"></i>
 </div>
 <div class="callout-title-container flex-fill">
-Disclaimer
+<span class="screen-reader-only">Important</span>Disclaimer
 </div>
 </div>
 <div class="callout-body-container callout-body">
@@ -3959,7 +3959,7 @@ Yang, Z., Z. Dai, Y. Yang, J. Carbonell, R. R. Salakhutdinov, and Q. V. Le. 2019
 <section id="perspective-on-the-challenge" class="level2">
 <h2 class="anchored" data-anchor-id="perspective-on-the-challenge">Perspective on the challenge</h2>
 <p>Text matching is an essential task in natural language processing <span class="citation" data-cites="DBLP:journals/corr/PangLGXWC16">(NLP, Pang et al. 2016)</span>, while record linkage across different sources is an essential task in data science. Machine learning techniques allow people to combine data faster and cheaper than using manual linkage. However, in the context of the Food for Thought challenge, existing methods for matching universal product codes (UPCs) to ensemble codes (ECs) require every UPC to be compared with every EC code (Figure 1a). Such approaches can be computationally expensive in the training process when data is noisy. Here, we propose an ensemble model with a category-based adapter to tackle this problem, drawing on the category information included in UPC and EC data. The category-based adapter allows UPCs to be first matched with only a small and reliable set of ECs (Figure 1b). Then, an ensemble model will be deployed to make predictions for UPC-EC matching. Our proposed approach can achieve competitive performance compared with state-of-the-art models.</p>
-<div class="quarto-layout-panel" data-layout-ncol="2" style="padding-top: 1em; margin-bottom: 0;">
+<div class="quarto-layout-panel" style="padding-top: 1em; margin-bottom: 0;" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
@@ -4528,7 +4528,7 @@ Macavaney, S., A. Mittu, G. Coppersmith, J. Leintz, and P. Resnik. 2021. <span>�
 <p>In switching between machines and computing environments, I soon encountered an issue with my code: the <a href="https://en.wikipedia.org/wiki/Path_(computing)">paths</a>, or file directory locations, for the trained algorithms had been hardcoded! As I quickly discovered, hardcoding a path can lead to issues when the code is run in a different environment, as the path might not exist in the new environment.</p>
 <p>As my code became longer, I overlooked the path names linked to algorithms that were generating the results. This mistake – which would have been easily corrected if spotted earlier – resulted in incorrect outputs. Such errors could have enormous (negative) implications in a public health context, where evidence-based decisions have real impacts on human lives. It was at this point that I realised that my code is the fundamental pillar of the validity of my empirical work. How can someone trust my work if they are not able to verify it?</p>
 <p>The following dummy code demonstrates the hardcoding issue:</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{python}</span></span>
 <span id="cb1-2"><span class="co" style="color: #5E5E5E;
@@ -4574,10 +4574,10 @@ background-color: null;
 font-style: inherit;">"File not found"</span>)</span>
 <span id="cb1-10"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <p><img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/06/15/images/hardcoded-paths-1.gif" class="img-fluid"></p>
 <p>In the code above, a dummy file (<code>toydata.csv</code>) is used. The dummy file contains data on the prices of three different toys, but only the path of the file is relevant to this example. If the hardcoded file path – <code>"/user/notebooks/toydata.csv"</code> – exists on the machine being used, the code will run just fine. But, when run in a different environment without said path, the code will result in a <code>"File not found error"</code>. Better code that uses relative paths can be written as:</p>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{python}</span></span>
 <span id="cb2-2"><span class="co" style="color: #5E5E5E;
@@ -4627,11 +4627,11 @@ background-color: null;
 font-style: inherit;">"File not found"</span>)</span>
 <span id="cb2-12"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <p><img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/06/15/images/hardcoded-paths-2.gif" class="img-fluid"></p>
 <p>You can see that this code has successfully imported data from the dataset <code>toydata.csv</code> and printed its two columns (toy and price) and three rows.</p>
 <p>The following example is a simplified version of what happened when I wrote code to train several models, store the results and run a procedure to compare results with the predictive performance of a benchmark model:</p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{python}</span></span>
 <span id="cb3-2"><span class="co" style="color: #5E5E5E;
@@ -4705,8 +4705,8 @@ background-color: null;
 font-style: inherit;">False</span>)</span>
 <span id="cb3-17"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><span class="in" style="color: #5E5E5E;
+font-style: inherit;">```</span></span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{python}</span></span>
 <span id="cb4-2"><span class="co" style="color: #5E5E5E;
@@ -4792,12 +4792,12 @@ background-color: null;
 font-style: inherit;">[3;31m&gt;&gt;&gt; Result is NOT better than the benchmark -&gt; Reject the model as it is not optimal"</span>)</span>
 <span id="cb4-13"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <p><img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/06/15/images/hardcoded-paths-3.gif" class="img-fluid"></p>
 <p>Everything looks fine at a glance. But, if you examine the code carefully, you may spot the problem. Initially, when I coded the procedure (training the model, saving and loading the results), I hardcoded the paths and had to change them for each tested model. First, I trained <code>model2</code>, a complex model, and tested it against the benchmark (70 &gt; 50 → accepted). I repeated the procedure for <code>model1</code> (a simple model). Its result was identical to <code>model2</code>, therefore I kept <code>model1</code> following the <a href="https://www.sciencedirect.com/topics/computer-science/parsimony-principle">parsimony principle</a>.</p>
 <p>However, for the code line loading the result for the current model (line 5, second cell), I forgot to amend the path and so mistakenly loaded the result of <code>model2</code>. As a consequence, I accepted a model which should have been rejected. These wrong results were then spread further in the code, including all charts and maps and the conclusions of my analysis.</p>
 <p>A small coding error like this can therefore be fatal to an analysis. Below is the corrected code:</p>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{python}</span></span>
 <span id="cb5-2"><span class="im" style="color: #00769E;
@@ -4882,8 +4882,8 @@ background-color: null;
 font-style: inherit;">False</span>)</span>
 <span id="cb5-18"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><span class="in" style="color: #5E5E5E;
+font-style: inherit;">```</span></span></code></pre></div></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{python}</span></span>
 <span id="cb6-2"><span class="co" style="color: #5E5E5E;
@@ -4969,7 +4969,7 @@ background-color: null;
 font-style: inherit;">[3;31m&gt;&gt;&gt; Result is NOT better than the benchmark -&gt; Reject the model as it is not optimal"</span>)</span>
 <span id="cb6-13"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <p><img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/06/15/images/hardcoded-paths-4.gif" class="img-fluid"></p>
 <p>Here, the paths are stored with other model details (line 7–8, first cell). Therefore, we can use them as variables when we need them (e.g., line 16, first cell, and line 5, second cell). Now, when the current model is set to <code>model1</code> (line 11, first cell), everything is automatically adjusted. Also, if the path details need to be changed, we only need to change them once and everything else is automatically adjusted and updated. The code now correctly states that <code>model1</code> performs worse than the benchmark and is therefore rejected and we should keep <code>model2</code>, which performs best.</p>
 <p>I managed to catch this error in time, but it often can be difficult to spot our own mistakes. That is why making code available to others is crucial. A code review by a second (or third) pair of eyes can save everyone a lot of time and avoid spreading incorrect results and conclusions.</p>
@@ -4990,7 +4990,7 @@ font-style: inherit;">```</span></span></code></pre></div>
 <p>Even after implementing Docker, I still faced another challenge to reproducibility: making the verification process for my code easy enough that it could be done by anyone, without them needing a degree in computer science! Increasingly, there is an expectation for researchers to share their code so that results can be reproduced, but there are as yet no widely accepted or enforced standards on how to make code readable and reusable. However, if we are to embrace the concept of reproducibility, we must write and publish code under the assumption that someone, somewhere – boss, team member, journal reviewer, reader – will want to rerun our code. And, if we expect that someone will want to rerun our code (and hopefully check it), we should ensure that the code is readable and does not take too long to run.</p>
 <p>If your code <em>does</em> take too long to run, some operations can often be accelerated – for example, by reducing the size of the datasets or by implementing computationally efficient data processing approaches (e.g., using <a href="https://pytorch.org/">PyTorch</a>). Aim for a running time of a few minutes – or about as long as it takes to make a cup of tea or coffee. Of course, if data needs to be reduced to save computational time, the person rerunning your code won’t generate the same results as in your original analysis. This therefore will not lead to reproducibility, <em>sensu stricto</em>. However, as long as you state clearly what are the expected results from the reduced dataset, your peers can at least inspect your code and offer feedback, and this marks a step towards reproducibility.</p>
 <p>We should also make sure our code is free from bugs – both the kind that might lead to errors in analysis and also those that stop the code running to completion. Bugs can occur for various reasons. For example, some code chunks written on a Windows machine may not properly execute on a macOS machine because the former uses <code>\</code> for file paths, while the latter uses <code>/</code>:</p>
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{python}</span></span>
 <span id="cb7-2"><span class="co" style="color: #5E5E5E;
@@ -5054,10 +5054,10 @@ background-color: null;
 font-style: inherit;">print</span>(f.read())</span>
 <span id="cb7-9"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <p><img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/06/15/images/path-cross-platform-compatibility-1.gif" class="img-fluid"></p>
 <p>Here, only the macOS/Linux version works, since the code this capture was taken from was implemented on a Linux server. There are alternatives, however. The code below works on macOS, Linux, and also Windows machines:</p>
-<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{python}</span></span>
 <span id="cb8-2"><span class="im" style="color: #00769E;
@@ -5089,7 +5089,7 @@ background-color: null;
 font-style: inherit;">print</span>(f.read())</span>
 <span id="cb8-8"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <p><img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/06/15/images/path-cross-platform-compatibility-2.gif" class="img-fluid"></p>
 <p>The extra Python package, <code>pathlib</code>, is of course unnecessary if you build a Docker container for your project, as discussed in the previous section.</p>
 </section>
@@ -5134,7 +5134,7 @@ font-style: inherit;">```</span></span></code></pre></div>
 <p>Randomness is not necessarily a bad thing – it mitigates overfitting and helps predictions to be generalised. However, it does present an additional barrier to reproducibility. If you cannot get the same results using the same raw materials – data, code, packages and computing environment – then you might have good reasons to doubt the validity of the findings.</p>
 <p>There are many elements of an analysis in which randomness may be present and lead to different results. For example, in a classification (where your dependent variable is binary, e.g., success/failure with 1 and 0) or a regression (where your dependent variable is continuous, e.g., temperature measurements of 10.1°C, 2.8°C, etc.), you might need to split your data into training and testing sets. The training set is used to estimate the model (hyper)parameters and the testing set is used to compute the performance of the model. The way the split is usually operationalised is as a random selection of rows of your data. So, in principle, each time you split your data into training and testing sets, you may end up with different rows in each set. Differences in the training set may therefore lead to different values of the model (hyper)parameters and affect the predictive performance that is measured from the testing set. Also, differences in the testing set may lead to variations in the predictive performance scores, which in turn lead to potentially different interpretations and, ultimately, decisions if the results are used for that purpose.</p>
 <p>This aspect of randomness in the training of models is relatively well known. But randomness may hide in other parts of code. One such example is illustrated below. Here, using Python, we set the seed number to 0 using <code>np.random.seed(seed value)</code>. The <code>random.seed()</code> function from the package <code>numpy</code> (abbreviated <code>np</code>) saves the state of a random function so that it can create identical random numbers independently of the machine you use, and this is for any number of executions. A seed value is an initial input or starting point used by a pseudorandom number generator to generate a sequence of random numbers. It is often an integer or a timestamp. The number generator takes this seed value and uses it to produce a deterministic series of random numbers that appear to be random but can be recreated by using the same seed value. Without providing this seed value, the first execution of the function typically uses the current system time. The animation below generates two random arrays <code>arr1</code> and <code>arr2</code> using <code>np.random.rand(3,2)</code>. Note that the values <code>3,2</code> indicate that we want random values for an array that has 3 rows and 2 columns.</p>
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{python}</span></span>
 <span id="cb9-2"><span class="im" style="color: #00769E;
@@ -5190,10 +5190,10 @@ background-color: null;
 font-style: inherit;">## print(arr2)</span></span>
 <span id="cb9-17"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <p><img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/06/15/images/randomisation-with-seed.gif" class="img-fluid"></p>
 <p>If you run the code yourself multiple times, the values of <code>arr1</code> and <code>arr2</code> should remain identical. If this is not the case, check that the seed value is set to 0 in lines 4 and 11. These identical results are possible because we set the seed value to 0, which ensures that the random number generator produces the same sequence of numbers each time the code is run. Now, let’s look at what happens if we remove the line <code>np.random.seed(0)</code>:</p>
-<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{python}</span></span>
 <span id="cb10-2"><span class="co" style="color: #5E5E5E;
@@ -5231,7 +5231,7 @@ background-color: null;
 font-style: inherit;">## print(arr2)</span></span>
 <span id="cb10-11"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <p><img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/06/15/images/randomisation-without-seed.gif" class="img-fluid"></p>
 <p>Here, the values of <code>arr1</code> and <code>arr2</code> will be different each time we run the code since the seed value was not set and is therefore changing over time.</p>
 <p>This short code demonstrates how randomness that can be controlled by the seed value may affect your code. Therefore, unless randomness is required, e.g., to get some uncertainty in the results, setting the seed value will contribute to making your work reproducible. I also find it helpful to document the seed number I use in my code so that I can easily reproduce my findings in the future. If you are currently working on some code that involves random number generators, it might be worth checking your code and making all necessary changes. In our work (see code chunk 9 in <a href="https://github.com/dsvanidze/replicability/blob/master/notebooks/main.ipynb">the Jupyter notebook</a>) we set the seed value in a general way, using a framework (config) so that our code always uses the same seed to train our algorithm.</p>
@@ -5336,7 +5336,7 @@ Svanidze, Davit, Andre Python, Christoph Weisser, Benjamin Säfken, Thomas Kneib
 <li>Describe how the USA National Phenology Network uses the bloom dates of lilacs to monitor the start of spring.</li>
 </ol>
 <p>At the end of the tutorial, we challenge you to design an algorithm that beats our predictions. The tutorial uses the <code>R</code> programming language. In particular, the code relies on the following packages:</p>
-<div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb1-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb1-2"><span class="fu" style="color: #4758AB;
@@ -5376,7 +5376,7 @@ background-color: null;
 font-style: inherit;">"rvest"</span>)</span>
 <span id="cb1-9"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <section id="the-law-of-the-flowering-plants" class="level2">
 <h2 class="anchored" data-anchor-id="the-law-of-the-flowering-plants">The law of the flowering plants</h2>
 <p>We begin by reviewing the law of the flowering plants as it was stated by Adolphe Quetelet. You may already know Quetelet as the inventor of the body mass index. Less known is that Quetelet recorded the bloom dates of hundreds of different plants between 1833 and 1852 at the Brussels Observatory, which he founded and directed. Quetelet reported that a plant flowers when exposed to a specific quantity of heat, measured in degrees of Celsius squared (°C²). For example, he calculated that a lilac blooms when the sum of the daily temperatures squared exceeds 4264°C² following the last frost.</p>
@@ -5384,10 +5384,10 @@ font-style: inherit;">```</span></span></code></pre></div>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><a href="images/quetelet_1875400.jpg" class="lightbox" data-glightbox="description: .lightbox-desc-1;" data-gallery="Quetelet"><img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2023/04/13/images/quetelet_1875400.jpg" class="img-fluid" alt="Portrait of Adolphe Quetelet."></a></p>
+<p><a href="images/quetelet_1875400.jpg" class="lightbox" data-gallery="Quetelet" data-glightbox="description: .lightbox-desc-1;"><img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2023/04/13/images/quetelet_1875400.jpg" class="img-fluid" alt="Portrait of Adolphe Quetelet."></a></p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><a href="images/sur_le_climat400.jpeg" class="lightbox" data-glightbox="description: .lightbox-desc-2;" data-gallery="Quetelet"><img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2023/04/13/images/sur_le_climat400.jpeg" class="img-fluid" alt="Title page of Adolphe Quetelet's 'On the climate of Belgium'."></a></p>
+<p><a href="images/sur_le_climat400.jpeg" class="lightbox" data-gallery="Quetelet" data-glightbox="description: .lightbox-desc-2;"><img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2023/04/13/images/sur_le_climat400.jpeg" class="img-fluid" alt="Title page of Adolphe Quetelet's 'On the climate of Belgium'."></a></p>
 </div>
 </div>
 </div>
@@ -5398,7 +5398,7 @@ font-style: inherit;">```</span></span></code></pre></div>
 <p>Quetelet was also not the first to study the relationship between temperature and bloom dates. René Réaumur <span class="citation" data-cites="deréaumur_1735">(1735)</span>, an early adopter of the thermometer, noted the relationship before Marsham published his <em>Indications</em>. But Quetelet was the first to systematically study the relationship across a wide variety of plants and derive the amount of heat needed to bloom. An example of Quetelet’s careful record keeping can be seen in Figure 2, one of many tables he reported in his publications.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><a href="images/quetelet_bloom.png" class="lightbox" data-glightbox="description: .lightbox-desc-3;" data-gallery="quarto-lightbox-gallery-3"><img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2023/04/13/images/quetelet_bloom.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="A table of bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852." width="600"></a></p>
+<p><a href="images/quetelet_bloom.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" data-glightbox="description: .lightbox-desc-3;"><img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2023/04/13/images/quetelet_bloom.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="A table of bloom dates at Brussels Observatory observed by Quetelet between 1839 and 1852." width="600"></a></p>
 </figure>
 </div>
 <div class="figure-caption">
@@ -5411,13 +5411,13 @@ font-style: inherit;">```</span></span></code></pre></div>
 <div class="quarto-layout-panel" data-layout-ncol="3">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><a href="images/buds250.jpg" class="lightbox" data-glightbox="description: .lightbox-desc-4;" data-gallery="flowers"><img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2023/04/13/images/buds250.jpg" class="img-fluid" alt="Photo of lilac flower buds."></a></p>
+<p><a href="images/buds250.jpg" class="lightbox" data-gallery="flowers" data-glightbox="description: .lightbox-desc-4;"><img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2023/04/13/images/buds250.jpg" class="img-fluid" alt="Photo of lilac flower buds."></a></p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><a href="images/open_flowers250.jpg" class="lightbox" data-glightbox="description: .lightbox-desc-5;" data-gallery="flowers"><img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2023/04/13/images/open_flowers250.jpg" class="img-fluid" alt="Photo of open lilac flowers."></a></p>
+<p><a href="images/open_flowers250.jpg" class="lightbox" data-gallery="flowers" data-glightbox="description: .lightbox-desc-5;"><img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2023/04/13/images/open_flowers250.jpg" class="img-fluid" alt="Photo of open lilac flowers."></a></p>
 </div>
 <div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><a href="images/full_flowers250.jpg" class="lightbox" data-glightbox="description: .lightbox-desc-6;" data-gallery="flowers"><img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2023/04/13/images/full_flowers250.jpg" class="img-fluid" alt="Photo of full lilac flowers."></a></p>
+<p><a href="images/full_flowers250.jpg" class="lightbox" data-gallery="flowers" data-glightbox="description: .lightbox-desc-6;"><img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2023/04/13/images/full_flowers250.jpg" class="img-fluid" alt="Photo of full lilac flowers."></a></p>
 </div>
 </div>
 </div>
@@ -5425,7 +5425,7 @@ font-style: inherit;">```</span></span></code></pre></div>
 <p><strong>Figure 3:</strong> The bloom date occurs when the first corolla opens and shows the stamina (center image). Source: <a href="https://www.usanpn.org/nn/TrackaLilac">USA National Phenology Network</a>.</p>
 </div>
 <p>In the <code>R</code> code below, the five-column tibble <code>lilac</code> contains the date each year that Quetelet observed the lilacs bloom at Brussels Observatory. The first three columns are the month, day, and year the lilacs bloomed between 1839 and 1852. These columns are combined to form the fourth column, the full date the lilacs bloomed. The last column converts the date to the day of the year the lilacs bloomed, abbreviated “doy.” That is, “doy” is the number of days it took for the lilacs bloom following January 1. Both “date” and “doy” representations of Quetelet’s observations will be useful throughout this tutorial.</p>
-<div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb2-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb2-2">lilac <span class="ot" style="color: #003B4F;
@@ -5565,7 +5565,7 @@ background-color: null;
 font-style: inherit;">"400px"</span>)</span>
 <span id="cb2-15"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <div id="tab-table1">
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
 <table class="table" style="margin-left: auto; margin-right: auto;">
@@ -5837,7 +5837,7 @@ May
 <p>To reproduce Quetelet’s law of the flowering plants, we will combine these bloom dates with daily temperature. The daily maximum and minimum temperatures at Brussels Observatory between 1839 and 1852 are available from the Global Historical Climatology Network. The data can be downloaded using the <code>ghcnd_search</code> function contained within the <code>R</code> package <code>rnoaa</code> <span class="citation" data-cites="chamberlain_2021">(2021)</span>. The station id for Brussels Observatory is “BE000006447”.</p>
 <p>The <code>ghcnd_search</code> function returns the maximum and minimum temperature as separate tibbles in a list. In the <code>R</code> code below, we join the tibbles using the <code>reduce</code> function. Note that the temperature is reported in tenths of a degree (i.e.&nbsp;0.1°C) so we divide by 10 before calculating the temperature midrange, our estimate of the daily temperature.</p>
 <p>The result is a five-column tibble <code>temp</code>, which contains the year of the temperature record (“year”), the date of the temperature record (“date”), the maximum temperature (“tmax”), the minimum temperature (“tmin”), and the midrange temperature (“temp”). The first 10 rows of the table are below. When you produce the full table yourself, you may notice that a small portion of temperature records are missing. We found that imputing these missing values does not significantly change the results. Therefore, we ignore these days when conducting our analysis.</p>
-<div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb3-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb3-2">temp <span class="ot" style="color: #003B4F;
@@ -5963,7 +5963,7 @@ background-color: null;
 font-style: inherit;">"400px"</span>)</span>
 <span id="cb3-21"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <div id="tab-table2">
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
 <table class="table" style="margin-left: auto; margin-right: auto;">
@@ -6182,7 +6182,7 @@ midrange temperature (°C)
 </div>
 </div>
 <p>Reproducing Quetelet’s law is now a simple matter of calculating the sum of the squared daily temperature from the day of last frost until the bloom day. We could use the day of last frost reported in Quetelet’s <em>Letters</em>. However, since we will replicate Quetelet’s analysis with recent data in a later section, we use our own definition of the day of last frost. We define the day of last frost to be the day following the last day the maximum temperature is below 0. The <code>R</code> code below creates the function <code>doy_last_frost</code> to extract the day of last frost from the maximum temperature. To demonstrate this function, we then compare the bloom date with the last frost date in 1839, the first year Quetelet observed.</p>
-<div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb4-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb4-2">doy_last_frost <span class="ot" style="color: #003B4F;
@@ -6328,7 +6328,7 @@ background-color: null;
 font-style: inherit;">kable_styling</span>()</span>
 <span id="cb4-24"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <div id="tab-table3">
 <div style="overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
 <table class="table" style="margin-left: auto; margin-right: auto; margin-bottom: 1.5em;">
@@ -6359,7 +6359,7 @@ bloom date
 </div>
 </div>
 <p>If Quetelet’s law of the flowering plants is correct, Table 3 has the following interpretation. On March 8, 1839 the lilacs at Brussels Observatory began “collecting” temperature. The lilacs continued to “collect” temperature until May 11, at which point they exceeded their 4264°C² quota and bloomed. We visualize this theory in Figure 4 with the <code>R</code> packages <code>ggplot2</code>, a member of the set of packages that constitute the “tidyverse” <span class="citation" data-cites="Wickham2019">(2019)</span>, and <code>plotly</code>.</p>
-<div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb5-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb5-2">(temp <span class="sc" style="color: #5E5E5E;
@@ -6510,13 +6510,13 @@ background-color: null;
 font-style: inherit;">FALSE</span>)</span>
 <span id="cb5-22"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
-<p><a href="images/fig4.png" class="lightbox" data-glightbox="description: .lightbox-desc-7;" data-gallery="quarto-lightbox-gallery-7"><img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2023/04/13/images/fig4.png" class="img-fluid" alt="A line graph of midrange temperature by day, for January to June 1839, with day of last frost (March 8) and day of first bloom (May 11) marked by vertical dashed lines."></a></p>
+font-style: inherit;">```</span></span></code></pre></div></div>
+<p><a href="images/fig4.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" data-glightbox="description: .lightbox-desc-7;"><img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2023/04/13/images/fig4.png" class="img-fluid" alt="A line graph of midrange temperature by day, for January to June 1839, with day of last frost (March 8) and day of first bloom (May 11) marked by vertical dashed lines."></a></p>
 <div class="figure-caption">
 <p><strong>Figure 4:</strong> According to Quetelet’s law, the lilacs bloom when exposed to 4264°C² following the last frost. Author provided, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 </div>
 <p>We now have all the ingredients necessary to reproduce Quetelet’s findings. Our reproduction is greatly simplified by using the <code>nest</code> function from the <code>tidyr</code> package, another member of the “tidyverse”. For an overview of <code>nest</code>, see the <a href="https://r4ds.had.co.nz/many-models.html?q=nest#nested-data">“Nested data” section</a> of <span class="citation" data-cites="grolemund2017r">Grolemund and Wickham (2017)</span>. We will group the data by year, nest, calculate the cumulative squared temperature from the frost date to the bloom date within each year, and then unnest. We ignore temperatures below 0°C. That is, temperatures below 0°C are set to 0°C. We do this because it is clear from Quetelet’s derivation of the law that only positive temperatures should be squared. See the next section for details.</p>
-<div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb6-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb6-2">quetelet <span class="ot" style="color: #003B4F;
@@ -6679,7 +6679,7 @@ background-color: null;
 font-style: inherit;">kable_styling</span>()</span>
 <span id="cb6-22"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <div id="tab-table4">
 <div style="overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
 <table class="table" style="margin-left: auto; margin-right: auto; margin-bottom: 1.5em;">
@@ -6723,7 +6723,7 @@ standard error (°C²)
 </div>
 <p>The results show that Quetelet’s findings are indeed reproducible. Quetelet estimated that lilacs bloom once exposed to 4264°C² following the last frost. Our reanalysis suggests a similar amount. However, 4264°C² is the overall average across all years – the estimated amount needed to bloom varies year to year. As a result, the average has a 95% confidence interval of approximately 3870°C² to 4660°C². Quetelet was well aware of this variation. He argued it was due to unobserved factors that influence growing conditions and change each year, and he dedicated significant space in his <em>Letters</em> to discuss them.</p>
 <p>These unobserved factors limit the accuracy of predictions made using the law. To assess the predictive accuracy of the law, we temporarily ignore the bloom dates Quetelet observed. Instead, we apply the 4264°C² quota to the temperature records at Brussels Observatory to predict the bloom date. We then compare our predictions with the bloom date Quetelet observed. The <code>R</code> code below creates the function <code>doy_prediction</code> to estimate the day the lilac will bloom from temperature records. Table 5 summarizes the accuracy of Quetelet’s law by the mean absolute error and root mean squared error.</p>
-<div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb7-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb7-2">doy_prediction <span class="ot" style="color: #003B4F;
@@ -6857,7 +6857,7 @@ background-color: null;
 font-style: inherit;">kable_styling</span>()</span>
 <span id="cb7-16"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <div id="tab-table5">
 <div style="overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
 <table class="table" style="margin-left: auto; margin-right: auto; margin-bottom: 1.5em;">
@@ -6888,7 +6888,7 @@ root mean squared error (days)
 </div>
 </div>
 <p>Table 5 indicates that predictions made using the law are accurate to within a week on average. For comparison purposes, we also predict the day the lilacs will bloom using the average bloom date between 1839 and 1852. That is, on average the lilac bloomed on April 30 (April 29 on leap years), and we check the accuracy of simply predicting this average date each year. Table 6 indicates the average bloom date yields predictions that are less accurate by an average of two days.</p>
-<div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb8-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb8-2">quetelet <span class="sc" style="color: #5E5E5E;
@@ -6964,7 +6964,7 @@ background-color: null;
 font-style: inherit;">kable_styling</span>()</span>
 <span id="cb8-13"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <div id="tab-table6">
 <div style="overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
 <table class="table" style="margin-left: auto; margin-right: auto; margin-bottom: 1.5em;">
@@ -7016,7 +7016,7 @@ root mean squared error (days)
 <p>In the previous section, we explained how Quetelet derived the law of the flowering plants. Quetelet believed the law of the flowering plants was universal, describing the bloom date of all flowers around the world and in any year. Whether the law can in fact be considered universal requires replicating Quetelet’s results with new data collected at a different location in a different year.</p>
 <p>In this section, we replicate the law of the flowering plants using lilac bloom dates observed by scientists between 1956 and 2009 at 53 locations throughout the Pacific Northwest <span class="citation" data-cites="rosemartin_denny_weltzin_lee_marsh_wilson_mehdipoor_zurita-milla_schwartz_2015">(2015)</span>. The data can be downloaded from the USA National Phenology Network using the <code>rnpn</code> package <span class="citation" data-cites="the_comprehensive_r_archive_network_2022">(2022)</span>. For space considerations, the <code>R</code> code that downloads and cleans the data is provided in the Appendix. Running this code yields the tibble <code>usa_npn</code>. Each row of the tibble corresponds with a bloom date observed at a given site in a given year. There are 31 columns, only seven of which we use in our replication. The remaining columns are documented in the <code>rnpn</code> package, and we will not review them here.</p>
 <p>Table 7 displays six of the seven columns (and only the first 10 rows of the full table). These columns are defined in the same way as the columns of Table 1, except for “site_id”, which denotes the site at which the observation was made. Table 1 does not have a “site_id” column because all observations were made at the same site, Brussels Observatory.</p>
-<div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb9-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb9-2"><span class="fu" style="color: #4758AB;
@@ -7089,7 +7089,7 @@ background-color: null;
 font-style: inherit;">"400px"</span>)</span>
 <span id="cb9-16"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <div id="tab-table7">
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; margin-bottom: 1.5em; ">
 <table class="table" style="margin-left: auto; margin-right: auto;">
@@ -7344,7 +7344,7 @@ doy
 </div>
 </div>
 <p>The seventh column we review is “temp”. Each row of “temp” is a tibble of temperature records taken at the nearest station in the Global Historical Climatology Network. The first tibble (again, only the first 10 rows) is displayed in Table 8 below. The columns are defined in the same way as the columns of Table 2, except for “id”, which denotes the location at which the temperature record was made. Table 2 does not have an “id” column because all observations were made at the same site, Brussels Observatory.</p>
-<div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb10-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb10-2">usa_npn <span class="sc" style="color: #5E5E5E;
@@ -7429,7 +7429,7 @@ background-color: null;
 font-style: inherit;">"400px"</span>)</span>
 <span id="cb10-14"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <div id="tab-table8">
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
 <table class="table" style="margin-left: auto; margin-right: auto;">
@@ -7684,7 +7684,7 @@ USC00245761
 </div>
 </div>
 <p>We are now prepared to replicate Quetelet’s findings. We will use <code>R</code> code nearly identical to the code we used to reproduce Quetelet’s findings earlier. The main difference is due to the fact that temperature records are dependent across sites within a year. To account for this dependence, we compute the cumulative temperature squared from the last frost to the bloom date for each site and year. We then take the average across all sites within a year. Finally, we calculate the standard error and confidence interval using only the variation of the averages across years. Table 9 displays the results.</p>
-<div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb11-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb11-2">usa_npn <span class="sc" style="color: #5E5E5E;
@@ -7848,7 +7848,7 @@ background-color: null;
 font-style: inherit;">kable_styling</span>()</span>
 <span id="cb11-19"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <div id="tab-table9">
 <div style="overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
 <table class="table" style="margin-left: auto; margin-right: auto; margin-bottom: 1.5em;">
@@ -7892,7 +7892,7 @@ standard error (°C²)
 </div>
 <p>Table 9 indicates that Quetelet’s findings are replicable in the sense that the confidence interval calculated using Quetelet’s data (Table 4) overlaps with the confidence interval calculated using the USA lilac data (Table 9). The standard error in Table 9 is smaller than Table 4 because the replication uses 54 years of data compared to Quetelet’s 14. Note that in the <code>R</code> code above, we subtract 1 from “doy” to correct for differences in how the bloom date is reported. This correction is not particularly important; the confidence intervals still overlap when this correction is removed.</p>
 <p>We now investigate the accuracy of Quetelet’s law when applied to the USA lilac data. As before, we make use of the <code>doy_prediction</code> function.</p>
-<div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb12-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb12-2">usa_npn <span class="ot" style="color: #003B4F;
@@ -7998,7 +7998,7 @@ background-color: null;
 font-style: inherit;">kable_styling</span>()</span>
 <span id="cb12-17"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <div id="tab-table10">
 <div style="overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
 <table class="table" style="margin-left: auto; margin-right: auto; margin-bottom: 1.5em;">
@@ -8030,7 +8030,7 @@ root mean squared error (days)
 </div>
 <p>Table 10 indicates that the predictions are accurate to within two weeks on average. Recall that the predictions using Quetelet’s own data were accurate to within one week on average (Table 5). We speculate that the decrease in accuracy is due in part to the fact that both Quetelet’s lilacs and the temperature were observed at the same site, Brussels Observatory. In some cases, the USA lilacs were a few miles from where the temperature was recorded.</p>
 <p>Although the accuracy of the predictions made using Quetelet’s law is lower when applied to the USA lilac data, Figure 5 indicates that the law produces the correct bloom date on average. The figure plots the predictions made by the law against the actual bloom dates scientists observed. Note that instead of representing prediction-observation pairs as points in a scatter plot, the data are represented using blue contours. We use contours because there are more than 1,500 observations – too many to study using a scatter plot.</p>
-<div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb13" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb13-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb13-2">(usa_npn <span class="sc" style="color: #5E5E5E;
@@ -8161,15 +8161,15 @@ background-color: null;
 font-style: inherit;">FALSE</span>)</span>
 <span id="cb13-18"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
-<p><a href="images/fig5.png" class="lightbox" data-glightbox="description: .lightbox-desc-8;" data-gallery="quarto-lightbox-gallery-8"><img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2023/04/13/images/fig5.png" class="img-fluid" alt="This figure plots the predictions made by Quetelet's law against the actual bloom dates scientists observed from US lilac data. Data are represented using blue contours, and a dotted line of equality is drawn through the graph. The dotted line intersects the blue contours at their peak, suggesting that the law derived from Quetelet’s data accurately predicts the typical bloom date of the USA data."></a></p>
+font-style: inherit;">```</span></span></code></pre></div></div>
+<p><a href="images/fig5.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" data-glightbox="description: .lightbox-desc-8;"><img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2023/04/13/images/fig5.png" class="img-fluid" alt="This figure plots the predictions made by Quetelet's law against the actual bloom dates scientists observed from US lilac data. Data are represented using blue contours, and a dotted line of equality is drawn through the graph. The dotted line intersects the blue contours at their peak, suggesting that the law derived from Quetelet’s data accurately predicts the typical bloom date of the USA data."></a></p>
 <div class="figure-caption">
 <p><strong>Figure 5:</strong> Predictions using Quetelet’s law are accurate within about two weeks on average. Author provided, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 </div>
 <p>The contours are easy to interpret. The blue lines are much like a mountain range observed from above. The inner circles are peaks of high elevation in which many prediction-observation pairs co-occur. The outer circles are areas of low elevation in which few prediction-observation pairs co-occur.</p>
 <p>The dotted line is the “y = x” line, having zero intercept and unit slope. Prediction-observation pairs that lie on the line indicate perfect predictions. The fact that the dotted line intersects the blue contours at their peak suggests the law derived from Quetelet’s data accurately predicts the typical bloom date of the USA data. This accuracy is impressive given the fact that the USA lilacs were observed more than a century later and on a different continent. The blue curves deviate from the line by about two weeks in the vertical direction, which is consistent with Table 10.</p>
 <p>An average accuracy of two weeks might not sound impressive. But it is far more accurate than using the average bloom date Quetelet observed, April 30 (April 29 on leap years). The average bloom date yields predictions that are off by an additional eleven days on average.</p>
-<div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb14" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb14-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb14-2">usa_npn <span class="sc" style="color: #5E5E5E;
@@ -8261,7 +8261,7 @@ background-color: null;
 font-style: inherit;">kable_styling</span>()</span>
 <span id="cb14-17"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <div id="tab-table11">
 <div style="overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
 <table class="table" style="margin-left: auto; margin-right: auto; margin-bottom: 1.5em;">
@@ -8297,7 +8297,7 @@ root mean squared error (days)
 <p>Any weather forecast can become a flower forecast by applying the law of the flowering plants. In this section, we use the AccuWeather forecast to predict the day a hypothetical lilac will bloom in Brussels in 2023. AccuWeather forecasts daily maximum and minimum temperatures three months into the future. We do not evaluate the quality of these forecasts. The purpose of this section is to simply convert them into flower forecasts.</p>
 <p>We use the AccuWeather forecast as it appeared on the webpage <a href="https://www.accuweather.com/en/be/brussels/27581/january-weather/27581?year=2023">AccuWeather.com</a> on February 19, 2023. AccuWeather reports the forecast for each month on a separate webpage. For reproducibility, we saved each page on the <a href="https://web.archive.org/web/20230219151906/https://www.accuweather.com/en/be/brussels/27581/january-weather/27581?year=2023&amp;unit=c">Internet Archive</a>. The following <code>R</code> code creates the function <code>get_weather_table</code> to retrieve each page we saved, extract the forecast contained within that page, and arrange the data as a tibble. The <code>get_weather_table</code> function combines several functions from the <code>rvest</code> package, which is yet another member of the “tidyverse”. In particular, the forecast on each page is contained within the div “monthly-calendar” and can be extracted with the <code>html_nodes</code> and <code>html_text2</code> functions.</p>
 <p>Applying the <code>get_weather_table</code> function to the url for each page yields a five column tibble <code>temp_br</code>, with columns defined in the same way as the tibble <code>temp</code>, discussed in previous sections. The first 10 rows are below; the data are also available on the author’s <a href="https://raw.githubusercontent.com/jauerbach/miscellaneous/main/temp_br.csv">GitHub</a>.</p>
-<div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb15" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb15-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb15-2"> get_weather_table <span class="ot" style="color: #003B4F;
@@ -8591,7 +8591,7 @@ background-color: null;
 font-style: inherit;">"400px"</span>)</span>
 <span id="cb15-41"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <div id="tab-table12">
 <div style="border: 1px solid #ddd; padding: 0px; overflow-y: scroll; height:400px; overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
 <table class="table" style="margin-left: auto; margin-right: auto;">
@@ -8810,7 +8810,7 @@ midrange temperature (°C)
 </div>
 </div>
 <p>We now predict the day the lilacs will bloom. The <code>R</code> code below uses the <code>doy_prediction</code> and <code>doy_last_frost</code> functions created in earlier sections and displays the prediction in Table 13. At the time of our writing, the predicted date is <strong>April 19</strong>. The forecast is easily updated by providing the url to the updated AccuWeather webpage. (You might use the url <a href="https://web.archive.org/save">https://web.archive.org/save</a> to save a webpage to the Internet Archive to ensure your work is reproducible.)</p>
-<div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb16" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb16-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb16-2">bloom_day_br <span class="ot" style="color: #003B4F;
@@ -8900,7 +8900,7 @@ background-color: null;
 font-style: inherit;">kable_styling</span>()</span>
 <span id="cb16-17"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <div id="tab-table13">
 <div style="overflow-x: scroll; width:100%; margin-bottom: 1.5em;">
 <table class="table" style="margin-left: auto; margin-right: auto; margin-bottom: 1.5em;">
@@ -8931,7 +8931,7 @@ bloom date
 </div>
 </div>
 <p>We visualize the predictions in Figure 6, which has the same interpretation as Figure 4. If the temperature forecast and Quetelet’s law are correct, on January 27, 2023 the lilacs in Brussels began “collecting” temperature. The lilacs will continue to “collect” temperature until April 19, at which point they will exceed their 4264°C² quota and bloom.</p>
-<div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb17" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb17-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb17-2">(temp_br <span class="sc" style="color: #5E5E5E;
@@ -9067,8 +9067,8 @@ background-color: null;
 font-style: inherit;">FALSE</span>)</span>
 <span id="cb17-21"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
-<p><a href="images/fig6.png" class="lightbox" data-glightbox="description: .lightbox-desc-9;" data-gallery="quarto-lightbox-gallery-9"><img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2023/04/13/images/fig6.png" class="img-fluid" alt="A line graph of midrange temperature by day in Brussels for January 1 to February 18 (observed) and February 19 to May 20 (forecast), 2023, with day of last frost (January 27) and predicted day of first bloom (April 19) marked by vertical dashed lines."></a></p>
+font-style: inherit;">```</span></span></code></pre></div></div>
+<p><a href="images/fig6.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" data-glightbox="description: .lightbox-desc-9;"><img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2023/04/13/images/fig6.png" class="img-fluid" alt="A line graph of midrange temperature by day in Brussels for January 1 to February 18 (observed) and February 19 to May 20 (forecast), 2023, with day of last frost (January 27) and predicted day of first bloom (April 19) marked by vertical dashed lines."></a></p>
 <div class="figure-caption">
 <p><strong>Figure 6:</strong> According to Quetelet’s law, the lilacs will bloom once exposed to 4264°C² following the last frost. Author provided, <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>.</p>
 </div>
@@ -9079,7 +9079,7 @@ font-style: inherit;">```</span></span></code></pre></div>
 <p>The law of the flowering plants surely stands the test of time. It continues to be used by scientists – with relatively few changes – to plan harvests, manage pests, and study ecosystems stressed by climate change. We speculate the law’s longevity is due to the fact that it balances simplicity with relatively accurate predictions.</p>
 <p>Although Quetelet did not discover the law, he did much to advance it. Quetelet founded an international network for “observations of the periodical phenomena” (in addition to numerous statistical societies and publications, including the precursor to the Royal Statistical Society). Quetelet’s network of 80 stations collected observations throughout Europe from 1841 until 1872. In particular, Quetelet collaborated with Charles Morren – who later coined the term phenology, the name of the field that now studies biological life-cycle events like the timing of flower blooms <span class="citation" data-cites="demarée_rutishauser_2011">(Demarée and Rutishauser 2011)</span>.</p>
 <p>In recent years, the observations collected through phenology networks have become an important resource for understanding the impacts of climate change. For example, the USA National Phenology Network calculates the Spring Bloom Index, which measures the “first day of spring” using the days lilacs are observed to bloom at locations across the United States. The index is then compared to previous years. Figure 7 shows one comparison, called the Return Interval. The Return Interval is much like a p-value, calculating how frequently more extreme spring indices were observed in previous decades. Bloom dates that are uncommonly early (green) or late (purple) may indicate environments stressed by changing climate. Scientists exploit the relationship between temperature and bloom date to extrapolate the index to areas with few observations.</p>
-<p><a href="images/six-bloom-return-interval-2020.png" class="lightbox" data-glightbox="description: .lightbox-desc-10;" data-gallery="quarto-lightbox-gallery-10"><img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2023/04/13/images/six-bloom-return-interval-2020.png" class="img-fluid" alt="A map of the United States showing the Spring Bloom Index Return Interval 2020, which measures whether spring is typical when compared to recent decades."></a></p>
+<p><a href="images/six-bloom-return-interval-2020.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" data-glightbox="description: .lightbox-desc-10;"><img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2023/04/13/images/six-bloom-return-interval-2020.png" class="img-fluid" alt="A map of the United States showing the Spring Bloom Index Return Interval 2020, which measures whether spring is typical when compared to recent decades."></a></p>
 <div class="figure-caption">
 <p><strong>Figure 7:</strong> The Spring Bloom Index Return Interval measures whether spring is typical when compared to recent decades. Source: <a href="https://www.usanpn.org/files/npn/maps/six-bloom-return-interval-2020.png">USA National Phenology Network</a>.</p>
 </div>
@@ -9112,7 +9112,7 @@ font-style: inherit;">```</span></span></code></pre></div>
 </section>
 <section id="appendix-preparing-usa-npn-data" class="level2">
 <h2 class="anchored" data-anchor-id="appendix-preparing-usa-npn-data">Appendix: Preparing USA NPN Data</h2>
-<div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><span class="in" style="color: #5E5E5E;
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb18" style="background: #f1f3f5;"><pre class="sourceCode markdown code-with-copy"><code class="sourceCode markdown"><span id="cb18-1"><span class="in" style="color: #5E5E5E;
 background-color: null;
 font-style: inherit;">```{r}</span></span>
 <span id="cb18-2"><span class="co" style="color: #5E5E5E;
@@ -9538,7 +9538,7 @@ background-color: null;
 font-style: inherit;">ungroup</span>()</span>
 <span id="cb18-66"><span class="in" style="color: #5E5E5E;
 background-color: null;
-font-style: inherit;">```</span></span></code></pre></div>
+font-style: inherit;">```</span></span></code></pre></div></div>
 <div class="article-btn">
 <p><a href="../../../../../../applied-insights/tutorials/index.html">Explore more Tutorials</a></p>
 </div>

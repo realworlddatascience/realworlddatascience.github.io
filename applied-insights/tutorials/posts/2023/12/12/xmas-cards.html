@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.7.34">
+<meta name="generator" content="quarto-1.8.24">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -91,14 +91,15 @@ div.csl-indent {
 <link href="../../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
 <script src="../../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../../../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../../../../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../../../../site_libs/quarto-html/quarto-syntax-highlighting-c8ad9e5dbd60b7b70b38521ab19b7da4.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../../../../../site_libs/quarto-html/quarto-syntax-highlighting-dc55a5b9e770e841cd82e46aadbfb9b0.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../../../../site_libs/bootstrap/bootstrap-179842bdf905c6d0377aa50398844bd3.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../../site_libs/bootstrap/bootstrap-35b1a0dec93d7059980bd102674a100a.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../../../../../site_libs/quarto-contrib/social-share-1.0.0/social-share.css" rel="stylesheet">
 <link href="../../../../../../site_libs/quarto-contrib/social-share-1.0.0/all.min.css" rel="stylesheet">
 <link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
@@ -188,7 +189,8 @@ document.addEventListener("DOMContentLoaded", function() {
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
     <a href="../../../../../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo">
+    <img src="../../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo light-content">
+    <img src="../../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo dark-content">
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -312,9 +314,9 @@ document.addEventListener("DOMContentLoaded", function() {
 
 <p>When you think about data visualisation in R <span class="citation" data-cites="R-base">(<a href="#ref-R-base" role="doc-biblioref">R Core Team 2022</a>)</span>, you’d be forgiven for not jumping straight to thinking about creating Christmas cards. However, the package and functions we often use to create bar charts and line graphs can be repurposed to create festive images. This tutorial provides a step-by-step guide to creating a Christmas card featuring a snowman – entirely in R. Though this seems like just a fun exercise, the functions and techniques you learn in this tutorial can also transfer into more traditional data visualisations created using {ggplot2} <span class="citation" data-cites="ggplot2">(<a href="#ref-ggplot2" role="doc-biblioref">Wickham 2016</a>)</span> in R.</p>
 <p>The code in this tutorial relies on the following packages:</p>
-<div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggplot2)</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(ggforce)</span>
-<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(sf)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <blockquote class="blockquote">
 <p>You may also have seen this tutorial presented at the <a href="https://github.com/nrennie/oxford-RUG-christmas-cards">Oxford R User Group November 2023 Meetup</a>.</p>
 </blockquote>
@@ -329,18 +331,18 @@ document.addEventListener("DOMContentLoaded", function() {
 <p>Let’s start with the background. The easiest way to start with a blank canvas in {ggplot2} is to create an empty plot using <code>ggplot()</code> with no arguments. We can also remove all theme elements (such as the grey background and grid lines) with <code>theme_void()</code>. To change the background colour to a dark blue for the night sky, we can edit the <code>plot.background</code> element of the theme using <code>element_rect()</code> (since the background is essentially just a big rectangle).</p>
 <p>In {ggplot2} <code>fill</code> is the inner colour of shapes whilst <code>colour</code> is the outline colour. You can specify colours in different ways in R: either via the <code>rgb()</code> function, using a character string for a hex colour such as <code>"#000000"</code>, or using a named colour. If you run <code>colors()</code>, you’ll see all the valid named colours you can use. Here, we’ve picked <code>"midnightblue"</code>.</p>
 <p>Let’s save this initial plot as an object <code>s1</code> that we’ll keep adding layers to. Saving plots in different stages of styling as objects can help to keep your code more modular.</p>
-<div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>s1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a>s1 <span class="ot">&lt;-</span> <span class="fu">ggplot</span>() <span class="sc">+</span></span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme_void</span>() <span class="sc">+</span></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  <span class="fu">theme</span>(</span>
 <span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">plot.background =</span> <span class="fu">element_rect</span>(</span>
 <span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a>      <span class="at">fill =</span> <span class="st">"midnightblue"</span></span>
 <span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>      )</span>
 <span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>s1</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>s1</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Next we’ll add some snow on the ground. We’ll do this by drawing a white rectangle along the bottom of the plot. There are two different functions that we could use to add a rectangle: <code>geom_rect()</code> or <code>annotate()</code>. The difference between the two is that <code>geom_rect()</code> maps columns of a <code>data.frame</code> to different elements of a plot whereas <code>annotate()</code> can take values passed in as vectors. Most of the {ggplot2} graphs you’ll see will use <code>geom_*()</code> functions. However, if you’re only adding one or two elements to a plot then <code>annotate()</code> might be quicker.</p>
 <p>Since we’re only adding one rectangle for the snow, it’s easier to use <code>annotate()</code> with the <code>"rect"</code> geometry. This requires four arguments: the minimum and maximum x and y coordinates of the rectangle – essentially specifying where the corners are. We can also change the colour of the rectangle and its outline using the <code>fill</code> and <code>colour</code> arguments. Here, I’ve used a very light grey instead of white.</p>
 <p>If we don’t set the axis limits using <code>xlim()</code> and <code>ylim()</code>, the plot area will resize to fit the area of the snow rectangle. The night sky background will disappear. You can choose any axis limits you wish here – but the unit square will make it easier to find the right coordinates when deciding where to position other elements. Finally, we add <code>coord_fixed()</code> to fix the 1:1 aspect ratio and make sure our grid is actually square with <code>expand = FALSE</code> to remove the additional padding at the sides of the plot.</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>s2 <span class="ot">&lt;-</span> s1 <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>s2 <span class="ot">&lt;-</span> s1 <span class="sc">+</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"rect"</span>,</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">xmin =</span> <span class="dv">0</span>, <span class="at">xmax =</span> <span class="dv">1</span>,</span>
@@ -351,7 +353,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">xlim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">ylim</span>(<span class="dv">0</span>, <span class="dv">1</span>) <span class="sc">+</span></span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_fixed</span>(<span class="at">expand =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>s2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>s2</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -365,14 +367,14 @@ document.addEventListener("DOMContentLoaded", function() {
 <p>To finish off the background, we’ll add some falling snowflakes. We first need to decide where on the plot the snowflakes will appear. We’ll be plotting lots of snowflakes, so manually typing out the coordinates of where they’ll be would be very inefficient. Instead, we can use functions to generate the locations randomly. For this we’ll use the uniform distribution. The uniform distribution has two parameters – the lower and upper bounds where any values between the bounds are equally likely. You can generate samples from a uniform distribution in R using the <code>runif()</code> function.</p>
 <p>When generating random numbers in R (or any other programming language), it’s important to set a seed. This means that if you give your code to someone else, they’ll get the same random numbers as you. Some people choose to use the date as the random seed and since we’re making Christmas cards, we’ll use Christmas day as the random seed – in <code>yyyymmdd</code> format, of course!</p>
 <p>We create a variable <code>n</code> specifying how many snowflakes we’ll create. Creating a variable rather than hard coding the variables makes it easier to vary how many snowflakes we want. Since our plot grid goes between 0 and 1 in both the x and y directions, we generate random numbers between 0 and 1 for both the x and y coordinates and store the values in a <code>data.frame</code> called <code>snowflakes</code>.</p>
-<div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20231225</span>)</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="fu">set.seed</span>(<span class="dv">20231225</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>n <span class="ot">&lt;-</span> <span class="dv">100</span></span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>snowflakes <span class="ot">&lt;-</span> <span class="fu">data.frame</span>(</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>  <span class="at">x =</span> <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">1</span>),</span>
 <span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a>  <span class="at">y =</span> <span class="fu">runif</span>(n, <span class="dv">0</span>, <span class="dv">1</span>)</span>
-<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now we can plot the <code>snowflakes</code> data using <code>geom_point()</code> – the same function you’d use for a scatter plot. Since we’re using a <code>geom_*()</code> function, we need to tell {ggplot2} which columns go on the <code>x</code> and <code>y</code> axes inside the <code>aes()</code> function. To plot the snowflakes, we’re going to make using of R’s different point characters. The default when plotting with <code>geom_point()</code> is a small black dot, but we can choose to use a small star (close enough to a snowflake!) by setting <code>pch = 8</code> and changing the <code>colour</code> to <code>"white"</code>.</p>
-<div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>s3 <span class="ot">&lt;-</span> s2 <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>s3 <span class="ot">&lt;-</span> s2 <span class="sc">+</span></span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> snowflakes,</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(</span>
@@ -382,10 +384,10 @@ document.addEventListener("DOMContentLoaded", function() {
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"white"</span>,</span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">pch =</span> <span class="dv">8</span></span>
 <span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>s3</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>s3</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now comes the part where we start rolling up some snowballs! Or, in the case of an R snowman, we draw some circles. Unfortunately, there isn’t a built-in <code>geom_*()</code> function in {ggplot2} for plotting circles. We could use <code>geom_point()</code> here and increase the size of the points but this approach can look a little bit <em>fuzzy</em> when the points are very large. Instead, we’ll turn to a {ggplot2} extension package for some additional <code>geom_*</code> functions - {ggforce} <span class="citation" data-cites="ggforce">(<a href="#ref-ggforce" role="doc-biblioref">Pedersen 2022</a>)</span>.</p>
 <p>The <code>geom_circle()</code> function requires at least three elements mapped to the aesthetics inside <code>aes()</code>: the coordinates of the centre of the circle given by <code>x0</code> and <code>y0</code>, and the radii of each of the circles, <code>r</code>. Instead of creating a separate data frame and passing it into <code>geom_circle()</code>, we can alternatively create the data frame inside the function. The <code>fill</code> and <code>colour</code> arguments work as they do in {ggplot2} and we can set both to <code>"white"</code>.</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>s4 <span class="ot">&lt;-</span> s3 <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>s4 <span class="ot">&lt;-</span> s3 <span class="sc">+</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_circle</span>(</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">data.frame</span>(</span>
 <span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">x0 =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.6</span>),</span>
@@ -396,7 +398,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"white"</span>,</span>
 <span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"white"</span></span>
 <span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>s4</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>s4</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -409,7 +411,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </div>
 <p>We can use <code>geom_point()</code> again to add some more points to represent the buttons and the eyes. Here, we’ll manually specify the coordinates of the points. For the buttons we add them in a vertical line in the middle of the snowman’s body circle, and for the eyes we add them in a horizontal line in the middle of the head circle.</p>
 <p>Since no two rocks are exactly the same size, we can add some random variation to the size of the points using <code>runif()</code> again. We generate five different sizes between 2 and 4.5. For reference, the default point size is 1.5. Adding <code>scale_size_identity()</code> means that the sizes of the points are actually equally to the sizes we generated from <code>runif()</code> and removes the legend that is automatically added when we add <code>size</code> inside <code>aes()</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>s5 <span class="ot">&lt;-</span> s4 <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>s5 <span class="ot">&lt;-</span> s4 <span class="sc">+</span></span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_point</span>(</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">data.frame</span>(</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="fu">c</span>(<span class="fl">0.6</span>, <span class="fl">0.6</span>, <span class="fl">0.6</span>, <span class="fl">0.57</span>, <span class="fl">0.62</span>),</span>
@@ -419,10 +421,10 @@ document.addEventListener("DOMContentLoaded", function() {
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">mapping =</span> <span class="fu">aes</span>(<span class="at">x =</span> x, <span class="at">y =</span> y, <span class="at">size =</span> size)</span>
 <span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>  <span class="fu">scale_size_identity</span>()</span>
-<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>s5</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>s5</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>To add sticks for arms, we can make use of <code>geom_segment()</code> to draw some lines. We could also use <code>geom_path()</code> but that is designed to connect points across multiple cases, whereas <code>geom_segment()</code> draws a single line per row of data – and we don’t want to join the snowman’s arms together!</p>
 <p>To use <code>geom_segment()</code> we need to create a data frame containing the x and y coordinates for the start and end of each line, and then pass this into the aesthetic mapping with <code>aes()</code>. We can control the colour and width of the lines using the <code>colour</code> and <code>linewidth</code> arguments. Setting the <code>lineend</code> argument to <code>"round"</code> means that the ends of the lines will be rounded rather than the default straight edge.</p>
-<div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>s6 <span class="ot">&lt;-</span> s5 <span class="sc">+</span> </span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb8"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>s6 <span class="ot">&lt;-</span> s5 <span class="sc">+</span> </span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_segment</span>(</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> <span class="fu">data.frame</span>(</span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>      <span class="at">x =</span> <span class="fu">c</span>(<span class="fl">0.46</span>, <span class="fl">0.7</span>),</span>
@@ -435,7 +437,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">lineend =</span> <span class="st">"round"</span>,</span>
 <span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">linewidth =</span> <span class="dv">2</span></span>
 <span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>s6</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>s6</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -448,7 +450,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </div>
 <p>We’ll now add a (very simple) hat to our snowman, fashioned out of two rectangles. We can add the rectangles as we did before using the <code>annotate()</code> function and specifying the locations of the corners of the rectangles. We start with a shorter wider rectangle for the brim of the hat, and then a taller, narrower rectangle for the crown of the hat. Since we’ll colour them both <code>"brown"</code>, it doesn’t matter if they overlap a little bit.</p>
 <p>This <em>might</em> be one of the situations we should have used <code>geom_rect()</code> instead of <code>annotate()</code> but it might take a lot of trial and error to position the hat exactly where we want it, and this seemed a little easier with <code>annotate()</code>.</p>
-<div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>s7 <span class="ot">&lt;-</span> s6 <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb9"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>s7 <span class="ot">&lt;-</span> s6 <span class="sc">+</span></span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"rect"</span>,</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">xmin =</span> <span class="fl">0.46</span>, <span class="at">xmax =</span> <span class="fl">0.74</span>,</span>
@@ -461,10 +463,10 @@ document.addEventListener("DOMContentLoaded", function() {
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="at">ymin =</span> <span class="fl">0.56</span>, <span class="at">ymax =</span> <span class="fl">0.73</span>,</span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"brown"</span></span>
 <span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>s7</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>s7</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <p>Now we can move on to the final component of building a snowman – the carrot for his nose! We’re going to use a triangle for the nose. Unfortunately, there are no built-in triangle geoms in {ggplot2} so we’ll have to make our own. There are different ways to do this, but here we’re going to make use of the {sf} package <span class="citation" data-cites="sf">(<a href="#ref-sf" role="doc-biblioref">Pebesma 2018</a>)</span>. The {sf} package (short for <em>simple features</em>) is designed for working with spatial data. Although we’re not working with maps, we can still use {sf} to make shapes – including polygons.</p>
 <p>We start by constructing a matrix with two columns – one for x coordinates and one for y. The x coordinates start in the middle of the head and go slightly to the right for the triangle point. The y coordinates take a little bit more trial and error to get right. Note that although triangles only have three corners, we have four rows of points. The last row must be the same as the first to make the polygon <em>closed</em>. The matrix is then converted into a spatial object using the <code>st_polygon()</code> function, and we can check how it looks using <code>plot()</code>.</p>
-<div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>nose_pts <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb10"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>nose_pts <span class="ot">&lt;-</span> <span class="fu">matrix</span>(</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">c</span>(</span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.6</span>, <span class="fl">0.5</span>,</span>
 <span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="fl">0.65</span>, <span class="fl">0.48</span>,</span>
@@ -475,7 +477,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <span id="cb10-9"><a href="#cb10-9" aria-hidden="true" tabindex="-1"></a>  <span class="at">byrow =</span> <span class="cn">TRUE</span></span>
 <span id="cb10-10"><a href="#cb10-10" aria-hidden="true" tabindex="-1"></a>)</span>
 <span id="cb10-11"><a href="#cb10-11" aria-hidden="true" tabindex="-1"></a>nose <span class="ot">&lt;-</span> <span class="fu">st_polygon</span>(<span class="fu">list</span>(nose_pts))</span>
-<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nose)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb10-12"><a href="#cb10-12" aria-hidden="true" tabindex="-1"></a><span class="fu">plot</span>(nose)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -488,19 +490,19 @@ document.addEventListener("DOMContentLoaded", function() {
 </div>
 <p>We can plot <code>sf</code> objects with {ggplot2} using <code>geom_sf()</code>. <code>geom_sf()</code> is a slightly special <code>geom</code> since we don’t need to specify an aesthetic mapping for the <code>x</code> and <code>y</code> axes – they are determined automatically from the <code>sf</code> object along with which type of geometry to draw. If your <code>sf</code> object has points, points will be drawn. If it has country shapes, polygons will be drawn. Like other <code>geom_*()</code> functions, we can change the <code>colour</code> and <code>fill</code> arguments to a different colour – in this case <code>"orange"</code> to represent a carrot!</p>
 <p>You should see a <code>Coordinate system already present. Adding new coordinate system, which will replace the existing one.</code> message when you run the following code. The is because <code>geom_sf</code> forces it’s own coordinate system on the plot overriding our previous code specifying <code>coord_fixed()</code>. If you run it without the <code>coord_sf(expand = FALSE)</code>, the extra space around the plot will reappear. We can remove it again with <code>expand = FALSE</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>s8 <span class="ot">&lt;-</span> s7 <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb11"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a>s8 <span class="ot">&lt;-</span> s7 <span class="sc">+</span></span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">geom_sf</span>(</span>
 <span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">data =</span> nose,</span>
 <span id="cb11-4"><a href="#cb11-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">fill =</span> <span class="st">"orange"</span>,</span>
 <span id="cb11-5"><a href="#cb11-5" aria-hidden="true" tabindex="-1"></a>    <span class="at">colour =</span> <span class="st">"orange"</span></span>
 <span id="cb11-6"><a href="#cb11-6" aria-hidden="true" tabindex="-1"></a>  ) <span class="sc">+</span></span>
 <span id="cb11-7"><a href="#cb11-7" aria-hidden="true" tabindex="-1"></a>  <span class="fu">coord_sf</span>(<span class="at">expand =</span> <span class="cn">FALSE</span>)</span>
-<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>s8</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb11-8"><a href="#cb11-8" aria-hidden="true" tabindex="-1"></a>s8</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <blockquote class="blockquote">
 <p>You <em>could</em> skip the <code>sf</code> part of this completely and pass the coordinates directly into <code>geom_polygon()</code> instead. However, I’ve often found it quicker and easier to tinker with polygon shapes using <code>sf</code>.</p>
 </blockquote>
 <p>A key part of any Christmas card is the message wishing recipients a Merry Christmas! We can add text to our plot using the <code>annotate()</code> function and the <code>"text"</code> geometry (you could instead use <code>geom_text()</code> if you prefer). When adding text, we require at least three arguments: the <code>x</code> and <code>y</code> coordinates of where the text should be added, and the <code>label</code> denoting what text should appear. We can supply additional arguments to <code>annotate()</code> to style the text, such as: <code>colour</code> (which changes the colour of the text); <code>family</code> (to define which font to use); <code>fontface</code> (which determines if the font is bold or italic, for example); and <code>size</code> (which changes the size of the text). The <code>"mono"</code> option for <code>family</code> tells {ggplot2} to use the default system monospace font.</p>
-<div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>s9 <span class="ot">&lt;-</span> s8 <span class="sc">+</span></span>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb12"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>s9 <span class="ot">&lt;-</span> s8 <span class="sc">+</span></span>
 <span id="cb12-2"><a href="#cb12-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">annotate</span>(</span>
 <span id="cb12-3"><a href="#cb12-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">geom =</span> <span class="st">"text"</span>,</span>
 <span id="cb12-4"><a href="#cb12-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">x =</span> <span class="fl">0.5</span>, <span class="at">y =</span> <span class="fl">0.07</span>,</span>
@@ -509,7 +511,7 @@ document.addEventListener("DOMContentLoaded", function() {
 <span id="cb12-7"><a href="#cb12-7" aria-hidden="true" tabindex="-1"></a>    <span class="at">family =</span> <span class="st">"mono"</span>,</span>
 <span id="cb12-8"><a href="#cb12-8" aria-hidden="true" tabindex="-1"></a>    <span class="at">fontface =</span> <span class="st">"bold"</span>, <span class="at">size =</span> <span class="dv">7</span></span>
 <span id="cb12-9"><a href="#cb12-9" aria-hidden="true" tabindex="-1"></a>  )</span>
-<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>s9</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb12-10"><a href="#cb12-10" aria-hidden="true" tabindex="-1"></a>s9</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="quarto-layout-panel" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
@@ -649,13 +651,14 @@ Wickham, Hadley. 2016. <em>Ggplot2: Elegant Graphics for Data Analysis</em>. Spr
       e.clearSelection();
     }
     const getTextToCopy = function(trigger) {
-        const codeEl = trigger.previousElementSibling.cloneNode(true);
-        for (const childEl of codeEl.children) {
-          if (isCodeAnnotation(childEl)) {
-            childEl.remove();
-          }
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
         }
-        return codeEl.innerText;
+      }
+      return codeEl.innerText;
     }
     const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
       text: getTextToCopy
