@@ -1,0 +1,823 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.8.26">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Willis Jensen, Fatemeh Torabi, Monnie McGee, Isabel Sassoon">
+<meta name="dcterms.date" content="2025-12-04">
+<meta name="description" content="Data science is a blend of both data and science. A data scientist with too much focus on data may do work with little impact while a data scientist with too much focus on science will miss opportunities to leverage the wealth of data around them. We provide some guidance on how to ensure a balance.">
+
+<title>Keeping the Science in Data Science – Real World Data Science</title>
+<style>
+code{white-space: pre-wrap;}
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: min(4vw, 1.5em);}
+div.column{flex: auto; overflow-x: auto;}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../">
+<link href="../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
+<script src="../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-587c61ba64f3a5504c4d52d930310e48.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../site_libs/bootstrap/bootstrap-3062bb56513a1a637f86ad3c346ce31b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
+</script>
+<!-- Thank you to Ben Ruijl for the progress bar code!
+Ben is on GitHub here: https://github.com/benruijl
+And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
+
+<meta property="og:title" content="Keeping the Science in Data Science – Real World Data Science">
+<meta property="og:description" content="Data science is a blend of both data and science. A data scientist with too much focus on data may do work with little impact while a data scientist with too much focus on science will miss opportunities to leverage the wealth of data around them. We provide some guidance on how to ensure a balance.">
+<meta property="og:image" content="https://realworlddatascience.net/foundation-frontiers/posts/2025/12/03/images/thumbnail(2).png">
+<meta property="og:site_name" content="Real World Data Science">
+<meta name="twitter:title" content="Keeping the Science in Data Science – Real World Data Science">
+<meta name="twitter:description" content="Data science is a blend of both data and science. A data scientist with too much focus on data may do work with little impact while a data scientist with too much focus on science will miss opportunities to leverage the wealth of data around them. We provide some guidance on how to ensure a balance.">
+<meta name="twitter:image" content="https://realworlddatascience.net/foundation-frontiers/posts/2025/12/03/images/thumbnail(2).png">
+<meta name="twitter:site" content="@rwdatasci">
+<meta name="twitter:card" content="summary_large_image">
+</head><body class="nav-fixed quarto-light"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
+
+<script id="progressbar" type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const bar = document.querySelector('#progress-bar');
+    const post = document.querySelector('#quarto-content');
+    const html = document.documentElement;
+    
+    const height = post.scrollHeight + post.offsetTop;
+    
+    window.addEventListener('scroll', () => {
+        bar.style.width = (html.scrollTop / (height- html.clientHeight)) * 100 + '%';
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../rwds.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo light-content">
+    <img src="../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo dark-content">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../the-pulse/index.html"> 
+<span class="menu-text">The Pulse</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../applied-insights/index.html"> 
+<span class="menu-text">Applied Insights</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../foundation-frontiers/index.html"> 
+<span class="menu-text">Foundations &amp; Frontiers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../people-paths/index.html"> 
+<span class="menu-text">People &amp; Paths</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About RWDS</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
+        <li>
+    <a class="dropdown-item" href="../../../../../about-rwds.html">
+ <span class="dropdown-text">Who we are</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../contributor-docs/call-for-contributions.html">
+ <span class="dropdown-text">How to contribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../CODE_OF_CONDUCT.html">
+ <span class="dropdown-text">Code of conduct</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../contact.html">
+ <span class="dropdown-text">Contact us</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Keeping the Science in Data Science</h1>
+                  <div>
+        <div class="description">
+          <p>Data science is a blend of both data and science. A data scientist with too much focus on data may do work with little impact while a data scientist with too much focus on science will miss opportunities to leverage the wealth of data around them. We provide some guidance on how to ensure a balance.</p>
+        </div>
+      </div>
+                </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Willis Jensen, Fatemeh Torabi, Monnie McGee, Isabel Sassoon </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">December 4, 2025</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#two-foundational-elements-of-data-science" id="toc-two-foundational-elements-of-data-science" class="nav-link active" data-scroll-target="#two-foundational-elements-of-data-science">Two Foundational Elements of Data Science</a></li>
+  <li><a href="#data-modeling-culture-versus-algorithmic-culture" id="toc-data-modeling-culture-versus-algorithmic-culture" class="nav-link" data-scroll-target="#data-modeling-culture-versus-algorithmic-culture">Data Modeling Culture Versus Algorithmic Culture</a></li>
+  <li><a href="#balancing-data-and-science" id="toc-balancing-data-and-science" class="nav-link" data-scroll-target="#balancing-data-and-science">Balancing Data and Science</a></li>
+  <li><a href="#finding-balance" id="toc-finding-balance" class="nav-link" data-scroll-target="#finding-balance">Finding Balance</a></li>
+  <li><a href="#conclusions" id="toc-conclusions" class="nav-link" data-scroll-target="#conclusions">Conclusions</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/foundation-frontiers/posts/2025/12/03/scienceindatascience.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p>Have you ever run an elegant ML model that landed flat with those who were supposed to use the insights? Do you find yourself deep into building hundreds of features for your model without knowing exactly what they all mean? Do you spend the bulk of your time tweaking your algorithms while aiming for incremental improvements in accuracy? If so, you might be focused more on the “data” aspects of “data science” than the “science” aspects.</p>
+<section id="two-foundational-elements-of-data-science" class="level2">
+<h2 class="anchored" data-anchor-id="two-foundational-elements-of-data-science">Two Foundational Elements of Data Science</h2>
+<p>“Data Science” contains two essential components, “data” and “science”. The field of Data Science requires holding both components in equilibrium. Data is the raw material molded in the service of Science. While Data is first, Science is no lessimportant. Data is the foundation and Science gives it purpose.</p>
+<p>What do we mean by Science? We’re referring specifically to the scientific method as an approach to gain knowledge. It is the process of formulating ideas and hypotheses about the world around us and collecting data to determine the validity of those ideas. By hypotheses we’re not limiting the definition to strict statistical hypothesis tests, but rather the general process of formulating a research question, gathering appropriate data and advancing human knowledge, regardless of the statistical techniques or machine learning algorithms employed. Science, at its core, is about using data to gain insights and understanding about the complex universe we inhabit.</p>
+<p>The scientific method has a long history and is generally defined in terms of steps such as these <a href="https://en.wikipedia.org/wiki/Scientific_method?utm_source=chatgpt.com">noted in Wikipedia</a> (Scientific Method, 2025) as:</p>
+<ol type="1">
+<li><p>Characterizations (observations, definitions, and measurements of the subject of inquiry)</p></li>
+<li><p>Hypotheses (theoretical, hypothetical explanations of observations and measurements of the subject)</p></li>
+<li><p>Predictions (inductive and deductive reasoning from the hypothesis or theory)</p></li>
+<li><p>Experiments (tests of all of the above)</p></li>
+</ol>
+<p>The relationship between Data and Science is cyclical. Performing good science requires gathering good data, informed by proper experimental design techniques, which in turn requires appropriate analysis and interpretation in the context of the science. And good research (science) often generates more questions than it answers, giving way to the need to gather more data, and so on. As such, data science is more than just confirming hypotheses or generating insights, it becomes the application of the scientific method.</p>
+<p>The scientific method should be the scaffold supporting what data scientists do. While data scientists come from a variety of backgrounds, many have more training in computer science than statistical methodology, and have more experience in software tools than they do in executing the scientific method.</p>
+<p>In an influential, relevant paper Shmueli (2010) described two major types of statistical modeling, I) explanatory models which attempt to determine causal effects. And II) predictive models which seek accurate predictions. While predictive models can lead to understanding and possible explanatory models, explanatory models tend to be preferred by those seeking more scientific explanations for phenomena.</p>
+</section>
+<section id="data-modeling-culture-versus-algorithmic-culture" class="level2">
+<h2 class="anchored" data-anchor-id="data-modeling-culture-versus-algorithmic-culture">Data Modeling Culture Versus Algorithmic Culture</h2>
+<p>Leo Breiman <a href="https://projecteuclid.org/journals/statistical-science/volume-16/issue-3/Statistical-Modeling--The-Two-Cultures-with-comments-and-a/10.1214/ss/1009213726.full">in a famous paper</a> described two paradigms: I) the data modelling approach, which assumes the model that generates the data versus and II) the algorithm approach, which relies on flexible methods without assuming an underlying data generating model and assumptions about how the data are generated.Breiman(2001a) felt that the statistics discipline was missing out on opportunities by focusing more on data modeling approaches and not using algorithmic approaches. He practiced what he preached, developing new algorithmic approaches and encouraging the field to increase its focus on algorithms. For example, he introduced Random Forests, starting a cascade of more algorithmic approaches to modeling (Breiman, 2001b).</p>
+<p>This wise counsel fromBreimanencouraged those working with data to build more expertise in algorithms, promoting the algorithmic culture as a way to harness the power of new computational techniques. We would equateBreiman’salgorithmic approach with a greater focus on the data side of data science and the data modeling approach with a greater focus on the science side of data science.</p>
+</section>
+<section id="balancing-data-and-science" class="level2">
+<h2 class="anchored" data-anchor-id="balancing-data-and-science">Balancing Data and Science</h2>
+<p>Just as pendulums slowly swing back and forth, so too has the pendulum swung too hard towards predictive accuracy (the data side) at the expense of contextual interpretation (the science side) . This pendulum swing is evidenced by the growing demand for explainable ML methods (seeAlangariret al.&nbsp;2023 as an example) . One such method is the use of Shapley values to elicit and rank the most important features in a ML model (seeRozemberczkiet al 2022 for an introduction). It seems ironic that in the rush to gain model accuracy with sophisticated models containing hundreds of features, that end users of the models still want something they can understand and explain. In other words, they still want scientific knowledge and understanding of cause and effect even for complicated problems.</p>
+<p>So what is the best approach from a scientific perspective? Throw as many features into a model that you can think of and see which ones show up to be the most important? Or is there some thought and care that can go into feature selection, considering what might be important given your knowledge of the science behind a problem?</p>
+<p>We’re not suggesting that it is bad to include many features in a model. What we are suggesting is that considering the context of the problem can provide insight on features that might matter. Of course, we don’t want to jump to conclusions on what we think is important and miss opportunities to learn. We seek to maintain some balance between using our previous knowledge and experience while not increasing the risk of confirmation bias in the feature selection process.</p>
+<p>In software engineering, there is a well-known warning “prematureoptimisationis the root of all evil”. The same applied in data science. Too often, teams rush tooptimisemodels, tuninghyperparameters, stacking architectures, and searching for marginal gains, before clearly defining the scientific question or validating whether the data and assumptions are appropriate. This tendency leads to models that are mathematically elegant but scientifically ungrounded.Optimisationshould follow understanding, not precede it. A model that captures the right question with moderate accuracy is far more valuable than one thatoptimisesthe wrong target to perfection. This limitation of models is reflected in the famous aphorism “All models are wrong, but some are useful” most commonly associated with the British Statistician George Box who wrote (Box 1976):</p>
+<p><em>“Since all models are wrong the scientist cannot obtain a”correct” one by excessive elaboration. On the contrary following William of Occam he should seek an economical description of natural phenomena. Just as the ability to devise simple but evocative models is the signature of the great scientist so overelaboration and overparameterisation is often the mark of mediocrity.”</em></p>
+<p>Is it okay to use black box models where the model accuracy is paramount and ignore the explainability of the model? Yes, for some problems. But should we use black box models for all problems? No.&nbsp;The key to being a good data scientist/statistician is to recognize when one provides more value than another and use the best approach for the problem at hand.</p>
+<p>So how does one give more attention to the science side of data science? It starts with more attention on the question of interest. It doesn’t matter so much the type of question whether it is a research question, a business problem to solve or something sparked by curiosity. And it is often more than a single question. Often, it is not a single question but a series of cascading questions, each one digging deeper to get at the root causes. To manage this complexity effectively, it helps to adopt a modular approach, structuring analytical work into well-defined, interlinked components that mirror the scientific process. Each module focuses on a specific purpose: formulating and refining hypotheses, understanding data provenance and quality, developing and validating models, and translating findings into meaningful actions. Suchmodularisationskeep the process transparent and iterative, prevents prematureoptimisation, and ensures that model development remains anchored to the underlying scientific inquiry rather than drifting towards technical over-engineering. With this increased attention, we believe sampling methods and experimental design will continue to be fundamental.</p>
+<p>Here’s one example loosely based on our work experience. A business executive has some reports that show an increase in turnover at their organization, which is driving up hiring and recruiting costs, making the company less profitable. We find that the turnover is higher for those who are newer to the company, which leads to the question of why those new ones. This leads to an additional hypothesis that perhaps these newer employees are not getting the leadership support they need, which leads to questions about the effectiveness of leadership training programs. Which then leads to questions on how we measure the effectiveness of training programs. By continuing to ask questions, we can get a more targeted effort at a root cause and thus increase the impact of our work.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/businessexec.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+<p>With the availability of many algorithms and approaches that are able to process large amounts of data, it can be tempting to gravitate towards them. When teaching analysis/ applied statistics courses it is important to look beyond the methods and consider the overall aim.THereare a set of frameworks that have been around for a while that can be helpful in finding the right balance. One example is PPDAC (Mckayet al.&nbsp;2000) thatemphasisesall the steps beyond the modelling part and the importance of considering them all. Using such frameworks can help decide whether a black box approach is suitable in the situation or whether this won’t achieve the overall intended aim.</p>
+</section>
+<section id="finding-balance" class="level2">
+<h2 class="anchored" data-anchor-id="finding-balance">Finding Balance</h2>
+<p>So how do we ensure a good balance between data and science in data science?</p>
+<p>One way is to ask “so what” with any analysis that you do and any model that you build. Ideally, you would ask that at the beginning of a project to reduce wasted effort, but it should be clear how the analysis output will be used. And it would not be sufficient to say “so that we can publish the output in a paper”. You have to think about the impact of the analysis. Will it change a decision that is being made? Does it create a new insight that can be acted upon? Does it lead to a process improvement or a new product innovation? Does it lead to a new way of running an organization? Data science that doesn’t lead to some action or insight is just computation for computations sake. Vance et al.&nbsp;(2022) provides additional resources and advice for how to ask good questions.</p>
+<p>A second way is to consider the potential explanations and meaning behind any model. Don’t become too enamored with the predictive accuracy of the model (which isn’t inherently a bad thing) at the expense of asking whether there are potential scientific explanations based on the features used in any model. Use a predictive model as a starting point for digging deeper and finding a smaller set of features that provide deeper insight on potential causal relationships to explore.Sometimes a simpler model that is easier to “explain” or one that uses trusted data provides more value than the latest and greatest algorithm.</p>
+<p>A third way is continuing emphasis on the reproducibility of the results. Clean code, documentation of results, version control of analysis code and open sharing of the code with its underlying assumptions are best practices to ensure that others can replicate the findings of any data science output. <a href="https://realworlddatascience.net/foundation-frontiers/posts/2023/11/06/how-to-open-science.html">Sassoon (2023)</a> provides additional guidance for ensuring reproducibility and transparency of results.</p>
+<p>A final way to find the balance is to better understand how the data are generated. Hoerl (2025) touched on this issue in calling for statisticians to focus more on data quality. We believe this advice to be equally relevant for data scientists. By recognizing the crucial importance of the data generation process, data scientists will better be able to use the right data that matches the problem of interest and push for changes as needed to ensure high quality data.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/balance.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</section>
+<section id="conclusions" class="level2">
+<h2 class="anchored" data-anchor-id="conclusions">Conclusions</h2>
+<p>We encourage data scientists to live up to their name and become experts in both Data and Science. As they find a proper balance between those two areas, their impact and influence will increase and the quality of their rigorous work will stand up to scrutiny and advance human knowledge.</p>
+<p><strong>References</strong></p>
+<p>Alangari, N., Menai, M. E. B.,Mathkour, H., &amp;Almosallam, I. (2023).Exploring evaluation methods for interpretable machine learning: A survey.<em>Information</em>,<em>14</em>(8), 469.</p>
+<p>Box, George (December 1976). “Science and Statistics”. Journal of the American Statistical Association. 71 (356): 791–799. doi:10.1080/01621459.1976.10480949. Retrieved 2025-11-28.</p>
+<p>Breiman, L. (2001a). Statistical modeling: The two cultures (with comments and a rejoinder by the author).<em>Statistical Science</em>,<em>16</em>(3), 199-231.</p>
+<p>Breiman, L. (2001b). Random forests.<em>Machine Learning</em>,<em>45</em>, 5-32.</p>
+<p>Hoerl, R. W. (2025). The future of statistics in an AI era.<em>Quality Engineering</em>. Advance online publication.</p>
+<p>Hyde, R. (2009). The fallacy of premature optimization.<em>Ubiquity</em>,<em>2009</em>(February).</p>
+<p>MacKay, R. J., &amp; Oldford, R. W. (2000). Scientific method, statistical method and the speed of light.<em>Statistical Science</em>,<em>15</em>(3), 254-278.</p>
+<p>Rozemberczki, B., Watson, L., Bayer, P., Yang, H. T., Kiss, O., Nilsson, S., &amp; Sarkar, R. (2022). Theshapleyvalue in machine learning. In<em>The 31st International Joint Conference on Artificial Intelligence and the 25th European Conference on Artificial Intelligence</em>(pp.&nbsp;5572-5579). International Joint Conferences on Artificial Intelligence Organization.</p>
+<p>Sassoon, I. (2023, November 6). How to ‘open science’: A brief guide to principles and practices.<em>Real World Data Science</em>. https://realworlddatascience.net/foundation-frontiers/posts/2023/11/06/how-to-open-science.html</p>
+<p>Scientific method. (2025, November). In<em>Wikipedia</em>.</p>
+<p>Shmueli, G. (2010). To explain or to predict?<em>Statistical Science</em>,<em>25</em>(3), 289-310.</p>
+<p>Vance, E. A., Trumble, I. M., Alzen, J. L., &amp; Smith, H. S. (2022). Asking great questions.<em>Stat</em>,<em>11</em>(1), e471.</p>
+<div class="article-btn">
+<p><a href="../../../../../foundation-frontiers/index.html">Explore more data science ideas</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+This article was authored by some of our editorial board members. You can find their bios <a href="https://realworlddatascience.net/the-pulse/editors-blog/posts/2022/10/18/meet-the-team.html">on our team page</a>.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2025 Willis Jensen, Fatemeh Torabi, Monnie McGee, Isabel Sassoon.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p>: Jensen, Willis. Torabi, Fatemeh. McGee, Monnie. Sassoon, Isabel. “Keeping the Science in Data Science,” Real World Data Science, December 04, 2025. <a href="https://realworlddatascience.net/foundation-frontiers/posts/2025/11/27/scienceindatascience.html">URL</a></p>
+</div>
+
+
+</div>
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/realworlddatascience\.net\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<input type="hidden" id="giscus-base-theme" value="light">
+<input type="hidden" id="giscus-alt-theme" value="dark">
+<script>
+  function loadGiscus() {
+    // Function to get the theme based on body class
+    const getTheme = () => {
+      let baseTheme = document.getElementById('giscus-base-theme').value;
+      let altTheme = document.getElementById('giscus-alt-theme').value;
+      return document.body.classList.contains('quarto-dark') ? altTheme : baseTheme;
+    };
+    const script = document.createElement("script");
+    script.src = "https://giscus.app/client.js";
+    script.async = true;
+    script.dataset.repo = "realworlddatascience/realworlddatascience.github.io";
+    script.dataset.repoId = "R_kgDOILnnig";
+    script.dataset.category = "General";
+    script.dataset.categoryId = "DIC_kwDOILnnis4CSt2s";
+    script.dataset.mapping = "title";
+    script.dataset.reactionsEnabled = "1";
+    script.dataset.emitMetadata = "0";
+    script.dataset.inputPosition = "top";
+    script.dataset.theme = getTheme();
+    script.dataset.lang = "en";
+    script.crossOrigin = "anonymous";
+    // Append the script to the desired div instead of at the end of the body
+    document.getElementById("quarto-content").appendChild(script);
+  }
+  loadGiscus();
+</script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><a href="../../../../../LICENCE.html">Copyright © 2025 Royal Statistical Society</a></p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/realworlddatascience">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience">
+<p><i class="ai  ai-zenodo ai-2xl"></i></p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/rwdatasci">
+      <i class="bi bi-twitter-x" role="img" aria-label="Twitter/X">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@rwdatasci">
+      <i class="bi bi-mastodon" role="img" aria-label="Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="../../../../../feeds.html">
+      <i class="bi bi-rss" role="img" aria-label="RWDS rss">
+</i> 
+    </a>
+  </li>  
+</ul>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/foundation-frontiers/posts/2025/12/03/scienceindatascience.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p><a href="../../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
