@@ -17,7 +17,229 @@
 <width>144</width>
 </image>
 <generator>quarto-1.8.26</generator>
-<lastBuildDate>Thu, 04 Dec 2025 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 12 Dec 2025 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>​Testing Multi-Agent Systems in the LLM Age: A Practical Guide for Data Scientists</title>
+  <dc:creator>Peter Capsalis</dc:creator>
+  <link>https://realworlddatascience.net/applied-insights/tutorials/posts/2025/12/12/to_publish_2_converted.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Agentic AI has gained recent popularity with the emergence of Large-Language Models (LLMs) and the rapid growth of the AI technology sector. The reinvention of technology companies entering the ‘agentic age’ mirrors a profound shift in how people interact with technology. In this article, I share a structured approach for testing Multi-Agent Systems (MAS) and provide some key questions to start you thinking critically about how your systems may be working.</p>
+<section id="history-and-background-defining-mas" class="level2">
+<h2 class="anchored" data-anchor-id="history-and-background-defining-mas">History and Background: Defining MAS</h2>
+<p>There has been more than 30 years of research into intelligent agents. Traditionally, Multi-Agent Systems (MAS) referred to collections of autonomous software agents that could communicate, coordinate, and collaborate to solve complex tasks, often in domains like robotics, logistics, or distributed control systems.</p>
+</section>
+<section id="the-mas-llm-shift" class="level2">
+<h2 class="anchored" data-anchor-id="the-mas-llm-shift">The MAS + LLM Shift</h2>
+<p>What’s new today is the emergence of LLM-powered agents, where each agent is a Large Language Model (or a wrapper around one) capable of generating language, and calling external tools. This shift marks a new phase: MAS + LLM, where agents are not just rule-based or symbolic, but generative and language-driven.</p>
+<p>​This distinction is crucial:</p>
+<ul>
+<li><p>Traditional MAS Example (Rule-Based): A fleet of warehouse robots coordinate to move packages using pre-programmed rules and message-passing protocols.</p></li>
+<li><p>MAS + LLM Example (Generative &amp; Tool-Enabled): That same warehouse might now use a set of LLM agents to plan a delivery route, query traffic data via APIs, and negotiate with each other in natural language to optimise timing, all while calling tools like maps, databases, and calculators.</p></li>
+</ul>
+<p>This new architecture introduces challenges and opportunities: LLM agents can be more flexible and adaptive, but also more prone to errors like hallucinations or inconsistent tool usage.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2025/12/12/images/MAS.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</section>
+<section id="data-scientists-and-mas-a-new-mandate" class="level2">
+<h2 class="anchored" data-anchor-id="data-scientists-and-mas-a-new-mandate">Data Scientists and MAS: A New Mandate</h2>
+<p>​In traditional ML workflows, Data Scientists might train models and deploy them behind APIs for consumption by other services. In MAS + LLM setups, those models become tools that LLM agents can call as part of a broader reasoning process. Data Scientists may now be involved in designing these tools, defining agent roles, and testing how agents interact.</p>
+<p>​Imagine, for example, that a Data Scientist is training a sentiment analysis model. Instead of embedding it in a web app, they expose it as a tool. A “Customer Feedback Agent” (LLM) calls this tool to analyse reviews, then passes results to a “Product Strategy Agent” to decide next steps. This new mandate means Data Scientists are uniquely positioned to ensure the reliability and responsible deployment of agentic systems by rigorously testing the individual tools and the complex communication logic.</p>
+<p>​When using MAS + LLM, it is essential that Data Scientists ask the right questions to assess how well a system performs on a given task. Below is a proposed framework, based on established software testing hierarchies, adapted for MAS + LLM architectures:</p>
+</section>
+<section id="a-four-level-testing-approach" class="level2">
+<h2 class="anchored" data-anchor-id="a-four-level-testing-approach">​A Four-Level Testing Approach</h2>
+<section id="unit-level-checks-determinism-and-reproducibility" class="level3">
+<h3 class="anchored" data-anchor-id="unit-level-checks-determinism-and-reproducibility">​1. Unit-Level Checks: Determinism and Reproducibility</h3>
+<p>​These tests assess whether individual agents behave consistently when given identical inputs. This is foundational for debugging and validation.</p>
+<p><strong>​Check</strong>: Does the agent produce the same output when given the same prompt?</p>
+<p>Example: Recipe Planner Agent. A “Recipe Planner Agent” is asked: “Plan a healthy lunch under 500 calories.” If the response varies significantly each time, the agent may be hallucinating or poorly grounded.</p>
+<p><strong>Check</strong>: Does the agent consistently call the same tool when prompted?</p>
+<p>Example: Currency Conversion Tool.An agent is asked to convert $100 USD to GBP. Check: Does the agent consistently call the convert_currency(amount, from, to) tool with the correct parameters, and is the output reliably parsed?</p>
+</section>
+<section id="unit-integration-context-management-and-grounding" class="level3">
+<h3 class="anchored" data-anchor-id="unit-integration-context-management-and-grounding">​2. Unit + Integration: Context Management and Grounding</h3>
+<p>​These tests examine how well agents manage context and avoid hallucinations by properly utilizing their tools. Failures here often stem from insufficient or poorly structured information.</p>
+<p><strong>​Check</strong>: Does the agent hallucinate outputs instead of calling tools?</p>
+<p>​Example: Weather Forecast Agent. Prompt: “What’s the weather in London tomorrow?” If the agent guesses instead of calling the weather API, it may lack grounding or tool clarity.</p>
+<p><strong>​Check</strong>: Does the agent fail due to context length limits?</p>
+<p><strong>​Check</strong>: Does the agent fail to match the correct tool due to vague definitions?</p>
+<p><strong>​Check</strong>: Does the agent handle tool errors gracefully?</p>
+<p>​Example: Data Analysis Agent. Input: [“a”, “b”, “c”] provided to a calculate_mean() tool. If the agent fails to handle the non-numeric error output from the tool, it demonstrates poor context and error management.</p>
+</section>
+<section id="integration-testing-inter-agent-communication" class="level3">
+<h3 class="anchored" data-anchor-id="integration-testing-inter-agent-communication">​3. Integration Testing: Inter-Agent Communication</h3>
+<p>​These tests focus on how agents coordinate and hand off tasks. This layer is particularly tricky, as agents must operate independently while still collaborating effectively.</p>
+<p><strong>​Check</strong>: Do agents successfully hand off tasks to one another?</p>
+<p><strong>​Check</strong>: Does changing the prompt affect handover success (e.g., changing the tone or syntax)?</p>
+<p><strong>​Check</strong>: Are agent roles and descriptions clear enough to support successful delegation?</p>
+<p>​Example: Travel Planning Agents. A “Trip Planner Agent” delegates hotel booking to a “Hotel Booking Agent.” If the handover fails (e.g., the receiving agent doesn’t understand its input format), the receiving agent may be poorly defined or misnamed.</p>
+</section>
+<section id="system-level-validation-error-propagation-and-validation" class="level3">
+<h3 class="anchored" data-anchor-id="system-level-validation-error-propagation-and-validation">​4. System-Level Validation: Error Propagation and Validation</h3>
+<p>These tests assess how errors are surfaced, handled, and communicated across the entire system. They also include strategies for validating the final outputs.​</p>
+<p><strong>Check:</strong> Do the underlying tools include error checking and format validation on their outputs?</p>
+<p><strong>Check:</strong> Can agents detect and communicate null or failed outputs from other agents or tools?</p>
+<p><strong>Check:</strong> Is there a mechanism (e.g., human-in-the-loop or a designated reviewer agent) to validate final results against expected metrics?</p>
+<p>Example: Reviewer Agent for Expense Reports. A “Finance Agent” calculates total expenses, and a “Reviewer Agent” checks the result. If the Finance Agent returns £400 instead of £350 for the input “£100 travel, £200 meals, £50 misc.,” the Reviewer Agent can flag the discrepancy.</p>
+</section>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>MAS + LLM is becoming an increasingly essential part of a Data Scientist’s toolkit. With the numerous agentic orchestration frameworks available (LangGraph, Autogen, CrewAI, etc.) and that number increasing over time, understanding how to assess MAS and actions to improve them is necessary for their development. I encourage you to use this framework as a starting point to establish robust testing pipelines and governance standards within your teams.</p>
+<div class="article-btn">
+<p><a href="../../../../../../applied-insights/index.html">Explore more data science ideas</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author:</dt>
+<dd>
+<a href="https://www.linkedin.com/in/peter-capsalis-37795958/">Peter Capsalis (MBA, MSc, AdvDSP)</a> is an AI and Data Senior Manager at Ernst and Young where he leads teams of data professionals in the government and energy resources sectors to solve data challenges and deliver transformational change. He sits on the <a href="https://rss.org.uk/policy-campaigns/policy-groups/ai-task-force/">RSS AI Taskforce</a>, and the Society’s <a href="https://rss.org.uk/about/equity-diversity-and-inclusion-(edi)/">EDI committee</a>.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2025 Peter Capsalis
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p>: Capsalis, Peter. “​Testing Multi-Agent Systems in the LLM Age: A Practical Guide for Data Scientists”, Real World Data Science, December 12, 2025. <a href="https://realworlddatascience.net/foundation-frontiers/posts/2025/11/27/scienceindatascience.html">URL</a></p>
+</div>
+
+
+</div>
+</div>
+</section>
+
+ ]]></description>
+  <guid>https://realworlddatascience.net/applied-insights/tutorials/posts/2025/12/12/to_publish_2_converted.html</guid>
+  <pubDate>Fri, 12 Dec 2025 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/applied-insights/tutorials/posts/2025/12/12/images/MAS.png" medium="image" type="image/png" height="96" width="144"/>
+</item>
+<item>
+  <title>​Testing Multi-Agent Systems in the LLM Age: A Practical Guide for Data Scientists</title>
+  <dc:creator>Peter Capsalis</dc:creator>
+  <link>https://realworlddatascience.net/applied-insights/tutorials/posts/2025/12/12/MAS-guide.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Agentic AI has gained recent popularity with the emergence of Large-Language Models (LLMs) and the rapid growth of the AI technology sector. The reinvention of technology companies entering the ‘agentic age’ mirrors a profound shift in how people interact with technology. In this article, I share a structured approach for testing Multi-Agent Systems (MAS) and provide some key questions to start you thinking critically about how your systems may be working.</p>
+<section id="history-and-background-defining-mas" class="level2">
+<h2 class="anchored" data-anchor-id="history-and-background-defining-mas">History and Background: Defining MAS</h2>
+<p>There has been more than 30 years of research into intelligent agents. Traditionally, Multi-Agent Systems (MAS) referred to collections of autonomous software agents that could communicate, coordinate, and collaborate to solve complex tasks, often in domains like robotics, logistics, or distributed control systems.</p>
+</section>
+<section id="the-mas-llm-shift" class="level2">
+<h2 class="anchored" data-anchor-id="the-mas-llm-shift">The MAS + LLM Shift</h2>
+<p>What’s new today is the emergence of LLM-powered agents, where each agent is a Large Language Model (or a wrapper around one) capable of generating language, and calling external tools. This shift marks a new phase: MAS + LLM, where agents are not just rule-based or symbolic, but generative and language-driven.</p>
+<p>​This distinction is crucial:</p>
+<ul>
+<li><p>Traditional MAS Example (Rule-Based): A fleet of warehouse robots coordinate to move packages using pre-programmed rules and message-passing protocols.</p></li>
+<li><p>MAS + LLM Example (Generative &amp; Tool-Enabled): That same warehouse might now use a set of LLM agents to plan a delivery route, query traffic data via APIs, and negotiate with each other in natural language to optimise timing, all while calling tools like maps, databases, and calculators.</p></li>
+</ul>
+<p>This new architecture introduces challenges and opportunities: LLM agents can be more flexible and adaptive, but also more prone to errors like hallucinations or inconsistent tool usage.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2025/12/12/images/MAS.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</section>
+<section id="data-scientists-and-mas-a-new-mandate" class="level2">
+<h2 class="anchored" data-anchor-id="data-scientists-and-mas-a-new-mandate">Data Scientists and MAS: A New Mandate</h2>
+<p>​In traditional ML workflows, Data Scientists might train models and deploy them behind APIs for consumption by other services. In MAS + LLM setups, those models become tools that LLM agents can call as part of a broader reasoning process. Data Scientists may now be involved in designing these tools, defining agent roles, and testing how agents interact.</p>
+<p>​Imagine, for example, that a Data Scientist is training a sentiment analysis model. Instead of embedding it in a web app, they expose it as a tool. A “Customer Feedback Agent” (LLM) calls this tool to analyse reviews, then passes results to a “Product Strategy Agent” to decide next steps. This new mandate means Data Scientists are uniquely positioned to ensure the reliability and responsible deployment of agentic systems by rigorously testing the individual tools and the complex communication logic.</p>
+<p>​When using MAS + LLM, it is essential that Data Scientists ask the right questions to assess how well a system performs on a given task. Below is a proposed framework, based on established software testing hierarchies, adapted for MAS + LLM architectures:</p>
+</section>
+<section id="a-four-level-testing-approach" class="level2">
+<h2 class="anchored" data-anchor-id="a-four-level-testing-approach">​A Four-Level Testing Approach</h2>
+<section id="unit-level-checks-determinism-and-reproducibility" class="level3">
+<h3 class="anchored" data-anchor-id="unit-level-checks-determinism-and-reproducibility">​1. Unit-Level Checks: Determinism and Reproducibility</h3>
+<p>​These tests assess whether individual agents behave consistently when given identical inputs. This is foundational for debugging and validation.</p>
+<p><strong>​Check</strong>: Does the agent produce the same output when given the same prompt?</p>
+<p>Example: Recipe Planner Agent. A “Recipe Planner Agent” is asked: “Plan a healthy lunch under 500 calories.” If the response varies significantly each time, the agent may be hallucinating or poorly grounded.</p>
+<p><strong>Check</strong>: Does the agent consistently call the same tool when prompted?</p>
+<p>Example: Currency Conversion Tool.An agent is asked to convert $100 USD to GBP. Check: Does the agent consistently call the convert_currency(amount, from, to) tool with the correct parameters, and is the output reliably parsed?</p>
+</section>
+<section id="unit-integration-context-management-and-grounding" class="level3">
+<h3 class="anchored" data-anchor-id="unit-integration-context-management-and-grounding">​2. Unit + Integration: Context Management and Grounding</h3>
+<p>​These tests examine how well agents manage context and avoid hallucinations by properly utilizing their tools. Failures here often stem from insufficient or poorly structured information.</p>
+<p><strong>​Check</strong>: Does the agent hallucinate outputs instead of calling tools?</p>
+<p>​Example: Weather Forecast Agent. Prompt: “What’s the weather in London tomorrow?” If the agent guesses instead of calling the weather API, it may lack grounding or tool clarity.</p>
+<p><strong>​Check</strong>: Does the agent fail due to context length limits?</p>
+<p><strong>​Check</strong>: Does the agent fail to match the correct tool due to vague definitions?</p>
+<p><strong>​Check</strong>: Does the agent handle tool errors gracefully?</p>
+<p>​Example: Data Analysis Agent. Input: [“a”, “b”, “c”] provided to a calculate_mean() tool. If the agent fails to handle the non-numeric error output from the tool, it demonstrates poor context and error management.</p>
+</section>
+<section id="integration-testing-inter-agent-communication" class="level3">
+<h3 class="anchored" data-anchor-id="integration-testing-inter-agent-communication">​3. Integration Testing: Inter-Agent Communication</h3>
+<p>​These tests focus on how agents coordinate and hand off tasks. This layer is particularly tricky, as agents must operate independently while still collaborating effectively.</p>
+<p><strong>​Check</strong>: Do agents successfully hand off tasks to one another?</p>
+<p><strong>​Check</strong>: Does changing the prompt affect handover success (e.g., changing the tone or syntax)?</p>
+<p><strong>​Check</strong>: Are agent roles and descriptions clear enough to support successful delegation?</p>
+<p>​Example: Travel Planning Agents. A “Trip Planner Agent” delegates hotel booking to a “Hotel Booking Agent.” If the handover fails (e.g., the receiving agent doesn’t understand its input format), the receiving agent may be poorly defined or misnamed.</p>
+</section>
+<section id="system-level-validation-error-propagation-and-validation" class="level3">
+<h3 class="anchored" data-anchor-id="system-level-validation-error-propagation-and-validation">​4. System-Level Validation: Error Propagation and Validation</h3>
+<p>These tests assess how errors are surfaced, handled, and communicated across the entire system. They also include strategies for validating the final outputs.​</p>
+<p><strong>Check:</strong> Do the underlying tools include error checking and format validation on their outputs?</p>
+<p><strong>Check:</strong> Can agents detect and communicate null or failed outputs from other agents or tools?</p>
+<p><strong>Check:</strong> Is there a mechanism (e.g., human-in-the-loop or a designated reviewer agent) to validate final results against expected metrics?</p>
+<p>Example: Reviewer Agent for Expense Reports. A “Finance Agent” calculates total expenses, and a “Reviewer Agent” checks the result. If the Finance Agent returns £400 instead of £350 for the input “£100 travel, £200 meals, £50 misc.,” the Reviewer Agent can flag the discrepancy.</p>
+</section>
+</section>
+<section id="summary" class="level2">
+<h2 class="anchored" data-anchor-id="summary">Summary</h2>
+<p>MAS + LLM is becoming an increasingly essential part of a Data Scientist’s toolkit. With the numerous agentic orchestration frameworks available (LangGraph, Autogen, CrewAI, etc.) and that number increasing over time, understanding how to assess MAS and actions to improve them is necessary for their development. I encourage you to use this framework as a starting point to establish robust testing pipelines and governance standards within your teams.</p>
+<div class="article-btn">
+<p><a href="../../../../../../applied-insights/index.html">Explore more data science ideas</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author:</dt>
+<dd>
+<a href="https://www.linkedin.com/in/peter-capsalis-37795958/">Peter Capsalis (MBA, MSc, AdvDSP)</a> is an AI and Data Senior Manager at Ernst and Young where he leads teams of data professionals in the government and energy resources sectors to solve data challenges and deliver transformational change. He sits on the <a href="https://rss.org.uk/policy-campaigns/policy-groups/ai-task-force/">RSS AI Taskforce</a>, and the Society’s <a href="https://rss.org.uk/about/equity-diversity-and-inclusion-(edi)/">EDI committee</a>.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2025 Peter Capsalis
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p>: Capsalis, Peter. “​Testing Multi-Agent Systems in the LLM Age: A Practical Guide for Data Scientists”, Real World Data Science, December 12, 2025. <a href="https://realworlddatascience.net/foundation-frontiers/posts/2025/11/27/scienceindatascience.html">URL</a></p>
+</div>
+
+
+</div>
+</div>
+</section>
+
+ ]]></description>
+  <guid>https://realworlddatascience.net/applied-insights/tutorials/posts/2025/12/12/MAS-guide.html</guid>
+  <pubDate>Fri, 12 Dec 2025 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/applied-insights/tutorials/posts/2025/12/12/images/MAS.png" medium="image" type="image/png" height="96" width="144"/>
+</item>
 <item>
   <title>Keeping the Science in Data Science</title>
   <dc:creator>Willis Jensen, Fatemeh Torabi, Monnie McGee, Isabel Sassoon</dc:creator>
@@ -550,7 +772,7 @@ Tate, Rosemary A. and Halliday, Roger. 2025. “Why We Should All Be Data Qualit
 
 
 <p>This article had its genesis when co-author Ed’s dog, Sparkle, was treated for pneumonia in the summer of 2024. Ed, a mathematician and chair of the <a href="https://alliancefordatascienceprofessionals.com/">Alliance for Data Science Professionals</a>, was intrigued by the surgery’s use of data in Sparkle’s treatment and decided to find out more about the use of data and AI in veterinary medicine. His exploration led to a guest appearance on the <a href="https://www.vetvoices.co.uk/podcasts">Vet Voices on Air</a> podcast hosted by co-author Robyn. She is a registered veterinary nurse (RVN) and the director of <a href="https://www.vetvoices.co.uk/">Veterinary Voices UK</a>. Inspired by that conversation, this article explores the ways veterinary professionals are currently applying data science principles and how professions adapt and evolve in the face of these developments.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Sparkle. Credit: Edward Rochead.">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Sparkle. Credit: Edward Rochead." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2025/08/26/images/Sparkle.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Sparkle. Credit: Edward Rochead.">
@@ -577,7 +799,7 @@ Diagnosis and prediction of diseases is one key area where AI is being used in v
 <p>These are just a few examples of AI use in companion animals currently.</p>
 <p><strong>Disease Monitoring and Prediction</strong> Disease monitoring and prediction are exciting because they can help us act earlier—sometimes even preventing illness. This not only improves animal health and welfare, but also supports <a href="https://www.skeptic.org.uk/2024/05/agr-tech-will-technology-help-or-hinder-food-production-and-animal-welfare/">antimicrobial stewardship</a> by reducing unnecessary treatments, helping to combat antimicrobial resistance—a serious global threat to both animals and humans.</p>
 <p>An area that demonstrates compelling evidence of these positive outcomes is <a href="https://www.skeptic.org.uk/2024/05/agr-tech-will-technology-help-or-hinder-food-production-and-animal-welfare/">farming and agriculture</a>, where farmers are able to use AI to monitor herds, and act promptly to treat disease, before it would have been evident and notable by human monitoring. Examples, which will be explored in more detail below, include body condition technology, lameness technology, disease recognition, grazing, land and pasture management, biosensors and biochips and more.</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Technology that measures body condition each time the cow passes under the camera, reporting the changes in Body Condition Score directly to the farmer via app and online portal, helping to support individual cow treatment, group rationing and herd management.">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Technology that measures body condition each time the cow passes under the camera, reporting the changes in Body Condition Score directly to the farmer via app and online portal, helping to support individual cow treatment, group rationing and herd management." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2025/08/26/images/herdvision1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Technology that measures body condition each time the cow passes under the camera, reporting the changes in Body Condition Score directly to the farmer via app and online portal, helping to support individual cow treatment, group rationing and herd management.">
@@ -590,7 +812,7 @@ Figure&nbsp;2: Technology that measures body condition each time the cow passes 
 <p><strong>Body Condition Technology</strong> The agricultural industry typically relies on subjective visual observation, human recording and manual reporting of all the key health and welfare traits, including Body Condition Score (BCS). Despite these individuals being highly skilled professionals, there is inevitable human error, paired with the constraints of busy farm management which can lead to cases getting picked up later in their disease process. BCS is a major indicator of metabolic performance in dairy cows and directly related to fertility performance and health traits. Technologies such as <a href="https://herd.vision/">Herdvision</a> use a 2D and 3D camera system to monitor BCS, resulting in improvement in cattle heath and fertility, less premature culling, and savings on feeding costs.</p>
 <p><strong>Lameness Technology</strong><br>
 Lameness is considered one of the <a href="https://www.frontiersin.org/articles/10.3389/fvets.2019.00094/full">top cattle health and welfare challenges</a>. A <a href="https://www.sciencedirect.com/science/article/abs/pii/S1871141313001698">2013 study</a> noted that almost 70% of the dairy farmers expressed an intention to take action for improving dairy cow foot health. Cattle naturally mask the signs of pain, and as with body condition scoring we have relied on subjective visual observation, human recording and manual reporting of all the key health and welfare traits. Technology that can pick up lameness earlier, with more objectivity and with less labour intensity is hugely beneficial to both the animals’ health and welfare and the farm’s profitability.</p>
-<div id="fig-3" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Images that produce prioritisation list for vets and hoof trimmers, ranking cows according to severity of immobility and identifying small changes in mobility and BCS before they are visible to the human eye.">
+<div id="fig-3" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Images that produce prioritisation list for vets and hoof trimmers, ranking cows according to severity of immobility and identifying small changes in mobility and BCS before they are visible to the human eye." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2025/08/26/images/herdvision2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Images that produce prioritisation list for vets and hoof trimmers, ranking cows according to severity of immobility and identifying small changes in mobility and BCS before they are visible to the human eye.">
@@ -2428,7 +2650,7 @@ Demming, Anna. 2024. “The machine learning victories at the 2024 Nobel Prize a
 <p>Knowledge is power and today a lot of that knowledge – not just what you know but who you know – is online. In 2015 the UN General Assembly laid out 17 Sustainable Development Goals (SDGs) that aim to end poverty and other deprivations while improving the welfare of both people and the planet. One of the <a href="https://sdgs.un.org/goals/goal5#targets_and_indicators">SDGs deals with gender equality</a> and emphasises the importance of digital technology for empowering women. Online, a woman can engage in commercial, social, business or networking transactions without the need to be absent from care responsibilities at home or maintain traditional 9-5 working hours or, in some instances, even expose the fact that she is a woman at all – all potentially transformative features of online engagement<sup>1</sup>. Yet the reality for digital technology to empower women is by no means clear cut.</p>
 <p>‘For me, whether digital technologies are able to empower women was fundamentally an empirical question,’’ says professor of demography and computational data science at Oxford University <a href="https://www.sociology.ox.ac.uk/people/ridhi-kashyap">Ridhi Kashyap</a>. She adds that in order to ask these questions of impact, you first need to be able to measure inequalities in digital access. However, the pace of technological change has been a lot faster than the rate at which national censuses – or other kinds of surveys useful to social scientists – update their questions, so they shed little light on the demographics around digital technologies.</p>
 <p>Since then, progress in accruing data on digital access has revealed some stark gender inequalities. However, access is not the only fly in the ointment when it comes to the potential for digital technology to help towards gender equality. ‘The most harmful illegal online content disproportionately affects women and girls,’ says the <a href="https://www.gov.uk/government/publications/online-safety-act-explainer/online-safety-act-explainer#how-the-act-protects-women-and-girls">explainer for the UK’s 2023 Online Safety Act</a>. A <a href="https://www.turing.ac.uk/news/publications/understanding-gender-differences-experiences-and-concerns-surrounding-online">study by the Turing Institute</a> published earlier this year has revealed nuances on this picture, but confirmed that many women feel particularly vulnerable online, suggesting women may be losing a seat at the table as debate and discourse increasingly moves online.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Muted. In the absence of proactive intervention, the shift of debate and discourse online risks muting women and girls as multiple factors exclude them from engaging there as productively as male counterparts. Copyright: Park Kang Hun/Shutterstock.">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Muted. In the absence of proactive intervention, the shift of debate and discourse online risks muting women and girls as multiple factors exclude them from engaging there as productively as male counterparts. Copyright: Park Kang Hun/Shutterstock." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/09/17/images/Minoan-Illustration.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Muted. In the absence of proactive intervention, the shift of debate and discourse online risks muting women and girls as multiple factors exclude them from engaging there as productively as male counterparts. Copyright: Park Kang Hun/Shutterstock.">
@@ -2443,7 +2665,7 @@ Figure&nbsp;1: Muted. In the absence of proactive intervention, the shift of deb
 <h2 class="anchored" data-anchor-id="gender-disparities-in-internet-access">Gender disparities in internet access</h2>
 <p>A turning point in the conversation around digital technology and gender equality came in 2018 with work by Kashyap and collaborators in the US and Qatar at the time. They found that where traditional survey-based data on internet and mobile gender gaps was available, it correlated well with the gender gap on Facebook, using data extracted for Facebook’s ad platform: When Facebook’s aggregate user counts did not show women, it provided a good signal that women were not online altogether in those countries. As such, the work revealed a potentially useful proxy to gauge the digital gender gap in countries where little traditional survey data was available<sup>3</sup>. <a href="https://www.digitalgendergaps.org/">The results</a> revealed an unexpectedly large gender gap, particularly in parts of South Asia and certain countries in Africa where men were up to twice as likely to have access to the Internet compared with women.</p>
 <p>‘In some sense it was perhaps not surprising,’’ says Kashyap highlighting that having a mobile phone or similar device that grants access to the internet amounts to a kind of asset ownership, and studies for other assets indicate women are less likely to own them. ‘This is broadly reflective of economic gender inequality,’ she adds. Perhaps more surprising is that the gaps have changed very little in the five years since <a href="https://www.digitalgendergaps.org/">their website, which monitors the digital gender gap</a>, was first released, particularly in view of the pace of technological progress in general, and the importance placed on closing the gap. Citing India as an example, Kashyap points out that in 2019 the ratio of access to the internet for men versus women was 0.619 – fewer than two women had access for every three men with access. In the subsequent half decade this digital gender gap has closed by just 7.1% to a ratio of 0.663.</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="The digital gender gap. Ratio of female-to-male internet use estimated using the Facebook Gender Gap Index^[Leasure D R, Yan J, Bondarenko M, Kerr D, Fatehkia M, Weber I &amp; Kashyap R. Digital Gender Gaps Web Application, v1.0.0. Zenodo, GitHub (2023) [doi:10.5281/zenodo.7897491](https://github.com/OxfordDemSci/dgg-www)]">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The digital gender gap. Ratio of female-to-male internet use estimated using the Facebook Gender Gap Index^[Leasure D R, Yan J, Bondarenko M, Kerr D, Fatehkia M, Weber I &amp; Kashyap R. Digital Gender Gaps Web Application, v1.0.0. Zenodo, GitHub (2023) [doi:10.5281/zenodo.7897491](https://github.com/OxfordDemSci/dgg-www)]" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/09/17/images/Digital gender gap.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The digital gender gap. Ratio of female-to-male internet use estimated using the Facebook Gender Gap Index^[Leasure D R, Yan J, Bondarenko M, Kerr D, Fatehkia M, Weber I &amp; Kashyap R. Digital Gender Gaps Web Application, v1.0.0. Zenodo, GitHub (2023) [doi:10.5281/zenodo.7897491](https://github.com/OxfordDemSci/dgg-www)]">
@@ -2471,7 +2693,7 @@ Figure&nbsp;2: The digital gender gap. Ratio of female-to-male internet use esti
 <p>Challenges to women being heard online seem to go beyond safety issues. Recent research by Kashyap and collaborators at the University of Oxford and collaborators in Iran and Germany has also highlighted differences in how influential women’s professional networks are relative to male counterparts<sup>8</sup>. In previous work with Florianne Verkroost, also at the University of Oxford, Kashyap had investigated the gender gaps in those who have a LinkedIn profile to see how they vary across industries<sup>9</sup>. They found that use of the platform broadly mirrors female-to-male ratios of representation in technical and managerial professions. In reference 8, they then investigated what insights LinkedIn data might provide as to the cause of some of the gender disparities in these professions, and ultimately why women are not progressing in technical and professional jobs as well as male counterparts.</p>
 <p>‘One argument is that that’s often because they don’t have advantageous networks,’ says Kashyap, adding that women may be restricted by the need to resume care commitments at home instead of staying for drinks after work or travelling to attend conferences. One might expect online avenues for networking would be able to mitigate such obstacles. In fact, studies of LinkedIn data did suggest that although women are less likely to be in professional and technical occupations as reflected in the platform’s data, in some instances their numbers exceeded them. Kashyap suggests this could be ‘where they’re using online platforms to make themselves more visible, because other fine forms of networking are less available, or they have less time for it.’ Indeed, women who were on LinkedIn were more likely to report a promotion than their male counterparts, suggesting an element of positive selection among the female LinkedIn user population. However, the potential equalising impact of moving professional networking online seems to have its limits.</p>
 <p>Their study of LinkedIn data showed women were less likely to report a relocation for work, which Kashyap suggests, ‘is a sign that the work family trade-off is probably still remaining acute for this highly selected group.’ In another 2023 study Kashyap and colleagues had also reported a lower mobility for women, specifically among published scientists, researchers and academics based on bibliometric data from over 33 million Scopus publications<sup>10</sup>. In addition, when Kashyap and her colleagues looked at women on LinkedIn working in the tech sector, they found that they had a lower chance of being connected to those working in one of the “big five” firms in the tech sector than men, when not working in one themselves. ‘One way to interpret that is to say that they have maybe less influential online social networks, right, even when they are on the platform.’</p>
-<div id="fig-4" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Leaky pipeline. The proportion of women working in science decreases towards the mid and senior career stages">
+<div id="fig-4" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Leaky pipeline. The proportion of women working in science decreases towards the mid and senior career stages" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/09/17/images/shutterstock_1215562669-h350.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Leaky pipeline. The proportion of women working in science decreases towards the mid and senior career stages">
@@ -2553,180 +2775,6 @@ Demming, Anna. 2024. “Are we at risk of muting the female voice in the digital
   <guid>https://realworlddatascience.net/foundation-frontiers/posts/2024/09/17/digital-gender-gap.html</guid>
   <pubDate>Tue, 17 Sep 2024 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/foundation-frontiers/posts/2024/09/17/images/Minoan-Illustration-991.jpg" medium="image" type="image/jpeg"/>
-</item>
-<item>
-  <title>New open access journal - RSS: Data Science and Artificial Intelligence</title>
-  <link>https://realworlddatascience.net/the-pulse/posts/2024/08/01/RWDS-journal.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p><img src="https://realworlddatascience.net/the-pulse/posts/2024/08/01/images/RSS-DSAI-Logo-blue.png" class="img-fluid" style="width:80.0%" alt="RSS Data Science and AI logo"><br>
-</p>
-<p>The Royal Statistical Society (RSS) is launching a new fully open access journal, <em>RSS: Data Science and Artificial Intelligence</em>. Created in recognition of the growing importance of data science and artificial intelligence in science and society, the new journal’s remit spans the breadth of data science; you can <a href="https://academic.oup.com/rssdat/pages/general-instructions">submit articles</a> covering disciplines including statistics, machine learning, deep learning, econometrics, bioinformatics, engineering and computational social science.</p>
-<p>As well as three primary paper types - method papers, applications papers and behind-the-scenes papers - RSS: Data Science and Artificial Intelligence will publish editorials, op-eds, interviews, and reviews/perspectives in line with <a href="https://academic.oup.com/rssdat/pages/about">its goal to become a primary destination for data scientists</a>.</p>
-<p>Published by Oxford University Press, this new journal is the first addition to the RSS family of world class statistics journals since 1952.</p>
-<p><a href="https://academic.oup.com/rssdat/pages/why-publish">Learn more</a> about why <em>RSS: Data Science and Artificial Intelligence</em> is the ideal platform for showcasing your research.</p>
-<div class="keyline">
-<hr>
-</div>
-<section id="meet-the-journals-editors-in-chief-and-editorial-board" class="level3">
-<h3 class="anchored" data-anchor-id="meet-the-journals-editors-in-chief-and-editorial-board">Meet the journal’s editors-in-chief and editorial board</h3>
-<p>&nbsp;</p>
-<div class="grid">
-<div class="g-col-12 g-col-md-4">
-<p><img src="https://realworlddatascience.net/the-pulse/posts/2024/08/01/images/Mukherjee_Sach.jpg" class="img-fluid" alt="Photo of Mukherjee, Director of Research in Machine Learning for Biomedicine at the MRC"></p>
-<p><strong>Sach Mukherjee</strong> is Director of Research in Machine Learning for Biomedicine at the Medical Research Council (MRC) Biostatistics Unit, University of Cambridge, and Head of Statistics and Machine Learning at the German Center for Neurodegenerative Diseases.</p>
-</div>
-<div class="g-col-12 g-col-md-4">
-<p><img src="https://realworlddatascience.net/the-pulse/posts/2024/08/01/images/silvia-chiappa.jpeg" class="img-fluid" alt="Silvia Chiappa, Research Scientist at Google DeepMind"></p>
-<p><strong>Silvia Chiappa</strong> is a Research Scientist at <a href="https://deepmind.com/">Google DeepMind</a> London, where she leads the Causal Intelligence team, and Honorary Professor at the <a href="https://www.ucl.ac.uk/computer-science/">Computer Science Department</a> of University College London.</p>
-</div>
-<div class="g-col-12 g-col-md-4">
-<p><img src="https://realworlddatascience.net/the-pulse/posts/2024/08/01/images/neil-lawrence.png" class="img-fluid" alt="Neil Lawrenece, DeepMind Professor of Machine Learning at the University of Cambridge"></p>
-<p><strong>Neil Lawrenece</strong> is the inaugural DeepMind Professor of Machine Learning at the University of Cambridge. He has been working on machine learning models for over 20 years. He recently returned to academia after three years as Director of Machine Learning at Amazon.</p>
-</div>
-</div>
-<p><br>
-</p>
-<p><strong>View the full editorial board here:</strong> <a href="https://academic.oup.com/rssdat/pages/editorial-board">Editorial Board | RSS Data Science | Oxford Academic (oup.com)</a></p>
-<div class="article-btn">
-<p><a href="../../../../../the-pulse/index.html">Discover more The Pulse</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Royal Statistical Society
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-
-</div>
-</div>
-</div>
-
-
-</section>
-
- ]]></description>
-  <category>AI</category>
-  <category>Data Science</category>
-  <category>Machine learning</category>
-  <category>Deep learning</category>
-  <category>Econometrics</category>
-  <guid>https://realworlddatascience.net/the-pulse/posts/2024/08/01/RWDS-journal.html</guid>
-  <pubDate>Thu, 01 Aug 2024 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/the-pulse/posts/2024/08/01/images/RSS-DS-AI-cover.jpg" medium="image" type="image/jpeg"/>
-</item>
-<item>
-  <title>Nowcasting upgrade for better real time estimation of GDP and inflation</title>
-  <dc:creator>Atmajitsinh Gohil</dc:creator>
-  <link>https://realworlddatascience.net/foundation-frontiers/datasciencebites/posts/2024/6/25/nowcasting-3step.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>Governments, policymakers and central banks across the world are wrestling to keep rising prices under control using monetary policies such as interest rate increases. The effectiveness of such policy changes should be assessed by monitoring inflation data as well as studying the impact on real GDP, making timely and accurate access to key economic indicators crucial for policy planning. The delay in publishing economic indicators such as Real GDP, inflation and other labour related series, makes this real time assessment of the economy particularly challenging. Now Menzie Chinn at the University of Wisconsin, Baptiste Meunier at the European Central Bank and Sebastian Stumpner at the Banque de France report an approach for “nowcasting” built on previous research that develops a framework using different machine learning techniques and is flexible and adaptable compared with traditional methods<sup>1</sup>. They report on the accuracy of their 3-step framework for nowcasting global trade volume estimates, showing how it can outperform traditional methods. They also highlight that the 3-step framework can be extended beyond World Trade data.</p>
-<p>Nowcasting, an amalgamation of the term now and forecasting, provides a methodology to assess the current state of the economy by predicting the current value of inflation or Real GDP. The <a href="https://www.newyorkfed.org/research/policy/nowcast#/overview">Federal Reserve Bank of New York</a> and <a href="https://www.atlantafed.org/cqer/research/gdpnow">Federal Reserve Bank of Atlanta</a> have used nowcasting to publish real time GDP estimates, for the USA. Similarly, the <a href="https://www.clevelandfed.org/indicators-and-data/inflation-nowcasting">Federal Reserve Bank of Cleveland estimates real time inflation</a> using nowcasting methods.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="GDP digital drawing. Credit: Shutterstock, Vink Fan">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://realworlddatascience.net/foundation-frontiers/datasciencebites/posts/2024/6/25/images/GDPshutterstock_2302082265-991.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="GDP digital drawing. Credit: Shutterstock, Vink Fan">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Growth of GDP with statistical graph, 3d rendering. Digital drawing. Credit: Shutterstock, Vink Fan
-</figcaption>
-</figure>
-</div>
-<p>The basic principle of nowcasting is utilising information that is published early such as using data published at higher frequency, survey data, financial indicators or economic indicators. For example, the running estimate of Real GDP (aka GDPNow) that the Federal Reserve Bank of Atlanta provides is updated 6 or 7 times a month on weekdays when one of the 7 input data sources are released. Similarly, the real GDP growth estimate that the Federal Reserve Bank of New York provides is based on data releases in categories such as housing and construction, manufacturing, surveys, retail and consumption, income, labour, international trade, prices and others.</p>
-<p>The traditional methods of nowcasting do not provide an integrated framework, and forecasters need to know which variables to use, and select a method for factor extraction and machine learning regression. Chinn, Meunier and Stumpner propose a sequential framework that selects the most important predictors. The selected variables are then summarized using Principal Component Analysis (PCA) and these factors are used as explanatory variables to perform the regression. Although traditional methods of nowcasting also utilized many of these techniques, the authors test various combinations of pre-selection, factor extraction and regression techniques and propose a combination that improves model accuracy.</p>
-<section id="model-framework-improved-flexibility-and-accuracy" class="level2">
-<h2 class="anchored" data-anchor-id="model-framework-improved-flexibility-and-accuracy">Model framework improved flexibility and accuracy:</h2>
-<p>The 3 steps in the framework are chronological steps to be performed in which the first step is pre-selection of the independent variables with the highest predictive power. The independent variables from the first step are then summarised into a few factors using factor extraction methodology in the second step. The final step consists of using the factors from step 2 to perform regression.</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://realworlddatascience.net/foundation-frontiers/datasciencebites/posts/2024/6/25/images/3step-framework-methods-big.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research.">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research.
-</figcaption>
-</figure>
-</div>
-<p>Figure&nbsp;2 summarises the various methods employed at each step in the 3 step framework. In their report Chinn, Meunier and Stumpner aim to propose the best techniques for pre-selection, factor extraction and regression. As such their 3-step framework comprises performing pre-selection using Least Angle Regression (LARS), factor extraction using Principal Component Analysis (PCA) and employing a Macroeconomic Random Forest (MRF) machine learning technique for nowcasting.</p>
-<p>The model performance or accuracy of MRF is compared with traditional methods using Root Mean Square Error (RMSE), a measure of the deviation between the actual data and the predicted data. The 3-step framework model accuracy is tested by holding the preselection and factor extraction fixed to isolate the impact of regression techniques.</p>
-<div id="fig-3" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research.">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://realworlddatascience.net/foundation-frontiers/datasciencebites/posts/2024/6/25/images/method-accuracy-big.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research.">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research.
-</figcaption>
-</figure>
-</div>
-<p>Figure&nbsp;3 compares the RMSE of traditional methods, machine learning tree and machine learning regression model for backcasting (t-2 and t-1), nowcasting (t) and forecasting (t+1). It highlights the greater model accuracy of MRF and Gradient Boosting compared with traditional models and tree models for backcasting, nowcasting and forecasting.</p>
-</section>
-<section id="whats-next" class="level2">
-<h2 class="anchored" data-anchor-id="whats-next">What’s Next?</h2>
-<p>Organisations such as <a href="https://nowcastinglab.org/map">The Nowcasting Lab</a> provide GDP estimates for European countries. Such nowcasting techniques have been employed by humanitarian agencies including the United Nations Refugee Agency (UNHCR) which uses nowcasting to estimate the actual forced displaced population. The nowcasting techniques, dashboards and tools have been implemented and accepted as a reliable source of information at government organisations for policy making, central banks, and financial organisations. The 3-step framework, proposed by Chinn, Meunier and Stumpner, is easily adaptable, flexible and provides higher accuracy, which will be valuable to a range of fields employing nowcasting.</p>
-<div class="article-btn">
-<p><a href="../../../../../../foundation-frontiers/index.html">Explore more data science ideas</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the author</dt>
-<dd>
-<strong>Atmajitsinh Gohil</strong> is an independent researcher in the field of AI and ML, specifically managing AI and ML risk. He has worked with consulting firm assisting clients in model risk management. He has graduated from SUNY, Buffalo with a M.S. in Economics.
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2024 Atmajitsinh Gohil
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> Text, code, and figures are licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>, except where otherwise noted. Thumbnail image by <a href="https://www.shutterstock.com/image-illustration/growth-gdp-statistical-graph-3d-rendering-2302082265">Shutterstock Van Fink</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Gohil, Atmajitsinh. 2024. “Nowcasting upgrade for better real time estimation of GDP and inflation.” Real World Data Science, June 25, 2024. <a href="https://realworlddatascience.net/foundation-frontiers/posts/2024/06/25/nowcasting-3step.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-</section>
-
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">References</h2>
-
-<ol>
-<li id="fn1"><p>Nowcasting World Trade with Machine Learning: a Three-Step Approach Chinn, M. D., Meunier, B. &amp; Stumpner, S. <em>NBER</em> <a href="https://www.nber.org/papers/w31419">DOI 10.3386/w31419</a>) ↩︎</p></li>
-</ol>
-</section></div> ]]></description>
-  <category>Forecasting</category>
-  <category>Machine learning</category>
-  <guid>https://realworlddatascience.net/foundation-frontiers/datasciencebites/posts/2024/6/25/nowcasting-3step.html</guid>
-  <pubDate>Tue, 25 Jun 2024 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/foundation-frontiers/datasciencebites/posts/2024/6/25/images/GDPshutterstock_2302082265-991.jpg" medium="image" type="image/jpeg"/>
 </item>
 </channel>
 </rss>
