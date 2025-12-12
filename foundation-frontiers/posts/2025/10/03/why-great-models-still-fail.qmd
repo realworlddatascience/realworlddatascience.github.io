@@ -1,0 +1,170 @@
+---
+title: "Why Great Models (Still) Fail"
+description: No matter how elegant a technical solution is, it must address real problems for real users. Here's our practical guide to making sure your model fits the big picture.
+ 
+
+author: Jennifer Hall
+date: 10/03/2025
+toc: true
+image: images/Glitch.eps
+image-alt: Abstract red digital glitch background with lines and noise.
+    section-title-footnotes: Footnotes
+---
+
+In the field of data science and AI, it’s easy to assume that technical excellence is the ultimate goal. Performance can be quantified in ROC curves, accuracy scores, and other metrics, but a model can be technically brilliant and still deliver no real-world impact.
+
+Success in practice goes far beyond code and algorithms. It comes down to solving the right problem, in the right way, for the right people. No matter how elegant a technical solution is, it must address real problems for real users. Achieving that requires more than strong technical workflows—it also demands an understanding of how the model and technical solution fits into the bigger picture. To do that data science and AI practitioners, when designing their solution, need to see how it will sit within broader processes, including how end users will actually interact with and use it.
+
+The importance of this skill emerged repeatedly in the “10 Key Questions to Data Science and AI Practitioners” interview series, run by the Data Science and AI Section of the Royal Statistical Society. The series gathers perspectives from practitioners at all career stages, from those starting their career to senior leaders. By posing the same ten questions, it uncovers motivations, challenges, and visions for the future while highlighting the breadth of career paths in the field. When asked what they considered the most undervalued skill, many participants highlighted the importance of something non-technical —it is the ability to understand the organisational context and the needs of users.
+
+{{< video https://www.youtube.com/watch?v=wrH9O7pNjI4&list=PLi_-RNsPXDTLZ7xWzEsXK1woX9NyjZB2H&index=2 >}}
+
+The importance of these skills for data science and AI practitioners is further evidenced by their emphasis in government and professional standards. The UK Government’s DDaT Capability Framework highlights that data science practitioners especially at higher levels are expected to “design and manage processes to gather and establish user needs”. Similarly, the Royal Statistical Society in The Alliance for Data Science Professionals Certification Guidance and Process: Advanced Data Science Professional states as a key skill the ability to be “engaging stakeholders, demonstrating the ability to clearly define a problem and agree on solutions” including being able to “Identify and elicit project requirements”. Together, these frameworks show that engaging directly with users and stakeholders is not optional—it is a core professional expectation for data science and AI practitioners.
+
+## The Case of the Vanishing Model
+
+Consider a fictional, but perhaps painfully familiar, scenario to practitioners. A practitioner is asked to “build a model to predict which customers are likely to leave.”
+
+They get to work: sourcing data, engineering features, and testing a range of algorithms. After three months, they deliver a model with 94% accuracy. It’s an elegant solution, using a technically sophisticated approach and they are justifiably proud. Then comes the handover presentation:
+
+* Marketing asks: “How do we act on this? We already run retention campaigns—will this actually improve them?”
+* Commercial asks: “It will cost £X per month to operate. What return should we expect?”
+* Operations asks: “There’s no process for plugging these predictions into the CRM. Who exactly is meant to action this?”
+
+![Credit: RSS](images/Everyone Question.jpg){#fig-1 fig-align="center" fig-alt="Credit: RSS"}
+
+The project stalls. Despite strong performance metrics, the model never makes it into production. The lesson is clear: even the most technically impressive solution will fail if it isn’t designed with real-world context in mind. The model simply “vanishes” and all that hard work goes to waste.
+
+This example is deliberately simplified. In some organisations, practitioners may work alongside business partners, product owners, or domain leads who help shape requirements and maintain alignment with broader goals. Yet this support does not remove the practitioner’s responsibility: technical success still depends on their own clear understanding of the business requirement and recognition their technical solution may be a small but an integral cog in a large machine. For the machine to work effectively all the parts must work together. A model is not just a mathematical construct; it is a product that must operate within the complex, resource-limited realities of an organisation.
+ 
+## Start with What We Are Trying to Achieve
+
+Too often, data science projects begin with vague aims such as “build a model” or “forecast sales.” These are activities, not outcomes. What matters is the result the organisation is striving for—for example, increasing upsell revenue by £2M this quarter or preventing 500 contract cancellations per month through timely intervention. Asking the right questions early—about objectives, operational constraints, and definitions of success—is essential for designing solutions that can actually be implemented. For instance, a retention model might flag 1,000 customers at high risk of leaving, but if capacity allows only 50 calls per week, the key question becomes: which 50 should be prioritised, and does contacting them actually improve retention compared to a control group?
+
+![Credit: RSS](images/The Motivation.jpg){#fig-1 fig-align="center" fig-alt="Credit: RSS"}
+
+Before writing a single line of code, it is essential to  gather as much context as possible: 
+
+* What problems are the business actually solving?
+* How does the model fit into the wider business process?
+* What tools/ dashboards do users currently use in the business process?
+* Who will use the outputs, and what actions will follow? 
+* How will success be measured—commercially, operationally, or behaviourally? How does the business success metrics translate to technical model metrics?
+* What trade-offs are acceptable in terms of cost, complexity, or speed? 
+* How will performance be monitored as data, behaviour, and markets evolve?
+* What are the operational constraints?
+
+Once the essentials are understood (to the extent they can be), the vision for the project and the success metrics must be agreed collectively. All key stakeholders—technical, operational, financial, and strategic—need to be involved in defining what success looks like. Without this shared vision, each group risks optimising for its own priorities rather than the organisation’s overall goals. Crucially, the vision should extend beyond performance metrics: it should tell the story of the problem being solved and what success will mean in practice. This shared narrative becomes the project’s guiding star. To keep it on course, data science and AI teams, working with stakeholders, must guard against scope creep and shifting success criteria, ensuring that any new requests fit within the agreed scope. Flexibility still has a place—experimentation and design changes are healthy—but only when they remain consistent with the original vision and are aligning to achieving the success metrics.
+
+## The Power of Test-and-Learn
+
+Evaluation and monitoring should never be an afterthought—they must be built in from the very beginning. Doing so ensures that systems are designed to capture the right metrics for monitoring, rather than scrambling to measure impact after the fact. This means defining not only technical performance measures but also organisational impact measures, all aligned to clear, measurable success metrics. These metrics should be developed collaboratively with stakeholders, and while data scientists may not set them alone, they play a critical role in shaping and challenging them where needed.
+
+![Credit: RSS](images/Evaluate.jpg){#fig-1 fig-align="center" fig-alt="Credit: RSS"}
+
+A test-and-learn approach is particularly powerful because it generates direct evidence of what works under real-world conditions. For example, a simple test-and-control design—splitting customers into two groups, one acted on and one left as business-as-usual—provides incremental evidence of benefit that is far more persuasive than retrospective accuracy scores. Unlike abstract metrics, this method shows whether interventions truly drive the desired outcomes, and it allows organisations to learn, adapt, and refine strategies over time.
+
+Ultimately, evaluation is about measuring decision performance in practice, while monitoring ensures that impact remains robust as circumstances evolve.
+
+In our fictional case, the practitioner was told simply: “Predict which customers are likely to leave.”  Had the brief been framed instead as:
+
+*“Identify the top 50 customers most likely to leave and integrate this into daily retention calls, aiming to save £1M/year in lost contracts,”*
+
+– the project would have taken a very different path. From the outset, the practitioner could have:
+
+* Focused on the right features (e.g. time since last contact, usage trends).
+* Defined the appropriate technical workflows to meet the business vision such as defining how to best process the predictions (e.g. such as daily batches).
+* Set evaluation criteria and how this will be measured and monitored over time not just for accuracy, but for contracts saved and revenue retained. For example is a dashboard needed to monitor technical and/or business metrics over time?
+
+Map the current business process end to end, noting all user interactions and data collection points. Then overlay where the model will integrate into that process—how scores or predictions are generated, who receives them, how they are acted on, and how outcomes flow back into the system. This makes clear both the operational impact of the model and what changes are needed for it to deliver value.
+ 
+## Design for Value, Not Novelty
+
+Data science is not about building technically impressive models for their own sake. It is about solving real, valuable problems in a way that makes sense for the business. That requires balancing technical rigour with commercial awareness and designing for the decisions the model is supposed to inform. If a model improves accuracy by two percent but costs ten times more to run, is it worth it? The answer depends on whether those extra points translate into measurable financial impact—say, millions in retained revenue—or whether the additional complexity simply adds cost, slows decisions, or creates operational risks.
+
+These trade-offs demand evidence-based thinking. Costs and benefits should be estimated transparently, with plausible assumptions rather than optimistic guesses. If the data isn’t available, the honest answer is to propose an experiment or pilot to generate it. Credibility comes from clarity: being upfront about uncertainty and showing how evidence will be built over time.
+
+When weighing approaches, ask: 
+
+* Could a simpler model deliver “good enough” accuracy at lower cost and be deployed faster? 
+* What is the marginal value of added complexity? 
+* Does the design reflect operational constraints such as contact-centre capacity? 
+
+Here, the product mindset for data science and AI practitioners becomes critical. Treating an AI solution as a product reframes the goal from “building a model” to “delivering value.” Like any product, an AI system has costs to design, build, deploy, and maintain. Its worth lies not in technical elegance but in whether the return justifies those costs. That means asking early: is the investment worth it?
+
+One practical way to answer that question is by forecasting scenarios. Before scaling, estimate the expected impact under different conditions: a base case, a best case, and a worst case. For example, in a retention project, you might forecast incremental revenue by combining churn rates, average customer value, intervention costs, and expected uplift. This makes assumptions explicit and gives decision-makers a clear view of risk and upside. A solution is rarely a guaranteed win, but scenario planning allows stakeholders to judge whether the likely outcomes justify the investment.
+
+Consider again the retention example. A complex ensemble might squeeze out a few extra percentage points of accuracy, but a straightforward logistic regression—fast, interpretable, and low-cost—might enable daily scoring and immediate action. Even if slightly less accurate, its ease of deployment and alignment with operational capacity could make it far more valuable overall. Simplicity, in many cases, is the shortest route to measurable business outcomes.
+
+A product mindset also changes how value is communicated. Technical performance metrics—“87% recall with XGBoost”—speak to specialists but mean little to decision-makers. A product framing translates performance into outcomes: “This model could reduce service costs by £800k annually by targeting at-risk customers more effectively.” Such claims should be grounded in defendable assumptions: average customer value, historic retention rates, intervention costs, and expected uplift. Framing matters. Commercial cares about ROI, operations about efficiency and capacity, marketing about campaign effectiveness, and leadership about growth and risk. Lead with the “why,” not the “how,” so the role of the model in delivering value is unmistakable.
+
+![Credit: RSS](images/Make It Make Sense.jpg){#fig-1 fig-align="center" fig-alt="Credit: RSS"}
+
+In our fictional retention project, the gap wasn’t the algorithm—it was the absence of product-minded, value-first design. A better path would have been to:
+
+* Co-define the decision and action with Marketing: which customers will be contacted, via which channel, on what cadence.
+* Quantify a credible return on investment with Commercial by building a simple model using actual retention rates, average customer value, contact costs, and expected uplift—then present best/base/worst cases with explicit assumptions. From there, translate the ROI targets into required model performance thresholds (e.g., precision/recall, lift) to meet ROI and the agreed success metrics.  
+* Choose the fastest viable baseline—such as logistic regression—to enable daily scoring and interpretability, and document the marginal value required to justify moving to a more complex ensemble. Factor in time investment and run costs, align these with the ROI calculations above, and use that alignment to communicate and justify the investment. This approach also provides a clear benchmark: if the baseline model cannot meet the agreed success metrics, it helps build the case for investing in more complex methods.
+* Run a time-boxed pilot with a holdout: four–six weeks, test-and-control experiment; measure incremental saves, revenue impact, and operational load before scaling.
+* Set guardrails and monitoring: track decision KPIs (contacts made, saves, £ retained) alongside model KPIs; agree thresholds for retraining and a rollback plan. 
+
+## Build for Adoption
+
+Adoption must be planned from the start. Trust develops gradually, and regular check-ins with stakeholders help sustain it by keeping the project aligned with its agreed vision. These sessions are not box-ticking exercises but chances to test assumptions, surface blockers, have continuous feedback and make timely adjustments. Ultimately, a model succeeds only if people use it—so adoption depends on usability, seamless integration into existing processes while delivering something users genuinely want and can see a clear benefit from.
+
+Instead of starting with purely technical questions—such as “will I need to export this to a CSV?”—it is often more effective to begin by considering the user journey. For example, if the end goal is for users to view the results in a dashboard, that should frame the discussion from the outset. Once the user’s needs are clear, the practitioner can then work with the data engineering team to determine the most appropriate technical solution, such as the optimal data format or storage approach.. Hence it is important to ask early:
+
+* Where will predictions appear or be visualised for example in a CRM, a dashboard, or an automated alert? How will users interpret and act on them?
+* Will outputs delivered in tools people already use? 
+* What training or support will be needed?
+* How will impact be made visible to leadership?
+* How best should the outputs of the model be presented to ensure they are usable and actionable for the next stage of the business process.
+
+Thinking about these questions early prevents the familiar fate of a technically brilliant model that sits idle.
+
+Adoption is strongest when development is iterative. A continuous feedback loop between data science teams, users, and stakeholders is essential. Rather than disappearing into a three-month build, teams should work in cycles: release a minimum viable product (MVP), test it with users, gather feedback, and refine. An MVP could be as simple as a weekly spreadsheet with a risk score; if it proves valuable, the team can then invest in automation, dashboards, or more advanced models. This staged approach reduces risk, delivers value early, and builds trust among stakeholders. Crucially, reaching an MVP quickly lets both technical and business teams see what works—and what doesn’t—in practice, instead of relying on endless planning meetings where edge cases are difficult to anticipate.
+
+Communication is critical. Just as one study on doctor–patient interactions found that 91% of patients preferred doctors who avoided jargon,^[Allen, K. A., Charpentier, V., Hendrickson, M. A., Kessler, M., Gotlieb, R., Marmet, J., Hause, E., Praska, C., Lunos, S., & Pitt, M. B. (2023). Jargon Be Gone – Patient Preference in Doctor Communication. Journal of Patient Experience, 10, Article 23743735231158942. DOI: 10.1177/23743735231158942] stakeholders respond more positively when practitioners present results in plain language. Clear explanations build understanding, and understanding builds trust. It is also important to explain, in accessible terms, how a model or tool works “under the hood,” so users can better grasp how decisions are being made. Adoption can be further strengthened by having champions within the business—trusted and respected leaders in the business area who engage end users, promote new tools, and support day-to-day use through training and guidance.
+
+In the retention case, adoption failed because the model was delivered as a finished artefact, with no path to use. A better approach would have been to:
+
+* Deliver an MVP: a simple churn risk score in a spreadsheet, tested with Marketing for a small pilot group while establishing a continuous feedback look through feedback forms or through stakeholder updates.
+* Work iteratively with Engineering to integrate predictions into the CRM step by step, rather than aiming for a big-bang deployment. define the CRM fields, score push schedule, ownership of follow-up, and SLAs; confirm who acts on the scores and how outcomes are recorded.
+* Run a test-and-control pilot to prove incremental benefit, building an evidence base for expansion.
+* Set up a lightweight KPI dashboard so everyone can  see early wins in terms of contracts saved and revenue retained.
+* Create champions by involving stakeholders at every stage, so they owned and advocated for the solution.
+
+Had the project taken an iterative, MVP-first approach, the practitioner would have avoided months of sunk effort and built momentum for adoption as trust grew over time. Adoption is not an afterthought—it is the decisive factor that turns technical excellence into sustained impact. 
+
+##The Bottom Line
+
+Great models rarely fail because of poor algorithms; they fail because they are disconnected from the goals, workflows, strategies, and people they are meant to serve. To avoid the fate of the Vanishing Model, projects must begin with a clear vision—one that is co-created with stakeholders and sustained through regular check-ins. Frame every project around measurable business outcomes and define success before writing a single line of code.
+
+Prove value under real-world conditions with test-and-control approaches. Weigh technical ambition against practical trade-offs—cost, complexity, deployment speed, and maintainability. Translate precision, recall, and ROC curves into outcomes the business understands: contracts retained, revenue gained, costs reduced. And above all, plan for adoption from day one, so that predictions are not just accurate but usable, trusted, and embedded in daily decisions.
+
+In the end, the mark of a great model is not the elegance of its algorithm but its ability to have positive impact.
+
+
+::: article-btn
+[Explore more data science ideas](/foundation-frontiers/index.qmd)
+:::
+
+::: {.further-info}
+::: grid
+::: {.g-col-12 .g-col-md-12}
+About the author
+: **Jennifer Hall** is a freelance science writer and editor based in Bristol, UK. She has a PhD from King’s College London in physics, specifically nanophotonics and how light interacts with the very small, and has been an editor for Nature Publishing Group (now Springer Nature), IOP Publishing and New Scientist. Other publications she contributes to include The Observer, New Scientist, Scientific American, Physics World and Chemistry World..
+:::
+::: {.g-col-12 .g-col-md-6}
+Copyright and licence
+: &copy; 2025 Jennifer Hall
+
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> Text, code, and figures are licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>, except where otherwise noted. Thumbnail image by <a href="https://www.shutterstock.com/image-photo/mute-key-on-neat-white-keyboard-1832448097">Shutterstock/Park Kang Hun</a>  <a href="https://creativecommons.org/licenses/by/4.0/">Licenced by CC-BY 4.0</a>.
+
+:::
+::: {.g-col-12 .g-col-md-6}
+How to cite
+: Hall, Jennifer. 2025. "Why Great Models (Still) Fail" Real World Data Science, October 4, 2025. [URL](https://realworlddatascience.net/foundation-frontiers/posts/2024/10/31/why-great-models-still-fail.html)
+:::
+:::
+:::
