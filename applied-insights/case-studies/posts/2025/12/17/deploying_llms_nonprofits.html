@@ -6,11 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Yang Wu, Aishwarya Budhkar, Kai Zhang, Xuhong Zhang, and Xiaozhong Liu">
-<meta name="dcterms.date" content="2023-08-21">
-<meta name="description" content="PhD students and faculty from Worcester Polytechnic Institute and Indiana University Bloomington describe their solution to the Food for Thought challenge: an ensemble of base string matching and BERT models.">
+<meta name="author" content="Annie Flynn">
+<meta name="dcterms.date" content="2025-12-17">
+<meta name="description" content="The Mike Hudson Foundation has developed an LLM-powered ‘answer engine’ for non-profits. Our recent conversation with them surfaced some valuable insights for practitioners working in this sphere.">
 
-<title>Food for Thought: Second place winners – DeepFFTLink – Real World Data Science</title>
+<title>Deploying LLMs for Nonprofits: 10 Lessons from Knowbot – Real World Data Science</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -23,27 +23,7 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
   vertical-align: middle;
 }
-/* CSS for citations */
-div.csl-bib-body { }
-div.csl-entry {
-  clear: both;
-  margin-bottom: 0em;
-}
-.hanging-indent div.csl-entry {
-  margin-left:2em;
-  text-indent:-2em;
-}
-div.csl-left-margin {
-  min-width:2em;
-  float:left;
-}
-div.csl-right-inline {
-  margin-left:2em;
-  padding-left:1em;
-}
-div.csl-indent {
-  margin-left: 2em;
-}</style>
+</style>
 
 
 <script src="../../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
@@ -107,20 +87,18 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 Ben is on GitHub here: https://github.com/benruijl
 And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
 
-<meta property="og:title" content="Food for Thought: Second place winners – DeepFFTLink – Real World Data Science">
-<meta property="og:description" content="PhD students and faculty from Worcester Polytechnic Institute and Indiana University Bloomington describe their solution to the Food for Thought challenge: an ensemble of base string matching and BERT models.">
-<meta property="og:image" content="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/04-deepfftlink.png">
+<meta property="og:title" content="Deploying LLMs for Nonprofits: 10 Lessons from Knowbot – Real World Data Science">
+<meta property="og:description" content="The Mike Hudson Foundation has developed an LLM-powered ‘answer engine’ for non-profits. Our recent conversation with them surfaced some valuable insights for practitioners working in this sphere.">
+<meta property="og:image" content="https://realworlddatascience.net/applied-insights/case-studies/posts/2025/12/17/images/LLMthumb.png">
 <meta property="og:site_name" content="Real World Data Science">
-<meta property="og:image:height" content="724">
-<meta property="og:image:width" content="991">
-<meta property="og:image:alt" content="A shopper walks the aisles of a supermarket in the United States.">
-<meta name="twitter:title" content="Food for Thought: Second place winners – DeepFFTLink – Real World Data Science">
-<meta name="twitter:description" content="PhD students and faculty from Worcester Polytechnic Institute and Indiana University Bloomington describe their solution to the Food for Thought challenge: an ensemble of base string matching and BERT models.">
-<meta name="twitter:image" content="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/04-deepfftlink.png">
+<meta property="og:image:height" content="1024">
+<meta property="og:image:width" content="1536">
+<meta name="twitter:title" content="Deploying LLMs for Nonprofits: 10 Lessons from Knowbot – Real World Data Science">
+<meta name="twitter:description" content="The Mike Hudson Foundation has developed an LLM-powered ‘answer engine’ for non-profits. Our recent conversation with them surfaced some valuable insights for practitioners working in this sphere.">
+<meta name="twitter:image" content="https://realworlddatascience.net/applied-insights/case-studies/posts/2025/12/17/images/LLMthumb.png">
 <meta name="twitter:site" content="@rwdatasci">
-<meta name="twitter:image-height" content="724">
-<meta name="twitter:image-width" content="991">
-<meta name="twitter:image:alt" content="A shopper walks the aisles of a supermarket in the United States.">
+<meta name="twitter:image-height" content="1024">
+<meta name="twitter:image-width" content="1536">
 <meta name="twitter:card" content="summary_large_image">
 </head><body class="nav-fixed quarto-light"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
 
@@ -140,35 +118,6 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 </script>
 
-  <script src="https://cdnjs.cloudflare.com/polyfill/v3/polyfill.min.js?features=es6"></script>
-  <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js" type="text/javascript"></script>
-
-<script type="text/javascript">
-const typesetMath = (el) => {
-  if (window.MathJax) {
-    // MathJax Typeset
-    window.MathJax.typeset([el]);
-  } else if (window.katex) {
-    // KaTeX Render
-    var mathElements = el.getElementsByClassName("math");
-    var macros = [];
-    for (var i = 0; i < mathElements.length; i++) {
-      var texText = mathElements[i].firstChild;
-      if (mathElements[i].tagName == "SPAN" && texText && texText.data) {
-        window.katex.render(texText.data, mathElements[i], {
-          displayMode: mathElements[i].classList.contains('display'),
-          throwOnError: false,
-          macros: macros,
-          fleqn: false
-        });
-      }
-    }
-  }
-}
-window.Quarto = {
-  typesetMath
-};
-</script>
 
 <link rel="stylesheet" href="../../../../../../rwds.css">
 
@@ -241,19 +190,13 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Food for Thought: Second place winners – DeepFFTLink</h1>
+      <h1 class="title">Deploying LLMs for Nonprofits: 10 Lessons from Knowbot</h1>
                   <div>
         <div class="description">
-          <p>PhD students and faculty from Worcester Polytechnic Institute and Indiana University Bloomington describe their solution to the Food for Thought challenge: an ensemble of base string matching and BERT models.</p>
+          <p>The Mike Hudson Foundation has developed an LLM-powered ‘answer engine’ for non-profits. Our recent conversation with them surfaced some valuable insights for practitioners working in this sphere.</p>
         </div>
       </div>
-                          <div class="quarto-categories">
-                <div class="quarto-category">Machine learning</div>
-                <div class="quarto-category">Natural language processing</div>
-                <div class="quarto-category">Public policy</div>
-                <div class="quarto-category">Health and wellbeing</div>
-              </div>
-                  </div>
+                </div>
   </div>
     
   
@@ -262,14 +205,14 @@ window.Quarto = {
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Yang Wu, Aishwarya Budhkar, Kai Zhang, Xuhong Zhang, and Xiaozhong Liu </p>
+               <p>Annie Flynn </p>
             </div>
     </div>
       
       <div>
       <div class="quarto-title-meta-heading">Published</div>
       <div class="quarto-title-meta-contents">
-        <p class="date">August 21, 2023</p>
+        <p class="date">December 17, 2025</p>
       </div>
     </div>
     
@@ -285,13 +228,18 @@ window.Quarto = {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#perspective-on-the-challenge" id="toc-perspective-on-the-challenge" class="nav-link active" data-scroll-target="#perspective-on-the-challenge">Perspective on the challenge</a></li>
-  <li><a href="#our-approach" id="toc-our-approach" class="nav-link" data-scroll-target="#our-approach">Our approach</a></li>
-  <li><a href="#our-results" id="toc-our-results" class="nav-link" data-scroll-target="#our-results">Our results</a></li>
-  <li><a href="#future-work" id="toc-future-work" class="nav-link" data-scroll-target="#future-work">Future work</a></li>
-  <li><a href="#lessons-learned" id="toc-lessons-learned" class="nav-link" data-scroll-target="#lessons-learned">Lessons learned</a></li>
+  <li><a href="#start-with-the-simplest-possible-use-case" id="toc-start-with-the-simplest-possible-use-case" class="nav-link active" data-scroll-target="#start-with-the-simplest-possible-use-case">1. Start With the Simplest Possible Use Case</a></li>
+  <li><a href="#culture-matters-more-than-budget" id="toc-culture-matters-more-than-budget" class="nav-link" data-scroll-target="#culture-matters-more-than-budget">2. Culture Matters More Than Budget</a></li>
+  <li><a href="#build-for-trust-first-then-functionality" id="toc-build-for-trust-first-then-functionality" class="nav-link" data-scroll-target="#build-for-trust-first-then-functionality">3. Build for Trust First, Then Functionality</a></li>
+  <li><a href="#where-appropriate-restrict-the-models-knowledge-domain-to-reduce-risk" id="toc-where-appropriate-restrict-the-models-knowledge-domain-to-reduce-risk" class="nav-link" data-scroll-target="#where-appropriate-restrict-the-models-knowledge-domain-to-reduce-risk">4. Where Appropriate, Restrict the Model’s Knowledge Domain to Reduce Risk</a></li>
+  <li><a href="#expect-surprising-user-behaviour-and-design-for-it" id="toc-expect-surprising-user-behaviour-and-design-for-it" class="nav-link" data-scroll-target="#expect-surprising-user-behaviour-and-design-for-it">5. Expect Surprising User Behaviour — And Design for It</a></li>
+  <li><a href="#technological-timing-matters-and-keeps-improving" id="toc-technological-timing-matters-and-keeps-improving" class="nav-link" data-scroll-target="#technological-timing-matters-and-keeps-improving">6. Technological Timing Matters — And Keeps Improving</a></li>
+  <li><a href="#value-impact-over-volume" id="toc-value-impact-over-volume" class="nav-link" data-scroll-target="#value-impact-over-volume">7. Value Impact Over Volume</a></li>
+  <li><a href="#in-fast-moving-environments-admit-what-you-dont-know" id="toc-in-fast-moving-environments-admit-what-you-dont-know" class="nav-link" data-scroll-target="#in-fast-moving-environments-admit-what-you-dont-know">8. In Fast-Moving Environments, Admit What You Don’t Know</a></li>
+  <li><a href="#relationships-and-partnerships-are-everything" id="toc-relationships-and-partnerships-are-everything" class="nav-link" data-scroll-target="#relationships-and-partnerships-are-everything">9. Relationships and Partnerships Are Everything</a></li>
+  <li><a href="#the-next-frontier-agentic-ai" id="toc-the-next-frontier-agentic-ai" class="nav-link" data-scroll-target="#the-next-frontier-agentic-ai">10. The Next Frontier: Agentic AI</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/applied-insights/case-studies/posts/2023/08/21/04-second-place-winners.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/applied-insights/case-studies/posts/2025/12/17/deploying_llms_nonprofits.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -300,152 +248,104 @@ window.Quarto = {
 
 
 
-<p>DeepFFTLink team members: Yang Wu and Kai Zhang are PhD students at Worcester Polytechnic Institute. Aishwarya Budhkar is a PhD student at Indiana University Bloomington. Xuhong Zhang is an assistant professor at Indiana University Bloomington. Xiaozhong Liu is an associate professor at Worcester Polytechnic Institute.</p>
-<section id="perspective-on-the-challenge" class="level2">
-<h2 class="anchored" data-anchor-id="perspective-on-the-challenge">Perspective on the challenge</h2>
-<p>Text matching is an essential task in natural language processing <span class="citation" data-cites="DBLP:journals/corr/PangLGXWC16">(NLP, <a href="#ref-DBLP:journals/corr/PangLGXWC16" role="doc-biblioref">Pang et al. 2016</a>)</span>, while record linkage across different sources is an essential task in data science. Machine learning techniques allow people to combine data faster and cheaper than using manual linkage. However, in the context of the Food for Thought challenge, existing methods for matching universal product codes (UPCs) to ensemble codes (ECs) require every UPC to be compared with every EC code (Figure 1a). Such approaches can be computationally expensive in the training process when data is noisy. Here, we propose an ensemble model with a category-based adapter to tackle this problem, drawing on the category information included in UPC and EC data. The category-based adapter allows UPCs to be first matched with only a small and reliable set of ECs (Figure 1b). Then, an ensemble model will be deployed to make predictions for UPC-EC matching. Our proposed approach can achieve competitive performance compared with state-of-the-art models.</p>
-<div class="quarto-layout-panel" data-layout-ncol="2" style="padding-top: 1em; margin-bottom: 0;">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/pt4-fig1a.png"><img src="images/pt4-fig1a.png" class="img-fluid figure-img"></a></p>
-<figcaption>(a)</figcaption>
-</figure>
-</div>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><a href="images/pt4-fig1b.png"><img src="images/pt4-fig1b.png" class="img-fluid figure-img"></a></p>
-<figcaption>(b)</figcaption>
-</figure>
-</div>
-</div>
-</div>
-</div>
-<div class="figure-caption">
-<p><strong>Figure 1:</strong> A toy example of our method. Panel (a) shows the traditional matching method, while (b) is our proposed ensemble model with category-based adapter. With the help of the adapter, UPC 1 only needs to be matched with EC 1 and EC 3.</p>
-</div>
+<p>*Based on <a href="https://realworlddatascience.net/foundation-frontiers/posts/2025/11/27/MHF-interview.html">our conversation</a> with <a href="https://www.mikehudsonfoundation.org/">Mike Hudson</a>, Founder of <a href="https://www.mikehudsonfoundation.org">MHF</a>, <a href="https://www.knowbot.uk/">Knowbot</a> and <a href="https://www.testramp.org/">TestRAMP.</a></p>
+<p>Large language models (LLMs) are a form of generative artificial intelligence (AI) that offer transformative opportunities for organisations with complex information ecosystems. But deploying them responsibly requires technical pragmatism, cultural awareness, and a respect for context.</p>
+<p>Specialist AI donor the <a href="https://www.mikehudsonfoundation.org/">Mike Hudson Foundation</a> has developed an LLM-powered ‘answer engine’ that sits on websites and answers users’ questions. Our recent conversation with MHF’s Foundersurfaced some valuable insights for data science practitioners working in this sphere.</p>
+<section id="start-with-the-simplest-possible-use-case" class="level2">
+<h2 class="anchored" data-anchor-id="start-with-the-simplest-possible-use-case">1. Start With the Simplest Possible Use Case</h2>
+<p>One of Knowbot’s core design principles was <em>minimal friction</em>. MHF looked for a “gateway use case”: a low-risk, easy-to-understand tool that organisations could immediately see value in and adopt quickly.</p>
+<p><strong>Practitioner takeaway:</strong> Don’t begin with the most ambitious AI project your organisation can imagine. Begin with an easy, low risk project that still delivers value and treat it as a learning experience..</p>
 </section>
-<section id="our-approach" class="level2">
-<h2 class="anchored" data-anchor-id="our-approach">Our approach</h2>
-<p>We propose a two-step framework to address this problem. To begin with, we use a category-based adapter to get reliable candidate ECs for each UPC. Then, an ensemble model <span class="citation" data-cites="10.1007/3-540-45014-9_1">(<a href="#ref-10.1007/3-540-45014-9_1" role="doc-biblioref">Dietterich 2000</a>)</span> is deployed to make a prediction for each UPC-EC pair.</p>
-<section id="category-based-adapter" class="level5">
-<h5 class="anchored" data-anchor-id="category-based-adapter">Category-based adapter</h5>
-<p>By using 2015–2016 UPC-EC data, we created a knowledge base, which is a UPC category–EC pair-wised table for generating candidate ECs. Within this setting, each UPC category is, on average, related to only 32 ECs. This knowledge base is then used as context to further filter the candidate ECs. Note that there are some new ECs generated year by year, which can also be part of the potential ECs in the UPC-EC matching task, since the contextual information of new ECs does not exist in our knowledge base.</p>
-</section>
-<section id="ensembled-model" class="level5">
-<h5 class="anchored" data-anchor-id="ensembled-model">Ensembled model</h5>
-<p>We ensemble the base-string match and BERT models. BERT is a deep learning model for natural language processing <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805">(<a href="#ref-DBLP:journals/corr/abs-1810-04805" role="doc-biblioref">Devlin et al. 2018</a>)</span>. In the base-string match model, we used the Term Frequency-Inverse Document Frequency (TFIDF) of each UPC and EC description as features to calculate a pairwise cosine similarity, which is a distance between instances. Meanwhile, we used features extracted from UPC and EC descriptions to fine-tune the BERT base model and calculated the cosine similarity of embeddings between each UPC and EC. Then we rank ECs based on their similarity scores with the UPC.</p>
-<p><a href="images/pt4-fig2.png"><img src="images/pt4-fig2.png" class="img-fluid"></a></p>
-<div class="figure-caption">
-<p><strong>Figure 2:</strong> The framework of our proposed model. A two-step strategy is used to make the final prediction.</p>
-</div>
-<div class="callout callout-style-simple callout-note" style="margin-top: 2rem;">
-<div class="callout-body d-flex">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-body-container">
-<p>Find the code in the <a href="https://github.com/realworlddatascience/realworlddatascience.github.io/tree/main/case-studies/posts/2023/08/21/_code">Real World Data Science GitHub repository</a>.</p>
-</div>
-</div>
-</div>
-</section>
-</section>
-<section id="our-results" class="level2">
-<h2 class="anchored" data-anchor-id="our-results">Our results</h2>
-<p>We randomly selected 500 samples from the 2017–2018 UPC-EC data to train the ensembled weight for each model. Two functions were adapted to make a fusion of base-string and BERT models:</p>
-<p><span id="eq-first"><span class="math display">\[
-C = a * X + b * Y  
-\tag{1}\]</span></span></p>
-<p><span id="eq-second"><span class="math display">\[
-C =  a * log(X) + b * log(Y) \text{. }
-\tag{2}\]</span></span></p>
-<p><span class="math inline">\(C\)</span> denotes the final confidence score. <span class="math inline">\(X\)</span> and <span class="math inline">\(Y\)</span> represent <em>base_string_similarity_score</em> and <em>BERT_similarity_score</em>, respectively. <span class="math inline">\(a\)</span> and <span class="math inline">\(b\)</span> are corresponding model weights for base_string and BERT models.</p>
-<p>A better Success@5 is achieved with function (1). The ensembled weights for the base-string model and BERT model are 0.738 and 0.262, respectively. The experiment result indicates that the base_string model contributes more than the BERT model when the ensemble model makes predictions. The prediction result for the 2017–2018 data is:</p>
+<section id="culture-matters-more-than-budget" class="level2">
+<h2 class="anchored" data-anchor-id="culture-matters-more-than-budget">2. Culture Matters More Than Budget</h2>
+<p>Hudson notes that AI readiness among nonprofits varies widely and isn’t correlated with organisational size. Some large charities are slow to innovate due to bureaucracy; some small ones are enthusiastic but unlikely to benefit.</p>
+<p><strong>Practitioner takeaway:</strong> When planning an LLM deployment, assess <em>cultural readiness</em>, not just technical readiness. Ask:</p>
 <ul>
-<li>Success@5: 0.727</li>
-<li>NDCG@5: 0.528</li>
+<li><p>Who are the internal champions?</p></li>
+<li><p>How much AI literacy exists?</p></li>
+<li><p>How cautious is the organisation by default?</p></li>
 </ul>
-<p>Computation time is 6 hours.</p>
+<p>This will drive adoption far more than infrastructure.</p>
 </section>
-<section id="future-work" class="level2">
-<h2 class="anchored" data-anchor-id="future-work">Future work</h2>
-<p>Our next step will focus on adding the newly generated EC data into our knowledge base, which allows the model to be more stable to make predictions for UPC-EC matching. Our model is an unsupervised method, which does not need labels for each instance. We use cosine similarity to rank the matches, so no labels are needed in the training process. However, our future work will try to label some instances to handle the UPC-EC matching task in a supervised manner.</p>
+<section id="build-for-trust-first-then-functionality" class="level2">
+<h2 class="anchored" data-anchor-id="build-for-trust-first-then-functionality">3. Build for Trust First, Then Functionality</h2>
+<p>The biggest obstacle MHF faced wasn’t the model, the infrastructure, or the code. It was <em>accessing the right decision-makers</em> and establishing trust with LLMs in general and Knowbot in particular.</p>
+<p><strong>Practitioner takeaway:</strong> AI deployments in nonprofits are trust projects as much as technical ones. Practitioners should:</p>
+<ul>
+<li><p>Engage early with leadership.</p></li>
+<li><p>Be explicit about risks and mitigations.</p></li>
+<li><p>Provide clear, responsible documentation.</p></li>
+<li><p>Avoid overclaiming what the model can do.</p></li>
+</ul>
+<p>The more transparent the process, the smoother the adoption.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/LLM2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
 </section>
-<section id="lessons-learned" class="level2">
-<h2 class="anchored" data-anchor-id="lessons-learned">Lessons learned</h2>
-<ol type="1">
-<li><p><strong>If the data is not complex, simple models may outperform complex models.</strong> For example, in our experiment, we found that the base-string model outperforms single RoBERTa <span class="citation" data-cites="DBLP:journals/corr/abs-1907-11692">(<a href="#ref-DBLP:journals/corr/abs-1907-11692" role="doc-biblioref">Liu et al. 2019</a>)</span> or BERT models. However, our ensemble model can outperform each individual model since model fusion allows information aggregation from multiple models.</p></li>
-<li><p><strong>Multi-label models may not work well on UPC-EC data.</strong> In our early work, we tried to consider the UPC-EC matching task as a multi-label problem, e.g., we labeled each EC as a binary label which indicated whether the EC was an appropriate match or not. We mapped UPC and EC pairs into a multi-label table. However, we find that the UPC and EC keeps a one-to-one relation for most UPCs. The model performance of a multi-label model, i.e., Label-Specific Attention Network <span class="citation" data-cites="xiao-etal-2019-label">(LSAN, <a href="#ref-xiao-etal-2019-label" role="doc-biblioref">Xiao et al. 2019</a>)</span>, is lower than base-string model on both Success@5 and NDCG@5 metrics.</p></li>
-</ol>
-<div class="nav-btn-container">
-<div class="grid">
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/03-first-place-winners.html">← Part 3: First place winners</a></p>
+<section id="where-appropriate-restrict-the-models-knowledge-domain-to-reduce-risk" class="level2">
+<h2 class="anchored" data-anchor-id="where-appropriate-restrict-the-models-knowledge-domain-to-reduce-risk">4. Where Appropriate, Restrict the Model’s Knowledge Domain to Reduce Risk</h2>
+<p>Knowbot deliberately confines itself to the content on the host organisation’s website(s), plus general internal LLM knowledge. It doesn’t trawl the open internet. This dramatically limits opportunities for hallucinations, unsafe advice, or reputational risk.</p>
+<p><strong>Practitioner takeaway:</strong> Whenever possible, design LLM answer engine systems that operate on <em>curated, organisation-owned content</em>. Domain restriction is one of the most effective forms of practical AI safety.</p>
+</section>
+<section id="expect-surprising-user-behaviour-and-design-for-it" class="level2">
+<h2 class="anchored" data-anchor-id="expect-surprising-user-behaviour-and-design-for-it">5. Expect Surprising User Behaviour — And Design for It</h2>
+<p>One of the unexpected patterns in early usage: people asked Knowbot, <em>“Who are you?”</em> This required the team to add a new prompt component and require every partner to host a <em>“What is Knowbot?”</em> page.</p>
+<p><strong>Practitioner takeaway:</strong> Build processes for:</p>
+<ul>
+<li><p>Unexpected inputs</p></li>
+<li><p>Prompt evolution</p></li>
+<li><p>Iterative refinement</p></li>
+</ul>
+<p>LLM deployment is never “set and forget.”</p>
+</section>
+<section id="technological-timing-matters-and-keeps-improving" class="level2">
+<h2 class="anchored" data-anchor-id="technological-timing-matters-and-keeps-improving">6. Technological Timing Matters — And Keeps Improving</h2>
+<p>Hudson emphasised that many capabilities now considered standard (e.g.&nbsp;long context length, ring fenced access to specific types of knowledge, server deployment ease) would have been impossible even a year earlier. The tools needed to fulfil a nonprofit’s evolving needs often appear in the LLM ecosystem soon after the nonprofit requests new functionality - making the decision whether to ‘build custom’ or ‘wait’ a tricky one.</p>
+<p><strong>Practitioner takeaway:</strong> Stay current. Model capabilities, guardrails, and hosting options evolve at high speed. What was impossible last quarter may be trivial today.</p>
+</section>
+<section id="value-impact-over-volume" class="level2">
+<h2 class="anchored" data-anchor-id="value-impact-over-volume">7. Value Impact Over Volume</h2>
+<p>Knowbot’s LLM processing costs MHF money, and soKnowbot’s team evaluates success not just by the number of questions answered but by the <em>relevance</em> of those questions to valuable decision-making. A tool that helps a policymaker or researcher retrieve something critical can have outsized impact.</p>
+<p><strong>Practitioner takeaway:</strong>When measuring impact, develop metrics that capture qualitative value, not just quantitative usage. For example you might consider:</p>
+<ul>
+<li><p>Complexity of queries</p></li>
+<li><p>Decision relevance</p></li>
+<li><p>Equity of access</p></li>
+<li><p>Whether the tool reduces burden on staff</p></li>
+</ul>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/LLM3.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
 </div>
+</section>
+<section id="in-fast-moving-environments-admit-what-you-dont-know" class="level2">
+<h2 class="anchored" data-anchor-id="in-fast-moving-environments-admit-what-you-dont-know">8. In Fast-Moving Environments, Admit What You Don’t Know</h2>
+<p>Both Knowbot and TestRAMP were built in contexts where knowledge was changing daily. Hudson emphasises the importance of asking “naïve” questions, learning quickly, and not pretending expertise where there is none.</p>
+<p><strong>Practitioner takeaway:</strong> Cultivate humility. Curiosity and fast learning beats early certainty. Pair technical exploration with organisational openness about unknowns.</p>
+</section>
+<section id="relationships-and-partnerships-are-everything" class="level2">
+<h2 class="anchored" data-anchor-id="relationships-and-partnerships-are-everything">9. Relationships and Partnerships Are Everything</h2>
+<p>Across both initiatives, success depended less on algorithms and more on building new human relationships.</p>
+<p><strong>Practitioner takeaway: </strong>AI for public good is a team sport. Map stakeholders. Share progress transparently. Community buy-in creates technical resilience.</p>
+</section>
+<section id="the-next-frontier-agentic-ai" class="level2">
+<h2 class="anchored" data-anchor-id="the-next-frontier-agentic-ai">10. The Next Frontier: Agentic AI</h2>
+<p>Hudson argues we’re at a turning point where AI will expand from being “retrieval engines” to becoming “agentic systems that can do things.” With that shift comes both opportunity and new categories of risk.</p>
+<p><strong>Practitioner takeaway:</strong> Prepare now for agentic systems. Start with controlled automation, clear constraints, auditable logs, and robust governance. Retrieval is only the beginning.</p>
+<p><a href="https://realworlddatascience.net/foundation-frontiers/posts/2025/11/27/MHF-interview.html">Read our full conversation with Mike Hudson here.</a></p>
+<p><a href="https://www.mikehudsonfoundation.org/">Find out more about the Mike Hudson Foundation here.</a></p>
+<p><em>Mike Hudson is an entrepreneur in technology &amp; electronic markets. He now uses his expertise to help solve social problems. Mike founded TestRAMP, a pandemic nonprofit social market described as a “major contribution to Covid PCR testing &amp; genomic sequencing” &amp; donated its £2.4mn profits for charity. Mike is a Fellow of ZSL &amp; adviser to its CEO. He is an honorary Research Fellow at City, University of London. Mike is a member of the Responsible AI Institute. He is a Foundation Fellow at St Antony’s College, University of Oxford.</em></p>
+<div class="article-btn">
+<p><a href="../../../../../../applied-insights/index.html">Explore more data science ideas</a></p>
 </div>
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/05-third-place-winners.html">Part 5: Third place winners →</a></p>
-</div>
-</div>
-</div>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the authors</dt>
-<dd>
-<strong>Yang Wu</strong> and <strong>Kai Zhang</strong> are PhD students, and <strong>Xiaozhong Liu</strong> is an associate professor at Worcester Polytechnic Institute. <strong>Aishwarya Budhkar</strong> is a PhD student and <strong>Xuhong Zhang</strong> is an assistant professor at Indiana University Bloomington.
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Yang Wu, Aishwarya Budhkar, Kai Zhang, Xuhong Zhang, and Xiaozhong Liu
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@hansonluu?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Hanson Lu</a> on <a href="https://unsplash.com/photos/sq5P00L7lXc?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Wu, Yang, Aishwarya Budhkar, Kai Zhang, Xuhong Zhang, and Xiaozhong Liu. 2023. “Food for Thought: Second place winners – DeepFFTLink.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/the-pulse/case-studies/posts/2023/08/21/04-second-place-winners.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
 
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
-<div id="ref-DBLP:journals/corr/abs-1810-04805" class="csl-entry" role="listitem">
-Devlin, J., M.-W. Chang, K. Lee, and K. Toutanova. 2018. <span>“<span>BERT:</span> Pre-Training of Deep Bidirectional Transformers for Language Understanding.”</span> <em>CoRR</em> abs/1810.04805. <a href="http://arxiv.org/abs/1810.04805">http://arxiv.org/abs/1810.04805</a>.
-</div>
-<div id="ref-10.1007/3-540-45014-9_1" class="csl-entry" role="listitem">
-Dietterich, T. G. 2000. <span>“Ensemble Methods in Machine Learning.”</span> In <em>Multiple Classifier Systems</em>, 1–15. Berlin, Heidelberg: Springer Berlin Heidelberg.
-</div>
-<div id="ref-DBLP:journals/corr/abs-1907-11692" class="csl-entry" role="listitem">
-Liu, Y., M. Ott, N. Goyal, J. Du, M. Joshi, D. Chen, O. Levy, M. Lewis, L. Zettlemoyer, and V. Stoyanov. 2019. <span>“RoBERTa: <span>A</span> Robustly Optimized <span>BERT</span> Pretraining Approach.”</span> <em>CoRR</em> abs/1907.11692. <a href="http://arxiv.org/abs/1907.11692">http://arxiv.org/abs/1907.11692</a>.
-</div>
-<div id="ref-DBLP:journals/corr/PangLGXWC16" class="csl-entry" role="listitem">
-Pang, L., Y. Lan, J. Guo, J. Xu, S. Wan, and X. Cheng. 2016. <span>“Text Matching as Image Recognition.”</span> <em>CoRR</em> abs/1602.06359. <a href="http://arxiv.org/abs/1602.06359">http://arxiv.org/abs/1602.06359</a>.
-</div>
-<div id="ref-xiao-etal-2019-label" class="csl-entry" role="listitem">
-Xiao, L., X. Huang, B. Chen, and L. Jing. 2019. <span>“Label-Specific Document Representation for Multi-Label Text Classification.”</span> In <em>Proceedings of the 2019 Conference on Empirical Methods in Natural Language Processing and the 9th International Joint Conference on Natural Language Processing (EMNLP-IJCNLP)</em>, 466–75. Hong Kong, China: Association for Computational Linguistics. <a href="https://doi.org/10.18653/v1/D19-1044">https://doi.org/10.18653/v1/D19-1044</a>.
-</div>
-</div></section></div></main> <!-- /main -->
+</main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
   window.document.addEventListener("DOMContentLoaded", function (event) {
     const icon = "";
@@ -919,7 +819,7 @@ Xiao, L., X. Huang, B. Chen, and L. Jing. 2019. <span>“Label-Specific Document
     </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/applied-insights/case-studies/posts/2023/08/21/04-second-place-winners.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/applied-insights/case-studies/posts/2025/12/17/deploying_llms_nonprofits.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p><a href="../../../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
 </div>
