@@ -17,7 +17,109 @@
 <width>144</width>
 </image>
 <generator>quarto-1.8.27</generator>
-<lastBuildDate>Thu, 29 Jan 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Mon, 02 Feb 2026 18:29:47 GMT</lastBuildDate>
+<item>
+  <title>Colorado’s AI Law Pause: What It Means for People Working in Data Science</title>
+  <dc:creator>Dr. Stefani Langehennig, University of Denver Daniels College of Business</dc:creator>
+  <link>https://realworlddatascience.net/the-pulse/posts/2026/02/02/colarado-AI.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>In 2024, Colorado became the first U.S. state to pass a <a href="https://leg.colorado.gov/bills/sb24-205">comprehensive law</a> aimed at regulating “high-risk” artificial intelligence systems-models used in areas such as hiring, housing, credit, and healthcare. The law adopted a risk-based approach, placing additional obligations on systems that shape consequential decisions, including requirements around documentation, monitoring, and human oversight. Less than a year later, lawmakers delayed its implementation and began reconsidering key provisions, citing uncertainty about feasibility, cost, and enforcement.</p>
+<p>Colorado’s approach drew explicitly on international models, most notably the <a href="https://artificialintelligenceact.eu/">European Union’s AI Act</a>, which similarly classifies AI systems by risk and ties higher-risk uses to stronger accountability requirements. Colorado’s experience is not only a story about state politics. It serves as a useful case study for a more practical question: what happens when ambitious AI governance principles meet the realities of building and maintaining production data systems?</p>
+<p>For data scientists, analysts, machine learning engineers, and others responsible for real-world data products, this moment signals that AI governance is no longer a peripheral policy concern. It is becoming an operational constraint.</p>
+<section id="from-governance-principles-to-technical-work" class="level2">
+<h2 class="anchored" data-anchor-id="from-governance-principles-to-technical-work">From Governance Principles to Technical Work</h2>
+<p>Colorado’s law followed a pattern increasingly visible in global AI governance, particularly the European Union’s AI Act. These frameworks share a risk-based logic in that systems that influence consequential decisions face higher expectations for transparency, oversight, and accountability.</p>
+<p>At a high level, these expectations (fairness, consumer protection, responsible use) sound abstract. In practice, they translate directly into technical work:</p>
+<ul>
+<li>Clear documentation of model purpose, training data, and limitations</li>
+<li>Records showing where data comes from and how it changes over time</li>
+<li>Reproducible experiments and versioned artifacts</li>
+<li>Ongoing monitoring for performance drift and unintended impacts</li>
+<li>Defined processes for human review and intervention</li>
+</ul>
+<blockquote class="blockquote">
+<p>None of this lives in legislation. It lives in scripts, workflows, dashboards, deployment systems, and operational infrastructure.</p>
+</blockquote>
+<p>Colorado’s stalled implementation of AI policy surfaced a familiar pattern, as many organizations are well equipped to optimize model performance, but far less prepared to operationalize accountability at scale. The friction emerged not because governance goals were controversial, but because the supporting technical infrastructure was uneven.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://realworlddatascience.net/the-pulse/posts/2026/02/02/images/thumb.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</section>
+<section id="why-uncertainty-becomes-a-design-risk" class="level2">
+<h2 class="anchored" data-anchor-id="why-uncertainty-becomes-a-design-risk">Why Uncertainty Becomes a Design Risk</h2>
+<p>One challenge Colorado encountered was definitional ambiguity. For example, what qualifies as “high risk”, what safeguards are sufficient, and how should harms should be assessed? These questions are not merely legal - they are technical and context dependent.</p>
+<p>Different data sources, deployment approaches, and users lead to different answers. For teams building data systems today, that uncertainty creates risk. When teams cannot easily see how data moves through a system, how models change over time, or how decisions are produced, adapting later becomes costly and disruptive.</p>
+<p>Recent federal signals add another layer of complexity. President Trump’s executive order discouraging state-level AI regulation aims to reduce fragmented policy on AI, but it does not replace state experimentation with a concrete national policy. Teams now operate in a moving landscape shaped by state initiatives, evolving federal priorities, and international regimes like the EU AI Act. In this environment, aiming for minimal compliance is risky. Teams are better served by designing systems that are flexible and easy to observe from the start.</p>
+</section>
+<section id="responsibility-does-not-end-at-deployment" class="level2">
+<h2 class="anchored" data-anchor-id="responsibility-does-not-end-at-deployment">Responsibility Does Not End at Deployment</h2>
+<p>A lesson emerging from both policy debates and practice is that accountability does not stop when a model goes live. Responsibility shifts across teams over time, from data scientists to engineers, product owners, operators, and decision-makers.</p>
+<p>This challenge is the focus of the <a href="https://senseaboutscience.org/responsible-handover-of-ai/">Responsible Handover of AI framework</a> developed by <a href="https://senseaboutscience.org/">Sense about Science</a>, which emphasizes the need for clear transitions of responsibility as AI systems move from development into real-world use. Rather than treating deployment as a handoff to “the business”, the framework highlights the risks that arise when assumptions, limitations, and responsibilities are not carried forward with the system.</p>
+<p>For practitioners, this framing maps governance concerns onto familiar operational questions, such as who monitors systems after deployment, which development assumptions still matter in production, how limitations are communicated to users, and what happens when systems are updated or handed over to new teams.</p>
+<p>Without explicit handover practices, accountability gaps emerge because responsibility becomes diffuse as systems evolve. From this perspective, many regulatory requirements are not adding entirely new work, rather they formalize practices teams already rely on. This includes documentation that travels with systems, monitoring in production, and clear escalation paths when something goes wrong.</p>
+</section>
+<section id="practical-steps-teams-can-take-now" class="level2">
+<h2 class="anchored" data-anchor-id="practical-steps-teams-can-take-now">Practical Steps Teams Can Take Now</h2>
+<p>Regardless of how U.S. and international regulation ultimately settles, many investments pay off immediately while reducing future risk, including:</p>
+<ul>
+<li><em>Standardizing documentation</em>. Ensure model summaries and data descriptions travel with systems as they move between teams</li>
+<li><em>Build end-to-end visibility</em>. Version datasets, features, models, and configurations so results can be reproduced</li>
+<li><em>Instrument monitoring early</em>. Track input drift, unstable predictions, performance decay, and downstream impacts once systems are in production</li>
+<li><em>Clarify governance workflows</em>. Define who approves releases, who monitors systems, and how responsibility shifts over time</li>
+<li><em>Translate risk for leadership</em>. Gaps in documentation and visibility tend to come back later as messy, expensive fixes; addressing them early saves time and pain</li>
+</ul>
+<blockquote class="blockquote">
+<p>These practices are not limited to machine learning. Any system that informs decisions can create similar accountability challenges.</p>
+</blockquote>
+</section>
+<section id="governance-lives-in-the-data-stack" class="level2">
+<h2 class="anchored" data-anchor-id="governance-lives-in-the-data-stack">Governance Lives in the Data Stack</h2>
+<p>There’s still no settled agreement on how AI should be governed. But for people building real-world data systems, its implications are already concrete. Accountability increasingly lives in the data stack in how workflows are instrumented, how models are monitored, and how decisions can be examined after the fact.</p>
+<p>This is not simply about regulatory compliance. It is about building systems that are transparent, resilient, and trustworthy at scale. Organizations that treat governance as a core technical problem (rather than an external policy constraint imposed later) will be best positioned to navigate whatever regulatory balance ultimately emerges.</p>
+<div class="article-btn">
+<p><a href="../../../../../the-pulse/index.html">Explore more data science ideas</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author:</dt>
+<dd>
+<a href="https://www.linkedin.com/in/stefani-langehennig-phd-418820144/">Dr.&nbsp;Stefani Langehennig</a> is an Assistant Professor of the Practice in the Business Information &amp; Analytics Department at the University of Denver’s Daniels College of Business. She is also the lead director for the Center for Analytics and Innovation with Data (CAID). As a former data scientist, she has worked with both academic and industry partners in the U.S. and abroad, helping organizations evaluate and implement data analytics and AI solutions. Her research focuses on computational social science methods, the impact of data transparency on political behavior, and legislative policy capacity.
+</dd>
+</dl>
+<div class="g-col-12 g-col-md-6">
+<p><strong>Copyright and licence</strong> : © 2026 Stefani Langehennig<br>
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"> <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"> </a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>How to cite</strong> :<br>
+Langehennig, Stefani. 2026. “<strong>Colorado’s AI Law Pause: What It Means for People Working in Data Science</strong>.” <em>Real World Data Science</em>, 2026. <a href="https://realworlddatascience.net/the-pulse/posts/2026/02/colarado-AI.html">URL</a></p>
+</div>
+</div>
+</div>
+
+
+</div>
+</section>
+
+ ]]></description>
+  <category>AI governance</category>
+  <category>Applied data science</category>
+  <category>Data engineering and MLOps</category>
+  <category>Technology policy</category>
+  <category>Operational risk</category>
+  <guid>https://realworlddatascience.net/the-pulse/posts/2026/02/02/colarado-AI.html</guid>
+  <pubDate>Mon, 02 Feb 2026 18:29:47 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/the-pulse/posts/2026/02/02/images/thumb.png" medium="image" type="image/png" height="96" width="144"/>
+</item>
 <item>
   <title>Beyond Quantification: Interview with Professor Sylvie Delacroix on Navigating Uncertainty with AI</title>
   <dc:creator>Annie Flynn</dc:creator>
@@ -1241,7 +1343,7 @@ Tate, Rosemary A. and Halliday, Roger. 2025. “Why We Should All Be Data Qualit
 
 
 <p>This article had its genesis when co-author Ed’s dog, Sparkle, was treated for pneumonia in the summer of 2024. Ed, a mathematician and chair of the <a href="https://alliancefordatascienceprofessionals.com/">Alliance for Data Science Professionals</a>, was intrigued by the surgery’s use of data in Sparkle’s treatment and decided to find out more about the use of data and AI in veterinary medicine. His exploration led to a guest appearance on the <a href="https://www.vetvoices.co.uk/podcasts">Vet Voices on Air</a> podcast hosted by co-author Robyn. She is a registered veterinary nurse (RVN) and the director of <a href="https://www.vetvoices.co.uk/">Veterinary Voices UK</a>. Inspired by that conversation, this article explores the ways veterinary professionals are currently applying data science principles and how professions adapt and evolve in the face of these developments.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Sparkle. Credit: Edward Rochead.">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Sparkle. Credit: Edward Rochead." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2025/08/26/images/Sparkle.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Sparkle. Credit: Edward Rochead.">
@@ -1268,7 +1370,7 @@ Diagnosis and prediction of diseases is one key area where AI is being used in v
 <p>These are just a few examples of AI use in companion animals currently.</p>
 <p><strong>Disease Monitoring and Prediction</strong> Disease monitoring and prediction are exciting because they can help us act earlier—sometimes even preventing illness. This not only improves animal health and welfare, but also supports <a href="https://www.skeptic.org.uk/2024/05/agr-tech-will-technology-help-or-hinder-food-production-and-animal-welfare/">antimicrobial stewardship</a> by reducing unnecessary treatments, helping to combat antimicrobial resistance—a serious global threat to both animals and humans.</p>
 <p>An area that demonstrates compelling evidence of these positive outcomes is <a href="https://www.skeptic.org.uk/2024/05/agr-tech-will-technology-help-or-hinder-food-production-and-animal-welfare/">farming and agriculture</a>, where farmers are able to use AI to monitor herds, and act promptly to treat disease, before it would have been evident and notable by human monitoring. Examples, which will be explored in more detail below, include body condition technology, lameness technology, disease recognition, grazing, land and pasture management, biosensors and biochips and more.</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Technology that measures body condition each time the cow passes under the camera, reporting the changes in Body Condition Score directly to the farmer via app and online portal, helping to support individual cow treatment, group rationing and herd management.">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Technology that measures body condition each time the cow passes under the camera, reporting the changes in Body Condition Score directly to the farmer via app and online portal, helping to support individual cow treatment, group rationing and herd management." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2025/08/26/images/herdvision1.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Technology that measures body condition each time the cow passes under the camera, reporting the changes in Body Condition Score directly to the farmer via app and online portal, helping to support individual cow treatment, group rationing and herd management.">
@@ -1281,7 +1383,7 @@ Figure&nbsp;2: Technology that measures body condition each time the cow passes 
 <p><strong>Body Condition Technology</strong> The agricultural industry typically relies on subjective visual observation, human recording and manual reporting of all the key health and welfare traits, including Body Condition Score (BCS). Despite these individuals being highly skilled professionals, there is inevitable human error, paired with the constraints of busy farm management which can lead to cases getting picked up later in their disease process. BCS is a major indicator of metabolic performance in dairy cows and directly related to fertility performance and health traits. Technologies such as <a href="https://herd.vision/">Herdvision</a> use a 2D and 3D camera system to monitor BCS, resulting in improvement in cattle heath and fertility, less premature culling, and savings on feeding costs.</p>
 <p><strong>Lameness Technology</strong><br>
 Lameness is considered one of the <a href="https://www.frontiersin.org/articles/10.3389/fvets.2019.00094/full">top cattle health and welfare challenges</a>. A <a href="https://www.sciencedirect.com/science/article/abs/pii/S1871141313001698">2013 study</a> noted that almost 70% of the dairy farmers expressed an intention to take action for improving dairy cow foot health. Cattle naturally mask the signs of pain, and as with body condition scoring we have relied on subjective visual observation, human recording and manual reporting of all the key health and welfare traits. Technology that can pick up lameness earlier, with more objectivity and with less labour intensity is hugely beneficial to both the animals’ health and welfare and the farm’s profitability.</p>
-<div id="fig-3" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Images that produce prioritisation list for vets and hoof trimmers, ranking cows according to severity of immobility and identifying small changes in mobility and BCS before they are visible to the human eye.">
+<div id="fig-3" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Images that produce prioritisation list for vets and hoof trimmers, ranking cows according to severity of immobility and identifying small changes in mobility and BCS before they are visible to the human eye." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2025/08/26/images/herdvision2.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Images that produce prioritisation list for vets and hoof trimmers, ranking cows according to severity of immobility and identifying small changes in mobility and BCS before they are visible to the human eye.">
@@ -2074,368 +2176,6 @@ Wu, E., J. Salvo, V. Lancaster, and S. Shipp. 2023. <span>“Housing Affordabili
   <guid>https://realworlddatascience.net/applied-insights/case-studies/posts/2024/11/22/development-plan-2.html</guid>
   <pubDate>Fri, 22 Nov 2024 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/applied-insights/case-studies/posts/2024/11/22/images/figure-1.png" medium="image" type="image/png" height="81" width="144"/>
-</item>
-<item>
-  <title>Translating the Curated Data Model into Practice - Climate resiliency of skilled nursing facilities</title>
-  <dc:creator>Vicki Lancaster, Stephanie Shipp, Sallie Keller, Henning Mortveit, Samarth Swarup, Aaron Schroeder, and Dawen Xie &lt;br /&gt; University of Virginia, Biocomplexity Institute</dc:creator>
-  <link>https://realworlddatascience.net/applied-insights/case-studies/posts/2024/11/19/use-case-2.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<center>
-Acknowledgments: This research was sponsored by the: <br> Unites States Census Bureau Agreement No.&nbsp;01-21-MOU-06 and <br> Alfred P. Sloan Foundation Grant No.&nbsp;G-2022-19536
-</center>
-<p><br> <br></p>
-<section id="introduction" class="level2" data-number="1">
-<h2 data-number="1" class="anchored" data-anchor-id="introduction"><span class="header-section-number">1</span> Introduction</h2>
-<p>Here, we demonstrate how the CDE Framework can be implemented for a research use case related to skilled nursing facilities. The framework provides the guiding principles for ethical, transparent, and reproducible research and dissemination and the research process for developing the statistical product.</p>
-<p>Across the US, federally regulated skilled nursing facilities (SNFs) provide essential care, rehabilitation, and related health services to about 1.3 million people. An SNF is a facility that meets specific federal regulatory certification requirements that enable it to provide short-term inpatient care and services to patients who require medical, nursing, or rehabilitative services. Their patients can be among the most vulnerable members of our society, and yet, historically, SNFs have not been incorporated into existing emergency response systems. For example, during the 2004 Florida hurricane season, SNFs were given the same priority as day spas for restoring electricity, telephones, water, and other essential services <span class="citation" data-cites="hyer2006establishing">(Hyer et al. 2006)</span>. Even worse are the deaths of SNF residents in Louisiana following Hurricanes Katrina and Rita in 2005 <span class="citation" data-cites="dosa2008controversy">(Dosa et al. 2008)</span>. This was still an issue in 2021. In Louisiana, 15 SNF residents died when evacuated to a warehouse during Hurricane Ida (2021), and 12 died in Florida as a result of Hurricane Irma (2017). In both instances, the deaths were attributed to extreme heat and lack of electricity <span class="citation" data-cites="skarha2021association">(Skarha et al. 2021)</span>.</p>
-<p>These events prompted the <span class="citation" data-cites="sheet2022protecting">(The White House 2022)</span> initiative, <em>Protecting Seniors by Improving Safety and Quality of Care in the Nation’s Nursing Homes</em>, stating, ‘All people deserve to be treated with dignity and respect and to have access to quality medical care.’</p>
-<p>However, there are questions that need to be addressed to best protect SNFs and their residents. For example, how resilient are SNFs in extreme climate events? This use case demonstration shows how we built a new statistical product to address this question using the CDE Framework <span class="citation" data-cites="lancaster2023CDE">(Lancaster et al. 2023)</span>.</p>
-</section>
-<section id="purposes-and-uses" class="level2" data-number="2">
-<h2 data-number="2" class="anchored" data-anchor-id="purposes-and-uses"><span class="header-section-number">2</span> Purposes and uses</h2>
-<p>A skilled nursing facility (SNF) is a federally regulated nursing facility with the staff and equipment to provide skilled nursing care, skilled rehabilitation services, and other related health services <span class="citation" data-cites="cmsglossary">(Medicare &amp; Medicaid Services 2023)</span>. The context of this use case is to create a baseline picture of SNFs in Virginia and then integrate information on the risk of extreme flood events to assess facility and community preparedness – for example, how likely are the nursing staff<sup>1</sup> to make it to the facility in the event of a flood?</p>
-<p>This use case has two parts. The first creates a baseline data picture of SNFs, bringing together data about the residents, nursing staff, and SNF characteristics. The second addresses two issues raised in the <span class="citation" data-cites="sheet2022protecting">(The White House 2022)</span> initiative: emergency preparedness and nurse staffing. We frame these issues into three purpose and use questions with the ultimate goal of creating statistical products that address these questions:</p>
-<ol type="1">
-<li><p>Can SNF workers get to work during an extreme flood event?</p></li>
-<li><p>Are SNFs prepared for a flood emergency?</p></li>
-<li><p>Can communities support SNFs during an emergency?</p></li>
-</ol>
-</section>
-<section id="statistical-product-development-stages" class="level2" data-number="3">
-<h2 data-number="3" class="anchored" data-anchor-id="statistical-product-development-stages"><span class="header-section-number">3</span> Statistical product development stages</h2>
-<p><strong>Subject matter input and literature review</strong></p>
-<p>The subject matter experts consulted included nursing facility administrators, SNF resident advocates, demographers, and researchers. Our discussions and literature review informed us of the many federal policies governing SNFs regarding inspections and data reporting requirements (procedural data). In addition, we were told about non-public data sources on residents and SNF staff that were aggregated to the SNF level and provided to the public under a grant from the National Institute on Aging. This information was important since we had yet to come across this source in our data discovery process. The dialogue with experts and our literature review helped us generate a ‘wish list’ of variables we used to inform our data discovery process that we visualized into a conceptual data map (see Figure&nbsp;1).</p>
-<div id="fig-data" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2024/11/19/images/figure-3.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-data-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: Conceptual Data Map Aligned to Purpose and Use: The conceptual data map displays the results of our data discovery. The team identifies the data needs informed by expert elicitation and literature review. For this use case the data discovery took three phases: (1) create a data picture of SNF owners, nursing staff, and residents, and the communities the facilities reside in; (2) identify the potential risks of a severe flood events, coastal and riverine; and (3) identify the potential weakness in the SNF’s and community’s ability to respond.
-</figcaption>
-</figure>
-</div>
-<p><strong>Data discovery</strong></p>
-<p>Data discovery focused on identifying data sources to address the purpose and use questions and was informed by the conceptual data map.</p>
-<p>For the first question – Can SNF workers get to work during an extreme flood event? – we discovered and used proprietary synthetic population, transportation routes, building data sources, and publicly available flood data. The <a href="https://developer.here.com/documentation">HERE Premium Streets</a> proprietary data includes information about roads, such as type of road, speed limits, number of lanes, etc. The proprietary synthetic population data, Building Knowledge Base (BKB), are used to identify where SNF workers live and work to map transportation routes from home to work <span class="citation" data-cites="mortveitNSSAC">(Mortveit, Xie, and Marathe 2023)</span>. Publicly available data from the Federal Emergency Management Administration (FEMA) provided flooding risk estimates along the routes from nursing staff homes to the SNF.</p>
-<p>For the second question – Are SNFs prepared for a flood emergency? – we used Center for Medicare and Medicaid (CMS) SNF inspection and deficiency data as a proxy for preparedness. We also examined SNF residents’ physical and mental health to assess SNF emergency preparedness. For example, if most residents faced mobility challenges, the SNF would need more resources available during an emergency to move residents to a safer facility. We used data about residents from the Long Term Care Focus <span class="citation" data-cites="brown2022ltcfocus">(LTCFocus 2022)</span> Public Use Data sponsored by the National Institute on Aging (Brown University 2022).</p>
-<p>We used data to measure community resilience, assets, and risks by geography at the county, city, and census tract levels to address the third question, Can communities support SNFs during an emergency? These data included:</p>
-<ul>
-<li>Health professional shortages area (HRSA 2022)</li>
-<li>Shelter facilities and emergency service providers data <span class="citation" data-cites="dhs2022hifld">(Homeland Security: Geospatial Management Office 2022)</span></li>
-<li>Community Resilience Indicator Analysis and National Risk Index for Natural Hazards <span class="citation" data-cites="FEMA2022a">(FEMA 2022)</span>.</li>
-</ul>
-<p>All data are provided in a <a href="https://github.com/uva-bi-sdad/census_cde_demo_2/tree/main/data">GitHub</a> repository along with their metadata, except for the three proprietary data sources. Articles about how the synthetic estimates are constructed are provided for two of these proprietary data sources. The third data source was obtained from a private-sector vendor whose data and documentation are proprietary; a link is provided to their website.</p>
-<p><strong>Data ingest and governance</strong></p>
-<p>All the public data, metadata, code, statistical products, data processes, and relevant literature on SNF policies and regulations are stored in a <a href="https://github.com/uva-bi-sdad/census_cde_demo_2/tree/main">GitHub</a> repository.</p>
-<p>In our experience, data wrangling is the most time-consuming and challenging part of product development. This speaks directly to the benefit of the CDE; once a researcher has wrangled together multiple data sources, it can be made available to other researchers.</p>
-<p>The two predominant issues with data wrangling for this Use Case included reconciling data sources that contain data on the same topic and creating linkages between data sources. For example, we reviewed three hospital data sources:</p>
-<ol type="1">
-<li><a href="https://hifld-geoplatform.opendata.arcgis.com/">Homeland Security Infrastructure Foundation-Level Data</a> (HIFLD) (DHS 2022)</li>
-<li><a href="https://healthdata.gov/dataset/COVID-19-Reported-Patient-Impact-and-Hospital-Capa/6xf2-c3ie">HealthData.gov - COVID-19 Reported Patient Impact and Hospital Capacity by State</a> (HHS 2022)</li>
-<li><a href="https://vhha.com/about-virginia-hospitals/">Map of VHHA Hospital and Health System Members</a> (Virginia Hospital &amp; Healthcare Association 2022)</li>
-</ol>
-<p>We observed inconsistences and omissions across the three data sources including:&nbsp;</p>
-<ul>
-<li>non-standard hospital names and hospital classification types</li>
-<li>inconsistent availability of hospital IDs (such as Medicare Provider Number) &nbsp;</li>
-<li>conflicting geographic information, including address, latitude, and longitude.</li>
-</ul>
-<p>We did not attempt to reconcile these inconsistencies for the demonstration but decided to use a single source for shelter facility and emergency service provider data. We used <a href="https://hifld-geoplatform.opendata.arcgis.com/">HIFLD</a> data since they provided the most current data (DHS 2022). The use of these data reinforces the purpose of the use case – to illuminate the challenges in creating statistical products and what the Census Bureau would need to consider.</p>
-<p>Similar inconsistencies made it difficult to link data sources using geographic variables. For example, we used shelter facility and emergency service provider data sources from the HIFLD – including hospitals, Red Cross chapter facilities, National Shelter System Facilities, emergency medical service stations, fire stations, and urgent care facilities – to calculate a metric for potential community support. The goal was to place each facility in a Virginia county or independent city. Virginia is divided into 95 counties, and 38 independent cities considered county-equivalents for census purposes, and in some cases, there is a county and a city with the same name (eg, Richmond County and Richmond City, each in different locations in Virginia). It was necessary to <a href="https://en.wikipedia.org/wiki/Canonicalization">canonicalize</a> the county and city names (when available), which meant aligning upper and lower cases, removing unnecessary characters, and distinguishing between county and city.<sup>2</sup></p>
-<p>The challenge with locating shelter facilities and emergency service providers within a county or independent city was using different variables to identify their location (latitude and longitude, address, ZIP code<sup>3</sup>, Federal Information and Processing Standard (FIPS) code, and county/city name). In cases where the data source only had a ZIP or FIPS code, a Department of Housing and Urban Development crosswalk was used to link the two codes; in other cases, a crosswalk that linked non-independent cities and towns to counties was used; and in others, a crosswalk that linked FIP codes to counties and independent cities. Researchers would benefit from exhaustive crosswalks between all variables on the same topic, such as location variables, facility names, and identification numbers, to reduce the time spent on data wrangling.</p>
-<p>Regarding data products related to popular indices, such as climate disaster risks and community resilience, they are operationalized differently across the various departments and agencies within the federal and state governments and private and non-profit sectors. It is an enormous task to review the methodology and technology reports (if available) to understand their differences and decide which versions are most relevant (fitness-for-purpose) for a particular use case. Again, after reviewing the options for this use case, we determined that the National Risk Index for riverine and coastal floods from FEMA was the best option for climate risk estimates. The detailed technical report, <em>National Risk Index Technical Document</em> <span class="citation" data-cites="FEMA2021risk">(FEMA 2021)</span>, provides a clear assessment of the assumptions and limitations of the data and a description of how the risk estimates were derived. Researchers would benefit from guidance on the numerous constructions of indices on the same topic. A use case on a specific index topic could be used to highlight differences and similarities among indices, which would help with data wrangling and fitness-for-use. Ideally, the use case could benchmark the various constructions and provide a statistical assessment.</p>
-<section id="question-1-can-snf-workers-get-to-work-during-an-extreme-flooding-event" class="level3" data-number="3.1">
-<h3 data-number="3.1" class="anchored" data-anchor-id="question-1-can-snf-workers-get-to-work-during-an-extreme-flooding-event"><span class="header-section-number">3.1</span> <strong>Question 1: Can SNF workers get to work during an extreme flooding event?</strong></h3>
-<p>Sufficient nursing staff is of significant concern to assure resident safety and quality of care.</p>
-<p>Since proprietary synthetic population data and commercial sector digitized mapping data were used to construct the routes SNF nursing staff are likely to take from home to work, only an outline of the computational process used to identify the routes is provided. Publicly available data from FEMA were used to estimate flooding risk along a particular route. Below is a general description of the modeling steps and the proprietary data used to assess SNF vulnerability as a function of the nursing staff’s inability to report to work due to the transportation infrastructure <span class="citation" data-cites="choupani2016population">(Choupani and Mamdoohi 2016)</span>.</p>
-<p><strong>Computational modules</strong></p>
-<p>Here is the basic outline of the process that uses proprietary data that starts at network construction and ends with routes. For more details, see the GitHub repository: <a href="https://github.com/uva-bi-sdad/census_cde_demo_2/blob/main/documents/products/processes/commute_vulnerability/algorithm.md">Vulnerability of SNFs concerning Commuting</a>.</p>
-<ol type="1">
-<li>Extract network data from HERE (2021 Q1 in this use case).</li>
-<li>Process the extracted data to form a network suitable for routing. This includes inference of speed limits for road links where such data is missing.</li>
-<li>Prepare origin-destination pairs. In this case, the list of locations pairs a worker’s home and work locations. The person is constructed in the synthetic population pipeline, and residences and workplaces are derived through the data fusion process used to construct the NSSAC building database.</li>
-<li>Construct routes using the Quest router.</li>
-</ol>
-<p>Once the routes to an SNF were established, the expected number of nursing staff at an SNF during a flood event could be calculated as the sum of the probabilities of each worker being able to commute to work during a flood event. A computational model was developed using the following data:</p>
-<ul>
-<li>SNF locations in Virginia from the Centers for Medicare &amp; Medicaid Services (CMS);</li>
-<li>Home locations of workers at each SNF assigned from the synthetic population and Building Knowledge Base <span class="citation" data-cites="beckman1996creating mortveitNSSAC">(Beckman, Baggerly, and McKay 1996; Mortveit, Xie, and Marathe 2023)</span>;</li>
-<li>Virginia road networks; and</li>
-<li>FEMA census tract-level riverine and coastal flood risks.</li>
-</ul>
-<p>Using router software, the Virginia road network was used from the HERE map data to compute each nursing staff’s likely route to their SNF. Routers are commonly used within transportation and traffic simulators. The router software used for this demonstration is a highly parallelizable router previously developed in BI NSSAC, known as the Simba router <span class="citation" data-cites="barrett2013planning">(Barrett et al. 2013)</span>.</p>
-<p>The FEMA risk data provide the riverine and coastal flood risks for each census tract in Virginia. Given the routes, the FEMA riverine and coastal flood risks were used to estimate the probability of the nursing staff making it to work. The FEMA technical document <em>National Risk Index Technical Document</em> <span class="citation" data-cites="FEMA2021risk">(FEMA 2021)</span> provides information on how natural hazard risks are calculated. We use these risk estimates ranging from 0 to 100 as a proxy for the probability a worker can reach the SNF by dividing by 100. For example, we assume a risk is zero if there is zero probability of being unable to reach the SNF due to an extreme flood event.</p>
-<p>In contrast, a risk of 100 indicates the roads are underwater, and the probability of being unable to reach the SNF is one. The maximum risks along transportation routes leading to an SNF range from 0 to 47 for riverine flooding and 0 to 40 for coastal flooding. We assume the combined value of the maximum riverine and coastal flood risks along a worker’s transportation routes, divided by 100, is the worker’s probability of not getting to work during a flooding event.</p>
-<p>Since we do not have data on the exact home locations of the nursing staff, we estimated how many could reach the facility by taking a random sample (whose size is the CMS average daily nursing staff<sup>4</sup> for an SNF) from the possible routes identified using the HERE Virginia road network. We calculated the average with a 95% nonparametric confidence interval. The 283 SNFs used in our research have an average daily nursing staff of 12,609. Using the above approach, we estimated that 10,005 (95% CI: 9,013, 10,700) or 79% can get work during an extreme flood event. The individual SNF nursing staff percentage who can make it to work ranges from 48% to 93%.</p>
-<p>Figure&nbsp;2 visualizes this analysis for the 283 SNFs ordered by the observed average daily nursing staff numbers at the facility from smallest to largest, displayed using the orange line. The black line indicates the expected number in an extreme flood event and the 95% nonparametric confidence interval (grey band). The code for Figure&nbsp;2 is provided in the <a href="https://github.com/uva-bi-sdad/census_cde_demo_2/blob/main/source_code/analyses/VA_Probability_of_Getting_to_SNF.R">GitHub</a> repository.</p>
-<div id="fig-ns" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-ns-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2024/11/19/images/figure-4.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="2000">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-ns-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: SNF Average Observed and Expected Average Daily Nursing Staff Numbers: The horizontal axis is ordered by the size of the nursing staff at the facility from smallest to largest. The orange line displays the observed average daily nursing staff numbers. The black line displays the estimated numbers in the event of an extreme coastal and/or riverine flood event. The grey band is the 95% nonparametric confidence interval.
-</figcaption>
-</figure>
-</div>
-<p>For example, in King George County, the SNF is Heritage Hall King George (Federal Provider Number 495300 in Figure&nbsp;3), located near the Potomac River, which opens to the Chesapeake Bay. According to CMS, the Heritage Hall King George facility has an average daily skilled nursing staff of 41. Using the HERE Virginia road network, we identified 101 routes the staff could use to reach the facility. The combined maximum coastal and riverine flood risks along these routes ranged from 5.6 to 66.7; a random sample of 41 from the 101 routes gives an average probability of reaching the facility of 0.74 with a 95% nonparametric confidence interval of [0.65, 0.80]. These were used to estimate the average number of nursing staff at the facility, 30, during a flood event, along with a 95% nonparametric confidence interval [14, 38]. Publicly available data from the Federal Emergency Management Administration (FEMA) provided flooding risk estimates along the routes from the nursing staff home to the SNF along with proprietary road and building information<strong>.</strong></p>
-<div id="fig-map" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2024/11/19/images/figure-5.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-map-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: An Example of Nursing Staff Routes to Heritage Hall King George SNF: Routes that workers can take to work at Heritage Hall  King George SNF FPN 495300 (identified with the black oval). The risk levels of each road are identified with colors, from low risk (blue), medium-low (yellow), orange (medium), red (medium-high), to high risk (dark red). The risk scores are used to calculate the probability of a worker getting to work during an extreme flood event using publicly available FEMA data and proprietary road and building data.
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="question-2.-are-snfs-prepared-for-emergencies" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="question-2.-are-snfs-prepared-for-emergencies"><span class="header-section-number">3.2</span> <strong>Question 2. Are SNFs prepared for emergencies?</strong></h3>
-<p>To address this question, we examined how prepared SNFs are for emergencies using annual inspection and deficiency data as a proxy for preparedness. CMS issues deficiencies to SNFs that fail to meet federal Medicare and Medicaid preparedness standards. Every deficiency is classified into one of 12 categories based on the scope and severity of the deficiency. There are two broad types of non-health-related deficiencies:</p>
-<ul>
-<li><p>Emergency Preparedness Deficiencies – There are four elements of emergency preparedness. They cover an emergency plan, policies and procedures, a communication plan, and training and testing.</p></li>
-<li><p>Fire Life Safety Code – The set of fire protection requirements are designed to provide a reasonable degree of safety from fire. They cover construction, protection, and operational features designed to provide safety from fire, smoke, and panic.</p></li>
-</ul>
-<p>We calculated separate Emergency Preparedness and Fire Life Safety Code deficiency indices to combine them to create a single index to measure SNF preparedness and distinguish between high and low performing SNFs. The computation of the indices has four steps.</p>
-<ol type="1">
-<li><p><em>Number of deficiencies</em>: For each SNF, the total number of deficiencies during the past four years, 2018-2022, was divided by the number of SNF inspections over the same period to estimate the average number of deficiencies per inspection.</p></li>
-<li><p><em>Time to resolve deficiencies</em>: We next computed the average number of days it took to resolve each deficiency.</p></li>
-<li><p><em>Scope and severity of deficiencies</em>: We then transformed the deficiency letter inspection rating for scope and severity to a numerical weight using the CMS technical guide, <em>Care Compare Nursing Home Five-Star Quality Rating System</em> <span class="citation" data-cites="CMS2022design">(Medicare &amp; Medicaid Services 2022)</span>,and averaged the ratings.</p></li>
-<li><p>The estimates from these three steps were summed to compute separate Emergency Preparedness and Fire Life Safety Code deficiency indices (see Figure&nbsp;4) and are provided for reuse in a .csv file on <a href="https://github.com/uva-bi-sdad/census_cde_demo_2/blob/main/documents/products/processes/derived_variables/va_snf_deficiency_indices_k_e.csv">GitHub</a>.</p></li>
-</ol>
-<p>Figure&nbsp;4 displays the results of an exploratory data analysis for each index. These analyses assessed fitness-for-use; we wanted to construct an indicator with sufficient variability to discriminate between high and low-performing SNFs. It is evident we accomplished this in Figure&nbsp;4 there are SNFs with indices outside the main body of the data. We summed the Emergency Preparedness and Fire Life Safety Code indices and categorized them into high, medium, low, and no deficiencies.</p>
-<div id="fig-def" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-def-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2024/11/19/images/figure-6.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="900">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-def-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;4: Exploratory Data Analysis Visualizations for the Emergency Preparedness and Fire Life Safety Code Deficiencies
-</figcaption>
-</figure>
-</div>
-</section>
-<section id="question-3-can-communities-support-snfs-during-emergencies" class="level3" data-number="3.3">
-<h3 data-number="3.3" class="anchored" data-anchor-id="question-3-can-communities-support-snfs-during-emergencies"><span class="header-section-number">3.3</span> <strong>Question 3: Can communities support SNFs during emergencies?</strong></h3>
-<p>To answer this question, we computed a community resiliency index using the US Census American Community Survey and the guidance provided by the <em>Homeland Security document Community Resilience Indicator Analysis: County-Level Analysis of Commonly Used Indicators from Peer-Reviewed Research</em> <span class="citation" data-cites="edgemon2018community">(Edgemon et al. 2018)</span><em>.</em> The index was constructed by summing the county (census tract) level percentages for the following variables:</p>
-<ul>
-<li>fraction employed</li>
-<li>fraction with no disability</li>
-<li>fraction with a high school diploma or greater</li>
-<li>fraction of households with at least one vehicle</li>
-<li>reverse GINI Index – so all indicators are in a positive direction.</li>
-</ul>
-<p>Figure&nbsp;5 displays the combined deficiency indices, Emergency Preparedness + Fire Life Safety Code, for each SNF with the choropleth map for the community resilience index at the census tract level. We also examined the number of shelter facilities and emergency service providers and the availability of medical staff per 10,000 residents. We constructed isochrones to establish the distance from the SNF to these potential sources of support. Working on this component of the use case highlighted the need for cross-agency data, pointing to the utility of future strategic partnering between the US Census Bureau, CMS, and FEMA.</p>
-<div id="fig-cri" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-cri-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2024/11/19/images/figure-7.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-cri-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;5: 2020 Population Resilience Composite Index for Virginia Census Tracts: The light yellow tracts are the least resilient, and the dark green are the most resilient. The locations of the 283 SNFs are identified with filled circles, orange circles with the highest
-</figcaption>
-</figure>
-</div>
-<p>In addition to describing the population using a resilience index, we also developed a measure to present the number of shelter facilities and emergency service providers (data from Homeland Security / Homeland Infrastructure Foundation Level Data) and the availability of medical doctors (MDs) and Doctor of Osteopathic Medicine (ODs) who provide direct patient care (HRSA 2022) (Figure&nbsp;6).&nbsp;</p>
-<p>The number of MDs and ODs is described as a primary care health professional shortage area. HRSA defines these contiguous areas where primary medical care professionals are overutilized, excessively distant, or inaccessible to the population of the area under consideration. Figure&nbsp;6 (bottom) shows that approximately one-third of the counties and independent cities have health professional shortage areas across their entire boundary, and another 40 percent have shortages within parts of their boundaries.</p>
-<div id="fig-help" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-help-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2024/11/19/images/figure-8.png" class="img-fluid quarto-figure quarto-figure-center figure-img" width="1000">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-help-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;6: Assessment of the number of shelter facilities and emergency service providers per 10,000 population (top) and medically underserved areas (bottom): On both maps, the lighter the color, the more in need is the population of shelter facilities and emergency services (top chart) or health professionals (bottom chart). The location of the 283 SNFs are identified with filled circles, orange circles are those with the highest deficiency index and grey circles are those with no deficiencies.
-</figcaption>
-</figure>
-</div>
-</section>
-</section>
-<section id="guiding-principles-for-ethical-transparent-reproducible-statistical-product-development-and-dissemination." class="level2" data-number="4">
-<h2 data-number="4" class="anchored" data-anchor-id="guiding-principles-for-ethical-transparent-reproducible-statistical-product-development-and-dissemination."><span class="header-section-number">4</span> Guiding principles for ethical, transparent, reproducible statistical product development and dissemination.</h2>
-<p><strong>Communication</strong></p>
-<p>We communicated results throughout the Demonstration Use Case research with our Census CDE Working Group (composed of former Census Bureau Directors and Communication Director, and academic and industry census experts), with the Census Bureau, at conferences such as the annual Federal Statistical Committee on Methodology, and sharing drafts to seek input and ideas. The discussions and presentations helped to shape ideas and advance our thinking about how best to address the purpose and use questions.</p>
-<p><strong>Stakeholder engagement</strong></p>
-<p>We engaged stakeholders by sharing our research and results through conference presentations at the American Community Survey Data Users Conference and the Applied Public Data Users Conference.&nbsp;We also shared this demonstration project at Listening Sessions with stakeholders as an example of statistical product development. The Listening Sessions bring together 7 to 12 stakeholders by topic (e.g., children’s health) or function (e.g., state demographers) to seek their ideas for new statistical products.</p>
-<p><strong>Equity and ethics</strong></p>
-<p>As described in the Introduction, there are ethics and equity issues that drew us to develop this Use Case. Here we focus on equity and ethics vis-a-vis the data choices and analyses. With regard to ethical considerations with our data discovery process, fitness-for-purpose evaluation, and analyses, two questions arose:</p>
-<ol type="1">
-<li><p>What role does synthetic data have to play, and how do you benchmark it to evaluate fitness-for-purpose?</p></li>
-<li><p>How do you construct and evaluate an index with the goal of identifying vulnerable populations?</p></li>
-</ol>
-<p>Realizing the importance of nursing staff levels, we discussed and questioned whether the synthetic data had biases and were not representative of SNF residents and employees. We benchmarked the synthetic SNF nursing staff numbers against those submitted quarterly to CMS and observed they were biased low, so we decided to use the CMS data. These data were used to estimate the average number of nursing staff that could reach the facility during an extreme flood event (Figure&nbsp;2).</p>
-<p>In this use case, we were fortunate to have the “truth” to benchmark the synthetic data for the average daily nursing staff at each SNF. But this was not the case for the home locations of the nursing staff, therefore, the synthetic locations were not used since we had no way to benchmark them. Ideally, we would use the actual addresses of SNF employees. Instead, we used a simulation to estimate the average risks over routes leading to the SNF. This approach could be replaced with (or benchmarked against) the Census commuting data sets (eg, <a href="https://www.census.gov/topics/employment/commuting/guidance/flows.html">Commuting Flows</a> or the <a href="https://lehd.ces.census.gov/data/">LEHD Origin-Destination Employment Statistics</a>) and the home census tract used as the starting point for each worker. For the number of nursing staff and their home locations, it is impossible to identify potential biases that would result in the inequitable allocation of emergency rescue resources without a thorough understanding of how the synthetic data were generated.</p>
-<p>How one evaluates the equity of an index is a more challenging task. Questions that need to be addressed include:</p>
-<ol type="1">
-<li><p>How do you select the variables used to construct an indicator to guide an equitable allocation of technical assistance?</p></li>
-<li><p>What relationship between these variables is important?</p></li>
-<li><p>What are the differences across the numerous publicly available resilience estimators? Do some lead to a more equitable allocation of technical assistance in the event of an extreme clime event?</p></li>
-<li><p>How do you validate a resilience estimator?</p></li>
-</ol>
-<p>The technical document <em>Community Resilience Indicator Analysis: County-Level Analysis of Commonly Used Indicators from Peer-Reviewed Research</em> <span class="citation" data-cites="edgemon2018community">(Edgemon et al. 2018)</span> identified the 20 most commonly selected variables for constructing resilience estimators from peer-reviewed research. Future research will need to validate these indices against past extreme climate events.</p>
-<p><strong>Privacy and confidentiality</strong></p>
-<p>We did not do a full disclosure review. However, some data are proprietary, and we could not release those data. We discuss how we used these data.</p>
-<p><strong>Dissemination</strong></p>
-<p>We disseminated the final version of the use case in the University of Virginia Libra Open repository <span class="citation" data-cites="lancaster2023CDE">(Lancaster et al. 2023)</span>.</p>
-<p><strong>Curation</strong></p>
-<p>Curation involves documenting all steps of the process so that they can be repeated, validated, reused, or extended. The final report explains the process in words. Curation must also provide the data, metadata, source code, and products. This led us to construct a GitHub repository. A <a href="https://github.com/uva-bi-sdad/census_cde_demo_2/blob/main/README.pdf">README</a> file guides the reader through the material and provides instructions for replicating the research results. Note that the README file must be downloaded for the hyperlinks to work.</p>
-</section>
-<section id="using-the-snf-statistical-product" class="level2" data-number="5">
-<h2 data-number="5" class="anchored" data-anchor-id="using-the-snf-statistical-product"><span class="header-section-number">5</span> Using the SNF statistical product</h2>
-<p>This potential statistical product has many uses. Federal policymakers and administrators regulate SNFs; however, they only sometimes realize the impacts on costs and the need for increased resources to meet these regulations. For example, by reviewing the aggregate inspection deficiency metrics, policymakers can target resources where they are most needed. Providing additional funding to pay workers more, improve their facilities, and address inspection deficiencies would improve the quality of SNFs.&nbsp;</p>
-<p>The media and advocacy groups play a role in highlighting good and bad cases of SNF care or where communities do not have adequate assets to support SNFs during an emergency event. For example, a <em>New Yorker</em> article <span class="citation" data-cites="rafiei2022private">(Rafiei 2022)</span> highlighted how nursing homes decline dramatically when bought by private equity owners. The GAO (September 22, 2023) recently identified the need for more information about private equity ownership in CMS data – a gap that CMS needs to address. And, of course, researchers and analysts are essential for conducting research that leads to creating and improving statistical products around SNFs. By releasing a regularly scheduled SNF statistical product, the changes in SNFs over time can be monitored.</p>
-</section>
-<section id="what-cde-capabilities-have-this-use-case-demonstrated" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="what-cde-capabilities-have-this-use-case-demonstrated"><span class="header-section-number">6</span> What CDE capabilities have this use case demonstrated?</h2>
-<p>As demonstrated by this use case, the CDE Framework is a powerful process for guiding and curating the development of statistics to address complex purposes and uses. Additionally, use cases help illuminate technical capabilities that should be present in the data enterprise to facilitate and accelerate the reuse of data and methods in the development and dissemination of new statistical products.</p>
-<p>This CDE demonstration is the first of many use cases needed to define and develop CDE capabilities. Underlying each use case is the curation process. Curation documents each step, including decisions that may involve trade-offs. Curation preserves and adds value to the data. This includes organizing to facilitate data discovery and easy access; providing metadata to enable the reuse in scientific and programmatic research; enhancing the value of the data enterprise through linkages between datasets; and mapping the network of interconnections between datasets, research outputs, researchers, and institutions. Over time, a searchable curation system will be needed as a foundation for creating statistical products in the CDE.</p>
-<p>The types of products from a use case that can benefit the larger community are only limited by the creativity of the researchers and stakeholders carrying out the use case. The products from this use case are re-useable code; integrated data sets across diverse topics for each SNF; maps and other visualizations; statistical products such as SNF deficiency indices and various indices that measure community and SNF resilience; the probability of a worker reaching an SNF in the event of extreme flooding; and a GitHub repo that provides easy access to all these products plus relevant metadata, literature, and government documents and regulations.</p>
-<p>Conducting this use case has been an eye-opening experience as to the amount and quality of publicly available data to address our research questions. The statistical capabilities and products flowing from diverse use cases can only be identified as the program progresses.</p>
-<div class="nav-btn-container">
-<div class="grid">
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../../applied-insights/case-studies/posts/2024/11/08/what-is-CDE-2.html">← Part 2: What is the CDE?</a></p>
-</div>
-</div>
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../../applied-insights/case-studies/posts/2024/11/22/development-plan-2.html">Part 4: Census Curated Data Enterprise Environment →</a></p>
-</div>
-</div>
-</div>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the authors</dt>
-<dd>
-<strong>Vicki Lancaster</strong> is a statistician with expertise in experimental design, linear models, computation, visualizations, data analysis, and interpretation. She works with scientists at federal agencies on projects requiring statistical skills and creativity, eg, defining skilled technical workforce using novel data sources.
-</dd>
-<dd>
-<strong>Stephanie Shipp</strong> leads the Curated Data Enterprise research portfolio and collaborates with the US Census. She is an economist with experience in data science, survey statistics, public policy, innovation, ethics, and evaluation.
-</dd>
-<dd>
-<strong>Sallie Keller</strong> is the Chief Scientist and Associate Director of Research and Methodology at the US Census Bureau. She is a statistician with research interest in social and decision informatics, statistics underpinnings of data science, and data access and confidentiality. Sallie Keller was at the University of Virginia when this work was conducted.
-</dd>
-<dd>
-<strong>Aaron Schroeder</strong> has experience in the technologies and related policies of information and data integration and systems analysis, including policy and program development and implementation.
-</dd>
-<dd>
-<strong>Henning Mortveit</strong> develops massively interacting systems and the mathematics supporting rigorous analysis and understanding of their stability and resiliency.
-</dd>
-<dd>
-<strong>Samarth Swarup</strong> conducts research in computational social science, resiliency and sustainability, and stimulation analytics.
-</dd>
-<dd>
-<strong>Dawen Xie</strong> develops geographic information systems, visual analytics, information management systems, and databases, with a current focus on building dynamic web systems.
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2024 Stephanie Shipp
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://www.shutterstock.com/g/Ground+Picture">Ground Picture</a> on <a href="https://www.shutterstock.com/image-photo/lovely-nurse-assisting-senior-man-get-2006404274">Shutterstock</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Lancaster V, Shipp S, Keller S et al.&nbsp;(2024). “Translating the Curated Data Model into Practice - climate resiliency of skilled nursing facilities” Real World Data Science, November 19, 2024. <a href="https://realworlddatascience.net/applied-insights/case-studies/posts/2024/11/19/use-case-2.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-
-</section>
-
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
-<div id="ref-barrett2013planning" class="csl-entry">
-Barrett, Christopher, Keith Bisset, Shridhar Chandan, Jiangzhuo Chen, Youngyun Chungbaek, Stephen Eubank, Yaman Evrenosoğlu, et al. 2013. <span>“Planning and Response in the Aftermath of a Large Crisis: An Agent-Based Informatics Framework.”</span> In <em>2013 Winter Simulations Conference (WSC)</em>, 1515–26. IEEE.
-</div>
-<div id="ref-beckman1996creating" class="csl-entry">
-Beckman, Richard J, Keith A Baggerly, and Michael D McKay. 1996. <span>“Creating Synthetic Baseline Populations.”</span> <em>Transportation Research Part A: Policy and Practice</em> 30 (6): 415–29.
-</div>
-<div id="ref-choupani2016population" class="csl-entry">
-Choupani, Abdoul-Ahad, and Amir Reza Mamdoohi. 2016. <span>“Population Synthesis Using Iterative Proportional Fitting (IPF): A Review and Future Research.”</span> <em>Transportation Research Procedia</em> 17: 223–33.
-</div>
-<div id="ref-dosa2008controversy" class="csl-entry">
-Dosa, David M, Kathryn Hyer, Lisa M Brown, Andrew W Artenstein, LuMarie Polivka-West, and Vincent Mor. 2008. <span>“The Controversy Inherent in Managing Frail Nursing Home Residents During Complex Hurricane Emergencies.”</span> <em>Journal of the American Medical Directors Association</em> 9 (8): 599–604. <a href="https://pubmed.ncbi.nlm.nih.gov/19083295/">https://pubmed.ncbi.nlm.nih.gov/19083295/</a>.
-</div>
-<div id="ref-edgemon2018community" class="csl-entry">
-Edgemon, Lesley, Carol Freeman, Carmella Burdi, Trail, and Kyle Pfeiffer. 2018. <span>“Community Resilience Indicator Analysis: County-Level Analysis of Commonly Used Indicators from Peer-Reviewed Research.”</span> <em>Argonne National Laboratory</em>. <a href="https://www.researchgate.net/publication/331232094_Community_Resilience_Indicator_Analysis_County-Level_Analysis_of_Commonly_Used_Indicators_From_Peer-Reviewed_Research">https://www.researchgate.net/publication/331232094_Community_Resilience_Indicator_Analysis_County-Level_Analysis_of_Commonly_Used_Indicators_From_Peer-Reviewed_Research</a>.
-</div>
-<div id="ref-FEMA2021risk" class="csl-entry">
-FEMA. 2021. <span>“National Risk Index Technical Documentation.”</span> Federal Emergency Management Agency. 2021. <a href="https://www.fema.gov/sites/default/files/documents/fema_national-risk-index_technical-documentation.pdf
-  ">https://www.fema.gov/sites/default/files/documents/fema_national-risk-index_technical-documentation.pdf </a>.
-</div>
-<div id="ref-FEMA2022a" class="csl-entry">
-———. 2022. <span>“Community Resilience Indicator Analysis: Commonly Used Indicators from Peer-Reviewed Research: Updated for Research Published 2003-2021.”</span> Federal Emergency Management Agency. 2022. <a href="hhttps://www.fema.gov/sites/default/files/documents/fema_2022-community-resilience-indicator-analysis.pdf
-  ">hhttps://www.fema.gov/sites/default/files/documents/fema_2022-community-resilience-indicator-analysis.pdf </a>.
-</div>
-<div id="ref-dhs2022hifld" class="csl-entry">
-Homeland Security: Geospatial Management Office, Department of. 2022. <span>“Homeland Security Infrastructure Foundation-Level Data Open Data.”</span> 2022. <a href="https://hifld-geoplatform.opendata.arcgis.com/">https://hifld-geoplatform.opendata.arcgis.com/</a>.
-</div>
-<div id="ref-hyer2006establishing" class="csl-entry">
-Hyer, Kathryn, Lisa M Brown, Amy Berman, and LuMarie Polivka-West. 2006. <span>“Establishing and Refining Hurricane Response Systems for Long-Term Care Facilities: The John a. Hartford Foundation Was the Lead Funder of a Hurricane Summit to Focus on the Neglected Needs of the Elderly.”</span> <em>Health Affairs</em> 25 (Suppl1): W407–11. <a href="https://www.healthaffairs.org/doi/full/10.1377/hlthaff.25.w407?casa_token=XbJ2j-CdtssAAAAA:USJMJsZq_jlYlQlASQt4O4OYJcq_AOKjpXOx5tTMUIZxoNVXZCzj1_ejtQyLHrnTg6B1BygFuuGZ">https://www.healthaffairs.org/doi/full/10.1377/hlthaff.25.w407?casa_token=XbJ2j-CdtssAAAAA:USJMJsZq_jlYlQlASQt4O4OYJcq_AOKjpXOx5tTMUIZxoNVXZCzj1_ejtQyLHrnTg6B1BygFuuGZ</a>.
-</div>
-<div id="ref-lancaster2023CDE" class="csl-entry">
-Lancaster, V., S. Shipp, S. Keller, A. Schroeder, H. Mortveit, S. Swarup, and D. Xie. 2023. <span>“Census Curated Data Enterprise Use Case Demonstration: Climate Resiliency of Skilled Nursing Facilities”</span> TR 2023-53. <a href="https://doi.org/10.18130/ce97-sp05">https://doi.org/10.18130/ce97-sp05</a>.
-</div>
-<div id="ref-brown2022ltcfocus" class="csl-entry">
-LTCFocus, Brown University. 2022. <span>“Who We Are.”</span> 2022. <a href="https://ltcfocus.org/about">https://ltcfocus.org/about</a>.
-</div>
-<div id="ref-CMS2022design" class="csl-entry">
-Medicare &amp; Medicaid Services, Centers for. 2022. <span>“Design for Care Compare Nursing Home Five-Star Quality Rating System: Technical Users’ Guide.”</span> 2022. <a href="https://www.cms.gov/medicare/provider-enrollment-and-certification/certificationandcomplianc/downloads/usersguide.pdf">https://www.cms.gov/medicare/provider-enrollment-and-certification/certificationandcomplianc/downloads/usersguide.pdf</a>.
-</div>
-<div id="ref-cmsglossary" class="csl-entry">
-———. 2023. <span>“CMS Glossary.”</span> 2023. <a href="https://www.cms.gov/glossary?term=skilled+nursing+facility&amp;items_per_page=10&amp;viewmode=grid ">https://www.cms.gov/glossary?term=skilled+nursing+facility&amp;items_per_page=10&amp;viewmode=grid </a>.
-</div>
-<div id="ref-mortveitNSSAC" class="csl-entry">
-Mortveit, H., D. Xie, and M. Marathe. 2023. <span>“NSSAC Building Knowledge Base: Modeling and Implementation.”</span>
-</div>
-<div id="ref-rafiei2022private" class="csl-entry">
-Rafiei, Y. 2022. <span>“When Private Equity Takes over a Nursing Home.”</span> <em>New Yorker</em> 2022: 333. <a href="https://www.newyorker.com/news/dispatch/when-private-equity-takes-over-a-nursing-home">https://www.newyorker.com/news/dispatch/when-private-equity-takes-over-a-nursing-home</a>.
-</div>
-<div id="ref-skarha2021association" class="csl-entry">
-Skarha, Julianne, Lily Gordon, Nazmus Sakib, Joseph June, Dylan J Jester, Lindsay J Peterson, Ross Andel, and David M Dosa. 2021. <span>“Association of Power Outage with Mortality and Hospitalizations Among Florida Nursing Home Residents After Hurricane Irma.”</span> In <em>JAMA Health Forum</em>, 2:e213900–213900. 11. American Medical Association. <a href="https://jamanetwork.com/journals/jama-health-forum/fullarticle/2786665">https://jamanetwork.com/journals/jama-health-forum/fullarticle/2786665</a>.
-</div>
-<div id="ref-sheet2022protecting" class="csl-entry">
-The White House. 2022. <span>“Protecting Seniors by Improving Safety and Quality of Care in the Nation’s Nursing Homes.”</span> 2022. <a href="https://www.whitehouse.gov/briefing-room/statements-releases/2022/02/28/fact-sheet-protecting-seniors-and-people-with-disabilities-by-improving-safety-and-quality-of-care-in-the-nations-nursing-homes/
-  ">https://www.whitehouse.gov/briefing-room/statements-releases/2022/02/28/fact-sheet-protecting-seniors-and-people-with-disabilities-by-improving-safety-and-quality-of-care-in-the-nations-nursing-homes/ </a>.
-</div>
-</div></section><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>Nursing staff includes medical aides and technicians, certified nursing assistants, licensed practical nurses (LPNs), LPNs with administrative duties, registered nurses (RNs), RNs with administrative duties, and the RN director of nursing.↩︎</p></li>
-<li id="fn2"><p>For example, distinguishing county from city when the name is the same could be done using State/County FIPS codes. Richmond County is 51159; Richmond City is 51760.↩︎</p></li>
-<li id="fn3"><p><em>ZIP code is a system of postal codes used by the United States Postal Service. ZIP</em> was chosen to indicate mail travels more quickly when senders use the postal code.↩︎</p></li>
-<li id="fn4"><p>Average Daily Nursing Staff is the daily number of Medical Aides and Technicians, CNAs, LPNs, LPNs with administrative duties, RNs, RNs with administrative duties, and RN Director of Nursing averaged over three months.↩︎</p></li>
-</ol>
-</section></div> ]]></description>
-  <category>Public Policy</category>
-  <category>Data Analysis</category>
-  <category>Data Integration</category>
-  <category>Curation</category>
-  <category>Statistical Products</category>
-  <guid>https://realworlddatascience.net/applied-insights/case-studies/posts/2024/11/19/use-case-2.html</guid>
-  <pubDate>Tue, 19 Nov 2024 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/applied-insights/case-studies/posts/2024/11/19/images/nurse-thumbnail.jpg" medium="image" type="image/jpeg"/>
 </item>
 </channel>
 </rss>
