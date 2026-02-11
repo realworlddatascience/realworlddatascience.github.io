@@ -6,11 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Dr.&nbsp;Stefani Langehennig, University of Denver Daniels College of Business">
+<meta name="author" content="Devin Partida">
 <meta name="dcterms.date" content="2026-02-11">
-<meta name="description" content="As AI regulation wobbles, this piece shows data scientists how today’s policy fights translate into concrete design choices—and how smarter systems can reduce risk while improving quality.">
+<meta name="description" content="Practical tips for bias detection and mitigation, using credit card loan systems as a case study.">
 
-<title>Colorado’s AI Law Pause: What It Means for People Working in Data Science – Real World Data Science</title>
+<title>Understanding and Addressing Algorithmic Bias: a Credit Scoring Case Study – Real World Data Science</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -26,27 +26,27 @@ ul.task-list li input[type="checkbox"] {
 </style>
 
 
-<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
-<script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
-<script src="../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="../../../../../site_libs/quarto-search/fuse.min.js"></script>
-<script src="../../../../../site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="../../../../../">
-<link href="../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
-<script src="../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
-<script src="../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
-<script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
-<script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
-<link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
-<script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../../../site_libs/bootstrap/bootstrap-3062bb56513a1a637f86ad3c346ce31b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
-<link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
-<link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script src="../../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../../">
+<link href="../../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
+<script src="../../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
+<script src="../../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../../site_libs/bootstrap/bootstrap-3062bb56513a1a637f86ad3c346ce31b.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
   "location": "navbar",
   "copy-button": false,
@@ -87,18 +87,14 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 Ben is on GitHub here: https://github.com/benruijl
 And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
 
-<meta property="og:title" content="Colorado’s AI Law Pause: What It Means for People Working in Data Science – Real World Data Science">
-<meta property="og:description" content="As AI regulation wobbles, this piece shows data scientists how today’s policy fights translate into concrete design choices—and how smarter systems can reduce risk while improving quality.">
-<meta property="og:image" content="https://realworlddatascience.net/the-pulse/posts/2026/02/02/images/thumb.png">
+<meta property="og:title" content="Understanding and Addressing Algorithmic Bias: a Credit Scoring Case Study – Real World Data Science">
+<meta property="og:description" content="Practical tips for bias detection and mitigation, using credit card loan systems as a case study.">
+<meta property="og:image" content="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/02/11/images/thumbcredit">
 <meta property="og:site_name" content="Real World Data Science">
-<meta property="og:image:height" content="1024">
-<meta property="og:image:width" content="1536">
-<meta name="twitter:title" content="Colorado’s AI Law Pause: What It Means for People Working in Data Science – Real World Data Science">
-<meta name="twitter:description" content="As AI regulation wobbles, this piece shows data scientists how today’s policy fights translate into concrete design choices—and how smarter systems can reduce risk while improving quality.">
-<meta name="twitter:image" content="https://realworlddatascience.net/the-pulse/posts/2026/02/02/images/thumb.png">
+<meta name="twitter:title" content="Understanding and Addressing Algorithmic Bias: a Credit Scoring Case Study – Real World Data Science">
+<meta name="twitter:description" content="Practical tips for bias detection and mitigation, using credit card loan systems as a case study.">
+<meta name="twitter:image" content="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/02/11/images/thumbcredit">
 <meta name="twitter:site" content="@rwdatasci">
-<meta name="twitter:image-height" content="1024">
-<meta name="twitter:image-width" content="1536">
 <meta name="twitter:card" content="summary_large_image">
 </head><body class="nav-fixed quarto-light"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
 
@@ -119,8 +115,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </script>
 
 
-<link rel="stylesheet" href="../../../../../rwds.css">
-<link rel="stylesheet" href="rwds.css">
+<link rel="stylesheet" href="../../../../../../rwds.css">
 
 
 
@@ -130,9 +125,9 @@ document.addEventListener("DOMContentLoaded", function() {
     <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
       <div class="navbar-container container-fluid">
       <div class="navbar-brand-container mx-auto">
-    <a href="../../../../../index.html" class="navbar-brand navbar-brand-logo">
-    <img src="../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo light-content">
-    <img src="../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo dark-content">
+    <a href="../../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo light-content">
+    <img src="../../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo dark-content">
     </a>
   </div>
             <div id="quarto-search" class="" title="Search"></div>
@@ -142,19 +137,19 @@ document.addEventListener("DOMContentLoaded", function() {
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav navbar-nav-scroll ms-auto">
   <li class="nav-item">
-    <a class="nav-link" href="../../../../../the-pulse/index.html"> 
+    <a class="nav-link" href="../../../../../../the-pulse/index.html"> 
 <span class="menu-text">The Pulse</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../../../applied-insights/index.html"> 
+    <a class="nav-link" href="../../../../../../applied-insights/index.html"> 
 <span class="menu-text">Applied Insights</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../../../foundation-frontiers/index.html"> 
+    <a class="nav-link" href="../../../../../../foundation-frontiers/index.html"> 
 <span class="menu-text">Foundations &amp; Frontiers</span></a>
   </li>  
   <li class="nav-item">
-    <a class="nav-link" href="../../../../../people-paths/index.html"> 
+    <a class="nav-link" href="../../../../../../people-paths/index.html"> 
 <span class="menu-text">People &amp; Paths</span></a>
   </li>  
   <li class="nav-item dropdown ">
@@ -163,19 +158,19 @@ document.addEventListener("DOMContentLoaded", function() {
     </a>
     <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
         <li>
-    <a class="dropdown-item" href="../../../../../about-rwds.html">
+    <a class="dropdown-item" href="../../../../../../about-rwds.html">
  <span class="dropdown-text">Who we are</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../../../contributor-docs/call-for-contributions.html">
+    <a class="dropdown-item" href="../../../../../../contributor-docs/call-for-contributions.html">
  <span class="dropdown-text">How to contribute</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../../../CODE_OF_CONDUCT.html">
+    <a class="dropdown-item" href="../../../../../../CODE_OF_CONDUCT.html">
  <span class="dropdown-text">Code of conduct</span></a>
   </li>  
         <li>
-    <a class="dropdown-item" href="../../../../../contact.html">
+    <a class="dropdown-item" href="../../../../../../contact.html">
  <span class="dropdown-text">Contact us</span></a>
   </li>  
     </ul>
@@ -191,18 +186,15 @@ document.addEventListener("DOMContentLoaded", function() {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Colorado’s AI Law Pause: What It Means for People Working in Data Science</h1>
+      <h1 class="title">Understanding and Addressing Algorithmic Bias: a Credit Scoring Case Study</h1>
                   <div>
         <div class="description">
-          As AI regulation wobbles, this piece shows data scientists how today’s policy fights translate into concrete design choices—and how smarter systems can reduce risk while improving quality.
+          <p>Practical tips for bias detection and mitigation, using credit card loan systems as a case study.</p>
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">AI governance</div>
-                <div class="quarto-category">Applied data science</div>
-                <div class="quarto-category">Data engineering and MLOps</div>
-                <div class="quarto-category">Technology policy</div>
-                <div class="quarto-category">Operational risk</div>
+                <div class="quarto-category">Ethics</div>
+                <div class="quarto-category">Algorithms</div>
               </div>
                   </div>
   </div>
@@ -213,7 +205,7 @@ document.addEventListener("DOMContentLoaded", function() {
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Dr.&nbsp;Stefani Langehennig, University of Denver Daniels College of Business </p>
+               <p>Devin Partida </p>
             </div>
     </div>
       
@@ -236,13 +228,12 @@ document.addEventListener("DOMContentLoaded", function() {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#from-governance-principles-to-technical-work" id="toc-from-governance-principles-to-technical-work" class="nav-link active" data-scroll-target="#from-governance-principles-to-technical-work">From Governance Principles to Technical Work</a></li>
-  <li><a href="#why-uncertainty-becomes-a-design-risk" id="toc-why-uncertainty-becomes-a-design-risk" class="nav-link" data-scroll-target="#why-uncertainty-becomes-a-design-risk">Why Uncertainty Becomes a Design Risk</a></li>
-  <li><a href="#responsibility-does-not-end-at-deployment" id="toc-responsibility-does-not-end-at-deployment" class="nav-link" data-scroll-target="#responsibility-does-not-end-at-deployment">Responsibility Does Not End at Deployment</a></li>
-  <li><a href="#practical-steps-teams-can-take-now" id="toc-practical-steps-teams-can-take-now" class="nav-link" data-scroll-target="#practical-steps-teams-can-take-now">Practical Steps Teams Can Take Now</a></li>
-  <li><a href="#governance-lives-in-the-data-stack" id="toc-governance-lives-in-the-data-stack" class="nav-link" data-scroll-target="#governance-lives-in-the-data-stack">Governance Lives in the Data Stack</a></li>
+  <li><a href="#the-critical-issue-of-algorithmic-bias-in-credit-scoring-models" id="toc-the-critical-issue-of-algorithmic-bias-in-credit-scoring-models" class="nav-link active" data-scroll-target="#the-critical-issue-of-algorithmic-bias-in-credit-scoring-models">The Critical Issue of Algorithmic Bias in Credit Scoring Models</a></li>
+  <li><a href="#practical-tips-for-bias-detection-and-mitigation" id="toc-practical-tips-for-bias-detection-and-mitigation" class="nav-link" data-scroll-target="#practical-tips-for-bias-detection-and-mitigation">Practical Tips for Bias Detection and Mitigation</a></li>
+  <li><a href="#considerations-to-reduce-algorithmic-bias-in-credit-scoring" id="toc-considerations-to-reduce-algorithmic-bias-in-credit-scoring" class="nav-link" data-scroll-target="#considerations-to-reduce-algorithmic-bias-in-credit-scoring">Considerations to Reduce Algorithmic Bias in Credit Scoring</a></li>
+  <li><a href="#stay-vigilant-to-maintain-fairness" id="toc-stay-vigilant-to-maintain-fairness" class="nav-link" data-scroll-target="#stay-vigilant-to-maintain-fairness">Stay Vigilant to Maintain Fairness</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/the-pulse/posts/2026/02/02/colorado-AI.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/applied-insights/case-studies/posts/2026/02/11/algorithmic_bias_credit_scoring.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -251,63 +242,46 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-<p>In 2024, Colorado became the first U.S. state to pass a <a href="https://leg.colorado.gov/bills/sb24-205">comprehensive law</a> aimed at regulating “high-risk” artificial intelligence systems-models used in areas such as hiring, housing, credit, and healthcare. The law adopted a risk-based approach, placing additional obligations on systems that shape consequential decisions, including requirements around documentation, monitoring, and human oversight. Less than a year later, lawmakers delayed its implementation and began reconsidering key provisions, citing uncertainty about feasibility, cost, and enforcement.</p>
-<p>Colorado’s approach drew explicitly on international models, most notably the <a href="https://artificialintelligenceact.eu/">European Union’s AI Act</a>, which similarly classifies AI systems by risk and ties higher-risk uses to stronger accountability requirements. Colorado’s experience is not only a story about state politics. It serves as a useful case study for a more practical question: what happens when ambitious AI governance principles meet the realities of building and maintaining production data systems?</p>
-<p>For data scientists, analysts, machine learning engineers, and others responsible for real-world data products, this moment signals that AI governance is no longer a peripheral policy concern. It is becoming an operational constraint.</p>
-<section id="from-governance-principles-to-technical-work" class="level2">
-<h2 class="anchored" data-anchor-id="from-governance-principles-to-technical-work">From Governance Principles to Technical Work</h2>
-<p>Colorado’s law followed a pattern increasingly visible in global AI governance, particularly the European Union’s AI Act. These frameworks share a risk-based logic in that systems that influence consequential decisions face higher expectations for transparency, oversight, and accountability.</p>
-<p>At a high level, these expectations (fairness, consumer protection, responsible use) sound abstract. In practice, they translate directly into technical work:</p>
-<ul>
-<li>Clear documentation of model purpose, training data, and limitations</li>
-<li>Records showing where data comes from and how it changes over time</li>
-<li>Reproducible experiments and versioned artifacts</li>
-<li>Ongoing monitoring for performance drift and unintended impacts</li>
-<li>Defined processes for human review and intervention</li>
-</ul>
-<blockquote class="blockquote">
-<p>None of this lives in legislation. It lives in scripts, workflows, dashboards, deployment systems, and operational infrastructure.</p>
-</blockquote>
-<p>Colorado’s stalled implementation of AI policy surfaced a familiar pattern, as many organizations are well equipped to optimize model performance, but far less prepared to operationalize accountability at scale. The friction emerged not because governance goals were controversial, but because the supporting technical infrastructure was uneven.</p>
+<p>When you apply for a credit card or a loan, algorithms work in the background to determine financial worthiness. Despite increasing advancements, these are <a href="https://hai.stanford.edu/news/how-flawed-data-aggravates-inequality-credit">still imperfect</a> due to inherent biases. As data science students and professionals, you’ll inevitably face similar issues relating to biased data sets and should know how to combat them. What are some of the most effective techniques, and why do they matter?</p>
+<section id="the-critical-issue-of-algorithmic-bias-in-credit-scoring-models" class="level2">
+<h2 class="anchored" data-anchor-id="the-critical-issue-of-algorithmic-bias-in-credit-scoring-models">The Critical Issue of Algorithmic Bias in Credit Scoring Models</h2>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
-<p><img src="images/thumb.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+<p><img src="images/thumbcredit.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
 </figure>
 </div>
+<p>One of the most concerning aspects of algorithmic bias is the limited recourse available to those negatively impacted, leaving them vulnerable to opaque decision-making processes. This challenge underscores the need for increased transparency in <a href="https://www.psecu.com/learn/whats-in-a-credit-score">how credit scoring models are developed</a> and deployed. Ultimately, proactive mitigation strategies are essential to ensure fairness and equity in financial outcomes.</p>
+<p>One of the biggest issues surrounding algorithmic bias in credit scoring is that adversely affected parties usually have little or no recourse for appealing unfavorable decisions. This problem happens because most widely used algorithms still can’t explain how they reached specific decisions, leaving people in the dark and forcing them to trust the technology, even as it potentially ruins lives.</p>
+<p>A November 2025 academic review <a href="https://giesbusiness.illinois.edu/news/2025/11/12/new-research-reveals-widespread-bias--inefficiency-in-credit-scoring-and-mortgage-lending">revealed numerous flaws in financial algorithms</a> and confirmed various impacts. They included systematic disadvantages for minority groups and miscalibrated credit scores for individual borrowers. The researchers also discovered that these issues appeared despite the financial technology industry’s promises of superior efficiency.</p>
+<p>One of the cited studies consistently showed that female applicants received credit scores six to eight points lower than their male counterparts. The researchers determined that the associated effects diminished economic welfare and that the ramifications continued for multiple borrowing cycles. Another investigation revealed persistent disparities across minority groups, despite the applicant’s chosen lender type.</p>
+<p>Elsewhere, researchers examined the effects of using large language models to evaluate applicants’ loan data. This approach regularly <a href="https://news.lehigh.edu/ai-exhibits-racial-bias-in-mortgage-underwriting-decisions">recommended charging higher interest rates</a> to Black applicants or denying their applications. It did not make the same suggestions for identical white applicants. These examples demonstrate why data science professionals must remain constantly aware of the potential for bias and uphold fairness by reducing the issue whenever possible.</p>
 </section>
-<section id="why-uncertainty-becomes-a-design-risk" class="level2">
-<h2 class="anchored" data-anchor-id="why-uncertainty-becomes-a-design-risk">Why Uncertainty Becomes a Design Risk</h2>
-<p>One challenge Colorado encountered was definitional ambiguity. For example, what qualifies as “high risk”, what safeguards are sufficient, and how should harms should be assessed? These questions are not merely legal - they are technical and context dependent.</p>
-<p>Different data sources, deployment approaches, and users lead to different answers. For teams building data systems today, that uncertainty creates risk. When teams cannot easily see how data moves through a system, how models change over time, or how decisions are produced, adapting later becomes costly and disruptive.</p>
-<p>Recent federal signals add another layer of complexity. President Trump’s executive order discouraging state-level AI regulation aims to reduce fragmented policy on AI, but it does not replace state experimentation with a concrete national policy. Teams now operate in a moving landscape shaped by state initiatives, evolving federal priorities, and international regimes like the EU AI Act. In this environment, aiming for minimal compliance is risky. Teams are better served by designing systems that are flexible and easy to observe from the start.</p>
+<section id="practical-tips-for-bias-detection-and-mitigation" class="level2">
+<h2 class="anchored" data-anchor-id="practical-tips-for-bias-detection-and-mitigation">Practical Tips for Bias Detection and Mitigation</h2>
+<p>Sources of bias in credit scoring data and algorithms are more common than you might think. They can include:</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/infog.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+<p>One straightforward way to identify bias in training data is to be aware of the most common types and build algorithms to be less reliant on them when possible. Regularly reviewing the training data is similarly effective because it can catch biases before they have real-life effects.</p>
+<p>You can also perform a disparate impact analysis to mitigate bias, which compares aggregate measurements attributed to fewer privileges or less representation to their counterparts. Dividing the proportion of one group that received an adverse outcome and comparing it with that of the other group identifies bias.</p>
+<p>Creating a set of fairness metrics is another practical mitigation approach, as it encourages data scientists to understand the impacts of various aspects of a person’s background that they can and cannot control. The examined attributes could include someone’s employment history, income and debt, but also the extent to which they experienced equal opportunities.</p>
+<p>Improvements in explainable artificial intelligence will further both bias detection and mitigation. Developers then see <a href="https://rehack.com/ai/explainable-ai/">the heavily weighted but irrelevant factors</a> that could lead to unfair outcomes and correct issues early.</p>
 </section>
-<section id="responsibility-does-not-end-at-deployment" class="level2">
-<h2 class="anchored" data-anchor-id="responsibility-does-not-end-at-deployment">Responsibility Does Not End at Deployment</h2>
-<p>A lesson emerging from both policy debates and practice is that accountability does not stop when a model goes live. Responsibility shifts across teams over time, from data scientists to engineers, product owners, operators, and decision-makers.</p>
-<p>This challenge is the focus of the <a href="https://senseaboutscience.org/responsible-handover-of-ai/">Responsible Handover of AI framework</a> developed by <a href="https://senseaboutscience.org/">Sense about Science</a>, which emphasizes the need for clear transitions of responsibility as AI systems move from development into real-world use. Rather than treating deployment as a handoff to “the business”, the framework highlights the risks that arise when assumptions, limitations, and responsibilities are not carried forward with the system.</p>
-<p>For practitioners, this framing maps governance concerns onto familiar operational questions, such as who monitors systems after deployment, which development assumptions still matter in production, how limitations are communicated to users, and what happens when systems are updated or handed over to new teams.</p>
-<p>Without explicit handover practices, accountability gaps emerge because responsibility becomes diffuse as systems evolve. From this perspective, many regulatory requirements are not adding entirely new work, rather they formalize practices teams already rely on. This includes documentation that travels with systems, monitoring in production, and clear escalation paths when something goes wrong.</p>
+<section id="considerations-to-reduce-algorithmic-bias-in-credit-scoring" class="level2">
+<h2 class="anchored" data-anchor-id="considerations-to-reduce-algorithmic-bias-in-credit-scoring">Considerations to Reduce Algorithmic Bias in Credit Scoring</h2>
+<p>Reducing algorithmic bias in credit scoring requires cooperation across roles and departments and includes those who will use the tools containing the algorithms. Committing to specific postprocessing steps empowers people to become more familiar with an algorithm’s functionality and potential shortcomings rather than automatically trusting the results. Those developing the algorithms should prioritize transparency by designing explainable models when possible and making them accessible enough for the expected audience.</p>
+<p>Staying abreast of recent research shapes data scientists’ efforts by helping them understand the possibilities. In a 2024 case study, MIT researchers created a new <a href="https://news.mit.edu/2024/researchers-reduce-bias-ai-models-while-preserving-improving-accuracy-1211">technique that identifies and eliminates</a> the specific attributes of training data that are the strongest contributors to a model’s biases about minority subgroups. This approach also preserves overall accuracy because it preserves more of the data compared to other options.</p>
+<p>The developers confirmed that the technique can find hidden bias sources and training datasets with unlabeled information. This capability is significant because the data used by many applications lacks labels. They envision combining their technique with other approaches to improve fairness in high-stakes situations. This detail makes it well-suited for the financial industry because many of the associated decisions alter people’s lives and opportunities.</p>
+<p>Maintaining responsible data science practices requires equipping professionals with the skills to detect and mitigate bias in an evolving technological landscape. A 2025 study involved a biased dataset that contained a <a href="https://www.psu.edu/news/bellisario-college-communications/story/most-users-cannot-identify-ai-bias-even-training-data">disproportionately high number</a> of white people with happy faces. This issue caused the AI algorithm to correlate race with emotional expressions.</p>
+<p>The results of three experiments with human participants showed that most individuals did not notice the bias. This result shows why data scientists need ongoing education to spot less-obvious examples.</p>
 </section>
-<section id="practical-steps-teams-can-take-now" class="level2">
-<h2 class="anchored" data-anchor-id="practical-steps-teams-can-take-now">Practical Steps Teams Can Take Now</h2>
-<p>Regardless of how U.S. and international regulation ultimately settles, many investments pay off immediately while reducing future risk, including:</p>
-<ul>
-<li><em>Standardizing documentation</em>. Ensure model summaries and data descriptions travel with systems as they move between teams</li>
-<li><em>Build end-to-end visibility</em>. Version datasets, features, models, and configurations so results can be reproduced</li>
-<li><em>Instrument monitoring early</em>. Track input drift, unstable predictions, performance decay, and downstream impacts once systems are in production</li>
-<li><em>Clarify governance workflows</em>. Define who approves releases, who monitors systems, and how responsibility shifts over time</li>
-<li><em>Translate risk for leadership</em>. Gaps in documentation and visibility tend to come back later as messy, expensive fixes; addressing them early saves time and pain</li>
-</ul>
-<blockquote class="blockquote">
-<p>These practices are not limited to machine learning. Any system that informs decisions can create similar accountability challenges.</p>
-</blockquote>
-</section>
-<section id="governance-lives-in-the-data-stack" class="level2">
-<h2 class="anchored" data-anchor-id="governance-lives-in-the-data-stack">Governance Lives in the Data Stack</h2>
-<p>There’s still no settled agreement on how AI should be governed. But for people building real-world data systems, its implications are already concrete. Accountability increasingly lives in the data stack in how workflows are instrumented, how models are monitored, and how decisions can be examined after the fact.</p>
-<p>This is not simply about regulatory compliance. It is about building systems that are transparent, resilient, and trustworthy at scale. Organizations that treat governance as a core technical problem (rather than an external policy constraint imposed later) will be best positioned to navigate whatever regulatory balance ultimately emerges.</p>
+<section id="stay-vigilant-to-maintain-fairness" class="level2">
+<h2 class="anchored" data-anchor-id="stay-vigilant-to-maintain-fairness">Stay Vigilant to Maintain Fairness</h2>
+<p>Your work on algorithms for credit scoring could adversely affect people’s lives and leave them with no way to contest unfavorable outcomes. Being a responsible data scientist means understanding the numerous risk factors and the controllable factors to minimize harm. Remaining aware of emerging AI applications in the financial industry and regularly meeting with colleagues to discuss ways forward increases fairness for everyone.</p>
 <div class="article-btn">
-<p><a href="../../../../../the-pulse/index.html">Explore more data science ideas</a></p>
+<p><a href="../../../../../../applied-insights/index.html">Explore more data science ideas</a></p>
 </div>
 <div class="further-info">
 <div class="grid">
@@ -315,16 +289,15 @@ document.addEventListener("DOMContentLoaded", function() {
 <dl>
 <dt>About the author:</dt>
 <dd>
-<a href="https://www.linkedin.com/in/stefani-langehennig-phd-418820144/">Dr.&nbsp;Stefani Langehennig</a> is an Assistant Professor of the Practice in the Business Information &amp; Analytics Department at the University of Denver’s Daniels College of Business. She is also the lead director for the Center for Analytics and Innovation with Data (CAID). As a former data scientist, she has worked with both academic and industry partners in the U.S. and abroad, helping organizations evaluate and implement data analytics and AI solutions. Her research focuses on computational social science methods, the impact of data transparency on political behavior, and legislative policy capacity.
+<a href="https://devinpartida.com/">Devin Partida</a> is a data science and technology writer, as well as the Editor-in-Chief of ReHack.com. Her work has been featured on Hackernoon, TechTarget, DZone and others.
 </dd>
 </dl>
 <div class="g-col-12 g-col-md-6">
-<p><strong>Copyright and licence</strong> : © 2026 Stefani Langehennig<br>
-<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"> <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"> </a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.</p>
+<p><strong>Copyright and licence</strong> : © 2026 Devin Partida <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"> <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"> </a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.</p>
 </div>
 <div class="g-col-12 g-col-md-6">
 <p><strong>How to cite</strong> :<br>
-Langehennig, Stefani. 2026. “<strong>Colorado’s AI Law Pause: What It Means for People Working in Data Science</strong>.” <em>Real World Data Science</em>, 2026. <a href="https://realworlddatascience.net/the-pulse/posts/2026/02/02/colorado-AI.html">URL</a></p>
+Partida, Devin. 2026. “<strong>Understanding and Addressing Algorithmic Bias: a Credit Scoring Case Study</strong>.” <em>Real World Data Science</em>, 2026. <a href="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/02/11/algorithmic-bias-credit-scoring.html">URL</a></p>
 </div>
 </div>
 </div>
@@ -767,7 +740,7 @@ Langehennig, Stefani. 2026. “<strong>Colorado’s AI Law Pause: What It Means 
 <footer class="footer">
   <div class="nav-footer">
     <div class="nav-footer-left">
-<p><a href="../../../../../LICENCE.html">Copyright © 2025 Royal Statistical Society</a></p>
+<p><a href="../../../../../../LICENCE.html">Copyright © 2025 Royal Statistical Society</a></p>
 </div>   
     <div class="nav-footer-center">
       <ul class="footer-items list-unstyled">
@@ -801,15 +774,15 @@ Langehennig, Stefani. 2026. “<strong>Colorado’s AI Law Pause: What It Means 
     </a>
   </li>  
     <li class="nav-item compact">
-    <a class="nav-link" href="../../../../../feeds.html">
+    <a class="nav-link" href="../../../../../../feeds.html">
       <i class="bi bi-rss" role="img" aria-label="RWDS rss">
 </i> 
     </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/the-pulse/posts/2026/02/02/colorado-AI.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/applied-insights/case-studies/posts/2026/02/11/algorithmic_bias_credit_scoring.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
-<p><a href="../../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
+<p><a href="../../../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
 </div>
   </div>
 </footer>
