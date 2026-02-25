@@ -17,7 +17,200 @@
 <width>144</width>
 </image>
 <generator>quarto-1.8.27</generator>
-<lastBuildDate>Wed, 18 Feb 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 25 Feb 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Why Great Models (Still) Fail</title>
+  <dc:creator>Jennifer Hall</dc:creator>
+  <link>https://realworlddatascience.net/foundation-frontiers/posts/2026/02/25/why_great_models_still_fail.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>In the field of data science and AI, it’s easy to assume that technical excellence is the ultimate goal. Performance can be quantified in ROC curves, accuracy scores, and other metrics, but a model can be technically brilliant and still deliver no real-world impact.</p>
+<p>In our earlier article <a href="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/01/12/why-95-percent-of-ai-projects-fail.html">“Why 95% of AI Projects Fail”</a> Lee Cleweley examined the strategic and organisational reasons AI struggles to deliver value. This piece takes that conversation to the ground level, offering a practitioner’s guide to designing models that succeed in real‑world use.</p>
+<p>Success in practice goes far beyond code and algorithms. It comes down to solving the right problem, in the right way, for the right people. No matter how elegant a technical solution is, it must address real problems for real users. Achieving that requires more than strong technical workflows—it also demands an understanding of how the model and technical solution fits into the bigger picture. To do that, data science and AI practitioners, when designing their solution, need to see how it will sit within broader processes, including how end users will actually interact with and use it.</p>
+<p>The importance of this skill emerged repeatedly in the “10 Key Questions to Data Science and AI Practitioners” interview series, run by the Data Science and AI Section of the Royal Statistical Society. The series gathers perspectives from practitioners at various career stages, from those starting their career to senior leaders. By posing the same ten questions, it uncovers motivations, challenges, and visions for the future while highlighting the breadth of career paths in the field. When asked what they considered the most undervalued skill, many participants highlighted the importance of something non-technical — the ability to understand the organisational context and the needs of users.</p>
+<p>The importance of these skills for data science and AI practitioners is further evidenced by their emphasis in government and professional standards. The UK Government’s DDaT Capability Framework highlights that data science practitioners especially at higher levels are expected to “design and manage processes to gather and establish user needs”. Similarly, the Royal Statistical Society in The Alliance for Data Science Professionals Certification Guidance and Process: Advanced Data Science Professional states as a key skill the ability to be “engaging stakeholders, demonstrating the ability to clearly define a problem and agree on solutions” including being able to “Identify and elicit project requirements”. Together, these frameworks show that engaging directly with users and stakeholders is not optional—it is a core professional expectation for data science and AI practitioners.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>The Case of the Vanishing Model</strong></p>
+<p>Consider a fictional, but perhaps painfully familiar, scenario to practitioners. A practitioner is asked to “build a model to predict which customers are likely to leave.”</p>
+<p>They get to work: sourcing data, engineering features, and testing a range of algorithms. After three months, they deliver a model with 94% accuracy on retrospective data. It’s an elegant solution, using a technically sophisticated approach and they are justifiably proud.</p>
+<p>Then comes the handover presentation:</p>
+<ul>
+<li><strong>Marketing:</strong> “How do we act on this? We already run retention campaigns—will this actually improve them?”</li>
+<li><strong>Commercial:</strong> “It will cost £X per month to operate. What return should we expect?”<br>
+</li>
+<li><strong>Operations:</strong> “There’s no process for plugging these predictions into the CRM. Who is meant to action this?”</li>
+</ul>
+<p>The project stalls. Despite strong performance metrics, the model never makes it into production. The lesson is clear: even the most technically impressive solution will fail if it isn’t designed with real-world context in mind. The model simply “vanishes” and all that hard work goes to waste.</p>
+<p>This example is deliberately simplified. In some organisations, practitioners may work alongside business partners, product owners, or domain leads who help shape requirements and maintain alignment with broader goals. Yet this support does not remove the practitioner’s responsibility: technical success still depends on their own clear understanding of the business requirement and recognition their technical solution may be a small but an integral cog in a large machine. For the machine to work effectively all the parts must work together. A model is not just a mathematical construct; it is a product that must operate within the complex, resource-limited realities of an organisation. :::</p>
+<section id="start-with-what-we-are-trying-to-achieve" class="level2">
+<h2 class="anchored" data-anchor-id="start-with-what-we-are-trying-to-achieve">Start with What We Are Trying to Achieve</h2>
+<p>Too often, data science projects begin with vague aims such as “build a model” or “forecast sales.” These are activities, not outcomes. What matters is the result the organisation is striving for—for example, increasing upsell revenue by £2M this quarter or preventing 500 contract cancellations per month through timely intervention. Asking the right questions early is essential for designing solutions that can actually be implemented. For instance, a retention model might flag 1,000 customers at high risk of leaving, but if capacity allows only 50 calls per week, the key question becomes: which 50 should be prioritised, and does contacting them actually improve retention compared to a control group?</p>
+<p>Before writing a single line of code, it is essential to gather as much context as possible:</p>
+<ul>
+<li>What problems is the business actually solving?</li>
+<li>How does the model fit into the wider business process?</li>
+<li>Who will use the outputs, and what actions will follow?</li>
+<li>How will success be measured—commercially, operationally, behaviourally?</li>
+<li>What trade-offs are acceptable in cost, complexity, or speed?</li>
+<li>How will performance be monitored over time?</li>
+<li>What are the operational constraints?</li>
+</ul>
+<p>Once the essentials are understood (to the extent they can be), the vision for the project and the success metrics must be agreed collectively. All key stakeholders—technical, operational, financial, and strategic—need to be involved in defining what success looks like. Without this shared vision, each group risks optimising for its own priorities rather than the organisation’s overall goals. Crucially, the vision should extend beyond performance metrics: it should tell the story of the problem being solved and what success will mean in practice. This shared narrative becomes the project’s guiding star. To keep it on course, data science and AI teams, working with stakeholders, must guard against scope creep and shifting success criteria, ensuring that any new requests fit within the agreed scope. Flexibility still has a place—experimentation and design changes are healthy—but only when they remain consistent with the original vision and are aligning to achieving the success metrics.</p>
+</section>
+<section id="the-power-of-test-and-learn" class="level2">
+<h2 class="anchored" data-anchor-id="the-power-of-test-and-learn">The Power of Test-and-Learn</h2>
+<p>Evaluation and monitoring must be built in from the beginning. Doing so ensures that systems are designed to capture the right metrics for monitoring, rather than scrambling to measure impact after the fact. This means defining not only technical performance measures but also organisational impact measures, all aligned to clear, measurable success metrics. These metrics should be developed collaboratively with stakeholders, and while data scientists may not set them alone, they play a critical role in shaping and challenging them where needed.</p>
+<p>A test-and-learn approach is particularly powerful because it generates direct evidence of what works under real-world conditions. For example, a simple test-and-control design splitting customers into two groups, one acted on and one left as business-as-usual, provides incremental evidence of benefit that is far more persuasive than retrospective accuracy scores. Unlike abstract metrics, this method shows whether interventions truly drive the desired outcomes, and it allows organisations to learn, adapt, and refine strategies over time.</p>
+<p>Ultimately, evaluation is about measuring decision performance in practice, while monitoring ensures that impact remains robust as circumstances evolve.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>In our fictional case, the practitioner was told simply “Predict which customers are likely to leave.”</p>
+<p>Had the brief been framed instead as: “Identify the top 50 customers most likely to leave and integrate this into daily retention calls, aiming to save £1M/year in lost contracts,”</p>
+<p>– the project would have taken a very different path. From the outset, the practitioner could have:</p>
+<ul>
+<li>Focused on the right features (e.g.&nbsp;time since last contact, usage trends).</li>
+<li>Defined the appropriate technical workflows to meet the business vision such as defining how to best process the predictions (e.g.&nbsp;such as daily batches).</li>
+<li>Set evaluation criteria and how this will be measured and monitored over time not just for accuracy, but for contracts saved and revenue retained. For example is a dashboard needed to monitor technical and/or business metrics over time?</li>
+</ul>
+</div>
+</div>
+</div>
+<p>Map the current business process end to end, noting all user interactions and data collection points. Then overlay where the model will integrate into that process— the inputs into the model pipeline, who receives the model outputs, how they are acted on, and how outcomes flow back into the system. This makes clear both the operational impact of the model and what changes are needed for it to deliver value.</p>
+</section>
+<section id="design-for-value-not-novelty" class="level2">
+<h2 class="anchored" data-anchor-id="design-for-value-not-novelty">Design for Value, Not Novelty</h2>
+<p>Data science is not about building impressive models for their own sake. It is about solving valuable problems in ways that make business sense.</p>
+<p>If a model improves accuracy by two percent but costs ten times more to run, is it worth it? The answer depends on whether those extra points translate into measurable financial impact.</p>
+<p>Ask:</p>
+<ul>
+<li>Could a simpler model deliver “good enough” accuracy at lower cost?</li>
+<li>What is the marginal value of added complexity?</li>
+<li>Does the design reflect operational constraints?</li>
+</ul>
+<blockquote class="blockquote">
+<p>Here, the product mindset for data science and AI practitioners becomes critical. Treating an AI solution as a product reframes the goal from “building a model” to “delivering value.” Like any product, an AI system has costs to design, build, deploy, and maintain. Its worth lies not in technical elegance but in whether the return justifies those costs. That means asking early: is the investment worth it?</p>
+</blockquote>
+<p>One practical way to answer that question is by forecasting scenarios. Before scaling, estimate the expected impact under different conditions: a base case, a best case, and a worst case. For example, in a retention project, you might forecast incremental revenue by combining churn rates, average customer value, intervention costs, and expected uplift. This makes assumptions explicit and gives decision-makers a clear view of risk and upside. A solution is rarely a guaranteed win, but scenario planning allows stakeholders to judge whether the likely outcomes justify the investment.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Consider again the retention example. A complex ensemble might squeeze out a few extra percentage points of accuracy, but a straightforward logistic regression—fast, interpretable, and low-cost—might enable daily scoring and immediate action. Even if slightly less accurate, its ease of deployment and alignment with operational capacity could make it far more valuable overall. Simplicity, in many cases, is the shortest route to measurable business outcomes.</p>
+<p>A product mindset also changes how value is communicated. Technical performance metrics—“87% recall with XGBoost”—speak to specialists but mean little to decision-makers. A product framing translates performance into outcomes: “This model could reduce service costs by £800k annually by targeting at-risk customers more effectively.” Such claims should be grounded in defendable assumptions: average customer value, historic retention rates, intervention costs, and expected uplift. Framing matters. Commercial cares about ROI, operations about efficiency and capacity, marketing about campaign effectiveness, and leadership about growth and risk. Lead with the “why,” not the “how,” so the role of the model in delivering value is unmistakable.</p>
+<p>In our fictional retention project, the gap wasn’t the algorithm—it was the absence of product-minded, value-first design. A better path would have been to:</p>
+<ul>
+<li>Co-define the decision and action with Marketing: which customers will be contacted, via which channel, on what cadence.</li>
+<li>Quantify a credible return on investment with Commercial by building a simple model using actual retention rates, average customer value, contact costs, and expected uplift—then present best/base/worst cases with explicit assumptions. From there, translate the ROI targets into required model performance thresholds (e.g., precision/recall, lift) to meet ROI and the agreed success metrics.<br>
+</li>
+<li>Choose the fastest viable baseline—such as logistic regression—to enable daily scoring and interpretability, and document the marginal value required to justify moving to a more complex ensemble. Factor in time investment and run costs, align these with the ROI calculations above, and use that alignment to communicate and justify the investment. This approach also provides a clear benchmark: if the baseline model cannot meet the agreed success metrics, it helps build the case for investing in more complex methods.</li>
+<li>Run a time-boxed pilot with a holdout: four–six weeks, test-and-control experiment; measure incremental saves, revenue impact, and operational load before scaling.</li>
+<li>Set guardrails and monitoring: track decision KPIs (contacts made, saves, £ retained) alongside model KPIs; agree thresholds for retraining and a rollback plan.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="build-for-adoption" class="level2">
+<h2 class="anchored" data-anchor-id="build-for-adoption">Build for Adoption</h2>
+<p>Adoption must be planned from the start. Trust develops gradually, and regular check-ins with stakeholders help sustain it by keeping the project aligned with its agreed vision. These sessions are not box-ticking exercises but chances to test assumptions, surface blockers, have continuous feedback and make timely adjustments. Ultimately, a model succeeds only if people use it — so adoption depends on seamless integration into existing processes while delivering something users can see a clear benefit from.</p>
+<p>Instead of starting with purely technical questions—such as “will I need to export this to a CSV?”—it is often more effective to begin by considering the user journey. For example, if the end goal is for users to view the results in a dashboard, that should frame the discussion from the outset. Once the user’s needs are clear, the practitioner can then work with the data engineering team to determine the most appropriate technical solution, such as the optimal data format or storage approach.</p>
+<p>Hence it is important to ask early:</p>
+<ul>
+<li>Where will predictions appear (CRM, dashboard, alert)?</li>
+<li>Will outputs be delivered in tools people already use?</li>
+<li>What training or support is required?</li>
+<li>How will impact be made visible to leadership?</li>
+<li>How best should the outputs of the model be presented to ensure they are usable and actionable for the next stage of the business process.</li>
+</ul>
+<p>Thinking about these questions early prevents the familiar fate of a technically brilliant model that sits idle.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://realworlddatascience.net/foundation-frontiers/posts/2026/02/25/images/body.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+<p>Adoption is strongest when development is iterative. Rather than disappearing into a three-month build, teams should work in cycles: release a minimum viable product (MVP), test it with users, gather feedback, and refine. The first iteration of the MVP should be the simplest form of the product while testing the core principle of what is trying to be achieved. An MVP could be as simple as a weekly spreadsheet with a risk score; if it proves valuable, the team can then invest in automation, dashboards, or more advanced models. This staged approach reduces risk, delivers value early, and builds trust among stakeholders. Crucially, reaching an MVP quickly lets both technical and business teams see what works—and what doesn’t—in practice, instead of relying on endless planning meetings where edge cases are difficult to anticipate.</p>
+<p>Communication is critical. Just as one study on doctor–patient interactions found that 91% of patients preferred doctors who avoided jargon [1], stakeholders respond more positively when practitioners present results in plain language. Clear explanations build understanding, and understanding builds trust. It is also important to explain, in accessible terms, how a model or tool works “under the hood,” so users can better grasp how decisions are being made. Adoption can be further strengthened by having champions within the business—trusted and respected leaders in the business area who engage end users, promote new tools, and support day-to-day use through training and guidance.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>In the retention case, adoption failed because the model was delivered as a finished artefact, with no path to use. A better approach would have been to:</p>
+<ul>
+<li>Deliver an MVP: a simple risk score in a spreadsheet, tested with Marketing for a small pilot group while establishing a continuous feedback look through feedback forms or through stakeholder updates.</li>
+<li>Work iteratively with data engineering to integrate predictions into the CRM step by step, rather than aiming for a big-bang deployment. define the CRM fields, score push schedule, ownership of follow-up, and SLAs; confirm who acts on the scores and how outcomes are recorded.</li>
+<li>Run a test-and-control pilot to prove incremental benefit, building an evidence base for expansion.</li>
+<li>Set up a lightweight KPI dashboard so everyone can see early wins in terms of contracts saved and revenue retained.</li>
+<li>Create champions by involving stakeholders at every stage, so they owned and advocated for the solution.</li>
+</ul>
+<p>Had the project taken an iterative, MVP-first approach, the practitioner would have avoided months of sunk effort and built momentum for adoption as trust grew over time. Adoption is not an afterthought—it is the decisive factor that turns technical excellence into sustained impact.</p>
+<section id="the-bottom-line" class="level2">
+<h2 class="anchored" data-anchor-id="the-bottom-line">The Bottom Line</h2>
+<blockquote class="blockquote">
+<p>Great models rarely fail because of poor algorithms; they fail because they are disconnected from the goals, workflows, strategies, and people they are meant to serve.</p>
+</blockquote>
+<p>To avoid the fate of the Vanishing Model, projects must begin with a clear vision — one that is co-created with stakeholders and sustained through regular check-ins. Frame every project around measurable business outcomes and define success before writing a single line of code.</p>
+<p>Prove value under real-world conditions with well designed and measurable evaluation plans such as test-and-control approaches. Weigh technical ambition against practical trade-offs—cost, complexity, deployment speed, and maintainability. Translate precision, recall, and ROC curves into outcomes the business understands: contracts retained, revenue gained, costs reduced. And above all, plan for adoption from day one, so that predictions are not just accurate but usable, trusted, and embedded in daily decisions.</p>
+<p>In the end, the mark of a great model is not the elegance of its algorithm but its ability to have a positive impact.</p>
+<p>*For a broader, strategic view of why organisations struggle to realise value from AI—and how leadership and structure can change the odds—check out <a href="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/01/12/why-95-percent-of-ai-projects-fail.html">“Why 95% of AI Projects Fail.”</a></p>
+<p><strong>Sources:</strong> [1]Allen, K. A., Charpentier, V., Hendrickson, M. A., Kessler, M., Gotlieb, R., Marmet, J., Hause, E., Praska, C., Lunos, S., &amp; Pitt, M. B. (2023). Jargon Be Gone – Patient Preference in Doctor Communication. Journal of Patient Experience, 10, Article 23743735231158942. DOI: 10.1177/23743735231158942.</p>
+<div class="article-btn">
+<p><a href="../../../../../applied-insights/index.html">Explore more data science ideas</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author:</dt>
+<dd>
+<a href="https://www.linkedin.com/in/jennifer--hall/">Jennifer Hall</a> is a Senior Analytics Manager at Barclays and Co-Vice Chair of the Royal Statistical Society’s Data Science and AI Section. She is an <a href="https://rss.org.uk/resources/resources-for-educators/rss-william-guy-lecturers/">RSS William Guy Lecturer (2025–2026)</a>; this year’s theme, Statistics and AI, aims to inspire young people to understand how statistical thinking underpins AI and shapes the world around them. Jennifer has extensive experience applying data science and advanced analytics to real-world challenges across finance, travel, healthcare, and insurance. This breadth of experience has strengthened her commitment to delivering responsible, data-driven solutions that create meaningful impact for both businesses and society.
+</dd>
+</dl>
+<div class="g-col-12 g-col-md-6">
+<p><strong>Copyright and licence</strong> : © 2026 Jennifer Hall<br>
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"> <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"> </a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>How to cite</strong> :<br>
+Hall, Jennifer. 2026. “<strong>Why Great Models Still Fail</strong>.” <em>Real World Data Science</em>, 2026. <a href="https://realworlddatascience.net/applied-insights/tutorials/posts/2026/12/why-great-models-still-fail.html">URL</a></p>
+</div>
+</div>
+
+
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+
+ ]]></description>
+  <category>AI</category>
+  <category>Data Science</category>
+  <guid>https://realworlddatascience.net/foundation-frontiers/posts/2026/02/25/why_great_models_still_fail.html</guid>
+  <pubDate>Wed, 25 Feb 2026 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/foundation-frontiers/posts/2026/02/25/images/thumb.png" medium="image" type="image/png" height="96" width="144"/>
+</item>
 <item>
   <title>RWDS Big Questions: How do we balance innovation and regulation in the world of AI?</title>
   <dc:creator>Annie Flynn</dc:creator>
@@ -457,25 +650,25 @@ Hoerl, Roger. Jensen, Willis. 2026. “<strong>Why Data Quality Is the New Compe
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body">
 <div id="ref-davenport2012sexiest" class="csl-entry">
-<div class="csl-left-margin">1. </div><div class="csl-right-inline">Davenport TH, Patil DJ. Data scientist: The sexiest job of the 21st century. Harvard Business Review. 2012 Oct;70–6. </div>
+<div class="csl-left-margin">1. </div><div class="csl-right-inline">Thomas H. Davenport, D. J. Patil. Data scientist: The sexiest job of the 21st century. Harvard Business Review. 2012 Oct;70–6.</div>
 </div>
 <div id="ref-hoerl2025future" class="csl-entry">
-<div class="csl-left-margin">2. </div><div class="csl-right-inline">Hoerl RW. <a href="https://doi.org/10.1080/08982112.2025.2556222">The future of statistics in an AI era</a>. Quality Engineering. 2025; </div>
+<div class="csl-left-margin">2. </div><div class="csl-right-inline">Roger W. Hoerl. The future of statistics in an AI era. Quality Engineering. 2025. doi:<a href="https://doi.org/10.1080/08982112.2025.2556222">10.1080/08982112.2025.2556222</a></div>
 </div>
 <div id="ref-davenport2025unstructured" class="csl-entry">
-<div class="csl-left-margin">3. </div><div class="csl-right-inline">Davenport TH, Hoerl RW, Redman TC. To create value with AI, improve the quality of your unstructured data. Harvard Business Review [Internet]. 2025 May; Available from: <a href="https://hbr.org/2025/05/to-create-value-with-ai-improve-the-quality-of-your-unstructured-data">https://hbr.org/2025/05/to-create-value-with-ai-improve-the-quality-of-your-unstructured-data</a></div>
+<div class="csl-left-margin">3. </div><div class="csl-right-inline">Thomas H. Davenport, Roger W. Hoerl, Thomas C. Redman. To create value with AI, improve the quality of your unstructured data. Harvard Business Review [Internet]. 2025 May. Available from: <a href="https://hbr.org/2025/05/to-create-value-with-ai-improve-the-quality-of-your-unstructured-data">https://hbr.org/2025/05/to-create-value-with-ai-improve-the-quality-of-your-unstructured-data</a></div>
 </div>
 <div id="ref-davenport2024generative" class="csl-entry">
-<div class="csl-left-margin">4. </div><div class="csl-right-inline">Davenport TH, Tiwari P. Is your company’s data ready for generative AI? Harvard Business Review [Internet]. 2024 Mar; Available from: <a href="https://hbr.org/2024/03/is-your-companys-data-ready-for-generative-ai">https://hbr.org/2024/03/is-your-companys-data-ready-for-generative-ai</a></div>
+<div class="csl-left-margin">4. </div><div class="csl-right-inline">Thomas H. Davenport, Prasanna Tiwari. Is your company’s data ready for generative AI? Harvard Business Review [Internet]. 2024 Mar. Available from: <a href="https://hbr.org/2024/03/is-your-companys-data-ready-for-generative-ai">https://hbr.org/2024/03/is-your-companys-data-ready-for-generative-ai</a></div>
 </div>
 <div id="ref-redman2020source" class="csl-entry">
-<div class="csl-left-margin">5. </div><div class="csl-right-inline">Redman TC. To improve data quality, start at the source. Harvard Business Review [Internet]. 2020 Feb; Available from: <a href="https://hbr.org/2020/02/to-improve-data-quality-start-at-the-source">https://hbr.org/2020/02/to-improve-data-quality-start-at-the-source</a></div>
+<div class="csl-left-margin">5. </div><div class="csl-right-inline">Thomas C. Redman. To improve data quality, start at the source. Harvard Business Review [Internet]. 2020 Feb. Available from: <a href="https://hbr.org/2020/02/to-improve-data-quality-start-at-the-source">https://hbr.org/2020/02/to-improve-data-quality-start-at-the-source</a></div>
 </div>
 <div id="ref-shumailov2024collapse" class="csl-entry">
-<div class="csl-left-margin">6. </div><div class="csl-right-inline">Shumailov I, Shumaylov Z, Zhao Y, Papernot N, Anderson R, Gal Y. AI models collapse when trained on recursively generated data. Nature. 2024;631(8022):755–9. </div>
+<div class="csl-left-margin">6. </div><div class="csl-right-inline">Ilia Shumailov, Zakhar Shumaylov, Yiren Zhao, Nicolas Papernot, Ross Anderson, Yarin Gal. AI models collapse when trained on recursively generated data. Nature. 2024;631(8022):755–9.</div>
 </div>
 <div id="ref-jensen2024cleaning" class="csl-entry">
-<div class="csl-left-margin">7. </div><div class="csl-right-inline">Jensen WA. Can data cleaning be automated? [Internet]. 2024. Available from: <a href="https://willisjensen.substack.com/p/can-data-cleaning-be-automated">https://willisjensen.substack.com/p/can-data-cleaning-be-automated</a></div>
+<div class="csl-left-margin">7. </div><div class="csl-right-inline">Willis A. Jensen. Can data cleaning be automated? [Internet]. 2024. Available from: <a href="https://willisjensen.substack.com/p/can-data-cleaning-be-automated">https://willisjensen.substack.com/p/can-data-cleaning-be-automated</a></div>
 </div>
 </div></section></div> ]]></description>
   <category>Data quality</category>
@@ -687,65 +880,65 @@ Clewley, Lee. 2026. “<strong>Why 95% Of AI Projects Fail and How to Change the
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body">
 <div id="ref-mitnanda2025" class="csl-entry">
-<div class="csl-left-margin">1. </div><div class="csl-right-inline">MIT NANDA. The GenAI divide: State of AI in business 2025. Massachusetts Institute of Technology; 2025. </div>
+<div class="csl-left-margin">1. </div><div class="csl-right-inline">MIT NANDA. The GenAI divide: State of AI in business 2025. Massachusetts Institute of Technology; 2025.</div>
 </div>
 <div id="ref-chopra2025" class="csl-entry">
-<div class="csl-left-margin">2. </div><div class="csl-right-inline">Chopra A et al. Measuring skills-centered exposure in the AI economy. MIT Project Iceberg; Oak Ridge National Laboratory; 2025. </div>
+<div class="csl-left-margin">2. </div><div class="csl-right-inline">A. Chopra, others. Measuring skills-centered exposure in the AI economy. MIT Project Iceberg; Oak Ridge National Laboratory; 2025.</div>
 </div>
 <div id="ref-ransbotham2020" class="csl-entry">
-<div class="csl-left-margin">3. </div><div class="csl-right-inline">Ransbotham S, Khodabandeh S, Kiron D, Candelon F, Chu M, LaFountain B. Expanding AI’s impact with organizational learning. MIT Sloan Management Review. 2020; </div>
+<div class="csl-left-margin">3. </div><div class="csl-right-inline">Sam Ransbotham, Shervin Khodabandeh, David Kiron, François Candelon, Michael Chu, Brooke LaFountain. Expanding AI’s impact with organizational learning. MIT Sloan Management Review. 2020.</div>
 </div>
 <div id="ref-bcg2024" class="csl-entry">
-<div class="csl-left-margin">4. </div><div class="csl-right-inline">Bellefonds N de et al. Where’s the value in AI? Boston Consulting Group; 2024. </div>
+<div class="csl-left-margin">4. </div><div class="csl-right-inline">Nicolas de Bellefonds, others. Where’s the value in AI? Boston Consulting Group; 2024.</div>
 </div>
 <div id="ref-deloitte2024" class="csl-entry">
-<div class="csl-left-margin">5. </div><div class="csl-right-inline">Deloitte AI Institute. The state of generative AI in the enterprise: Now decides next. Deloitte; 2024. </div>
+<div class="csl-left-margin">5. </div><div class="csl-right-inline">Deloitte AI Institute. The state of generative AI in the enterprise: Now decides next. Deloitte; 2024.</div>
 </div>
 <div id="ref-schlegel2023" class="csl-entry">
-<div class="csl-left-margin">6. </div><div class="csl-right-inline">Schlegel D, Schuler K, Westenberger J. Failure factors of AI projects: Results from expert interviews. International Journal of Information Systems and Project Management. 2023;11(3):25–40. </div>
+<div class="csl-left-margin">6. </div><div class="csl-right-inline">Dominik Schlegel, Katharina Schuler, Johannes Westenberger. Failure factors of AI projects: Results from expert interviews. International Journal of Information Systems and Project Management. 2023;11(3):25–40.</div>
 </div>
 <div id="ref-gskjules2024" class="csl-entry">
 <div class="csl-left-margin">7. </div><div class="csl-right-inline">GSK.ai. JulesOS: GSK’s agent-based operating system [Internet]. 2024. Available from: <a href="https://www.gsk.ai">https://www.gsk.ai</a></div>
 </div>
 <div id="ref-tangram2025" class="csl-entry">
-<div class="csl-left-margin">8. </div><div class="csl-right-inline">Tangram Therapeutics. LLibra OS: Identifying the right targets. 2025. </div>
+<div class="csl-left-margin">8. </div><div class="csl-right-inline">Tangram Therapeutics. LLibra OS: Identifying the right targets. 2025.</div>
 </div>
 <div id="ref-markus1983" class="csl-entry">
-<div class="csl-left-margin">9. </div><div class="csl-right-inline">Markus ML. Power, politics, and MIS implementation. Communications of the ACM. 1983;26(6):430–44. </div>
+<div class="csl-left-margin">9. </div><div class="csl-right-inline">M. Lynne Markus. Power, politics, and MIS implementation. Communications of the ACM. 1983;26(6):430–44.</div>
 </div>
 <div id="ref-orlikowski1992" class="csl-entry">
-<div class="csl-left-margin">10. </div><div class="csl-right-inline">Orlikowski WJ. The duality of technology: Rethinking the concept of technology in organizations. Organization Science. 1992;3(3):398–427. </div>
+<div class="csl-left-margin">10. </div><div class="csl-right-inline">Wanda J. Orlikowski. The duality of technology: Rethinking the concept of technology in organizations. Organization Science. 1992;3(3):398–427.</div>
 </div>
 <div id="ref-paleyes2022" class="csl-entry">
-<div class="csl-left-margin">11. </div><div class="csl-right-inline">Paleyes A, Urma RG, Lawrence ND. Challenges in deploying machine learning: A survey of case studies. ACM Computing Surveys. 2022;55(6). </div>
+<div class="csl-left-margin">11. </div><div class="csl-right-inline">Andrei Paleyes, Raoul-Gabriel Urma, Neil D. Lawrence. Challenges in deploying machine learning: A survey of case studies. ACM Computing Surveys. 2022;55(6).</div>
 </div>
 <div id="ref-ey2025" class="csl-entry">
 <div class="csl-left-margin">12. </div><div class="csl-right-inline">EY. How responsible AI translates investment into impact. Ernst<br>
-&amp; Young; 2025. </div>
+&amp; Young; 2025.</div>
 </div>
 <div id="ref-capgemini2024" class="csl-entry">
-<div class="csl-left-margin">13. </div><div class="csl-right-inline">Capgemini Research Institute. Generative AI in organizations 2024. Capgemini; 2024. </div>
+<div class="csl-left-margin">13. </div><div class="csl-right-inline">Capgemini Research Institute. Generative AI in organizations 2024. Capgemini; 2024.</div>
 </div>
 <div id="ref-davenport2018" class="csl-entry">
-<div class="csl-left-margin">14. </div><div class="csl-right-inline">Davenport TH, Ronanki R. Artificial intelligence for the real world. Harvard Business Review. 2018;96(1):108–16. </div>
+<div class="csl-left-margin">14. </div><div class="csl-right-inline">Thomas H. Davenport, Rajeev Ronanki. Artificial intelligence for the real world. Harvard Business Review. 2018;96(1):108–16.</div>
 </div>
 <div id="ref-foundry2024" class="csl-entry">
-<div class="csl-left-margin">15. </div><div class="csl-right-inline">Foundry. State of the CIO survey 2024. Foundry; 2024. </div>
+<div class="csl-left-margin">15. </div><div class="csl-right-inline">Foundry. State of the CIO survey 2024. Foundry; 2024.</div>
 </div>
 <div id="ref-bolton2024" class="csl-entry">
-<div class="csl-left-margin">16. </div><div class="csl-right-inline">Bolton WJ, Poyiadzi R, Morrell ER, Bergen Gonzalez Bueno G van, Goetz L. RAmBLA: A framework for evaluating the reliability of LLMs as assistants in the biomedical domain. arXiv preprint. 2024; </div>
+<div class="csl-left-margin">16. </div><div class="csl-right-inline">William J. Bolton, Rafail Poyiadzi, Edward R. Morrell, Gonzalo van Bergen Gonzalez Bueno, Lauren Goetz. RAmBLA: A framework for evaluating the reliability of LLMs as assistants in the biomedical domain. arXiv preprint. 2024.</div>
 </div>
 <div id="ref-ji2023" class="csl-entry">
-<div class="csl-left-margin">17. </div><div class="csl-right-inline">Ji Z, Lee N, Frieske R, et al. Survey of hallucination in natural language generation. ACM Computing Surveys. 2023;55(12). </div>
+<div class="csl-left-margin">17. </div><div class="csl-right-inline">Zhijing Ji, Nayeon Lee, Rita Frieske, others. Survey of hallucination in natural language generation. ACM Computing Surveys. 2023;55(12).</div>
 </div>
 <div id="ref-gskrambla2024" class="csl-entry">
-<div class="csl-left-margin">18. </div><div class="csl-right-inline">GSK.ai. RAmBLA: Evaluating the reliability of LLMs as biomedical assistants. 2024. </div>
+<div class="csl-left-margin">18. </div><div class="csl-right-inline">GSK.ai. RAmBLA: Evaluating the reliability of LLMs as biomedical assistants. 2024.</div>
 </div>
 <div id="ref-ouyang2022" class="csl-entry">
-<div class="csl-left-margin">19. </div><div class="csl-right-inline">Ouyang L, Wu J, Jiang X, et al. Training language models to follow instructions with human feedback. In: Advances in neural information processing systems. 2022. p. 27730–44. </div>
+<div class="csl-left-margin">19. </div><div class="csl-right-inline">Long Ouyang, Jeffrey Wu, Xu Jiang, others. Training language models to follow instructions with human feedback. In: Advances in neural information processing systems. 2022. p. 27730–44.</div>
 </div>
 <div id="ref-crooke2021" class="csl-entry">
-<div class="csl-left-margin">20. </div><div class="csl-right-inline">Crooke ST, Liang XH, Baker BF, Crooke RM. Antisense technology: A review. Journal of Biological Chemistry. 2021;296:100416. </div>
+<div class="csl-left-margin">20. </div><div class="csl-right-inline">Stanley T. Crooke, Xiaohua H. Liang, Brenda F. Baker, Rosanne M. Crooke. Antisense technology: A review. Journal of Biological Chemistry. 2021;296:100416.</div>
 </div>
 </div></section></div> ]]></description>
   <category>Viewpoints</category>
@@ -1982,109 +2175,6 @@ Real World Data Science Editorial Board. 2025. “We’re Back: Real World Data 
   <guid>https://realworlddatascience.net/the-pulse/editors-blog/posts/2025/07/07/editors-relaunch.html</guid>
   <pubDate>Mon, 07 Jul 2025 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/the-pulse/editors-blog/posts/2025/07/07/images/team.png" medium="image" type="image/png" height="77" width="144"/>
-</item>
-<item>
-  <title>Call for Submissions</title>
-  <dc:creator>Editorial Board</dc:creator>
-  <link>https://realworlddatascience.net/the-pulse/editors-blog/posts/2025/07/08/relaunch-CFS.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>Get ready to engage with Real World Data Science as we unveil an exciting editorial refresh! We’re thrilled to announce that submissions are now open across our four dynamic sections: The Pulse, Applied Insights, Foundations &amp; Frontiers, and People &amp; Pathways. Join us as we redefine the conversation in data science with fresh perspectives and insights. Real World Data Science is relaunching to meet the pace and complexity of today’s data-driven world in real time, with the RSS’s trademark steadying presence. We will be publishing high-quality case-studies, tutorials and think-pieces that bridge the gap between rigorous analysis and real-time relevance, and that speak directly to latest events and emerging trends.</p>
-<p>All submissions will be peer-reviewed by members of the Real World Data Science <a href="https://realworlddatascience.net/the-pulse/editors-blog/posts/2022/10/18/meet-the-team.html">Editorial Board</a>.</p>
-<section id="our-audience" class="level2">
-<h2 class="anchored" data-anchor-id="our-audience">Our Audience:</h2>
-<p>People working in data science looking for practical insights, methodological rigour and thought-leadership that informs their work and decision-making.</p>
-</section>
-<section id="our-voice" class="level2">
-<h2 class="anchored" data-anchor-id="our-voice">Our Voice:</h2>
-<p>Authoritative, Trustworthy, Cutting Edge</p>
-</section>
-<section id="our-editorial-sections" class="level2">
-<h2 class="anchored" data-anchor-id="our-editorial-sections">Our Editorial Sections:</h2>
-<p>Real World Data Science has four editorial sections. Please read through and consider where your piece would fit best. Each piece we publish needs to be tailored towards the focus of one of these sections.</p>
-<p><a href="https://realworlddatascience.net/the-pulse/">THE PULSE</a></p>
-<p>News, updates and real time commentary.</p>
-<p>Purpose: To respond to current events, trends and debates in the data science world with rigour, insight and relevance.</p>
-<p>Content Types: Articles that speak directly to current events/trends/launches</p>
-<p>Example Call To Action: Invite readers to share your commentary with their networks as a trusted voice in the space. Invite engagement, discussion and debate over the topics.</p>
-<p><a href="https://realworlddatascience.net/applied-insights/">APPLIED INSIGHTS</a><br>
-How data science is used to solve real-world problems in business, public policy and beyond.</p>
-<p>Purpose: To showcase real-world applications of data science, including hands-on tutorials, project walk-throughs, and case studies from industry, academia, or public service.</p>
-<p>Content Types:</p>
-<ul>
-<li>High-quality step-by-step tutorials with code<br>
-</li>
-<li>Case studies detailing a problem, approach, and outcome<br>
-</li>
-<li>Lessons learned from real-world deployments</li>
-</ul>
-<p>Example Call To Action: Readers should walk away with something to try.</p>
-<p><a href="https://realworlddatascience.net/foundation-frontiers/">FOUNDATIONS &amp; FRONTIERS</a><br>
-The ideas behind the impact: the concepts, tools and methods that make data science possible.</p>
-<p>Purpose: To deepen understanding of the theoretical and ethical foundations of data science, and to spotlight thought leadership and emerging ideas.</p>
-<p>Content Types:</p>
-<ul>
-<li>Think-piece style articles with an engaging angle on methodology, ethics and standards<br>
-</li>
-<li>Interviews with thought-leaders<br>
-</li>
-<li><a href="https://realworlddatascience.net/foundation-frontiers/datasciencebites/">Data Science Bites</a> - our handy summaries/explainers of academic papers</li>
-</ul>
-<p>Example Call To Action: Invite discussion and engagement – pose questions and challenges to the reader.</p>
-<p><a href="https://realworlddatascience.net/people-paths/">PEOPLE &amp; PATHS</a><br>
-Strategic reflections on careers, leadership and professional evolution in data science.</p>
-<p>Purpose: To explore the evolving nature of data science careers through the lens of experience, leadership, and long-term impact. This section highlights how professionals shape and are shaped by the field—through roles, decisions, and philosophies.</p>
-<p>Content Types:</p>
-<ul>
-<li>Profiles of/interviews with senior professionals reflecting on career philosophy and leadership<br>
-</li>
-<li>Roundtables with experts on hiring, mentoring, or organisational design</li>
-<li>Commentary on career-defining trends, such as the rise of AI governance or the shift toward interdisciplinary teams</li>
-</ul>
-<p>Example Call To Action: Encourage readers to share our strategic insights with their community.</p>
-</section>
-<section id="use-of-ai-in-submissions" class="level2">
-<h2 class="anchored" data-anchor-id="use-of-ai-in-submissions">Use of AI in Submissions</h2>
-<p>We recognise that LLMs and other generative AI tools are increasingly part of the data science workflow, from code generation and data cleaning to drafting documentation and shaping analysis. We welcome a transparent approach in submissions that have made use of these tools, and ask that authors include a declaration outlining where and how AI was used in the development of their submission. This helps us maintain transparency, uphold standards of reproducibility, and better understand the evolving role of AI in real-world data science practice.</p>
-<p>To make your submission, please review our <a href="https://realworlddatascience.net/contributor-docs/contributor-guidelines.html">contributor guidelines</a> and email us at rwds@rss.org.uk</p>
-<div class="article-btn">
-<p><a href="../../../../../../the-pulse/editors-blog/index.html">Back to Editors’ blog</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2025 Royal Statistical Society
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@johnsonvr?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Virgina Johnson</a> on <a href="https://unsplash.com/photos/turned-on-red-open-neon-sigange-QmNnZj_Ok-M?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Unsplash</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Real World Data Science Editorial Board. 2025. “Call for Submissions” Real World Data Science, July 7, 2025. <a href="https://realworlddatascience.net/the-pulse/editors-blog/posts/2025/07/07/relaunch-CFS.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-</section>
-
- ]]></description>
-  <category>Call for contributions</category>
-  <category>Updates</category>
-  <guid>https://realworlddatascience.net/the-pulse/editors-blog/posts/2025/07/08/relaunch-CFS.html</guid>
-  <pubDate>Mon, 07 Jul 2025 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/the-pulse/editors-blog/posts/2025/07/08/Images/open.jpg" medium="image" type="image/jpeg"/>
 </item>
 </channel>
 </rss>

@@ -17,7 +17,200 @@
 <width>144</width>
 </image>
 <generator>quarto-1.8.27</generator>
-<lastBuildDate>Thu, 29 Jan 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Wed, 25 Feb 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Why Great Models (Still) Fail</title>
+  <dc:creator>Jennifer Hall</dc:creator>
+  <link>https://realworlddatascience.net/foundation-frontiers/posts/2026/02/25/why_great_models_still_fail.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>In the field of data science and AI, it’s easy to assume that technical excellence is the ultimate goal. Performance can be quantified in ROC curves, accuracy scores, and other metrics, but a model can be technically brilliant and still deliver no real-world impact.</p>
+<p>In our earlier article <a href="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/01/12/why-95-percent-of-ai-projects-fail.html">“Why 95% of AI Projects Fail”</a> Lee Cleweley examined the strategic and organisational reasons AI struggles to deliver value. This piece takes that conversation to the ground level, offering a practitioner’s guide to designing models that succeed in real‑world use.</p>
+<p>Success in practice goes far beyond code and algorithms. It comes down to solving the right problem, in the right way, for the right people. No matter how elegant a technical solution is, it must address real problems for real users. Achieving that requires more than strong technical workflows—it also demands an understanding of how the model and technical solution fits into the bigger picture. To do that, data science and AI practitioners, when designing their solution, need to see how it will sit within broader processes, including how end users will actually interact with and use it.</p>
+<p>The importance of this skill emerged repeatedly in the “10 Key Questions to Data Science and AI Practitioners” interview series, run by the Data Science and AI Section of the Royal Statistical Society. The series gathers perspectives from practitioners at various career stages, from those starting their career to senior leaders. By posing the same ten questions, it uncovers motivations, challenges, and visions for the future while highlighting the breadth of career paths in the field. When asked what they considered the most undervalued skill, many participants highlighted the importance of something non-technical — the ability to understand the organisational context and the needs of users.</p>
+<p>The importance of these skills for data science and AI practitioners is further evidenced by their emphasis in government and professional standards. The UK Government’s DDaT Capability Framework highlights that data science practitioners especially at higher levels are expected to “design and manage processes to gather and establish user needs”. Similarly, the Royal Statistical Society in The Alliance for Data Science Professionals Certification Guidance and Process: Advanced Data Science Professional states as a key skill the ability to be “engaging stakeholders, demonstrating the ability to clearly define a problem and agree on solutions” including being able to “Identify and elicit project requirements”. Together, these frameworks show that engaging directly with users and stakeholders is not optional—it is a core professional expectation for data science and AI practitioners.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>The Case of the Vanishing Model</strong></p>
+<p>Consider a fictional, but perhaps painfully familiar, scenario to practitioners. A practitioner is asked to “build a model to predict which customers are likely to leave.”</p>
+<p>They get to work: sourcing data, engineering features, and testing a range of algorithms. After three months, they deliver a model with 94% accuracy on retrospective data. It’s an elegant solution, using a technically sophisticated approach and they are justifiably proud.</p>
+<p>Then comes the handover presentation:</p>
+<ul>
+<li><strong>Marketing:</strong> “How do we act on this? We already run retention campaigns—will this actually improve them?”</li>
+<li><strong>Commercial:</strong> “It will cost £X per month to operate. What return should we expect?”<br>
+</li>
+<li><strong>Operations:</strong> “There’s no process for plugging these predictions into the CRM. Who is meant to action this?”</li>
+</ul>
+<p>The project stalls. Despite strong performance metrics, the model never makes it into production. The lesson is clear: even the most technically impressive solution will fail if it isn’t designed with real-world context in mind. The model simply “vanishes” and all that hard work goes to waste.</p>
+<p>This example is deliberately simplified. In some organisations, practitioners may work alongside business partners, product owners, or domain leads who help shape requirements and maintain alignment with broader goals. Yet this support does not remove the practitioner’s responsibility: technical success still depends on their own clear understanding of the business requirement and recognition their technical solution may be a small but an integral cog in a large machine. For the machine to work effectively all the parts must work together. A model is not just a mathematical construct; it is a product that must operate within the complex, resource-limited realities of an organisation. :::</p>
+<section id="start-with-what-we-are-trying-to-achieve" class="level2">
+<h2 class="anchored" data-anchor-id="start-with-what-we-are-trying-to-achieve">Start with What We Are Trying to Achieve</h2>
+<p>Too often, data science projects begin with vague aims such as “build a model” or “forecast sales.” These are activities, not outcomes. What matters is the result the organisation is striving for—for example, increasing upsell revenue by £2M this quarter or preventing 500 contract cancellations per month through timely intervention. Asking the right questions early is essential for designing solutions that can actually be implemented. For instance, a retention model might flag 1,000 customers at high risk of leaving, but if capacity allows only 50 calls per week, the key question becomes: which 50 should be prioritised, and does contacting them actually improve retention compared to a control group?</p>
+<p>Before writing a single line of code, it is essential to gather as much context as possible:</p>
+<ul>
+<li>What problems is the business actually solving?</li>
+<li>How does the model fit into the wider business process?</li>
+<li>Who will use the outputs, and what actions will follow?</li>
+<li>How will success be measured—commercially, operationally, behaviourally?</li>
+<li>What trade-offs are acceptable in cost, complexity, or speed?</li>
+<li>How will performance be monitored over time?</li>
+<li>What are the operational constraints?</li>
+</ul>
+<p>Once the essentials are understood (to the extent they can be), the vision for the project and the success metrics must be agreed collectively. All key stakeholders—technical, operational, financial, and strategic—need to be involved in defining what success looks like. Without this shared vision, each group risks optimising for its own priorities rather than the organisation’s overall goals. Crucially, the vision should extend beyond performance metrics: it should tell the story of the problem being solved and what success will mean in practice. This shared narrative becomes the project’s guiding star. To keep it on course, data science and AI teams, working with stakeholders, must guard against scope creep and shifting success criteria, ensuring that any new requests fit within the agreed scope. Flexibility still has a place—experimentation and design changes are healthy—but only when they remain consistent with the original vision and are aligning to achieving the success metrics.</p>
+</section>
+<section id="the-power-of-test-and-learn" class="level2">
+<h2 class="anchored" data-anchor-id="the-power-of-test-and-learn">The Power of Test-and-Learn</h2>
+<p>Evaluation and monitoring must be built in from the beginning. Doing so ensures that systems are designed to capture the right metrics for monitoring, rather than scrambling to measure impact after the fact. This means defining not only technical performance measures but also organisational impact measures, all aligned to clear, measurable success metrics. These metrics should be developed collaboratively with stakeholders, and while data scientists may not set them alone, they play a critical role in shaping and challenging them where needed.</p>
+<p>A test-and-learn approach is particularly powerful because it generates direct evidence of what works under real-world conditions. For example, a simple test-and-control design splitting customers into two groups, one acted on and one left as business-as-usual, provides incremental evidence of benefit that is far more persuasive than retrospective accuracy scores. Unlike abstract metrics, this method shows whether interventions truly drive the desired outcomes, and it allows organisations to learn, adapt, and refine strategies over time.</p>
+<p>Ultimately, evaluation is about measuring decision performance in practice, while monitoring ensures that impact remains robust as circumstances evolve.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>In our fictional case, the practitioner was told simply “Predict which customers are likely to leave.”</p>
+<p>Had the brief been framed instead as: “Identify the top 50 customers most likely to leave and integrate this into daily retention calls, aiming to save £1M/year in lost contracts,”</p>
+<p>– the project would have taken a very different path. From the outset, the practitioner could have:</p>
+<ul>
+<li>Focused on the right features (e.g.&nbsp;time since last contact, usage trends).</li>
+<li>Defined the appropriate technical workflows to meet the business vision such as defining how to best process the predictions (e.g.&nbsp;such as daily batches).</li>
+<li>Set evaluation criteria and how this will be measured and monitored over time not just for accuracy, but for contracts saved and revenue retained. For example is a dashboard needed to monitor technical and/or business metrics over time?</li>
+</ul>
+</div>
+</div>
+</div>
+<p>Map the current business process end to end, noting all user interactions and data collection points. Then overlay where the model will integrate into that process— the inputs into the model pipeline, who receives the model outputs, how they are acted on, and how outcomes flow back into the system. This makes clear both the operational impact of the model and what changes are needed for it to deliver value.</p>
+</section>
+<section id="design-for-value-not-novelty" class="level2">
+<h2 class="anchored" data-anchor-id="design-for-value-not-novelty">Design for Value, Not Novelty</h2>
+<p>Data science is not about building impressive models for their own sake. It is about solving valuable problems in ways that make business sense.</p>
+<p>If a model improves accuracy by two percent but costs ten times more to run, is it worth it? The answer depends on whether those extra points translate into measurable financial impact.</p>
+<p>Ask:</p>
+<ul>
+<li>Could a simpler model deliver “good enough” accuracy at lower cost?</li>
+<li>What is the marginal value of added complexity?</li>
+<li>Does the design reflect operational constraints?</li>
+</ul>
+<blockquote class="blockquote">
+<p>Here, the product mindset for data science and AI practitioners becomes critical. Treating an AI solution as a product reframes the goal from “building a model” to “delivering value.” Like any product, an AI system has costs to design, build, deploy, and maintain. Its worth lies not in technical elegance but in whether the return justifies those costs. That means asking early: is the investment worth it?</p>
+</blockquote>
+<p>One practical way to answer that question is by forecasting scenarios. Before scaling, estimate the expected impact under different conditions: a base case, a best case, and a worst case. For example, in a retention project, you might forecast incremental revenue by combining churn rates, average customer value, intervention costs, and expected uplift. This makes assumptions explicit and gives decision-makers a clear view of risk and upside. A solution is rarely a guaranteed win, but scenario planning allows stakeholders to judge whether the likely outcomes justify the investment.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>Consider again the retention example. A complex ensemble might squeeze out a few extra percentage points of accuracy, but a straightforward logistic regression—fast, interpretable, and low-cost—might enable daily scoring and immediate action. Even if slightly less accurate, its ease of deployment and alignment with operational capacity could make it far more valuable overall. Simplicity, in many cases, is the shortest route to measurable business outcomes.</p>
+<p>A product mindset also changes how value is communicated. Technical performance metrics—“87% recall with XGBoost”—speak to specialists but mean little to decision-makers. A product framing translates performance into outcomes: “This model could reduce service costs by £800k annually by targeting at-risk customers more effectively.” Such claims should be grounded in defendable assumptions: average customer value, historic retention rates, intervention costs, and expected uplift. Framing matters. Commercial cares about ROI, operations about efficiency and capacity, marketing about campaign effectiveness, and leadership about growth and risk. Lead with the “why,” not the “how,” so the role of the model in delivering value is unmistakable.</p>
+<p>In our fictional retention project, the gap wasn’t the algorithm—it was the absence of product-minded, value-first design. A better path would have been to:</p>
+<ul>
+<li>Co-define the decision and action with Marketing: which customers will be contacted, via which channel, on what cadence.</li>
+<li>Quantify a credible return on investment with Commercial by building a simple model using actual retention rates, average customer value, contact costs, and expected uplift—then present best/base/worst cases with explicit assumptions. From there, translate the ROI targets into required model performance thresholds (e.g., precision/recall, lift) to meet ROI and the agreed success metrics.<br>
+</li>
+<li>Choose the fastest viable baseline—such as logistic regression—to enable daily scoring and interpretability, and document the marginal value required to justify moving to a more complex ensemble. Factor in time investment and run costs, align these with the ROI calculations above, and use that alignment to communicate and justify the investment. This approach also provides a clear benchmark: if the baseline model cannot meet the agreed success metrics, it helps build the case for investing in more complex methods.</li>
+<li>Run a time-boxed pilot with a holdout: four–six weeks, test-and-control experiment; measure incremental saves, revenue impact, and operational load before scaling.</li>
+<li>Set guardrails and monitoring: track decision KPIs (contacts made, saves, £ retained) alongside model KPIs; agree thresholds for retraining and a rollback plan.</li>
+</ul>
+</div>
+</div>
+</div>
+</section>
+<section id="build-for-adoption" class="level2">
+<h2 class="anchored" data-anchor-id="build-for-adoption">Build for Adoption</h2>
+<p>Adoption must be planned from the start. Trust develops gradually, and regular check-ins with stakeholders help sustain it by keeping the project aligned with its agreed vision. These sessions are not box-ticking exercises but chances to test assumptions, surface blockers, have continuous feedback and make timely adjustments. Ultimately, a model succeeds only if people use it — so adoption depends on seamless integration into existing processes while delivering something users can see a clear benefit from.</p>
+<p>Instead of starting with purely technical questions—such as “will I need to export this to a CSV?”—it is often more effective to begin by considering the user journey. For example, if the end goal is for users to view the results in a dashboard, that should frame the discussion from the outset. Once the user’s needs are clear, the practitioner can then work with the data engineering team to determine the most appropriate technical solution, such as the optimal data format or storage approach.</p>
+<p>Hence it is important to ask early:</p>
+<ul>
+<li>Where will predictions appear (CRM, dashboard, alert)?</li>
+<li>Will outputs be delivered in tools people already use?</li>
+<li>What training or support is required?</li>
+<li>How will impact be made visible to leadership?</li>
+<li>How best should the outputs of the model be presented to ensure they are usable and actionable for the next stage of the business process.</li>
+</ul>
+<p>Thinking about these questions early prevents the familiar fate of a technically brilliant model that sits idle.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://realworlddatascience.net/foundation-frontiers/posts/2026/02/25/images/body.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+<p>Adoption is strongest when development is iterative. Rather than disappearing into a three-month build, teams should work in cycles: release a minimum viable product (MVP), test it with users, gather feedback, and refine. The first iteration of the MVP should be the simplest form of the product while testing the core principle of what is trying to be achieved. An MVP could be as simple as a weekly spreadsheet with a risk score; if it proves valuable, the team can then invest in automation, dashboards, or more advanced models. This staged approach reduces risk, delivers value early, and builds trust among stakeholders. Crucially, reaching an MVP quickly lets both technical and business teams see what works—and what doesn’t—in practice, instead of relying on endless planning meetings where edge cases are difficult to anticipate.</p>
+<p>Communication is critical. Just as one study on doctor–patient interactions found that 91% of patients preferred doctors who avoided jargon [1], stakeholders respond more positively when practitioners present results in plain language. Clear explanations build understanding, and understanding builds trust. It is also important to explain, in accessible terms, how a model or tool works “under the hood,” so users can better grasp how decisions are being made. Adoption can be further strengthened by having champions within the business—trusted and respected leaders in the business area who engage end users, promote new tools, and support day-to-day use through training and guidance.</p>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p>In the retention case, adoption failed because the model was delivered as a finished artefact, with no path to use. A better approach would have been to:</p>
+<ul>
+<li>Deliver an MVP: a simple risk score in a spreadsheet, tested with Marketing for a small pilot group while establishing a continuous feedback look through feedback forms or through stakeholder updates.</li>
+<li>Work iteratively with data engineering to integrate predictions into the CRM step by step, rather than aiming for a big-bang deployment. define the CRM fields, score push schedule, ownership of follow-up, and SLAs; confirm who acts on the scores and how outcomes are recorded.</li>
+<li>Run a test-and-control pilot to prove incremental benefit, building an evidence base for expansion.</li>
+<li>Set up a lightweight KPI dashboard so everyone can see early wins in terms of contracts saved and revenue retained.</li>
+<li>Create champions by involving stakeholders at every stage, so they owned and advocated for the solution.</li>
+</ul>
+<p>Had the project taken an iterative, MVP-first approach, the practitioner would have avoided months of sunk effort and built momentum for adoption as trust grew over time. Adoption is not an afterthought—it is the decisive factor that turns technical excellence into sustained impact.</p>
+<section id="the-bottom-line" class="level2">
+<h2 class="anchored" data-anchor-id="the-bottom-line">The Bottom Line</h2>
+<blockquote class="blockquote">
+<p>Great models rarely fail because of poor algorithms; they fail because they are disconnected from the goals, workflows, strategies, and people they are meant to serve.</p>
+</blockquote>
+<p>To avoid the fate of the Vanishing Model, projects must begin with a clear vision — one that is co-created with stakeholders and sustained through regular check-ins. Frame every project around measurable business outcomes and define success before writing a single line of code.</p>
+<p>Prove value under real-world conditions with well designed and measurable evaluation plans such as test-and-control approaches. Weigh technical ambition against practical trade-offs—cost, complexity, deployment speed, and maintainability. Translate precision, recall, and ROC curves into outcomes the business understands: contracts retained, revenue gained, costs reduced. And above all, plan for adoption from day one, so that predictions are not just accurate but usable, trusted, and embedded in daily decisions.</p>
+<p>In the end, the mark of a great model is not the elegance of its algorithm but its ability to have a positive impact.</p>
+<p>*For a broader, strategic view of why organisations struggle to realise value from AI—and how leadership and structure can change the odds—check out <a href="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/01/12/why-95-percent-of-ai-projects-fail.html">“Why 95% of AI Projects Fail.”</a></p>
+<p><strong>Sources:</strong> [1]Allen, K. A., Charpentier, V., Hendrickson, M. A., Kessler, M., Gotlieb, R., Marmet, J., Hause, E., Praska, C., Lunos, S., &amp; Pitt, M. B. (2023). Jargon Be Gone – Patient Preference in Doctor Communication. Journal of Patient Experience, 10, Article 23743735231158942. DOI: 10.1177/23743735231158942.</p>
+<div class="article-btn">
+<p><a href="../../../../../applied-insights/index.html">Explore more data science ideas</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author:</dt>
+<dd>
+<a href="https://www.linkedin.com/in/jennifer--hall/">Jennifer Hall</a> is a Senior Analytics Manager at Barclays and Co-Vice Chair of the Royal Statistical Society’s Data Science and AI Section. She is an <a href="https://rss.org.uk/resources/resources-for-educators/rss-william-guy-lecturers/">RSS William Guy Lecturer (2025–2026)</a>; this year’s theme, Statistics and AI, aims to inspire young people to understand how statistical thinking underpins AI and shapes the world around them. Jennifer has extensive experience applying data science and advanced analytics to real-world challenges across finance, travel, healthcare, and insurance. This breadth of experience has strengthened her commitment to delivering responsible, data-driven solutions that create meaningful impact for both businesses and society.
+</dd>
+</dl>
+<div class="g-col-12 g-col-md-6">
+<p><strong>Copyright and licence</strong> : © 2026 Jennifer Hall<br>
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"> <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"> </a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>How to cite</strong> :<br>
+Hall, Jennifer. 2026. “<strong>Why Great Models Still Fail</strong>.” <em>Real World Data Science</em>, 2026. <a href="https://realworlddatascience.net/applied-insights/tutorials/posts/2026/12/why-great-models-still-fail.html">URL</a></p>
+</div>
+</div>
+
+
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+</section>
+</div>
+</div>
+</div>
+
+ ]]></description>
+  <category>AI</category>
+  <category>Data Science</category>
+  <guid>https://realworlddatascience.net/foundation-frontiers/posts/2026/02/25/why_great_models_still_fail.html</guid>
+  <pubDate>Wed, 25 Feb 2026 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/foundation-frontiers/posts/2026/02/25/images/thumb.png" medium="image" type="image/png" height="96" width="144"/>
+</item>
 <item>
   <title>Beyond Quantification: Interview with Professor Sylvie Delacroix on Navigating Uncertainty with AI</title>
   <dc:creator>Annie Flynn</dc:creator>
@@ -192,25 +385,25 @@ Hoerl, Roger. Jensen, Willis. 2026. “<strong>Why Data Quality Is the New Compe
 
 <div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body">
 <div id="ref-davenport2012sexiest" class="csl-entry">
-<div class="csl-left-margin">1. </div><div class="csl-right-inline">Davenport TH, Patil DJ. Data scientist: The sexiest job of the 21st century. Harvard Business Review. 2012 Oct;70–6. </div>
+<div class="csl-left-margin">1. </div><div class="csl-right-inline">Thomas H. Davenport, D. J. Patil. Data scientist: The sexiest job of the 21st century. Harvard Business Review. 2012 Oct;70–6.</div>
 </div>
 <div id="ref-hoerl2025future" class="csl-entry">
-<div class="csl-left-margin">2. </div><div class="csl-right-inline">Hoerl RW. <a href="https://doi.org/10.1080/08982112.2025.2556222">The future of statistics in an AI era</a>. Quality Engineering. 2025; </div>
+<div class="csl-left-margin">2. </div><div class="csl-right-inline">Roger W. Hoerl. The future of statistics in an AI era. Quality Engineering. 2025. doi:<a href="https://doi.org/10.1080/08982112.2025.2556222">10.1080/08982112.2025.2556222</a></div>
 </div>
 <div id="ref-davenport2025unstructured" class="csl-entry">
-<div class="csl-left-margin">3. </div><div class="csl-right-inline">Davenport TH, Hoerl RW, Redman TC. To create value with AI, improve the quality of your unstructured data. Harvard Business Review [Internet]. 2025 May; Available from: <a href="https://hbr.org/2025/05/to-create-value-with-ai-improve-the-quality-of-your-unstructured-data">https://hbr.org/2025/05/to-create-value-with-ai-improve-the-quality-of-your-unstructured-data</a></div>
+<div class="csl-left-margin">3. </div><div class="csl-right-inline">Thomas H. Davenport, Roger W. Hoerl, Thomas C. Redman. To create value with AI, improve the quality of your unstructured data. Harvard Business Review [Internet]. 2025 May. Available from: <a href="https://hbr.org/2025/05/to-create-value-with-ai-improve-the-quality-of-your-unstructured-data">https://hbr.org/2025/05/to-create-value-with-ai-improve-the-quality-of-your-unstructured-data</a></div>
 </div>
 <div id="ref-davenport2024generative" class="csl-entry">
-<div class="csl-left-margin">4. </div><div class="csl-right-inline">Davenport TH, Tiwari P. Is your company’s data ready for generative AI? Harvard Business Review [Internet]. 2024 Mar; Available from: <a href="https://hbr.org/2024/03/is-your-companys-data-ready-for-generative-ai">https://hbr.org/2024/03/is-your-companys-data-ready-for-generative-ai</a></div>
+<div class="csl-left-margin">4. </div><div class="csl-right-inline">Thomas H. Davenport, Prasanna Tiwari. Is your company’s data ready for generative AI? Harvard Business Review [Internet]. 2024 Mar. Available from: <a href="https://hbr.org/2024/03/is-your-companys-data-ready-for-generative-ai">https://hbr.org/2024/03/is-your-companys-data-ready-for-generative-ai</a></div>
 </div>
 <div id="ref-redman2020source" class="csl-entry">
-<div class="csl-left-margin">5. </div><div class="csl-right-inline">Redman TC. To improve data quality, start at the source. Harvard Business Review [Internet]. 2020 Feb; Available from: <a href="https://hbr.org/2020/02/to-improve-data-quality-start-at-the-source">https://hbr.org/2020/02/to-improve-data-quality-start-at-the-source</a></div>
+<div class="csl-left-margin">5. </div><div class="csl-right-inline">Thomas C. Redman. To improve data quality, start at the source. Harvard Business Review [Internet]. 2020 Feb. Available from: <a href="https://hbr.org/2020/02/to-improve-data-quality-start-at-the-source">https://hbr.org/2020/02/to-improve-data-quality-start-at-the-source</a></div>
 </div>
 <div id="ref-shumailov2024collapse" class="csl-entry">
-<div class="csl-left-margin">6. </div><div class="csl-right-inline">Shumailov I, Shumaylov Z, Zhao Y, Papernot N, Anderson R, Gal Y. AI models collapse when trained on recursively generated data. Nature. 2024;631(8022):755–9. </div>
+<div class="csl-left-margin">6. </div><div class="csl-right-inline">Ilia Shumailov, Zakhar Shumaylov, Yiren Zhao, Nicolas Papernot, Ross Anderson, Yarin Gal. AI models collapse when trained on recursively generated data. Nature. 2024;631(8022):755–9.</div>
 </div>
 <div id="ref-jensen2024cleaning" class="csl-entry">
-<div class="csl-left-margin">7. </div><div class="csl-right-inline">Jensen WA. Can data cleaning be automated? [Internet]. 2024. Available from: <a href="https://willisjensen.substack.com/p/can-data-cleaning-be-automated">https://willisjensen.substack.com/p/can-data-cleaning-be-automated</a></div>
+<div class="csl-left-margin">7. </div><div class="csl-right-inline">Willis A. Jensen. Can data cleaning be automated? [Internet]. 2024. Available from: <a href="https://willisjensen.substack.com/p/can-data-cleaning-be-automated">https://willisjensen.substack.com/p/can-data-cleaning-be-automated</a></div>
 </div>
 </div></section></div> ]]></description>
   <category>Data quality</category>
@@ -976,7 +1169,7 @@ Lowe, Robyn and Rochead, Edward. 2025. “All Creatures, Great, Small, and Artif
 
 
 <p>Few saw it coming when on 8th October 2024 the Nobel Committee awarded the <a href="https://www.nobelprize.org/prizes/physics/2024/prize-announcement/">2024 Nobel Prize for Physics</a> to John Hopfield for his Hopfield networks and Geoffrey Hinton for his Boltzmann machines as seminal developments towards machine learning that have statistical physics at the heart of them. The next day machine learning albeit using a different architecture bagged half of the <a href="https://www.nobelprize.org/prizes/chemistry/2024/prize-announcement/">Nobel Prize for Chemistry</a> as well, with the award going to Demis Hassabis and John Jumper for the development of an algorithm that predicts protein folding conformations. The other half of the Chemistry Nobel was awarded to David Baker for successfully building new proteins.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Close-up of a copy of the Nobel Prize Medal. Photographed on the floor of the Nobel Museum in Old Town, Stockholm. Machine learning came up a winner in both the Physics and Chemistry Nobel Prizes for 2024. Credit: Shutterstock" data-fig-align="center">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Close-up of a copy of the Nobel Prize Medal. Photographed on the floor of the Nobel Museum in Old Town, Stockholm. Machine learning came up a winner in both the Physics and Chemistry Nobel Prizes for 2024. Credit: Shutterstock">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/10/31/images/Nobelpic-shutterstock-991.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Close-up of a copy of the Nobel Prize Medal. Photographed on the floor of the Nobel Museum in Old Town, Stockholm. Machine learning came up a winner in both the Physics and Chemistry Nobel Prizes for 2024. Credit: Shutterstock">
@@ -991,7 +1184,7 @@ Figure&nbsp;1: Close-up of a copy of the Nobel Prize Medal. Photographed on the 
 <h2 class="anchored" data-anchor-id="collective-phenomena">Collective phenomena</h2>
 <p>Hopfield networks brought some of the mathematical toolbox long applied to extract “collective phenomena” from vast numbers of essentially identical parts such as atoms in a gas or atomic spins in magnetic materials. Although there maybe too many particles to track each individually, properties like temperature and magnetic field can be extracted using statistical physics. Hopfield showed that similarly a useful phenomenon he described as “associative memory” could be constructed from large numbers of artificial neurons by defining a “minimum energy”, which describes the network of neurons. The energy is determined by connections between neurons, which store information about patterns. Thus the network can retrieve the memorized patterns by minimizing that energy, just as stable conformations of atomic spins might be found in a magnetic material<sup>1</sup>. As the energy of the network is then subsequently minimised the pattern gets closer to the one that was memorised, just as when recalling a word or someone’s name we might first run through similar sounding words or names.</p>
 <p>These Hopfield networks proved a seminal step in progressing AI algorithms, enabling a kind of pattern recognition from multiple stored patterns. However, it turned out that the number of patterns that could be stored was fundamentally limited due to what are known as “local” minima. You can imagine a ball rolling down a hill – it will reach the bottom of the hill fine so long as there are no dips for it to get stuck in en route. Algorithms based on Hopfield networks were prone to getting stuck in such dips or undesirable local minima, until Hopfield and Krotov put their heads together to find a way around it. Krotov describes himself as “incredibly lucky” that his research interests aligned so well with Hopfield. “He’s just such a smart and genuine person, and he has been in the field for many years,” he tells Real World Data Science. “He just knows things that no one else in the world knows.” Together they worked out they could address the problem of local minima by toggling the “activation function”.</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Energy Landscape of a Hopfield Network, highlighting the current state of the network (up the hill), an attractor state to which it will eventually converge, a minimum energy level and a basin of attraction shaded in green. Note how the update of the Hopfield Network is always going down in Energy. Credit: Mrazvan22/wikimedia" data-fig-align="center">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Energy Landscape of a Hopfield Network, highlighting the current state of the network (up the hill), an attractor state to which it will eventually converge, a minimum energy level and a basin of attraction shaded in green. Note how the update of the Hopfield Network is always going down in Energy. Credit: Mrazvan22/wikimedia">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/10/31/images/Energy_landscape.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Energy Landscape of a Hopfield Network, highlighting the current state of the network (up the hill), an attractor state to which it will eventually converge, a minimum energy level and a basin of attraction shaded in green. Note how the update of the Hopfield Network is always going down in Energy. Credit: Mrazvan22/wikimedia">
@@ -1221,7 +1414,7 @@ Demming, Anna. 2024. “Are we at risk of muting the female voice in the digital
 
 <p>Governments, policymakers and central banks across the world are wrestling to keep rising prices under control using monetary policies such as interest rate increases. The effectiveness of such policy changes should be assessed by monitoring inflation data as well as studying the impact on real GDP, making timely and accurate access to key economic indicators crucial for policy planning. The delay in publishing economic indicators such as Real GDP, inflation and other labour related series, makes this real time assessment of the economy particularly challenging. Now Menzie Chinn at the University of Wisconsin, Baptiste Meunier at the European Central Bank and Sebastian Stumpner at the Banque de France report an approach for “nowcasting” built on previous research that develops a framework using different machine learning techniques and is flexible and adaptable compared with traditional methods<sup>1</sup>. They report on the accuracy of their 3-step framework for nowcasting global trade volume estimates, showing how it can outperform traditional methods. They also highlight that the 3-step framework can be extended beyond World Trade data.</p>
 <p>Nowcasting, an amalgamation of the term now and forecasting, provides a methodology to assess the current state of the economy by predicting the current value of inflation or Real GDP. The <a href="https://www.newyorkfed.org/research/policy/nowcast#/overview">Federal Reserve Bank of New York</a> and <a href="https://www.atlantafed.org/cqer/research/gdpnow">Federal Reserve Bank of Atlanta</a> have used nowcasting to publish real time GDP estimates, for the USA. Similarly, the <a href="https://www.clevelandfed.org/indicators-and-data/inflation-nowcasting">Federal Reserve Bank of Cleveland estimates real time inflation</a> using nowcasting methods.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="GDP digital drawing. Credit: Shutterstock, Vink Fan" data-fig-align="center">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="GDP digital drawing. Credit: Shutterstock, Vink Fan">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/datasciencebites/posts/2024/6/25/images/GDPshutterstock_2302082265-991.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="GDP digital drawing. Credit: Shutterstock, Vink Fan">
@@ -1236,7 +1429,7 @@ Figure&nbsp;1: Growth of GDP with statistical graph, 3d rendering. Digital drawi
 <section id="model-framework-improved-flexibility-and-accuracy" class="level2">
 <h2 class="anchored" data-anchor-id="model-framework-improved-flexibility-and-accuracy">Model framework improved flexibility and accuracy:</h2>
 <p>The 3 steps in the framework are chronological steps to be performed in which the first step is pre-selection of the independent variables with the highest predictive power. The independent variables from the first step are then summarised into a few factors using factor extraction methodology in the second step. The final step consists of using the factors from step 2 to perform regression.</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research." data-fig-align="center">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/datasciencebites/posts/2024/6/25/images/3step-framework-methods-big.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research.">
@@ -1248,7 +1441,7 @@ Figure&nbsp;2: The various methods that can be employed in the 3 step framework 
 </div>
 <p>Figure&nbsp;2 summarises the various methods employed at each step in the 3 step framework. In their report Chinn, Meunier and Stumpner aim to propose the best techniques for pre-selection, factor extraction and regression. As such their 3-step framework comprises performing pre-selection using Least Angle Regression (LARS), factor extraction using Principal Component Analysis (PCA) and employing a Macroeconomic Random Forest (MRF) machine learning technique for nowcasting.</p>
 <p>The model performance or accuracy of MRF is compared with traditional methods using Root Mean Square Error (RMSE), a measure of the deviation between the actual data and the predicted data. The 3-step framework model accuracy is tested by holding the preselection and factor extraction fixed to isolate the impact of regression techniques.</p>
-<div id="fig-3" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research." data-fig-align="center">
+<div id="fig-3" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/datasciencebites/posts/2024/6/25/images/method-accuracy-big.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research.">
@@ -1330,7 +1523,7 @@ Gohil, Atmajitsinh. 2024. “Nowcasting upgrade for better real time estimation 
 <h2 class="anchored" data-anchor-id="high-stakes">High stakes</h2>
 <p>When Open AI publicised their Voice Engine’s ability to clone human voices from just 15s of audio, they too flagged the potential benefit for people with poor health conditions, since those with deteriorating speech could find a means to <a href="https://www.euronews.com/next/2024/04/01/openai-unveils-ai-voice-cloning-tech-that-only-needs-a-15-second-sample-to-work">have their speech restored</a>. However, voice clones had already been used to make robot calls to voters imitating the voice of President Joe Biden and <a href="https://news.sky.com/story/fake-ai-generated-joe-biden-robocall-tells-people-in-new-hampshire-not-to-vote-13054446">telling voters to stay at home</a>.</p>
 <p>“The question you have to ask there is what’s the societal benefit of that tool? And what are the risks,” associate director at the Ada Lovelace Institute Andrew Strait told <em>Real World Data Science</em>. “They thankfully decided to not fully release it,” he adds, highlighting how the timing “right before an election year with 40 democracies across the world” could have made the release particularly problematic.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Themis, goddess of justice. External governance is required to ensure the outcomes of AI deployment are safe and just. Credit Shutterstock, Michal Bednarek">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Themis, goddess of justice. External governance is required to ensure the outcomes of AI deployment are safe and just. Credit Shutterstock, Michal Bednarek" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/06/11/images/shutterstock_2436413315.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Themis, goddess of justice. External governance is required to ensure the outcomes of AI deployment are safe and just. Credit Shutterstock, Michal Bednarek">
@@ -1355,7 +1548,7 @@ Figure&nbsp;1: Themis, goddess of justice. External governance is required to en
 <h2 class="anchored" data-anchor-id="regulatory-ecosystems">Regulatory ecosystems</h2>
 <p>As has been emphasised throughout the series, making a success of an AI project requires a unique skillset that <a href="https://realworlddatascience.net/foundation-frontiers/posts/2024/06/04/ai-series-6.html">combines expertise in AI with the domain expertise for the sector</a> the project is contributing to, and there is often a dearth of people that straddle both camps. The same hunt for “unicorns” with useful expertise in the tech sector and policymakers can also be an obstacle for developing “good regulation”. One solution is to bring people from the different disciplines together to develop legislation collaboratively, as was arguably the case with the roll out of General Data Protection Regulations (GDPR) in 2018. “Policymakers and academics, they worked very closely together in the crafting of that law,” says Katell. “It was one of those rare moments in which we saw the boundaries really dissolve between policy and academia in a way that delivered something that I think we can agree was largely a positive outcome.”</p>
 <p>When it comes to AI, an obstacle to that kind of collaboration has been the lack of a common language. In “Defining AI in policy and practice” in 2020<sup>1</sup>, Katell alongside Peaks Krafft at the University of Oxford and co-authors found that AI researchers favoured definitions of AI that “emphasise technical functionality”, whereas policy-makers tended towards definitions that “compare systems to <a href="https://realworlddatascience.net/foundation-frontiers/posts/2024/04/29/gen-ai-human-intel.html">human thinking and behavior”, which AI systems remain far from achieving</a>. Strait also highlights a recurring theme among those without experience of actually making AI systems in overselling AI capabilities in suggestions that it will “help solve climate change” or “cure cancer”. “How are you measuring that?” he asks. “How are we making a clear sense of the efficacy, the proof behind those kinds of statements? Where are the case studies that actually work, and how are we determining that’s working?”</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Safety first. External governance is required to ensure the outcomes of AI deployment are safe and knock on effects have been considered. Credit Shutterstock, 3rdtimeluckystudio">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Safety first. External governance is required to ensure the outcomes of AI deployment are safe and knock on effects have been considered. Credit Shutterstock, 3rdtimeluckystudio" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/06/11/images/shutterstock_2180417651.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Safety first. External governance is required to ensure the outcomes of AI deployment are safe and knock on effects have been considered. Credit Shutterstock, 3rdtimeluckystudio">
@@ -1463,7 +1656,7 @@ Demming, Anna. 2024. “Ensuring new AI technologies help everyone thrive .” R
 <p>For example, in healthcare when we use AI for risk predictions, it can be a really great tool to aid clinicians to save time. However, in each stage, we need to assess the data quality, how these data are fed into the algorithm, what procedures, what models, and how we generate those models. And then which discriminative models do we use to balance the risk and eventually predict the risk of outcomes in patients? It’s very much a balance between risks and benefits for usefulness of these tools in practice. We have all these brilliant ideas of what best practice is. But in real terms, sometimes it’s a little bit tricky to follow through.</p>
 <p><strong>Could you give us some thoughts on the sort of best practice with data, for example, that doesn’t quite turn out to be quite so easy to follow in practice, and what you might do about it?</strong></p>
 <p><strong>FT</strong>: We always call these AI algorithms, data hungry algorithms, because the models that we fit require us to see patterns in the data that we feed into them so that the learning happens. And then the discriminative functions come in place to balance and kind of give a score to wherever the learning is happening and give an evaluation of each step. However, the data that we put into these algorithms comes first – the quality of that data. Often in healthcare, because of its sensitivity, the data is held within a secure environment. So we cannot, at this point in time, expose an AI algorithm to a very diverse example, specifically for investigating rare diseases or rare conditions. And above that, there is also complexities in the data itself. We need to evaluate and clean the data before we feed it into these algorithms. We need to evaluate the diversity of the data itself – for example, the tabular data, the imaging data, the genomic data – and each one requires its own specific or tailored approach in data cleaning stages.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="The panel. Clockwise from top left: Ali Al-Sherbaz, Janet Bastiman, Fatemeh Torabi and Jonathan Gillard">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The panel. Clockwise from top left: Ali Al-Sherbaz, Janet Bastiman, Fatemeh Torabi and Jonathan Gillard" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/06/04/images/panel-991.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The panel. Clockwise from top left: Ali Al-Sherbaz, Janet Bastiman, Fatemeh Torabi and Jonathan Gillard">
@@ -1704,7 +1897,7 @@ Lane, J., Hirsch, L. and Leonard, A. 2024. “Meeting the unprecedented challeng
 <section id="know-your-goals" class="level2">
 <h2 class="anchored" data-anchor-id="know-your-goals">Know your goals</h2>
 <p>The first point to note is that checking how well the output from an AI model matches the data in the training set is not an adequate indication of how well it will perform once deployed on other data. The problem can be exemplified by considering a simple model based on an equation that best fits a training data set. Data values are inevitably subject to measurement uncertainties and local conditions that add various types of noise, so taking the line defined by the equation identified as best matching the training data and measuring how good that match is falls short of adequate evaluation - the more perfectly a model matches this noisy data, the less perfectly it will fit an alternative set of data, a scenario described as “overfitting”. Similarly, what a machine learning or AI algorithm or model learns when it optimises its fit to the training data may not be generalisable.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart.">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/05/21/images/Evaluation_thumbnail.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Reliable deployment of an algorithm requires identifying metrics, risks and rigorous, ongoing evaluation. Image created by Isabel Sassoon using firefly to show a technical report process flow of statistical model performance and a huge numbers chart.">
@@ -1716,7 +1909,7 @@ Figure&nbsp;1: Evaluation plots. The kinds of charts of monitored performance an
 </div>
 <p>There are a number of possible approaches and factors to take into account when sourcing test data but the first thing to consider when drawing up a process for evaluating an AI model is its objective. With this objective in mind it is then possible to pin down an appropriate measure of performance, which will shape how to use the test data to evaluate the model performance. Among the distinguishing factors between different measures used to evaluate how a model performs on test data, some will be suitable when the objective is to classify (e.g high or low risk based on health data?) while others are useful for models that estimate or predict (e.g What is the estimated height of a child given their parents’ heights).</p>
 <p>Classification model performance can be measured using accuracy, confusion matrices, sensitivity, specificity and the receiver operating characteristic (ROC). Classification accuracy summarises the performance of a classification model as the number of cases in which the model correctly classifies divided by the total number of cases used in the test set. However, this can be a blunt tool as there are cases where there is a different cost or consequence depending on the direction of the error. Confusion matrices are helpful to explore how the model performs in correctly classifying the different classes. The confusion matrix sums up the number of cases the model classifies correctly within each of the classes, for example how many actual high-risk cases are correctly classified as high risk by the model. The number of cases the model classifies as high risk, for example, that are not high risk is referred to as the False Positives. In the context of medical tests (e.g the covid lateral flow tests) testing positive for a condition that is not actually there is potentially less damaging than testing negative when the condition is there.</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="The receiver operating characteristic can provide a helpful means of visualising performance. Credit: shutterstock .">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The receiver operating characteristic can provide a helpful means of visualising performance. Credit: shutterstock ." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/05/21/images/shutterstock_2377152411.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The receiver operating characteristic can provide a helpful means of visualising performance. Credit: shutterstock .">
@@ -1737,7 +1930,7 @@ Figure&nbsp;2: The receiver operating characteristic can provide a helpful means
 <p>These data sets also need to have reliable labelling i.e.&nbsp;the rows of data need to be accurate so that the model’s performance can be assessed objectively against a trusted “ground truth”. For example, if we want to evaluate the performance of a fraud transaction classification model using accuracy as the performance metric, then we need a reliable training data set with true fraud transactions to evaluate how good the model is at detecting them. A data set with a list of transactions that are not accurately identified (or labelled) as fraud or not is not helpful. Thinking about how some commercial LLMs are trained on all the data in the “internet” it is worth asking whether a smaller more curated and specific training set would be better for model performance as well as being more ethical and safer.</p>
 <p>Several approaches for generating test data sets take training and test data as distinct subsets from the same initial data set <sup>4</sup>. There are different ways of doing this to make the most of the data to evaluate the model as systematically and exhaustively as possible. Perhaps the simplest example is using a hold-out set, which involves taking all the data available and taking a random subset of the data to use for testing the model. Depending on how much data is available then this can be 50% or less.</p>
 <p>A slightly more sophisticated approach is k-fold cross validation, which involves splitting all the data you have available into k subsets and then doing k iterations where in each iteration a different kth of the data is used as the testing data for evaluation of the model built by training it on the remaining (k-1/k) of the data. This is repeated k times each time using a different one of the k subsets for testing. The performance of the model can then be averaged over the k iterations. (The measure of performance can be, say, accuracy or sensitivity depending on the context). For example, if k is 3 then the data is split into 3, and each iteration will take a different 2/3 of the data as training data to build the model, and the remaining 1/3 as testing data to evaluate the model.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="K fold cross validation can indicate how sensitive a model is to the test data. Credit: Fabian Flöck CC-BY-AS-3.0">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="K fold cross validation can indicate how sensitive a model is to the test data. Credit: Fabian Flöck CC-BY-AS-3.0" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/05/21/images/k-fold-cross-validation.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="K fold cross validation can indicate how sensitive a model is to the test data. Credit: Fabian Flöck CC-BY-AS-3.0">
@@ -1947,7 +2140,7 @@ Varley-Winter, O., Author. 2024. “On AI ethics - influencing its use in the de
 <p>Imputing missing values can preserve the whole sample. However, the introduction of noise during the imputation process may compromise the quality of fitted models, contingent upon the proportion of missing records. One way to offset this may be to use larger and larger data sets that might inevitably include a fuller training picture to the algorithm, just as adding dots to a pixelated image makes it more and more clear what is depicted.</p>
 <p>It is often perceived that for certain instances, particularly in the context of deep learning models, such as neural networks, the model itself is capable of handling missing values without explicit imputation or deletion procedures. <sup>6</sup> Is this really true in a real-world scenario? Are these models advanced enough to achieve an optimised performance even when data quality is not at an optimised level? <sup>7</sup> Köse et al.&nbsp;(2020) investigated the effect of two conventional imputation approaches: Multiple imputation (MICE) <sup>8</sup> and Factor analysis of mixed data (FAMD) <sup>9</sup> on performance of deep learning models. Their study endorsed the use of such explicit imputation approaches, showing an enhancement in model performance. <sup>10</sup></p>
 <p>Data imbalance issues, arise within datasets where there is a disproportionate amount of information pertaining to a specific aspect. When imbalanced data, rich in focused information, is used to train an AI model, the model becomes adept at learning about the specific aspect but may struggle to generalise its findings to diverse scenarios, thus fostering overfitting where the model achieves accurate prediction on the training data but loses accuracy for any new test dataset.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Stages involved in AI model development" data-fig-align="center">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Stages involved in AI model development">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/05/07/images/Stages-of-model-development-724.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Stages involved in AI model development">
@@ -1966,7 +2159,7 @@ Figure&nbsp;1: Stages involved in AI model development.
 <p>When AI algorithms encounter complex, unstructured data, the task of quality assurance suddenly balloons beyond tackling the three main errors highlighted above. Such circumstances require some kind of quality enhancement procedure, where datasets in the form of images or unstructured text go through a curation process which involves enhancement of the quality and standardisation of the format to the level required for integration into AI algorithms. This process of standardization of data is paramount across various domains, especially in healthcare where complex, unstructured health data holds transformative potential for AI driven advances that revolutionise diagnosis, treatment, and prognosis of diseases. From electronic health records to magnetic resonance imaging (MRI) scans and genetic sequences, this data offers a wealth of insights for AI models to learn from. Adopting standardised formats not only facilitates seamless integration of diverse datasets but also streamlines the development and deployment of AI models. However, unlocking this potential requires a strong foundation in high-quality, processed data which begins with standardisation.</p>
 <p>One category of complex health data is neuroimaging of which a prime example is MRI. Different institutions will often employ different acquisition protocols and different ways of collecting and storing neuroimaging data. Above all, this can make it very difficult to integrate into existing workflows and processing pipelines, but it also makes it challenging to understand, compare and combine with other datasets. To address these challenges, the neuroimaging community has adopted the Brain Imaging Data Structure (BIDS) <sup>13</sup> – a standardised format for organising and naming MRI data which allows compliant data to integrate smoothly with existing workflows and AI models, streamlining processing and analysis. By embracing standardisation, we can pave the way for common processing tools to enable the generation of AI-ready data.</p>
 <p>Next, comes pre-processing. Sticking with the neuroimaging example, MRI scans are susceptible to various forms of noise and artifacts, which can appear as blurring or distortions which, without proper processing, can be misinterpreted by AI models. Pre-processing typically includes steps for spatial normalisation and image registration, involving alignment of brain images from different individuals into a common reference model and alignment of different images of the same subject to a common template. This standardisation facilitates inter-subject and inter-study comparisons, enabling AI models to generalise effectively across diverse datasets. However, the multi-layer aspect of this process means that aligning data to a common template is dependent on the choice of template which itself can introduce bias if the template brain doesn’t accurately reflect the patient’s anatomy (due to age, ethnicity, or disease for example).</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Neuroimaging data" data-fig-align="center">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Neuroimaging data">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/05/07/images/neuroimaging.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Neuroimaging data">
@@ -2245,138 +2438,6 @@ Miranda-Saavedra, Diego. 2024. “Generative AI models and the quest for human-l
   <guid>https://realworlddatascience.net/foundation-frontiers/posts/2024/04/29/gen-ai-human-intel.html</guid>
   <pubDate>Mon, 29 Apr 2024 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/foundation-frontiers/posts/2024/04/29/images/data-people.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>AI series: What is AI? Shedding light on the method and madness in these algorithms</title>
-  <dc:creator>Anna Demming</dc:creator>
-  <link>https://realworlddatascience.net/foundation-frontiers/posts/2024/04/22/ai-series-1.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<!-- article text to go here -->
-<p>What do <a href="https://www.simmons-simmons.com/en/publications/clq2gkar900fcu2ewb904uhrj/inappropriate-use-of-chatgpt-exposed-in-tax-case">defence cases in litigation</a>, statistical analyses, book summaries and a description of <a href="https://twitter.com/jimalkhalili/status/1621454981097209857/photo/1">Young’s double slit experiment in the manner of poet Robert Burns</a> have in common? They are all tasks that people have rightly or wrongly attempted to delegate to large language models.</p>
-<p>The playground of generative AI algorithms based on large language models extends well beyond the space of generating text-based language but includes creating images, videos and even music from prompts. The capabilities of these algorithms, and the ubiquity of tasks that large language models like OpenAI’s Generative Pre-trained Transformer (GPT) models can have a go at is striking. These large language models and the chatbots and so on based on them have also been catapulted into the centre of mainstream public attention with huge success – who has not heard of ChatGPT? The net result has been something akin to a feeding frenzy as individuals and businesses alike strive to be among the first to benefit from them.</p>
-<p>Like others, many data scientists closely familiar with these kinds of algorithms share some enthusiasm for their potential utility, but many also advocate an element of caution. There are some obvious caveats, including accuracy and cost – not just financially but also in terms of the huge energy costs to run these algorithms, a real world consequence that is affecting the planet in the present day but is often eclipsed by fears that AI might take over the world some time in the future. Another concern is security. Should you be sharing the information you are working from with a third party anyway? However, while a lot of attention has focused on what these algorithms can do, fewer have been asking what they actually do – what we know about the initial programming, the training data, the final algorithm and the range of possible outputs, all of which provide useful pointers as to whether a particular algorithm is appropriate for the task in hand, and how best to benefit from it.</p>
-<section id="demystifying-machine-learning" class="level2">
-<h2 class="anchored" data-anchor-id="demystifying-machine-learning">Demystifying machine learning</h2>
-<p>Definitions of artificial intelligence vary, often circling around the theme of a system reaching an “intelligent” decision or output based on multiple inputs, although how “intelligent” might be defined can be hairier still. Nonetheless, there is currently largely a consensus that some kind of machine learning is a route to achieving it. Through machine learning “you are letting the computer adjust the importance of its inputs, and their relationships, to determine an appropriate output” as Napier chief data scientist and chair of the Royal Statistical Society DS &amp; AI Section <a href="https://www.linkedin.com/in/janetbastiman/?originalSubdomain=uk">Janet Bastiman</a> describes it. The term “machine learning” was first proposed by IBM scientist Arthur Samuel in 1952, and it has largely been achieved by two approaches. One is “random forests”, based on constructing multiple decision trees. The other is the neural networks first devised by American psychologist Frank Rosenblatt and simulated at IBM in 1957. Here, a set of artificial neurons – components closer to a capacitor than a biological neuron – is connected to another layer of neurons, which is connected to another layer of neurons, and so on (Figure 1). Crucially the connections are strengthened or not through “learning” based on training data that allows the network to recognise patterns and extract meaningful features.</p>
-<div id="fig-neuralnetworks" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-neuralnetworks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/04/22/images/neuralnetworks.jpg" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-neuralnetworks-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;1: A <a href="https://commons.wikimedia.org/wiki/File:Visualizing_Artificial_Neural_Networks_%28ANNs%29_with_python_library-ANN_Visualizer.jpg">schematic of a neural network</a> depicted with circles connected with lines or arrows.
-</figcaption>
-</figure>
-</div>
-<p>“Machine learning is just like linear regression with tonnes of bells and whistles,” says <a href="https://www.danielawitten.com/">Daniela Witten</a>, professor of mathematical statistics at the University of Washington in the US, referring to a statistical method for fitting a line to a set of data points that dates back over a hundred years. There are many other traditional approaches to statistical learning that may be nonlinear and so on, but as an example of the “bells and whistles” Witten describes, whereas a traditional regression model might have 5 inputs or variables, the machine learning version might have 15 million, and instead of assuming it is linear the fit is allowed to be more flexible and so on. However, the fundamental statistical ideas underlying both sets of models are the same. For this reason, although some may beg to differ, she feels doing machine learning before you understand statistics is like trying to jump rope before you can walk. “It’s not that you can’t do it but why would you?” she adds.</p>
-<p>Broadly speaking, machine learning can be classified two ways. One is “supervised”, which means that the training data is somehow labelled, for instance with a known output collected from real world records. The alternative is “unsupervised” where the algorithm is set the task of finding a way to learn relationships between input data itself. There are also neural network approaches that fall somewhere between the two, such as reinforcement learning where an algorithm may generate outputs for a task at random such that its performance is initially poor but improves with feedback to reinforce generation of outputs that are closer to those desired. An approach that enjoyed great popularity for a time used another machine learning algorithm to provide this feedback, which would initially also be a poor judge but improve as pitted against the algorithm learning to do the task – generative adversarial networks (<a href="https://proceedings.neurips.cc/paper_files/paper/2014/file/5ca3e9b122f61f8f06494c97b1afccf3-Paper.pdf">GANs</a>). GANs are still used a lot, but usually in a pipeline and may be pre-trained so they are not starting from scratch like they used to.</p>
-<p>As the number of layers increased from just a few, the term “deep learning” was adopted along with alternative structures. The first models operated with every neuron in each layer connected to every neuron in the previous layer. “This is very wasteful because not every part of your input relates to each other that much,” says <a href="https://petar-v.com/">Petar Veličković</a>, staff research scientist at Google DeepMind and affiliated lecturer at the University of Cambridge. He cites images as among the first scenarios where people began to implement a tweak to the approach in what is called a convolutional neural network. Based on the assumption that the pixels for each object in an image sit adjacent to each other rather than at opposing corners of the image, the neurons in a convolutional neural network connect only with the neurons in the next layer that are nearby in the image space. In this way the convolutional neural network assumes a kind of structure in the input data – that the image is contiguous, so the pixels for edges and so on are in contact.</p>
-<div id="fig-Attentionfigure2" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-Attentionfigure2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/04/22/images/Attentionfigure2.jpg" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-Attentionfigure2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;2: Schematics for (left) Scaled Dot-Product Attention and (right) Multi-Head Attention, which consists of several attention layers running in parallel.
-</figcaption>
-</figure>
-</div>
-<p>“Transformers are also a neural network but they encode a different kind of structure,” Veličković tells Real World Data Science, as he describes the data architecture at the heart of the large language models creating such a buzz at present. Language has structure too – the letters make up words, which then make up sentences and so on. So it makes sense to program some of that structure into the algorithm rather than leaving it to work it all out. “You would need a lot more training data than there is on the internet to train a system without such structure by itself,” adds Veličković. Transformers structure the training data into tokens, and a key component first reported in 2017 is the way each token then connects with or <a href="https://papers.nips.cc/paper_files/paper/2017/hash/3f5ee243547dee91fbd053c1c4a845aa-Abstract.html">“attends” to all other similar tokens</a> . Here whether they are “similar” is determined by their dot products, a multiplication technique for the kind of vector format of input numbers used for these tokens (Figure 2). Exploiting this “dot product attention” significantly improves the efficiency of the training process.</p>
-</section>
-<section id="taking-the-world-by-storm" class="level2">
-<h2 class="anchored" data-anchor-id="taking-the-world-by-storm">Taking the world by storm</h2>
-<p>The transformer architecture proved very powerful as has been seen in the surge to prominence of various AI systems based on generative pre-trained transformer algorithms, such as ChatGPT, BERT and PaLM, although this likely has at least as much to do with the marketing of the recent releases as it does with the algorithm itself. “It was a small evolution rather than a revolution,” says Bastiman in reference to recent GPT releases, explaining that there was an increase in parameter size and the amount of data used for training that gave rise to something that could provide broader answers and was ready for mass market. Nonetheless she adds, “There had been GPT2, GPT1 and all the other previous ones had been released quietly and had all been quite good.”</p>
-<p>The marketing spin has not stopped with the product releases as terms like “<a href="https://realworlddatascience.net/the-pulse/editors-blog/posts/2022/11/23/LLM-content-warning.html">hallucination</a>” have entered the lexicon to describe instances when the output is wrong and potentially dangerous. (Figure 3) “The language we are using to describe these models is different to how we describe human intelligence to deliberately instil the sense this is better,” adds Bastiman. “So even if the model is incorrect these terms imply that it is still doing something amazing.”</p>
-<div id="fig-hallucinatedreferences" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-fig figure">
-<div aria-describedby="fig-hallucinatedreferences-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-<img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/04/22/images/hallucinatedreferences.jpg" class="img-fluid figure-img">
-</div>
-<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hallucinatedreferences-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Figure&nbsp;3: “Hallucinated” references. A study found that out of the 178 references cited by ChatGPT, 69 did not have a DOI. Upon extensive internet search, 41 out of these 69 reference articles were found to exist.
-</figcaption>
-</figure>
-</div>
-<p>The success of this marketing does have its advantages as Veličković points out, thrusting AI in the spotlight, inviting people to try the algorithms, which thanks to a growth in web-based user interfaces like ChatGPT can reach a much broader audience. This is not only encouraging developers they are doing something potentially useful but prompting important discussions around the potential bias and ethics issues, which many would argue ought to be considered before anything else. Nonetheless Veličković also doubts whether the current AI fanfare can be attributed to advances in the algorithms they use alone, pointing out that neural networks have been around since the 1950s, and the 1980s and 1990s saw the invention of most of the building blocks we need to scale such systems up: the backpropagation algorithm, convolutional and recurrent neural networks, long-short term memory networks, and early variants of linear self-attention and graph neural networks. “It’s just that we needed gamers,” he tells <em>Real World Data Science</em>, suggesting that hardware and engineering have been key to the recent successes of AI. “We needed people to drive the development of graphics cards which are really good hardware for training these things.”</p>
-<p>Clearly advances in processing power and the hardware such as GPUs to manage it so that it is possible to compute these algorithms massively affects their potential impact. Although the field no longer relies on GPUs developed for gamers, GPUs are still widely used, as they offer such a good return on investment and are easier to get hold of than alternatives like tensor processing units. Certainly a significant development over the past decade or so is the increase in size of not just the data sets but the algorithms themselves. Implementing algorithms at such colossal scales that require data centres imposes incredibly challenging requirements on the hardware and the electrical and computational engineering involved to set them running and keep them from failure. “When you have a data centre, failure is a common thing,” says Veličković, listing multiple vulnerabilities that balloon at scale such as hardware failures, electrical failures, even apparently exotic events like solar flares can flip bits and scramble data leading to nonsense output. “People underestimate this but good engineering is now the bread and butter of how these systems work.”</p>
-</section>
-<section id="managing-expectations" class="level2">
-<h2 class="anchored" data-anchor-id="managing-expectations">Managing expectations</h2>
-<p>The explosion in scale has also created fundamental distinctions from how people work with machine learning algorithms versus statistical methods. Witten highlights “the ability to gauge uncertainty” by quantifying parameters such as confidence intervals and error bars as a key contribution of statistics. “Often with these machine learning models things get very complicated and we do not yet have a way to quantify that uncertainty.”</p>
-<p>This quantifying of finite parameters contrasts with the kind of output achieved with the generative AI applications that have grabbed media focus recently. For instance, asking a large language model to describe Young’s double slit experiment in the style of Robert Burns may sound quite a specific prompt, and it may seem impressive if the algorithm returns something akin to what was asked, but the number of possible responses that could be deemed “correct” are infinite. A lot of applications of generative AI – many with more real world impact than describing iconic experiments in archaic scotch rhyme – similarly have a vast set of reasonable outputs.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/04/22/images/Gamers.jpg" class="img-fluid figure-img"></p>
-<figcaption>Gamers drove the development of GPUs which have proven invaluable for training machine learning algorithms</figcaption>
-</figure>
-</div>
-<p>“We shouldn’t be surprised if ChatGPT does well with a question that has a million reasonable answers,” says Witten, contrasting these scenarios with questions that she suggests might have more real-world importance, like whether a patient with breast cancer will respond to a particular treatment. “Actually ChatGPT often gets into trouble if there is a problem with just one answer, and that answer is not part of the training set.”</p>
-<p>For predictive AI there is often only one useful answer – the outcome that will come to pass. This has implications if machine learning is used for predictions, particularly if it is in real world settings that affect real people. “If you are deploying an AI model for some healthcare application like what breast cancer treatment you are going to respond best to, we really better make sure that the model works, and that we understand the uncertainty of those predictions,” says Witten. She feels that over the past few years, the machine learning community has increasingly recognized the importance of bringing statistical thinking to bear within the context of complex machine learning/AI algorithms: in particular, interpretability and uncertainty quantification have become major areas of interest in machine learning. Witten suggests that statistics is making progress here citing as an example conformal inference, “which allows recalibration of the predictions of a machine learning model in order to quantify uncertainty appropriately.”</p>
-</section>
-<section id="explain-yourself" class="level2">
-<h2 class="anchored" data-anchor-id="explain-yourself">Explain yourself</h2>
-<p>Understanding the uncertainties of output is one thing, but many of these algorithms have now reached the kind of scale that totally obfuscates what they are doing with the input data to reach their outputs. There may be specialists who understand how they are programmed but there are just too many variables to track so that even for them, the final process the algorithm lands on for generating its output from the various inputs is a black box with no neat mathematical description, unlike statistical techniques like regression.</p>
-<p>“You can draw a picture with circles and arrows, and arrows cross in a certain way, but you don’t have a clear idea of how one feature that you started with maps to the output,” says Witten. “On an actual quantitative level of scientific understanding we don’t have that.” If decisions are being made for and about people based on AI, people will also sometimes want to know how that conclusion was drawn. “When we want to make decisions there’s a level of deferred trust,” says Bastiman citing a <a href="https://www.turing.ac.uk/research/research-projects/project-explain#:~:text=This%20gap%20in%20AI%20explainability,robust%2C%20reliable%2C%20and%20safe">work by the Alan Turing Institute</a> that began in the late 2010s. “We as humans want explanations from machines in the same scenarios that we want them from humans but that’s not going to be the same for all people.” For example, a person who has had a bad experience in the past will need more convincing than one who has not. Janet suggests that a very normal cognitive bias can be generalised as most people wanting more explanation if the model output is not in their favour. “Similarly, a person accepted for a job where AI is used, may not require any explanation, while another candidate the AI rejected may challenge the decision and want to know why.”</p>
-<p>Hybrid implementations including a human in the loop may help to a degree. However, to get a handle on the workings of the algorithm itself, Bastiman points out that it is possible to introduce layers in the algorithm that will help extract how the output is reached even for unsupervised neural networks. “That’s where a lot of effort goes from data scientists and machine learning engineers to make sure the model has that level of transparency and makes sense,” she adds, emphasising the need to ensure a model has these features before it is released and put in use. The process is far from straightforward as the explanation needs to be at the right level and with the right terminology for a range of audiences, be they data scientists, quality assurance professionals, decision makers, end users or impacted individuals. “People say you can’t explain things when what they really mean is that it’s difficult.”</p>
-<p>Veličković suggests a lot could be gained in terms of being able to analyse AI algorithms by marrying them with elements of classical algorithms, which are “nicely implemented and interpretable.” Classical algorithms are also impervious to changes in the input data such as an increase by a factor of 10, which can completely throw an algorithm based on machine learning. “The problem is they are trained to be really useful and give you an answer at all times so they won’t even give you a confidence estimate, they will just try to answer even if the answer is completely broken,” he adds. A lot of his research has focused on “<a href="https://www.sciencedirect.com/science/article/pii/S2666389921000994">out-of-distribution generalisation</a>” – the way classical algorithms work with any input data – to see how these features might be sewn into AI to extract the best of both worlds. “There’s a lot of research to be done still but our findings so far indicate that if you want out-of-distribution generalisation you need to look at what makes your problem special and put some of those properties inside your neural network model.”</p>
-<p>Even what we know about the way the algorithm reaches a decision has caused concern when it comes to critical real-world applications – for example, <a href="https://www.bu.edu/articles/2023/do-algorithms-reduce-bias-in-criminal-justice/">to determine the likelihood that someone convicted of a crime will reoffend</a>. (More on this to come in the special issue article on ethics). With many commercial algorithms the details of the training data are unknown or essentially constitute the whole internet, which as Witten points out is “a pretty bad place a lot of the time.” While ChatGPT may seem an unlikely choice for anything like gauging risk for recidivism or cancer treatments, concerns remain over biases propagating in AI generated content we might consume through marketing campaigns and other activities. “Even just thinking about deploying AI/machine learning models in critical real-world settings without the associated statistical understanding is just very deeply problematic,” says Witten, emphasising the importance of not just statisticians but also ethicists for tackling these challenges.</p>
-<p>The fact is many of us are already interacting with multiple machine learning/AI models on a daily basis through recommendations, search engines and predictive text. “If we are going to deploy these [machine learning algorithms] at scale in a way that will affect human lives, then we first need to understand the implications for humans of these models,” says Witten. “This includes both statistical and ethical considerations.”</p>
-<p>Coming up: Forthcoming articles in this special issue will look at machine learning and human-level intelligence, issues around data, techniques for evaluation, gauging workforce impact, governance, best practice and living with AI</p>
-</section>
-<section id="also-in-the-ai-series" class="level2">
-<h2 class="anchored" data-anchor-id="also-in-the-ai-series">Also in the AI series</h2>
-<p><a href="https://realworlddatascience.net/foundation-frontiers/posts/2024/04/29/gen-ai-human-intel.html">Generative AI models and the quest for human-level artificial intelligence</a> <a href="https://realworlddatascience.net/foundation-frontiers/posts/2024/05/07/ai-series-3.html">datasets for optimised AI performance</a></p>
-<div class="article-btn">
-<p><a href="../../../../../foundation-frontiers/index.html">Explore more data science ideas</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the authors</dt>
-<dd>
-<strong>Anna Demming</strong> is a freelance science writer and editor based in Bristol, UK. She has a PhD from King’s College London in physics, specifically nanophotonics and how light interacts with the very small, and has been an editor for Nature Publishing Group (now Springer Nature), IOP Publishing and New Scientist. Other publications she contributes to include The Observer, New Scientist, Scientific American, Physics World and Chemistry World.
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<!-- copyright goes to the author, or to Royal Statistical Society if written by staff -->
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2024 Anna Demming
-</dd>
-</dl>
-<!-- confirm licence terms with contributor before publishing - must be Creative Commons licence, but different types of CC licences might be preferred -->
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. <!-- Add thumbnail image credit and any licence terms here -->Thumbnail image courtesy of Serenechan3 reproduced under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a></p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Demming Anna. 2024. “What is AI? Shedding light on the method and madness in these algorithms .” Real World Data Science, April 22, 2024. <a href="https://realworlddatascience.net/foundation-frontiers/posts/2024/04/22/ai-series-1.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-<!-- Make sure to update main site homepage (index.qmd) before publishing. See README for details. -->
-
-
-</section>
-
- ]]></description>
-  <category>AI</category>
-  <category>algorithms</category>
-  <category>statistics</category>
-  <guid>https://realworlddatascience.net/foundation-frontiers/posts/2024/04/22/ai-series-1.html</guid>
-  <pubDate>Mon, 22 Apr 2024 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/foundation-frontiers/posts/2024/04/22/images/neuralnetworks.jpg" medium="image" type="image/jpeg"/>
 </item>
 </channel>
 </rss>
