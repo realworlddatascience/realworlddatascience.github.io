@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,6 +12,9 @@
 
 <title>Trusted AI: translating AI ethics from theory into practice – Real World Data Science</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -36,15 +39,14 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
 <script src="../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../../../site_libs/bootstrap/bootstrap-652564b586393c295f53bd90e4d54206.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/bootstrap/bootstrap-b7447f0ff9e1df1d81fcb4152ef27c73.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
 <link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -279,13 +281,9 @@ document.addEventListener("DOMContentLoaded", function() {
 <p>Fundamentally, different model architectures mean that some models are more interpretable than others, as the steps used to evaluate their predictions are easier for humans to comprehend. Decision trees, for example, have more human-interpretable characteristics than deep learning models. Different model architectures also mean that there are interpretation tools that are only applicable to certain models, such as regression weights in a linear model.</p>
 <p>Another approach to consider, then, is model-agnostic interpretation, which encompasses both global interpretability (explanation of an entire model’s behaviour) and local interpretability (explanation of a single prediction). While there are fast-developing techniques and tools for model-agnostic interpretability, let’s take a look at two of the more popular methods available:</p>
 <ul>
-<li><dl>
-<dt><a href="https://dl.acm.org/doi/10.1145/2939672.2939778">Local interpretable model-agnostic explanations (LIME)</a></dt>
-<dd>
-This is an explanation technique that trains local surrogate models, using explainable models such as Lasso or decision trees, to approximate the predictions of a model that is not interpretable by design in order to explain individual model predictions. The idea is to use interpretable features from the surrogate models to create human-friendly explanations where the underlying model cannot. For example, in an image classification model that detects a flower in an image, LIME is able to highlight the parts of the image that explain why the model classifies the image as a flower (see illustration below). This provides an interpretable explanation between the input variable and prediction, which is an essential part of interpretability.
-</dd>
-</dl></li>
+<li><a href="https://dl.acm.org/doi/10.1145/2939672.2939778">Local interpretable model-agnostic explanations (LIME)</a></li>
 </ul>
+<p>: This is an explanation technique that trains local surrogate models, using explainable models such as Lasso or decision trees, to approximate the predictions of a model that is not interpretable by design in order to explain individual model predictions. The idea is to use interpretable features from the surrogate models to create human-friendly explanations where the underlying model cannot. For example, in an image classification model that detects a flower in an image, LIME is able to highlight the parts of the image that explain why the model classifies the image as a flower (see illustration below). This provides an interpretable explanation between the input variable and prediction, which is an essential part of interpretability.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><a href="images/lime.png"><img src="images/lime.png" class="img-fluid figure-img" alt="Illustration of explainable AI processes using LIME on an image classification AI system. In this example, an image classification system receives an image of a sunflower and classifies it as a flower with 70% likelihood. The LIME approach then sees parts of the input image perturbed, or masked, leading to different classification likelihoods from the AI system. From this, a model is able to determine the parts of the input image that best explain the initial classification of 'flower'."></a></p>
@@ -293,13 +291,9 @@ This is an explanation technique that trains local surrogate models, using expla
 </figure>
 </div>
 <ul>
-<li><dl>
-<dt><a href="https://papers.nips.cc/paper/2017/hash/8a20a8621978632d76c43dfd28b67767-Abstract.html">Shapley Additive Explanations (SHAP)</a></dt>
-<dd>
-SHAP (<a href="https://github.com/slundberg/shap">GitHub repo</a>) uses tools and theoretical foundations from game theory, one of which is Shapley values. It works by assigning each feature an importance value for a particular prediction to numerically explain the contribution of various features to a model’s output. For example, in a model that predicts flu, SHAP calculates the importance of sneezing as a feature by removing and adding the subset of other features, leading to different combinations of features that contribute to the prediction. This method provides interpretable solutions for more complex models similar to the equivalent of “weights” in linear models.
-</dd>
-</dl></li>
+<li><a href="https://papers.nips.cc/paper/2017/hash/8a20a8621978632d76c43dfd28b67767-Abstract.html">Shapley Additive Explanations (SHAP)</a></li>
 </ul>
+<p>: SHAP (<a href="https://github.com/slundberg/shap">GitHub repo</a>) uses tools and theoretical foundations from game theory, one of which is Shapley values. It works by assigning each feature an importance value for a particular prediction to numerically explain the contribution of various features to a model’s output. For example, in a model that predicts flu, SHAP calculates the importance of sneezing as a feature by removing and adding the subset of other features, leading to different combinations of features that contribute to the prediction. This method provides interpretable solutions for more complex models similar to the equivalent of “weights” in linear models.</p>
 </section>
 <section id="fairness" class="level3">
 <h3 class="anchored" data-anchor-id="fairness">Fairness</h3>
@@ -307,58 +301,14 @@ SHAP (<a href="https://github.com/slundberg/shap">GitHub repo</a>) uses tools an
 <p>Let’s begin with the technical approaches to fairness. To achieve equitable, reliable, and fair decisions, a diverse and balanced set of examples is needed in training datasets. However, data often contains disparities that, if left unchecked, can perpetuate algorithmic biases and harms. There are various approaches to detect sources of bias, guarantee fairness, or “debias” models. To strive for algorithmic fairness, many papers have proposed various quantitative measures of fairness, with some based on unstated assumptions about fairness in society. Unfortunately, <a href="https://arxiv.org/pdf/1609.07236.pdf">these assumptions are often mutually incompatible</a>, making it difficult to compare fairness metrics to one another – consider, for example, the longstanding debate between equality of outcome and equality of treatment.</p>
 <p>Although metrics incompatibilities exist, fairness broadly focuses on equality of opportunity (group fairness), and equality of outcome (individual fairness) to prevent discrimination against certain attributes. Drawing definitions from legal frameworks, the term “protected attribute” refers to the characteristics that are often protected under anti-discrimination laws, such as gender or race. Mathematically, the following metrics are often used to demonstrate scores that support fairness:</p>
 <ul>
-<li><dl>
-<dt>Statistical parity</dt>
-<dd>
-This measure seeks to uncover whether a model is fair towards protected attributes by measuring the difference between the majority and protected class in receiving a favourable outcome. A value of 0 demonstrates the model to be fair.
-</dd>
-</dl></li>
-<li><dl>
-<dt>Disparate impact</dt>
-<dd>
-This compares the percentage of favourable outcomes for the monitored group to the percentage of favourable outcomes for a reference group. The groups compared can be the majority group and minority group, and this score will highlight in whose direction decisions are biased. For example, if a model grants loans to 60% of people in a middle-aged group and only 50% for those of other age cohorts, then the disparate impact is 0.8, which indicates a positive bias towards the middle-aged group and an adverse impact on the remaining cohorts.
-</dd>
-</dl></li>
-<li><dl>
-<dt>Equality of odds</dt>
-<dd>
-This measures the balance of the true positive rate and false positive rate between protected and unprotected groups, which seeks to uncover whether a model performs similarly for the two groups.
-</dd>
-</dl></li>
+<li>Statistical parity</li>
 </ul>
+<p>: This measure seeks to uncover whether a model is fair towards protected attributes by measuring the difference between the majority and protected class in receiving a favourable outcome. A value of 0 demonstrates the model to be fair. - Disparate impact : This compares the percentage of favourable outcomes for the monitored group to the percentage of favourable outcomes for a reference group. The groups compared can be the majority group and minority group, and this score will highlight in whose direction decisions are biased. For example, if a model grants loans to 60% of people in a middle-aged group and only 50% for those of other age cohorts, then the disparate impact is 0.8, which indicates a positive bias towards the middle-aged group and an adverse impact on the remaining cohorts. - Equality of odds : This measures the balance of the true positive rate and false positive rate between protected and unprotected groups, which seeks to uncover whether a model performs similarly for the two groups.</p>
 <p>It is important to remember that statistics are only one side of the fairness problem for machine learning, and one that treats the symptoms of bias as opposed to the underlying causes. In addition to the aforementioned technical approaches, there are a variety of non-technical measures that teams developing AI systems can adopt to augment fairness and inclusion:</p>
 <ul>
-<li><dl>
-<dt>Definition of fairness</dt>
-<dd>
-Organisations that develop or use AI systems need to define, practically, what it means to be fair. Although there are various quantitative fairness measures, these are based on assumptions of fairness in society, which could be defined for each specific use case.
-</dd>
-</dl></li>
-<li><dl>
-<dt>Diversity on teams</dt>
-<dd>
-There’s been a sharpened focus on the value of team diversity to areas such as productivity and creativity. The same is true for ethics. Ensuring that product teams are composed of a broad cross-section of identities can help to organically drive fairness through diversity of thought and experience.
-</dd>
-</dl></li>
-<li><dl>
-<dt>Education and self-reflection</dt>
-<dd>
-Developing knowledge within individuals and teams about the socio-technical aspects of AI – that is, the ways in which AI shapes our social, political, economic, and environmental lives. The more critical a person can be as a data scientist in questioning why something is being built, the more likely they are to proactively recognise risks surrounding fairness.
-</dd>
-</dl></li>
-<li><dl>
-<dt>Consider the end user</dt>
-<dd>
-Imagine that you are on a development team building an AI solution for a problem in the agricultural sector pertaining to livestock health. Who is best suited to solving the problem: a data scientist or a farmer? As a data scientist, you may have the tools to develop a solution, but given your distance from the end user, you are unlikely to intimately understand the problem in the same way a farmer would. If you cannot understand the problem, you cannot hope to find a solution, much less an ethical one. Recognising the importance of consulting individuals that are representative of end users is key to ensure that your design is fair.
-</dd>
-</dl></li>
-<li><dl>
-<dt>AI ethics review boards</dt>
-<dd>
-Data science teams should not operate in isolation. Increasingly, organisations are establishing AI ethics review boards or similar forums that are intended to act as checks on the design decisions made throughout AI development. Does your organisation have one?
-</dd>
-</dl></li>
+<li>Definition of fairness</li>
 </ul>
+<p>: Organisations that develop or use AI systems need to define, practically, what it means to be fair. Although there are various quantitative fairness measures, these are based on assumptions of fairness in society, which could be defined for each specific use case. - Diversity on teams : There’s been a sharpened focus on the value of team diversity to areas such as productivity and creativity. The same is true for ethics. Ensuring that product teams are composed of a broad cross-section of identities can help to organically drive fairness through diversity of thought and experience. - Education and self-reflection : Developing knowledge within individuals and teams about the socio-technical aspects of AI – that is, the ways in which AI shapes our social, political, economic, and environmental lives. The more critical a person can be as a data scientist in questioning why something is being built, the more likely they are to proactively recognise risks surrounding fairness. - Consider the end user : Imagine that you are on a development team building an AI solution for a problem in the agricultural sector pertaining to livestock health. Who is best suited to solving the problem: a data scientist or a farmer? As a data scientist, you may have the tools to develop a solution, but given your distance from the end user, you are unlikely to intimately understand the problem in the same way a farmer would. If you cannot understand the problem, you cannot hope to find a solution, much less an ethical one. Recognising the importance of consulting individuals that are representative of end users is key to ensure that your design is fair. - AI ethics review boards : Data science teams should not operate in isolation. Increasingly, organisations are establishing AI ethics review boards or similar forums that are intended to act as checks on the design decisions made throughout AI development. Does your organisation have one?</p>
 </section>
 </section>
 <section id="in-conclusion" class="level2">
@@ -407,7 +357,7 @@ Data science teams should not operate in isolation. Increasingly, organisations 
 <a href="https://www.ey.com/en_uk/people/maxine-setiawan">Maxine Setiawan</a> is a social data scientist specialising in trusted AI, and AI and data risk in EY UK&amp;I. With her multi-disciplinary background, she works to help clients understand and manage risks from their data and AI systems, and to ensure AI governance that is fair, accountable, and trustworthy. Maxine holds an MSc in social data science from the University of Oxford.
 </dd>
 <dd>
-<p><a href="https://www.ey.com/en_uk/people/mira-pijselman">Mira Pijselman</a> is the digital ethics lead for EY UK&amp;I, where she focuses on the responsible governance of key emerging technologies, including artificial intelligence, quantum technologies, and the metaverse. A social scientist and philosopher by training, she helps clients to map, understand, secure, and capitalise on their data and technology potential safely. Mira holds an MSc in the social science of the internet from the University of Oxford.</p>
+<a href="https://www.ey.com/en_uk/people/mira-pijselman">Mira Pijselman</a> is the digital ethics lead for EY UK&amp;I, where she focuses on the responsible governance of key emerging technologies, including artificial intelligence, quantum technologies, and the metaverse. A social scientist and philosopher by training, she helps clients to map, understand, secure, and capitalise on their data and technology potential safely. Mira holds an MSc in the social science of the internet from the University of Oxford.
 </dd>
 </dl>
 </div>

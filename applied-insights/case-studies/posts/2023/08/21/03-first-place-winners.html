@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,6 +12,9 @@
 
 <title>Food for Thought: First place winners – Auburn Big Data – Real World Data Science</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -27,7 +30,6 @@ ul.task-list li input[type="checkbox"] {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -56,15 +58,14 @@ div.csl-indent {
 <link href="../../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
 <script src="../../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../../../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../../../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../../../../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../../../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../../../../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../../../../site_libs/bootstrap/bootstrap-652564b586393c295f53bd90e4d54206.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../../site_libs/bootstrap/bootstrap-b7447f0ff9e1df1d81fcb4152ef27c73.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
 <link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -278,14 +279,14 @@ document.addEventListener("DOMContentLoaded", function() {
 <p>At the start of this competition, we decided to test three general approaches, in the order listed:</p>
 <ol type="1">
 <li><p>A heuristic approach, where we use only the data and a defined similarity metric to predict which FNDDS label a given IRI item should have.</p></li>
-<li><p>A simpler modeling approach, where we train a simple statistical classifier, like a random forest <span class="citation" data-cites="10.1007/978-3-030-03146-6_86">(<a href="#ref-10.1007/978-3-030-03146-6_86" role="doc-biblioref">Parmar, Katariya, and Patel 2019</a>)</span>, logistic regression, etc., to predict the FNDDS label for a given IRI item. For this method, we opted to use a random forest as our statistical model, as it was a simpler model to use as a baseline, having shown decent performance in a wide range of classification tasks. As it turned out, this approach was quite robust and accurate, so we kept it as our main model for this approach.</p></li>
+<li><p>A simpler modeling approach, where we train a simple statistical classifier, like a random forest <span class="citation" data-cites="10.1007/978-3-030-03146-6_86">(<a href="#ref-10.1007/978-3-030-03146-6_86" role="doc-biblioref">Parmar et al. 2019</a>)</span>, logistic regression, etc., to predict the FNDDS label for a given IRI item. For this method, we opted to use a random forest as our statistical model, as it was a simpler model to use as a baseline, having shown decent performance in a wide range of classification tasks. As it turned out, this approach was quite robust and accurate, so we kept it as our main model for this approach.</p></li>
 <li><p>A large language modeling approach, where we train a model like BERT <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805">(<a href="#ref-DBLP:journals/corr/abs-1810-04805" role="doc-biblioref">Devlin et al. 2018</a>)</span> to map the descriptions for given IRI and FNDDS items to the FNDDS category the supplied IRI item belongs to.</p></li>
 </ol>
 </section>
 <section id="our-approach" class="level2">
 <h2 class="anchored" data-anchor-id="our-approach">Our approach</h2>
 <p>As we explored the data provided, we opted to use the given 2017–2018 PPC dataset as our primary dataset for both training and testing. To ensure a fair evaluation of the model, we randomly split the dataset into 60% training samples and 40% testing samples, making sure our training process never sees the testing dataset. For evaluating our models, we adopted the competition’s metrics: Success@5 and NDCG@5. After months of testing, our statistical classifier (approach #2) proved itself to be the model that both processes the data fastest and achieves the highest performance on our testing metrics.</p>
-<p>This approach, at a high level, takes in the provided data (among other configuration parameters), formats the data in a computer-readable format – converting the IRI and FNDDS descriptions to a numerical representation with word embeddings <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805 mikolov2013efficient pennington-etal-2014-glove">(<a href="#ref-DBLP:journals/corr/abs-1810-04805" role="doc-biblioref">2018</a>; <a href="#ref-mikolov2013efficient" role="doc-biblioref">Mikolov et al. 2013</a>; <a href="#ref-pennington-etal-2014-glove" role="doc-biblioref">Pennington, Socher, and Manning 2014</a>)</span> and then using that numerical representation to calculate the distances between each description – and then trains a classification model (random forest <span class="citation" data-cites="10.1007/978-3-030-03146-6_86">(<a href="#ref-10.1007/978-3-030-03146-6_86" role="doc-biblioref">2019</a>)</span>/neural network <span class="citation" data-cites="SCHMIDHUBER201585">(<a href="#ref-SCHMIDHUBER201585" role="doc-biblioref">Schmidhuber 2015</a>)</span>) that can predict an FNDDS label for a given IRI item.</p>
+<p>This approach, at a high level, takes in the provided data (among other configuration parameters), formats the data in a computer-readable format – converting the IRI and FNDDS descriptions to a numerical representation with word embeddings <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805 mikolov2013efficient pennington-etal-2014-glove">(<a href="#ref-DBLP:journals/corr/abs-1810-04805" role="doc-biblioref">2018</a>; <a href="#ref-mikolov2013efficient" role="doc-biblioref">Mikolov et al. 2013</a>; <a href="#ref-pennington-etal-2014-glove" role="doc-biblioref">Pennington et al. 2014</a>)</span> and then using that numerical representation to calculate the distances between each description – and then trains a classification model (random forest <span class="citation" data-cites="10.1007/978-3-030-03146-6_86">(<a href="#ref-10.1007/978-3-030-03146-6_86" role="doc-biblioref">2019</a>)</span>/neural network <span class="citation" data-cites="SCHMIDHUBER201585">(<a href="#ref-SCHMIDHUBER201585" role="doc-biblioref">Schmidhuber 2015</a>)</span>) that can predict an FNDDS label for a given IRI item.</p>
 <p>In terms of data, our approach uses the FNDDS/IRI descriptions, combining them into a single “description” field, and the IRI item’s categorical items – department, aisle, category, product, brand, manufacturer, and parent company – to further discern between items.</p>
 <p>While most industrial methods require use of a graphics processing unit (graphics card, or GPU) to perform this kind of processing, our primary method only requires the computer’s internal processor (CPU) to function properly. With that in mind, to achieve the best possible performance on our test metrics, the most time-consuming operations are run in parallel. The time taken to train our primary model can likely be further improved if we parallelize these operations across a GPU, with the only downside being the imposition of a GPU requirement for systems aiming to run this method.</p>
 <p>In addition to our primary method, our team has worked with alternate approaches on the GPU (using BERT <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805">(<a href="#ref-DBLP:journals/corr/abs-1810-04805" role="doc-biblioref">2018</a>)</span>, neural networks <span class="citation" data-cites="SCHMIDHUBER201585">(<a href="#ref-SCHMIDHUBER201585" role="doc-biblioref">2015</a>)</span>, etc.) to either: 1) speed up the time it takes to process and make inferences for the data, achieving similar performance on our test metrics, or 2) achieve higher performance, likely at a cost to the time it takes to process everything. Our reasoning behind doing so is that if a simple statistical model performs well, then a larger language model should be able to demonstrate a higher performance on our test metrics without much of an increase in training time. At the current time, these methods are still unable to match the performance/efficiency tradeoff of our primary method.</p>
@@ -324,14 +325,14 @@ document.addEventListener("DOMContentLoaded", function() {
 <section id="feature-transformations" class="level5">
 <h5 class="anchored" data-anchor-id="feature-transformations">Feature transformations</h5>
 <p>Our feature transformations are also relatively simple. First, we combine all description fields for each item to make one large description, and then use a word embedding method (like GloVe <span class="citation" data-cites="pennington-etal-2014-glove">(<a href="#ref-pennington-etal-2014-glove" role="doc-biblioref">2014</a>)</span> or BERT <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805">(<a href="#ref-DBLP:journals/corr/abs-1810-04805" role="doc-biblioref">2018</a>)</span>) to convert the description into a numerical representation, resulting in a 300-dimensional GloVe or 768-dimensional BERT vector of numbers for each description. Then, for each IRI item, we calculate the cosine and Euclidean distances from each FNDDS item, resulting in two vectors, both equal in length to the original FNDDS data (in this case, two vectors of length ~7,300). The intuition behind this is that while cosine and Euclidean distances can tell us similar things, providing both of these sets of distances to the model should allow it to pick up on a more nuanced set of relationships between the IRI and FNDDS items.</p>
-<p>For categorical data, we take all unique values in each field and assign them an ID number. While that is often not the best practice for making a numerical representation out of categorical data <span class="citation" data-cites="10.5120/ijca2017915495">(<a href="#ref-10.5120/ijca2017915495" role="doc-biblioref">Potdar, Pardawala, and Pai 2017</a>)</span>, it seemed to work for the downstream model.</p>
+<p>For categorical data, we take all unique values in each field and assign them an ID number. While that is often not the best practice for making a numerical representation out of categorical data <span class="citation" data-cites="10.5120/ijca2017915495">(<a href="#ref-10.5120/ijca2017915495" role="doc-biblioref">Potdar et al. 2017</a>)</span>, it seemed to work for the downstream model.</p>
 <p>Regardless, the aforementioned feature transformations give us (ad hoc) ~14,900 features if we use GloVe and ~15,300 features if we use BERT. Both feature sets can then be sent to the downstream random forest/neural network to start classifying items.</p>
 <p>It should be noted that processing the data is by far the most time-consuming part of our method. The data processing times for each embedding are as follows:</p>
 <ul>
 <li>GloVe: ~3 hours</li>
 <li>BERT: ~6 hours</li>
 </ul>
-<p>Due to BERT both taking so long to process data and performing lower than our GloVe embeddings on the classification task, we opt to use GloVe embeddings for our primary method. Our only theoretical explanation here is that since BERT is better at context-dependent tasks <span class="citation" data-cites="10.1145/3443279.3443304">(<a href="#ref-10.1145/3443279.3443304" role="doc-biblioref">Wang, Nulty, and Lillis 2021</a>)</span>, it likely will expect something similar to well-structured sentences as input, which is not what the IRI/FNDDS descriptions are. Rather, GloVe – being a method that depends less on context <span class="citation" data-cites="mikolov2013efficient pennington-etal-2014-glove">(<a href="#ref-mikolov2013efficient" role="doc-biblioref">2013</a>; <a href="#ref-pennington-etal-2014-glove" role="doc-biblioref">2014</a>)</span> – should excel better when the input text is not a well-formed sentence.</p>
+<p>Due to BERT both taking so long to process data and performing lower than our GloVe embeddings on the classification task, we opt to use GloVe embeddings for our primary method. Our only theoretical explanation here is that since BERT is better at context-dependent tasks <span class="citation" data-cites="10.1145/3443279.3443304">(<a href="#ref-10.1145/3443279.3443304" role="doc-biblioref">Wang et al. 2021</a>)</span>, it likely will expect something similar to well-structured sentences as input, which is not what the IRI/FNDDS descriptions are. Rather, GloVe – being a method that depends less on context <span class="citation" data-cites="mikolov2013efficient pennington-etal-2014-glove">(<a href="#ref-mikolov2013efficient" role="doc-biblioref">2013</a>; <a href="#ref-pennington-etal-2014-glove" role="doc-biblioref">2014</a>)</span> – should excel better when the input text is not a well-formed sentence.</p>
 </section>
 <section id="training-methods" class="level5">
 <h5 class="anchored" data-anchor-id="training-methods">Training methods</h5>
@@ -466,7 +467,7 @@ Knipper, Alex, Naman Bansal, Jingyi Zheng, Wenying Li, and Shubhra Kanti Karmake
 
 </section>
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-aly2005survey" class="csl-entry" role="listitem">
 Aly, M. 2005. <span>“Survey on Multiclass Classification Methods, Tech. Rep.”</span> <em>California Institute of Technology</em>.
 </div>
@@ -474,25 +475,25 @@ Aly, M. 2005. <span>“Survey on Multiclass Classification Methods, Tech. Rep.�
 Devlin, J., M.-W. Chang, K. Lee, and K. Toutanova. 2018. <span>“<span>BERT:</span> Pre-Training of Deep Bidirectional Transformers for Language Understanding.”</span> <em>CoRR</em> abs/1810.04805. <a href="http://arxiv.org/abs/1810.04805">http://arxiv.org/abs/1810.04805</a>.
 </div>
 <div id="ref-mikolov2013efficient" class="csl-entry" role="listitem">
-Mikolov, Tomas, Kai Chen, Greg Corrado, and Jeffrey Dean. 2013. <span>“Efficient Estimation of Word Representations in Vector Space.”</span> <a href="https://arxiv.org/abs/1301.3781">https://arxiv.org/abs/1301.3781</a>.
+Mikolov, Tomas, Kai Chen, Greg Corrado, and Jeffrey Dean. 2013. <em>Efficient Estimation of Word Representations in Vector Space</em>. <a href="https://arxiv.org/abs/1301.3781">https://arxiv.org/abs/1301.3781</a>.
 </div>
 <div id="ref-10.1007/978-3-030-03146-6_86" class="csl-entry" role="listitem">
-Parmar, A., R. Katariya, and V. Patel. 2019. <span>“A Review on Random Forest: An Ensemble Classifier.”</span> In <em>International Conference on Intelligent Data Communication Technologies and Internet of Things (ICICI) 2018</em>, edited by J. Hemanth, X. Fernando, P. Lafata, and Z. Baig, 758–63. Cham: Springer International Publishing.
+Parmar, A., R. Katariya, and V. Patel. 2019. <span>“A Review on Random Forest: An Ensemble Classifier.”</span> In <em>International Conference on Intelligent Data Communication Technologies and Internet of Things (ICICI) 2018</em>, edited by J. Hemanth, X. Fernando, P. Lafata, and Z. Baig. Springer International Publishing.
 </div>
 <div id="ref-pennington-etal-2014-glove" class="csl-entry" role="listitem">
-Pennington, J., R. Socher, and C. Manning. 2014. <span>“<span>G</span>lo<span>V</span>e: Global Vectors for Word Representation.”</span> In <em>Proceedings of the 2014 Conference on Empirical Methods in Natural Language Processing (<span>EMNLP</span>)</em>, 1532–43. Doha, Qatar: Association for Computational Linguistics. <a href="https://doi.org/10.3115/v1/D14-1162">https://doi.org/10.3115/v1/D14-1162</a>.
+Pennington, J., R. Socher, and C. Manning. 2014. <span>“<span>G</span>lo<span>V</span>e: Global Vectors for Word Representation.”</span> <em>Proceedings of the 2014 Conference on Empirical Methods in Natural Language Processing (<span>EMNLP</span>)</em> (Doha, Qatar), October, 1532–43. <a href="https://doi.org/10.3115/v1/D14-1162">https://doi.org/10.3115/v1/D14-1162</a>.
 </div>
 <div id="ref-10.5120/ijca2017915495" class="csl-entry" role="listitem">
-Potdar, K., T. S. Pardawala, and C. D. Pai. 2017. <span>“A Comparative Study of Categorical Variable Encoding Techniques for Neural Network Classifiers.”</span> <em>International Journal of Computer Applications</em> 175 (4): 7–9. <a href="https://doi.org/10.5120/ijca2017915495">https://doi.org/10.5120/ijca2017915495</a>.
+Potdar, K., T. S. Pardawala, and C. D. Pai. 2017. <span>“A Comparative Study of Categorical Variable Encoding Techniques for Neural Network Classifiers.”</span> <em>International Journal of Computer Applications</em> (New York, USA) 175 (4): 7–9. <a href="https://doi.org/10.5120/ijca2017915495">https://doi.org/10.5120/ijca2017915495</a>.
 </div>
 <div id="ref-10.1145/967900.968151" class="csl-entry" role="listitem">
-Qian, G., S. Sural, Y. Gu, and S. Pramanik. 2004. <span>“Similarity Between Euclidean and Cosine Angle Distance for Nearest Neighbor Queries.”</span> In <em>Proceedings of the 2004 ACM Symposium on Applied Computing</em>, 1232–37. SAC ’04. New York, NY, USA: Association for Computing Machinery. <a href="https://doi.org/10.1145/967900.968151">https://doi.org/10.1145/967900.968151</a>.
+Qian, G., S. Sural, Y. Gu, and S. Pramanik. 2004. <span>“Similarity Between Euclidean and Cosine Angle Distance for Nearest Neighbor Queries.”</span> <em>Proceedings of the 2004 ACM Symposium on Applied Computing</em> (New York, NY, USA), SAC ’04, 1232–37. <a href="https://doi.org/10.1145/967900.968151">https://doi.org/10.1145/967900.968151</a>.
 </div>
 <div id="ref-SCHMIDHUBER201585" class="csl-entry" role="listitem">
 Schmidhuber, J. 2015. <span>“Deep Learning in Neural Networks: An Overview.”</span> <em>Neural Networks</em> 61: 85–117. https://doi.org/<a href="https://doi.org/10.1016/j.neunet.2014.09.003">https://doi.org/10.1016/j.neunet.2014.09.003</a>.
 </div>
 <div id="ref-10.1145/3443279.3443304" class="csl-entry" role="listitem">
-Wang, C., P. Nulty, and D. Lillis. 2021. <span>“A Comparative Study on Word Embeddings in Deep Learning for Text Classification.”</span> In <em>Proceedings of the 4th International Conference on Natural Language Processing and Information Retrieval</em>, 37–46. NLPIR ’20. New York, NY, USA: Association for Computing Machinery. <a href="https://doi.org/10.1145/3443279.3443304">https://doi.org/10.1145/3443279.3443304</a>.
+Wang, C., P. Nulty, and D. Lillis. 2021. <span>“A Comparative Study on Word Embeddings in Deep Learning for Text Classification.”</span> <em>Proceedings of the 4th International Conference on Natural Language Processing and Information Retrieval</em> (New York, NY, USA), NLPIR ’20, 37–46. <a href="https://doi.org/10.1145/3443279.3443304">https://doi.org/10.1145/3443279.3443304</a>.
 </div>
 </div></section></div></main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.8.27">
+<meta name="generator" content="quarto-1.9.36">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
@@ -12,6 +12,9 @@
 
 <title>Translating the Curated Data Model into Practice - Climate resiliency of skilled nursing facilities – Real World Data Science</title>
 <style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
 div.columns{display: flex; gap: min(4vw, 1.5em);}
@@ -27,7 +30,6 @@ ul.task-list li input[type="checkbox"] {
 div.csl-bib-body { }
 div.csl-entry {
   clear: both;
-  margin-bottom: 0em;
 }
 .hanging-indent div.csl-entry {
   margin-left:2em;
@@ -56,15 +58,14 @@ div.csl-indent {
 <link href="../../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
 <script src="../../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
 <script src="../../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
-<script src="../../../../../../site_libs/quarto-html/axe/axe-check.js" type="module"></script>
 <script src="../../../../../../site_libs/quarto-html/popper.min.js"></script>
 <script src="../../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../../../../../../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../../../../../../site_libs/quarto-html/quarto-syntax-highlighting-ed96de9b727972fe78a7b5d16c58bf87.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<link href="../../../../../../site_libs/quarto-html/quarto-syntax-highlighting-845c23b38eaddc0f92fda52bfe77a8c8.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../../../../site_libs/bootstrap/bootstrap-652564b586393c295f53bd90e4d54206.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../../site_libs/bootstrap/bootstrap-b7447f0ff9e1df1d81fcb4152ef27c73.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
 <link href="../../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -311,7 +312,7 @@ Figure&nbsp;1: Conceptual Data Map Aligned to Purpose and Use: The conceptual da
 </div>
 <p><strong>Data discovery</strong></p>
 <p>Data discovery focused on identifying data sources to address the purpose and use questions and was informed by the conceptual data map.</p>
-<p>For the first question – Can SNF workers get to work during an extreme flood event? – we discovered and used proprietary synthetic population, transportation routes, building data sources, and publicly available flood data. The <a href="https://developer.here.com/documentation">HERE Premium Streets</a> proprietary data includes information about roads, such as type of road, speed limits, number of lanes, etc. The proprietary synthetic population data, Building Knowledge Base (BKB), are used to identify where SNF workers live and work to map transportation routes from home to work <span class="citation" data-cites="mortveitNSSAC">(<a href="#ref-mortveitNSSAC" role="doc-biblioref">Mortveit, Xie, and Marathe 2023</a>)</span>. Publicly available data from the Federal Emergency Management Administration (FEMA) provided flooding risk estimates along the routes from nursing staff homes to the SNF.</p>
+<p>For the first question – Can SNF workers get to work during an extreme flood event? – we discovered and used proprietary synthetic population, transportation routes, building data sources, and publicly available flood data. The <a href="https://developer.here.com/documentation">HERE Premium Streets</a> proprietary data includes information about roads, such as type of road, speed limits, number of lanes, etc. The proprietary synthetic population data, Building Knowledge Base (BKB), are used to identify where SNF workers live and work to map transportation routes from home to work <span class="citation" data-cites="mortveitNSSAC">(<a href="#ref-mortveitNSSAC" role="doc-biblioref">Mortveit et al. 2023</a>)</span>. Publicly available data from the Federal Emergency Management Administration (FEMA) provided flooding risk estimates along the routes from nursing staff homes to the SNF.</p>
 <p>For the second question – Are SNFs prepared for a flood emergency? – we used Center for Medicare and Medicaid (CMS) SNF inspection and deficiency data as a proxy for preparedness. We also examined SNF residents’ physical and mental health to assess SNF emergency preparedness. For example, if most residents faced mobility challenges, the SNF would need more resources available during an emergency to move residents to a safer facility. We used data about residents from the Long Term Care Focus <span class="citation" data-cites="brown2022ltcfocus">(<a href="#ref-brown2022ltcfocus" role="doc-biblioref">LTCFocus 2022</a>)</span> Public Use Data sponsored by the National Institute on Aging (Brown University 2022).</p>
 <p>We used data to measure community resilience, assets, and risks by geography at the county, city, and census tract levels to address the third question, Can communities support SNFs during an emergency? These data included:</p>
 <ul>
@@ -354,11 +355,11 @@ Figure&nbsp;1: Conceptual Data Map Aligned to Purpose and Use: The conceptual da
 <p>Once the routes to an SNF were established, the expected number of nursing staff at an SNF during a flood event could be calculated as the sum of the probabilities of each worker being able to commute to work during a flood event. A computational model was developed using the following data:</p>
 <ul>
 <li>SNF locations in Virginia from the Centers for Medicare &amp; Medicaid Services (CMS);</li>
-<li>Home locations of workers at each SNF assigned from the synthetic population and Building Knowledge Base <span class="citation" data-cites="beckman1996creating mortveitNSSAC">(<a href="#ref-beckman1996creating" role="doc-biblioref">Beckman, Baggerly, and McKay 1996</a>; <a href="#ref-mortveitNSSAC" role="doc-biblioref">Mortveit, Xie, and Marathe 2023</a>)</span>;</li>
+<li>Home locations of workers at each SNF assigned from the synthetic population and Building Knowledge Base <span class="citation" data-cites="beckman1996creating mortveitNSSAC">(<a href="#ref-beckman1996creating" role="doc-biblioref">Beckman et al. 1996</a>; <a href="#ref-mortveitNSSAC" role="doc-biblioref">Mortveit et al. 2023</a>)</span>;</li>
 <li>Virginia road networks; and</li>
 <li>FEMA census tract-level riverine and coastal flood risks.</li>
 </ul>
-<p>Using router software, the Virginia road network was used from the HERE map data to compute each nursing staff’s likely route to their SNF. Routers are commonly used within transportation and traffic simulators. The router software used for this demonstration is a highly parallelizable router previously developed in BI NSSAC, known as the Simba router <span class="citation" data-cites="barrett2013planning">(<a href="#ref-barrett2013planning" role="doc-biblioref">Barrett et al. 2013</a>)</span>.</p>
+<p>Using router software, the Virginia road network was used from the HERE map data to compute each nursing staff’s likely route to their SNF. Routers are commonly used within transportation and traffic simulators. The router software used for this demonstration is a highly parallelizable router previously developed in BI NSSAC, known as the Simba router <span class="citation" data-cites="barrett2013planning">(<a href="#ref-barrett2013planning" role="doc-biblioref"><span class="nocase">Barrett et al.</span> 2013</a>)</span>.</p>
 <p>The FEMA risk data provide the riverine and coastal flood risks for each census tract in Virginia. Given the routes, the FEMA riverine and coastal flood risks were used to estimate the probability of the nursing staff making it to work. The FEMA technical document <em>National Risk Index Technical Document</em> <span class="citation" data-cites="FEMA2021risk">(<a href="#ref-FEMA2021risk" role="doc-biblioref">FEMA 2021</a>)</span> provides information on how natural hazard risks are calculated. We use these risk estimates ranging from 0 to 100 as a proxy for the probability a worker can reach the SNF by dividing by 100. For example, we assume a risk is zero if there is zero probability of being unable to reach the SNF due to an extreme flood event.</p>
 <p>In contrast, a risk of 100 indicates the roads are underwater, and the probability of being unable to reach the SNF is one. The maximum risks along transportation routes leading to an SNF range from 0 to 47 for riverine flooding and 0 to 40 for coastal flooding. We assume the combined value of the maximum riverine and coastal flood risks along a worker’s transportation routes, divided by 100, is the worker’s probability of not getting to work during a flooding event.</p>
 <p>Since we do not have data on the exact home locations of the nursing staff, we estimated how many could reach the facility by taking a random sample (whose size is the CMS average daily nursing staff<a href="#fn4" class="footnote-ref" id="fnref4" role="doc-noteref"><sup>4</sup></a> for an SNF) from the possible routes identified using the HERE Virginia road network. We calculated the average with a 95% nonparametric confidence interval. The 283 SNFs used in our research have an average daily nursing staff of 12,609. Using the above approach, we estimated that 10,005 (95% CI: 9,013, 10,700) or 79% can get work during an extreme flood event. The individual SNF nursing staff percentage who can make it to work ranges from 48% to 93%.</p>
@@ -553,9 +554,9 @@ Lancaster V, Shipp S, Keller S et al.&nbsp;(2024). “Translating the Curated Da
 </section>
 
 
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0" role="list">
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" role="doc-bibliography" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" role="list">
 <div id="ref-barrett2013planning" class="csl-entry" role="listitem">
-Barrett, Christopher, Keith Bisset, Shridhar Chandan, Jiangzhuo Chen, Youngyun Chungbaek, Stephen Eubank, Yaman Evrenosoğlu, et al. 2013. <span>“Planning and Response in the Aftermath of a Large Crisis: An Agent-Based Informatics Framework.”</span> In <em>2013 Winter Simulations Conference (WSC)</em>, 1515–26. IEEE.
+<span class="nocase">Barrett, Christopher, Keith Bisset, Shridhar Chandan, et al.</span> 2013. <span>“Planning and Response in the Aftermath of a Large Crisis: An Agent-Based Informatics Framework.”</span> <em>2013 Winter Simulations Conference (WSC)</em>, 1515–26.
 </div>
 <div id="ref-beckman1996creating" class="csl-entry" role="listitem">
 Beckman, Richard J, Keith A Baggerly, and Michael D McKay. 1996. <span>“Creating Synthetic Baseline Populations.”</span> <em>Transportation Research Part A: Policy and Practice</em> 30 (6): 415–29.
@@ -570,42 +571,42 @@ Dosa, David M, Kathryn Hyer, Lisa M Brown, Andrew W Artenstein, LuMarie Polivka-
 Edgemon, Lesley, Carol Freeman, Carmella Burdi, Trail, and Kyle Pfeiffer. 2018. <span>“Community Resilience Indicator Analysis: County-Level Analysis of Commonly Used Indicators from Peer-Reviewed Research.”</span> <em>Argonne National Laboratory</em>. <a href="https://www.researchgate.net/publication/331232094_Community_Resilience_Indicator_Analysis_County-Level_Analysis_of_Commonly_Used_Indicators_From_Peer-Reviewed_Research">https://www.researchgate.net/publication/331232094_Community_Resilience_Indicator_Analysis_County-Level_Analysis_of_Commonly_Used_Indicators_From_Peer-Reviewed_Research</a>.
 </div>
 <div id="ref-FEMA2021risk" class="csl-entry" role="listitem">
-FEMA. 2021. <span>“National Risk Index Technical Documentation.”</span> Federal Emergency Management Agency. 2021. <a href="https://www.fema.gov/sites/default/files/documents/fema_national-risk-index_technical-documentation.pdf
+FEMA. 2021. <span>“National Risk Index Technical Documentation.”</span> Federal Emergency Management Agency. <a href="https://www.fema.gov/sites/default/files/documents/fema_national-risk-index_technical-documentation.pdf
   ">https://www.fema.gov/sites/default/files/documents/fema_national-risk-index_technical-documentation.pdf </a>.
 </div>
 <div id="ref-FEMA2022a" class="csl-entry" role="listitem">
-———. 2022. <span>“Community Resilience Indicator Analysis: Commonly Used Indicators from Peer-Reviewed Research: Updated for Research Published 2003-2021.”</span> Federal Emergency Management Agency. 2022. <a href="hhttps://www.fema.gov/sites/default/files/documents/fema_2022-community-resilience-indicator-analysis.pdf
+FEMA. 2022. <span>“Community Resilience Indicator Analysis: Commonly Used Indicators from Peer-Reviewed Research: Updated for Research Published 2003-2021.”</span> Federal Emergency Management Agency. <a href="hhttps://www.fema.gov/sites/default/files/documents/fema_2022-community-resilience-indicator-analysis.pdf
   ">hhttps://www.fema.gov/sites/default/files/documents/fema_2022-community-resilience-indicator-analysis.pdf </a>.
 </div>
 <div id="ref-dhs2022hifld" class="csl-entry" role="listitem">
-Homeland Security: Geospatial Management Office, Department of. 2022. <span>“Homeland Security Infrastructure Foundation-Level Data Open Data.”</span> 2022. <a href="https://hifld-geoplatform.opendata.arcgis.com/">https://hifld-geoplatform.opendata.arcgis.com/</a>.
+Homeland Security: Geospatial Management Office, Department of. 2022. <span>“Homeland Security Infrastructure Foundation-Level Data Open Data.”</span> <a href="https://hifld-geoplatform.opendata.arcgis.com/">https://hifld-geoplatform.opendata.arcgis.com/</a>.
 </div>
 <div id="ref-hyer2006establishing" class="csl-entry" role="listitem">
 Hyer, Kathryn, Lisa M Brown, Amy Berman, and LuMarie Polivka-West. 2006. <span>“Establishing and Refining Hurricane Response Systems for Long-Term Care Facilities: The John a. Hartford Foundation Was the Lead Funder of a Hurricane Summit to Focus on the Neglected Needs of the Elderly.”</span> <em>Health Affairs</em> 25 (Suppl1): W407–11. <a href="https://www.healthaffairs.org/doi/full/10.1377/hlthaff.25.w407?casa_token=XbJ2j-CdtssAAAAA:USJMJsZq_jlYlQlASQt4O4OYJcq_AOKjpXOx5tTMUIZxoNVXZCzj1_ejtQyLHrnTg6B1BygFuuGZ">https://www.healthaffairs.org/doi/full/10.1377/hlthaff.25.w407?casa_token=XbJ2j-CdtssAAAAA:USJMJsZq_jlYlQlASQt4O4OYJcq_AOKjpXOx5tTMUIZxoNVXZCzj1_ejtQyLHrnTg6B1BygFuuGZ</a>.
 </div>
 <div id="ref-lancaster2023CDE" class="csl-entry" role="listitem">
-Lancaster, V., S. Shipp, S. Keller, A. Schroeder, H. Mortveit, S. Swarup, and D. Xie. 2023. <span>“Census Curated Data Enterprise Use Case Demonstration: Climate Resiliency of Skilled Nursing Facilities”</span> TR 2023-53. <a href="https://doi.org/10.18130/ce97-sp05">https://doi.org/10.18130/ce97-sp05</a>.
+Lancaster, V., S. Shipp, S. Keller, et al. 2023. <em>Census Curated Data Enterprise Use Case Demonstration: Climate Resiliency of Skilled Nursing Facilities</em>. TR 2023-53. <a href="https://doi.org/10.18130/ce97-sp05">https://doi.org/10.18130/ce97-sp05</a>.
 </div>
 <div id="ref-brown2022ltcfocus" class="csl-entry" role="listitem">
-LTCFocus, Brown University. 2022. <span>“Who We Are.”</span> 2022. <a href="https://ltcfocus.org/about">https://ltcfocus.org/about</a>.
+LTCFocus, Brown University. 2022. <span>“Who We Are.”</span> <a href="https://ltcfocus.org/about">https://ltcfocus.org/about</a>.
 </div>
 <div id="ref-CMS2022design" class="csl-entry" role="listitem">
-Medicare &amp; Medicaid Services, Centers for. 2022. <span>“Design for Care Compare Nursing Home Five-Star Quality Rating System: Technical Users’ Guide.”</span> 2022. <a href="https://www.cms.gov/medicare/provider-enrollment-and-certification/certificationandcomplianc/downloads/usersguide.pdf">https://www.cms.gov/medicare/provider-enrollment-and-certification/certificationandcomplianc/downloads/usersguide.pdf</a>.
+Medicare &amp; Medicaid Services, Centers for. 2022. <span>“Design for Care Compare Nursing Home Five-Star Quality Rating System: Technical Users’ Guide.”</span> <a href="https://www.cms.gov/medicare/provider-enrollment-and-certification/certificationandcomplianc/downloads/usersguide.pdf">https://www.cms.gov/medicare/provider-enrollment-and-certification/certificationandcomplianc/downloads/usersguide.pdf</a>.
 </div>
 <div id="ref-cmsglossary" class="csl-entry" role="listitem">
-———. 2023. <span>“CMS Glossary.”</span> 2023. <a href="https://www.cms.gov/glossary?term=skilled+nursing+facility&amp;items_per_page=10&amp;viewmode=grid ">https://www.cms.gov/glossary?term=skilled+nursing+facility&amp;items_per_page=10&amp;viewmode=grid </a>.
+Medicare &amp; Medicaid Services, Centers for. 2023. <span>“CMS Glossary.”</span> <a href="https://www.cms.gov/glossary?term=skilled+nursing+facility&amp;items_per_page=10&amp;viewmode=grid ">https://www.cms.gov/glossary?term=skilled+nursing+facility&amp;items_per_page=10&amp;viewmode=grid </a>.
 </div>
 <div id="ref-mortveitNSSAC" class="csl-entry" role="listitem">
-Mortveit, H., D. Xie, and M. Marathe. 2023. <span>“NSSAC Building Knowledge Base: Modeling and Implementation.”</span>
+Mortveit, H., D. Xie, and M. Marathe. 2023. <em>NSSAC Building Knowledge Base: Modeling and Implementation</em>.
 </div>
 <div id="ref-rafiei2022private" class="csl-entry" role="listitem">
 Rafiei, Y. 2022. <span>“When Private Equity Takes over a Nursing Home.”</span> <em>New Yorker</em> 2022: 333. <a href="https://www.newyorker.com/news/dispatch/when-private-equity-takes-over-a-nursing-home">https://www.newyorker.com/news/dispatch/when-private-equity-takes-over-a-nursing-home</a>.
 </div>
 <div id="ref-skarha2021association" class="csl-entry" role="listitem">
-Skarha, Julianne, Lily Gordon, Nazmus Sakib, Joseph June, Dylan J Jester, Lindsay J Peterson, Ross Andel, and David M Dosa. 2021. <span>“Association of Power Outage with Mortality and Hospitalizations Among Florida Nursing Home Residents After Hurricane Irma.”</span> In <em>JAMA Health Forum</em>, 2:e213900–213900. 11. American Medical Association. <a href="https://jamanetwork.com/journals/jama-health-forum/fullarticle/2786665">https://jamanetwork.com/journals/jama-health-forum/fullarticle/2786665</a>.
+Skarha, Julianne, Lily Gordon, Nazmus Sakib, et al. 2021. <span>“Association of Power Outage with Mortality and Hospitalizations Among Florida Nursing Home Residents After Hurricane Irma.”</span> <em>JAMA Health Forum</em> 2: e213900–213900. <a href="https://jamanetwork.com/journals/jama-health-forum/fullarticle/2786665">https://jamanetwork.com/journals/jama-health-forum/fullarticle/2786665</a>.
 </div>
 <div id="ref-sheet2022protecting" class="csl-entry" role="listitem">
-The White House. 2022. <span>“Protecting Seniors by Improving Safety and Quality of Care in the Nation’s Nursing Homes.”</span> 2022. <a href="https://www.whitehouse.gov/briefing-room/statements-releases/2022/02/28/fact-sheet-protecting-seniors-and-people-with-disabilities-by-improving-safety-and-quality-of-care-in-the-nations-nursing-homes/
+The White House. 2022. <span>“Protecting Seniors by Improving Safety and Quality of Care in the Nation’s Nursing Homes.”</span> <a href="https://www.whitehouse.gov/briefing-room/statements-releases/2022/02/28/fact-sheet-protecting-seniors-and-people-with-disabilities-by-improving-safety-and-quality-of-care-in-the-nations-nursing-homes/
   ">https://www.whitehouse.gov/briefing-room/statements-releases/2022/02/28/fact-sheet-protecting-seniors-and-people-with-disabilities-by-improving-safety-and-quality-of-care-in-the-nations-nursing-homes/ </a>.
 </div>
 </div></section><section id="footnotes" class="footnotes footnotes-end-of-document" role="doc-endnotes"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
