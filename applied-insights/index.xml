@@ -17,7 +17,7 @@
 <width>144</width>
 </image>
 <generator>quarto-1.9.37</generator>
-<lastBuildDate>Thu, 21 May 2026 14:55:38 GMT</lastBuildDate>
+<lastBuildDate>Thu, 21 May 2026 14:59:59 GMT</lastBuildDate>
 <item>
   <title>Choosing the Right Genomic Dataset: A Five-Pillar Framework for Researchers</title>
   <dc:creator>Alieyeh Sarabandi Moghaddam</dc:creator>
@@ -247,7 +247,239 @@ Table&nbsp;1: Key selection criteria across the five pillars.
   <category>Data science</category>
   <category>Research methods</category>
   <guid>https://realworlddatascience.net/applied-insights/tutorials/posts/2026/05/21/genomic-dataset-guide.html</guid>
-  <pubDate>Thu, 21 May 2026 14:55:38 GMT</pubDate>
+  <pubDate>Thu, 21 May 2026 14:59:59 GMT</pubDate>
+</item>
+<item>
+  <title>Choosing the Right Genomic Dataset: A Five-Pillar Framework for Researchers</title>
+  <dc:creator>Alieyeh Sarabandi Moghaddam</dc:creator>
+  <dc:creator>Fatemeh Torabi</dc:creator>
+  <dc:creator>Emma Squires</dc:creator>
+  <dc:creator>Professor Kenneth Langlands</dc:creator>
+  <link>https://realworlddatascience.net/applied-insights/tutorials/posts/2026/05/21/draft-2.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>While the term “genomic data” encompasses a wide range of data types (e.g., RNA-seq, single-cell sequencing, ChIP-seq), this article focuses specifically on datasets derived from GWAS and sequencing-based studies (WES/WGS), given their prominence in disease genetics research.</p>
+<p>This guide is aimed at researchers who may be experts in clinical, epidemiological, or data-science domains but are relatively new to working with genomic data. We assume no prior experience with genotyping platforms or sequencing pipelines, focusing instead on the key questions you need to ask before committing to a dataset.</p>
+<p>Although we present the five pillars as a logical framework for evaluation, in practice ethical and governance considerations act as an initial gatekeeper. This reflects the foundational role of international frameworks like the GA4GH Framework for Responsible Sharing [1] and the WHO’s ethical principles for genomic data [2], which provide the essential governance context within which all technical decisions are made. Before assessing technical suitability, researchers should first establish whether they are permitted to access and use a dataset at all, and whether institutional or regulatory approval (such as ethics committee or Institutional Review Board (IRB) review) is required. If a dataset cannot be used ethically or legally for a given research question, no level of technical suitability can compensate.</p>
+<section id="introduction-navigating-the-data-deluge" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-navigating-the-data-deluge">Introduction: Navigating the Data Deluge</h2>
+<p>The greatest challenge in modern genomics is no longer generating data, but knowing which data can actually answer your question.</p>
+<p>Genomic data has become a fundamental pillar of biomedical discovery, fuelling advancements from Genome-Wide Association Studies (GWAS) to Polygenic Risk Scores (PRS) and rare variant analyses, including those informing novel therapeutic approaches like CRISPR-based gene therapies [3]. This wealth of data holds immense promise for elucidating the genetic architecture of disease, personalising therapeutic strategies, and accelerating drug development.</p>
+<p>However, for researchers new to genomics, the initial challenge is often not the complexity of the analysis, but the complexity of the data landscape itself; a challenge well-documented in the literature. This includes the sheer scale of data, where individual genomes can exceed 100 gigabytes of information [4], the significant ethical and logistical hurdles in managing it [5, 6], and the persistent issue of non-representative data that limits equitable progress [2, 7]. The pivotal question, “<em>Which genomic dataset is right for my research?”,</em> can be daunting. Navigating a maze of biobanks, consortia, and public repositories, researchers are confronted with a bewildering array of technical jargon and specifications. Selecting an unsuitable dataset can lead to months of wasted effort, irreproducible results, and fundamental biases that undermine scientific validity.</p>
+<p>This article enriches existing approaches by providing a solution: a clear, structured framework designed to guide researchers in systematically evaluating and selecting genomic datasets. We move beyond simple catalogues of resources to dissect the critical decision-making process. By interrogating any potential dataset across five core pillars, you can ensure the data you source is robust, fit for purpose, and capable of driving reliable science, whether for GWAS, PRS, exome analysis, or other downstream applications.</p>
+<p>Researchers often turn to existing genomic datasets rather than generating new data due to several key motivations: Cost efficiency, as sequencing and genotyping are resource-intensive; Access to larger sample sizes than may be feasible for individual studies; The ability to leverage well-phenotyped cohorts with longitudinal or linked data; As well as accelerating research by building on previously harmonized and QC-ed data. Common sources for such data include public repositories such as dbGaP, EGA, the NCI Genomic Data Commons (GDC), and databanks such as UK Biobank, FinnGen, and the UK’s National Genomics Research Library (NGRL).</p>
+</section>
+<section id="the-core-framework-the-five-pillars-of-genomic-data-selection" class="level2">
+<h2 class="anchored" data-anchor-id="the-core-framework-the-five-pillars-of-genomic-data-selection">The Core Framework: The Five Pillars of Genomic Data Selection</h2>
+<p>Before downloading data, a researcher must interrogate it across five key dimensions. These pillars form a checklist of non-negotiable considerations that determine technical compatibility, scientific utility, and practical feasibility. Importantly, most of these questions can, and should, be answered before you apply for access or begin data transfer. Doing so can prevent months of downstream re-analysis or worse, discovering too late that a dataset is fundamentally unsuited to your research question.</p>
+<div id="fig-five-pillar-framework" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-five-pillar-framework-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2026/05/21/five-pillar-framework.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-five-pillar-framework-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The Five-Pillar Framework for Genomic Dataset Selection.
+</figcaption>
+</figure>
+</div>
+<section id="pillar-1-data-discover-the-where-do-i-even-find-it" class="level3">
+<h3 class="anchored" data-anchor-id="pillar-1-data-discover-the-where-do-i-even-find-it">Pillar 1: Data Discover (The “Where Do I Even Find It?”)</h3>
+<p>Before you can interrogate a dataset’s governance, technology, or content, you must first know it exists and be able to locate it. For researchers new to the field, the sheer number of repositories, consortia websites, and data portals can be overwhelming. This pillar provides a roadmap for navigating this discovery phase, transforming a frantic search into a systematic hunt. The goal here is not to download data, but to identify a shortlist of candidate datasets that warrant the deeper, pillar-by-pillar evaluation outlined in the rest of this framework.</p>
+<ul>
+<li><p><strong>Defining Your Data Wishlist:</strong> The discovery process should be guided by a clear, pre-defined set of criteria derived from your research question. Before you open a single browser tab, jot down your non-negotiables. This wishlist is a distilled version of the other pillars and will be your compass. Ask yourself:</p></li>
+<li><p><strong>Disease/Phenotype:</strong> What traits or diseases must be present? (e.g., “Alzheimer’s disease with cerebrospinal fluid biomarkers”, “type 2 diabetes with longitudinal BMI data”, “rare paediatric developmental disorders with parental data”).</p></li>
+<li><p><strong>Data Type:</strong> What is the fundamental genomic data needed? (e.g., “Genome-wide genotyping array data for PRS”, “Whole-genome sequencing for structural variant analysis”, “Exome sequencing for rare variant burden tests”).</p></li>
+<li><p><strong>Minimum Sample Size:</strong> What is the smallest number of cases or total participants needed for adequate statistical power?</p></li>
+<li><p><strong>Population Ancestry:</strong> Is the study focused on a specific genetic ancestry or requires a diverse, multi-ancestry cohort?</p></li>
+<li><p><strong>Navigating the Discovery Landscape:</strong> With your wishlist in hand, you can strategically explore the ecosystem of genomic data resources. These fall into several categories:</p></li>
+<li><p><strong>Generalist Repositories:</strong> These are large, international archives that house data from thousands of individual studies. They are often the first place to look.</p></li>
+<li><p><a href="https://dbgap.ncbi.nlm.nih.gov/home/">dbGaP (Database of Genotypes and Phenotypes)</a>: The primary repository for US-funded studies.</p></li>
+<li><p><a href="https://ega-archive.org/">EGA (European Genome-Phenome Archive)</a>: The European counterpart, hosting numerous European and international studies.</p></li>
+<li><p><a href="https://gdc.cancer.gov/">NCI GDC (Genomic Data Commons):</a> A highly harmonized repository focused on cancer research, containing data from projects like The Cancer Genome Atlas (TCGA).</p></li>
+<li><p><strong>Major Biobanks &amp; Cohort Databases:</strong> These are large-scale, prospective collections of data from hundreds of thousands of participants. They are ideal for researchers who need deep phenotyping and large sample sizes under a single, consistent data access policy.</p></li>
+<li><p><a href="https://www.ukbiobank.ac.uk/">UK Biobank:</a> A premier resource for population health.</p></li>
+<li><p><a href="https://www.finngen.fi/en">FinnGen:</a> Provides unique insights into a founder population.</p></li>
+<li><p><a href="https://allofus.nih.gov/">All of Us Research Program</a>: A US-based cohort explicitly focused on diversity and precision medicine.</p></li>
+<li><p><a href="https://biobankjp.org/en/#gsc.tab=0">BioBank Japan</a>: A rich resource for studying non-European populations, containing genomic and clinical data from over 200,000 Japanese individuals with a focus on common lifestyle diseases.</p></li>
+<li><p><a href="https://genomics.ut.ee/en/content/estonian-biobank">Estonian Biobank:</a> A population-based biobank with over 200,000 participants, representing a significant proportion of Estonia’s adult population and offering a valuable resource for studying a national cohort.</p></li>
+<li><p><strong>Specialised National Initiatives &amp; Platform-Based Resources:</strong> These resources often provide not just data, but also secure analysis environments, making them particularly valuable for researchers with limited local computational infrastructure. They are often disease-focused or clinically driven.</p></li>
+<li><p><a href="https://www.dementiasplatform.uk/">Dementias Platform UK (DPUK)</a>: A UK-based platform that brings together over 60 cohorts of dementia-relevant data, totalling more than 3.5 million participants. Critically, DPUK provides a secure cloud-based Data Portal where approved researchers can access and analyse linked genetic, imaging, cognitive, and biomarker data without needing to download massive files locally.</p></li>
+<li><p><a href="https://www.genomicsengland.co.uk/blog/genomics-101-what-is-the-national-genomic-research-library">National Genomics Research Library (NGRL)</a>: Part of Genomics England, this is a growing collection of whole-genome sequences from NHS patients. It is particularly valuable for rare disease research and novel variant interpretation due to its clinical-grade sequencing data and linkage to rich, longitudinal NHS health records. Access is managed through the secure Genomics England Research Environment.</p></li>
+<li><p><a href="https://canpath.ca/">Canadian Partnership for Tomorrow Project (CPTP)</a>: A pan-Canadian platform pooling data from over 300,000 Canadians across multiple regional cohorts, offering a powerful resource for studying how genetics, environment, and lifestyle interact to influence cancer and chronic disease risk.</p></li>
+<li><p><strong>Specialized Consortia and Project Websites:</strong> Many large, collaborative scientific consortia have their own data access portals or provide clear instructions on how to apply for their specific datasets. These are invaluable for research into a particular disease area.</p></li>
+<li><p><a href="https://pgc.unc.edu/">Psychiatric Genomics Consortium (PGC)</a>: The world’s largest mental health genomics consortium, with access protocols for using their meta-analysed GWAS summary statistics and, in some cases, individual-level data from dozens of contributing studies.</p></li>
+<li><p><a href="https://icda.bio/">International Common Disease Alliance (ICDA)</a>: A global consortium aiming to understand the genetic architecture of common diseases, providing access frameworks and harmonized datasets from multiple contributing studies.</p></li>
+<li><p><a href="https://gtexportal.org/home/">The GTEx Project (Genotype-Tissue Expression)</a>: A specific and highly influential project focused on understanding how genetic variation affects gene expression across different human tissues, with its own dedicated data portal.</p></li>
+<li><p><strong>The Power of Discovery Tools:</strong> You do not need to manually search every repository website. A new generation of powerful discovery tools acts as a search engine for genomic and biomedical data, allowing you to query across multiple repositories at once.</p></li>
+<li><p><strong>Repository Portals:</strong> The EGA and dbGaP themselves have advanced search features to filter studies by disease, data type, and publication.</p></li>
+<li><p><strong>Federated Search Tools:</strong> Platforms like the <a href="https://anvilproject.org/">NHGRI AnVIL (Genomic Data Science Analysis, Visualization, and Informatics Lab-space)</a> and the <a href="https://www.ga4gh.org/product/beacon-api/">GA4GH Beacon project</a> aim to make data findable by allowing researchers to query across multiple datasets to see if specific genetic variants or phenotypic information exists, without needing to access the full data first. Using these tools can save weeks of manual searching.</p></li>
+</ul>
+<p>By systematically applying your wishlist to the landscape of repositories and using modern discovery tools, you move from a vague need for “genomic data on heart disease” to a concrete list of potential datasets, such as “UK Biobank”, “dbGaP study phs000007 (FHS)”, “the Alzheimer’s cohorts within DPUK,” and “NCBI GDC’s TCGA-BRCA project”. Only once you have this shortlist can you begin the deep, critical evaluation defined by Pillars 1 through 5.</p>
+</section>
+<section id="pillar-2-access-ethics-governance-the-can-i-use-this-responsibly" class="level3">
+<h3 class="anchored" data-anchor-id="pillar-2-access-ethics-governance-the-can-i-use-this-responsibly">Pillar 2: Access, Ethics &amp; Governance (The “Can I Use This Responsibly?”)</h3>
+<p>Once you have discovered the appropriate dataset, the next step is to establish whether you can access it ethically; all ethical and governance considerations should be addressed before investing time in detailed technical assessment or data preparation. Researchers should determine whether their proposed use aligns with participant consent, data access agreements, and institutional requirements. In many cases, this includes assessing whether approval from an ethics committee or Institutional Review Board (IRB) is required, and at what stage such approval must be obtained.</p>
+<p>The most suitable dataset scientifically is useless if you cannot access it or use it within a responsible governance framework. This pillar now encompasses the global standards for ethical data stewardship and the practical realities of gaining and maintaining access.</p>
+<ul>
+<li><p><strong>Data Access Models &amp; Governance:</strong> Genomic data exists on a spectrum of accessibility. Understanding where your shortlisted datasets fall on this spectrum is your first practical task.</p></li>
+<li><p><strong>Open Access:</strong> Some resources, like the 1000 Genomes Project or GTEx, provide openly available data, typically summary statistics or fully anonymized data, with minimal access barriers.</p></li>
+<li><p><strong>Controlled Access:</strong> Most individual-level genomic data sits behind controlled access regimes. Reputable resources like dbGaP, EGA, and FinnGen require researchers to submit a project proposal for review by a Data Access Committee (DAC). The DAC evaluates whether your proposed use aligns with the participant consent and data use limitations. Usage terms might involve a contract or a non-disclosure agreement (NDA), which will have to be reviewed by your institution’s legal team and signed by a designated institutional signee.</p></li>
+<li><p><strong>Managed/Platform Access:</strong> A growing number of resources, including UK Biobank, Dementias Platform UK (DPUK), and Genomics England (NGRL), operate a managed access model. Here, you apply to use the data within a secure, cloud-based Research Environment or Trusted Research Environment (TRE). You do not download the data; you bring your analysis to it. This model enhances data security and democratizes access for researchers who may lack local high-performance computing infrastructure.</p></li>
+<li><p><strong>Foundations of Responsible Research:</strong> Modern genomic research operates within established ethical frameworks. The <em>Global Alliance for Genomics and Health (GA4GH) Framework for Responsible Sharing</em> provides foundational principles such as transparency, accountability, and promoting benefit, that guide international data sharing. Furthermore, the <em>FAIR Guiding Principles (Findable, Accessible, Interoperable, Reusable)</em> are a benchmark for high-quality, reusable data management that many repositories strive to meet.</p></li>
+<li><p><strong>Informed Consent &amp; Use Limitations:</strong> Scrutinise the consent conditions. What research purposes are permitted? Note that even within “health-related research”, there can be debates about appropriate use, such as applications in insurance or non-medical trait prediction. Platforms like UK Biobank and DPUK explicitly exclude certain users, like insurance companies, from direct data access.</p></li>
+<li><p><strong>The Practicalities of Gaining Access:</strong> Access is rarely instantaneous. You must factor in the time and administrative steps required.</p></li>
+<li><p><strong>Application &amp; Review:</strong> Preparing a project proposal for a DAC takes time. The review process itself can take weeks or even months. Plan accordingly.</p></li>
+<li><p><strong>Costs of Access:</strong> While many repositories are non-commercial, access is not always free. Be aware of potential costs:</p></li>
+<li><p><strong>Application or administration fees:</strong> Some resources charge a nominal fee to process applications.</p></li>
+<li><p><strong>Data egress and compute costs:</strong> In cloud-based platforms like the UK Biobank Research Analysis Platform or Terra, you may incur costs for data storage and the computational time used to run your analyses. It is essential to understand the pricing model before you start.</p></li>
+<li><p><strong>Membership/Consortium fees:</strong> Accessing data from some consortia may require your institution to be a member or contributor.</p></li>
+<li><p><strong>Mandatory Training:</strong> Many data access providers, particularly in the UK and Europe, require researchers to complete specific accredited training before they are granted access. Common examples include:</p></li>
+<li><p><strong>Good Clinical Practice (GCP):</strong> Often required when working with clinical trial data or data derived from clinical settings.</p></li>
+<li><p><strong>Accredited Researcher Training:</strong> Programmes like the ONS (Office for National Statistics) Safe Researcher training or similar accredited courses are mandatory for accessing data within many TREs, including DPUK and UKSeRP. These courses cover the principles of data privacy, disclosure control, and secure handling of sensitive information.</p></li>
+<li><p><strong>Computational Logistics:</strong> Genomic data is vast. Analyzing feasibility is crucial; WGS data for 100,000 individuals requires terabytes of storage and high-performance computing. Many platforms now offer cloud-based analysis environments (e.g., Dementia’s Platform UK, Genomics England Research Environment, UK Biobank Research Analysis Platform) to democratize access.</p></li>
+</ul>
+<p>Importantly, ethical constraints may shape study design itself (e.g., limiting commercial use, cross-border data transfer, or linkage with external datasets) and should therefore inform all downstream methodological choices.</p>
+</section>
+<section id="pillar-3-technology-assay-the-how-of-data-generation" class="level3">
+<h3 class="anchored" data-anchor-id="pillar-3-technology-assay-the-how-of-data-generation">Pillar 3: Technology &amp; Assay (The “How” of Data Generation)</h3>
+<p>The technological origin of the data defines its fundamental nature, scope, and limitations. For a researcher navigating the genomics landscape, the core question is simple: What was measured, and how does that determine what I can and cannot find?</p>
+<ul>
+<li><p><strong>Genotyping Arrays:</strong> These are the cost-effective workhorses for large-scale biobanks like UK Biobank and FinnGen. They directly measure a pre-selected set of common single nucleotide polymorphisms (SNPs) across the genome. If your research question focuses on common genetic variation associated with complex diseases, array data is often the most appropriate and scalable starting point.</p></li>
+<li><p><strong>The Key Concept:</strong> <em>Imputation:</em> Array data is almost always statistically imputed to infer millions of additional variants not directly measured on the chip. This process uses a reference panel (e.g., TOPMed, 1000 Genomes) to predict missing genotypes. For a researcher, the crucial point is that the choice and version of the reference panel directly impacts the number, quality, and ancestral diversity of the variants available for your analysis. A dataset imputed with a diverse, population-matched panel will always be superior for your downstream work.</p></li>
+<li><p><strong>Sequencing (Whole Exome/Genome - WES/WGS):</strong> Sequencing provides a more comprehensive readout, identifying variants across the entire genome (WGS) or just the protein-coding regions (WES). If your research question involves rare variants, structural variants, or novel mutations not captured on standard arrays, sequencing is the necessary technology.</p>
+<p>o <strong>The Key Concept:</strong> <em>Coverage Depth</em>: The reliability of sequencing data hinges on coverage depth; the number of times a given nucleotide has been read. Low-coverage sequencing (e.g., 4x WGS) is sufficient for some imputation-based analyses, but high coverage (typically ≥30x for WGS, ≥50-100x for WES) is essential for confident rare variant discovery in individual patients.</p>
+<p>o <strong>Variant Calling Pipeline:</strong> The bioinformatic pipelines used for alignment, variant calling, and filtering (e.g., GATK, Dragen) can influence the final variant set. Understanding the pipeline version and quality thresholds applied is crucial.</p></li>
+</ul>
+<p>No single technology is universally superior, the optimal choice depends entirely on whether your research question prioritises common variant association, rare variant discovery, or structural variation.</p>
+</section>
+<section id="pillar-4-data-content-phenotypic-context-the-what-and-who" class="level3">
+<h3 class="anchored" data-anchor-id="pillar-4-data-content-phenotypic-context-the-what-and-who">Pillar 4: Data Content &amp; Phenotypic Context (The “What” and “Who”)</h3>
+<p>The scientific value of a genomic dataset is inextricably linked to the richness and rigour of its associated phenotypic data.</p>
+<ul>
+<li><p><strong>Representativeness and Generalizability:</strong> The genetic ancestry of the cohort is critical: it affects the generalisability of findings and is essential for <em>controlling population stratification</em>; a major source of false positives. Population stratification occurs when cases and controls are drawn from sub-groups with different ancestral backgrounds, leading to false associations. For instance, a GWAS on height might incorrectly identify a variant common in Northern Europeans as associated if the case group has a higher proportion of Northern European ancestry than the control group. One can control for such situations by including genetic principal components (PCs) derived from the genomic data itself as covariates in the association model, which adjusts for underlying ancestry differences. Beyond ancestry, it is essential to consider whether the population in which the data were collected is representative of the population you aim to study, including factors such as age range, sex distribution, recruitment strategy, disease severity, and socioeconomic or geographic context. A dataset may be statistically powerful yet poorly suited to answering questions about broader or different populations. As such, this is a basic but crucial epidemiological principle. Ask: Were participants recruited through broad population registries (enhancing representativeness), or through specialist clinics or volunteer schemes (which can introduce “healthy volunteer” or other selection biases)? Findings from a non-representative sample may not generalize to your target population; for example, genetic risk variants identified in a hospital-based case-control study may not apply to individuals with milder forms of the disease in the community. Always align the cohort’s sampling strategy with the goal of your research, whether it is discovery (where breadth is key) or mechanistic insight (where depth may be prioritized).</p></li>
+<li><p><strong>Phenotype Depth &amp; Relevance:</strong> Does the dataset contain the specific clinical diagnoses, biomarkers, or questionnaire outcomes needed to test your hypothesis? Assess the measurement methods, validation, and clinical definitions used. Keep an eye out for phenotype misclassification as a risk, especially in electronic health data derived trait.</p></li>
+<li><p><strong>Sample Size:</strong> Sample size directly determines statistical power. As an example, In the UK, the National Genomics Research Library (NGRL) serves as a key managed-access resource for researchers. It is particularly valuable for rare disease research and novel variant interpretation due to its clinical-grade sequencing data from the NHS. However, its current cohort structure may not provide the very large sample sizes required for well-powered common variant GWAS of complex traits.</p></li>
+<li><p><strong>Cohort Design:</strong> Is the study a case-control, prospective cohort, or family-based design? The design dictates the analytical methods you can employ and influences the interpretation of results.</p>
+<p>o <strong>Population-Based Cohorts</strong> are a large, often prospective, sample of individuals from a general population, typically not selected for any specific disease. Participants are followed over time. This type is Ideal for estimating disease incidence, studying a wide range of health outcomes, and calculating population-attributable risks. They are the gold standard for initial <em>GWAS discovery</em> for complex traits because they minimize certain selection biases. Some things to consider would be phenotype prevalence (especially for rare diseases), phenotype depth (often lacking) and temporality (can establish that the genetic variant was present before the disease, supporting causal inference).</p>
+<p>o <strong>Case-Control Studies</strong> are studies where individuals with a specific disease or trait (cases) are recruited and compared to a group without the disease (controls). This type is highly statistically efficient for <em>studying the genetic basis of a specific disease</em>, especially rare diseases. This is the most common and powerful design for <em>focused GWAS</em> and <em>rare variant association tests</em>. Things to consider would be control selection (sourced from the same underlying population as cases), awareness of spectrum (milder and more severe cases for generalizability of found causal variants), and prevalence (not suitable for finding it in population).</p>
+<p>o <strong>Family-Based Studies (Trios, Sibships, Pedigrees)</strong> where genetic data is collected from related individuals, most classically from affected offspring and both parents (trios). This design is uniquely powerful for detecting <em>de novo mutations</em> (new mutations in the child) and for <em>studying inheritance patterns</em>. They are inherently controlled for population stratification because family members share genetic background. Some constraints are that recruitments of trios or larger pedigrees are often challenging, and specificity (findings are more relevant for early-onset or highly heritable disorders, and less for discovering common variants associated with complex traits compared to large case-control studies).</p>
+<p>o <strong>Longitudinal / Prospective Cohorts</strong> involve a subset or special feature of population-based or clinical cohorts where participants undergo repeated phenotypic assessments over months, years, or decades. This type is essential for studying <em>disease progression, time-to-event outcomes, age-related penetrance of genetic variants, and dynamic traits</em> like changes in biomarker levels. Prospective cohorts allow for analysis of how genetics influences not just <em>if</em> a disease occurs, but <em>when</em> and <em>how</em> it develops. Some considerations are attrition (participants often drop out over time, and if not random, it can cause bias), data complexity (more sophisticated methods are needed for repeated measures and survival analysis), and phenotype evolution (diagnostic criteria and measurement technologies may change over a long follow-up period, requiring data harmonization).</p></li>
+<li><p><strong>Flexibility for Novel Questions:</strong> Consider whether the dataset’s raw data or intermediate files are accessible, allowing you to repurpose it for questions beyond its original design. For instance, a researcher interested in <em>gene expression regulation</em> might want to study splicing quantitative trait loci (sQTLs). While a repository may provide processed gene expression levels, sQTL analysis typically requires access to the raw RNA sequencing read files (BAM/FASTQ) to accurately quantify alternative splicing events. A dataset offering only summary-level expression data would not be suitable for this novel question, even if it has the right phenotypes and sample size. Another example could be a researcher interested in analysing <em>complex structural variations or mobile element insertions</em>. They would need access to raw sequence reads (BAM/CRAM files) to perform sensitive, read-depth or split-read analysis, which is not always possible with processed variant call format (VCF) datasets. Always check the available data formats against your analytical needs, and make sure that the terms of use allow usage of the raw data for research beyond its original design.</p></li>
+</ul>
+</section>
+<section id="pillar-5-quality-control-harmonization-the-data-integrity-reality" class="level3">
+<h3 class="anchored" data-anchor-id="pillar-5-quality-control-harmonization-the-data-integrity-reality">Pillar 5: Quality Control &amp; Harmonization (The “Data Integrity” Reality)</h3>
+<p>Raw genomic data is never analysis-ready. A dataset’s true value is determined by the rigor of its quality control (QC) and, critically, its harmonization; the reprocessing of raw data to a common standard to minimize technical artifacts. A crucial distinction must be made here: quality control is a shared, two-stage responsibility with different roles for data providers and data users.</p>
+<ul>
+<li><p><strong>The Data Provider’s Responsibility:</strong> Foundational QC and Harmonization</p></li>
+<li><p>Reputable data providers perform essential, standardized QC and harmonization to deliver a reliable foundational dataset. This is the bedrock of data integrity.</p></li>
+<li><p><strong>The Imperative of Harmonization</strong>: Leading repositories like the NCI Genomic Data Commons (GDC) perform extensive harmonization. This involves realigning all sequencing data to a consistent reference genome (e.g., GRCh38) and reprocessing it through standardized pipelines for variant calling and expression quantification. This process is designed to minimize batch effects, systematic errors introduced by processing samples across different centres, times, or platforms, which are a primary confounder in genomics.</p></li>
+<li><p><strong>Providing QC Metrics:</strong> A responsible data provider supplies extensive QC summaries. When evaluating a dataset, your first task is to locate and understand these reports. Look for:</p></li>
+<li><p><strong>Batch Information:</strong> Determine if information on processing batches is available. Batch effects are systematic technical differences that can be mistaken for biological signals. For example, if samples are processed in two different sequencing batches, one containing most of the “case” subjects and another most of the “controls”, any subtle technical difference between the runs (like reagent lot variation) could create a spurious genetic association with the disease. If significant batch effects are likely, check if the data has been harmonized or if batch covariates are provided for you to include in your models.</p></li>
+<li><p><strong>Core QC Metrics for all Data Types (Arrays &amp; Sequencing) - Sample-Level:</strong> These identify problematic individuals. Key metrics include call rate (the percentage of genotypes successfully determined for an individual; samples below ~98% are often excluded), sex discrepancy (a mismatch between genetically inferred sex and reported sex, which can indicate sample mix-ups), and measures of heterozygosity (excessive rates can signal contamination. Very low rates can indicate inbreeding or sample issues). Analysis of cryptic relatedness (unreported familial connections, typically up to 3rd-degree relatives) is also standard, as relatedness can inflate statistical significance if not accounted for.</p></li>
+<li><p><strong>Core QC Metrics for all Data Types (Arrays &amp; Sequencing) - Variant-Level:</strong> These filter out unreliable genetic markers. The fundamental filters are variant call rate (the percentage of individuals successfully genotyped for a given variant) and deviation from Hardy-Weinberg Equilibrium (HWE) within control populations, which can indicate genotyping errors or natural selection. Minor Allele Frequency (MAF) thresholds are applied contextually; for a standard GWAS, very rare variants (e.g., MAF &lt; 0.01) are often excluded due to low statistical power.</p>
+<p><strong>For Sequencing Data (WES/WGS) Only:</strong> The QC requirements are more demanding. You must check for coverage statistics such as the mean coverage depth (e.g., 30x for WGS) and, more importantly, the percentage of the target genome or exome covered at a minimum depth (e.g., “&gt;95% of bases covered ≥10x”). This tells you what proportion of the data is reliable for variant calling. Also check sequence quality metrics, which assess the raw sequencing data and include the percentage of reads aligned to the reference genome, duplication rates (high rates can indicate technical artifacts or limited library complexity), and cross-sample contamination estimates, which can be provided by tools like VerifyBamID.</p></li>
+<li><p><strong>The Data User’s Responsibility: Study-Specific Quality Control (QC)</strong></p></li>
+<li><p>The researcher remains ultimately responsible for conducting study-specific QC after data acquisition. This final check is non-negotiable. It ensures the data is appropriate for your specific cohort, hypotheses, and analytical models, guarding against hidden biases that could invalidate your results. A QC check includes:</p></li>
+<li><p>Re-checking for batch effects within your specific analytical subset.</p></li>
+<li><p>Confirming ancestry through PCA clustering.</p></li>
+<li><p>Applying appropriate MAF or HWE filters for your specific study design (e.g., stricter HWE filters for cases vs.&nbsp;controls).</p></li>
+<li><p>Validating that your case/control groups pass the same quality thresholds.</p></li>
+<li><p>For detailed guidance on genomic QC, researchers may refer to established protocols such as those from the GATK Best Practices [8, 9], QC guidelines for large-scale biobanks [10, 11], or relevant review papers [12, 13].</p></li>
+</ul>
+</section>
+</section>
+<section id="synthesising-the-framework-from-evaluation-to-selection" class="level2">
+<h2 class="anchored" data-anchor-id="synthesising-the-framework-from-evaluation-to-selection">Synthesising the Framework: From Evaluation to Selection</h2>
+<div id="tbl-selection-criteria" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-selection-criteria-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Key selection criteria across the five pillars.
+</figcaption>
+<div aria-describedby="tbl-selection-criteria-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Pillar</th>
+<th style="text-align: left;">Key Questions for Researchers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>1 – Data Discovery</strong></td>
+<td style="text-align: left;">What is my specific data wishlist (phenotype, data type, sample size)? Which repositories (e.g., dbGaP, EGA, UK Biobank) are most likely to host such data? Can I use discovery tools like AnVIL or Beacon to refine my search?</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>2 - Access &amp; Governance</strong></td>
+<td style="text-align: left;">What is the access procedure (open, controlled, managed)? Do the consent terms and permissible uses align with my project? What are the costs (fees, compute) and required training (e.g., Safe Researcher, GCP)?</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>3 - Technology</strong></td>
+<td style="text-align: left;">Was the data generated by array or sequencing? If array, what imputation panel was used? If sequencing, what is the coverage depth? Does this technology match my need for common or rare variant discovery?</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>4 – Content &amp; Context</strong></td>
+<td style="text-align: left;">Does it include my target phenotype with sufficient depth? Is the sample size adequate and the ancestry appropriate? What is the cohort design (population, case-control, family, longitudinal)?</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>5 - QC &amp; Harmonization</strong></td>
+<td style="text-align: left;">Has the data been harmonized to a common standard by the provider? Are detailed QC metrics and batch information available? Have I planned my own study-specific QC to validate the data for my analysis?</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="the-road-ahead-federation-and-multi-modal-data-integration" class="level2">
+<h2 class="anchored" data-anchor-id="the-road-ahead-federation-and-multi-modal-data-integration">The Road Ahead: Federation and Multi-Modal Data Integration</h2>
+<p>While our five-pillar framework provides a robust foundation for selecting a dataset, the future of genomic discovery lies in what comes next: the ability to connect and integrate data across multiple sources. This is where the vision of the Global Alliance for Genomics and Health (GA4GH) and the principles of data federation become tangible.</p>
+<p>A single dataset, no matter how well-curated, is ultimately limited by its sample size, population diversity, and the breadth of its phenotypic measurements. The next frontier involves securely combining information from multiple datasets to ask questions that no single cohort could answer alone. This might involve:</p>
+<ul>
+<li><strong>Federated Analysis:</strong> Instead of pooling data into a single location (which raises significant ethical and governance challenges), federated approaches allow researchers to bring analysis algorithms to disparate datasets. The algorithm travels to the data, learns from it, and returns only the aggregated results, never the individual-level data. This approach, championed by GA4GH, is already being used to build more powerful polygenic risk scores and to discover rare variant associations by effectively and securely increasing sample sizes across international borders.</li>
+<li><strong>Multi-Modal Data Integration:</strong> The real power of platforms like DPUK, UK Biobank, and Terra is their ability to link genomic data with other data modalities; brain imaging, proteomics, metabolomics, electronic health records, and wearable device data. For the researcher, this integration opens up entirely new classes of questions. You can move beyond simple genetic association to study molecular mechanisms, gene-environment interactions, and the real-world progression of disease over decades. Understanding how genetics influences protein levels (via pQTLs), or how a polygenic risk interacts with air pollution to trigger asthma, requires this integrated, multi-modal perspective.</li>
+</ul>
+<p>As you apply the five-pillar framework, consider not just the dataset in isolation, but its potential to connect with others. Does it use common data standards? Is it part of a federated network? Does its platform support linkage to other data types? The datasets that will drive the next generation of discovery are those designed to be nodes in a larger, interconnected, and responsible data ecosystem.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Selecting the right genomic dataset is the foundational step that determines the validity, reproducibility, and ethical integrity of your research. By systematically applying this enhanced five-pillar framework, interrogating the Discovery, Access &amp; Governance, Technology, Content, and Quality &amp; Harmonization of potential datasets, you transform a daunting maze into a navigable landscape.</p>
+<p>In the next article of this series, “From Dataset to Discovery,” we will put this framework into practice, demonstrating how to apply these pillars to real-world study designs including GWAS, PRS validation, and rare variant analysis.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p>1) Bahcall O. G. (2021). In this issue: GA4GH standards enable the responsible sharing of human genomic and biomedical data. <em>Cell Genomics</em>, <em>1</em>(2), 100038. <a href="https://doi.org/10.1016/j.xgen.2021.100038">https://doi.org/10.1016/j.xgen.2021.100038</a></p>
+<p>2) World Health Organization. (2024). <em>Guidance for human genome data collection, access, use and sharing</em>. World Health Organization. <a href="https://www.who.int/publications/i/item/9789240102149">https://www.who.int/publications/i/item/9789240102149</a></p>
+<p>3) Siermann, M., Mohan, R., Bunnik, E. M., Cambon-Thomsen, A., Chadwick, R., Cornel, M. C., van Delden, J. J. M., Joly, Y., Molnár-Gábor, F., Nicolás Jiménez, M. P., Pinxten, W., Rial-Sebbag, E., Shabani, M., Van Steijvoort, E., Wallace, S. E., Zawati, M. H., Knoppers, B. M., &amp; Borry, P. (2025). Emerging and evolving values in the changing landscape of genomics. <em>Frontiers in genetics</em>, <em>16</em>, 1566291. <a href="https://doi.org/10.3389/fgene.2025.1566291">https://doi.org/10.3389/fgene.2025.1566291</a></p>
+<p>4) Sriram, V., Conard, A.M., Rosenberg, I. et al.&nbsp;Addressing biomedical data challenges and opportunities to inform a large-scale data lifecycle for enhanced data sharing, interoperability, analysis, and collaboration across stakeholders. Sci Rep 15, 6291 (2025). <a href="https://doi.org/10.1038/s41598-025-90453-x">https://doi.org/10.1038/s41598-025-90453-x</a></p>
+<p>5) Horton, R., &amp; Lucassen, A. (2023). Ethical Considerations in Research with Genomic Data. <em>The New bioethics : a multidisciplinary journal of biotechnology and the body</em>, <em>29</em>(1), 37–51. <a href="https://doi.org/10.1080/20502877.2022.2060590">https://doi.org/10.1080/20502877.2022.2060590</a></p>
+<p>6) Campbell, D., Spencer, S., Kang, A., Pandey, R., Katsandres, S., &amp; Veenstra, D. (2025). A Value Framework for Evaluating Population Genomic Programs: A Mixed Methods Approach. <em>Journal of personalized medicine</em>, <em>15</em>(7), 307. <a href="https://doi.org/10.3390/jpm15070307">https://doi.org/10.3390/jpm15070307</a></p>
+<p>7) Siermann, M., Mohan, R., Bunnik, E. M., Cambon-Thomsen, A., Chadwick, R., Cornel, M. C., van Delden, J. J. M., Joly, Y., Molnár-Gábor, F., Nicolás Jiménez, M. P., Pinxten, W., Rial-Sebbag, E., Shabani, M., Van Steijvoort, E., Wallace, S. E., Zawati, M. H., Knoppers, B. M., &amp; Borry, P. (2025). Emerging and evolving values in the changing landscape of genomics. <em>Frontiers in genetics</em>, <em>16</em>, 1566291. <a href="https://doi.org/10.3389/fgene.2025.1566291">https://doi.org/10.3389/fgene.2025.1566291</a></p>
+<p>8) McKenna, A., Hanna, M., Banks, E., Sivachenko, A., Cibulskis, K., Kernytsky, A., Garimella, K., Altshuler, D., Gabriel, S., Daly, M., &amp; DePristo, M. A. (2010). The Genome Analysis Toolkit: a MapReduce framework for analyzing next-generation DNA sequencing data. <em>Genome research</em>, <em>20</em>(9), 1297–1303. <a href="https://doi.org/10.1101/gr.107524.110">https://doi.org/10.1101/gr.107524.110</a></p>
+<p>9) Van der Auwera GA &amp; O’Connor BD. (2020). Genomics in the Cloud: Using Docker, GATK, and WDL in Terra (1st Edition). O’Reilly Media.</p>
+<p>10) Mendy M, Caboux E, Lawlor RT, et al.&nbsp;Common Minimum Technical Standards and Protocols for Biobanks Dedicated to Cancer Research. Lyon (FR): International Agency for Research on Cancer; 2017. (IARC Technical Report, No.&nbsp;44.) SECTION 3., Recommendations for biobanks. Available from: https://www.ncbi.nlm.nih.gov/books/NBK567244/</p>
+<p>11) Dagher G. (2022). Quality matters: International standards for biobanking. Cell proliferation, 55(8), e13282. https://doi.org/10.1111/cpr.13282</p>
+<p>12) Marees, A. T., de Kluiver, H., Stringer, S., Vorspan, F., Curis, E., Marie-Claire, C., &amp; Derks, E. M. (2018). A tutorial on conducting genome-wide association studies: Quality control and statistical analysis. <em>International journal of methods in psychiatric research</em>, <em>27</em>(2), e1608. <a href="https://doi.org/10.1002/mpr.1608">https://doi.org/10.1002/mpr.1608</a></p>
+<p>13) Olson, N. D., Lund, S. P., Colman, R. E., Foster, J. T., Sahl, J. W., Schupp, J. M., Keim, P., Morrow, J. B., Salit, M. L., &amp; Zook, J. M. (2015). Best practices for evaluating single nucleotide variant calling methods for microbial genomics. Frontiers in genetics, 6, 235. https://doi.org/10.3389/fgene.2015.00235</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Genomics</category>
+  <category>Data science</category>
+  <category>Research methods</category>
+  <guid>https://realworlddatascience.net/applied-insights/tutorials/posts/2026/05/21/draft-2.html</guid>
+  <pubDate>Thu, 21 May 2026 14:59:59 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/applied-insights/tutorials/posts/2026/05/21/images/thumb.png" medium="image" type="image/png" height="96" width="144"/>
 </item>
 <item>
   <title>Understanding and Addressing Algorithmic Bias: a Credit Scoring Case Study</title>
@@ -4440,7 +4672,7 @@ Williams, H. 2012. <span>“Innovation Inducement Prizes: Connecting Research to
 <section id="perspective-on-the-challenge" class="level2">
 <h2 class="anchored" data-anchor-id="perspective-on-the-challenge">Perspective on the challenge</h2>
 <p>Text matching is an essential task in natural language processing <span class="citation" data-cites="DBLP:journals/corr/PangLGXWC16">(NLP, Pang et al. 2016)</span>, while record linkage across different sources is an essential task in data science. Machine learning techniques allow people to combine data faster and cheaper than using manual linkage. However, in the context of the Food for Thought challenge, existing methods for matching universal product codes (UPCs) to ensemble codes (ECs) require every UPC to be compared with every EC code (Figure 1a). Such approaches can be computationally expensive in the training process when data is noisy. Here, we propose an ensemble model with a category-based adapter to tackle this problem, drawing on the category information included in UPC and EC data. The category-based adapter allows UPCs to be first matched with only a small and reliable set of ECs (Figure 1b). Then, an ensemble model will be deployed to make predictions for UPC-EC matching. Our proposed approach can achieve competitive performance compared with state-of-the-art models.</p>
-<div class="quarto-layout-panel" data-layout-ncol="2" style="padding-top: 1em; margin-bottom: 0;">
+<div class="quarto-layout-panel" style="padding-top: 1em; margin-bottom: 0;" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
@@ -4986,154 +5218,6 @@ Wang, C., P. Nulty, and D. Lillis. 2021. <span>“A Comparative Study on Word Em
   <guid>https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/03-first-place-winners.html</guid>
   <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/03-auburn.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>Food for Thought: Competition and challenge design</title>
-  <dc:creator>Zheyuan Zhang and Uyen Le</dc:creator>
-  <link>https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/02-competition-design.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>Since 2014, the professional services firm Westat, Inc.&nbsp;has been developing the Purchase to Plate Crosswalk (PPC) for the United States Department of Agriculture (USDA) Economic Research Service (ERS). The PPC links the retail food transactions database from IRI’s InfoScan service and the USDA Food and Nutrient Database for Dietary Studies (FNDDS). However, the current linkage process uses only partly automated data matching, meaning it is resource intensive, time consuming, and requires manual review.</p>
-<p>With sponsorship from ERS, Westat partnered with the Coleridge Initiative to host the Food for Thought competition to challenge researchers and data scientists to use machine learning and natural language processing to find accurate and efficient methods for creating the PPC. Figure 1 provides a visual overview of the challenge set by the competition.</p>
-<p><a href="images/pt2-fig1.png"><img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/pt2-fig1.png" class="img-fluid" width="700"></a></p>
-<div class="figure-caption">
-<p><strong>Figure 1:</strong> Overview of the Food for Thought Competition Challenge.</p>
-</div>
-<p>The one-to-many matching task that is central to the competition throws up many challenges for researchers to wrestle with. Because IRI data contains food transactions collected from partnered retail establishments for over 350,000 items, the matchings need to be made based on limited data features, including categories, providers, and semantically inconsistent descriptions that consist of short phrases. Consider this hypothetical example: IRI product-related information about a (fictional) “Cheesy Hashbrowns Hamburger Helper, 5.5 Oz Box” needs to be linked to FNDDS nutrition-related information found under “Mixed dishes – meat, poultry, seafood: Mixed meat dishes”. Figure 2 demonstrates how the two databases are linked with each other to create the PPC. As can be seen, there is no common word that easily indicates that “Cheesy Hashbrowns Hamburger Helper…” should be matched with “Mixed dishes…”, and such cases exist in all IRI tables used for the challenge, from 2012 through 2018.</p>
-<p><a href="images/pt2-fig2.png"><img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/pt2-fig2.png" class="img-fluid" width="700"></a></p>
-<div class="figure-caption">
-<p><strong>Figure 2:</strong> Each universal product code (UPC) from the IRI data could match to only one ensemble code (EC) from the FNDDS data, whereas one EC code could match to multiple UPCs.</p>
-</div>
-<p>Also, because nutritionists or food scientists will always need to review the matching, regardless of the matching method used, it was important that our evaluation of proposed matching methods focused both on the accuracy of prediction models and also on metrics that would lead participants to develop models that facilitate qualified reviewers to reduce their workloads.</p>
-<p>Organising the competition was also a challenge in its own right, for data privacy reasons. IRI scanner data contains sensitive information, such as store name, location, unit price, and weekly quantity sold for each item. This ruled out using existing online platforms like Kaggle, DrivenData or AIcrowd to host the competition, and instead required a private secure data enclave to ensure the safe use of sensitive and confidential data assets. The need for such an environment imposed capacity constraints on the competition, meaning only dozens of teams could be invited to take part, whereas on open platforms it is common to have thousands of teams competing and sharing ideas and code.</p>
-<section id="competition-structure" class="level2">
-<h2 class="anchored" data-anchor-id="competition-structure">Competition structure</h2>
-<p>The competition ran over 10 months and consisted of three separate challenges: two interim, one final. Applications opened in September 2021, and the competition started in January 2022. Submission deadlines for the first and second interim challenges were in July and September 2022, respectively. For these rounds, participants submitted preliminary solutions for evaluation based solely on quantitative metrics, and two awards of $10,000 were given to the highest-scoring teams. The deadline for the final challenge was in October 2022. Here, solutions were evaluated by the scientific review board based on three judging criteria: quantitative metrics, transferability, and innovation. First, second, and third place winners received awards of $30,000, $1,500, and $1,000 respectively. Final presentations were given at the Food for Thought symposium in December 2022.</p>
-<p>The competition was run entirely within the Coleridge Initiative’s Administrative Data Research Facility (ADRF), which was established by the United States Census Bureau to inform the decision-making of the Commission on Evidence-Based Policy under the Evidence Act. ADRF follows the Five Safes Framework: safe projects, safe people, safe data, safe settings, and safe outputs.</p>
-<p>In keeping with this framework, participants were provided with ADRF login credentials after signing the relevant data use agreements during the onboarding process. All participants were required to agree to the ADRF terms of use, to complete security training, and to pass a security training assessment prior to accessing the challenge data. Participants’ access within ADRF was limited to the challenge environment and data only. There was no internet access, so Coleridge Initiative ensured that any packages requested by teams were available for use within the environment after passing security review. All codes and documentation were only allowed to be exported outside ADRF after export reviews from both Coleridge Initiative and USDA staff. At the end of each challenge, the teams submitted write-ups and supporting files by placing all the necessary submission files in their ADRF team folder. Detailed submission instructions are available via the <a href="https://github.com/realworlddatascience/realworlddatascience.github.io/tree/main/case-studies/posts/2023/08/21/_code">Real World Data Science GitHub repository</a>.</p>
-</section>
-<section id="metrics" class="level2">
-<h2 class="anchored" data-anchor-id="metrics">Metrics</h2>
-<p>Submissions were evaluated by Coleridge Initiative and technical review and subject review boards based on the following criteria:</p>
-<ul>
-<li><strong>Quantitative metrics</strong> were used to measure the predictive accuracy and runtime of the model.<br>
-</li>
-<li><strong>Transferability</strong> measured the quality of documentation and code, and the ability of individuals who are not involved in model development to replicate and implement the team’s approach.<br>
-</li>
-<li><strong>Innovation</strong> measured novelty and creativity of the model in addressing the linkage problem.</li>
-</ul>
-<p>Technical review was overseen by faculty members from computer science and engineering departments of top US universities. Subject review was handled by subject matter experts from USDA and Westat.</p>
-<p>From a quantitative perspective, the most common way to evaluate machine learning competition submissions is to use model predictive accuracy. However, single metrics are typically incomplete descriptions of real-world tasks, and they can easily hide significant differences between models which simple predictive accuracy cannot capture. To select the most appropriate official challenge metrics, Coleridge Initiative reviewed the literature on the use of evaluation measures in both classification and ranking task machine learning competitions. Success at 5 (S@5) and Normalized Discounted Cumulative Gain at 5 (NDCG@5) scores were ultimately used as the quantitative metrics.</p>
-<p>The metrics were applied as follows: models proposed by each team were tasked with outputting five potential FNDDS matches for each IRI code, with potential FNDDS matches ordered from most likely to least likely. S@5 and NDCG@5 scores are broadly similar – both measure whether a correct match is present in the five proposed matches that participants were asked to identify. However, S@5 does not take rank position into account and only considers whether the five proposed FNDDS matches contain the correct FNDDS response. NDCG@5 does take rank into account and also measures how highly the correct FNDDS response is ranked among the five proposed matches. Both measures range from 0 to 1 (or 0% to 100%). Models get a “full credit” for S@5 as long as they contain the correct FNDDS option. NDCG@5 penalizes models when the correct match is ranked lower on the list of 5 proposed matches.</p>
-</section>
-<section id="technical-description" class="level2">
-<h2 class="anchored" data-anchor-id="technical-description">Technical description</h2>
-<section id="environment-setup" class="level5">
-<h5 class="anchored" data-anchor-id="environment-setup">Environment setup</h5>
-<p>Coleridge Initiative solicited technical requirements from participants at the challenge application stage to prepare the ADRF environment as much as possible before the competition began. Each team was asked to share anticipated workspace specifications and software library requests in their application package. From this we identified, reviewed, and installed the requested Python and R packages, libraries, and library components (e.g., pre-trained models, training data) that were not yet available within ADRF.</p>
-<p>The setup of graphics processing units (GPUs) was also a critical part of competition preparation. We created an environment with 16 gibibyte (GiB) of GPU memory for each team. Our technology team met with multiple teams several times to discuss computing environment configurations to ensure the GPU could work properly. None of these efforts was wasted: without GPU access, it would be impossible for teams to use state-of-the-art pre-trained models such as the Bidirectional Encoder Representations from Transformers <span class="citation" data-cites="DBLP:journals/corr/abs-1810-04805">(BERT, Devlin et al. 2018)</span>.</p>
-<p>We completed the setup of new team workspaces, each customized to the individual team’s resource and library requirements, including GPU configuration. The isolation and customization of workspaces was vital because teams may request different versions of libraries that potentially have version conflict with other libraries. We ensured the configurations were all set before the challenge began because such data challenges are bursty in nature <span class="citation" data-cites="macavaney_et_al_2021">(Macavaney et al. 2021)</span>, and handling support requests in the private data enclave risked causing delays. We hoped to avoid receiving too many requests in the beginning phase of the competition in order to give participants a better experience, though we did of course provide participants with instructions on how to request additional libraries during the challenge period.</p>
-</section>
-<section id="supporting-materials" class="level5">
-<h5 class="anchored" data-anchor-id="supporting-materials">Supporting materials</h5>
-<p>In addition to environment preparation, we made available a list of supporting documentation, including IRI, PPC, and FNDDS codebooks, technical reports, and related publications that could help teams understand the challenge datasets. The FNDDS codebook pooled information on variable availability, coding, and descriptions across dataset files and years. It also included internal Westat food category coding difficulty ratings and notes on created PPC codes and provided UPC code, EC code, and general dataset remarks and observations that may take time for analysts to discover on their own.</p>
-<p>We developed a baseline model to demonstrate the challenge task and the expected outputs – both outside of ADRF using FNDDS and fictitious data in place of IRI data, and an analogous model using FNDDS and IRI data within the ADRF secure environment. Moreover, we provided the teams with an evaluation script to read in their submissions and evaluate them for predictive accuracy against the public test set using S@5 and NDCG@5 challenge metrics. Finally, we held multiple webinars during the course of the challenge to explain next steps, address participant questions, solicit feedback, and provide general support. Multiple teams also met with our technology team to clarify ADRF-related questions or troubleshoot technical issues.</p>
-<p>(Baseline model, toolkits, and evaluation script are available from the <a href="https://github.com/realworlddatascience/realworlddatascience.github.io/tree/main/case-studies/posts/2023/08/21/_code">Real World Data Science GitHub repository</a>.)</p>
-</section>
-<section id="data-splitting" class="level5">
-<h5 class="anchored" data-anchor-id="data-splitting">Data splitting</h5>
-<p>To mimic the real-world scenario, the competition used 2012–2016 IRI data as the training set, and the 2017–2018 IRI data as the test set, since the data change over time and USDA could provide the most recent data available. To make sure that models were generalizable and not just overfit to the test set, we split the test set into private and public test sets. In this way, we guaranteed that the models were evaluated on completely hidden data. In order to keep the similar distribution of the two sets, we first divided the data into five quintiles based on EC code frequencies and then randomly sampled 80% of records in each group without repetition for placement into the private test set. Later in the competition, because of the computation limit, we further shrank the private test set to 40% of its original size using the same data-splitting method.</p>
-</section>
-<section id="judging" class="level5">
-<h5 class="anchored" data-anchor-id="judging">Judging</h5>
-<p>In the first two rounds, submissions were evaluated based on the quantitative metrics, as previously mentioned above. Coleridge Initiative was responsible for running the evaluation script, making sure not to re-train the model or modify the configs in any way, and only applying the model to predict the private test set. Prediction results were then compared against ground truth to get the private scores.</p>
-<p>The final challenge was reviewed by the scientific review board on all three judging criteria. Submitted models were first evaluated by Coleridge Initiative in the same way as in the first two rounds. The runtime of models was also recorded as an assessment of model cost. The scientific review boards then assessed the models by the quality of documentation, the quality of code, and the ability to replicate and implement the team’s approach, and scored the models for innovation and creativity in addressing the linkage problem. Lastly, scores were summarized and the scientific review board discussed and decided the winners of the competition.</p>
-</section>
-</section>
-<section id="results" class="level2">
-<h2 class="anchored" data-anchor-id="results">Results</h2>
-<p>The next few articles in this collection walk readers through the solutions proposed by competition finalists. Figure 3 provides a brief summary.</p>
-<p><a href="images/pt2-fig3.png"><img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/pt2-fig3.png" class="img-fluid" width="700"></a></p>
-<div class="figure-caption">
-<p><strong>Figure 3:</strong> Top competitors and their solutions to the Food for Thought challenge.</p>
-</div>
-</section>
-<section id="lessons-learned" class="level2">
-<h2 class="anchored" data-anchor-id="lessons-learned">Lessons learned</h2>
-<p>It was undoubtedly challenging for teams to work with highly secured data in a private data enclave for this data challenge. We solicited feedback from teams and summarized the issues that we experienced throughout the competitions, together with the solutions to resolve those issues. Below are our main lessons learned and we hope this summary can serve to inform future competitions.</p>
-<ul>
-<li><p><strong>Environmental factors:</strong> The installation and setup of packages, libraries, and resources, as well as the configuration of GPUs, system dependencies, and workspace design were expected to take a long time as each team had their own needs. To accelerate the process, we requested a list of specific package and environment requirements from the teams in advance. However, due to the complexity of the system configuration required by the teams, environment setup took longer than expected. Thus, the challenge deadlines had to be postponed a few times to accommodate this.</p></li>
-<li><p><strong>Time commitment:</strong> Twelve teams were selected to participate in the challenge, but only three teams remained in the final challenge. Other than one team that was disqualified for violating the ADRF terms of use agreement, eight dropped out because of other commitments and insufficient time to meaningfully participate. To ensure security, ADRF does not allow jobs to run in the backend, which also adds to the time commitment of teams. To encourage teams to participate in the final challenge, we gave out additional awards for second and third places.</p></li>
-<li><p><strong>Computing resource limit:</strong> One issue encountered in evaluating submitted models was computing environment resource limits due to the secured nature of the data enclave. The original private test dataset is four times larger than the public test dataset, making it unfeasible to evaluate. To overcome this issue, given the fixed resource constraints, we decided to reduce the private test set to 40% of its original size. It would have been helpful, though, if the competition had set a model running time limit at the outset, so that participants could build simpler yet effective models.</p></li>
-<li><p><strong>Supporting code:</strong> Although the initial baseline model we provided was extremely simple, we found this helped participants a lot in the initial phase – yet there is space to improve. To be specific, supporting codes should be constructed so that all relevant data tables are used and specify the main function to run the code, especially how the model should be tested. The teams only used the main table, which was the only table that was used in the baseline model, for training and did not touch the other supporting table. If we included the other table in the baseline model, it could help participants to have a better use of this data as well. In addition, a baseline model should be intuitive for the participants to follow, allowing evaluators to easily replace the public test set with the private test set without any programming modifications.</p></li>
-</ul>
-<div class="nav-btn-container">
-<div class="grid">
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/01-purchase-to-plate.html">← Part 1: Purchase to Plate</a></p>
-</div>
-</div>
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/03-first-place-winners.html">Part 3: First place winners →</a></p>
-</div>
-</div>
-</div>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the authors</dt>
-<dd>
-<strong>Zheyuan Zhang</strong> and <strong>Uyen Le</strong> are research scientists at the Coleridge Initiative.
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Zheyuan Zhang and Uyen Le
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Zhang, Zheyuan, and Uyen Le. 2023. “Food for Thought: Competition and challenge design.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/the-pulse/case-studies/posts/2023/08/21/02-competition-design.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-DBLP:journals/corr/abs-1810-04805" class="csl-entry">
-Devlin, J., M.-W. Chang, K. Lee, and K. Toutanova. 2018. <span>“<span>BERT:</span> Pre-Training of Deep Bidirectional Transformers for Language Understanding.”</span> <em>CoRR</em> abs/1810.04805. <a href="http://arxiv.org/abs/1810.04805">http://arxiv.org/abs/1810.04805</a>.
-</div>
-<div id="ref-macavaney_et_al_2021" class="csl-entry">
-Macavaney, S., A. Mittu, G. Coppersmith, J. Leintz, and P. Resnik. 2021. <em>Community-Level Research on Suicidality Prediction in a Secure Environment: Overview of the CLPsych 2021 Shared Task</em>. In Proceedings of the Seventh Workshop on Computational Linguistics and Clinical Psychology: Improving Access.
-</div>
-</div></section></div> ]]></description>
-  <category>Machine learning</category>
-  <category>Natural language processing</category>
-  <category>Public policy</category>
-  <category>Health and wellbeing</category>
-  <guid>https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/02-competition-design.html</guid>
-  <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/pt2-intro.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 </channel>
 </rss>
