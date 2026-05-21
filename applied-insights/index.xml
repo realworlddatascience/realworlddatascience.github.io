@@ -17,7 +17,238 @@
 <width>144</width>
 </image>
 <generator>quarto-1.9.37</generator>
-<lastBuildDate>Wed, 11 Feb 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 21 May 2026 14:55:38 GMT</lastBuildDate>
+<item>
+  <title>Choosing the Right Genomic Dataset: A Five-Pillar Framework for Researchers</title>
+  <dc:creator>Alieyeh Sarabandi Moghaddam</dc:creator>
+  <dc:creator>Fatemeh Torabi</dc:creator>
+  <dc:creator>Emma Squires</dc:creator>
+  <dc:creator>Professor Kenneth Langlands</dc:creator>
+  <link>https://realworlddatascience.net/applied-insights/tutorials/posts/2026/05/21/genomic-dataset-guide.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>While the term “genomic data” encompasses a wide range of data types (e.g., RNA-seq, single-cell sequencing, ChIP-seq), this article focuses specifically on datasets derived from GWAS and sequencing-based studies (WES/WGS), given their prominence in disease genetics research.</p>
+<p>This guide is aimed at researchers who may be experts in clinical, epidemiological, or data-science domains but are relatively new to working with genomic data. We assume no prior experience with genotyping platforms or sequencing pipelines, focusing instead on the key questions you need to ask before committing to a dataset.</p>
+<p>Although we present the five pillars as a logical framework for evaluation, in practice ethical and governance considerations act as an initial gatekeeper. This reflects the foundational role of international frameworks like the GA4GH Framework for Responsible Sharing [1] and the WHO’s ethical principles for genomic data [2], which provide the essential governance context within which all technical decisions are made. Before assessing technical suitability, researchers should first establish whether they are permitted to access and use a dataset at all, and whether institutional or regulatory approval (such as ethics committee or Institutional Review Board (IRB) review) is required. If a dataset cannot be used ethically or legally for a given research question, no level of technical suitability can compensate.</p>
+<section id="introduction-navigating-the-data-deluge" class="level2">
+<h2 class="anchored" data-anchor-id="introduction-navigating-the-data-deluge">Introduction: Navigating the Data Deluge</h2>
+<p>The greatest challenge in modern genomics is no longer generating data, but knowing which data can actually answer your question.</p>
+<p>Genomic data has become a fundamental pillar of biomedical discovery, fuelling advancements from Genome-Wide Association Studies (GWAS) to Polygenic Risk Scores (PRS) and rare variant analyses, including those informing novel therapeutic approaches like CRISPR-based gene therapies [3]. This wealth of data holds immense promise for elucidating the genetic architecture of disease, personalising therapeutic strategies, and accelerating drug development.</p>
+<p>However, for researchers new to genomics, the initial challenge is often not the complexity of the analysis, but the complexity of the data landscape itself; a challenge well-documented in the literature. This includes the sheer scale of data, where individual genomes can exceed 100 gigabytes of information [4], the significant ethical and logistical hurdles in managing it [5, 6], and the persistent issue of non-representative data that limits equitable progress [2, 7]. The pivotal question, “<em>Which genomic dataset is right for my research?”,</em> can be daunting. Navigating a maze of biobanks, consortia, and public repositories, researchers are confronted with a bewildering array of technical jargon and specifications. Selecting an unsuitable dataset can lead to months of wasted effort, irreproducible results, and fundamental biases that undermine scientific validity.</p>
+<p>This article enriches existing approaches by providing a solution: a clear, structured framework designed to guide researchers in systematically evaluating and selecting genomic datasets. We move beyond simple catalogues of resources to dissect the critical decision-making process. By interrogating any potential dataset across five core pillars, you can ensure the data you source is robust, fit for purpose, and capable of driving reliable science, whether for GWAS, PRS, exome analysis, or other downstream applications.</p>
+<p>Researchers often turn to existing genomic datasets rather than generating new data due to several key motivations: Cost efficiency, as sequencing and genotyping are resource-intensive; Access to larger sample sizes than may be feasible for individual studies; The ability to leverage well-phenotyped cohorts with longitudinal or linked data; As well as accelerating research by building on previously harmonized and QC-ed data. Common sources for such data include public repositories such as dbGaP, EGA, the NCI Genomic Data Commons (GDC), and databanks such as UK Biobank, FinnGen, and the UK’s National Genomics Research Library (NGRL).</p>
+</section>
+<section id="the-core-framework-the-five-pillars-of-genomic-data-selection" class="level2">
+<h2 class="anchored" data-anchor-id="the-core-framework-the-five-pillars-of-genomic-data-selection">The Core Framework: The Five Pillars of Genomic Data Selection</h2>
+<p>Before downloading data, a researcher must interrogate it across five key dimensions. These pillars form a checklist of non-negotiable considerations that determine technical compatibility, scientific utility, and practical feasibility. Importantly, most of these questions can, and should, be answered before you apply for access or begin data transfer. Doing so can prevent months of downstream re-analysis or worse, discovering too late that a dataset is fundamentally unsuited to your research question.</p>
+<div id="fig-five-pillar-framework" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-five-pillar-framework-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/applied-insights/tutorials/posts/2026/05/21/five-pillar-framework.png" class="img-fluid quarto-figure quarto-figure-center figure-img">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-five-pillar-framework-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: The Five-Pillar Framework for Genomic Dataset Selection.
+</figcaption>
+</figure>
+</div>
+<section id="pillar-1-data-discover-the-where-do-i-even-find-it" class="level3">
+<h3 class="anchored" data-anchor-id="pillar-1-data-discover-the-where-do-i-even-find-it">Pillar 1: Data Discover (The “Where Do I Even Find It?”)</h3>
+<p>Before you can interrogate a dataset’s governance, technology, or content, you must first know it exists and be able to locate it. For researchers new to the field, the sheer number of repositories, consortia websites, and data portals can be overwhelming. This pillar provides a roadmap for navigating this discovery phase, transforming a frantic search into a systematic hunt. The goal here is not to download data, but to identify a shortlist of candidate datasets that warrant the deeper, pillar-by-pillar evaluation outlined in the rest of this framework.</p>
+<ul>
+<li><p><strong>Defining Your Data Wishlist:</strong> The discovery process should be guided by a clear, pre-defined set of criteria derived from your research question. Before you open a single browser tab, jot down your non-negotiables. This wishlist is a distilled version of the other pillars and will be your compass. Ask yourself:</p></li>
+<li><p><strong>Disease/Phenotype:</strong> What traits or diseases must be present? (e.g., “Alzheimer’s disease with cerebrospinal fluid biomarkers”, “type 2 diabetes with longitudinal BMI data”, “rare paediatric developmental disorders with parental data”).</p></li>
+<li><p><strong>Data Type:</strong> What is the fundamental genomic data needed? (e.g., “Genome-wide genotyping array data for PRS”, “Whole-genome sequencing for structural variant analysis”, “Exome sequencing for rare variant burden tests”).</p></li>
+<li><p><strong>Minimum Sample Size:</strong> What is the smallest number of cases or total participants needed for adequate statistical power?</p></li>
+<li><p><strong>Population Ancestry:</strong> Is the study focused on a specific genetic ancestry or requires a diverse, multi-ancestry cohort?</p></li>
+<li><p><strong>Navigating the Discovery Landscape:</strong> With your wishlist in hand, you can strategically explore the ecosystem of genomic data resources. These fall into several categories:</p></li>
+<li><p><strong>Generalist Repositories:</strong> These are large, international archives that house data from thousands of individual studies. They are often the first place to look.</p></li>
+<li><p><a href="https://dbgap.ncbi.nlm.nih.gov/home/">dbGaP (Database of Genotypes and Phenotypes)</a>: The primary repository for US-funded studies.</p></li>
+<li><p><a href="https://ega-archive.org/">EGA (European Genome-Phenome Archive)</a>: The European counterpart, hosting numerous European and international studies.</p></li>
+<li><p><a href="https://gdc.cancer.gov/">NCI GDC (Genomic Data Commons):</a> A highly harmonized repository focused on cancer research, containing data from projects like The Cancer Genome Atlas (TCGA).</p></li>
+<li><p><strong>Major Biobanks &amp; Cohort Databases:</strong> These are large-scale, prospective collections of data from hundreds of thousands of participants. They are ideal for researchers who need deep phenotyping and large sample sizes under a single, consistent data access policy.</p></li>
+<li><p><a href="https://www.ukbiobank.ac.uk/">UK Biobank:</a> A premier resource for population health.</p></li>
+<li><p><a href="https://www.finngen.fi/en">FinnGen:</a> Provides unique insights into a founder population.</p></li>
+<li><p><a href="https://allofus.nih.gov/">All of Us Research Program</a>: A US-based cohort explicitly focused on diversity and precision medicine.</p></li>
+<li><p><a href="https://biobankjp.org/en/#gsc.tab=0">BioBank Japan</a>: A rich resource for studying non-European populations, containing genomic and clinical data from over 200,000 Japanese individuals with a focus on common lifestyle diseases.</p></li>
+<li><p><a href="https://genomics.ut.ee/en/content/estonian-biobank">Estonian Biobank:</a> A population-based biobank with over 200,000 participants, representing a significant proportion of Estonia’s adult population and offering a valuable resource for studying a national cohort.</p></li>
+<li><p><strong>Specialised National Initiatives &amp; Platform-Based Resources:</strong> These resources often provide not just data, but also secure analysis environments, making them particularly valuable for researchers with limited local computational infrastructure. They are often disease-focused or clinically driven.</p></li>
+<li><p><a href="https://www.dementiasplatform.uk/">Dementias Platform UK (DPUK)</a>: A UK-based platform that brings together over 60 cohorts of dementia-relevant data, totalling more than 3.5 million participants. Critically, DPUK provides a secure cloud-based Data Portal where approved researchers can access and analyse linked genetic, imaging, cognitive, and biomarker data without needing to download massive files locally.</p></li>
+<li><p><a href="https://www.genomicsengland.co.uk/blog/genomics-101-what-is-the-national-genomic-research-library">National Genomics Research Library (NGRL)</a>: Part of Genomics England, this is a growing collection of whole-genome sequences from NHS patients. It is particularly valuable for rare disease research and novel variant interpretation due to its clinical-grade sequencing data and linkage to rich, longitudinal NHS health records. Access is managed through the secure Genomics England Research Environment.</p></li>
+<li><p><a href="https://canpath.ca/">Canadian Partnership for Tomorrow Project (CPTP)</a>: A pan-Canadian platform pooling data from over 300,000 Canadians across multiple regional cohorts, offering a powerful resource for studying how genetics, environment, and lifestyle interact to influence cancer and chronic disease risk.</p></li>
+<li><p><strong>Specialized Consortia and Project Websites:</strong> Many large, collaborative scientific consortia have their own data access portals or provide clear instructions on how to apply for their specific datasets. These are invaluable for research into a particular disease area.</p></li>
+<li><p><a href="https://pgc.unc.edu/">Psychiatric Genomics Consortium (PGC)</a>: The world’s largest mental health genomics consortium, with access protocols for using their meta-analysed GWAS summary statistics and, in some cases, individual-level data from dozens of contributing studies.</p></li>
+<li><p><a href="https://icda.bio/">International Common Disease Alliance (ICDA)</a>: A global consortium aiming to understand the genetic architecture of common diseases, providing access frameworks and harmonized datasets from multiple contributing studies.</p></li>
+<li><p><a href="https://gtexportal.org/home/">The GTEx Project (Genotype-Tissue Expression)</a>: A specific and highly influential project focused on understanding how genetic variation affects gene expression across different human tissues, with its own dedicated data portal.</p></li>
+<li><p><strong>The Power of Discovery Tools:</strong> You do not need to manually search every repository website. A new generation of powerful discovery tools acts as a search engine for genomic and biomedical data, allowing you to query across multiple repositories at once.</p></li>
+<li><p><strong>Repository Portals:</strong> The EGA and dbGaP themselves have advanced search features to filter studies by disease, data type, and publication.</p></li>
+<li><p><strong>Federated Search Tools:</strong> Platforms like the <a href="https://anvilproject.org/">NHGRI AnVIL (Genomic Data Science Analysis, Visualization, and Informatics Lab-space)</a> and the <a href="https://www.ga4gh.org/product/beacon-api/">GA4GH Beacon project</a> aim to make data findable by allowing researchers to query across multiple datasets to see if specific genetic variants or phenotypic information exists, without needing to access the full data first. Using these tools can save weeks of manual searching.</p></li>
+</ul>
+<p>By systematically applying your wishlist to the landscape of repositories and using modern discovery tools, you move from a vague need for “genomic data on heart disease” to a concrete list of potential datasets, such as “UK Biobank”, “dbGaP study phs000007 (FHS)”, “the Alzheimer’s cohorts within DPUK,” and “NCBI GDC’s TCGA-BRCA project”. Only once you have this shortlist can you begin the deep, critical evaluation defined by Pillars 1 through 5.</p>
+</section>
+<section id="pillar-2-access-ethics-governance-the-can-i-use-this-responsibly" class="level3">
+<h3 class="anchored" data-anchor-id="pillar-2-access-ethics-governance-the-can-i-use-this-responsibly">Pillar 2: Access, Ethics &amp; Governance (The “Can I Use This Responsibly?”)</h3>
+<p>Once you have discovered the appropriate dataset, the next step is to establish whether you can access it ethically; all ethical and governance considerations should be addressed before investing time in detailed technical assessment or data preparation. Researchers should determine whether their proposed use aligns with participant consent, data access agreements, and institutional requirements. In many cases, this includes assessing whether approval from an ethics committee or Institutional Review Board (IRB) is required, and at what stage such approval must be obtained.</p>
+<p>The most suitable dataset scientifically is useless if you cannot access it or use it within a responsible governance framework. This pillar now encompasses the global standards for ethical data stewardship and the practical realities of gaining and maintaining access.</p>
+<ul>
+<li><p><strong>Data Access Models &amp; Governance:</strong> Genomic data exists on a spectrum of accessibility. Understanding where your shortlisted datasets fall on this spectrum is your first practical task.</p></li>
+<li><p><strong>Open Access:</strong> Some resources, like the 1000 Genomes Project or GTEx, provide openly available data, typically summary statistics or fully anonymized data, with minimal access barriers.</p></li>
+<li><p><strong>Controlled Access:</strong> Most individual-level genomic data sits behind controlled access regimes. Reputable resources like dbGaP, EGA, and FinnGen require researchers to submit a project proposal for review by a Data Access Committee (DAC). The DAC evaluates whether your proposed use aligns with the participant consent and data use limitations. Usage terms might involve a contract or a non-disclosure agreement (NDA), which will have to be reviewed by your institution’s legal team and signed by a designated institutional signee.</p></li>
+<li><p><strong>Managed/Platform Access:</strong> A growing number of resources, including UK Biobank, Dementias Platform UK (DPUK), and Genomics England (NGRL), operate a managed access model. Here, you apply to use the data within a secure, cloud-based Research Environment or Trusted Research Environment (TRE). You do not download the data; you bring your analysis to it. This model enhances data security and democratizes access for researchers who may lack local high-performance computing infrastructure.</p></li>
+<li><p><strong>Foundations of Responsible Research:</strong> Modern genomic research operates within established ethical frameworks. The <em>Global Alliance for Genomics and Health (GA4GH) Framework for Responsible Sharing</em> provides foundational principles such as transparency, accountability, and promoting benefit, that guide international data sharing. Furthermore, the <em>FAIR Guiding Principles (Findable, Accessible, Interoperable, Reusable)</em> are a benchmark for high-quality, reusable data management that many repositories strive to meet.</p></li>
+<li><p><strong>Informed Consent &amp; Use Limitations:</strong> Scrutinise the consent conditions. What research purposes are permitted? Note that even within “health-related research”, there can be debates about appropriate use, such as applications in insurance or non-medical trait prediction. Platforms like UK Biobank and DPUK explicitly exclude certain users, like insurance companies, from direct data access.</p></li>
+<li><p><strong>The Practicalities of Gaining Access:</strong> Access is rarely instantaneous. You must factor in the time and administrative steps required.</p></li>
+<li><p><strong>Application &amp; Review:</strong> Preparing a project proposal for a DAC takes time. The review process itself can take weeks or even months. Plan accordingly.</p></li>
+<li><p><strong>Costs of Access:</strong> While many repositories are non-commercial, access is not always free. Be aware of potential costs:</p></li>
+<li><p><strong>Application or administration fees:</strong> Some resources charge a nominal fee to process applications.</p></li>
+<li><p><strong>Data egress and compute costs:</strong> In cloud-based platforms like the UK Biobank Research Analysis Platform or Terra, you may incur costs for data storage and the computational time used to run your analyses. It is essential to understand the pricing model before you start.</p></li>
+<li><p><strong>Membership/Consortium fees:</strong> Accessing data from some consortia may require your institution to be a member or contributor.</p></li>
+<li><p><strong>Mandatory Training:</strong> Many data access providers, particularly in the UK and Europe, require researchers to complete specific accredited training before they are granted access. Common examples include:</p></li>
+<li><p><strong>Good Clinical Practice (GCP):</strong> Often required when working with clinical trial data or data derived from clinical settings.</p></li>
+<li><p><strong>Accredited Researcher Training:</strong> Programmes like the ONS (Office for National Statistics) Safe Researcher training or similar accredited courses are mandatory for accessing data within many TREs, including DPUK and UKSeRP. These courses cover the principles of data privacy, disclosure control, and secure handling of sensitive information.</p></li>
+<li><p><strong>Computational Logistics:</strong> Genomic data is vast. Analyzing feasibility is crucial; WGS data for 100,000 individuals requires terabytes of storage and high-performance computing. Many platforms now offer cloud-based analysis environments (e.g., Dementia’s Platform UK, Genomics England Research Environment, UK Biobank Research Analysis Platform) to democratize access.</p></li>
+</ul>
+<p>Importantly, ethical constraints may shape study design itself (e.g., limiting commercial use, cross-border data transfer, or linkage with external datasets) and should therefore inform all downstream methodological choices.</p>
+</section>
+<section id="pillar-3-technology-assay-the-how-of-data-generation" class="level3">
+<h3 class="anchored" data-anchor-id="pillar-3-technology-assay-the-how-of-data-generation">Pillar 3: Technology &amp; Assay (The “How” of Data Generation)</h3>
+<p>The technological origin of the data defines its fundamental nature, scope, and limitations. For a researcher navigating the genomics landscape, the core question is simple: What was measured, and how does that determine what I can and cannot find?</p>
+<ul>
+<li><p><strong>Genotyping Arrays:</strong> These are the cost-effective workhorses for large-scale biobanks like UK Biobank and FinnGen. They directly measure a pre-selected set of common single nucleotide polymorphisms (SNPs) across the genome. If your research question focuses on common genetic variation associated with complex diseases, array data is often the most appropriate and scalable starting point.</p></li>
+<li><p><strong>The Key Concept:</strong> <em>Imputation:</em> Array data is almost always statistically imputed to infer millions of additional variants not directly measured on the chip. This process uses a reference panel (e.g., TOPMed, 1000 Genomes) to predict missing genotypes. For a researcher, the crucial point is that the choice and version of the reference panel directly impacts the number, quality, and ancestral diversity of the variants available for your analysis. A dataset imputed with a diverse, population-matched panel will always be superior for your downstream work.</p></li>
+<li><p><strong>Sequencing (Whole Exome/Genome - WES/WGS):</strong> Sequencing provides a more comprehensive readout, identifying variants across the entire genome (WGS) or just the protein-coding regions (WES). If your research question involves rare variants, structural variants, or novel mutations not captured on standard arrays, sequencing is the necessary technology.</p>
+<p>o <strong>The Key Concept:</strong> <em>Coverage Depth</em>: The reliability of sequencing data hinges on coverage depth; the number of times a given nucleotide has been read. Low-coverage sequencing (e.g., 4x WGS) is sufficient for some imputation-based analyses, but high coverage (typically ≥30x for WGS, ≥50-100x for WES) is essential for confident rare variant discovery in individual patients.</p>
+<p>o <strong>Variant Calling Pipeline:</strong> The bioinformatic pipelines used for alignment, variant calling, and filtering (e.g., GATK, Dragen) can influence the final variant set. Understanding the pipeline version and quality thresholds applied is crucial.</p></li>
+</ul>
+<p>No single technology is universally superior, the optimal choice depends entirely on whether your research question prioritises common variant association, rare variant discovery, or structural variation.</p>
+</section>
+<section id="pillar-4-data-content-phenotypic-context-the-what-and-who" class="level3">
+<h3 class="anchored" data-anchor-id="pillar-4-data-content-phenotypic-context-the-what-and-who">Pillar 4: Data Content &amp; Phenotypic Context (The “What” and “Who”)</h3>
+<p>The scientific value of a genomic dataset is inextricably linked to the richness and rigour of its associated phenotypic data.</p>
+<ul>
+<li><p><strong>Representativeness and Generalizability:</strong> The genetic ancestry of the cohort is critical: it affects the generalisability of findings and is essential for <em>controlling population stratification</em>; a major source of false positives. Population stratification occurs when cases and controls are drawn from sub-groups with different ancestral backgrounds, leading to false associations. For instance, a GWAS on height might incorrectly identify a variant common in Northern Europeans as associated if the case group has a higher proportion of Northern European ancestry than the control group. One can control for such situations by including genetic principal components (PCs) derived from the genomic data itself as covariates in the association model, which adjusts for underlying ancestry differences. Beyond ancestry, it is essential to consider whether the population in which the data were collected is representative of the population you aim to study, including factors such as age range, sex distribution, recruitment strategy, disease severity, and socioeconomic or geographic context. A dataset may be statistically powerful yet poorly suited to answering questions about broader or different populations. As such, this is a basic but crucial epidemiological principle. Ask: Were participants recruited through broad population registries (enhancing representativeness), or through specialist clinics or volunteer schemes (which can introduce “healthy volunteer” or other selection biases)? Findings from a non-representative sample may not generalize to your target population; for example, genetic risk variants identified in a hospital-based case-control study may not apply to individuals with milder forms of the disease in the community. Always align the cohort’s sampling strategy with the goal of your research, whether it is discovery (where breadth is key) or mechanistic insight (where depth may be prioritized).</p></li>
+<li><p><strong>Phenotype Depth &amp; Relevance:</strong> Does the dataset contain the specific clinical diagnoses, biomarkers, or questionnaire outcomes needed to test your hypothesis? Assess the measurement methods, validation, and clinical definitions used. Keep an eye out for phenotype misclassification as a risk, especially in electronic health data derived trait.</p></li>
+<li><p><strong>Sample Size:</strong> Sample size directly determines statistical power. As an example, In the UK, the National Genomics Research Library (NGRL) serves as a key managed-access resource for researchers. It is particularly valuable for rare disease research and novel variant interpretation due to its clinical-grade sequencing data from the NHS. However, its current cohort structure may not provide the very large sample sizes required for well-powered common variant GWAS of complex traits.</p></li>
+<li><p><strong>Cohort Design:</strong> Is the study a case-control, prospective cohort, or family-based design? The design dictates the analytical methods you can employ and influences the interpretation of results.</p>
+<p>o <strong>Population-Based Cohorts</strong> are a large, often prospective, sample of individuals from a general population, typically not selected for any specific disease. Participants are followed over time. This type is Ideal for estimating disease incidence, studying a wide range of health outcomes, and calculating population-attributable risks. They are the gold standard for initial <em>GWAS discovery</em> for complex traits because they minimize certain selection biases. Some things to consider would be phenotype prevalence (especially for rare diseases), phenotype depth (often lacking) and temporality (can establish that the genetic variant was present before the disease, supporting causal inference).</p>
+<p>o <strong>Case-Control Studies</strong> are studies where individuals with a specific disease or trait (cases) are recruited and compared to a group without the disease (controls). This type is highly statistically efficient for <em>studying the genetic basis of a specific disease</em>, especially rare diseases. This is the most common and powerful design for <em>focused GWAS</em> and <em>rare variant association tests</em>. Things to consider would be control selection (sourced from the same underlying population as cases), awareness of spectrum (milder and more severe cases for generalizability of found causal variants), and prevalence (not suitable for finding it in population).</p>
+<p>o <strong>Family-Based Studies (Trios, Sibships, Pedigrees)</strong> where genetic data is collected from related individuals, most classically from affected offspring and both parents (trios). This design is uniquely powerful for detecting <em>de novo mutations</em> (new mutations in the child) and for <em>studying inheritance patterns</em>. They are inherently controlled for population stratification because family members share genetic background. Some constraints are that recruitments of trios or larger pedigrees are often challenging, and specificity (findings are more relevant for early-onset or highly heritable disorders, and less for discovering common variants associated with complex traits compared to large case-control studies).</p>
+<p>o <strong>Longitudinal / Prospective Cohorts</strong> involve a subset or special feature of population-based or clinical cohorts where participants undergo repeated phenotypic assessments over months, years, or decades. This type is essential for studying <em>disease progression, time-to-event outcomes, age-related penetrance of genetic variants, and dynamic traits</em> like changes in biomarker levels. Prospective cohorts allow for analysis of how genetics influences not just <em>if</em> a disease occurs, but <em>when</em> and <em>how</em> it develops. Some considerations are attrition (participants often drop out over time, and if not random, it can cause bias), data complexity (more sophisticated methods are needed for repeated measures and survival analysis), and phenotype evolution (diagnostic criteria and measurement technologies may change over a long follow-up period, requiring data harmonization).</p></li>
+<li><p><strong>Flexibility for Novel Questions:</strong> Consider whether the dataset’s raw data or intermediate files are accessible, allowing you to repurpose it for questions beyond its original design. For instance, a researcher interested in <em>gene expression regulation</em> might want to study splicing quantitative trait loci (sQTLs). While a repository may provide processed gene expression levels, sQTL analysis typically requires access to the raw RNA sequencing read files (BAM/FASTQ) to accurately quantify alternative splicing events. A dataset offering only summary-level expression data would not be suitable for this novel question, even if it has the right phenotypes and sample size. Another example could be a researcher interested in analysing <em>complex structural variations or mobile element insertions</em>. They would need access to raw sequence reads (BAM/CRAM files) to perform sensitive, read-depth or split-read analysis, which is not always possible with processed variant call format (VCF) datasets. Always check the available data formats against your analytical needs, and make sure that the terms of use allow usage of the raw data for research beyond its original design.</p></li>
+</ul>
+</section>
+<section id="pillar-5-quality-control-harmonization-the-data-integrity-reality" class="level3">
+<h3 class="anchored" data-anchor-id="pillar-5-quality-control-harmonization-the-data-integrity-reality">Pillar 5: Quality Control &amp; Harmonization (The “Data Integrity” Reality)</h3>
+<p>Raw genomic data is never analysis-ready. A dataset’s true value is determined by the rigor of its quality control (QC) and, critically, its harmonization; the reprocessing of raw data to a common standard to minimize technical artifacts. A crucial distinction must be made here: quality control is a shared, two-stage responsibility with different roles for data providers and data users.</p>
+<ul>
+<li><p><strong>The Data Provider’s Responsibility:</strong> Foundational QC and Harmonization</p></li>
+<li><p>Reputable data providers perform essential, standardized QC and harmonization to deliver a reliable foundational dataset. This is the bedrock of data integrity.</p></li>
+<li><p><strong>The Imperative of Harmonization</strong>: Leading repositories like the NCI Genomic Data Commons (GDC) perform extensive harmonization. This involves realigning all sequencing data to a consistent reference genome (e.g., GRCh38) and reprocessing it through standardized pipelines for variant calling and expression quantification. This process is designed to minimize batch effects, systematic errors introduced by processing samples across different centres, times, or platforms, which are a primary confounder in genomics.</p></li>
+<li><p><strong>Providing QC Metrics:</strong> A responsible data provider supplies extensive QC summaries. When evaluating a dataset, your first task is to locate and understand these reports. Look for:</p></li>
+<li><p><strong>Batch Information:</strong> Determine if information on processing batches is available. Batch effects are systematic technical differences that can be mistaken for biological signals. For example, if samples are processed in two different sequencing batches, one containing most of the “case” subjects and another most of the “controls”, any subtle technical difference between the runs (like reagent lot variation) could create a spurious genetic association with the disease. If significant batch effects are likely, check if the data has been harmonized or if batch covariates are provided for you to include in your models.</p></li>
+<li><p><strong>Core QC Metrics for all Data Types (Arrays &amp; Sequencing) - Sample-Level:</strong> These identify problematic individuals. Key metrics include call rate (the percentage of genotypes successfully determined for an individual; samples below ~98% are often excluded), sex discrepancy (a mismatch between genetically inferred sex and reported sex, which can indicate sample mix-ups), and measures of heterozygosity (excessive rates can signal contamination. Very low rates can indicate inbreeding or sample issues). Analysis of cryptic relatedness (unreported familial connections, typically up to 3rd-degree relatives) is also standard, as relatedness can inflate statistical significance if not accounted for.</p></li>
+<li><p><strong>Core QC Metrics for all Data Types (Arrays &amp; Sequencing) - Variant-Level:</strong> These filter out unreliable genetic markers. The fundamental filters are variant call rate (the percentage of individuals successfully genotyped for a given variant) and deviation from Hardy-Weinberg Equilibrium (HWE) within control populations, which can indicate genotyping errors or natural selection. Minor Allele Frequency (MAF) thresholds are applied contextually; for a standard GWAS, very rare variants (e.g., MAF &lt; 0.01) are often excluded due to low statistical power.</p>
+<p><strong>For Sequencing Data (WES/WGS) Only:</strong> The QC requirements are more demanding. You must check for coverage statistics such as the mean coverage depth (e.g., 30x for WGS) and, more importantly, the percentage of the target genome or exome covered at a minimum depth (e.g., “&gt;95% of bases covered ≥10x”). This tells you what proportion of the data is reliable for variant calling. Also check sequence quality metrics, which assess the raw sequencing data and include the percentage of reads aligned to the reference genome, duplication rates (high rates can indicate technical artifacts or limited library complexity), and cross-sample contamination estimates, which can be provided by tools like VerifyBamID.</p></li>
+<li><p><strong>The Data User’s Responsibility: Study-Specific Quality Control (QC)</strong></p></li>
+<li><p>The researcher remains ultimately responsible for conducting study-specific QC after data acquisition. This final check is non-negotiable. It ensures the data is appropriate for your specific cohort, hypotheses, and analytical models, guarding against hidden biases that could invalidate your results. A QC check includes:</p></li>
+<li><p>Re-checking for batch effects within your specific analytical subset.</p></li>
+<li><p>Confirming ancestry through PCA clustering.</p></li>
+<li><p>Applying appropriate MAF or HWE filters for your specific study design (e.g., stricter HWE filters for cases vs.&nbsp;controls).</p></li>
+<li><p>Validating that your case/control groups pass the same quality thresholds.</p></li>
+<li><p>For detailed guidance on genomic QC, researchers may refer to established protocols such as those from the GATK Best Practices [8, 9], QC guidelines for large-scale biobanks [10, 11], or relevant review papers [12, 13].</p></li>
+</ul>
+</section>
+</section>
+<section id="synthesising-the-framework-from-evaluation-to-selection" class="level2">
+<h2 class="anchored" data-anchor-id="synthesising-the-framework-from-evaluation-to-selection">Synthesising the Framework: From Evaluation to Selection</h2>
+<div id="tbl-selection-criteria" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-selection-criteria-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Table&nbsp;1: Key selection criteria across the five pillars.
+</figcaption>
+<div aria-describedby="tbl-selection-criteria-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Pillar</th>
+<th style="text-align: left;">Key Questions for Researchers</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>1 – Data Discovery</strong></td>
+<td style="text-align: left;">What is my specific data wishlist (phenotype, data type, sample size)? Which repositories (e.g., dbGaP, EGA, UK Biobank) are most likely to host such data? Can I use discovery tools like AnVIL or Beacon to refine my search?</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>2 - Access &amp; Governance</strong></td>
+<td style="text-align: left;">What is the access procedure (open, controlled, managed)? Do the consent terms and permissible uses align with my project? What are the costs (fees, compute) and required training (e.g., Safe Researcher, GCP)?</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>3 - Technology</strong></td>
+<td style="text-align: left;">Was the data generated by array or sequencing? If array, what imputation panel was used? If sequencing, what is the coverage depth? Does this technology match my need for common or rare variant discovery?</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>4 – Content &amp; Context</strong></td>
+<td style="text-align: left;">Does it include my target phenotype with sufficient depth? Is the sample size adequate and the ancestry appropriate? What is the cohort design (population, case-control, family, longitudinal)?</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>5 - QC &amp; Harmonization</strong></td>
+<td style="text-align: left;">Has the data been harmonized to a common standard by the provider? Are detailed QC metrics and batch information available? Have I planned my own study-specific QC to validate the data for my analysis?</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="the-road-ahead-federation-and-multi-modal-data-integration" class="level2">
+<h2 class="anchored" data-anchor-id="the-road-ahead-federation-and-multi-modal-data-integration">The Road Ahead: Federation and Multi-Modal Data Integration</h2>
+<p>While our five-pillar framework provides a robust foundation for selecting a dataset, the future of genomic discovery lies in what comes next: the ability to connect and integrate data across multiple sources. This is where the vision of the Global Alliance for Genomics and Health (GA4GH) and the principles of data federation become tangible.</p>
+<p>A single dataset, no matter how well-curated, is ultimately limited by its sample size, population diversity, and the breadth of its phenotypic measurements. The next frontier involves securely combining information from multiple datasets to ask questions that no single cohort could answer alone. This might involve:</p>
+<ul>
+<li><strong>Federated Analysis:</strong> Instead of pooling data into a single location (which raises significant ethical and governance challenges), federated approaches allow researchers to bring analysis algorithms to disparate datasets. The algorithm travels to the data, learns from it, and returns only the aggregated results, never the individual-level data. This approach, championed by GA4GH, is already being used to build more powerful polygenic risk scores and to discover rare variant associations by effectively and securely increasing sample sizes across international borders.</li>
+<li><strong>Multi-Modal Data Integration:</strong> The real power of platforms like DPUK, UK Biobank, and Terra is their ability to link genomic data with other data modalities; brain imaging, proteomics, metabolomics, electronic health records, and wearable device data. For the researcher, this integration opens up entirely new classes of questions. You can move beyond simple genetic association to study molecular mechanisms, gene-environment interactions, and the real-world progression of disease over decades. Understanding how genetics influences protein levels (via pQTLs), or how a polygenic risk interacts with air pollution to trigger asthma, requires this integrated, multi-modal perspective.</li>
+</ul>
+<p>As you apply the five-pillar framework, consider not just the dataset in isolation, but its potential to connect with others. Does it use common data standards? Is it part of a federated network? Does its platform support linkage to other data types? The datasets that will drive the next generation of discovery are those designed to be nodes in a larger, interconnected, and responsible data ecosystem.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Selecting the right genomic dataset is the foundational step that determines the validity, reproducibility, and ethical integrity of your research. By systematically applying this enhanced five-pillar framework, interrogating the Discovery, Access &amp; Governance, Technology, Content, and Quality &amp; Harmonization of potential datasets, you transform a daunting maze into a navigable landscape.</p>
+<p>In the next article of this series, “From Dataset to Discovery,” we will put this framework into practice, demonstrating how to apply these pillars to real-world study designs including GWAS, PRS validation, and rare variant analysis.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<p>1) Bahcall O. G. (2021). In this issue: GA4GH standards enable the responsible sharing of human genomic and biomedical data. <em>Cell Genomics</em>, <em>1</em>(2), 100038. <a href="https://doi.org/10.1016/j.xgen.2021.100038">https://doi.org/10.1016/j.xgen.2021.100038</a></p>
+<p>2) World Health Organization. (2024). <em>Guidance for human genome data collection, access, use and sharing</em>. World Health Organization. <a href="https://www.who.int/publications/i/item/9789240102149">https://www.who.int/publications/i/item/9789240102149</a></p>
+<p>3) Siermann, M., Mohan, R., Bunnik, E. M., Cambon-Thomsen, A., Chadwick, R., Cornel, M. C., van Delden, J. J. M., Joly, Y., Molnár-Gábor, F., Nicolás Jiménez, M. P., Pinxten, W., Rial-Sebbag, E., Shabani, M., Van Steijvoort, E., Wallace, S. E., Zawati, M. H., Knoppers, B. M., &amp; Borry, P. (2025). Emerging and evolving values in the changing landscape of genomics. <em>Frontiers in genetics</em>, <em>16</em>, 1566291. <a href="https://doi.org/10.3389/fgene.2025.1566291">https://doi.org/10.3389/fgene.2025.1566291</a></p>
+<p>4) Sriram, V., Conard, A.M., Rosenberg, I. et al.&nbsp;Addressing biomedical data challenges and opportunities to inform a large-scale data lifecycle for enhanced data sharing, interoperability, analysis, and collaboration across stakeholders. Sci Rep 15, 6291 (2025). <a href="https://doi.org/10.1038/s41598-025-90453-x">https://doi.org/10.1038/s41598-025-90453-x</a></p>
+<p>5) Horton, R., &amp; Lucassen, A. (2023). Ethical Considerations in Research with Genomic Data. <em>The New bioethics : a multidisciplinary journal of biotechnology and the body</em>, <em>29</em>(1), 37–51. <a href="https://doi.org/10.1080/20502877.2022.2060590">https://doi.org/10.1080/20502877.2022.2060590</a></p>
+<p>6) Campbell, D., Spencer, S., Kang, A., Pandey, R., Katsandres, S., &amp; Veenstra, D. (2025). A Value Framework for Evaluating Population Genomic Programs: A Mixed Methods Approach. <em>Journal of personalized medicine</em>, <em>15</em>(7), 307. <a href="https://doi.org/10.3390/jpm15070307">https://doi.org/10.3390/jpm15070307</a></p>
+<p>7) Siermann, M., Mohan, R., Bunnik, E. M., Cambon-Thomsen, A., Chadwick, R., Cornel, M. C., van Delden, J. J. M., Joly, Y., Molnár-Gábor, F., Nicolás Jiménez, M. P., Pinxten, W., Rial-Sebbag, E., Shabani, M., Van Steijvoort, E., Wallace, S. E., Zawati, M. H., Knoppers, B. M., &amp; Borry, P. (2025). Emerging and evolving values in the changing landscape of genomics. <em>Frontiers in genetics</em>, <em>16</em>, 1566291. <a href="https://doi.org/10.3389/fgene.2025.1566291">https://doi.org/10.3389/fgene.2025.1566291</a></p>
+<p>8) McKenna, A., Hanna, M., Banks, E., Sivachenko, A., Cibulskis, K., Kernytsky, A., Garimella, K., Altshuler, D., Gabriel, S., Daly, M., &amp; DePristo, M. A. (2010). The Genome Analysis Toolkit: a MapReduce framework for analyzing next-generation DNA sequencing data. <em>Genome research</em>, <em>20</em>(9), 1297–1303. <a href="https://doi.org/10.1101/gr.107524.110">https://doi.org/10.1101/gr.107524.110</a></p>
+<p>9) Van der Auwera GA &amp; O’Connor BD. (2020). Genomics in the Cloud: Using Docker, GATK, and WDL in Terra (1st Edition). O’Reilly Media.</p>
+<p>10) Mendy M, Caboux E, Lawlor RT, et al.&nbsp;Common Minimum Technical Standards and Protocols for Biobanks Dedicated to Cancer Research. Lyon (FR): International Agency for Research on Cancer; 2017. (IARC Technical Report, No.&nbsp;44.) SECTION 3., Recommendations for biobanks. Available from: https://www.ncbi.nlm.nih.gov/books/NBK567244/</p>
+<p>11) Dagher G. (2022). Quality matters: International standards for biobanking. Cell proliferation, 55(8), e13282. https://doi.org/10.1111/cpr.13282</p>
+<p>12) Marees, A. T., de Kluiver, H., Stringer, S., Vorspan, F., Curis, E., Marie-Claire, C., &amp; Derks, E. M. (2018). A tutorial on conducting genome-wide association studies: Quality control and statistical analysis. <em>International journal of methods in psychiatric research</em>, <em>27</em>(2), e1608. <a href="https://doi.org/10.1002/mpr.1608">https://doi.org/10.1002/mpr.1608</a></p>
+<p>13) Olson, N. D., Lund, S. P., Colman, R. E., Foster, J. T., Sahl, J. W., Schupp, J. M., Keim, P., Morrow, J. B., Salit, M. L., &amp; Zook, J. M. (2015). Best practices for evaluating single nucleotide variant calling methods for microbial genomics. Frontiers in genetics, 6, 235. https://doi.org/10.3389/fgene.2015.00235</p>
+
+
+</section>
+
+ ]]></description>
+  <category>Genomics</category>
+  <category>Data science</category>
+  <category>Research methods</category>
+  <guid>https://realworlddatascience.net/applied-insights/tutorials/posts/2026/05/21/genomic-dataset-guide.html</guid>
+  <pubDate>Thu, 21 May 2026 14:55:38 GMT</pubDate>
+</item>
 <item>
   <title>Understanding and Addressing Algorithmic Bias: a Credit Scoring Case Study</title>
   <dc:creator>Devin Partida</dc:creator>
@@ -3835,133 +4066,6 @@ Wright, Noah. 2023. “Learning from failure: ‘Red flags’ in body-worn camer
   <media:content url="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/11/16/images/bodycam-monitor.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
-  <title>Food for Thought: The value of competitions for confidential data</title>
-  <dc:creator>Steven Bedrick, Ophir Frieder, Julia Lane, and Philip Resnik</dc:creator>
-  <link>https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/06-value-of-competitions.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>We are witnessing a sea change in data collection practices by both governments and businesses – from purposeful collection (through surveys and censuses, for example) to opportunistic (drawing on web and social media data, and administrative datasets). This shift has made clear the importance of record linkage – a government might, for example, look to link records held by its various departments to understand how citizens make use of the gamut of public services.</p>
-<p>However, creating manual linkages between datasets can be prohibitively expensive, time consuming, and subject to human constraints and bias. Machine learning (ML) techniques offer the potential to combine data better, faster, and more cheaply. But, as the recently released <a href="https://www.ai.gov/wp-content/uploads/2023/01/NAIRR-TF-Final-Report-2023.pdf">National AI Research Resources Task Force report</a> highlights, it is important to have an open and transparent approach to ensure that unintended biases do not occur.</p>
-<p>In other words, ML tools are not a substitute for thoughtful analysis. Both private and public producers of a linked dataset have to determine the level of linkage quality – such as what precision/recall tradeoff is best for the intended purpose (that is, the balance between false-positive links and failure to cover links that should be there), how much processing time and cost is acceptable, and how to address coverage issues. The challenge is made more difficult by the idiosyncrasies of heterogeneous datasets, and more difficult yet when datasets to be linked include confidential data <span class="citation" data-cites="10.1257/jel.20171350 DBLP:books/sp/ChristenRS20">(Christensen and Miguel 2018; Christen et al. 2020)</span>.</p>
-<p>And, of course, an ML solution is never the end of the road: many data linkage scenarios are highly dynamic, involving use cases, datasets, and technical ecosystems that change and evolve over time; effective use of ML in practice necessitates an ongoing and continuous investment <span class="citation" data-cites="DBLP:journals/corr/abs-2112-01716">(Koch et al. 2021)</span>. Because techniques are constantly improving, producers need to keep abreast of new approaches. A model that is working well today may no longer work in a year because of changes in the data, or because the organizational needs have changed so that a certain type of error is no longer acceptable. As Sculley et al.&nbsp;point out, “it is remarkably easy to incur massive ongoing maintenance costs at the system level when applying machine learning” <span class="citation" data-cites="43146">(Sculley et al. 2014)</span>.</p>
-<p>Also important is that record linkage is not seen as a technical problem relegated to the realm of computer scientists to solve. The full engagement of domain experts in designing the optimization problem, identifying measures of success, and evaluating the quality of the results is absolutely critical, as is building an understanding of the pros and cons of different measures <span class="citation" data-cites="10.1371/journal.pone.0249833 10.1007/s11222-017-9746-6">(Schafer et al. 2021; Hand and Christen 2018)</span>. There will need to be much learning by doing in “sandbox” environments, and back and forth communication across communities to achieve successful outcomes, as noted in the <a href="https://www.bea.gov/system/files/2022-10/acdeb-year-2-report.pdf">recommendations of the Advisory Committee on Data for Evidence Building</a> (a screenshot of which is shown in Figure 1).</p>
-<p><a href="images/pt6-fig1.png"><img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/pt6-fig1.png" class="img-fluid" width="700"></a></p>
-<div class="figure-caption">
-<p><strong>Figure 1:</strong> A recommendation for building an “innovation sandbox” as part of the creation of a new National Secure Data Service in the United States.</p>
-</div>
-<p>Despite the importance of trial and error and transparency about linkage quality, there is no handbook that guides domain experts in how to design such sandboxes. There is a very real need for agreed-upon, domain-independent guidelines, or better yet, official standards to evaluate sandboxes. Those standards would define “who” could and would conduct the evaluation, and help guarantee independence and repeatability. And while innovation challenges have been embraced by the federal government, the devil can be very much in the details <span class="citation" data-cites="4138bca6-f7b7-3af8-a96c-5e2544823c5c">(Williams 2012)</span>.</p>
-<p>It is for this reason that the approach taken in the Food for Thought linkage competition, and described in this compendium, provides an important first step towards a well specified, replicable framework for achieving high quality outcomes. In that respect it joins other recent efforts to bring together community-level research on shared sensitive data <span class="citation" data-cites="macavaney-etal-2021-community tsakalidis-etal-2022-overview">(MacAvaney et al. 2021; Tsakalidis et al. 2022)</span>. This competition, like those, helped bring to the foreground both the opportunities and challenges of doing research in secure sandboxes with sensitive data. Notably, these exercises highlight a kind of cultural tension between secure, managed environments, on the one hand, and unfettered machine learning research, on the other. The need for flexibility and agility in computational research bumps up against the need for advance planning and careful step-by-step processes in environments with well-defined data governance rules, and one of the key lessons learned is that the tradeoffs here need to be recognized and planned for.</p>
-<p>This particular competition was important for a number of other reasons. Thanks to its organization as a competition, complete with prizes and bragging rights for strongly performing teams, it attracted new eyes from computer science and data science to think about how to address a critical real-world linkage problem. It offered the potential to produce approaches that were scalable, transparent, and reproducible. The engagement of domain experts and statisticians meant that it will be possible to conduct an informed error analysis, to explicitly relate the performance metrics in the task to the problem being solved in the real world, and to bring in the expertise of survey methodologists to think about the possible adjustments. And because it identified different approaches of addressing the same problem, it created an environment for new innovative ideas.</p>
-<p>More generally, in addition to the excitement of the new approaches, this exercise laid bare the fragility of linkages in general and highlighted the importance of secure sandboxes for confidential data. While the promise of privacy preserving technologies is alluring as <a href="https://www.bea.gov/system/files/2022-10/acdeb-year-2-report.pdf">an alternative to bringing confidential data together in one place</a>, such approaches are likely too immature to deploy ad hoc until a better understanding is established of how to translate real-world problems and their associated data into well-defined tasks, how to measure quality, and particularly how to assess the impact of match quality on different subgroups <span class="citation" data-cites="10.1145/3433638">(Domingo-Ferrer et al. 2021)</span>. The scientific profession has gone through too painful a lesson with the premature application of differential privacy techniques to ignore the lessons that can be learned from a careful and systematic analysis of different approaches <span class="citation" data-cites="10.1145/3433638 van_riper 10.1257/pandp.20191107 giles2022faking">(2021; Van Riper et al. 2020; Ruggles et al. 2019; Giles et al. 2022)</span>.</p>
-<p>We hope that the articles in this collection provide not only the first steps towards a handbook of best practices, but also an inspiration to share lessons learned, so that success can be emulated, and failures understood and avoided.</p>
-<div class="nav-btn-container">
-<div class="grid">
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/05-third-place-winners.html">← Part 5: Third place winners</a></p>
-</div>
-</div>
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../../applied-insights/case-studies/index.html">Find more case studies</a></p>
-</div>
-</div>
-</div>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the authors</dt>
-<dd>
-<strong>Steven Bedrick</strong> is an associate professor in Oregon Health and Science University’s Department of Medical Informatics and Clinical Epidemiology.
-</dd>
-<dd>
-<strong>Ophir Frieder</strong> is a professor in Georgetown University’s Department of Computer Science, and in the Department of Biostatistics, Bioinformatics &amp; Biomathematics at Georgetown University Medical Center.
-</dd>
-<dd>
-<strong>Julia Lane</strong> is a professor at the NYU Wagner Graduate School of Public Service and a NYU Provostial Fellow for Innovation Analytics. She co-founded the Coleridge Initiative.
-</dd>
-</dl>
-<p><strong>Philip Resnik</strong> holds a joint appointment as professor in the University of Maryland Institute for Advanced Computer Studies and the Department of Linguistics, and an affiliate professor appointment in computer science.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Steven Bedrick, Ophir Frieder, Julia Lane, and Philip Resnik
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@alexandru_tugui?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Alexandru Tugui</a> on <a href="https://unsplash.com/photos/-inuQpBGbgI?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Bedrick, Steven, Ophir Frieder, Julia Lane, and Philip Resnik. 2023. “Food for Thought: The value of competitions for confidential data.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/the-pulse/case-studies/posts/2023/08/21/06-value-of-competitions.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-DBLP:books/sp/ChristenRS20" class="csl-entry">
-Christen, P., T. Ranbaduge, and R. Schnell. 2020. <em>Linking Sensitive Data - Methods and Techniques for Practical Privacy-Preserving Information Sharing</em>. Springer. <a href="https://doi.org/10.1007/978-3-030-59706-1">https://doi.org/10.1007/978-3-030-59706-1</a>.
-</div>
-<div id="ref-10.1257/jel.20171350" class="csl-entry">
-Christensen, G., and E. Miguel. 2018. <span>“Transparency, Reproducibility, and the Credibility of Economics Research.”</span> <em>Journal of Economic Literature</em> 56 (3): 920–80. <a href="https://doi.org/10.1257/jel.20171350">https://doi.org/10.1257/jel.20171350</a>.
-</div>
-<div id="ref-10.1145/3433638" class="csl-entry">
-Domingo-Ferrer, J., D. Sánchez, and A. Blanco-Justicia. 2021. <span>“The Limits of Differential Privacy (and Its Misuse in Data Release and Machine Learning).”</span> <em>Communications of the ACM</em> (New York, NY, USA) 64 (7): 33–35. <a href="https://doi.org/10.1145/3433638">https://doi.org/10.1145/3433638</a>.
-</div>
-<div id="ref-giles2022faking" class="csl-entry">
-Giles, O., K. Hosseini, G. Mingas, et al. 2022. <em>Faking Feature Importance: A Cautionary Tale on the Use of Differentially-Private Synthetic Data</em>. <a href="https://arxiv.org/abs/2203.01363">https://arxiv.org/abs/2203.01363</a>.
-</div>
-<div id="ref-10.1007/s11222-017-9746-6" class="csl-entry">
-Hand, D., and P. Christen. 2018. <span>“A Note on Using the f-Measure for Evaluating Record Linkage Algorithms.”</span> <em>Statistics and Computing</em> (USA) 28 (3): 539–47. <a href="https://doi.org/10.1007/s11222-017-9746-6">https://doi.org/10.1007/s11222-017-9746-6</a>.
-</div>
-<div id="ref-DBLP:journals/corr/abs-2112-01716" class="csl-entry">
-Koch, B., E. Denton, A. Hanna, and J. G. Foster. 2021. <span>“Reduced, Reused and Recycled: The Life of a Dataset in Machine Learning Research.”</span> <em>CoRR</em> abs/2112.01716. <a href="https://arxiv.org/abs/2112.01716">https://arxiv.org/abs/2112.01716</a>.
-</div>
-<div id="ref-macavaney-etal-2021-community" class="csl-entry">
-MacAvaney, S., A. Mittu, G. Coppersmith, J. Leintz, and P. Resnik. 2021. <span>“Community-Level Research on Suicidality Prediction in a Secure Environment: Overview of the <span>CLP</span>sych 2021 Shared Task.”</span> <em>Proceedings of the Seventh Workshop on Computational Linguistics and Clinical Psychology: Improving Access</em> (Online), June, 70–80. <a href="https://doi.org/10.18653/v1/2021.clpsych-1.7">https://doi.org/10.18653/v1/2021.clpsych-1.7</a>.
-</div>
-<div id="ref-10.1257/pandp.20191107" class="csl-entry">
-Ruggles, S., C. Fitch, D. Magnuson, and J. Schroeder. 2019. <span>“Differential Privacy and Census Data: Implications for Social and Economic Research.”</span> <em>AEA Papers and Proceedings</em> 109 (May): 403–8. <a href="https://doi.org/10.1257/pandp.20191107">https://doi.org/10.1257/pandp.20191107</a>.
-</div>
-<div id="ref-10.1371/journal.pone.0249833" class="csl-entry">
-Schafer, K. M., G. Kennedy, A. Gallyer, and P. Resnik. 2021. <span>“A Direct Comparison of Theory-Driven and Machine Learning Prediction of Suicide: A Meta-Analysis.”</span> <em>PLOS ONE</em> 16 (4): 1–23. <a href="https://doi.org/10.1371/journal.pone.0249833">https://doi.org/10.1371/journal.pone.0249833</a>.
-</div>
-<div id="ref-43146" class="csl-entry">
-Sculley, D., G. Holt, D. Golovin, et al. 2014. <span>“Machine Learning: The High Interest Credit Card of Technical Debt.”</span> <em>SE4ML: Software Engineering for Machine Learning (NIPS 2014 Workshop)</em>.
-</div>
-<div id="ref-tsakalidis-etal-2022-overview" class="csl-entry">
-Tsakalidis, A., J. Chim, I. M. Bilal, et al. 2022. <span>“Overview of the <span>CLP</span>sych 2022 Shared Task: Capturing Moments of Change in Longitudinal User Posts.”</span> <em>Proceedings of the Eighth Workshop on Computational Linguistics and Clinical Psychology</em> (Seattle, USA), July, 184–98. <a href="https://doi.org/10.18653/v1/2022.clpsych-1.16">https://doi.org/10.18653/v1/2022.clpsych-1.16</a>.
-</div>
-<div id="ref-van_riper" class="csl-entry">
-Van Riper, D., T. Kugler, J. Schroeder, and S. Ruggles. 2020. <span>“Differential Privacy and Racial Residential Segregation.”</span> <em>2020 APPAM Fall Research Conference</em>.
-</div>
-<div id="ref-4138bca6-f7b7-3af8-a96c-5e2544823c5c" class="csl-entry">
-Williams, H. 2012. <span>“Innovation Inducement Prizes: Connecting Research to Policy.”</span> <em>Journal of Policy Analysis and Management</em> 31 (3): 752–76. <a href="http://www.jstor.org/stable/41653827">http://www.jstor.org/stable/41653827</a>.
-</div>
-</div></section></div> ]]></description>
-  <category>Machine learning</category>
-  <category>Natural language processing</category>
-  <category>Public policy</category>
-  <category>Health and wellbeing</category>
-  <guid>https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/06-value-of-competitions.html</guid>
-  <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/06-value-of-competitions.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
   <title>Food for Thought: Third place winners – Loyola Marymount</title>
   <dc:creator>Yifan Hu and Mandy Korpusik</dc:creator>
   <link>https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/05-third-place-winners.html</link>
@@ -4196,6 +4300,133 @@ Yang, Z., Z. Dai, Y. Yang, J. Carbonell, R. R. Salakhutdinov, and Q. V. Le. 2019
   <media:content url="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/05-lm.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
+  <title>Food for Thought: The value of competitions for confidential data</title>
+  <dc:creator>Steven Bedrick, Ophir Frieder, Julia Lane, and Philip Resnik</dc:creator>
+  <link>https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/06-value-of-competitions.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>We are witnessing a sea change in data collection practices by both governments and businesses – from purposeful collection (through surveys and censuses, for example) to opportunistic (drawing on web and social media data, and administrative datasets). This shift has made clear the importance of record linkage – a government might, for example, look to link records held by its various departments to understand how citizens make use of the gamut of public services.</p>
+<p>However, creating manual linkages between datasets can be prohibitively expensive, time consuming, and subject to human constraints and bias. Machine learning (ML) techniques offer the potential to combine data better, faster, and more cheaply. But, as the recently released <a href="https://www.ai.gov/wp-content/uploads/2023/01/NAIRR-TF-Final-Report-2023.pdf">National AI Research Resources Task Force report</a> highlights, it is important to have an open and transparent approach to ensure that unintended biases do not occur.</p>
+<p>In other words, ML tools are not a substitute for thoughtful analysis. Both private and public producers of a linked dataset have to determine the level of linkage quality – such as what precision/recall tradeoff is best for the intended purpose (that is, the balance between false-positive links and failure to cover links that should be there), how much processing time and cost is acceptable, and how to address coverage issues. The challenge is made more difficult by the idiosyncrasies of heterogeneous datasets, and more difficult yet when datasets to be linked include confidential data <span class="citation" data-cites="10.1257/jel.20171350 DBLP:books/sp/ChristenRS20">(Christensen and Miguel 2018; Christen et al. 2020)</span>.</p>
+<p>And, of course, an ML solution is never the end of the road: many data linkage scenarios are highly dynamic, involving use cases, datasets, and technical ecosystems that change and evolve over time; effective use of ML in practice necessitates an ongoing and continuous investment <span class="citation" data-cites="DBLP:journals/corr/abs-2112-01716">(Koch et al. 2021)</span>. Because techniques are constantly improving, producers need to keep abreast of new approaches. A model that is working well today may no longer work in a year because of changes in the data, or because the organizational needs have changed so that a certain type of error is no longer acceptable. As Sculley et al.&nbsp;point out, “it is remarkably easy to incur massive ongoing maintenance costs at the system level when applying machine learning” <span class="citation" data-cites="43146">(Sculley et al. 2014)</span>.</p>
+<p>Also important is that record linkage is not seen as a technical problem relegated to the realm of computer scientists to solve. The full engagement of domain experts in designing the optimization problem, identifying measures of success, and evaluating the quality of the results is absolutely critical, as is building an understanding of the pros and cons of different measures <span class="citation" data-cites="10.1371/journal.pone.0249833 10.1007/s11222-017-9746-6">(Schafer et al. 2021; Hand and Christen 2018)</span>. There will need to be much learning by doing in “sandbox” environments, and back and forth communication across communities to achieve successful outcomes, as noted in the <a href="https://www.bea.gov/system/files/2022-10/acdeb-year-2-report.pdf">recommendations of the Advisory Committee on Data for Evidence Building</a> (a screenshot of which is shown in Figure 1).</p>
+<p><a href="images/pt6-fig1.png"><img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/pt6-fig1.png" class="img-fluid" width="700"></a></p>
+<div class="figure-caption">
+<p><strong>Figure 1:</strong> A recommendation for building an “innovation sandbox” as part of the creation of a new National Secure Data Service in the United States.</p>
+</div>
+<p>Despite the importance of trial and error and transparency about linkage quality, there is no handbook that guides domain experts in how to design such sandboxes. There is a very real need for agreed-upon, domain-independent guidelines, or better yet, official standards to evaluate sandboxes. Those standards would define “who” could and would conduct the evaluation, and help guarantee independence and repeatability. And while innovation challenges have been embraced by the federal government, the devil can be very much in the details <span class="citation" data-cites="4138bca6-f7b7-3af8-a96c-5e2544823c5c">(Williams 2012)</span>.</p>
+<p>It is for this reason that the approach taken in the Food for Thought linkage competition, and described in this compendium, provides an important first step towards a well specified, replicable framework for achieving high quality outcomes. In that respect it joins other recent efforts to bring together community-level research on shared sensitive data <span class="citation" data-cites="macavaney-etal-2021-community tsakalidis-etal-2022-overview">(MacAvaney et al. 2021; Tsakalidis et al. 2022)</span>. This competition, like those, helped bring to the foreground both the opportunities and challenges of doing research in secure sandboxes with sensitive data. Notably, these exercises highlight a kind of cultural tension between secure, managed environments, on the one hand, and unfettered machine learning research, on the other. The need for flexibility and agility in computational research bumps up against the need for advance planning and careful step-by-step processes in environments with well-defined data governance rules, and one of the key lessons learned is that the tradeoffs here need to be recognized and planned for.</p>
+<p>This particular competition was important for a number of other reasons. Thanks to its organization as a competition, complete with prizes and bragging rights for strongly performing teams, it attracted new eyes from computer science and data science to think about how to address a critical real-world linkage problem. It offered the potential to produce approaches that were scalable, transparent, and reproducible. The engagement of domain experts and statisticians meant that it will be possible to conduct an informed error analysis, to explicitly relate the performance metrics in the task to the problem being solved in the real world, and to bring in the expertise of survey methodologists to think about the possible adjustments. And because it identified different approaches of addressing the same problem, it created an environment for new innovative ideas.</p>
+<p>More generally, in addition to the excitement of the new approaches, this exercise laid bare the fragility of linkages in general and highlighted the importance of secure sandboxes for confidential data. While the promise of privacy preserving technologies is alluring as <a href="https://www.bea.gov/system/files/2022-10/acdeb-year-2-report.pdf">an alternative to bringing confidential data together in one place</a>, such approaches are likely too immature to deploy ad hoc until a better understanding is established of how to translate real-world problems and their associated data into well-defined tasks, how to measure quality, and particularly how to assess the impact of match quality on different subgroups <span class="citation" data-cites="10.1145/3433638">(Domingo-Ferrer et al. 2021)</span>. The scientific profession has gone through too painful a lesson with the premature application of differential privacy techniques to ignore the lessons that can be learned from a careful and systematic analysis of different approaches <span class="citation" data-cites="10.1145/3433638 van_riper 10.1257/pandp.20191107 giles2022faking">(2021; Van Riper et al. 2020; Ruggles et al. 2019; Giles et al. 2022)</span>.</p>
+<p>We hope that the articles in this collection provide not only the first steps towards a handbook of best practices, but also an inspiration to share lessons learned, so that success can be emulated, and failures understood and avoided.</p>
+<div class="nav-btn-container">
+<div class="grid">
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/05-third-place-winners.html">← Part 5: Third place winners</a></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../../applied-insights/case-studies/index.html">Find more case studies</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+<strong>Steven Bedrick</strong> is an associate professor in Oregon Health and Science University’s Department of Medical Informatics and Clinical Epidemiology.
+</dd>
+<dd>
+<strong>Ophir Frieder</strong> is a professor in Georgetown University’s Department of Computer Science, and in the Department of Biostatistics, Bioinformatics &amp; Biomathematics at Georgetown University Medical Center.
+</dd>
+<dd>
+<strong>Julia Lane</strong> is a professor at the NYU Wagner Graduate School of Public Service and a NYU Provostial Fellow for Innovation Analytics. She co-founded the Coleridge Initiative.
+</dd>
+</dl>
+<p><strong>Philip Resnik</strong> holds a joint appointment as professor in the University of Maryland Institute for Advanced Computer Studies and the Department of Linguistics, and an affiliate professor appointment in computer science.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2023 Steven Bedrick, Ophir Frieder, Julia Lane, and Philip Resnik
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@alexandru_tugui?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Alexandru Tugui</a> on <a href="https://unsplash.com/photos/-inuQpBGbgI?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Bedrick, Steven, Ophir Frieder, Julia Lane, and Philip Resnik. 2023. “Food for Thought: The value of competitions for confidential data.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/the-pulse/case-studies/posts/2023/08/21/06-value-of-competitions.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-DBLP:books/sp/ChristenRS20" class="csl-entry">
+Christen, P., T. Ranbaduge, and R. Schnell. 2020. <em>Linking Sensitive Data - Methods and Techniques for Practical Privacy-Preserving Information Sharing</em>. Springer. <a href="https://doi.org/10.1007/978-3-030-59706-1">https://doi.org/10.1007/978-3-030-59706-1</a>.
+</div>
+<div id="ref-10.1257/jel.20171350" class="csl-entry">
+Christensen, G., and E. Miguel. 2018. <span>“Transparency, Reproducibility, and the Credibility of Economics Research.”</span> <em>Journal of Economic Literature</em> 56 (3): 920–80. <a href="https://doi.org/10.1257/jel.20171350">https://doi.org/10.1257/jel.20171350</a>.
+</div>
+<div id="ref-10.1145/3433638" class="csl-entry">
+Domingo-Ferrer, J., D. Sánchez, and A. Blanco-Justicia. 2021. <span>“The Limits of Differential Privacy (and Its Misuse in Data Release and Machine Learning).”</span> <em>Communications of the ACM</em> (New York, NY, USA) 64 (7): 33–35. <a href="https://doi.org/10.1145/3433638">https://doi.org/10.1145/3433638</a>.
+</div>
+<div id="ref-giles2022faking" class="csl-entry">
+Giles, O., K. Hosseini, G. Mingas, et al. 2022. <em>Faking Feature Importance: A Cautionary Tale on the Use of Differentially-Private Synthetic Data</em>. <a href="https://arxiv.org/abs/2203.01363">https://arxiv.org/abs/2203.01363</a>.
+</div>
+<div id="ref-10.1007/s11222-017-9746-6" class="csl-entry">
+Hand, D., and P. Christen. 2018. <span>“A Note on Using the f-Measure for Evaluating Record Linkage Algorithms.”</span> <em>Statistics and Computing</em> (USA) 28 (3): 539–47. <a href="https://doi.org/10.1007/s11222-017-9746-6">https://doi.org/10.1007/s11222-017-9746-6</a>.
+</div>
+<div id="ref-DBLP:journals/corr/abs-2112-01716" class="csl-entry">
+Koch, B., E. Denton, A. Hanna, and J. G. Foster. 2021. <span>“Reduced, Reused and Recycled: The Life of a Dataset in Machine Learning Research.”</span> <em>CoRR</em> abs/2112.01716. <a href="https://arxiv.org/abs/2112.01716">https://arxiv.org/abs/2112.01716</a>.
+</div>
+<div id="ref-macavaney-etal-2021-community" class="csl-entry">
+MacAvaney, S., A. Mittu, G. Coppersmith, J. Leintz, and P. Resnik. 2021. <span>“Community-Level Research on Suicidality Prediction in a Secure Environment: Overview of the <span>CLP</span>sych 2021 Shared Task.”</span> <em>Proceedings of the Seventh Workshop on Computational Linguistics and Clinical Psychology: Improving Access</em> (Online), June, 70–80. <a href="https://doi.org/10.18653/v1/2021.clpsych-1.7">https://doi.org/10.18653/v1/2021.clpsych-1.7</a>.
+</div>
+<div id="ref-10.1257/pandp.20191107" class="csl-entry">
+Ruggles, S., C. Fitch, D. Magnuson, and J. Schroeder. 2019. <span>“Differential Privacy and Census Data: Implications for Social and Economic Research.”</span> <em>AEA Papers and Proceedings</em> 109 (May): 403–8. <a href="https://doi.org/10.1257/pandp.20191107">https://doi.org/10.1257/pandp.20191107</a>.
+</div>
+<div id="ref-10.1371/journal.pone.0249833" class="csl-entry">
+Schafer, K. M., G. Kennedy, A. Gallyer, and P. Resnik. 2021. <span>“A Direct Comparison of Theory-Driven and Machine Learning Prediction of Suicide: A Meta-Analysis.”</span> <em>PLOS ONE</em> 16 (4): 1–23. <a href="https://doi.org/10.1371/journal.pone.0249833">https://doi.org/10.1371/journal.pone.0249833</a>.
+</div>
+<div id="ref-43146" class="csl-entry">
+Sculley, D., G. Holt, D. Golovin, et al. 2014. <span>“Machine Learning: The High Interest Credit Card of Technical Debt.”</span> <em>SE4ML: Software Engineering for Machine Learning (NIPS 2014 Workshop)</em>.
+</div>
+<div id="ref-tsakalidis-etal-2022-overview" class="csl-entry">
+Tsakalidis, A., J. Chim, I. M. Bilal, et al. 2022. <span>“Overview of the <span>CLP</span>sych 2022 Shared Task: Capturing Moments of Change in Longitudinal User Posts.”</span> <em>Proceedings of the Eighth Workshop on Computational Linguistics and Clinical Psychology</em> (Seattle, USA), July, 184–98. <a href="https://doi.org/10.18653/v1/2022.clpsych-1.16">https://doi.org/10.18653/v1/2022.clpsych-1.16</a>.
+</div>
+<div id="ref-van_riper" class="csl-entry">
+Van Riper, D., T. Kugler, J. Schroeder, and S. Ruggles. 2020. <span>“Differential Privacy and Racial Residential Segregation.”</span> <em>2020 APPAM Fall Research Conference</em>.
+</div>
+<div id="ref-4138bca6-f7b7-3af8-a96c-5e2544823c5c" class="csl-entry">
+Williams, H. 2012. <span>“Innovation Inducement Prizes: Connecting Research to Policy.”</span> <em>Journal of Policy Analysis and Management</em> 31 (3): 752–76. <a href="http://www.jstor.org/stable/41653827">http://www.jstor.org/stable/41653827</a>.
+</div>
+</div></section></div> ]]></description>
+  <category>Machine learning</category>
+  <category>Natural language processing</category>
+  <category>Public policy</category>
+  <category>Health and wellbeing</category>
+  <guid>https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/06-value-of-competitions.html</guid>
+  <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/06-value-of-competitions.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
+<item>
   <title>Food for Thought: Second place winners – DeepFFTLink</title>
   <dc:creator>Yang Wu, Aishwarya Budhkar, Kai Zhang, Xuhong Zhang, and Xiaozhong Liu</dc:creator>
   <link>https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/04-second-place-winners.html</link>
@@ -4209,7 +4440,7 @@ Yang, Z., Z. Dai, Y. Yang, J. Carbonell, R. R. Salakhutdinov, and Q. V. Le. 2019
 <section id="perspective-on-the-challenge" class="level2">
 <h2 class="anchored" data-anchor-id="perspective-on-the-challenge">Perspective on the challenge</h2>
 <p>Text matching is an essential task in natural language processing <span class="citation" data-cites="DBLP:journals/corr/PangLGXWC16">(NLP, Pang et al. 2016)</span>, while record linkage across different sources is an essential task in data science. Machine learning techniques allow people to combine data faster and cheaper than using manual linkage. However, in the context of the Food for Thought challenge, existing methods for matching universal product codes (UPCs) to ensemble codes (ECs) require every UPC to be compared with every EC code (Figure 1a). Such approaches can be computationally expensive in the training process when data is noisy. Here, we propose an ensemble model with a category-based adapter to tackle this problem, drawing on the category information included in UPC and EC data. The category-based adapter allows UPCs to be first matched with only a small and reliable set of ECs (Figure 1b). Then, an ensemble model will be deployed to make predictions for UPC-EC matching. Our proposed approach can achieve competitive performance compared with state-of-the-art models.</p>
-<div class="quarto-layout-panel" style="padding-top: 1em; margin-bottom: 0;" data-layout-ncol="2">
+<div class="quarto-layout-panel" data-layout-ncol="2" style="padding-top: 1em; margin-bottom: 0;">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
@@ -4354,6 +4585,165 @@ Xiao, L., X. Huang, B. Chen, and L. Jing. 2019. <span>“Label-Specific Document
   <guid>https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/04-second-place-winners.html</guid>
   <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/04-deepfftlink.png" medium="image" type="image/png" height="105" width="144"/>
+</item>
+<item>
+  <title>Food for Thought: The importance of the Purchase to Plate Suite</title>
+  <dc:creator>Andrea Carlson and Thea Palmer Zimmerman</dc:creator>
+  <link>https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/01-purchase-to-plate.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<div class="callout callout-style-default callout-important callout-titled" style="margin-top: 0;">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Important</span>Disclaimer
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>The findings and conclusions in this publication are those of the authors and should not be construed to represent any official USDA or US Government determination or policy. This research was supported by the US Department of Agriculture’s Economic Research Service and Center for Nutrition, Policy and Promotion. Findings should not be attributed to Circana (formerly IRI).</p>
+</div>
+</div>
+<p>About 600,000 <a href="https://www.cdc.gov/nchs/fastats/leading-causes-of-death.htm">deaths per year in the United States</a> are related to chronic diseases that are linked to poor dietary choices. Many other individuals suffer from diet-related health conditions, which may limit their ability to work, learn, and be physically active <span class="citation" data-cites="usda_2020">(US Department of Agriculture and US Department of Health and Human Services 2020)</span>. In recognition of the link between diet and health, in 1974 the Senate Select Committee on Nutrition and Human Needs, originally formed to eliminate hunger, expanded its focus to improving eating habits, nutrition policy and the national diet. Since 1980, the Dietary Guidelines for Americans have been released every five years by the US Departments of Agriculture (USDA) and Health and Human Services (DHHS). The guidelines present “<a href="https://www.dietaryguidelines.gov/">advice on what to eat and drink to meet nutrient needs, promote health, and prevent disease</a>”.</p>
+<p>Because there can be economic and social barriers to maintaining a healthy diet, USDA promotes <a href="https://www.usda.gov/nutrition-security">Food and Nutrition Security</a> so that everyone has consistent and equitable access to healthy, safe, and affordable foods that promote optimal health and well-being. A set of data tools called the <a href="https://www.ers.usda.gov/data-products/purchase-to-plate/">Purchase to Plate Suite</a> (PPS) supports these goals by enabling the update of the <a href="https://www.fns.usda.gov/snap/thriftyfoodplan#:~:text=What%20is%20the%20Thrifty%20Food,lowest%20cost%20of%20the%20four.">Thrifty Food Plan</a> (TFP), which estimates how much a budget-conscious family of four needs to spend on groceries to ensure a healthy diet. The TFP market basket – consisting of the specific amounts of various food categories required by the plan – forms the basis of the maximum allotment for the Supplemental Nutrition Assistance Program (SNAP, formerly known as the “Food Stamps” program), which provided financial support towards the cost of groceries for <a href="https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap">over 41 million individuals in almost 22 million households in fiscal year 2022</a>.</p>
+<p>The 2018 Farm Act (Agriculture Improvement Act of 2018) requires that USDA reevaluate the TFP every five years using current food composition, consumption patterns, dietary guidance, and food prices, and using approved scientific methods. USDA’s Economic Research Service (ERS) was charged with estimating the current food prices using retail food scanner data <span class="citation" data-cites="levin_et_al_2018 muth_et_al_2016">(Levin et al. 2018; Muth et al. 2016)</span> and utilized the PPS for this task. The most recent TFP update was released in August 2021 and the revised cost of the market basket was the first non-inflation adjustment increase in benefits for SNAP in over 40 years <span class="citation" data-cites="thrifty_food_plan_2021">(US Department of Agriculture 2021)</span>.</p>
+<p>The PPS combines datasets to enhance research related to the economics of food and nutrition. There are four primary components of the suite:</p>
+<ul>
+<li>Purchase to Plate Crosswalk (PPC),</li>
+<li>Purchase to Plate Price Tool (PPPT),</li>
+<li>Purchase to Plate National Average Prices (PP-NAP) for the National Health and Nutrition Examination Survey (NHANES), and</li>
+<li>Purchase to Plate Ingredient Tool (PPIT).</li>
+</ul>
+<p>The PPC allows researchers to measure the healthfulness of store purchases. On average <a href="https://www.ers.usda.gov/data-products/foodaps-national-household-food-acquisition-and-purchase-survey/summary-findings/#calories">US consumers acquire about 75% of their calories from retail stores</a>, and there are a number of studies linking the availability of foods at home to the healthfulness of the overall diet <span class="citation" data-cites="gattshall_et_al_2008 hanson_et_al_2005">(e.g., Gattshall et al. 2008; Hanson et al. 2005)</span>. Thus, understanding the healthfulness of store purchases allows us to understand differences in consumers who purchase healthy versus less healthy foods, and may contribute to better policies that promote healthier food purchases. While healthier diets are linked to a lower risk of disease outcomes <span class="citation" data-cites="REEDY2014881">(Reedy et al. 2014)</span>, other factors such as health care access may also be contributors <span class="citation" data-cites="cleary_et_al_2022">(Cleary et al. 2022)</span>. The PPC also forms the basis of the price tool, PPPT – which allows researchers to estimate custom prices for dietary recall studies – and a new ERS data product, the <a href="https://www.ers.usda.gov/data-products/purchase-to-plate/">PP-NAP</a>. The national average prices from PP-NAP are used in reevaluating the TFP. By using the PP-NAP with 24-hour dietary recall information from surveys such as What We Eat in America (<a href="https://www.ars.usda.gov/northeast-area/beltsville-md-bhnrc/beltsville-human-nutrition-research-center/food-surveys-research-group/docs/wweianhanes-overview/">WWEIA</a>) – the dietary component of the nationally representative <a href="https://www.cdc.gov/nchs/nhanes/index.htm">National Health and Nutrition Examination Survey</a>(NHANES)<sup>1</sup> – researchers can examine the relationship between the cost of food, dietary intake, and chronic diseases linked to poor diets. The price estimates also allow researchers to develop cost-effective healthy diets such as <a href="https://www.myplate.gov/myplate-kitchen/recipes">MyPlate Kitchen</a>. The final component of the Purchase to Plate Suite, the ingredient tool (PPIT), breaks dietary recall-reported foods back into purchasable ingredients, based on US retail food purchases. The PPIT is also used in the revaluation of the TFP, and by researchers who want to look at the relationship between reported ingestion of grocery items, cost and disease outcomes using WWEIA/NHANES. More information on the development of the PPC is available in two papers by Carlson et al. <span class="citation" data-cites="carlson_et_al_2019 carlson_et_al_2022">(2019, 2022)</span>.</p>
+<p>The Food for Thought competition aimed to support the development of the PPC – and thus policy-oriented research – by linking retail food scanner data to the USDA nutrition data used to analyze NHANES dietary recall data, specifically the Food and Nutrient Database for Dietary Studies (FNDDS) <span class="citation" data-cites="fndds_2018 fndds_2020">(2018, 2020)</span>. In particular, the competition set out to use artificial intelligence (AI) to reduce human resources in creating the links for the PPC, while still maintaining the high-quality standards required for reevaluating the TFP and for data published by ERS (which is one of 13 Principle Statistical Agencies in the United States Federal Government).</p>
+<section id="methods-used-to-date" class="level2">
+<h2 class="anchored" data-anchor-id="methods-used-to-date">Methods used to date</h2>
+<p>On the surface, the linking process may appear simple: both the FNDDS and retail food scanner data are databases of food. But the scanner data are produced for market research, and the FNDDS for dietary studies. The scanner data include about 350,000 items with sales each year, while the FNDDS has only 10,000–15,000 items. Scanner data relates to specific products, while FNDDS items are often more general. Both datasets have different hierarchical structures – the FNDDS hierarchy is based around major food groups: dairy; meat, poultry and seafood; eggs; nuts and legumes; grains; fruits; vegetables; fats and oils; and sugars, sweets, and beverages. Items fall into the groups regardless of preparation method or form. That is, broccoli prepared from frozen and from fresh both appear in the vegetable group, and for some fruits and vegetables, the fresh, frozen, canned and dried form are the same FNDDS item. Vegetable-based mixed dishes, such as broccoli and carrot stir-fry or soup, are also classified in the vegetable group. On the other hand, the scanner data classifies foods by grocery aisle. That is, the fresh and frozen broccoli are classified in different areas: produce and frozen vegetables. Similarly, when sold as a prepared food, the broccoli and carrot stir-fry may be found in the frozen entries, as a kit in either the frozen or produce section, refrigerated foods, or all of these.</p>
+<p>To allow researchers to import the FNDDS nutrient data into the scanner data, a one-to-many match between FNDDS and scanner data items was needed. The food descriptions in the scanner data include brand names and package sizes and are written as a consumer would pronounce them – e.g., fresh and crisp broccoli florets, ready-cut, 10 oz – versus a more general FNDDS description such as “Broccoli, raw”. (Also linked to the “Broccoli, raw” code would be broccoli sold with stems attached, broccoli spears, and any other way raw broccoli is sold.) In the scanner data, the Universal Product Code (UPC) and the European Article Number (EAN) can link items between tables within the scanner data, as well as between datasets of grocery items, such as the USDA Global Branded Foods Product Database, a component of <a href="https://fdc.nal.usda.gov/index.html">USDA’s Food Data Central</a>. However, these codes are not related to the FNDDS codes, or any other column within the FNDDS. In other words, before development of the PPC, there were no established linking identifiers.</p>
+<p>Figure 1 shows the process USDA uses to develop matches between scanner data and FNDDS.</p>
+<p><a href="images/pt1-fig1.png"><img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/pt1-fig1.png" class="img-fluid" width="700"></a></p>
+<div class="figure-caption">
+<p><strong>Figure 1:</strong> Process currently used to create the matches between the USDA Food and Nutrient Database for Dietary Studies (FNDDS) and the retail scanner data (labelled “IRI” for the IRI InfoScan and Consumer Network) product dictionaries. Source: Author provided.</p>
+</div>
+<p>We start the linking process by categorizing the scanner data items into homogeneous groups to make the first round of automated matching more efficient. To save time, we use the second lowest hierarchical category in the scanner data which generally divides items within a grocery aisle into homogenous groups such as produce, canned beans, baking mixes, and bread. Once the linking categories for scanner data are established, we select appropriate items from the FNDDS. Since the FNDDS is highly structured, this selection is usually straightforward.</p>
+<p>Our next step is to use semantic matching to create a search table that aligns similar terms within the IRI product dictionary and FNDDS. This first requires that we extract attributes from the FNDDS descriptions into fields similar to those in the scanner data product dictionary. The FNDDS descriptions are found across multiple columns because they are added as the need arises to provide examples of brand names or alternative descriptions of foods which help code the foods WWEIA participants report eating. We manually create matching tables that link terms used in FNDDS to those used in the scanner data, organized by the fields defined in the restructured FNDDS. We then use this table as the basis of a probabilistic matching process. For example, when linking the produce group, “fresh” in the scanner data would be aligned with “raw” and “prepared from fresh” and NOT “prepared from frozen” in the FNDDS, and “broccoli florets” would also be aligned with “raw” and “broccoli”. Since the FNDDS is designed to code the foods individuals report eating, many of the foods in the FNDDS are already prepared and result in descriptions such as “broccoli, steamed, prepared from fresh” or “broccoli, boiled, prepared from frozen”.</p>
+<p>Once the linking table is established, the probabilistic match process returns the single best possible match for each item in the scanner data. For example, a match between fresh broccoli florets and frozen broccoli would have a lower probability score than “broccoli, raw”. Because these matches form the basis of major USDA policies, we cannot accept an error rate of more than 5 percent, and lower is preferred. To reach that goal, nutritionists review every match to make sure the probabilistic match did not return a match between cauliflower florets and fresh broccoli, say, or that a broccoli and carrot stir-fry is not matched to a dish with broccoli, carrots, and chicken. The correct matches, such as the one between fresh broccoli florets and raw broccoli, are set aside while the items with an incorrect match, such as cauliflower florets and the broccoli and carrot stir-fry, are used to revise the search table. Revisions might include adding (NOT chicken) to the broccoli and carrot stir-fry dish. Mixed dishes — such as the broccoli and carrot stir-fry — pose particular challenges because there are a wide variety of similar products available in the grocery store. After a few rounds of revising the search table and running the probabilistic match process, it is more efficient to use a manual match, established by one nutritionist and reviewed by another, after which the match is assumed to be correct.</p>
+<p>The process improved with each new wave of FNDDS and IRI data. Our first creation of the PPC linked the FNDDS 2011/12 to the 2013 IRI retail scanner data. Subsequent waves started with the previous search table and resulting matches were reviewed by nutritionists. We also used more fields in the IRI product dictionary to create the homogeneous linking groups and made modifications to these groups with each wave. During each wave we experimented with the number of rounds of probabilistic matching that was the most cost effective. For some linking groups it took less human time to manually match from the start, while for other groups it was more efficient to do multiple rounds of improvements to the search table. Starting with the most recent wave (matching FNDDS 2017/18 to the 2017 and 2018 retail scanner data), we assumed previous matches appearing in the newer data were correct. Although this assumption was good for most matches, a review demonstrated the need to review previous matches prior to removing the item from the list of scanner data items needing FNDDS matches. In the future we intend to explore methods developed by the participants of the Food for Thought competition.</p>
+</section>
+<section id="linking-challenges" class="level2">
+<h2 class="anchored" data-anchor-id="linking-challenges">Linking challenges</h2>
+<p>An ongoing challenge to the linking problem is that both the scanner data and the FNDDS undergo substantive changes each year, meaning that both the previous matches and search tables need to be reviewed and revised with each new effort, as tables that work with one cycle of FNDDS and scanner data will need revisions to use with the next cycle. Changes to the scanner data that impact our current method include dropped and added items, data corrections, and revisions to the categories that form the basis of the homogeneous linking groups. In addition, there are errors such as incorrect food descriptions, conflicting package size information, and changes in the item description from year to year. Since the FNDDS is designed to support dietary recall studies, revisions reflect both changes to available foods and the level of detail respondents can provide. These revisions result in dropped/added food codes, changes to food descriptions that impact which scanner data items match to the FNDDS items, and revisions to recipes used in the nutrient coding which impacts the number of retail ingredients available in the FNDDS.</p>
+<p>Of the four parts of the PPS, establishing the matches is the most time-consuming task and constitutes at least 60 percent of the total budget. In the most recent round, we had 168 categories and each one went through 2-3 automated matching rounds; after each round, nutritionists spent an average of two hours reviewing the matches. This adds up to somewhere between 670 and 1,000 hours of review time. After the automated review, manual matching requires an additional 300 hours. Reducing the amount of time required to establish matches and link the FNDDS and retail scanner datasets may lead to significant time savings, resulting in faster data availability. That, in turn, could allow more timely policy-based research, and the mandated revision of the Thrifty Food Plan can continue with the most recent food price data.</p>
+<div class="nav-btn-container">
+<div class="grid">
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/00-food-for-thought.html">← Introduction</a></p>
+</div>
+</div>
+<div class="g-col-12 g-col-sm-6">
+<div class="nav-btn">
+<p><a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/02-competition-design.html">Part 2: Competition design →</a></p>
+</div>
+</div>
+</div>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+<strong>Andrea Carlson</strong> is an agricultural economist in the Food Markets Branch of the Food Economics Division in USDA’s Economic Research Service. She is the project lead for the Purchase to Plate Suite, which allows users to import USDA nutrient and food composition data into retail food scanner data acquired by USDA and estimate individual food prices for dietary intake data.
+</dd>
+<dd>
+<strong>Thea Palmer Zimmerman</strong> is a senior study director and research nutritionist at Westat.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Image credit</dt>
+<dd>
+Thumbnail photo by <a href="https://unsplash.com/@neonbrand?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Kenny Eliason</a> on <a href="https://unsplash.com/photos/SvhXD3kPSTY?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Carlson, Andrea, and Thea Palmer Zimmerman. 2023. “Food for Thought: The importance of the Purchase to Plate Suite.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/the-pulse/case-studies/posts/2023/08/21/01-purchase-to-plate.html">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+</section>
+<section id="acknowledgements" class="level2">
+<h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
+<p>The research presented in this compendium supports the Purchase to Plate Suite of data products. Carlson has been privileged to both develop and lead this project over the course of her career, but it is not a solo project. Many thanks to the Linkages Team from USDA’s Economic Research Service (Christopher Lowe, Mark Denbaly Elina Page, and Catherine Cullinane Thomas) the Center for Nutrition Policy and Promotion (Kristin Koegel, Kevin Kuczynski, Kevin Meyers Mathieu, TusaRebecca Pannucci), and our contractor Westat, Inc.&nbsp;(Thea Palmer Zimmerman, Carina E. Tornow, Amber Brown McFadden, Caitlin Carter, Viji Narayanaswamy, Lindsay McDougal, Elisha Lubar, Lynnea Brumby, Raquel Brown, and Maria Tamburri). Many others have supported this project over the years.</p>
+
+
+
+</section>
+
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-carlson_et_al_2019" class="csl-entry">
+Carlson, A. C., E. T. Page, T. P. Zimmerman, C. E. Tornow, and S. Hermansen. 2019. <em>Linking USDA Nutrition Databases to IRI Household-Based and Store-Based Scanner Data</em>. Technical Bulletin No. 1952. US Department of Agriculture, Economic Research Service.
+</div>
+<div id="ref-carlson_et_al_2022" class="csl-entry">
+Carlson, A. C., C. E. Tornow, E. T. Page, A. Brown McFadden, and T. Palmer Zimmerman. 2022. <span>“Development of the Purchase to Plate Crosswalk and Price Tool: Estimating Prices for the National Health and Nutrition Examination Survey (NHANES) Foods and Measuring the Healthfulness of Retail Food Purchases.”</span> <em>Journal of Food Composition and Analysis</em> 106: 104344. <a href="https://doi.org/10.1016/j.jfca.2021.104344">https://doi.org/10.1016/j.jfca.2021.104344</a>.
+</div>
+<div id="ref-cleary_et_al_2022" class="csl-entry">
+Cleary, R., Y. Liu, and A. Carlson. 2022. <em>Differences in the Distribution of Nutrition Between Households Above and Below Poverty</em>. Agricultural and Applied Economic Association Annual Meeting. Anaheim, CA. <a href="https://ageconsearch.umn.edu/record/322267">https://ageconsearch.umn.edu/record/322267</a>.
+</div>
+<div id="ref-gattshall_et_al_2008" class="csl-entry">
+Gattshall, M. L., J. A. Shoup, J. A. Marshall, L. A. Crane, and P. A. Estabrooks. 2008. <span>“Validation of a Survey Instrument to Assess Home Environments for Physical Activity and Healthy Eating in Overweight Children.”</span> <em>International Journal of Behavioral Nutrition and Physical Activity</em> 5 (3). <a href="https://doi.org/10.1186/1479-5868-5-3">https://doi.org/10.1186/1479-5868-5-3</a>.
+</div>
+<div id="ref-hanson_et_al_2005" class="csl-entry">
+Hanson, N. I., D. Neumark-Sztainer, M. E. Eisenberg, M. Story, and M. Wall. 2005. <span>“Associations Between Parental Report of the Home Food Environment and Adolescent Intakes of Fruits, Vegetables and Dairy Foods.”</span> <em>Public Health Nutrition</em> 8 (1). <a href="https://doi.org/10.1079/PHN2005661">https://doi.org/10.1079/PHN2005661</a>.
+</div>
+<div id="ref-levin_et_al_2018" class="csl-entry">
+Levin, D., D. Noriega, C. Dicken, A. Okrent, M. Harding, and M. Lovenheim. 2018. <em>Examining Store Scanner Data: A Comparison of the IRI Infoscan Data with Other Data Sets, 2008-12</em>. Technical Bulletin No. 1949. US Department of Agriculture, Economic Research Service.
+</div>
+<div id="ref-muth_et_al_2016" class="csl-entry">
+Muth, M. K., M. Sweitzer, D. Brown, et al. 2016. <em>Understanding IRI Household-Based and Store-Based Scanner Data</em>. Technical Bulletin No. 1942. US Department of Agriculture, Economic Research Service.
+</div>
+<div id="ref-REEDY2014881" class="csl-entry">
+Reedy, J., S. M. Krebs-Smith, P. E. Miller, et al. 2014. <span>“Higher Diet Quality Is Associated with Decreased Risk of All-Cause, Cardiovascular Disease, and Cancer Mortality Among Older Adults.”</span> <em>The Journal of Nutrition</em> 144 (6): 881–89. <a href="https://doi.org/10.3945/jn.113.189407">https://doi.org/10.3945/jn.113.189407</a>.
+</div>
+<div id="ref-thrifty_food_plan_2021" class="csl-entry">
+US Department of Agriculture. 2021. <em>Thrifty Food Plan, 2021</em>. Food and Nutrition Service No. 916. US Department of Agriculture. <a href="https://FNS.usda.gov/TFP">https://FNS.usda.gov/TFP</a>.
+</div>
+<div id="ref-fndds_2018" class="csl-entry">
+US Department of Agriculture, Agricultural Research Service. 2018. <em>USDA Food and Nutrient Database for Dietary Studies 2015-2016</em>. US Department of Agriculture, Agricultural Research Service. <a href="https://www.ars.usda.gov/nea/bhnrc/fsrg">https://www.ars.usda.gov/nea/bhnrc/fsrg</a>.
+</div>
+<div id="ref-fndds_2020" class="csl-entry">
+US Department of Agriculture, Agricultural Research Service. 2020. <em>USDA Food and Nutrient Database for Dietary Studies 2017-2018</em>. US Department of Agriculture, Agricultural Research Service. <a href="https://www.ars.usda.gov/nea/bhnrc/fsrg">https://www.ars.usda.gov/nea/bhnrc/fsrg</a>.
+</div>
+<div id="ref-usda_2020" class="csl-entry">
+US Department of Agriculture and US Department of Health and Human Services. 2020. <em>Dietary Guidelines for Americans, 2020-2025</em>. 9th edition. <span>US Department of Agriculture and US Department of Health and Human Services</span>. <a href="https://DietaryGuidelines.gov">https://DietaryGuidelines.gov</a>.
+</div>
+</div></section><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
+
+<ol>
+<li id="fn1"><p>NHANES is a multi-module continuous survey conducted by the Centers for Disease Control and Prevention. In addition to the WWEIA, NHANES includes a four-hour complete medical exam including a health history, and a blood and urine analysis.↩︎</p></li>
+</ol>
+</section></div> ]]></description>
+  <category>Machine learning</category>
+  <category>Natural language processing</category>
+  <category>Public policy</category>
+  <category>Health and wellbeing</category>
+  <guid>https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/01-purchase-to-plate.html</guid>
+  <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/01-pps.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
   <title>Food for Thought: First place winners – Auburn Big Data</title>
@@ -4596,239 +4986,6 @@ Wang, C., P. Nulty, and D. Lillis. 2021. <span>“A Comparative Study on Word Em
   <guid>https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/03-first-place-winners.html</guid>
   <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/03-auburn.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>The Food for Thought Challenge: Using AI to support evidence-based food and nutrition policy</title>
-  <dc:creator>Brian Tarran and Julia Lane</dc:creator>
-  <link>https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/00-food-for-thought.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>There’s a saying: “You are what you eat.” Its meaning is somewhat open to interpretation, as with many such sayings, but it is typically used to make the point that if you want to <em>be</em> well, you need to eat well. Nutrition scientists and dieticians spend their careers trying to figure out what “eating well” looks like – the foods the human body needs, in what quantities, and how best to consume them. Their research informs advice and guidance issued by health professionals and governments. Ultimately, though, the choice of what to eat falls to us – individuals and families – and our choices are often determined by our tastes, the availability of foodstuffs in our local stores, their price and affordability.</p>
-<p>So, what exactly <em>do</em> we eat? Answers come from a variety of sources. In the United States, there are dietary recall studies such as the <a href="https://www.cdc.gov/nchs/nhanes/index.htm">National Health and Nutrition Examination Survey</a>, which asks a sample of respondents to report their food and beverage consumption over a set period of time. There are also organisations like <a href="https://www.iriworldwide.com/en-gb">IRI</a> that collect point-of-sale data from retail stores on the actual food and drink being sold to consumers. By and large, this information comes from barcodes on product packaging being scanned at checkouts, so it is often referred to as “scanner data”.</p>
-<p>This data – from dietary recall studies and retail scanners – is valuable: once we know what people are eating, we can check the nutritional content of those foods and build up a picture of what the diet of a typical individual or family looks like and how it compares to the diet recommended by doctors and policymakers. And, if we know what other foodstuffs are available, how much they cost, and the nutritional value of those items, we can work out how much families need to spend, and on what, in order to eat well and, hopefully, be well.</p>
-<p>Figuring all this out is where something called the Purchase to Plate Crosswalk (PPC) comes in. It’s a key tool for understanding the “<a href="https://www.sciencedirect.com/science/article/pii/S0889157521005445">healthfulness of retail food purchases</a>” and it does this by linking IRI scanner data on what people buy with data on the nutritional content of those foods, as recorded in the US Department of Agriculture’s Food and Nutrient Database for Dietary Studies (FNDDS). But there’s a catch: scanner data is collected about hundreds of thousands of food products, whereas the FNDDS has nutritional profile information for only a few thousand items. Linking these two datasets therefore gives rise to a one-to-many matching problem – a problem that takes several hundred person-hours to resolve.</p>
-<p>What if machine learning can help? That question inspired a competition, the Food for Thought Challenge, organized by the Coleridge Initiative, a nonprofit organization working with governments to ensure that data are more effectively used for public decision-making. Researchers and data scientists were invited to use machine learning and natural language processing to more efficiently link data on supermarket products to nutrient databases.</p>
-<p>This collection of articles tells the story of the <a href="https://coleridgeinitiative.org/projects/food-for-thought">Food for Thought Challenge</a>. We begin by exploring the <a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/01-purchase-to-plate.html">policy issues</a> that drive the development of the PPC – the need to understand the national diet, developing healthy diet plans, and costing up those plans – and the issues posed by record linkage. Next, we learn about <a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/02-competition-design.html">the nature of the challenge and the structure of the competition in more detail</a>, and then the <a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/03-first-place-winners.html">three</a> <a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/04-second-place-winners.html">winning</a> <a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/05-third-place-winners.html">teams</a> walk us through their solutions. We end the collection with some closing thoughts on <a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/06-value-of-competitions.html">the value of competitions for addressing data scientific challenges in the public sector</a>.</p>
-<div class="nav-btn-container">
-<div class="grid">
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../../applied-insights/case-studies/index.html">Find more case studies</a></p>
-</div>
-</div>
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/01-purchase-to-plate.html">Part 1: The Purchase to Plate Suite →</a></p>
-</div>
-</div>
-</div>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the authors</dt>
-<dd>
-<strong>Brian Tarran</strong> is editor of Real World Data Science, and head of data science platform at the Royal Statistical Society.
-</dd>
-<dd>
-<strong>Julia Lane</strong> is a professor at the NYU Wagner Graduate School of Public Service and a NYU Provostial Fellow for Innovation Analytics. She co-founded the Coleridge Initiative, whose goal is to use data to transform the way governments access and use data for the social good through training programs, research projects and a secure data facility. She recently served on the Advisory Committee on Data for Evidence Building and the National AI Research Resources Task Force.
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Royal Statistical Society and Julia Lane
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@melaniesylim?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Melanie Lim</a> on <a href="https://unsplash.com/photos/246b6c6IeC0?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Tarran, Brian, and Julia Lane. 2023. “The Food for Thought Challenge: Using AI to support evidence-based food and nutrition policy.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/the-pulse/case-studies/posts/2023/08/21/00-food-for-thought.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-
- ]]></description>
-  <category>Machine learning</category>
-  <category>Natural language processing</category>
-  <category>Public policy</category>
-  <category>Health and wellbeing</category>
-  <guid>https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/00-food-for-thought.html</guid>
-  <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/00-shopping.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>Food for Thought: The importance of the Purchase to Plate Suite</title>
-  <dc:creator>Andrea Carlson and Thea Palmer Zimmerman</dc:creator>
-  <link>https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/01-purchase-to-plate.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<div class="callout callout-style-default callout-important callout-titled" style="margin-top: 0;">
-<div class="callout-header d-flex align-content-center">
-<div class="callout-icon-container">
-<i class="callout-icon"></i>
-</div>
-<div class="callout-title-container flex-fill">
-<span class="screen-reader-only">Important</span>Disclaimer
-</div>
-</div>
-<div class="callout-body-container callout-body">
-<p>The findings and conclusions in this publication are those of the authors and should not be construed to represent any official USDA or US Government determination or policy. This research was supported by the US Department of Agriculture’s Economic Research Service and Center for Nutrition, Policy and Promotion. Findings should not be attributed to Circana (formerly IRI).</p>
-</div>
-</div>
-<p>About 600,000 <a href="https://www.cdc.gov/nchs/fastats/leading-causes-of-death.htm">deaths per year in the United States</a> are related to chronic diseases that are linked to poor dietary choices. Many other individuals suffer from diet-related health conditions, which may limit their ability to work, learn, and be physically active <span class="citation" data-cites="usda_2020">(US Department of Agriculture and US Department of Health and Human Services 2020)</span>. In recognition of the link between diet and health, in 1974 the Senate Select Committee on Nutrition and Human Needs, originally formed to eliminate hunger, expanded its focus to improving eating habits, nutrition policy and the national diet. Since 1980, the Dietary Guidelines for Americans have been released every five years by the US Departments of Agriculture (USDA) and Health and Human Services (DHHS). The guidelines present “<a href="https://www.dietaryguidelines.gov/">advice on what to eat and drink to meet nutrient needs, promote health, and prevent disease</a>”.</p>
-<p>Because there can be economic and social barriers to maintaining a healthy diet, USDA promotes <a href="https://www.usda.gov/nutrition-security">Food and Nutrition Security</a> so that everyone has consistent and equitable access to healthy, safe, and affordable foods that promote optimal health and well-being. A set of data tools called the <a href="https://www.ers.usda.gov/data-products/purchase-to-plate/">Purchase to Plate Suite</a> (PPS) supports these goals by enabling the update of the <a href="https://www.fns.usda.gov/snap/thriftyfoodplan#:~:text=What%20is%20the%20Thrifty%20Food,lowest%20cost%20of%20the%20four.">Thrifty Food Plan</a> (TFP), which estimates how much a budget-conscious family of four needs to spend on groceries to ensure a healthy diet. The TFP market basket – consisting of the specific amounts of various food categories required by the plan – forms the basis of the maximum allotment for the Supplemental Nutrition Assistance Program (SNAP, formerly known as the “Food Stamps” program), which provided financial support towards the cost of groceries for <a href="https://www.fns.usda.gov/pd/supplemental-nutrition-assistance-program-snap">over 41 million individuals in almost 22 million households in fiscal year 2022</a>.</p>
-<p>The 2018 Farm Act (Agriculture Improvement Act of 2018) requires that USDA reevaluate the TFP every five years using current food composition, consumption patterns, dietary guidance, and food prices, and using approved scientific methods. USDA’s Economic Research Service (ERS) was charged with estimating the current food prices using retail food scanner data <span class="citation" data-cites="levin_et_al_2018 muth_et_al_2016">(Levin et al. 2018; Muth et al. 2016)</span> and utilized the PPS for this task. The most recent TFP update was released in August 2021 and the revised cost of the market basket was the first non-inflation adjustment increase in benefits for SNAP in over 40 years <span class="citation" data-cites="thrifty_food_plan_2021">(US Department of Agriculture 2021)</span>.</p>
-<p>The PPS combines datasets to enhance research related to the economics of food and nutrition. There are four primary components of the suite:</p>
-<ul>
-<li>Purchase to Plate Crosswalk (PPC),</li>
-<li>Purchase to Plate Price Tool (PPPT),</li>
-<li>Purchase to Plate National Average Prices (PP-NAP) for the National Health and Nutrition Examination Survey (NHANES), and</li>
-<li>Purchase to Plate Ingredient Tool (PPIT).</li>
-</ul>
-<p>The PPC allows researchers to measure the healthfulness of store purchases. On average <a href="https://www.ers.usda.gov/data-products/foodaps-national-household-food-acquisition-and-purchase-survey/summary-findings/#calories">US consumers acquire about 75% of their calories from retail stores</a>, and there are a number of studies linking the availability of foods at home to the healthfulness of the overall diet <span class="citation" data-cites="gattshall_et_al_2008 hanson_et_al_2005">(e.g., Gattshall et al. 2008; Hanson et al. 2005)</span>. Thus, understanding the healthfulness of store purchases allows us to understand differences in consumers who purchase healthy versus less healthy foods, and may contribute to better policies that promote healthier food purchases. While healthier diets are linked to a lower risk of disease outcomes <span class="citation" data-cites="REEDY2014881">(Reedy et al. 2014)</span>, other factors such as health care access may also be contributors <span class="citation" data-cites="cleary_et_al_2022">(Cleary et al. 2022)</span>. The PPC also forms the basis of the price tool, PPPT – which allows researchers to estimate custom prices for dietary recall studies – and a new ERS data product, the <a href="https://www.ers.usda.gov/data-products/purchase-to-plate/">PP-NAP</a>. The national average prices from PP-NAP are used in reevaluating the TFP. By using the PP-NAP with 24-hour dietary recall information from surveys such as What We Eat in America (<a href="https://www.ars.usda.gov/northeast-area/beltsville-md-bhnrc/beltsville-human-nutrition-research-center/food-surveys-research-group/docs/wweianhanes-overview/">WWEIA</a>) – the dietary component of the nationally representative <a href="https://www.cdc.gov/nchs/nhanes/index.htm">National Health and Nutrition Examination Survey</a>(NHANES)<sup>1</sup> – researchers can examine the relationship between the cost of food, dietary intake, and chronic diseases linked to poor diets. The price estimates also allow researchers to develop cost-effective healthy diets such as <a href="https://www.myplate.gov/myplate-kitchen/recipes">MyPlate Kitchen</a>. The final component of the Purchase to Plate Suite, the ingredient tool (PPIT), breaks dietary recall-reported foods back into purchasable ingredients, based on US retail food purchases. The PPIT is also used in the revaluation of the TFP, and by researchers who want to look at the relationship between reported ingestion of grocery items, cost and disease outcomes using WWEIA/NHANES. More information on the development of the PPC is available in two papers by Carlson et al. <span class="citation" data-cites="carlson_et_al_2019 carlson_et_al_2022">(2019, 2022)</span>.</p>
-<p>The Food for Thought competition aimed to support the development of the PPC – and thus policy-oriented research – by linking retail food scanner data to the USDA nutrition data used to analyze NHANES dietary recall data, specifically the Food and Nutrient Database for Dietary Studies (FNDDS) <span class="citation" data-cites="fndds_2018 fndds_2020">(2018, 2020)</span>. In particular, the competition set out to use artificial intelligence (AI) to reduce human resources in creating the links for the PPC, while still maintaining the high-quality standards required for reevaluating the TFP and for data published by ERS (which is one of 13 Principle Statistical Agencies in the United States Federal Government).</p>
-<section id="methods-used-to-date" class="level2">
-<h2 class="anchored" data-anchor-id="methods-used-to-date">Methods used to date</h2>
-<p>On the surface, the linking process may appear simple: both the FNDDS and retail food scanner data are databases of food. But the scanner data are produced for market research, and the FNDDS for dietary studies. The scanner data include about 350,000 items with sales each year, while the FNDDS has only 10,000–15,000 items. Scanner data relates to specific products, while FNDDS items are often more general. Both datasets have different hierarchical structures – the FNDDS hierarchy is based around major food groups: dairy; meat, poultry and seafood; eggs; nuts and legumes; grains; fruits; vegetables; fats and oils; and sugars, sweets, and beverages. Items fall into the groups regardless of preparation method or form. That is, broccoli prepared from frozen and from fresh both appear in the vegetable group, and for some fruits and vegetables, the fresh, frozen, canned and dried form are the same FNDDS item. Vegetable-based mixed dishes, such as broccoli and carrot stir-fry or soup, are also classified in the vegetable group. On the other hand, the scanner data classifies foods by grocery aisle. That is, the fresh and frozen broccoli are classified in different areas: produce and frozen vegetables. Similarly, when sold as a prepared food, the broccoli and carrot stir-fry may be found in the frozen entries, as a kit in either the frozen or produce section, refrigerated foods, or all of these.</p>
-<p>To allow researchers to import the FNDDS nutrient data into the scanner data, a one-to-many match between FNDDS and scanner data items was needed. The food descriptions in the scanner data include brand names and package sizes and are written as a consumer would pronounce them – e.g., fresh and crisp broccoli florets, ready-cut, 10 oz – versus a more general FNDDS description such as “Broccoli, raw”. (Also linked to the “Broccoli, raw” code would be broccoli sold with stems attached, broccoli spears, and any other way raw broccoli is sold.) In the scanner data, the Universal Product Code (UPC) and the European Article Number (EAN) can link items between tables within the scanner data, as well as between datasets of grocery items, such as the USDA Global Branded Foods Product Database, a component of <a href="https://fdc.nal.usda.gov/index.html">USDA’s Food Data Central</a>. However, these codes are not related to the FNDDS codes, or any other column within the FNDDS. In other words, before development of the PPC, there were no established linking identifiers.</p>
-<p>Figure 1 shows the process USDA uses to develop matches between scanner data and FNDDS.</p>
-<p><a href="images/pt1-fig1.png"><img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/pt1-fig1.png" class="img-fluid" width="700"></a></p>
-<div class="figure-caption">
-<p><strong>Figure 1:</strong> Process currently used to create the matches between the USDA Food and Nutrient Database for Dietary Studies (FNDDS) and the retail scanner data (labelled “IRI” for the IRI InfoScan and Consumer Network) product dictionaries. Source: Author provided.</p>
-</div>
-<p>We start the linking process by categorizing the scanner data items into homogeneous groups to make the first round of automated matching more efficient. To save time, we use the second lowest hierarchical category in the scanner data which generally divides items within a grocery aisle into homogenous groups such as produce, canned beans, baking mixes, and bread. Once the linking categories for scanner data are established, we select appropriate items from the FNDDS. Since the FNDDS is highly structured, this selection is usually straightforward.</p>
-<p>Our next step is to use semantic matching to create a search table that aligns similar terms within the IRI product dictionary and FNDDS. This first requires that we extract attributes from the FNDDS descriptions into fields similar to those in the scanner data product dictionary. The FNDDS descriptions are found across multiple columns because they are added as the need arises to provide examples of brand names or alternative descriptions of foods which help code the foods WWEIA participants report eating. We manually create matching tables that link terms used in FNDDS to those used in the scanner data, organized by the fields defined in the restructured FNDDS. We then use this table as the basis of a probabilistic matching process. For example, when linking the produce group, “fresh” in the scanner data would be aligned with “raw” and “prepared from fresh” and NOT “prepared from frozen” in the FNDDS, and “broccoli florets” would also be aligned with “raw” and “broccoli”. Since the FNDDS is designed to code the foods individuals report eating, many of the foods in the FNDDS are already prepared and result in descriptions such as “broccoli, steamed, prepared from fresh” or “broccoli, boiled, prepared from frozen”.</p>
-<p>Once the linking table is established, the probabilistic match process returns the single best possible match for each item in the scanner data. For example, a match between fresh broccoli florets and frozen broccoli would have a lower probability score than “broccoli, raw”. Because these matches form the basis of major USDA policies, we cannot accept an error rate of more than 5 percent, and lower is preferred. To reach that goal, nutritionists review every match to make sure the probabilistic match did not return a match between cauliflower florets and fresh broccoli, say, or that a broccoli and carrot stir-fry is not matched to a dish with broccoli, carrots, and chicken. The correct matches, such as the one between fresh broccoli florets and raw broccoli, are set aside while the items with an incorrect match, such as cauliflower florets and the broccoli and carrot stir-fry, are used to revise the search table. Revisions might include adding (NOT chicken) to the broccoli and carrot stir-fry dish. Mixed dishes — such as the broccoli and carrot stir-fry — pose particular challenges because there are a wide variety of similar products available in the grocery store. After a few rounds of revising the search table and running the probabilistic match process, it is more efficient to use a manual match, established by one nutritionist and reviewed by another, after which the match is assumed to be correct.</p>
-<p>The process improved with each new wave of FNDDS and IRI data. Our first creation of the PPC linked the FNDDS 2011/12 to the 2013 IRI retail scanner data. Subsequent waves started with the previous search table and resulting matches were reviewed by nutritionists. We also used more fields in the IRI product dictionary to create the homogeneous linking groups and made modifications to these groups with each wave. During each wave we experimented with the number of rounds of probabilistic matching that was the most cost effective. For some linking groups it took less human time to manually match from the start, while for other groups it was more efficient to do multiple rounds of improvements to the search table. Starting with the most recent wave (matching FNDDS 2017/18 to the 2017 and 2018 retail scanner data), we assumed previous matches appearing in the newer data were correct. Although this assumption was good for most matches, a review demonstrated the need to review previous matches prior to removing the item from the list of scanner data items needing FNDDS matches. In the future we intend to explore methods developed by the participants of the Food for Thought competition.</p>
-</section>
-<section id="linking-challenges" class="level2">
-<h2 class="anchored" data-anchor-id="linking-challenges">Linking challenges</h2>
-<p>An ongoing challenge to the linking problem is that both the scanner data and the FNDDS undergo substantive changes each year, meaning that both the previous matches and search tables need to be reviewed and revised with each new effort, as tables that work with one cycle of FNDDS and scanner data will need revisions to use with the next cycle. Changes to the scanner data that impact our current method include dropped and added items, data corrections, and revisions to the categories that form the basis of the homogeneous linking groups. In addition, there are errors such as incorrect food descriptions, conflicting package size information, and changes in the item description from year to year. Since the FNDDS is designed to support dietary recall studies, revisions reflect both changes to available foods and the level of detail respondents can provide. These revisions result in dropped/added food codes, changes to food descriptions that impact which scanner data items match to the FNDDS items, and revisions to recipes used in the nutrient coding which impacts the number of retail ingredients available in the FNDDS.</p>
-<p>Of the four parts of the PPS, establishing the matches is the most time-consuming task and constitutes at least 60 percent of the total budget. In the most recent round, we had 168 categories and each one went through 2-3 automated matching rounds; after each round, nutritionists spent an average of two hours reviewing the matches. This adds up to somewhere between 670 and 1,000 hours of review time. After the automated review, manual matching requires an additional 300 hours. Reducing the amount of time required to establish matches and link the FNDDS and retail scanner datasets may lead to significant time savings, resulting in faster data availability. That, in turn, could allow more timely policy-based research, and the mandated revision of the Thrifty Food Plan can continue with the most recent food price data.</p>
-<div class="nav-btn-container">
-<div class="grid">
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/00-food-for-thought.html">← Introduction</a></p>
-</div>
-</div>
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/02-competition-design.html">Part 2: Competition design →</a></p>
-</div>
-</div>
-</div>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the authors</dt>
-<dd>
-<strong>Andrea Carlson</strong> is an agricultural economist in the Food Markets Branch of the Food Economics Division in USDA’s Economic Research Service. She is the project lead for the Purchase to Plate Suite, which allows users to import USDA nutrient and food composition data into retail food scanner data acquired by USDA and estimate individual food prices for dietary intake data.
-</dd>
-<dd>
-<strong>Thea Palmer Zimmerman</strong> is a senior study director and research nutritionist at Westat.
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Image credit</dt>
-<dd>
-Thumbnail photo by <a href="https://unsplash.com/@neonbrand?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Kenny Eliason</a> on <a href="https://unsplash.com/photos/SvhXD3kPSTY?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Carlson, Andrea, and Thea Palmer Zimmerman. 2023. “Food for Thought: The importance of the Purchase to Plate Suite.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/the-pulse/case-studies/posts/2023/08/21/01-purchase-to-plate.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-</section>
-<section id="acknowledgements" class="level2">
-<h2 class="anchored" data-anchor-id="acknowledgements">Acknowledgements</h2>
-<p>The research presented in this compendium supports the Purchase to Plate Suite of data products. Carlson has been privileged to both develop and lead this project over the course of her career, but it is not a solo project. Many thanks to the Linkages Team from USDA’s Economic Research Service (Christopher Lowe, Mark Denbaly Elina Page, and Catherine Cullinane Thomas) the Center for Nutrition Policy and Promotion (Kristin Koegel, Kevin Kuczynski, Kevin Meyers Mathieu, TusaRebecca Pannucci), and our contractor Westat, Inc.&nbsp;(Thea Palmer Zimmerman, Carina E. Tornow, Amber Brown McFadden, Caitlin Carter, Viji Narayanaswamy, Lindsay McDougal, Elisha Lubar, Lynnea Brumby, Raquel Brown, and Maria Tamburri). Many others have supported this project over the years.</p>
-
-
-
-</section>
-
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent">
-<div id="ref-carlson_et_al_2019" class="csl-entry">
-Carlson, A. C., E. T. Page, T. P. Zimmerman, C. E. Tornow, and S. Hermansen. 2019. <em>Linking USDA Nutrition Databases to IRI Household-Based and Store-Based Scanner Data</em>. Technical Bulletin No. 1952. US Department of Agriculture, Economic Research Service.
-</div>
-<div id="ref-carlson_et_al_2022" class="csl-entry">
-Carlson, A. C., C. E. Tornow, E. T. Page, A. Brown McFadden, and T. Palmer Zimmerman. 2022. <span>“Development of the Purchase to Plate Crosswalk and Price Tool: Estimating Prices for the National Health and Nutrition Examination Survey (NHANES) Foods and Measuring the Healthfulness of Retail Food Purchases.”</span> <em>Journal of Food Composition and Analysis</em> 106: 104344. <a href="https://doi.org/10.1016/j.jfca.2021.104344">https://doi.org/10.1016/j.jfca.2021.104344</a>.
-</div>
-<div id="ref-cleary_et_al_2022" class="csl-entry">
-Cleary, R., Y. Liu, and A. Carlson. 2022. <em>Differences in the Distribution of Nutrition Between Households Above and Below Poverty</em>. Agricultural and Applied Economic Association Annual Meeting. Anaheim, CA. <a href="https://ageconsearch.umn.edu/record/322267">https://ageconsearch.umn.edu/record/322267</a>.
-</div>
-<div id="ref-gattshall_et_al_2008" class="csl-entry">
-Gattshall, M. L., J. A. Shoup, J. A. Marshall, L. A. Crane, and P. A. Estabrooks. 2008. <span>“Validation of a Survey Instrument to Assess Home Environments for Physical Activity and Healthy Eating in Overweight Children.”</span> <em>International Journal of Behavioral Nutrition and Physical Activity</em> 5 (3). <a href="https://doi.org/10.1186/1479-5868-5-3">https://doi.org/10.1186/1479-5868-5-3</a>.
-</div>
-<div id="ref-hanson_et_al_2005" class="csl-entry">
-Hanson, N. I., D. Neumark-Sztainer, M. E. Eisenberg, M. Story, and M. Wall. 2005. <span>“Associations Between Parental Report of the Home Food Environment and Adolescent Intakes of Fruits, Vegetables and Dairy Foods.”</span> <em>Public Health Nutrition</em> 8 (1). <a href="https://doi.org/10.1079/PHN2005661">https://doi.org/10.1079/PHN2005661</a>.
-</div>
-<div id="ref-levin_et_al_2018" class="csl-entry">
-Levin, D., D. Noriega, C. Dicken, A. Okrent, M. Harding, and M. Lovenheim. 2018. <em>Examining Store Scanner Data: A Comparison of the IRI Infoscan Data with Other Data Sets, 2008-12</em>. Technical Bulletin No. 1949. US Department of Agriculture, Economic Research Service.
-</div>
-<div id="ref-muth_et_al_2016" class="csl-entry">
-Muth, M. K., M. Sweitzer, D. Brown, et al. 2016. <em>Understanding IRI Household-Based and Store-Based Scanner Data</em>. Technical Bulletin No. 1942. US Department of Agriculture, Economic Research Service.
-</div>
-<div id="ref-REEDY2014881" class="csl-entry">
-Reedy, J., S. M. Krebs-Smith, P. E. Miller, et al. 2014. <span>“Higher Diet Quality Is Associated with Decreased Risk of All-Cause, Cardiovascular Disease, and Cancer Mortality Among Older Adults.”</span> <em>The Journal of Nutrition</em> 144 (6): 881–89. <a href="https://doi.org/10.3945/jn.113.189407">https://doi.org/10.3945/jn.113.189407</a>.
-</div>
-<div id="ref-thrifty_food_plan_2021" class="csl-entry">
-US Department of Agriculture. 2021. <em>Thrifty Food Plan, 2021</em>. Food and Nutrition Service No. 916. US Department of Agriculture. <a href="https://FNS.usda.gov/TFP">https://FNS.usda.gov/TFP</a>.
-</div>
-<div id="ref-fndds_2018" class="csl-entry">
-US Department of Agriculture, Agricultural Research Service. 2018. <em>USDA Food and Nutrient Database for Dietary Studies 2015-2016</em>. US Department of Agriculture, Agricultural Research Service. <a href="https://www.ars.usda.gov/nea/bhnrc/fsrg">https://www.ars.usda.gov/nea/bhnrc/fsrg</a>.
-</div>
-<div id="ref-fndds_2020" class="csl-entry">
-US Department of Agriculture, Agricultural Research Service. 2020. <em>USDA Food and Nutrient Database for Dietary Studies 2017-2018</em>. US Department of Agriculture, Agricultural Research Service. <a href="https://www.ars.usda.gov/nea/bhnrc/fsrg">https://www.ars.usda.gov/nea/bhnrc/fsrg</a>.
-</div>
-<div id="ref-usda_2020" class="csl-entry">
-US Department of Agriculture and US Department of Health and Human Services. 2020. <em>Dietary Guidelines for Americans, 2020-2025</em>. 9th edition. <span>US Department of Agriculture and US Department of Health and Human Services</span>. <a href="https://DietaryGuidelines.gov">https://DietaryGuidelines.gov</a>.
-</div>
-</div></section><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>NHANES is a multi-module continuous survey conducted by the Centers for Disease Control and Prevention. In addition to the WWEIA, NHANES includes a four-hour complete medical exam including a health history, and a blood and urine analysis.↩︎</p></li>
-</ol>
-</section></div> ]]></description>
-  <category>Machine learning</category>
-  <category>Natural language processing</category>
-  <category>Public policy</category>
-  <category>Health and wellbeing</category>
-  <guid>https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/01-purchase-to-plate.html</guid>
-  <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/01-pps.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 <item>
   <title>Food for Thought: Competition and challenge design</title>
