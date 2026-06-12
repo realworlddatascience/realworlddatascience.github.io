@@ -17,7 +17,88 @@
 <width>144</width>
 </image>
 <generator>quarto-1.9.38</generator>
-<lastBuildDate>Tue, 05 May 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 12 Jun 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Data Quality Under the Lens: Do You Really Have Hypertension?</title>
+  <dc:creator>Roger Hoerl and Hannah de Mowbray</dc:creator>
+  <link>https://realworlddatascience.net/the-pulse/posts/2026/06/12/DQUL_hypertension.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><em>Data Quality Under the Lens is a new Real World Data Science column. Each edition explores real-world moments where data quality shaped outcomes, sometimes driving failure, sometimes preventing it. From near misses to hard lessons learned, we look at what happens when data is up to the task… or falls short.</em></p>
+<p><em>If you spot a real world problem and think data quality could lie at the heart of the story, <a href="(mailto:rwds@rss.org.uk)">send it in to the RWDS mailbox</a> and our Data Quality Detectives will analyse whether the Silent Drift, Proxy Trap, Spreadsheet Cascade, Governance Vacuum or Metric Mirage is responsible.</em></p>
+<section id="the-case-of-the-month" class="level2">
+<h2 class="anchored" data-anchor-id="the-case-of-the-month">The Case of the Month</h2>
+<p>According to the US Centers for Disease Control (CDC), roughly half of adults in the US have hypertension (high blood pressure). Roughly 60% of these take medication to keep their blood pressure under control.</p>
+<p>However, measuring blood pressure turns out to be much more complicated than is widely acknowledged. This leads to the question of how many “false positives” there might be; that is, how many people diagnosed with high blood pressure don’t actually have it.</p>
+<p>Blood pressure medication, like all medication, has side effects, and people who don’t actually have high blood pressure shouldn’t be taking these medications. There may also be false negatives – people who are told they have normal blood pressure but are actually hypertensive, which can have extreme and <a href="https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure">well documented</a> implications. This is why obtaining high-quality data prior to diagnosis and treatment is so critical in addressing this common medical problem.</p>
+</section>
+<section id="what-actually-happened" class="level2">
+<h2 class="anchored" data-anchor-id="what-actually-happened">What Actually Happened?</h2>
+<p>As noted by <a href="https://www.ahajournals.org/doi/10.1161/HYPERTENSIONAHA.119.14171">Myers and Kaczorowski</a>, different ways of measuring blood pressure produce different results. In particular, the automated devices commonly used in clinical settings, as well as <a href="https://www.sciencedirect.com/science/article/pii/S2589790X24005171">those bought for at-home measurement</a>, are known to be highly variable. For example, one of the current authors experienced an automated reading in a clinic of 138/92, but when measured manually five minutes later, the reading was 123/82.</p>
+<p>Manual readings are also subject to tester-to-tester variation. Again, one of the authors experienced a 152/96 manual reading from a nurse, followed by a 122/78 reading by a doctor a few minutes later.</p>
+<p>These are not the only issues. In addition to ensuring that the patient is at rest, the American Medical Association recommends seven tips to ensure accurate and consistent blood pressure measurement:</p>
+<ol type="1">
+<li>The patient’s arm should be held at the same height as the heart.</li>
+<li>The cuff should be placed on the bare arm, with no clothing between the cuff and arm.</li>
+<li>The correct size cuff should be used, based on the diameter of the patient’s arm.</li>
+<li>The patient should not speak, or be spoken to, during measurement.</li>
+<li>The patient should have an empty bladder.</li>
+<li>The back and feet of the patient should be supported (e.g., feet not “dangling” from the examination table).</li>
+<li>The patient’s legs should not be crossed.</li>
+</ol>
+<p>Research has been carried out that shows how <a href="https://www.heart.org/en/news/2022/03/01/when-it-comes-to-accurate-blood-pressure-readings-cuff-size-matters">important cuff sizing is in accurately diagnosing hypertension</a>, especially in overweight adults. The research showed that too-small cuff size resulted in a mistaken diagnosis of high blood pressure in 39% of patients, while 22% of those with hypertension were given false negatives by the automated monitors.</p>
+<p>And this is only 1 of the 7 guidelines. In our collective experience, medical personnel frequently do not follow a number of the steps necessary for accurate readings. In fact, in a <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC12529977/">statistical analysis of stock images in which the subject is measuring blood pressure</a>, including images disseminated by prestigious medical and educational institutions like Harvard Publishing and Oxford University, only 1 in 7 images aligned with all the recommended clinical guidelines. So it is hardly surprising that inaccurate and highly variable measurements are common.</p>
+</section>
+<section id="disaster-or-near-miss" class="level2">
+<h2 class="anchored" data-anchor-id="disaster-or-near-miss">Disaster or Near-Miss?</h2>
+<p>Taking medication unnecessarily, or not taking medication when it is needed, can have serious consequences, including stroke and heart attack. Modelling data from Canada, <a href="https://www.sciencedirect.com/science/article/pii/S2589790X24005171">Leung et al</a>. found that, “If both systolic and diastolic BP were overestimated by 10 mm Hg, the prevalence of hypertension would falsely increase by 50% to 63%, potentially leading to overtreatment of approximately 3.5 million Canadians.” We suspect that the implications, both for misdiagnosis as well as under-diagnosis, are very serious, and this is at least a potential disaster.</p>
+<p>But there is also another angle to consider. The impact this may have on trust in medical results, as well as the implications for population statistics and national and international health interventions, are unknown. As good data are essential for improving health outcomes, especially in more deprived areas (see for example, the <a href="https://www.google.com/url?q=https://assets.publishing.service.gov.uk/media/5a7f1f3640f0b6230268d90f/Tackling_high_blood_pressure.pdf&amp;sa=D&amp;source=docs&amp;ust=1781024015411593&amp;usg=AOvVaw32LiyKGSRCSFlcJJg4QTPn">Public Health England report ’Tackling high blood pressure From evidence into action</a>’), this prevalence of poor data is especially concerning.</p>
+</section>
+<section id="why-this-matters-now" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-matters-now">Why This Matters Now</h2>
+<p>The differences noted previously are of clinical significance. In addition to deciding whether someone should or should not be on medication, there are decisions as to which medications to prescribe, and at what dosages, with one of the authors’relatives having been on three different blood pressure medications at the same time, with serious side effects. Regardless of the expertise of physicians and nurses, inaccurate data will prevent them from making the proper decisions for their patients.</p>
+<p>This is also relevant for research – and decisions made based on that research – that aggregates data to inform population-level health programming and initiatives that target hypertension across the globe, like the WHO’s <a href="https://www.who.int/publications/i/item/9789240115569">Global report on hypertension 2025: high stakes: turning evidence into action</a>.</p>
+</section>
+<section id="the-practitioner-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="the-practitioner-takeaways">The Practitioner Takeaways</h2>
+<p>For patients, the advice is simple enough: when having your blood pressure taken, insist on medical staff following the recommended protocols. Don’t rely solely on the automated measurement.</p>
+<p>But there is also the question of how inaccurate readings impact population data, resource allocation and health outcome measurement on a national and international level. For the data scientist, the key lesson is to make sure data are never taken at “face value,” and to always delve into the “data pedigree,” the details of how, when, where, etc. the data were collected.</p>
+<p>In the meantime, medical professionals taking care to follow the guidelines, recognise the issues with BP readings and communicate them clearly to patients, and not giving too much credence to any one measurement, could go a long way to combatting over-treatment and undertreatment, as well as mistrust in results.</p>
+</section>
+<section id="the-data-quality-pattern" class="level2">
+<h2 class="anchored" data-anchor-id="the-data-quality-pattern">The Data Quality Pattern</h2>
+<p>The fundamental issue here is that clinical decisions are being made based on poor and inaccurate data. But the cascading consequences of poor measurement, both for patient trust and population level outcomes, could be leading to what we at Data Quality Under the Lens call the Metric Mirage: a measure that appears to show success, failure, or progress, but is misleading because it is poorly defined, incomplete, or taken out of context.</p>
+<p>With an underlying instability involving questionable measurement accuracy and precision, the pivotal questions around health outcomes and the reliability of the data that backs decisions become paramount. Are the data being used to make and measure medical interventions fit for purpose, or are choices being made based on only the mirage of evidenced understanding?</p>
+<p>Data that come from an automated device, or from a trained and experienced healthcare provider, are often assumed to be accurate. In the case of blood pressure measurement, they frequently are not.</p>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<div class="g-col-12 g-col-md-6">
+<p><strong>Copyright and licence</strong> : © 2026 Roger Hoerl and Hannah de Mowbray <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"> <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"> </a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>How to cite</strong> :<br>
+Hoerl and de Mowbray 2026. “<strong>Data Quality Under the Lens: Do You Really Have Hypertension?</strong>” <em>Real World Data Science</em>, 2026. <a href="https://realworlddatascience.net/the-pulse/posts/2026/06/12/DQUL_hypertension.html">URL</a></p>
+</div>
+</div>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <category>AI</category>
+  <category>Governance</category>
+  <category>Policy</category>
+  <guid>https://realworlddatascience.net/the-pulse/posts/2026/06/12/DQUL_hypertension.html</guid>
+  <pubDate>Fri, 12 Jun 2026 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/the-pulse/posts/2026/06/12/images/hypertension-thumb.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>Data Quality Under the Lens: UK Prison Release Errors</title>
   <dc:creator>A. Rosemary Tate</dc:creator>
@@ -1452,786 +1533,6 @@ Tarran, Brian. 2024. “Creating a web publication with Quarto: the Real World D
   <guid>https://realworlddatascience.net/the-pulse/editors-blog/posts/2024/01/03/posit-conf-video.html</guid>
   <pubDate>Wed, 03 Jan 2024 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/the-pulse/editors-blog/posts/2024/01/03/images/video-grab.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>A Christmas card in R for the Real World Data Science community</title>
-  <dc:creator>Brian Tarran</dc:creator>
-  <link>https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/12/12/rwds-xmas-card.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>A few weeks back, I managed to catch Nicola Rennie’s presentation to the <a href="https://www.meetup.com/en-AU/oxford-r-user-group/events/297417319/">Oxford R User Group on how to create Christmas cards in R</a>. It was a fun session, and thanks to Nicola’s clear and concise explanations, I felt emboldened to attempt my own design, using her code as a base.</p>
-<p>If you missed the Meetup session, Nicola has kindly written <a href="../../../../../../applied-insights/tutorials/posts/2023/12/12/xmas-cards.html">a tutorial for Real World Data Science</a> that walks through all the necessary steps to create a snowman against a snowy night’s sky. You’ll want to read that tutorial first before returning to this blog.</p>
-<p>My design uses the same basic setting as Nicola’s but updates the scene to reflect the Real World Data Science (RWDS) brand colours, and I replace the snowman with a Christmas tree adorned with coloured baubles.</p>
-<section id="snowy-sky" class="level2">
-<h2 class="anchored" data-anchor-id="snowy-sky">Snowy sky</h2>
-<p>We begin by loading in the following packages, adding a couple extra to the ones Nicola uses:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(ggplot2)</span>
-<span id="cb1-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(ggforce)</span>
-<span id="cb1-3"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(sf)</span>
-<span id="cb1-4"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(png)</span>
-<span id="cb1-5"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">library</span>(patchwork) </span></code></pre></div></div>
-<p>Then we add the sky, now recoloured in RWDS purple using <code>fill</code> and <code>color</code>:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb2-1">s1 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ggplot</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb2-2">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">theme_void</span>() <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb2-3">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">theme</span>(</span>
-<span id="cb2-4">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">plot.background =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">element_rect</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#939bc9"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">color =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#939bc9"</span>)</span>
-<span id="cb2-5">  )</span>
-<span id="cb2-6">s1</span></code></pre></div></div>
-<p>We use the same code as Nicola to create the snowflakes, but we do this step first before adding snow on the ground, as we’re using the RWDS site background colour, hex code <code>#f0eeb</code>, to represent our settled snow:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb3-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># add snowflakes</span></span>
-<span id="cb3-2"><span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">set.seed</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">20231225</span>)</span>
-<span id="cb3-3">n <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">100</span></span>
-<span id="cb3-4">snowflakes <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">data.frame</span>(</span>
-<span id="cb3-5">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">runif</span>(n),</span>
-<span id="cb3-6">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">runif</span>(n)</span>
-<span id="cb3-7">)</span>
-<span id="cb3-8">s2 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> s1 <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb3-9">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_point</span>(</span>
-<span id="cb3-10">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">data =</span> snowflakes,</span>
-<span id="cb3-11">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">mapping =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">aes</span>(</span>
-<span id="cb3-12">      <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> x,</span>
-<span id="cb3-13">      <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> y</span>
-<span id="cb3-14">    ),</span>
-<span id="cb3-15">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"white"</span>,</span>
-<span id="cb3-16">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">pch =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">8</span></span>
-<span id="cb3-17">  )</span>
-<span id="cb3-18">s2</span>
-<span id="cb3-19"></span>
-<span id="cb3-20"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># snow on ground</span></span>
-<span id="cb3-21">s3 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> s2 <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb3-22">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">annotate</span>(</span>
-<span id="cb3-23">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">geom =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"rect"</span>,</span>
-<span id="cb3-24">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">xmin =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">xmax =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>,</span>
-<span id="cb3-25">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">ymin =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">ymax =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.2</span>,</span>
-<span id="cb3-26">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#f0eeeb"</span>, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"#f0eeeb"</span></span>
-<span id="cb3-27">  ) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb3-28">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">xlim</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb3-29">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">ylim</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">1</span>) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb3-30">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">coord_fixed</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">expand =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">FALSE</span>)</span>
-<span id="cb3-31">s3</span></code></pre></div></div>
-<div class="quarto-layout-panel" data-layout-ncol="2">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/12/12/images/s2.png" class="img-fluid" alt="Purple square with white snowflakes."></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: center;">
-<p><img src="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/12/12/images/s3.png" class="img-fluid" alt="Purple square with white snowflakes and off-white rectangle at the bottom."></p>
-</div>
-</div>
-</div>
-</section>
-<section id="oh-christmas-tree" class="level2">
-<h2 class="anchored" data-anchor-id="oh-christmas-tree">Oh, Christmas tree</h2>
-<p>To build her snowman, Nicola created a series of circles that were stacked and overlaid. A simple Christmas tree, though, requires a series of triangles. So, taking Nicola’s snowman’s nose (also a triangle) as our starting point, we coded three sets of coordinates – <code>tree_pts1</code>, <code>tree_pts2</code>, and <code>tree_pts3</code> – for three triangles of decreasing size that would sit on top of one another.</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb4-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># coordinates for tree base</span></span>
-<span id="cb4-2">tree_pts1 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">matrix</span>(</span>
-<span id="cb4-3">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(</span>
-<span id="cb4-4">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.2</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3</span>,</span>
-<span id="cb4-5">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.6</span>,</span>
-<span id="cb4-6">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.8</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3</span>,</span>
-<span id="cb4-7">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.2</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3</span></span>
-<span id="cb4-8">  ),</span>
-<span id="cb4-9">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">ncol =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>,</span>
-<span id="cb4-10">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">byrow =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">TRUE</span></span>
-<span id="cb4-11">)</span>
-<span id="cb4-12"></span>
-<span id="cb4-13"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># coordinates for tree middle</span></span>
-<span id="cb4-14">tree_pts2 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">matrix</span>(</span>
-<span id="cb4-15">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(</span>
-<span id="cb4-16">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>,</span>
-<span id="cb4-17">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.7</span>,</span>
-<span id="cb4-18">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.7</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>,</span>
-<span id="cb4-19">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span></span>
-<span id="cb4-20">  ),</span>
-<span id="cb4-21">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">ncol =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>,</span>
-<span id="cb4-22">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">byrow =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">TRUE</span></span>
-<span id="cb4-23">)</span>
-<span id="cb4-24"></span>
-<span id="cb4-25"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># coordinates for tree top</span></span>
-<span id="cb4-26">tree_pts3 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">matrix</span>(</span>
-<span id="cb4-27">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(</span>
-<span id="cb4-28">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.65</span>,</span>
-<span id="cb4-29">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.75</span>,</span>
-<span id="cb4-30">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.65</span>,</span>
-<span id="cb4-31">    <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.65</span></span>
-<span id="cb4-32">  ),</span>
-<span id="cb4-33">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">ncol =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>,</span>
-<span id="cb4-34">  <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">byrow =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">TRUE</span></span>
-<span id="cb4-35">)</span>
-<span id="cb4-36"></span>
-<span id="cb4-37"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># put tree together</span></span>
-<span id="cb4-38">tree <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">st_multipolygon</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">list</span>(<span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">list</span>(tree_pts1),</span>
-<span id="cb4-39">                             <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">list</span>(tree_pts2),</span>
-<span id="cb4-40">                             <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">list</span>(tree_pts3)))</span>
-<span id="cb4-41">s4 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> s3 <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb4-42">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_sf</span>(</span>
-<span id="cb4-43">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">data =</span> tree,</span>
-<span id="cb4-44">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"chartreuse4"</span>,</span>
-<span id="cb4-45">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"chartreuse4"</span></span>
-<span id="cb4-46">  ) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb4-47">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">coord_sf</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">expand =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">FALSE</span>)</span>
-<span id="cb4-48">s4</span></code></pre></div></div>
-<p>A tree also requires a trunk, so we borrowed one of the rectangles from Nicola’s snowman’s hat for this purpose:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb5" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb5-1">s5 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> s4<span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb5-2">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">annotate</span>(</span>
-<span id="cb5-3">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">geom =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"rect"</span>,</span>
-<span id="cb5-4">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">xmin =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.45</span>,</span>
-<span id="cb5-5">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">xmax =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.55</span>,</span>
-<span id="cb5-6">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">ymin =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.2</span>,</span>
-<span id="cb5-7">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">ymax =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3</span>,</span>
-<span id="cb5-8">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">fill =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"brown"</span></span>
-<span id="cb5-9">  )</span>
-<span id="cb5-10">s5</span></code></pre></div></div>
-<p>And, of course, no Christmas tree is complete without decorations. The “rocks” that formed the buttons and eyes on Nicola’s snowman were updated to become gold and red baubles for our tree:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb6" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb6-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># add gold baubles</span></span>
-<span id="cb6-2">s6 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> s5 <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb6-3">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_point</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"gold"</span>,</span>
-<span id="cb6-4">             <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">data =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">data.frame</span>(</span>
-<span id="cb6-5">               <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.57</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.62</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.45</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>),</span>
-<span id="cb6-6">               <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.325</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.45</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.35</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.57</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.52</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.7</span>),</span>
-<span id="cb6-7">               <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">size =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">runif</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">4.5</span>)</span>
-<span id="cb6-8">             ),</span>
-<span id="cb6-9">             <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">mapping =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> x, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> y, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">size =</span> size)</span>
-<span id="cb6-10">  ) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb6-11">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">scale_size_identity</span>()</span>
-<span id="cb6-12">s6</span>
-<span id="cb6-13"></span>
-<span id="cb6-14"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># add red baubles</span></span>
-<span id="cb6-15">s7 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> s6 <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb6-16">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">geom_point</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"red3"</span>,</span>
-<span id="cb6-17">             <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">data =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">data.frame</span>(</span>
-<span id="cb6-18">               <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.7</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.6</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.525</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.43</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.38</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.55</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>),</span>
-<span id="cb6-19">               <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">c</span>(<span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.375</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.4</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.55</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.65</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.43</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.48</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.375</span>),</span>
-<span id="cb6-20">               <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">size =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">runif</span>(<span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">8</span>, <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">2</span>, <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">4.5</span>)</span>
-<span id="cb6-21">             ),</span>
-<span id="cb6-22">             <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">mapping =</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">aes</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> x, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> y, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">size =</span> size)</span>
-<span id="cb6-23">  ) <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb6-24">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">scale_size_identity</span>()</span>
-<span id="cb6-25">s7</span></code></pre></div></div>
-<div class="quarto-layout-panel" data-layout-ncol="3">
-<div class="quarto-layout-row">
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><img src="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/12/12/images/s4.png" class="img-fluid" alt="Purple square with white snowflakes and green tree in foreground."></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><img src="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/12/12/images/s5.png" class="img-fluid" alt="Purple square with white snowflakes and green tree in foreground, now with brown trunk at foot of tree."></p>
-</div>
-<div class="quarto-layout-cell" style="flex-basis: 33.3%;justify-content: center;">
-<p><img src="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/12/12/images/s7.png" class="img-fluid" alt="Purple square with white snowflakes and green tree in foreground. Tree is decorated with red and gold baubles of various sizes."></p>
-</div>
-</div>
-</div>
-</section>
-<section id="seasons-greetings" class="level2">
-<h2 class="anchored" data-anchor-id="seasons-greetings">Season’s greetings</h2>
-<p>The final step was to add text to the top of the image, wishing you all a Merry Christmas, and our logo to the bottom, so you know who the card is from:</p>
-<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb7" style="background: #f1f3f5;"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># add text</span></span>
-<span id="cb7-2">s8 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> s7 <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span></span>
-<span id="cb7-3">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">annotate</span>(</span>
-<span id="cb7-4">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">geom =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"text"</span>,</span>
-<span id="cb7-5">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">x =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.5</span>,</span>
-<span id="cb7-6">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">y =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.875</span>,</span>
-<span id="cb7-7">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">label =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"Merry Christmas"</span>,</span>
-<span id="cb7-8">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">colour =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"red3"</span>,</span>
-<span id="cb7-9">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">fontface =</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"bold"</span>,</span>
-<span id="cb7-10">    <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">size =</span> <span class="dv" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">18</span></span>
-<span id="cb7-11">  )</span>
-<span id="cb7-12">s8</span>
-<span id="cb7-13"></span>
-<span id="cb7-14"><span class="co" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;"># add logo </span></span>
-<span id="cb7-15">path <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="st" style="color: #20794D;
-background-color: null;
-font-style: inherit;">"images/rwds-logo-150px.png"</span></span>
-<span id="cb7-16">img <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">readPNG</span>(path, <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">native =</span> <span class="cn" style="color: #8f5902;
-background-color: null;
-font-style: inherit;">TRUE</span>) </span>
-<span id="cb7-17">s9 <span class="ot" style="color: #003B4F;
-background-color: null;
-font-style: inherit;">&lt;-</span> s8 <span class="sc" style="color: #5E5E5E;
-background-color: null;
-font-style: inherit;">+</span>                   </span>
-<span id="cb7-18">  <span class="fu" style="color: #4758AB;
-background-color: null;
-font-style: inherit;">inset_element</span>(<span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">p =</span> img, </span>
-<span id="cb7-19">                <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">left =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.3265</span>, </span>
-<span id="cb7-20">                <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">bottom =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.0</span>, </span>
-<span id="cb7-21">                <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">right =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.6735</span>, </span>
-<span id="cb7-22">                <span class="at" style="color: #657422;
-background-color: null;
-font-style: inherit;">top =</span> <span class="fl" style="color: #AD0000;
-background-color: null;
-font-style: inherit;">0.2</span></span>
-<span id="cb7-23">  ) </span>
-<span id="cb7-24">s9</span></code></pre></div></div>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/12/12/images/rwds-christmas-card.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Purple square with white snowflakes and green tree in foreground. Tree is decorated with red and gold baubles of various sizes. Text over tree reads Merry Christmas. Under tree is a logo for the Real World Data Science website."></p>
-</figure>
-</div>
-<p>I hope you like the Christmas card! From all of us at Real World Data Science, thank you for your support throughout 2023. Merry Christmas, happy holidays, and best wishes for 2024!</p>
-<div class="article-btn">
-<p><a href="../../../../../../the-pulse/editors-blog/index.html">Back to Editors’ blog</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Royal Statistical Society
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Tarran, Brian. 2023. “A Christmas card in R for the Real World Data Science community.” Real World Data Science, December 12, 2023. <a href="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/12/12/rwds-xmas-card.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-</section>
-
- ]]></description>
-  <category>R</category>
-  <category>Data visualisation</category>
-  <category>Updates</category>
-  <guid>https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/12/12/rwds-xmas-card.html</guid>
-  <pubDate>Tue, 12 Dec 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/the-pulse/editors-blog/posts/2023/12/12/images/rwds-christmas-card-thumb.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 </channel>
 </rss>
