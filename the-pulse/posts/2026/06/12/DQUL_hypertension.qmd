@@ -1,0 +1,98 @@
+---
+title: "Data Quality Under the Lens: Do You Really Have Hypertension?"
+description: |
+  The second edition of our new column exploring real life data quality disasters and crises averted.  
+categories:
+  - AI
+  - Governance
+  - Policy
+author: Roger Hoerl and Hannah de Mowbray
+date: 2026-06-12
+date-format: long
+toc: true
+image: images/hypertension-thumb.jpg
+---
+
+*Data Quality Under the Lens is a new Real World Data Science column. Each edition explores real-world moments where data quality shaped outcomes, sometimes driving failure, sometimes preventing it. From near misses to hard lessons learned, we look at what happens when data is up to the task... or falls short.* 
+
+*If you spot a real world problem and think data quality could lie at the heart of the story, [send it in to the RWDS mailbox]((mailto:rwds@rss.org.uk)) and our Data Quality Detectives will analyse whether the Silent Drift, Proxy Trap, Spreadsheet Cascade, Governance Vacuum or Metric Mirage is responsible.*
+
+## The Case of the Month 
+According to the US Centers for Disease Control (CDC), roughly half of adults in the US have hypertension (high blood pressure). Roughly 60% of these take medication to keep their blood pressure under control. 
+ 
+However, measuring blood pressure turns out to be much more complicated than is widely acknowledged. This leads to the question of how many “false positives” there might be; that is, how many people diagnosed with high blood pressure don’t actually have it.  
+ 
+Blood pressure medication, like all medication, has side effects, and people who don’t actually have high blood pressure shouldn’t be taking these medications. There may also be false negatives – people who are told they have normal blood pressure but are actually hypertensive, which can have extreme and [well documented](https://www.heart.org/en/health-topics/high-blood-pressure/health-threats-from-high-blood-pressure) implications. This is why obtaining high-quality data prior to diagnosis and treatment is so critical in addressing this common medical problem.
+
+## What Actually Happened? 
+As noted by [Myers and Kaczorowski](https://www.ahajournals.org/doi/10.1161/HYPERTENSIONAHA.119.14171), different ways of measuring blood pressure produce different results. In particular, the automated devices commonly used in clinical settings, as well as [those bought for at-home measurement](https://www.sciencedirect.com/science/article/pii/S2589790X24005171), are known to be highly variable. For example, one of the current authors experienced an automated reading in a clinic of 138/92, but when measured manually five minutes later, the reading was 123/82. 
+ 
+Manual readings are also subject to tester-to-tester variation. Again, one of the authors experienced a 152/96 manual reading from a nurse, followed by a 122/78 reading by a doctor a few minutes later. 
+ 
+These are not the only issues. In addition to ensuring that the patient is at rest, the American Medical Association recommends seven tips to ensure accurate and consistent blood pressure measurement: 
+
+1. The patient’s arm should be held at the same height as the heart. 
+2. The cuff should be placed on the bare arm, with no clothing between the cuff and arm. 
+3. The correct size cuff should be used, based on the diameter of the patient’s arm. 
+4. The patient should not speak, or be spoken to, during measurement. 
+5. The patient should have an empty bladder. 
+6. The back and feet of the patient should be supported (e.g., feet not “dangling” from the examination table). 
+7. The patient’s legs should not be crossed. 
+
+Research has been carried out that shows how [important cuff sizing is in accurately diagnosing hypertension](https://www.heart.org/en/news/2022/03/01/when-it-comes-to-accurate-blood-pressure-readings-cuff-size-matters), especially in overweight adults. The research showed that too-small cuff size resulted in a mistaken diagnosis of high blood pressure in 39% of patients, while 22% of those with hypertension were given false negatives by the automated monitors. 
+
+And this is only 1 of the 7 guidelines. In our collective experience, medical personnel frequently do not follow a number of the steps necessary for accurate readings. In fact, in a [statistical analysis of stock images in which the subject is measuring blood pressure](https://pmc.ncbi.nlm.nih.gov/articles/PMC12529977/), including images disseminated by prestigious medical and educational institutions like Harvard Publishing and Oxford University, only 1 in 7 images aligned with all the recommended clinical guidelines. So it is hardly surprising that inaccurate and highly variable measurements are common.  
+
+
+## Disaster or Near-Miss? 
+Taking medication unnecessarily, or not taking medication when it is needed, can have serious consequences, including stroke and heart attack.  Modelling data from Canada, [Leung et al](https://www.sciencedirect.com/science/article/pii/S2589790X24005171). found that, “If both systolic and diastolic BP were overestimated by 10 mm Hg, the prevalence of hypertension would falsely increase by 50% to 63%, potentially leading to overtreatment of approximately 3.5 million Canadians.” We suspect that the implications, both for misdiagnosis as well as under-diagnosis, are very serious, and this is at least a potential disaster. 
+
+But there is also another angle to consider.  The impact this may have on trust in medical results, as well as the implications for population statistics and national and international health interventions, are unknown. As good data are essential for improving health outcomes, especially in more deprived areas (see for example, the [Public Health England report 'Tackling high blood pressure From evidence into action](https://www.google.com/url?q=https://assets.publishing.service.gov.uk/media/5a7f1f3640f0b6230268d90f/Tackling_high_blood_pressure.pdf&sa=D&source=docs&ust=1781024015411593&usg=AOvVaw32LiyKGSRCSFlcJJg4QTPn)'), this prevalence of poor data is especially concerning. 
+
+## Why This Matters Now 
+The differences noted previously are of clinical significance. In addition to deciding whether someone should or should not be on medication, there are decisions as to which medications to prescribe, and at what dosages, with one of the authors’relatives having been on three different blood pressure medications at the same time, with serious side effects. Regardless of the expertise of physicians and nurses, inaccurate data will prevent them from making the proper decisions for their patients. 
+
+This is also relevant for research – and decisions made based on that research – that aggregates data to inform population-level health programming and initiatives that target hypertension across the globe, like the WHO’s [Global report on hypertension 2025: high stakes: turning evidence into action](https://www.who.int/publications/i/item/9789240115569).
+
+## The Practitioner Takeaways 
+For patients, the advice is simple enough: when having your blood pressure taken, insist on medical staff following the recommended protocols. Don’t rely solely on the automated measurement. 
+
+But there is also the question of how inaccurate readings impact population data, resource allocation and health outcome measurement on a national and international level. For the data scientist, the key lesson is to make sure data are never taken at "face value," and to always delve into the "data pedigree," the details of how, when, where, etc. the data were collected. 
+
+In the meantime,  medical professionals taking care to follow the guidelines, recognise the issues with BP readings and communicate them clearly to patients, and not giving too much credence to any one measurement, could go a long way to combatting over-treatment and undertreatment, as well as mistrust in results. 
+
+## The Data Quality Pattern
+The fundamental issue here is that clinical decisions are being made based on poor and inaccurate data. But the cascading consequences of poor measurement, both for patient trust and population level outcomes, could be leading to what we at Data Quality Under the Lens call the Metric Mirage: a measure that appears to show success, failure, or progress, but is misleading because it is poorly defined, incomplete, or taken out of context. 
+
+With an underlying instability involving questionable measurement accuracy and precision, the pivotal questions around health outcomes and the reliability of the data that backs decisions become paramount. Are the data being used to make and measure medical interventions fit for purpose, or are choices being made based on only the mirage of evidenced understanding?
+ 
+Data that come from an automated device, or from a trained and experienced healthcare provider, are often assumed to be accurate. In the case of blood pressure measurement, they frequently are not. 
+
+
+::: {.further-info}
+::: grid
+
+::: {.g-col-12 .g-col-md-12}
+
+
+::: {.g-col-12 .g-col-md-6}
+**Copyright and licence** : © 2026 Roger Hoerl and Hannah de Mowbray 
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">
+  <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1">
+  <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1">
+</a>
+This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0)
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.
+:::
+
+::: {.g-col-12 .g-col-md-6}
+**How to cite** :  
+Hoerl and de Mowbray 2026. “**Data Quality Under the Lens: Do You Really Have Hypertension?**” *Real World Data Science*, 2026. [URL](https://realworlddatascience.net/the-pulse/posts/2026/06/12/DQUL_hypertension.html)
+:::
+
+:::
+:::
+:::
+
+
+
