@@ -17,7 +17,459 @@
 <width>144</width>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Thu, 21 May 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 28 Jul 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Linking Brain Injury to Cognitive Decline: A Multimodal, Explainable AI Approach within Trusted Research Environments</title>
+  <dc:creator>Kafayat Adeoye, Emma Squires, Fatemeh Torabi, Simon Thompson</dc:creator>
+  <link>https://realworlddatascience.net/applied-insights/case-studies/posts/2026/07/28/integrating-multimodal-data.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><em>Target audience: data scientists and analysts, health informaticians, and dementia and neurocognitive researchers.</em></p>
+<p><img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/07/28/images/header-ct-scan.png" class="img-fluid" alt="A radiographer supervises a patient entering a CT scanner."></p>
+<p><em>Image credit: Hospital-Healthcare Europe, 4 February 2022.</em></p>
+<section id="synopsis" class="level2">
+<h2 class="anchored" data-anchor-id="synopsis">Synopsis</h2>
+<p>Traumatic Brain Injury (TBI) notably increases the risk of dementia by about 24%, and this risk increases with severe injuries <span class="citation" data-cites="ref1">(Shively et al. 2012)</span>. Other research indicates that TBI confers around a 1.5-fold increased risk of dementia and may account for approximately 5% of global dementia cases <span class="citation" data-cites="ref21">(Graham and Sharp 2019)</span>. Acute and post-acute TBI care results in the generation of rich data streams such as imaging, intensive care monitoring (ICU), electronic health records (EHRs), and, in some cohorts, biomarkers and omics. Integrating these heterogeneous data streams within an analytic framework can reveal trajectories from acute injury to later-life cognitive decline, adding value to both dementia risk prediction and the design of targeted prevention and care <span class="citation" data-cites="ref3">(Nordström and Nordström 2018)</span>. Scalable dementia prediction relies not only on advanced modelling techniques but also on the proper integration of multimodal data. Data for patient-level observations are often acquired and managed within Trusted Research Environments (TREs), as these secure infrastructures are designed to receive, hold, and process sensitive health data safely. With this in mind, a robust TRE infrastructure is required to support the analysis of such data. While the sophistication of predictive models is crucial, the underlying challenge of integrating diverse data sources across all modalities—including imaging, genetics, clinical, and other modalities—must not be overlooked. Effective data harmonization and standardization across these modalities are essential to ensure consistency and interoperability, and we assume that such preparatory work has already been addressed. This assumption stems from the growing body of work and standard practices in the field, which have made significant strides in addressing modality-specific harmonization. With these foundational steps in place, the focus shifts to how we can leverage the resulting integrated data held within TRE infrastructure to enable scalable and accurate predictions.</p>
+<p>This article addresses three interlinked themes concerning the use of multimodal data in traumatic brain injury (TBI) research. <strong>Section A</strong> outlines the various modalities and levels of multimodal integration. It distinguishes between <em>within-modality integration</em>, which involves combining data of the same type (such as multiple Computed Tomography (CT) scan measures), and <em>cross-modality integration</em>, which links diverse data types. For example, imaging, intensive care unit (ICU), and electronic health record (EHR) variables collected for the same individual. In this context, ICU data differ from EHR data in that they provide high-frequency, time-critical observations during acute care, whereas EHR data capture broader, longitudinal clinical information across the patient’s care trajectory. Furthermore, Section A differentiates between levels of integration: <em>patient-level integration</em> refers to the aggregation of all available data for a single individual, while <em>cohort- and platform-level integration</em> involves harmonizing variables across entire studies and data platforms. TBI datasets are used throughout as exemplars to illustrate these approaches. <strong>Section B</strong> focuses on the intersection of data integration and explainable artificial intelligence (XAI). It examines recent advancements in machine-learning methods that not only generate predictive outputs but also produce human-understandable explanations, identifying which features contribute most significantly to the model’s predictions. Because TBI–dementia risk modelling is a high-stakes setting where clinicians and patients need to understand and trust model outputs, we use a synthetic multimodal TBI dataset to show how integrated TBI features can be analyzed with SHapley Additive exPlanations (SHAP)-based feature attribution to produce transparent, clinically interpretable risk estimates. <strong>Section C</strong> discusses interoperability and governance: the Dementias Platform UK (DPUK) Data Portal is selected as a leading TRE that carries out the upstream steps of ingestion, curation and harmonization and provides a secure platform for multimodal integration and explainable analytics.</p>
+</section>
+<section id="key-audience-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="key-audience-takeaways">Key audience takeaways</h2>
+<ul>
+<li><p><strong>Multimodal TBI Data as a Testbed for Dementia Research.</strong> Acute and follow-up care for traumatic brain injury (TBI) generates a wealth of multimodal data including imaging, ICU, electronic health records (EHR), and biomarkers which can be linked to dementia outcomes later in life. These data serve as a valuable testbed for studying life-course dementia risk.</p></li>
+<li><p><strong>Harmonization and Standardization as Essential Steps.</strong> For real-world data integration, harmonization and standardization of diverse data types are crucial. A common data model (CDM) provides a consistent framework for this process. Examples include the Brain Imaging Data Structure (BIDS) for imaging data and the Observational Medical Outcomes Partnership (OMOP) common data model for electronic health record (EHR) data. Additionally, methods such as ComBat are often used to correct for site or batch effects. This article assumes these upstream standardization steps are already completed and focuses on the subsequent integration process.</p></li>
+<li><p><strong>Data Integration and Explainable AI for Dementia Risk Prediction.</strong> The case study demonstrates how an integrated multimodal dataset can be processed and analyzed with explainable AI workflows. Using synthetic TBI features, we show how integrated patient-level data feeds into tree-based models, with SHAP-based feature attribution providing global and patient-level explanations of risk predictions. In this context, explainable AI refers to machine learning models that generate predictions and provide interpretable insights into how certain features influence these predictions, ensuring clinical transparency.</p></li>
+<li><p><strong>DPUK as a Model for Trusted Research Environments (TREs).</strong> The Dementias Platform UK (DPUK) Data Portal acts as an exemplary TRE that does the “heavy lifting”, handling the ingestion, curation, and harmonization of multimodal datasets. It provides a secure environment where integrated data can be analyzed, and explainable AI workflows can be executed to support dementia research.</p></li>
+<li><p><strong>Infrastructure and Integration are the Real Bottleneck.</strong> In the context of dementia risk prediction, the practical challenges lie in infrastructure and data integration, not in the sophistication of algorithms. Effective selection, harmonization, and integration of high-value modalities using platforms like DPUK often offer greater impact than incremental improvements in model architecture.</p></li>
+</ul>
+</section>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>Dementia is increasingly recognized not as a condition that simply emerges in later life, but as the culmination of exposures and vulnerabilities accumulated across the life course. Among these, traumatic brain injury (TBI) has consistently been linked to a higher risk of subsequent dementia, including specific subtypes such as vascular dementia, with large cohort studies suggesting an approximate 1.5-fold increase in relative risk <span class="citation" data-cites="ref1 ref2">(Shively et al. 2012; <span class="nocase">Lee et al.</span> 2013)</span>.</p>
+<p>What makes TBI particularly compelling in this context is not only its clinical significance, but its richness as a data source. Across the acute care pathway, patients contribute neuroimaging (CT, MRI), ICU monitoring, laboratory tests, and EHR data. Large research programmes such as CENTER-TBI and TRACK-TBI have deliberately collected multimodal data at scale, including clinical, imaging, biomarker and outcome information <span class="citation" data-cites="ref3 ref4">(Nordström and Nordström 2018; <span class="nocase">Maas et al.</span> 2017)</span>.</p>
+<p>In parallel, dementia research infrastructures such as the Dementias Platform UK (DPUK) Data Portal have transformed how these data can be used. By providing a secure, standards-based environment, DPUK performs the upstream work of ingesting, curating and harmonizing multimodal cohort and linked EHR data and then exposes them to researchers within a Trusted Research Environment (TRE) <span class="citation" data-cites="ref10 ref11">(<span class="nocase">Bauermeister et al.</span> 2020; UK Health Data Research Alliance 2021)</span>.</p>
+<p>This article begins where those upstream processes end. Rather than introducing new harmonization pipelines, we assume those initial steps have been completed within a TRE <span class="citation" data-cites="ref6 ref10">(<span class="nocase">Chou et al.</span> 2022; <span class="nocase">Bauermeister et al.</span> 2020)</span> and focus on what comes next:</p>
+<ul>
+<li>Data integration—combining harmonized features across modalities into integrated patient-level and cohort-level tables suitable for modelling.</li>
+<li>Explainable AI—using SHAP to interpret models built on these integrated tables.</li>
+<li>TRE infrastructure—using DPUK as an example of a platform that both harmonizes multimodal data and hosts integrated, explainable AI workflows.</li>
+</ul>
+</section>
+<section id="section-a-modalities-and-levels-of-multimodal-integration" class="level2">
+<h2 class="anchored" data-anchor-id="section-a-modalities-and-levels-of-multimodal-integration">Section A: Modalities and levels of multimodal integration</h2>
+<section id="a1.-data-modalities-along-the-tbi-dementia-pathway" class="level3">
+<h3 class="anchored" data-anchor-id="a1.-data-modalities-along-the-tbi-dementia-pathway">A1. Data modalities along the TBI dementia pathway</h3>
+<p>Following a traumatic brain injury (TBI), patients progress through a series of care stages, beginning with acute medical intervention and continuing with long-term rehabilitation and monitoring. Throughout this care pathway, a variety of data modalities are generated. From a dementia perspective, multimodal data generated after TBI can be categorized into four broad modalities:</p>
+<ul>
+<li><strong>Neuroimaging</strong>
+<ul>
+<li>Acute CT (e.g.&nbsp;haemorrhage volume).</li>
+<li>Follow-up Magnetic Resonance Imaging (MRI) (white-matter integrity, microbleeds, functional connectivity).</li>
+</ul></li>
+<li><strong>ICU / physiological monitoring</strong>
+<ul>
+<li>High-frequency vital signs (blood pressure, heart rate, oxygen saturation).</li>
+<li>Intracranial pressure (ICP) and derived metrics (mean, peaks, burden).</li>
+<li>Ventilation parameters and key laboratory time-series.</li>
+</ul></li>
+<li><strong>Clinical / EHR data</strong>
+<ul>
+<li>Demographics, comorbidities, medications.</li>
+<li>Glasgow Coma Scale (GCS), injury severity, neurosurgical interventions.</li>
+<li>Linked primary and secondary care diagnoses, including later dementia.</li>
+</ul></li>
+<li><strong>Biomarkers / omics</strong>
+<ul>
+<li>Blood-based markers of neuronal injury and inflammation.</li>
+<li>In selected cohorts, genomics and other omics panels <span class="citation" data-cites="ref5">(<span class="nocase">Huie et al.</span> 2021)</span>.</li>
+</ul></li>
+</ul>
+<p>Each data modality captures a different aspect of the pathway from acute injury to long-term cognitive outcomes, providing complementary information that can help elucidate the factors influencing later cognitive decline <span class="citation" data-cites="ref1 ref21">(Shively et al. 2012; Graham and Sharp 2019)</span>.</p>
+</section>
+<section id="a2.-harmonization-and-standardization-as-initial-steps" class="level3">
+<h3 class="anchored" data-anchor-id="a2.-harmonization-and-standardization-as-initial-steps">A2. Harmonization and standardization as initial steps</h3>
+<p>In real-world TBI and dementia research, these modalities are not initially analysis ready. They must first undergo modality-specific harmonization and standardization, which could be carried out by data platforms and/or TREs:</p>
+<ul>
+<li>Neuroimaging datasets are often organized using structural methods such as the Brain Imaging Data Structure (BIDS), which provides a standardized scheme for folder structures, filenames, and metadata to facilitate consistency and sharing across studies <span class="citation" data-cites="ref7">(<span class="nocase">Gorgolewski et al.</span> 2016)</span>.</li>
+<li>EHR and clinical data can be mapped to models like the OMOP Common Data Model (CDM), which standardizes tables and vocabularies for diagnoses, procedures, drugs, and measurements. However, not all EHR datasets are mapped to OMOP, and other mapping methods may also be used <span class="citation" data-cites="ref9">(Observational Health Data Sciences and Informatics (OHDSI) 2017)</span>.</li>
+<li>Multi-site imaging features are frequently harmonized using methods like ComBat, which helps reduce scanner- and site-related batch effects while preserving biological variance <span class="citation" data-cites="ref8">(<span class="nocase">Fortin et al.</span> 2018)</span>.</li>
+</ul>
+<p>This article does not implement BIDS, OMOP, or ComBat pipelines directly. Instead, we treat them as upstream enablers that can be managed by platforms like DPUK that specialize in data curation and harmonization at scale <span class="citation" data-cites="ref6 ref10">(<span class="nocase">Chou et al.</span> 2022; <span class="nocase">Bauermeister et al.</span> 2020)</span>.</p>
+</section>
+<section id="a3.-data-integration-as-the-next-step" class="level3">
+<h3 class="anchored" data-anchor-id="a3.-data-integration-as-the-next-step">A3. Data integration as the next step</h3>
+<p>Once modality-specific harmonization has been performed, the next step is data integration: bringing together features across modalities into an integrated structure suitable for modelling.</p>
+<p>Three levels matter:</p>
+<ul>
+<li><strong>Patient-level integration</strong>—creating a longitudinal, multimodal record per person, with one row per individual and columns spanning clinical, imaging and ICU features <span class="citation" data-cites="ref21">(Graham and Sharp 2019)</span>.</li>
+<li><strong>Cohort-level integration</strong>—ensuring variables are comparable across all participants within a study, enabling robust training and validation of prognostic models and subgroup analyses <span class="citation" data-cites="ref4 ref5">(<span class="nocase">Maas et al.</span> 2017; <span class="nocase">Huie et al.</span> 2021)</span>.</li>
+<li><strong>Platform-level integration</strong>—harmonizing across multiple cohorts. The Open Data Commons for TBI (ODC-TBI), for example, uses common data dictionaries and FAIR principles to support multi-study reuse and meta-analysis <span class="citation" data-cites="ref6">(<span class="nocase">Chou et al.</span> 2022)</span>. DPUK uses a multi-layer architecture to integrate many dementia-relevant cohorts and linked EHRs <span class="citation" data-cites="ref10">(<span class="nocase">Bauermeister et al.</span> 2020)</span>.</li>
+</ul>
+<p>Our case study starts after these steps: we assume upstream harmonization has been done, and we focus on building and analyzing an integrated patient-level table that approximates what would be available in a platform like DPUK.</p>
+</section>
+<section id="data-integration-in-the-synthetic-example" class="level3">
+<h3 class="anchored" data-anchor-id="data-integration-in-the-synthetic-example">Data integration in the synthetic example</h3>
+<p>In our synthetic experiment, we emulate this post-harmonization integration step. We do not simulate raw Digital Imaging and Communications in Medicine (DICOM) files or unstructured EHR records. Instead, we simulate <em>already-harmonized features</em> from three modalities plus an outcome:</p>
+<ul>
+<li>Clinical / EHR: age, sex, admission GCS (<code>gcs_adm</code>), hypertension (0/1).</li>
+<li>Imaging-derived: lesion volume (<code>lesion_volume_ml</code>), midline shift (<code>midline_shift_mm</code>).</li>
+<li>ICU / physiology: mean ICP (<code>mean_icp</code>), hours of hypoxia (<code>time_hypoxia_hours</code>), peak glucose (<code>glucose_peak</code>).</li>
+<li>Outcome: 12-month cognitive impairment (<code>cog_impair_12m</code>, 0/1).</li>
+</ul>
+<p>Each variable is simulated as an array of length 1,000, where the <em>i</em>-th element in each array corresponds to the same synthetic patient. These arrays are concatenated into a single table with one row per patient and columns spanning all modalities and the outcome. This integrated table is therefore a cross-modality, patient-level dataset analogous to what a researcher would receive inside a TRE like DPUK after the platform has already handled ingestion, harmonization and standardization <span class="citation" data-cites="ref10 ref16 ref19">(<span class="nocase">Bauermeister et al.</span> 2020; Liu et al. 2024; Mansouri-Benssassi et al. 2023)</span>. The remainder of the article shows how to analyze such an integrated table using explainable AI.</p>
+</section>
+</section>
+<section id="section-b-explainable-ai-in-multimodal-tbi-dementia-analytics" class="level2">
+<h2 class="anchored" data-anchor-id="section-b-explainable-ai-in-multimodal-tbi-dementia-analytics">Section B: Explainable AI in multimodal TBI dementia analytics</h2>
+<section id="b1.-why-is-explainability-critical" class="level3">
+<h3 class="anchored" data-anchor-id="b1.-why-is-explainability-critical">B1. Why is explainability critical?</h3>
+<p>Given an integrated multimodal table, the next step is modelling. But TBI and dementia are high-stakes settings: people live with the decisions that models inform. Reviews of explainable AI in healthcare stress that black-box predictions are not sufficient; clinicians need to inspect model reasoning, regulators must understand model behavior, and patients deserve transparent communication of risk <span class="citation" data-cites="ref14">(<span class="nocase">Sadeghi et al.</span> 2024)</span>. SHAP (SHapley Additive exPlanations) offers a practical approach. It provides consistent, locally accurate feature attributions by approximating Shapley values from cooperative game theory and is widely used in clinical machine learning <span class="citation" data-cites="ref13 ref15">(Carvalho et al. 2019; Lundberg and Lee 2017)</span>. It yields both global feature importance and local per-patient breakdowns of how features push a prediction up or down.</p>
+<p>In TBI, explainable models have been used for tasks such as early sepsis prediction, revealing clinically plausible risk drivers including age, physiological instability and laboratory markers <span class="citation" data-cites="ref17 ref18 ref19">(<span class="nocase">Nyam et al.</span> 2025; <span class="nocase">Mitchell et al.</span> 2025; Mansouri-Benssassi et al. 2023)</span>. Extending such approaches to dementia-related outcomes is mainly a question of having high-quality, integrated multimodal data and a secure environment in which to analyze them <span class="citation" data-cites="ref4 ref5">(<span class="nocase">Maas et al.</span> 2017; <span class="nocase">Huie et al.</span> 2021)</span>.</p>
+</section>
+<section id="b2.-multimodal-shap-workflow-schematic" class="level3">
+<h3 class="anchored" data-anchor-id="b2.-multimodal-shap-workflow-schematic">B2. Multimodal + SHAP workflow (schematic)</h3>
+<p>Figure&nbsp;1 sketches the overall workflow for explainable multimodal TBI dementia analytics.</p>
+<div id="fig-workflow" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Four-stage pipeline diagram: raw multimodal TBI data, upstream harmonisation (BIDS, OMOP, ComBat) within a TRE, cross-modality patient-level integration, and supervised modelling with SHAP explanations.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-workflow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/07/28/images/fig1-workflow.png" class="img-fluid figure-img" alt="Four-stage pipeline diagram: raw multimodal TBI data, upstream harmonisation (BIDS, OMOP, ComBat) within a TRE, cross-modality patient-level integration, and supervised modelling with SHAP explanations.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-workflow-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Multimodal TBI-dementia workflow in a TRE. Schematic overview of the proposed pipeline: (A) raw multimodal TBI data; (B) upstream harmonization and standardization within a TRE; (C) cross-modality, patient-level data integration into a single feature table; and (D) supervised modelling plus SHAP-based explanations.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="methods-synthetic-data-generation-and-revalidation" class="level3">
+<h3 class="anchored" data-anchor-id="methods-synthetic-data-generation-and-revalidation">Methods: Synthetic data generation and revalidation</h3>
+<p>To illustrate the data integration and explainable AI steps without using real patient data, we implemented a synthetic experiment whose structure mirrors contemporary TBI cohorts <span class="citation" data-cites="ref4 ref5 ref19">(<span class="nocase">Maas et al.</span> 2017; <span class="nocase">Huie et al.</span> 2021; Mansouri-Benssassi et al. 2023)</span>.</p>
+<p>We simulated a cohort of 1,000 adults with moderate-to-severe TBI, with features from the three modalities described above mimicked: a clinical/EHR domain (age, sex, GCS, hypertension), an imaging-like domain (lesion volume, midline shift) and an ICU/physiology domain (mean ICP, hours of hypoxia and peak glucose). For each feature, simple distributions were specified so that simulated values fell within a realistic range. The binary outcome, 12-month cognitive impairment, was generated so that risk increased with older age, larger lesions, greater midline shift, lower GCS, higher ICP, longer hypoxia, hypertension and hyperglycaemia, reflecting the chosen coefficients to be qualitatively consistent with published TBI prognostic studies <span class="citation" data-cites="ref4 ref5 ref18 ref19">(<span class="nocase">Maas et al.</span> 2017; <span class="nocase">Huie et al.</span> 2021; <span class="nocase">Mitchell et al.</span> 2025; Mansouri-Benssassi et al. 2023)</span>. Thus, the dataset serves as a realistic but entirely artificial mock-up of an already harmonized, integrated multimodal TBI feature table inside a TRE (such as DPUK), while ensuring that no real-world TBI or DPUK data were accessed or disclosed. We split the dataset into training (80%) and test (20%) sets and trained a gradient-boosted tree classifier. Feature attributions were computed on the test set using SHAP’s Tree Explainer, following Lundberg and Lee <span class="citation" data-cites="ref15">(Lundberg and Lee 2017)</span>. The purpose of this approach was not to reproduce any real cohort, but to create an artificial multimodal table that resembles what a post-harmonization dataset inside a trusted research environment such as DPUK might look like. Because the data were synthetic, revalidation focused on whether the generated dataset remained analytically credible for the intended demonstration. This involved checking that variable ranges were plausible and that the relationships built into the simulation remained clinically sensible. It also involved confirming that the integrated table could support downstream prediction modelling without obvious instability or contradiction in the direction of effects. In this setting, revalidation is not the same as external validation against a real cohort. It is a check that the synthetic data remain coherent enough to support a methodological illustration of multimodal integration, prediction modelling and explainability. This distinction is consistent with the broader synthetic health data literature, which treats generation and evaluation as related but separate stages and places emphasis on fidelity, utility and disclosure risk <span class="citation" data-cites="ref23 ref24">(Goncalves et al. 2020; Dankar et al. 2022)</span>. This simple simulation strategy is necessarily limited. It does not capture the full complexity of real multimodal TBI data, including missingness, temporal dependence, measurement noise, or site-specific heterogeneity. Even so, it remains useful for showing how a harmonized multimodal table can be assembled, checked, and carried forward into a downstream modelling workflow inside a trusted research environment. Having outlined how the synthetic data were generated and revalidated, the next step is to assess whether the integrated table supports a coherent prediction task before turning to SHAP-based interpretation.</p>
+</section>
+<section id="b3.-prediction-model-results-before-shap-interpretation" class="level3">
+<h3 class="anchored" data-anchor-id="b3.-prediction-model-results-before-shap-interpretation">B3. Prediction model results before SHAP interpretation</h3>
+<p>Before examining feature attributions, the synthetic multimodal dataset was first used to fit a supervised prediction model for 12-month cognitive impairment. As described in the case study, the integrated table was divided into training and test sets using an 80:20 split, and a gradient-boosted tree classifier was trained on the synthetic multimodal features. This stage of the analysis comes before SHAP because explanation does not replace model evaluation. The synthetic dataset had a cognitive impairment prevalence of 0.723, indicating a marked class imbalance towards the impaired group. Model performance was evaluated on the held-out test set, where the gradient-boosted classifier achieved an area under the receiver operating characteristic curve of 0.685. In the context of a synthetic demonstration, this should not be read as evidence of clinical readiness. Rather, it shows that the integrated multimodal table supports a non-trivial prediction task and that the fitted model captures some meaningful separation between lower-risk and higher-risk synthetic cases. That level of predictive performance is sufficient to justify moving to model interpretation, while still requiring caution in how the results are framed. The purpose here is not to claim a deployable prognostic tool, but to show that once harmonized multimodal features are brought together into a single patient-level table, they can be used to fit and assess a prediction model before examining how individual features contribute to model output. SHAP is therefore used here as a secondary interpretive step applied to an already-evaluated model, rather than as the primary result in its own right. With the prediction model established in this way, SHAP can then be used to examine which multimodal features drove the model’s output and how those effects appeared at both global and individual level.</p>
+</section>
+<section id="synthetic-multimodal-tbi-shap-experiment" class="level3">
+<h3 class="anchored" data-anchor-id="synthetic-multimodal-tbi-shap-experiment">Synthetic multimodal TBI SHAP experiment</h3>
+<p>With the prediction model established in this way, SHAP can then be used to examine which multimodal features drove the model’s output and how those effects appeared at both global and individual level.</p>
+<p>We produced three types of plots:</p>
+<ul>
+<li>A global SHAP summary plot ranking features by overall importance (Figure&nbsp;2) and individual feature importance.</li>
+<li>SHAP dependence plots for age, lesion volume, mean ICP, GCS and midline shift (Figure&nbsp;3).</li>
+<li>An individual-level waterfall plot decomposing a single patient’s prediction into feature-wise contributions (Figure&nbsp;4).</li>
+</ul>
+<p>Although synthetic, these plots demonstrate how a genuinely integrated multimodal feature table can be turned into clinically interpretable explanations.</p>
+</section>
+<section id="b4.-results-and-interpretation-of-the-synthetic-shap-analyses" class="level3">
+<h3 class="anchored" data-anchor-id="b4.-results-and-interpretation-of-the-synthetic-shap-analyses">B4. Results and interpretation of the synthetic SHAP analyses</h3>
+<div id="fig-shap-global" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-shap-global-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-shap-global" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="fig-beeswarm" class="quarto-float quarto-figure quarto-figure-center anchored" alt="SHAP beeswarm summary plot ranking features by impact on model output.">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-beeswarm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/07/28/images/fig2a-shap-summary.png" class="img-fluid figure-img" data-ref-parent="fig-shap-global" alt="SHAP beeswarm summary plot ranking features by impact on model output.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-beeswarm-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Beeswarm plot showing the distribution of SHAP values for each feature in the gradient-boosted model predicting 12-month cognitive impairment from synthetic multimodal TBI data. Lesion volume, mean intracranial pressure, age, midline shift and admission GCS contribute most strongly to the model’s predictions.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-shap-global" style="flex-basis: 100.0%;justify-content: flex-start;">
+<div id="fig-barimp" class="quarto-float quarto-figure quarto-figure-center anchored" alt="SHAP bar chart of mean absolute SHAP value per feature.">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-barimp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/07/28/images/fig2b-shap-importance.png" class="img-fluid figure-img" data-ref-parent="fig-shap-global" alt="SHAP bar chart of mean absolute SHAP value per feature.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-barimp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Global SHAP feature importance, computed as the mean absolute SHAP value per feature, indicating that lesion volume, mean ICP, age, midline shift and admission GCS contributed most strongly to the model’s predictions.
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-shap-global-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: Global SHAP summary for the synthetic multimodal TBI model.
+</figcaption>
+</figure>
+</div>
+<p>Lesion volume, mean ICP, age, midline shift and admission GCS emerged as the most influential predictors. High lesion volume and ICP values tended to push predictions toward impairment, while higher GCS scores tended to reduce risk. This mirrors clinical understanding that older age, greater intracranial injury burden and sustained intracranial hypertension drive worse outcomes after TBI <span class="citation" data-cites="ref4 ref5 ref19">(<span class="nocase">Maas et al.</span> 2017; <span class="nocase">Huie et al.</span> 2021; Mansouri-Benssassi et al. 2023)</span>.</p>
+<section id="non-linear-risk-relationships" class="level4">
+<h4 class="anchored" data-anchor-id="non-linear-risk-relationships">Non-linear risk relationships</h4>
+<p>Figure&nbsp;3 presents SHAP dependence plots for age, lesion volume, mean ICP, admission GCS and midline shift. These plots reveal non-linear patterns: predicted risk rises steeply once lesion volume exceeds a moderate threshold and once mean ICP remains above clinically relevant levels; lower GCS values show a monotonic association with higher risk. Such plots demonstrate how the model leverages multimodal information and make these risk relationships visually accessible.</p>
+<div id="fig-dependence" class="quarto-layout-panel">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-dependence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-dependence" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-dep-age" class="quarto-float quarto-figure quarto-figure-center anchored" alt="SHAP dependence plot for age.">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-dep-age-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/07/28/images/fig3a-dependence-age.png" class="img-fluid figure-img" data-ref-parent="fig-dependence" alt="SHAP dependence plot for age.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-dep-age-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(a) Age
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-dependence" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-dep-lesion" class="quarto-float quarto-figure quarto-figure-center anchored" alt="SHAP dependence plot for lesion volume.">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-dep-lesion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/07/28/images/fig3b-dependence-lesion-volume.png" class="img-fluid figure-img" data-ref-parent="fig-dependence" alt="SHAP dependence plot for lesion volume.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-dep-lesion-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(b) Lesion volume
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-dependence" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-dep-icp" class="quarto-float quarto-figure quarto-figure-center anchored" alt="SHAP dependence plot for mean intracranial pressure.">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-dep-icp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/07/28/images/fig3c-dependence-mean-icp.png" class="img-fluid figure-img" data-ref-parent="fig-dependence" alt="SHAP dependence plot for mean intracranial pressure.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-dep-icp-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(c) Mean ICP
+</figcaption>
+</figure>
+</div>
+</div>
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-dependence" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-dep-gcs" class="quarto-float quarto-figure quarto-figure-center anchored" alt="SHAP dependence plot for admission GCS.">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-dep-gcs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/07/28/images/fig3d-dependence-gcs.png" class="img-fluid figure-img" data-ref-parent="fig-dependence" alt="SHAP dependence plot for admission GCS.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-dep-gcs-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(d) Admission GCS
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+<div class="quarto-layout-row">
+<div class="quarto-layout-cell-subref quarto-layout-cell" data-ref-parent="fig-dependence" style="flex-basis: 50.0%;justify-content: flex-start;">
+<div id="fig-dep-midline" class="quarto-float quarto-figure quarto-figure-center anchored" alt="SHAP dependence plot for midline shift.">
+<figure class="quarto-float quarto-subfloat-fig figure">
+<div aria-describedby="fig-dep-midline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/07/28/images/fig3e-dependence-midline-shift.png" class="img-fluid figure-img" data-ref-parent="fig-dependence" alt="SHAP dependence plot for midline shift.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-subfloat-caption quarto-subfloat-fig" id="fig-dep-midline-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+(e) Midline shift
+</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-dependence-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: SHAP dependence plots for key multimodal predictors. Plots for age, lesion volume, mean intracranial pressure, admission GCS and midline shift in the synthetic TBI model highlight non-linear relationships between each feature and predicted risk, such as sharply increasing risk at higher lesion volumes and ICP, and monotonically lower risk with higher GCS.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="individual-level-explanation" class="level4">
+<h4 class="anchored" data-anchor-id="individual-level-explanation">Individual-level explanation</h4>
+<p>Figure&nbsp;4 shows a SHAP waterfall plot for a single high-risk patient. The baseline risk is incrementally increased by older age, large lesion volume, elevated mean ICP and prolonged hypoxia, with partial mitigation from a relatively preserved GCS. The resulting narrative—“this patient is high risk mainly because of age, large contusions, sustained ICP elevation and hypoxia”—is far more interpretable than a bare probability and aligns naturally with how clinicians think about TBI risk profiles.</p>
+<div id="fig-waterfall" class="quarto-float quarto-figure quarto-figure-center anchored" alt="SHAP waterfall plot decomposing one patient's predicted risk into feature contributions.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-waterfall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/07/28/images/fig4-waterfall.png" class="img-fluid figure-img" alt="SHAP waterfall plot decomposing one patient's predicted risk into feature contributions.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-waterfall-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: Individual-level SHAP explanation for a high-risk synthetic TBI case. Waterfall plot decomposing a single patient’s predicted probability of 12-month cognitive impairment into feature-wise SHAP contributions. Older age, large lesion volume, elevated mean intracranial pressure and prolonged hypoxia push the prediction above the baseline risk, while a relatively preserved GCS provides partial risk reduction.
+</figcaption>
+</figure>
+</div>
+</section>
+</section>
+<section id="b5.-implications-and-caveats" class="level3">
+<h3 class="anchored" data-anchor-id="b5.-implications-and-caveats">B5. Implications and caveats</h3>
+<p>Although synthetic, this example qualitatively resembles patterns from empirical TBI prognostic studies, where age, injury severity, intracranial lesions and physiological derangements drive poor outcomes <span class="citation" data-cites="ref4 ref5 ref18 ref19">(<span class="nocase">Maas et al.</span> 2017; <span class="nocase">Huie et al.</span> 2021; <span class="nocase">Mitchell et al.</span> 2025; Mansouri-Benssassi et al. 2023)</span>. It shows how, once multimodal features have been harmonised upstream and integrated into a single table, SHAP can make model behaviour transparent at both population and individual levels.</p>
+<p>Important caveats include the simplification of temporal dynamics, the need for robust handling of missing and biased data, and the risk of over-interpreting from poorly calibrated models <span class="citation" data-cites="ref14 ref15">(<span class="nocase">Sadeghi et al.</span> 2024; Lundberg and Lee 2017)</span>. The synthetic example is best seen as a template for what could be run on real TBI data inside a TRE such as DPUK.</p>
+</section>
+</section>
+<section id="section-c-interoperability-and-the-dpuk-dementia-platform-as-an-operational-tre" class="level2">
+<h2 class="anchored" data-anchor-id="section-c-interoperability-and-the-dpuk-dementia-platform-as-an-operational-tre">Section C: Interoperability and the DPUK Dementia Platform as an operational TRE</h2>
+<section id="c1.-interoperability-and-tres" class="level3">
+<h3 class="anchored" data-anchor-id="c1.-interoperability-and-tres">C1. Interoperability and TREs</h3>
+<p>In this context, interoperability has three dimensions:</p>
+<ul>
+<li><strong>Data interoperability</strong>—datasets adopt shared formats (e.g.&nbsp;BIDS), models (e.g.&nbsp;OMOP) and metadata, enabling linkage and reuse <span class="citation" data-cites="ref7 ref9">(<span class="nocase">Gorgolewski et al.</span> 2016; Observational Health Data Sciences and Informatics (OHDSI) 2017)</span>.</li>
+<li><strong>Analytical interoperability</strong>—pipelines run across datasets and environments using standardized, containerized tools <span class="citation" data-cites="ref10 ref11 ref20 ref21">(<span class="nocase">Bauermeister et al.</span> 2020; UK Health Data Research Alliance 2021; Fann et al. 2018; Graham and Sharp 2019)</span>.</li>
+<li><strong>Governance interoperability</strong>—TREs align on information-governance principles, often guided by the “Five Safes” framework promoted by Health Data Research UK <span class="citation" data-cites="ref12">(Jandoubi and Akhloufi 2025)</span>.</li>
+</ul>
+<p>Trusted Research Environments operationalize these principles by providing secure, audited platforms for working with sensitive health data.</p>
+</section>
+<section id="c2.-the-dpuk-data-portal-as-an-end-to-end-platform" class="level3">
+<h3 class="anchored" data-anchor-id="c2.-the-dpuk-data-portal-as-an-end-to-end-platform">C2. The DPUK Data Portal as an end-to-end platform</h3>
+<p>The DPUK Data Portal is a UK TRE designed for dementia research. It integrates over 3.5 million participants across more than 50 cohorts, with modalities spanning phenotypic data, neuroimaging, genetics and linked EHRs <span class="citation" data-cites="ref10 ref11">(<span class="nocase">Bauermeister et al.</span> 2020; UK Health Data Research Alliance 2021)</span>.</p>
+<p>Critically, DPUK does much of the upstream work that this article treats as assumed:</p>
+<ul>
+<li>Ingestion and curation of datasets from diverse studies.</li>
+<li>Harmonization and standardization, often using BIDS for neuroimaging and harmonized metadata or common data models for phenotypes and outcomes <span class="citation" data-cites="ref7 ref10 ref11">(<span class="nocase">Gorgolewski et al.</span> 2016; <span class="nocase">Bauermeister et al.</span> 2020; UK Health Data Research Alliance 2021)</span>.</li>
+<li>A layered architecture that includes platform, interoperability and analysis layers, enabling integrated, cross-cohort analyses <span class="citation" data-cites="ref10 ref11">(<span class="nocase">Bauermeister et al.</span> 2020; UK Health Data Research Alliance 2021)</span>.</li>
+</ul>
+<p>Once data is curated and harmonized, DPUK provides access to them inside a secure virtual desktop environment where researchers can carry out data integration and modelling, including SHAP analyses like the ones illustrated here. Data never leaves the TRE; outputs undergo disclosure control <span class="citation" data-cites="ref10 ref12">(<span class="nocase">Bauermeister et al.</span> 2020; Jandoubi and Akhloufi 2025)</span>. This infrastructure also supports domain-specific hubs such as the TBI Reporter Hub, which operates within DPUK to facilitate secure, harmonized data access and analysis for traumatic brain injury research.</p>
+</section>
+<section id="c3.-towards-federated-tre-ecosystems" class="level3">
+<h3 class="anchored" data-anchor-id="c3.-towards-federated-tre-ecosystems">C3. Towards federated TRE ecosystems</h3>
+<p>Recent guidance emphasizes that TREs should support federated analysis and ensure data security while avoiding the creation of new silos. This is particularly crucial for multimodal TBI dementia research <span class="citation" data-cites="ref12">(Jandoubi and Akhloufi 2025)</span>. As highlighted in recent work, federated systems can enable collaborative research without compromising data privacy. For this context, federated approaches could involve:</p>
+<ul>
+<li><strong>Running containerized SHAP workflows across multiple TREs without transferring raw data</strong>, ensuring that sensitive data remains within local institutions while still enabling powerful cross-site analysis. This approach ensures compliance with privacy regulations while maintaining research collaboration <span class="citation" data-cites="ref22">(Torabi et al. 2024)</span>.</li>
+<li><strong>Employing federated harmonization methods</strong> that minimize site-specific variations, ensuring consistent data quality while maintaining local control over sensitive data. Federated harmonization allows for greater consistency across datasets without compromising local data privacy and sovereignty <span class="citation" data-cites="ref8 ref22">(<span class="nocase">Fortin et al.</span> 2018; Torabi et al. 2024)</span>.</li>
+<li><strong>Sharing model artifacts and explanation templates between TREs</strong>, adhering to disclosure controls to ensure that machine learning models and their insights are transparent yet protected. This approach ensures that models are interpretable and that their explanations are shared securely across platforms without violating privacy or intellectual property concerns <span class="citation" data-cites="ref22">(Torabi et al. 2024)</span>.</li>
+</ul>
+<p>In this vision, platforms like DPUK not only manage multimodal data and perform necessary harmonization and standardization but also provide a trusted computational substrate. This enables the deployment of integrated, explainable AI workflows securely and at scale, all while upholding the highest standards of data privacy and governance as outlined in current frameworks <span class="citation" data-cites="ref22">(Torabi et al. 2024)</span>.</p>
+</section>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>TBI offers a powerful lens through which to understand how multimodal data can be brought together to advance dementia research. The acute phase of injury generates a uniquely rich set of data from imaging, ICU, and EHR sources, which, when linked to long-term outcomes, offer insights into how early structural and physiological events contribute to later cognitive decline.</p>
+<p>As we have shown, the real work begins before modelling. Harmonization and standardization, typically carried out by platforms like DPUK, are essential foundations. Once these steps are complete, integrating multimodal features into coherent patient- and cohort-level datasets creates the conditions for meaningful analysis. Explainable AI methods, such as SHAP, then build on this foundation by translating complex models into interpretable narratives that clinicians and patients can trust. DPUK’s Trusted Research Environment (TRE) facilitates this entire pipeline, managing the ingestion, harmonization, and secure hosting of multimodal data, while providing environments that allow integrated, explainable AI workflows to operate at scale.</p>
+<p>Rather than relying on AI to compensate for messy data, the TBI dementia use case demonstrates that harmonized, integrated multimodal data and robust TRE infrastructure are prerequisites for meaningful, explainable AI. Beyond the specific case of TBI and dementia, there is a broader lesson: effective AI is not a remedy for disordered data, it is the product of well-designed data pipelines. For data practitioners, the transferable insight is that value emerges from the sequence: careful harmonization, thoughtful integration, and only then modelling with built-in explainability, all supported by robust infrastructure. Platforms like DPUK exemplify how this can be operationalized in practice, turning complex, multimodal data into transparent and actionable insights for dementia risk prediction.</p>
+<p>All code used to generate the synthetic dataset and SHAP analyses is available in the <a href="https://github.com/kaffy90/Integrating-multimodal-data-for-dementia-research-the-approach-with-traumatic-brain-injury-data">GitHub repository</a>.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<div id="refs" class="references csl-bib-body hanging-indent">
+<div id="ref-ref10" class="csl-entry">
+<span class="nocase">Bauermeister, S., C. Orton, S. Thompson, et al.</span> 2020. <span>“The Dementias Platform UK (DPUK) Data Portal.”</span> <em>European Journal of Epidemiology</em> 35 (6): 601–11.
+</div>
+<div id="ref-ref13" class="csl-entry">
+Carvalho, D. V., E. M. Pereira, and J. S. Cardoso. 2019. <span>“Machine Learning Interpretability: A Survey on Methods and Metrics.”</span> <em>Electronics</em> 8 (8): 832.
+</div>
+<div id="ref-ref6" class="csl-entry">
+<span class="nocase">Chou, A., A. R. Mayer, R. M. Bauer, et al.</span> 2022. <span>“Empowering Data Sharing and Analytics Through the Open Data Commons for Traumatic Brain Injury Research.”</span> <em>Neurotrauma Reports</em> 3 (1): 139–57.
+</div>
+<div id="ref-ref24" class="csl-entry">
+Dankar, F. K., M. Ibrahim, and N. Ismaila. 2022. <span>“A Multi-Dimensional Evaluation of Synthetic Health Data.”</span> <em>BMC Medical Informatics and Decision Making</em> 22 (1): 182.
+</div>
+<div id="ref-ref20" class="csl-entry">
+Fann, J. R., A. R. Ribe, H. S. Pedersen, et al. 2018. <span>“Long-Term Risk of Dementia Among People with Traumatic Brain Injury in Denmark: A Population-Based Observational Cohort Study.”</span> <em>The Lancet Psychiatry</em> 5 (5): 424–31.
+</div>
+<div id="ref-ref8" class="csl-entry">
+<span class="nocase">Fortin, J.-P., N. Cullen, Y. I. Sheline, et al.</span> 2018. <span>“Harmonization of Cortical Thickness Measurements Across Scanners and Sites.”</span> <em>NeuroImage</em> 167: 104–20.
+</div>
+<div id="ref-ref23" class="csl-entry">
+Goncalves, A., P. Ray, B. Soper, J. Stevens, L. Coyle, and A. P. Sales. 2020. <span>“Generation and Evaluation of Synthetic Patient Data.”</span> <em>BMC Medical Research Methodology</em> 20 (1): 108.
+</div>
+<div id="ref-ref7" class="csl-entry">
+<span class="nocase">Gorgolewski, K. J., T. Auer, V. D. Calhoun, et al.</span> 2016. <span>“The Brain Imaging Data Structure, a Format for Organizing and Describing Outputs of Neuroimaging Experiments.”</span> <em>Scientific Data</em> 3: 160044.
+</div>
+<div id="ref-ref21" class="csl-entry">
+Graham, N. S. N., and D. J. Sharp. 2019. <span>“Understanding Neurodegeneration After Traumatic Brain Injury: From Mechanisms to Clinical Trials in Dementia.”</span> <em>Journal of Neurology, Neurosurgery &amp; Psychiatry</em> 90 (11): 1221–33.
+</div>
+<div id="ref-ref5" class="csl-entry">
+<span class="nocase">Huie, J. R., J. K. Yue, R. Diaz-Arrastia, et al.</span> 2021. <span>“Biomarkers for Traumatic Brain Injury: Data Standards and Statistical Considerations.”</span> <em>Journal of Neurotrauma</em> 38 (18): 2514–29.
+</div>
+<div id="ref-ref12" class="csl-entry">
+Jandoubi, B., and M. A. Akhloufi. 2025. <span>“Multimodal Artificial Intelligence in Medical Diagnostics.”</span> <em>Information</em> 16 (7): 591.
+</div>
+<div id="ref-ref2" class="csl-entry">
+<span class="nocase">Lee, Y.-K., Y.-Y. Chen, H.-C. Huang, et al.</span> 2013. <span>“Increased Risk of Dementia in Patients with Mild Traumatic Brain Injury: A Nationwide Cohort Study.”</span> <em>PLoS One</em> 8 (5): e62422.
+</div>
+<div id="ref-ref16" class="csl-entry">
+Liu, W., X. Yu, J. Chen, W. Chen, and Q. Wu. 2024. <span>“Explainable Machine Learning for Early Prediction of Sepsis in Traumatic Brain Injury: A Discovery and Validation Study.”</span> <em>PLoS One</em> 19 (11): e0313132.
+</div>
+<div id="ref-ref15" class="csl-entry">
+Lundberg, S. M., and S.-I. Lee. 2017. <span>“A Unified Approach to Interpreting Model Predictions.”</span> <em>Advances in Neural Information Processing Systems 30 (NeurIPS 2017)</em>, 4765–74.
+</div>
+<div id="ref-ref4" class="csl-entry">
+<span class="nocase">Maas, A. I. R., D. K. Menon, P. D. Adelson, et al.</span> 2017. <span>“Traumatic Brain Injury: Integrated Approaches to Improve Prevention, Clinical Care, and Research.”</span> <em>The Lancet Neurology</em> 16 (12): 987–1048.
+</div>
+<div id="ref-ref19" class="csl-entry">
+Mansouri-Benssassi, E., S. Rogers, S. Reel, et al. 2023. <span>“Disclosure Control of Machine Learning Models from Trusted Research Environments (TRE): New Challenges and Opportunities.”</span> <em>Heliyon</em> 9 (4): e15143.
+</div>
+<div id="ref-ref18" class="csl-entry">
+<span class="nocase">Mitchell, J. E., S. J. McDonald, D. J. Sharp, et al.</span> 2025. <span>“The Normative Modelling Framework for Traumatic Brain Injury.”</span> <em>Brain</em> 148 (11): 3817–32.
+</div>
+<div id="ref-ref3" class="csl-entry">
+Nordström, A., and P. Nordström. 2018. <span>“Traumatic Brain Injury and the Risk of Dementia Diagnosis: A Nationwide Cohort Study.”</span> <em>PLoS Medicine</em> 15 (1): e1002496.
+</div>
+<div id="ref-ref17" class="csl-entry">
+<span class="nocase">Nyam, T.-T. E., H.-J. Ng, J. Y. Lee, et al.</span> 2025. <span>“Predictive Modeling of Long-Term Care Needs in Traumatic Brain Injury Patients Using Machine Learning.”</span> <em>Diagnostics (Basel)</em> 15 (1): 20.
+</div>
+<div id="ref-ref9" class="csl-entry">
+Observational Health Data Sciences and Informatics (OHDSI). 2017. <em>The OMOP Common Data Model, Version 5.1</em>. <a href="https://ohdsi.github.io/CommonDataModel/" class="uri">Https://ohdsi.github.io/CommonDataModel/</a>.
+</div>
+<div id="ref-ref14" class="csl-entry">
+<span class="nocase">Sadeghi, Z., M. B. A. McDermott, M. Ghassemi, et al.</span> 2024. <span>“A Review of Explainable Artificial Intelligence in Healthcare.”</span> <em>Computers and Electrical Engineering</em> 118: 109370.
+</div>
+<div id="ref-ref1" class="csl-entry">
+Shively, S., A. I. Scher, D. P. Perl, and R. Diaz-Arrastia. 2012. <span>“Dementia Resulting from Traumatic Brain Injury: What Is the Pathology?”</span> <em>Archives of Neurology</em> 69 (10): 1245–51.
+</div>
+<div id="ref-ref22" class="csl-entry">
+Torabi, F., E. Squires, C. Orton, et al. 2024. <span>“A Common Framework for Health Data Governance Standards.”</span> <em>Nature Medicine</em> 30 (1): 26–29. <a href="https://doi.org/10.1038/s41591-023-02686-w">https://doi.org/10.1038/s41591-023-02686-w</a>.
+</div>
+<div id="ref-ref11" class="csl-entry">
+UK Health Data Research Alliance. 2021. <em>Trusted Research Environments (TREs): A Strategy to Build Public Trust and Enable Secure Data Access for Research</em>. HDR UK.
+</div>
+</div>
+<div class="article-btn">
+<p><a href="url">Back to section homepage</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+<a href="https://www.linkedin.com/in/kafayat-adeoye/">Kafayat Adeoye</a> is a computational health data scientist with experience building AI models and data pipelines on large-scale, heterogeneous health datasets. She currently works at <a href="https://www.dementiasplatform.uk/">Dementias Platform UK</a>, where her research focuses on translating traumatic brain injury data into clinically meaningful insights. She holds an MSc in Computer Science (AI) with from the University of Nottingham and a BEng in Electronic Systems Engineering from the University of Portsmouth.
+</dd>
+<dd>
+<a href="https://www.linkedin.com/in/emma-squires-977b6717a/">Emma Squires</a> is Chief Operating Officer for <a href="https://www.dementiasplatform.uk/">DPUK</a> and Head of Programmes and Innovation for <a href="https://serp.ac.uk/">SeRP</a>. She leads the design, governance, and delivery of Trusted Research Environments supporting over 1,300 users and 100+ datasets. Emma specialises in translating strategy into scalable, secure research infrastructure, and oversees major national programmes including TBI‑REPORTER and the MND Research Catalyst. She also contributes to AI governance and synthetic data policy, with a focus on enabling trusted, high-impact research at scale.
+</dd>
+<dd>
+<a href="https://www.linkedin.com/in/fatemeh-torabi-909190b3/">Fatemeh Torabi</a> is an Assistant Professor in Healthcare Data Science at the University of Cambridge and Senior Researcher. She works at the intersection of advanced analytics, real-world data, and translational impact. Her research develops innovative statistical and computational methods for risk prediction, treatment optimisation, and study design in long-term conditions such as cardiovascular disease. She has also pioneered methodologies for data quality assessment, disease phenotyping, and the integration of population-scale datasets. <a href="https://www.linkedin.com/in/simon-thompson-0b35546/">Prof.&nbsp;Simon Thompson</a> is a professor of Health Informatics and Deputy Associate Director at <a href="https://www.dementiasplatform.uk/">DPUK</a>, playing an instrumental role in the ongoing development of the DPUK Data Portal. He is a systems architect with many years’ experience in the NHS and academia, and Chief Technology Officer of a large team of talented and diversely skilled software developers. Simon leads the innovation, design, development and implementation of all SeRP technical system developments. He is responsible for delivering the technical workstream for Swansea University as part of a UK network of e-research centres of excellence and international collaboration.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2025 Kafayat Adeoye, Emma Squires, Fatemeh Torabi and Simon Thompson
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo credit: Hospital-Healthcare Europe.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Adeoye, Kafayat, Emma Squires, Fatemeh Torabi, and Simon Thompson. 2026. “Linking Brain Injury to Cognitive Decline: A Multimodal, Explainable AI Approach within Trusted Research Environments.” Real World Data Science, Month Day, Year. <a href="url">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <category>Multimodal data integration</category>
+  <category>Advanced health analytics and explainable AI</category>
+  <category>Data infrastructure and governance in health research</category>
+  <category>Prediction and risk modelling</category>
+  <guid>https://realworlddatascience.net/applied-insights/case-studies/posts/2026/07/28/integrating-multimodal-data.html</guid>
+  <pubDate>Tue, 28 Jul 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Choosing the Right Genomic Dataset: A Five-Pillar Framework for Researchers</title>
   <dc:creator>Alieyeh Sarabandi Moghaddam</dc:creator>
@@ -4481,7 +4933,7 @@ Wang, C., P. Nulty, and D. Lillis. 2021. <span>“A Comparative Study on Word Em
 <section id="perspective-on-the-challenge" class="level2">
 <h2 class="anchored" data-anchor-id="perspective-on-the-challenge">Perspective on the challenge</h2>
 <p>Text matching is an essential task in natural language processing <span class="citation" data-cites="DBLP:journals/corr/PangLGXWC16">(NLP, Pang et al. 2016)</span>, while record linkage across different sources is an essential task in data science. Machine learning techniques allow people to combine data faster and cheaper than using manual linkage. However, in the context of the Food for Thought challenge, existing methods for matching universal product codes (UPCs) to ensemble codes (ECs) require every UPC to be compared with every EC code (Figure 1a). Such approaches can be computationally expensive in the training process when data is noisy. Here, we propose an ensemble model with a category-based adapter to tackle this problem, drawing on the category information included in UPC and EC data. The category-based adapter allows UPCs to be first matched with only a small and reliable set of ECs (Figure 1b). Then, an ensemble model will be deployed to make predictions for UPC-EC matching. Our proposed approach can achieve competitive performance compared with state-of-the-art models.</p>
-<div class="quarto-layout-panel" data-layout-ncol="2" style="padding-top: 1em; margin-bottom: 0;">
+<div class="quarto-layout-panel" style="padding-top: 1em; margin-bottom: 0;" data-layout-ncol="2">
 <div class="quarto-layout-row">
 <div class="quarto-layout-cell" style="flex-basis: 50.0%;justify-content: flex-start;">
 <div class="quarto-figure quarto-figure-center">
@@ -5019,80 +5471,6 @@ US Department of Agriculture and US Department of Health and Human Services. 202
   <guid>https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/01-purchase-to-plate.html</guid>
   <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/01-pps.png" medium="image" type="image/png" height="105" width="144"/>
-</item>
-<item>
-  <title>The Food for Thought Challenge: Using AI to support evidence-based food and nutrition policy</title>
-  <dc:creator>Brian Tarran and Julia Lane</dc:creator>
-  <link>https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/00-food-for-thought.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>There’s a saying: “You are what you eat.” Its meaning is somewhat open to interpretation, as with many such sayings, but it is typically used to make the point that if you want to <em>be</em> well, you need to eat well. Nutrition scientists and dieticians spend their careers trying to figure out what “eating well” looks like – the foods the human body needs, in what quantities, and how best to consume them. Their research informs advice and guidance issued by health professionals and governments. Ultimately, though, the choice of what to eat falls to us – individuals and families – and our choices are often determined by our tastes, the availability of foodstuffs in our local stores, their price and affordability.</p>
-<p>So, what exactly <em>do</em> we eat? Answers come from a variety of sources. In the United States, there are dietary recall studies such as the <a href="https://www.cdc.gov/nchs/nhanes/index.htm">National Health and Nutrition Examination Survey</a>, which asks a sample of respondents to report their food and beverage consumption over a set period of time. There are also organisations like <a href="https://www.iriworldwide.com/en-gb">IRI</a> that collect point-of-sale data from retail stores on the actual food and drink being sold to consumers. By and large, this information comes from barcodes on product packaging being scanned at checkouts, so it is often referred to as “scanner data”.</p>
-<p>This data – from dietary recall studies and retail scanners – is valuable: once we know what people are eating, we can check the nutritional content of those foods and build up a picture of what the diet of a typical individual or family looks like and how it compares to the diet recommended by doctors and policymakers. And, if we know what other foodstuffs are available, how much they cost, and the nutritional value of those items, we can work out how much families need to spend, and on what, in order to eat well and, hopefully, be well.</p>
-<p>Figuring all this out is where something called the Purchase to Plate Crosswalk (PPC) comes in. It’s a key tool for understanding the “<a href="https://www.sciencedirect.com/science/article/pii/S0889157521005445">healthfulness of retail food purchases</a>” and it does this by linking IRI scanner data on what people buy with data on the nutritional content of those foods, as recorded in the US Department of Agriculture’s Food and Nutrient Database for Dietary Studies (FNDDS). But there’s a catch: scanner data is collected about hundreds of thousands of food products, whereas the FNDDS has nutritional profile information for only a few thousand items. Linking these two datasets therefore gives rise to a one-to-many matching problem – a problem that takes several hundred person-hours to resolve.</p>
-<p>What if machine learning can help? That question inspired a competition, the Food for Thought Challenge, organized by the Coleridge Initiative, a nonprofit organization working with governments to ensure that data are more effectively used for public decision-making. Researchers and data scientists were invited to use machine learning and natural language processing to more efficiently link data on supermarket products to nutrient databases.</p>
-<p>This collection of articles tells the story of the <a href="https://coleridgeinitiative.org/projects/food-for-thought">Food for Thought Challenge</a>. We begin by exploring the <a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/01-purchase-to-plate.html">policy issues</a> that drive the development of the PPC – the need to understand the national diet, developing healthy diet plans, and costing up those plans – and the issues posed by record linkage. Next, we learn about <a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/02-competition-design.html">the nature of the challenge and the structure of the competition in more detail</a>, and then the <a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/03-first-place-winners.html">three</a> <a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/04-second-place-winners.html">winning</a> <a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/05-third-place-winners.html">teams</a> walk us through their solutions. We end the collection with some closing thoughts on <a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/06-value-of-competitions.html">the value of competitions for addressing data scientific challenges in the public sector</a>.</p>
-<div class="nav-btn-container">
-<div class="grid">
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../../applied-insights/case-studies/index.html">Find more case studies</a></p>
-</div>
-</div>
-<div class="g-col-12 g-col-sm-6">
-<div class="nav-btn">
-<p><a href="../../../../../../applied-insights/case-studies/posts/2023/08/21/01-purchase-to-plate.html">Part 1: The Purchase to Plate Suite →</a></p>
-</div>
-</div>
-</div>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the authors</dt>
-<dd>
-<strong>Brian Tarran</strong> is editor of Real World Data Science, and head of data science platform at the Royal Statistical Society.
-</dd>
-<dd>
-<strong>Julia Lane</strong> is a professor at the NYU Wagner Graduate School of Public Service and a NYU Provostial Fellow for Innovation Analytics. She co-founded the Coleridge Initiative, whose goal is to use data to transform the way governments access and use data for the social good through training programs, research projects and a secure data facility. She recently served on the Advisory Committee on Data for Evidence Building and the National AI Research Resources Task Force.
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2023 Royal Statistical Society and Julia Lane
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@melaniesylim?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Melanie Lim</a> on <a href="https://unsplash.com/photos/246b6c6IeC0?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Tarran, Brian, and Julia Lane. 2023. “The Food for Thought Challenge: Using AI to support evidence-based food and nutrition policy.” Real World Data Science, August 21, 2023. <a href="https://realworlddatascience.net/the-pulse/case-studies/posts/2023/08/21/00-food-for-thought.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-
- ]]></description>
-  <category>Machine learning</category>
-  <category>Natural language processing</category>
-  <category>Public policy</category>
-  <category>Health and wellbeing</category>
-  <guid>https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/00-food-for-thought.html</guid>
-  <pubDate>Mon, 21 Aug 2023 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/applied-insights/case-studies/posts/2023/08/21/images/00-shopping.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 </channel>
 </rss>
