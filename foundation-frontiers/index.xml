@@ -17,7 +17,221 @@
 <width>144</width>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Wed, 05 Aug 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 18 Aug 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>The Hidden Statistics Behind Credit Risk</title>
+  <dc:creator>Denis Burakov</dc:creator>
+  <dc:creator>Agus Sudjianto</dc:creator>
+  <link>https://realworlddatascience.net/foundation-frontiers/posts/2026/08/18/hidden-statistics-credit-risk.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>A credit risk data scientist is ranking features for a new scorecard. One variable has an Information Value (IV) of 0.12; another scores 0.15. A third feature’s Population Stability Index (PSI) has just crept above the 0.10 line that the team treats as a warning threshold. Three numbers, three decisions: keep the 0.15 feature over the 0.12 one? Trigger a model review because PSI crossed the threshold?</p>
+<p>In most credit teams these calls are made on the point estimates alone, as if each number were exact. But every one of them was computed from a finite sample, so each carries sampling noise. Is 0.15 <em>meaningfully</em> more predictive than 0.12, or could the order flip on next month’s data? Did the population really drift, or did a quiet week thin the sample? Without a measure of uncertainty, there is no principled way to answer, and the data scientist is left trusting thresholds that were never derived from any statistical model.</p>
+<p>It turns out the statistical model was there all along. WoE, IV, and PSI are not ad hoc credit-industry inventions; they are specific instances of a classical information divergence (a measure of how far apart two probability distributions are) with roots in Turing’s wartime <em>weight of evidence</em> <span class="citation" data-cites="good1950probability">(Good 1950)</span> and Shannon’s information theory <span class="citation" data-cites="shannon1948mathematical">(Shannon 1948)</span>. Recognising that connection is not just intellectual housekeeping. Because these metrics are functions of sample proportions, they have sampling distributions, and that lets us attach confidence intervals and probabilistic bounds to quantities the industry has long treated as fixed. This article shows how, organised around the three questions our data scientist is really asking.</p>
+<section id="what-these-three-metrics-measure" class="level2">
+<h2 class="anchored" data-anchor-id="what-these-three-metrics-measure">What these three metrics measure</h2>
+<p>Before the statistics, a plain-English refresher for readers who don’t live in credit scoring:</p>
+<ul>
+<li><strong>Weight of Evidence (WoE)</strong> measures, for a single bin of a feature, how differently “good” and “bad” borrowers are distributed: it is large and positive where bads concentrate, negative where goods do. Formally it is a log likelihood ratio, exactly the quantity Turing and Good called the <em>weight of evidence</em> <span class="citation" data-cites="good1950probability">(Good 1950)</span>.</li>
+<li><strong>Information Value (IV)</strong> rolls those bin-level signals into one number summarising a feature’s overall discriminatory power. Practitioners rank candidate features by it and lean on conventional cut-offs (0.02 weak, 0.10 medium, 0.30 strong).</li>
+<li><strong>Population Stability Index (PSI)</strong> uses the same arithmetic to compare a feature’s distribution <em>today</em> against a reference period, and is the standard tool for monitoring drift after a model goes live.</li>
+</ul>
+<p>The thing rarely taught alongside these formulas is that all three are the same underlying quantity.</p>
+</section>
+<section id="one-identity-iv-psi-jeffreys-divergence" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="one-identity-iv-psi-jeffreys-divergence">One identity: IV = PSI = Jeffreys divergence</h2>
+<p>The textbook IV formula, for a feature binned into <img src="https://latex.codecogs.com/png.latex?K"> categories with good- and bad-borrower proportions <img src="https://latex.codecogs.com/png.latex?p_%7Bg,j%7D"> and <img src="https://latex.codecogs.com/png.latex?p_%7Bb,j%7D"> <span class="citation" data-cites="siddiqi2017intelligent">(Siddiqi 2017)</span>, turns out to be <em>exactly</em> the Jeffreys divergence (the symmetrised Kullback–Leibler divergence <span class="citation" data-cites="kullback1951information jeffreys1961theory">(Kullback and Leibler 1951; Jeffreys 1961)</span>) between the good and bad distributions:</p>
+<p><span id="eq-iv"><img src="https://latex.codecogs.com/png.latex?%0A%5Ctext%7BIV%7D%20=%20%5Csum_%7Bj=1%7D%5E%7BK%7D(p_%7Bb,j%7D%20-%20p_%7Bg,j%7D)%5C,%5Cln%5Cfrac%7Bp_%7Bb,j%7D%7D%7Bp_%7Bg,j%7D%7D%20%5C;=%5C;%20J(P_b%20%5C,%5C%7C%5C,%20P_g)%0A%5Ctag%7B1%7D"></span></p>
+<p>PSI is the same expression with a reference and a comparison distribution in place of bads and goods; a “fairness IV” is the same expression across two demographic groups. One formula, three uses.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><strong>One formula, three applications.</strong> IV, PSI, and fairness IV are all the Jeffreys divergence <img src="https://latex.codecogs.com/png.latex?J(P%20%5C%7C%20Q)"> applied to different partitions of the data.</p>
+</div></div><p>This is more than a notational coincidence. Every property of the Jeffreys divergence (non-negativity, symmetry, zero if and only if the two distributions match) transfers automatically to IV and PSI, grounding those decades-old thresholds in a well-understood statistical quantity <span class="citation" data-cites="kullback1951information">(Kullback and Leibler 1951)</span>. More usefully for our data scientist, because the divergence is a function of sample proportions, it inherits a <em>sampling distribution</em>: it can be reported with a standard error. The derivation is short but notation-heavy, so we have boxed it below; the rest of the article only needs the result (<strong>IV and PSI come with error bars</strong>) and what that changes for each of the data scientist’s three questions.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Technical note: where the standard errors come from
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The standard error follows from a single observation: Weight of Evidence is a <em>centred</em> log-odds ratio,</p>
+<p><span id="eq-woe"><img src="https://latex.codecogs.com/png.latex?%0A%5Ctext%7BWoE%7D_j%20=%20%5Cunderbrace%7B%5Cln%5Cfrac%7Bn_%7Bj,b%7D%7D%7Bn_%7Bj,g%7D%7D%7D_%7B%5Ctext%7Bbin%20log-odds%7D%7D%20-%20%5Cunderbrace%7B%5Cln%5Cfrac%7Bn_b%7D%7Bn_g%7D%7D_%7B%5Ctext%7Bpopulation%20log-odds%7D%7D%20.%0A%5Ctag%7B2%7D"></span></p>
+<p>Reading this through Bayes’ theorem in odds form gives the familiar updating rule: bin log-odds = population log-odds + WoE, so WoE is the evidence the bin contributes on top of the prior. In Bayesian terms, this is the logarithm of a Bayes factor. Subtracting the constant population term does not change the variance (<img src="https://latex.codecogs.com/png.latex?%5Ctext%7BVar%7D(X-c)=%5Ctext%7BVar%7D(X)"> for any constant <img src="https://latex.codecogs.com/png.latex?c">), so the standard error of WoE equals that of the bin log-odds ratio:</p>
+<p><span id="eq-se-woe"><img src="https://latex.codecogs.com/png.latex?%0A%5Ctext%7BSE%7D(%5Ctext%7BWoE%7D_j)%20=%20%5Csqrt%7B%5Cfrac%7B1%7D%7Bn_%7Bj,g%7D%7D%20+%20%5Cfrac%7B1%7D%7Bn_%7Bj,b%7D%7D%7D%20.%0A%5Ctag%7B3%7D"></span></p>
+<p>This is the same <img src="https://latex.codecogs.com/png.latex?1/%5Csqrt%7Bn_j%5C,p_j(1-p_j)%7D"> that appears as the standard error of a logistic-regression coefficient <span class="citation" data-cites="hand1997statistical">(Hand and Henley 1997)</span>. Since IV is a weighted sum of WoE values, the delta method, a standard tool for propagating uncertainty through a function of estimates, applies (assuming approximate independence across bins):</p>
+<p><span id="eq-se-iv"><img src="https://latex.codecogs.com/png.latex?%0A%5Ctext%7BSE%7D(%5Ctext%7BIV%7D)%20=%20%5Csqrt%7B%5Csum_%7Bj=1%7D%5E%7BK%7D(p_%7Bb,j%7D%20-%20p_%7Bg,j%7D)%5E2%20%5Ccdot%20%5Ctext%7BSE%7D(%5Ctext%7BWoE%7D_j)%5E2%7D%20.%0A%5Ctag%7B4%7D"></span></p>
+<p>Because IV = PSI = Jeffreys divergence, the identical formula gives a standard error for PSI whenever it is computed from binned counts. Full derivation in <span class="citation" data-cites="sudjianto2025information">(Sudjianto and Burakov 2025)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-1-is-this-feature-predictive" class="level2">
+<h2 class="anchored" data-anchor-id="question-1-is-this-feature-predictive">Question 1: Is this feature predictive?</h2>
+<p>With a standard error in hand, every IV point estimate becomes an interval, <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BIV%7D%20%5Cpm%201.96%20%5Ccdot%20%5Ctext%7BSE%7D(%5Ctext%7BIV%7D)">. Figure&nbsp;1 shows this for eight Home Credit features. The error bars do the work the point estimates cannot: features with nearly identical IV can have widely different precision, so a feature scoring 0.15 may not be reliably ahead of one scoring 0.12 once their intervals overlap. Ranking on the point estimate alone can put the more uncertain feature on top by luck of the draw.</p>
+<div id="fig-iv-ci" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Horizontal bar chart showing Information Value for 8 features with human-readable names, with 95% confidence interval error bars. Features are coloured by group: blue for Credit Bureau, pink for Financial/Behaviour, and purple for Categorical/Profile. Vertical dashed lines mark the conventional Weak (0.02), Medium (0.1), and Strong (0.3) IV thresholds.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-iv-ci-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/foundation-frontiers/posts/2026/08/18/images/iv_bar_chart.png" class="img-fluid figure-img" alt="Horizontal bar chart showing Information Value for 8 features with human-readable names, with 95% confidence interval error bars. Features are coloured by group: blue for Credit Bureau, pink for Financial/Behaviour, and purple for Categorical/Profile. Vertical dashed lines mark the conventional Weak (0.02), Medium (0.1), and Strong (0.3) IV thresholds.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-iv-ci-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: <strong>Information Value with 95% confidence intervals for eight Home Credit features.</strong> Notice that several features have overlapping intervals despite different point estimates: where the bars overlap, ranking one feature above another is not statistically justified, and the order may not survive the next data refresh. Colours indicate feature group: Credit Bureau (blue), Financial/Behaviour (pink), Categorical/Profile (purple).
+</figcaption>
+</figure>
+</div>
+<p>The standard error also suggests a quick check for whether a feature carries <em>any</em> signal: the ratio <img src="https://latex.codecogs.com/png.latex?Z%20=%20%5Ctext%7BIV%7D/%5Ctext%7BSE%7D(%5Ctext%7BIV%7D)"> (a signal-to-noise ratio) flags how far the estimate sits from zero. Treat this as a screening heuristic, not a clean significance test. Binning choices, sparse bins, smoothing, dependence across bins, and the fact that we typically screen many features at once all distort the nominal error rate, so the number should not be read as a publishable p-value. Its value is in catching features whose apparent signal may be nothing more than sampling noise. That is a coarser check than comparing two features against each other, which is the job of the confidence intervals in Figure&nbsp;1.</p>
+</section>
+<section id="question-2-has-this-population-drifted" class="level2">
+<h2 class="anchored" data-anchor-id="question-2-has-this-population-drifted">Question 2: Has this population drifted?</h2>
+<p>Because PSI shares the formula, it shares the standard error, so the same trick distinguishes real drift from sampling noise. Figure&nbsp;2 shows PSI computed weekly for the number of credit inquiries against a ten-week reference period, with confidence bands.</p>
+<div id="fig-psi" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Line chart showing weekly PSI values for number of credit inquiries. A spike around April 2020 has a wide confidence band indicating low sample size. From May onward, PSI is persistently elevated with the confidence band above zero, indicating genuine drift. Coloured threshold zones mark stable (green), minor shift (orange), and major shift (red) regions.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-psi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/foundation-frontiers/posts/2026/08/18/images/psi_over_time.png" class="img-fluid figure-img" alt="Line chart showing weekly PSI values for number of credit inquiries. A spike around April 2020 has a wide confidence band indicating low sample size. From May onward, PSI is persistently elevated with the confidence band above zero, indicating genuine drift. Coloured threshold zones mark stable (green), minor shift (orange), and major shift (red) regions.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-psi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: <strong>Weekly PSI for number of credit inquiries, with 95% confidence bands.</strong> The two movements to compare: the sharp April 2020 spike has a very wide band: it reflects a collapse in origination volume during lockdown (as few as 82 applications in a week), not a genuine shift. The quieter but <em>sustained</em> elevation from May onward keeps its band clear of zero, which is the signature of real drift. Without the bands, both look alike; with them, only the second warrants action.
+</figcaption>
+</figure>
+</div>
+<p>This is the practical pay-off for monitoring. A threshold crossing on its own is ambiguous: a thin week can push PSI over the line with no real change in behaviour, while a modest but persistent shift with a confidence band sitting clear of zero is the genuine article. The bands let a model-monitoring team triage alerts (chase the sustained signal, wait out the low-volume blip) instead of re-validating on every spike.</p>
+</section>
+<section id="question-3-does-this-feature-behave-differently-across-groups" class="level2">
+<h2 class="anchored" data-anchor-id="question-3-does-this-feature-behave-differently-across-groups">Question 3: Does this feature behave differently across groups?</h2>
+<p>The third question reuses the same divergence a final way. Computed between two demographic groups rather than between goods and bads, the Jeffreys divergence measures how differently a feature is distributed across those groups, a “demographic IV”. Plotting each feature’s predictive IV against its demographic IV (Figure&nbsp;3) lays out the performance–fairness trade-off in a single view.</p>
+<div id="fig-pareto" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Scatter plot with Predictive IV on the x-axis and Demographic IV on the y-axis. Each point is a feature, coloured by group. Error bars show 95% confidence intervals on both axes. A horizontal dashed orange line marks a reference line at IV = 0.05.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pareto-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/foundation-frontiers/posts/2026/08/18/images/pareto_predictive_vs_demographic.png" class="img-fluid figure-img" alt="Scatter plot with Predictive IV on the x-axis and Demographic IV on the y-axis. Each point is a feature, coloured by group. Error bars show 95% confidence intervals on both axes. A horizontal dashed orange line marks a reference line at IV = 0.05.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pareto-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: <strong>Performance–fairness trade-off for eight features.</strong> Read the plot by quadrant. The horizontal axis is predictive IV (against the default target); the vertical axis is demographic IV (against applicant sex). Features toward the <strong>bottom-right</strong> are the desirable ones: predictive yet evenly distributed across groups. Features toward the <strong>top</strong> carry a large demographic gap regardless of how predictive they are. The dashed line at 0.05 is a reference level for the discussion below, <em>not</em> a regulatory standard. Error bars are 95% confidence intervals on both axes; near the line, the bars show the classification can depend on the confidence level chosen.
+</figcaption>
+</figure>
+</div>
+<p>The most prominent outlier is <code>income_type</code>, with a demographic IV of 0.35. The reason is structural rather than prejudicial: retired pensioners are 29.7% of female applicants but only 15.0% of males, and salaried government employees are 31.3% of women versus 18.6% of men. The feature is picking up a genuine difference in employment composition, but a scorecard that uses it will treat men and women differently in proportion to that gap, which is exactly what the high demographic IV flags. Whether that is acceptable is a governance and legal judgement; the statistic only quantifies the size of the gap.</p>
+<p>That distinction matters for how the number is used. No single demographic-IV value is in itself a compliance bar, and the uncertainty estimate does not turn a fairness question into an automated pass/fail. What it <em>does</em> offer is better governance evidence: a feature at <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BIV%7D_%7B%5Ctext%7Bfair%7D%7D%20=%200.048%20%5Cpm%200.001"> is in a different position from one at <img src="https://latex.codecogs.com/png.latex?0.048%20%5Cpm%200.020">, even though the point estimates match. A model-risk reviewer can weigh that uncertainty rather than treat the point estimate as exact.</p>
+<p>The same machinery answers a sharper version of the question: do the groups differ not just in how a feature is distributed, but in how <em>predictive</em> it is? Figure&nbsp;4 computes IV separately for each group on shared bins. For percent of late installments, the feature is more predictive for women (IV = 0.31) than for men (IV = 0.21), a gap that is unlikely to be sampling noise. Tracing the full performance–fairness frontier, by mixed-integer programming, is developed in the paper <span class="citation" data-cites="sudjianto2025information">(Sudjianto and Burakov 2025)</span>; the contribution here is the statistical one: making the trade-off quantitative rather than binary.</p>
+<div id="fig-density" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two-panel figure. Left panel shows two normal density curves for the IV of percent late installments, one for female applicants (pink, IV around 0.31) and one for male applicants (teal, IV around 0.21), with vertical dashed lines at the Weak, Medium, and Strong IV thresholds. Right panel shows the normal density of the IV difference (Male minus Female), centred at minus 0.09, with 95% confidence interval dotted lines and a vertical black line at zero.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-density-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/foundation-frontiers/posts/2026/08/18/images/iv_density_by_group.png" class="img-fluid figure-img" alt="Two-panel figure. Left panel shows two normal density curves for the IV of percent late installments, one for female applicants (pink, IV around 0.31) and one for male applicants (teal, IV around 0.21), with vertical dashed lines at the Weak, Medium, and Strong IV thresholds. Right panel shows the normal density of the IV difference (Male minus Female), centred at minus 0.09, with 95% confidence interval dotted lines and a vertical black line at zero.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-density-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: <strong>IV by sex for percent of late installments.</strong> Left: the IV sampling distributions for female and male applicants barely overlap. Right: the distribution of their difference sits clear of zero, so the feature is meaningfully more predictive for one group than the other, a differential that is invisible if IV is reported as a single number per feature.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="what-to-do-differently-tomorrow" class="level2">
+<h2 class="anchored" data-anchor-id="what-to-do-differently-tomorrow">What to do differently tomorrow</h2>
+<p>None of this requires new infrastructure, only reporting the uncertainty that was always implicit in the numbers. A short checklist:</p>
+<ol type="1">
+<li><strong>When ranking features by IV, report the confidence interval, not just the point estimate.</strong> A feature at IV = 0.15 ± 0.04 may not be meaningfully ahead of one at 0.12 ± 0.03.</li>
+<li><strong>Treat a PSI alert as a hypothesis, not a verdict.</strong> Check whether the confidence band clears zero before you act: a thin origination week can lift the index over a line while the underlying distribution has barely moved.</li>
+<li><strong>Bring the error bars to fairness reviews.</strong> A demographic IV is one draw from a distribution: 0.048 ± 0.001 and 0.048 ± 0.020 should not weigh the same in a model-risk discussion, even though their point estimates are identical.</li>
+<li><strong>Read the conventional cut-offs (0.02, 0.10, 0.30) as rules of thumb, not thresholds with the force of law.</strong> The statistics size the question; they do not settle it.</li>
+</ol>
+</section>
+<section id="code-and-data" class="level2">
+<h2 class="anchored" data-anchor-id="code-and-data">Code and data</h2>
+<p>All results are reproduced in a companion Jupyter notebook at <a href="https://github.com/deburky/rwds-submission">github.com/deburky/rwds-submission</a>. It uses the <a href="https://huggingface.co/datasets/deburky/home-credit-credit-risk-model-stability">Home Credit - Credit Risk Model Stability</a> dataset <span class="citation" data-cites="homecredit2024">(Herman et al. 2024)</span> (522,596 loan applications, 8 features) and runs directly from HuggingFace. To keep the confidence intervals visible at the scale of the figures, the analysis uses a 10% sample stratified by week (roughly 52,000 applications, with every week retained); on the full dataset the intervals are correspondingly tighter. WoE encoding, IV, and standard errors use the open-source <a href="https://github.com/xRiskLab/fastwoe">FastWoe</a> library.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Weight of Evidence, Information Value, and the Population Stability Index are not ad hoc metrics. They are specific instances of the Jeffreys divergence, a quantity statisticians have understood since the 1940s. That single recognition is what gives the delta method something to work on, and the delta method is what supplies the standard errors, confidence intervals, and tests behind every figure above.</p>
+<p>The shift it asks of practitioners is small but real: from reporting credit metrics as exact numbers to reporting them as estimates with uncertainty. That is a modest change in workflow, but it moves credit risk practice from point estimates to inference, which is, after all, what statistics is for.</p>
+<div class="article-btn">
+<p><a href="https://realworlddatascience.net/ideas/foundations-and-frontiers/">Back to Foundations &amp; Frontiers</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+<strong>Denis Burakov</strong> leads data science and data engineering at Renmoney. He has held senior roles at Amazon, N26, KPMG, and Sberbank, spanning retail and corporate lending, regulatory and managerial risk models, and fraud detection. He is based in Berlin, Germany.
+</dd>
+<dd>
+<strong>Agus Sudjianto</strong> is SVP of Risk &amp; Technology at H2O.ai and Executive in Residence at the Center for Trustworthy AI Through Model Risk Management, University of North Carolina Charlotte. He was formerly Head of Corporate Model Risk at Wells Fargo. He is a co-creator of PiML and MoDeVa.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2026 Denis Burakov and Agus Sudjianto
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Burakov, Denis, and Agus Sudjianto. 2026. “The Hidden Statistics Behind Credit Risk.” Real World Data Science, June 2026. <a href="https://realworlddatascience.net">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>AI disclosure.</strong> Claude (Anthropic) was used to assist with code development for the companion notebook and to help structure drafts of this article. All mathematical content, analysis, and editorial decisions are the authors’ own.</p>
+</div>
+</div>
+</div>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="ref-good1950probability" class="csl-entry">
+Good, Irving John. 1950. <em>Probability and the Weighing of Evidence</em>. Charles Griffin &amp; Company.
+</div>
+<div id="ref-hand1997statistical" class="csl-entry">
+Hand, David J., and William E. Henley. 1997. <span>“Statistical Classification Methods in Consumer Credit Scoring: A Review.”</span> <em>Journal of the Royal Statistical Society: Series A</em> 160 (3): 523–41.
+</div>
+<div id="ref-homecredit2024" class="csl-entry">
+Herman, Daniel, Tomas Jelinek, Walter Reade, Maggie Demkin, and Addison Howard. 2024. <span>“Home Credit - Credit Risk Model Stability.”</span> <a href="https://kaggle.com/competitions/home-credit-credit-risk-model-stability" class="uri">https://kaggle.com/competitions/home-credit-credit-risk-model-stability</a>.
+</div>
+<div id="ref-jeffreys1961theory" class="csl-entry">
+Jeffreys, Harold. 1961. <em>Theory of Probability</em>. 3rd ed. Oxford University Press.
+</div>
+<div id="ref-kullback1951information" class="csl-entry">
+Kullback, Solomon, and Richard A. Leibler. 1951. <span>“On Information and Sufficiency.”</span> <em>Annals of Mathematical Statistics</em> 22 (1): 79–86.
+</div>
+<div id="ref-shannon1948mathematical" class="csl-entry">
+Shannon, Claude E. 1948. <span>“A Mathematical Theory of Communication.”</span> <em>Bell System Technical Journal</em> 27 (3): 379–423.
+</div>
+<div id="ref-siddiqi2017intelligent" class="csl-entry">
+Siddiqi, Naeem. 2017. <em>Intelligent Credit Scoring: Building and Implementing Better Credit Risk Scorecards</em>. 2nd ed. Wiley.
+</div>
+<div id="ref-sudjianto2025information" class="csl-entry">
+Sudjianto, Agus, and Denis Burakov. 2025. <span>“An Information-Theoretic Framework for Credit Risk Modeling: Unifying Industry Practice with Statistical Theory for Fair and Interpretable Scorecards.”</span> <em>arXiv Preprint arXiv:2509.09855</em>.
+</div>
+</div></section></div> ]]></description>
+  <category>Foundations &amp; Frontiers</category>
+  <category>Statistics</category>
+  <category>Information Theory</category>
+  <category>Credit Risk</category>
+  <guid>https://realworlddatascience.net/foundation-frontiers/posts/2026/08/18/hidden-statistics-credit-risk.html</guid>
+  <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Small Data, High Quality: a winning combination for the UK</title>
   <dc:creator>A. Rosemary Tate, Eugenie Hunsicker and Francis Osei</dc:creator>
@@ -1428,7 +1642,7 @@ Demming, Anna. 2024. “The machine learning victories at the 2024 Nobel Prize a
 <p>Knowledge is power and today a lot of that knowledge – not just what you know but who you know – is online. In 2015 the UN General Assembly laid out 17 Sustainable Development Goals (SDGs) that aim to end poverty and other deprivations while improving the welfare of both people and the planet. One of the <a href="https://sdgs.un.org/goals/goal5#targets_and_indicators">SDGs deals with gender equality</a> and emphasises the importance of digital technology for empowering women. Online, a woman can engage in commercial, social, business or networking transactions without the need to be absent from care responsibilities at home or maintain traditional 9-5 working hours or, in some instances, even expose the fact that she is a woman at all – all potentially transformative features of online engagement<sup>1</sup>. Yet the reality for digital technology to empower women is by no means clear cut.</p>
 <p>‘For me, whether digital technologies are able to empower women was fundamentally an empirical question,’’ says professor of demography and computational data science at Oxford University <a href="https://www.sociology.ox.ac.uk/people/ridhi-kashyap">Ridhi Kashyap</a>. She adds that in order to ask these questions of impact, you first need to be able to measure inequalities in digital access. However, the pace of technological change has been a lot faster than the rate at which national censuses – or other kinds of surveys useful to social scientists – update their questions, so they shed little light on the demographics around digital technologies.</p>
 <p>Since then, progress in accruing data on digital access has revealed some stark gender inequalities. However, access is not the only fly in the ointment when it comes to the potential for digital technology to help towards gender equality. ‘The most harmful illegal online content disproportionately affects women and girls,’ says the <a href="https://www.gov.uk/government/publications/online-safety-act-explainer/online-safety-act-explainer#how-the-act-protects-women-and-girls">explainer for the UK’s 2023 Online Safety Act</a>. A <a href="https://www.turing.ac.uk/news/publications/understanding-gender-differences-experiences-and-concerns-surrounding-online">study by the Turing Institute</a> published earlier this year has revealed nuances on this picture, but confirmed that many women feel particularly vulnerable online, suggesting women may be losing a seat at the table as debate and discourse increasingly moves online.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Muted. In the absence of proactive intervention, the shift of debate and discourse online risks muting women and girls as multiple factors exclude them from engaging there as productively as male counterparts. Copyright: Park Kang Hun/Shutterstock." data-fig-align="center">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Muted. In the absence of proactive intervention, the shift of debate and discourse online risks muting women and girls as multiple factors exclude them from engaging there as productively as male counterparts. Copyright: Park Kang Hun/Shutterstock.">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/09/17/images/Minoan-Illustration.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Muted. In the absence of proactive intervention, the shift of debate and discourse online risks muting women and girls as multiple factors exclude them from engaging there as productively as male counterparts. Copyright: Park Kang Hun/Shutterstock.">
@@ -1443,7 +1657,7 @@ Figure&nbsp;1: Muted. In the absence of proactive intervention, the shift of deb
 <h2 class="anchored" data-anchor-id="gender-disparities-in-internet-access">Gender disparities in internet access</h2>
 <p>A turning point in the conversation around digital technology and gender equality came in 2018 with work by Kashyap and collaborators in the US and Qatar at the time. They found that where traditional survey-based data on internet and mobile gender gaps was available, it correlated well with the gender gap on Facebook, using data extracted for Facebook’s ad platform: When Facebook’s aggregate user counts did not show women, it provided a good signal that women were not online altogether in those countries. As such, the work revealed a potentially useful proxy to gauge the digital gender gap in countries where little traditional survey data was available<sup>3</sup>. <a href="https://www.digitalgendergaps.org/">The results</a> revealed an unexpectedly large gender gap, particularly in parts of South Asia and certain countries in Africa where men were up to twice as likely to have access to the Internet compared with women.</p>
 <p>‘In some sense it was perhaps not surprising,’’ says Kashyap highlighting that having a mobile phone or similar device that grants access to the internet amounts to a kind of asset ownership, and studies for other assets indicate women are less likely to own them. ‘This is broadly reflective of economic gender inequality,’ she adds. Perhaps more surprising is that the gaps have changed very little in the five years since <a href="https://www.digitalgendergaps.org/">their website, which monitors the digital gender gap</a>, was first released, particularly in view of the pace of technological progress in general, and the importance placed on closing the gap. Citing India as an example, Kashyap points out that in 2019 the ratio of access to the internet for men versus women was 0.619 – fewer than two women had access for every three men with access. In the subsequent half decade this digital gender gap has closed by just 7.1% to a ratio of 0.663.</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The digital gender gap. Ratio of female-to-male internet use estimated using the Facebook Gender Gap Index^[Leasure D R, Yan J, Bondarenko M, Kerr D, Fatehkia M, Weber I &amp; Kashyap R. Digital Gender Gaps Web Application, v1.0.0. Zenodo, GitHub (2023) [doi:10.5281/zenodo.7897491](https://github.com/OxfordDemSci/dgg-www)]" data-fig-align="center">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="The digital gender gap. Ratio of female-to-male internet use estimated using the Facebook Gender Gap Index^[Leasure D R, Yan J, Bondarenko M, Kerr D, Fatehkia M, Weber I &amp; Kashyap R. Digital Gender Gaps Web Application, v1.0.0. Zenodo, GitHub (2023) [doi:10.5281/zenodo.7897491](https://github.com/OxfordDemSci/dgg-www)]">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/09/17/images/Digital gender gap.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The digital gender gap. Ratio of female-to-male internet use estimated using the Facebook Gender Gap Index^[Leasure D R, Yan J, Bondarenko M, Kerr D, Fatehkia M, Weber I &amp; Kashyap R. Digital Gender Gaps Web Application, v1.0.0. Zenodo, GitHub (2023) [doi:10.5281/zenodo.7897491](https://github.com/OxfordDemSci/dgg-www)]">
@@ -1471,7 +1685,7 @@ Figure&nbsp;2: The digital gender gap. Ratio of female-to-male internet use esti
 <p>Challenges to women being heard online seem to go beyond safety issues. Recent research by Kashyap and collaborators at the University of Oxford and collaborators in Iran and Germany has also highlighted differences in how influential women’s professional networks are relative to male counterparts<sup>8</sup>. In previous work with Florianne Verkroost, also at the University of Oxford, Kashyap had investigated the gender gaps in those who have a LinkedIn profile to see how they vary across industries<sup>9</sup>. They found that use of the platform broadly mirrors female-to-male ratios of representation in technical and managerial professions. In reference 8, they then investigated what insights LinkedIn data might provide as to the cause of some of the gender disparities in these professions, and ultimately why women are not progressing in technical and professional jobs as well as male counterparts.</p>
 <p>‘One argument is that that’s often because they don’t have advantageous networks,’ says Kashyap, adding that women may be restricted by the need to resume care commitments at home instead of staying for drinks after work or travelling to attend conferences. One might expect online avenues for networking would be able to mitigate such obstacles. In fact, studies of LinkedIn data did suggest that although women are less likely to be in professional and technical occupations as reflected in the platform’s data, in some instances their numbers exceeded them. Kashyap suggests this could be ‘where they’re using online platforms to make themselves more visible, because other fine forms of networking are less available, or they have less time for it.’ Indeed, women who were on LinkedIn were more likely to report a promotion than their male counterparts, suggesting an element of positive selection among the female LinkedIn user population. However, the potential equalising impact of moving professional networking online seems to have its limits.</p>
 <p>Their study of LinkedIn data showed women were less likely to report a relocation for work, which Kashyap suggests, ‘is a sign that the work family trade-off is probably still remaining acute for this highly selected group.’ In another 2023 study Kashyap and colleagues had also reported a lower mobility for women, specifically among published scientists, researchers and academics based on bibliometric data from over 33 million Scopus publications<sup>10</sup>. In addition, when Kashyap and her colleagues looked at women on LinkedIn working in the tech sector, they found that they had a lower chance of being connected to those working in one of the “big five” firms in the tech sector than men, when not working in one themselves. ‘One way to interpret that is to say that they have maybe less influential online social networks, right, even when they are on the platform.’</p>
-<div id="fig-4" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Leaky pipeline. The proportion of women working in science decreases towards the mid and senior career stages" data-fig-align="center">
+<div id="fig-4" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Leaky pipeline. The proportion of women working in science decreases towards the mid and senior career stages">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-4-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/09/17/images/shutterstock_1215562669-h350.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Leaky pipeline. The proportion of women working in science decreases towards the mid and senior career stages">
@@ -1566,7 +1780,7 @@ Demming, Anna. 2024. “Are we at risk of muting the female voice in the digital
 
 <p>Governments, policymakers and central banks across the world are wrestling to keep rising prices under control using monetary policies such as interest rate increases. The effectiveness of such policy changes should be assessed by monitoring inflation data as well as studying the impact on real GDP, making timely and accurate access to key economic indicators crucial for policy planning. The delay in publishing economic indicators such as Real GDP, inflation and other labour related series, makes this real time assessment of the economy particularly challenging. Now Menzie Chinn at the University of Wisconsin, Baptiste Meunier at the European Central Bank and Sebastian Stumpner at the Banque de France report an approach for “nowcasting” built on previous research that develops a framework using different machine learning techniques and is flexible and adaptable compared with traditional methods<sup>1</sup>. They report on the accuracy of their 3-step framework for nowcasting global trade volume estimates, showing how it can outperform traditional methods. They also highlight that the 3-step framework can be extended beyond World Trade data.</p>
 <p>Nowcasting, an amalgamation of the term now and forecasting, provides a methodology to assess the current state of the economy by predicting the current value of inflation or Real GDP. The <a href="https://www.newyorkfed.org/research/policy/nowcast#/overview">Federal Reserve Bank of New York</a> and <a href="https://www.atlantafed.org/cqer/research/gdpnow">Federal Reserve Bank of Atlanta</a> have used nowcasting to publish real time GDP estimates, for the USA. Similarly, the <a href="https://www.clevelandfed.org/indicators-and-data/inflation-nowcasting">Federal Reserve Bank of Cleveland estimates real time inflation</a> using nowcasting methods.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="GDP digital drawing. Credit: Shutterstock, Vink Fan">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="GDP digital drawing. Credit: Shutterstock, Vink Fan" data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/datasciencebites/posts/2024/6/25/images/GDPshutterstock_2302082265-991.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="GDP digital drawing. Credit: Shutterstock, Vink Fan">
@@ -1581,7 +1795,7 @@ Figure&nbsp;1: Growth of GDP with statistical graph, 3d rendering. Digital drawi
 <section id="model-framework-improved-flexibility-and-accuracy" class="level2">
 <h2 class="anchored" data-anchor-id="model-framework-improved-flexibility-and-accuracy">Model framework improved flexibility and accuracy:</h2>
 <p>The 3 steps in the framework are chronological steps to be performed in which the first step is pre-selection of the independent variables with the highest predictive power. The independent variables from the first step are then summarised into a few factors using factor extraction methodology in the second step. The final step consists of using the factors from step 2 to perform regression.</p>
-<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research.">
+<div id="fig-2" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/datasciencebites/posts/2024/6/25/images/3step-framework-methods-big.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The various methods that can be employed in the 3 step framework in Chinn et al (2024). Credit: National Bureau of Economic Research.">
@@ -1593,7 +1807,7 @@ Figure&nbsp;2: The various methods that can be employed in the 3 step framework 
 </div>
 <p>Figure&nbsp;2 summarises the various methods employed at each step in the 3 step framework. In their report Chinn, Meunier and Stumpner aim to propose the best techniques for pre-selection, factor extraction and regression. As such their 3-step framework comprises performing pre-selection using Least Angle Regression (LARS), factor extraction using Principal Component Analysis (PCA) and employing a Macroeconomic Random Forest (MRF) machine learning technique for nowcasting.</p>
 <p>The model performance or accuracy of MRF is compared with traditional methods using Root Mean Square Error (RMSE), a measure of the deviation between the actual data and the predicted data. The 3-step framework model accuracy is tested by holding the preselection and factor extraction fixed to isolate the impact of regression techniques.</p>
-<div id="fig-3" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research.">
+<div id="fig-3" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research." data-fig-align="center">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/datasciencebites/posts/2024/6/25/images/method-accuracy-big.png" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="Bar chart comparing the accuracy of different methods in terms of RMSE. Credit: National Bureau of Economic Research.">
@@ -1808,7 +2022,7 @@ Demming, Anna. 2024. “Ensuring new AI technologies help everyone thrive .” R
 <p>For example, in healthcare when we use AI for risk predictions, it can be a really great tool to aid clinicians to save time. However, in each stage, we need to assess the data quality, how these data are fed into the algorithm, what procedures, what models, and how we generate those models. And then which discriminative models do we use to balance the risk and eventually predict the risk of outcomes in patients? It’s very much a balance between risks and benefits for usefulness of these tools in practice. We have all these brilliant ideas of what best practice is. But in real terms, sometimes it’s a little bit tricky to follow through.</p>
 <p><strong>Could you give us some thoughts on the sort of best practice with data, for example, that doesn’t quite turn out to be quite so easy to follow in practice, and what you might do about it?</strong></p>
 <p><strong>FT</strong>: We always call these AI algorithms, data hungry algorithms, because the models that we fit require us to see patterns in the data that we feed into them so that the learning happens. And then the discriminative functions come in place to balance and kind of give a score to wherever the learning is happening and give an evaluation of each step. However, the data that we put into these algorithms comes first – the quality of that data. Often in healthcare, because of its sensitivity, the data is held within a secure environment. So we cannot, at this point in time, expose an AI algorithm to a very diverse example, specifically for investigating rare diseases or rare conditions. And above that, there is also complexities in the data itself. We need to evaluate and clean the data before we feed it into these algorithms. We need to evaluate the diversity of the data itself – for example, the tabular data, the imaging data, the genomic data – and each one requires its own specific or tailored approach in data cleaning stages.</p>
-<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" alt="The panel. Clockwise from top left: Ali Al-Sherbaz, Janet Bastiman, Fatemeh Torabi and Jonathan Gillard" data-fig-align="center">
+<div id="fig-1" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center" alt="The panel. Clockwise from top left: Ali Al-Sherbaz, Janet Bastiman, Fatemeh Torabi and Jonathan Gillard">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/06/04/images/panel-991.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" alt="The panel. Clockwise from top left: Ali Al-Sherbaz, Janet Bastiman, Fatemeh Torabi and Jonathan Gillard">
@@ -2160,117 +2374,6 @@ Sassoon, Isabel. 2024. “Evaluation essentials for safe and reliable AI model p
   <guid>https://realworlddatascience.net/foundation-frontiers/posts/2024/05/21/ai-series-4.html</guid>
   <pubDate>Tue, 21 May 2024 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/foundation-frontiers/posts/2024/05/21/images/Evaluation_thumbnail.jpg" medium="image" type="image/jpeg"/>
-</item>
-<item>
-  <title>AI series: On AI ethics - influencing its use in the delivery of public good</title>
-  <dc:creator>Olivia Varley-Winter</dc:creator>
-  <link>https://realworlddatascience.net/foundation-frontiers/posts/2024/05/14/ai-series-2.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<!-- article text to go here -->
-<p>Criminal <a href="https://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing">sentencing biased by race</a> in the US, <a href="https://www.theguardian.com/education/2021/feb/18/the-student-and-the-algorithm-how-the-exam-results-fiasco-threatened-one-pupils-future">students systematically downgraded</a> in UK public examinations with no process for appeal, and <a href="https://orientblackswan.com/details?id=9789352875429#:~:text=Dissent%20on%20Aadhaar%20argues%20that,surveillance%20and%20commercial%20data%2Dmining">decisions to rescind food welfare</a> in India riddled with errors and discrepancies are all instances where AI algorithms have hit the headlines. When Bill Gates wrote that the age of <a href="https://www.linkedin.com/pulse/age-ai-has-begun-bill-gates/">AI has begun</a> and “will change the way people work, learn, travel, get health care, and communicate with each other,” those probably weren’t the changes he had in mind. Nor need they be an inevitable side effect of living with AI.</p>
-<p>A number of points require consideration to work safely with AI, from the potential for bias in input and training data, and consent over data use, to the transparency and fairness of applying an algorithm – who has decided the problem, or set of problems, it is to solve? The steps that are taken to explain and involve an organisation’s stakeholders in the conclusions that AI reaches also require ethical consideration, as does ethical development of AI. Its use for social policies and services highlights an additional set of problems.</p>
-<p>As AI becomes more active in society, AI ethics involves not only defining the objectives for data scientists, researchers and technologists to work on. It involves governing bodies, regulators, policy makers, businesses and organisations, the media, and civil society, working to handle and communicate AI’s benefits and mitigate its harms. Organisations with international clout – such as the United Nations Educational, Scientific and Cultural Organization (<a href="https://www.unesco.org/en/artificial-intelligence/recommendation-ethics">UNESCO</a>) and the Organisation for Economic Co-operation and Development (<a href="https://www.oecd.org/gov/ethics/ethicscodesandcodesofconductinoecdcountries.htm">OECD</a>) – have prominently set out ethical principles that can broadly apply. Nonetheless, a lot can go wrong.</p>
-<section id="bias-in-bias-out" class="level2">
-<h2 class="anchored" data-anchor-id="bias-in-bias-out">Bias in bias out</h2>
-<p>In 2016 when ProPublica launched an investigation into potential biases in a ‘risk assessment’ algorithm used by the US criminal justice system, it was the first independent investigation of its kind. This was despite the widespread use of the algorithm and its power to influence a judge’s sentence, in one instance <a href="ttps://www.propublica.org/article/machine-bias-risk-assessments-in-criminal-sentencing">doubling the duration while increasing the severity</a> of the imprisonment. On examining 7000 risk assessment scores and the records detailing whether the subjects of those scores had reoffended in the subsequent two years, Propublica found “Only 20 percent of the people predicted to commit violent crimes actually went on to do so”. Even when the full range of crimes was taken into account “the algorithm was somewhat more accurate than a coin flip” at 61%. Part of the enthusiasm for these algorithms had been the expectation that they might bypass the prejudices and unconscious biases of human judges, enabling fairer justice. However, while many might baulk at the thought of tossing a coin to determine someone’s prison sentence, it turns out this might be a fairer approach than the algorithm, which was found to “falsely flag black defendants as future criminals” at twice the rate of white defendants.</p>
-<div id="Eleanor_Roosevelt-991724" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/05/14/images/Eleanor_Roosevelt-991724.jpg" class="img-fluid figure-img" alt="Eleanor Roosevelt reads the Universal Declaration of Human Rights in 1949; FDR Presidential Library &amp; Museum 64-165 CC-BY-2.0"></p>
-<figcaption>Eleanor Roosevelt reads the Universal Declaration of Human Rights in 1949; FDR Presidential Library &amp; Museum 64-165 CC-BY-2.0</figcaption>
-</figure>
-</div>
-<p>Since Propublica’s investigation there have been multiple reports highlighting problems with algorithms trained on historic data for use in the criminal justice system. The risk illustrated here, which can be generalised, is that such algorithms will tend to propagate social biases. In this case it means that those from ethnic minorities and lower socioeconomic backgrounds are awarded harsher sentences. Compounding the problem was the proprietary nature of the algorithms involved, which made it difficult to launch independent investigations. However, in the case of the algorithm investigated by Propublica, the input data, which is taken from questions put to the defendant and their prison records, did provide clues as to the scope for unfair outcomes. Although race is not explicitly identified, it likely correlates with other data that is used as input. This meant that the outcomes would be biased with respect to race all the same. A lot more work is needed to mitigate the effects of historical social injustices in how the criminal justice system uses data. Innovators in this area need to have confidence in what will be affected by their evidence base, as well as support from independent legal and ethical reviewers, and from regulators, to determine what will make a good innovation, and what will not.</p>
-</section>
-<section id="consent-human-rights-and-data-provenance" class="level2">
-<h2 class="anchored" data-anchor-id="consent-human-rights-and-data-provenance">Consent, human rights, and data provenance</h2>
-<p>The testing and training of AI algorithms can also run into other ethical questions about the ratio of public to private benefits from data and who governs those benefits. On the eve of the UK’s AI Summit in 2023, <a href="https://www.linkedin.com/pulse/ai-beneath-surface-pivotal-role-data-smart-data-research-uk-betwe/">Joe Cuddeford of Smart Data Research UK wrote</a>: “Many AI systems rely on data collected passively from individuals, raising questions about transparency, privacy, and who benefits from these data-driven advancements.”</p>
-<p>Large scale AI models, such as generative AI models, are <a href="https://www.washingtonpost.com/technology/2023/10/25/data-provenance/">often trained on web-scraped data</a> from online platforms. This leads to questions about the fairness of internet data, the ownership of it (e.g.&nbsp;<a href="https://www.nytimes.com/2024/04/06/technology/tech-giants-harvest-data-artificial-intelligence.html">potential violation of copyright law</a>), and methods for users’ consent and human rights to be embedded and respected. There are, once again, questions about accuracy and bias: what do algorithms “learn” from data scraped from the internet, and is the information appropriately curated for use?</p>
-<p>Civil liberties concerns also similarly arise when people are compelled to give up data about themselves by powerful arms of the state. For example, the national Facial Verification Testing program run by the National Institute of Standards and Technology, a part of the U.S. Department of Commerce, has held and <a href="https://slate.com/technology/2019/03/facial-recognition-nist-verification-testing-data-sets-children-immigrants-consent.html">made use of images of vulnerable individuals</a> to test and validate the performance of commercialised AI technologies. The data used by the agency for testing include ‘mugshots’ or facial images from arrests or from other encounters with law enforcement. <sup>1</sup> An additional programme focuses on testing the performance of facial recognition algorithms against an image database of sexually exploited children (<a href="https://www.nist.gov/programs-projects/chexia-face-recognition">CHEXIA-FACE</a>). Having statistics from this kind of agency testing has clear commercial benefit: it helped win the case for the vendors who could match those statistics when the <a href="https://www.met.police.uk/SysSiteAssets/media/downloads/force-content/met/advice/lfr/other-lfr-documents/lfr-accuracy-and-demographic-differential.pdf">London Metropolitan police purchased live facial recognition technology</a>. However, the interests of the people that have been documented do not come up for discussion in this form of data governance. There are many participatory methods that could be used for more ethical stewardship of the data that people are compelled to give. <sup>2</sup></p>
-<p>To address the scope for minorities and vulnerable groups to play their part in data collection, it should be possible for data scientists to adopt strategies that consciously address the bias in data collection. Eun Seo Jo (from Stanford University) and Timnit Gebru (formerly at Google) have suggested library and archival approaches. In Strategies for Collecting Sociocultural Data in Machine Learning, <sup>3</sup> they note that internet data is subject to historical and representative biases. Recognising and mitigating biases will “start with a statement of commitment to collecting the cultural remains of certain concepts, topics, or demographic groups.” A public mission statement, which highlights the interests of communities and minorities they plan to support, “forces [archival] researchers to reckon with their data composition.”</p>
-<p>These strategies also need to be supported by good management of data collection and curation. A report by the Royal Academy of Engineering (2021) <a href="https://reports.raeng.org.uk/datasharing/implications-for-policy">Towards trusted data sharing: implications for policy and practice</a> has highlighted that, to support the use of data for research, good data management must exist among the data owners. Strong relationships with data owners predicated on data quality and ethics will help researchers to specify what data sets they are looking for and how they can best be curated for AI purposes. Good data management will not only help AI developers but also all potential users (as well as the public) to understand the scope and the quality of what’s being shared. “Defining the requirements for data quality, and ensuring these requirements are delivered, remains a central challenge.” (<a href="https://reports.raeng.org.uk/datasharing/implications-for-policy">RAE report</a>)</p>
-<p>Advocates for accurate and fair data and machine learning have worked hard to clarify what good data management and sharing looks like, which is cause for optimism. However there is the sense that this is the area in which AI has the furthest to go, as data sets currently available fall far wide from the standards recommended by their work. Nonetheless the rise of Trusted Research Environments, Data Safe Havens and other methods of open-source transparency enable more AI innovators to disclose their sources without placing any of the personal information they use at further risk, as <a href="https://realworlddatascience.net/foundation-frontiers/posts/2024/05/07/ai-series-3.html">discussed previously in the AI series</a>. Leadership on ethical standards for data sharing may yet help to improve the <a href="https://oecd.ai/en/dashboards/ai-principles/P8">robustness, security, safety, and fairness of AI tools</a>, which the OECD advocates as key principles for AI.</p>
-</section>
-<section id="openness-explainability-and-the-scope-to-challenge-ai-decisions" class="level2">
-<h2 class="anchored" data-anchor-id="openness-explainability-and-the-scope-to-challenge-ai-decisions">Openness, explainability, and the scope to challenge AI decisions</h2>
-<p>A principle that many data science communities have been working on, is towards ensuring transparency and explainability of AI (<a href="https://oecd.ai/en/dashboards/ai-principles/P7">OECD AI Principle</a>). In OECD parlance that is in part “to ensure that people understand when they are engaging with [artificial intelligence] and can challenge outcomes.” In acknowledgement that some AI applications make this disclosure harder and more unappealing, the OECD suggests that the fact that AI is in use should be disclosed “with proportion to the importance of the outcome … so that consumers, for example, can make more informed choices”. The OECD emphasises the importance of the “explainability” of the algorithms, which it defines as “enabling people affected by the outcome of an AI system to understand how it was arrived at. … notably – to the extent practicable – the factors and logic that led to an outcome.”</p>
-<p>The <a href="https://www.oii.ox.ac.uk/research/projects/a-fairwork-foundation-towards-fair-work-in-the-platform-economy/">tens of millions of digital ‘platform workers’</a> that now live all over the world are a case in point for where explainability is needed. They perform short-term, freelance, or temporary work through digital platforms or apps in the “gig economy”. There is little transparency about how algorithms and AI influence outcomes for gig workers, and whether platform algorithms are contributing systematically to unfair outcomes. <a href="https://www.oii.ox.ac.uk/research/projects/a-fairwork-foundation-towards-fair-work-in-the-platform-economy/">Platform workers themselves have come together</a> to share their data to understand more about the outcomes of the algorithms, or AI, which is shaping their lives.</p>
-<p>It follows that where the use of an AI system does not affect outcomes for people, there may be less of a demand to publicly justify how AI arrived at its outcomes. For example, where AI is used to simulate something, or to research a decision, rather than to make a decision, there could be less weight placed on explaining the model publicly.</p>
-<div id="Aerial_view_of_Silion_Valley991" class="quarto-figure quarto-figure-center anchored">
-<figure class="figure">
-<p><img src="https://realworlddatascience.net/foundation-frontiers/posts/2024/05/14/images/Aerial_view_of_Silicon_Valley991.jpg" class="img-fluid figure-img" alt="Aerial view of tech cluster in Silicon Valley, taken on 29 March 2013, courtesy of Patrick Nouhaillier CC-BY-3.0"></p>
-<figcaption>Aerial view of tech cluster in Silicon Valley, taken on 29 March 2013, courtesy of <a href="Patrick Nouhaillier">https://www.flickr.com/photos/patrick_nouhailler/</a> CC-BY-3.0</figcaption>
-</figure>
-</div>
-<p>François Candelon, Theodoros Evgeniou, and David Martens, writing for the Harvard Business Review have outlined that their preference is for <a href="https://hbr.org/2023/05/ai-can-be-both-accurate-and-transparent">accuracy as well as explainability</a>. Often, to strike this balance, they will prefer ‘white box’ models which are transparent and interpretable. But not always. “In [complex] applications such as face-detection for cameras, vision systems in autonomous vehicles, facial recognition, image-based medical diagnostic devices, illegal/toxic content detection, and most recently, generative AI tools like ChatGPT and DALL-E, a black box approach may be advantageous or even the only feasible option.”</p>
-<p>Even where the algorithm is too large and complicated to be interpretable, work like that conducted by the Alan Turing Institute in <a href="https://www.turing.ac.uk/research/research-projects/project-explain">Project ExplAIn</a> finds ways of extracting some kind of explanation, for instance by embedding layers in the coding. The case for opening up AI in this way has to be balanced against concerns for intellectual property, information security and privacy. There can be <a href="https://www.tripwire.com/state-of-security/ai-transparency-why-explainable-ai-essential-modern-cybersecurity">cybersecurity issues</a> with making the different layers of an AI model more open to interrogation. Nonetheless, experiments with transparent and explainable models enable developers to advance their understanding of AI, as well as to consider whether its use for decision-making is ethically sound. The OECD principles make clear that it is important that AI doesn’t elude human insight, checks and balances. As Andrew Ng highlighted in the <a href="https://youtu.be/nIIPMmZaK-s?si=T6ahpP6R1QjuUIsq">RSS fireside chat in 2021</a>: “AI is increasing concentration of power like never before…governments and regulators need to look at that and think of what to do.”</p>
-</section>
-<section id="appropriate-human-centred-governance" class="level2">
-<h2 class="anchored" data-anchor-id="appropriate-human-centred-governance">Appropriate, human-centred governance</h2>
-<p>When school exams in England were cancelled during the Covid-19 pandemic, the government’s Department for Education decided that an algorithm should be used to allot grades to A-Level students, partly as a measure to counter grade inflation (a trend in which the grades awarded for the same standard of work will tend to rise, year on year). Algorithms had been used before in previous years to adjust the marks that were awarded for exams and coursework. Here instead of exams and coursework, the input data was gathered from Ofqual’s historical records about how particular schools’ pupils had performed in previous years, and some was generated by teachers. Efforts had been made at transparency in terms of how the new algorithm would arrive at these decisions (it was a relatively simple, white box algorithm). But there were ‘outliers’ acknowledged in the model even prior to deployment. Coupled with the widespread downgrading of teacher-estimated grades to fit a curve that would avoid grade inflation, there was not a clear process by which students and schools could appeal to change their grades. <a href="https://www.theguardian.com/education/2021/feb/18/the-student-and-the-algorithm-how-the-exam-results-fiasco-threatened-one-pupils-future">Dissatisfaction with the grades awarded</a> in the absence of exams or coursework was rife, as young people regarded as academically talented by their schools fell short of the grades their teachers had predicted, and lost university places.</p>
-<p>In the resulting furore, the Department for Education determined that its original policy was wrong and adopted the teacher estimated grades with an appeal process in place. The incident demonstrates that achieving the functional transparency of an algorithm is only one step in due process. Controversial policies could be using an algorithm to apportion losses across the population (e.g.&nbsp;to try to reduce grade inflation) in ways that are abhorred by individuals.</p>
-<p>Vested interests also surfaced during investigation of an algorithm brought into use to <a href="https://orientblackswan.com/details?id=9789352875429#:~:text=Dissent%20on%20Aadhaar%20argues%20that,surveillance%20and%20commercial%20data%2Dmining.">tackle fraud in India’s welfare system</a>. “From 2014 to 2019, the government of Telangana “<a href="https://www.aljazeera.com/economy/2024/1/24/how-an-algorithm-denied-food-to-thousands-of-poor-in-indias-telangana">cancelled more than 1.86 million existing food security cards</a> and rejected 142,086 fresh applications without any notice.” reported Al Jazeera in January of this year. Despite the government’s initial claims that the cancelled food security cards were fraudulent, critical data scholarship in India and elsewhere has established discrepancies and errors in the algorithms used, such as, confusing the records of a valid claimant with a car-owning citizen by the same name. (Under the government’s policies, SUV owners cannot receive food aid.) Further investigations revealed that at least 7.5 per cent of the food security cards were wrongly cancelled. The investigations highlight what can be a common problem: a focus on reducing the costs of welfare programmes tends to lead services to identify false positives - wrongful claimants – rather than false negatives. Thus efforts to correct sloppy data may meet resistance if this leads to fewer “frauds” being identified, even when citizens bring evidence to challenge it.</p>
-<p>There is a similar type of example in the <a href="https://www.computerweekly.com/feature/Post-Office-Horizon-scandal-explained-everything-you-need-to-know">UK’s Post Office scandal</a>, in which many sub-postmasters were wrongfully prosecuted for false accounting, after the Post Office adopted accounting software that contained significant bugs, which were covered up for many years. This similarly goes to show how far organisations can pursue wrongful judgements, and the life-changing consequences.</p>
-<p>The <a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai">EU’s new AI Act</a> advocates a risk-based approach, to balance the desire to minimise the burden of compliance while ensuring the safety of people who may be affected by the implementation of AI algorithms. Systems assessed as <a href="https://digital-strategy.ec.europa.eu/en/policies/regulatory-framework-ai">high risk according to specific criteria</a> are then “subject to strict obligations before they can be put on the market”.</p>
-<p>Governments across the industrialised world have raised their hopes for AI that will help to drive increases in productivity, and do so safely in ways that are fairly constructed, making use of legitimate data sources, and with fair outcomes for society. The work of data scientists is integral to the foundations by which AI can be used for social good, from establishing protocols for data management and sharing, to understanding the workings of complex algorithms, and the use of large and unstructured data sources. Data scientists and researchers are getting closer to understanding what good looks like, not just in terms of the ethical values to uphold but the technicalities of the code and data involved. However, a great deal of not only data work but also other work also needs to be maintained to uphold the ideal of ‘AI ethics’. Support for well-established ethical and legal rights and principles, to meaningfully involve people in policies that will be affected by AI use, and to develop data governance and infrastructure. It is always possible that when we’re working on AI ethics, we find that there are fairer and more ethical approaches that should precede the use of AI.</p>
-<p>“AI development raises a range of ethical questions for data practitioners, whether they are data scientists, econometricians, analysts, or statisticians,” Daniel Gibbons, Vice Chair of the Royal Statistical Society’s Data Ethics and Governance Section told <em>Real World Data Science</em>. Today, many data scientists would urge that ethical considerations precede the development of an AI algorithm and must inform its design and use, particularly for processes that significantly affect people, to ensure it does not propagate errors and injustices.</p>
-<div class="article-btn">
-<p><a href="../../../../../foundation-frontiers/index.html">Explore more data science ideas</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the author</dt>
-<dd>
-<strong>Olivia Varley-Winter</strong> Olivia is an experienced policy manager who has worked for the Royal Statistical Society, the Open Data Institute, Open Data Charter, the Nuffield Foundation, and the Alan Turing Institute. She was part of the Ada Lovelace Institute’s founding team in 2018 to 2020 and has since supported the development of other policy-related programmes and partnerships relating to data, AI and ethics. She is presently working for Smart Data Research UK on matters pertaining to ethics and responsible data governance. She has an MSc. in Nature, Society, and Environmental Policy from University of Oxford.
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<!-- copyright goes to the author, or to Royal Statistical Society if written by staff -->
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2024 Royal Statistical Society
-</dd>
-</dl>
-<!-- confirm licence terms with contributor before publishing - must be Creative Commons licence, but different types of CC licences might be preferred -->
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1" style="height:22px!important;vertical-align:text-bottom;"><img src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1" style="height:22px!important;margin-left:3px;vertical-align:text-bottom;"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. <!-- Add thumbnail image credit and any licence terms here --></p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Varley-Winter, O., Author. 2024. “On AI ethics - influencing its use in the delivery of public good.” Real World Data Science, May 14, 2024. <a href="https://realworlddatascience.net/foundation-frontiers/posts/2024/04/22/ai-series-2.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-<!-- Make sure to update main site homepage (index.qmd) before publishing. See README for details. -->
-
-
-</section>
-
-
-<div id="quarto-appendix" class="default"><section id="footnotes" class="footnotes footnotes-end-of-document"><h2 class="anchored quarto-appendix-heading">Footnotes</h2>
-
-<ol>
-<li id="fn1"><p>Grother, P., Ngan, M. &amp; Hanaoka K. Face Recognition Vendor Test (FRVT) Part 3: Demographic Effects NISTIR 8280 (2019) https://nvlpubs.nist.gov/nistpubs/ir/2019/NIST.IR.8280.pdf↩︎</p></li>
-<li id="fn2"><p>Participatory data stewardship (2021) Ada Lovelace Institute https://www.adalovelaceinstitute.org/wp-content/uploads/2021/11/ADA_Participatory-Data-Stewardship.pdf ↩︎</p></li>
-<li id="fn3"><p>Jo, E. S. &amp; Gebru T. Lessons from Archives: Strategies for Collecting SocioculturalData in Machine Learning Proceedings of the 2020 Conference on Fairness, Accountability, and Transparency (2020) https://dl.acm.org/doi/epdf/10.1145/3351095.3372829↩︎</p></li>
-</ol>
-</section></div> ]]></description>
-  <category>AI</category>
-  <category>AI ethics</category>
-  <guid>https://realworlddatascience.net/foundation-frontiers/posts/2024/05/14/ai-series-2.html</guid>
-  <pubDate>Tue, 14 May 2024 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/foundation-frontiers/posts/2024/05/14/images/Eleanor_Roosevelt-991724.jpg" medium="image" type="image/jpeg"/>
 </item>
 </channel>
 </rss>

@@ -17,7 +17,221 @@
 <width>144</width>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Wed, 05 Aug 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 18 Aug 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>The Hidden Statistics Behind Credit Risk</title>
+  <dc:creator>Denis Burakov</dc:creator>
+  <dc:creator>Agus Sudjianto</dc:creator>
+  <link>https://realworlddatascience.net/foundation-frontiers/posts/2026/08/18/hidden-statistics-credit-risk.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>A credit risk data scientist is ranking features for a new scorecard. One variable has an Information Value (IV) of 0.12; another scores 0.15. A third feature’s Population Stability Index (PSI) has just crept above the 0.10 line that the team treats as a warning threshold. Three numbers, three decisions: keep the 0.15 feature over the 0.12 one? Trigger a model review because PSI crossed the threshold?</p>
+<p>In most credit teams these calls are made on the point estimates alone, as if each number were exact. But every one of them was computed from a finite sample, so each carries sampling noise. Is 0.15 <em>meaningfully</em> more predictive than 0.12, or could the order flip on next month’s data? Did the population really drift, or did a quiet week thin the sample? Without a measure of uncertainty, there is no principled way to answer, and the data scientist is left trusting thresholds that were never derived from any statistical model.</p>
+<p>It turns out the statistical model was there all along. WoE, IV, and PSI are not ad hoc credit-industry inventions; they are specific instances of a classical information divergence (a measure of how far apart two probability distributions are) with roots in Turing’s wartime <em>weight of evidence</em> <span class="citation" data-cites="good1950probability">(Good 1950)</span> and Shannon’s information theory <span class="citation" data-cites="shannon1948mathematical">(Shannon 1948)</span>. Recognising that connection is not just intellectual housekeeping. Because these metrics are functions of sample proportions, they have sampling distributions, and that lets us attach confidence intervals and probabilistic bounds to quantities the industry has long treated as fixed. This article shows how, organised around the three questions our data scientist is really asking.</p>
+<section id="what-these-three-metrics-measure" class="level2">
+<h2 class="anchored" data-anchor-id="what-these-three-metrics-measure">What these three metrics measure</h2>
+<p>Before the statistics, a plain-English refresher for readers who don’t live in credit scoring:</p>
+<ul>
+<li><strong>Weight of Evidence (WoE)</strong> measures, for a single bin of a feature, how differently “good” and “bad” borrowers are distributed: it is large and positive where bads concentrate, negative where goods do. Formally it is a log likelihood ratio, exactly the quantity Turing and Good called the <em>weight of evidence</em> <span class="citation" data-cites="good1950probability">(Good 1950)</span>.</li>
+<li><strong>Information Value (IV)</strong> rolls those bin-level signals into one number summarising a feature’s overall discriminatory power. Practitioners rank candidate features by it and lean on conventional cut-offs (0.02 weak, 0.10 medium, 0.30 strong).</li>
+<li><strong>Population Stability Index (PSI)</strong> uses the same arithmetic to compare a feature’s distribution <em>today</em> against a reference period, and is the standard tool for monitoring drift after a model goes live.</li>
+</ul>
+<p>The thing rarely taught alongside these formulas is that all three are the same underlying quantity.</p>
+</section>
+<section id="one-identity-iv-psi-jeffreys-divergence" class="level2 page-columns page-full">
+<h2 class="anchored" data-anchor-id="one-identity-iv-psi-jeffreys-divergence">One identity: IV = PSI = Jeffreys divergence</h2>
+<p>The textbook IV formula, for a feature binned into <img src="https://latex.codecogs.com/png.latex?K"> categories with good- and bad-borrower proportions <img src="https://latex.codecogs.com/png.latex?p_%7Bg,j%7D"> and <img src="https://latex.codecogs.com/png.latex?p_%7Bb,j%7D"> <span class="citation" data-cites="siddiqi2017intelligent">(Siddiqi 2017)</span>, turns out to be <em>exactly</em> the Jeffreys divergence (the symmetrised Kullback–Leibler divergence <span class="citation" data-cites="kullback1951information jeffreys1961theory">(Kullback and Leibler 1951; Jeffreys 1961)</span>) between the good and bad distributions:</p>
+<p><span id="eq-iv"><img src="https://latex.codecogs.com/png.latex?%0A%5Ctext%7BIV%7D%20=%20%5Csum_%7Bj=1%7D%5E%7BK%7D(p_%7Bb,j%7D%20-%20p_%7Bg,j%7D)%5C,%5Cln%5Cfrac%7Bp_%7Bb,j%7D%7D%7Bp_%7Bg,j%7D%7D%20%5C;=%5C;%20J(P_b%20%5C,%5C%7C%5C,%20P_g)%0A%5Ctag%7B1%7D"></span></p>
+<p>PSI is the same expression with a reference and a comparison distribution in place of bads and goods; a “fairness IV” is the same expression across two demographic groups. One formula, three uses.</p>
+
+<div class="no-row-height column-margin column-container"><div class="">
+<p><strong>One formula, three applications.</strong> IV, PSI, and fairness IV are all the Jeffreys divergence <img src="https://latex.codecogs.com/png.latex?J(P%20%5C%7C%20Q)"> applied to different partitions of the data.</p>
+</div></div><p>This is more than a notational coincidence. Every property of the Jeffreys divergence (non-negativity, symmetry, zero if and only if the two distributions match) transfers automatically to IV and PSI, grounding those decades-old thresholds in a well-understood statistical quantity <span class="citation" data-cites="kullback1951information">(Kullback and Leibler 1951)</span>. More usefully for our data scientist, because the divergence is a function of sample proportions, it inherits a <em>sampling distribution</em>: it can be reported with a standard error. The derivation is short but notation-heavy, so we have boxed it below; the rest of the article only needs the result (<strong>IV and PSI come with error bars</strong>) and what that changes for each of the data scientist’s three questions.</p>
+<div class="callout callout-style-simple callout-note callout-titled">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Note</span>Technical note: where the standard errors come from
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>The standard error follows from a single observation: Weight of Evidence is a <em>centred</em> log-odds ratio,</p>
+<p><span id="eq-woe"><img src="https://latex.codecogs.com/png.latex?%0A%5Ctext%7BWoE%7D_j%20=%20%5Cunderbrace%7B%5Cln%5Cfrac%7Bn_%7Bj,b%7D%7D%7Bn_%7Bj,g%7D%7D%7D_%7B%5Ctext%7Bbin%20log-odds%7D%7D%20-%20%5Cunderbrace%7B%5Cln%5Cfrac%7Bn_b%7D%7Bn_g%7D%7D_%7B%5Ctext%7Bpopulation%20log-odds%7D%7D%20.%0A%5Ctag%7B2%7D"></span></p>
+<p>Reading this through Bayes’ theorem in odds form gives the familiar updating rule: bin log-odds = population log-odds + WoE, so WoE is the evidence the bin contributes on top of the prior. In Bayesian terms, this is the logarithm of a Bayes factor. Subtracting the constant population term does not change the variance (<img src="https://latex.codecogs.com/png.latex?%5Ctext%7BVar%7D(X-c)=%5Ctext%7BVar%7D(X)"> for any constant <img src="https://latex.codecogs.com/png.latex?c">), so the standard error of WoE equals that of the bin log-odds ratio:</p>
+<p><span id="eq-se-woe"><img src="https://latex.codecogs.com/png.latex?%0A%5Ctext%7BSE%7D(%5Ctext%7BWoE%7D_j)%20=%20%5Csqrt%7B%5Cfrac%7B1%7D%7Bn_%7Bj,g%7D%7D%20+%20%5Cfrac%7B1%7D%7Bn_%7Bj,b%7D%7D%7D%20.%0A%5Ctag%7B3%7D"></span></p>
+<p>This is the same <img src="https://latex.codecogs.com/png.latex?1/%5Csqrt%7Bn_j%5C,p_j(1-p_j)%7D"> that appears as the standard error of a logistic-regression coefficient <span class="citation" data-cites="hand1997statistical">(Hand and Henley 1997)</span>. Since IV is a weighted sum of WoE values, the delta method, a standard tool for propagating uncertainty through a function of estimates, applies (assuming approximate independence across bins):</p>
+<p><span id="eq-se-iv"><img src="https://latex.codecogs.com/png.latex?%0A%5Ctext%7BSE%7D(%5Ctext%7BIV%7D)%20=%20%5Csqrt%7B%5Csum_%7Bj=1%7D%5E%7BK%7D(p_%7Bb,j%7D%20-%20p_%7Bg,j%7D)%5E2%20%5Ccdot%20%5Ctext%7BSE%7D(%5Ctext%7BWoE%7D_j)%5E2%7D%20.%0A%5Ctag%7B4%7D"></span></p>
+<p>Because IV = PSI = Jeffreys divergence, the identical formula gives a standard error for PSI whenever it is computed from binned counts. Full derivation in <span class="citation" data-cites="sudjianto2025information">(Sudjianto and Burakov 2025)</span>.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="question-1-is-this-feature-predictive" class="level2">
+<h2 class="anchored" data-anchor-id="question-1-is-this-feature-predictive">Question 1: Is this feature predictive?</h2>
+<p>With a standard error in hand, every IV point estimate becomes an interval, <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BIV%7D%20%5Cpm%201.96%20%5Ccdot%20%5Ctext%7BSE%7D(%5Ctext%7BIV%7D)">. Figure&nbsp;1 shows this for eight Home Credit features. The error bars do the work the point estimates cannot: features with nearly identical IV can have widely different precision, so a feature scoring 0.15 may not be reliably ahead of one scoring 0.12 once their intervals overlap. Ranking on the point estimate alone can put the more uncertain feature on top by luck of the draw.</p>
+<div id="fig-iv-ci" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Horizontal bar chart showing Information Value for 8 features with human-readable names, with 95% confidence interval error bars. Features are coloured by group: blue for Credit Bureau, pink for Financial/Behaviour, and purple for Categorical/Profile. Vertical dashed lines mark the conventional Weak (0.02), Medium (0.1), and Strong (0.3) IV thresholds.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-iv-ci-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/foundation-frontiers/posts/2026/08/18/images/iv_bar_chart.png" class="img-fluid figure-img" alt="Horizontal bar chart showing Information Value for 8 features with human-readable names, with 95% confidence interval error bars. Features are coloured by group: blue for Credit Bureau, pink for Financial/Behaviour, and purple for Categorical/Profile. Vertical dashed lines mark the conventional Weak (0.02), Medium (0.1), and Strong (0.3) IV thresholds.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-iv-ci-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: <strong>Information Value with 95% confidence intervals for eight Home Credit features.</strong> Notice that several features have overlapping intervals despite different point estimates: where the bars overlap, ranking one feature above another is not statistically justified, and the order may not survive the next data refresh. Colours indicate feature group: Credit Bureau (blue), Financial/Behaviour (pink), Categorical/Profile (purple).
+</figcaption>
+</figure>
+</div>
+<p>The standard error also suggests a quick check for whether a feature carries <em>any</em> signal: the ratio <img src="https://latex.codecogs.com/png.latex?Z%20=%20%5Ctext%7BIV%7D/%5Ctext%7BSE%7D(%5Ctext%7BIV%7D)"> (a signal-to-noise ratio) flags how far the estimate sits from zero. Treat this as a screening heuristic, not a clean significance test. Binning choices, sparse bins, smoothing, dependence across bins, and the fact that we typically screen many features at once all distort the nominal error rate, so the number should not be read as a publishable p-value. Its value is in catching features whose apparent signal may be nothing more than sampling noise. That is a coarser check than comparing two features against each other, which is the job of the confidence intervals in Figure&nbsp;1.</p>
+</section>
+<section id="question-2-has-this-population-drifted" class="level2">
+<h2 class="anchored" data-anchor-id="question-2-has-this-population-drifted">Question 2: Has this population drifted?</h2>
+<p>Because PSI shares the formula, it shares the standard error, so the same trick distinguishes real drift from sampling noise. Figure&nbsp;2 shows PSI computed weekly for the number of credit inquiries against a ten-week reference period, with confidence bands.</p>
+<div id="fig-psi" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Line chart showing weekly PSI values for number of credit inquiries. A spike around April 2020 has a wide confidence band indicating low sample size. From May onward, PSI is persistently elevated with the confidence band above zero, indicating genuine drift. Coloured threshold zones mark stable (green), minor shift (orange), and major shift (red) regions.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-psi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/foundation-frontiers/posts/2026/08/18/images/psi_over_time.png" class="img-fluid figure-img" alt="Line chart showing weekly PSI values for number of credit inquiries. A spike around April 2020 has a wide confidence band indicating low sample size. From May onward, PSI is persistently elevated with the confidence band above zero, indicating genuine drift. Coloured threshold zones mark stable (green), minor shift (orange), and major shift (red) regions.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-psi-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;2: <strong>Weekly PSI for number of credit inquiries, with 95% confidence bands.</strong> The two movements to compare: the sharp April 2020 spike has a very wide band: it reflects a collapse in origination volume during lockdown (as few as 82 applications in a week), not a genuine shift. The quieter but <em>sustained</em> elevation from May onward keeps its band clear of zero, which is the signature of real drift. Without the bands, both look alike; with them, only the second warrants action.
+</figcaption>
+</figure>
+</div>
+<p>This is the practical pay-off for monitoring. A threshold crossing on its own is ambiguous: a thin week can push PSI over the line with no real change in behaviour, while a modest but persistent shift with a confidence band sitting clear of zero is the genuine article. The bands let a model-monitoring team triage alerts (chase the sustained signal, wait out the low-volume blip) instead of re-validating on every spike.</p>
+</section>
+<section id="question-3-does-this-feature-behave-differently-across-groups" class="level2">
+<h2 class="anchored" data-anchor-id="question-3-does-this-feature-behave-differently-across-groups">Question 3: Does this feature behave differently across groups?</h2>
+<p>The third question reuses the same divergence a final way. Computed between two demographic groups rather than between goods and bads, the Jeffreys divergence measures how differently a feature is distributed across those groups, a “demographic IV”. Plotting each feature’s predictive IV against its demographic IV (Figure&nbsp;3) lays out the performance–fairness trade-off in a single view.</p>
+<div id="fig-pareto" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Scatter plot with Predictive IV on the x-axis and Demographic IV on the y-axis. Each point is a feature, coloured by group. Error bars show 95% confidence intervals on both axes. A horizontal dashed orange line marks a reference line at IV = 0.05.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-pareto-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/foundation-frontiers/posts/2026/08/18/images/pareto_predictive_vs_demographic.png" class="img-fluid figure-img" alt="Scatter plot with Predictive IV on the x-axis and Demographic IV on the y-axis. Each point is a feature, coloured by group. Error bars show 95% confidence intervals on both axes. A horizontal dashed orange line marks a reference line at IV = 0.05.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-pareto-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;3: <strong>Performance–fairness trade-off for eight features.</strong> Read the plot by quadrant. The horizontal axis is predictive IV (against the default target); the vertical axis is demographic IV (against applicant sex). Features toward the <strong>bottom-right</strong> are the desirable ones: predictive yet evenly distributed across groups. Features toward the <strong>top</strong> carry a large demographic gap regardless of how predictive they are. The dashed line at 0.05 is a reference level for the discussion below, <em>not</em> a regulatory standard. Error bars are 95% confidence intervals on both axes; near the line, the bars show the classification can depend on the confidence level chosen.
+</figcaption>
+</figure>
+</div>
+<p>The most prominent outlier is <code>income_type</code>, with a demographic IV of 0.35. The reason is structural rather than prejudicial: retired pensioners are 29.7% of female applicants but only 15.0% of males, and salaried government employees are 31.3% of women versus 18.6% of men. The feature is picking up a genuine difference in employment composition, but a scorecard that uses it will treat men and women differently in proportion to that gap, which is exactly what the high demographic IV flags. Whether that is acceptable is a governance and legal judgement; the statistic only quantifies the size of the gap.</p>
+<p>That distinction matters for how the number is used. No single demographic-IV value is in itself a compliance bar, and the uncertainty estimate does not turn a fairness question into an automated pass/fail. What it <em>does</em> offer is better governance evidence: a feature at <img src="https://latex.codecogs.com/png.latex?%5Ctext%7BIV%7D_%7B%5Ctext%7Bfair%7D%7D%20=%200.048%20%5Cpm%200.001"> is in a different position from one at <img src="https://latex.codecogs.com/png.latex?0.048%20%5Cpm%200.020">, even though the point estimates match. A model-risk reviewer can weigh that uncertainty rather than treat the point estimate as exact.</p>
+<p>The same machinery answers a sharper version of the question: do the groups differ not just in how a feature is distributed, but in how <em>predictive</em> it is? Figure&nbsp;4 computes IV separately for each group on shared bins. For percent of late installments, the feature is more predictive for women (IV = 0.31) than for men (IV = 0.21), a gap that is unlikely to be sampling noise. Tracing the full performance–fairness frontier, by mixed-integer programming, is developed in the paper <span class="citation" data-cites="sudjianto2025information">(Sudjianto and Burakov 2025)</span>; the contribution here is the statistical one: making the trade-off quantitative rather than binary.</p>
+<div id="fig-density" class="quarto-float quarto-figure quarto-figure-center anchored" alt="Two-panel figure. Left panel shows two normal density curves for the IV of percent late installments, one for female applicants (pink, IV around 0.31) and one for male applicants (teal, IV around 0.21), with vertical dashed lines at the Weak, Medium, and Strong IV thresholds. Right panel shows the normal density of the IV difference (Male minus Female), centred at minus 0.09, with 95% confidence interval dotted lines and a vertical black line at zero.">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-density-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="https://realworlddatascience.net/foundation-frontiers/posts/2026/08/18/images/iv_density_by_group.png" class="img-fluid figure-img" alt="Two-panel figure. Left panel shows two normal density curves for the IV of percent late installments, one for female applicants (pink, IV around 0.31) and one for male applicants (teal, IV around 0.21), with vertical dashed lines at the Weak, Medium, and Strong IV thresholds. Right panel shows the normal density of the IV difference (Male minus Female), centred at minus 0.09, with 95% confidence interval dotted lines and a vertical black line at zero.">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-density-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;4: <strong>IV by sex for percent of late installments.</strong> Left: the IV sampling distributions for female and male applicants barely overlap. Right: the distribution of their difference sits clear of zero, so the feature is meaningfully more predictive for one group than the other, a differential that is invisible if IV is reported as a single number per feature.
+</figcaption>
+</figure>
+</div>
+</section>
+<section id="what-to-do-differently-tomorrow" class="level2">
+<h2 class="anchored" data-anchor-id="what-to-do-differently-tomorrow">What to do differently tomorrow</h2>
+<p>None of this requires new infrastructure, only reporting the uncertainty that was always implicit in the numbers. A short checklist:</p>
+<ol type="1">
+<li><strong>When ranking features by IV, report the confidence interval, not just the point estimate.</strong> A feature at IV = 0.15 ± 0.04 may not be meaningfully ahead of one at 0.12 ± 0.03.</li>
+<li><strong>Treat a PSI alert as a hypothesis, not a verdict.</strong> Check whether the confidence band clears zero before you act: a thin origination week can lift the index over a line while the underlying distribution has barely moved.</li>
+<li><strong>Bring the error bars to fairness reviews.</strong> A demographic IV is one draw from a distribution: 0.048 ± 0.001 and 0.048 ± 0.020 should not weigh the same in a model-risk discussion, even though their point estimates are identical.</li>
+<li><strong>Read the conventional cut-offs (0.02, 0.10, 0.30) as rules of thumb, not thresholds with the force of law.</strong> The statistics size the question; they do not settle it.</li>
+</ol>
+</section>
+<section id="code-and-data" class="level2">
+<h2 class="anchored" data-anchor-id="code-and-data">Code and data</h2>
+<p>All results are reproduced in a companion Jupyter notebook at <a href="https://github.com/deburky/rwds-submission">github.com/deburky/rwds-submission</a>. It uses the <a href="https://huggingface.co/datasets/deburky/home-credit-credit-risk-model-stability">Home Credit - Credit Risk Model Stability</a> dataset <span class="citation" data-cites="homecredit2024">(Herman et al. 2024)</span> (522,596 loan applications, 8 features) and runs directly from HuggingFace. To keep the confidence intervals visible at the scale of the figures, the analysis uses a 10% sample stratified by week (roughly 52,000 applications, with every week retained); on the full dataset the intervals are correspondingly tighter. WoE encoding, IV, and standard errors use the open-source <a href="https://github.com/xRiskLab/fastwoe">FastWoe</a> library.</p>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Weight of Evidence, Information Value, and the Population Stability Index are not ad hoc metrics. They are specific instances of the Jeffreys divergence, a quantity statisticians have understood since the 1940s. That single recognition is what gives the delta method something to work on, and the delta method is what supplies the standard errors, confidence intervals, and tests behind every figure above.</p>
+<p>The shift it asks of practitioners is small but real: from reporting credit metrics as exact numbers to reporting them as estimates with uncertainty. That is a modest change in workflow, but it moves credit risk practice from point estimates to inference, which is, after all, what statistics is for.</p>
+<div class="article-btn">
+<p><a href="https://realworlddatascience.net/ideas/foundations-and-frontiers/">Back to Foundations &amp; Frontiers</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the authors</dt>
+<dd>
+<strong>Denis Burakov</strong> leads data science and data engineering at Renmoney. He has held senior roles at Amazon, N26, KPMG, and Sberbank, spanning retail and corporate lending, regulatory and managerial risk models, and fraud detection. He is based in Berlin, Germany.
+</dd>
+<dd>
+<strong>Agus Sudjianto</strong> is SVP of Risk &amp; Technology at H2O.ai and Executive in Residence at the Center for Trustworthy AI Through Model Risk Management, University of North Carolina Charlotte. He was formerly Head of Corporate Model Risk at Wells Fargo. He is a co-creator of PiML and MoDeVa.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>Copyright and licence</dt>
+<dd>
+© 2026 Denis Burakov and Agus Sudjianto
+</dd>
+</dl>
+<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<dl>
+<dt>How to cite</dt>
+<dd>
+Burakov, Denis, and Agus Sudjianto. 2026. “The Hidden Statistics Behind Credit Risk.” Real World Data Science, June 2026. <a href="https://realworlddatascience.net">URL</a>
+</dd>
+</dl>
+</div>
+</div>
+</div>
+<div class="callout callout-style-simple callout-note">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>AI disclosure.</strong> Claude (Anthropic) was used to assist with code development for the companion notebook and to help structure drafts of this article. All mathematical content, analysis, and editorial decisions are the authors’ own.</p>
+</div>
+</div>
+</div>
+
+
+
+</section>
+
+<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body hanging-indent" data-entry-spacing="0">
+<div id="ref-good1950probability" class="csl-entry">
+Good, Irving John. 1950. <em>Probability and the Weighing of Evidence</em>. Charles Griffin &amp; Company.
+</div>
+<div id="ref-hand1997statistical" class="csl-entry">
+Hand, David J., and William E. Henley. 1997. <span>“Statistical Classification Methods in Consumer Credit Scoring: A Review.”</span> <em>Journal of the Royal Statistical Society: Series A</em> 160 (3): 523–41.
+</div>
+<div id="ref-homecredit2024" class="csl-entry">
+Herman, Daniel, Tomas Jelinek, Walter Reade, Maggie Demkin, and Addison Howard. 2024. <span>“Home Credit - Credit Risk Model Stability.”</span> <a href="https://kaggle.com/competitions/home-credit-credit-risk-model-stability" class="uri">https://kaggle.com/competitions/home-credit-credit-risk-model-stability</a>.
+</div>
+<div id="ref-jeffreys1961theory" class="csl-entry">
+Jeffreys, Harold. 1961. <em>Theory of Probability</em>. 3rd ed. Oxford University Press.
+</div>
+<div id="ref-kullback1951information" class="csl-entry">
+Kullback, Solomon, and Richard A. Leibler. 1951. <span>“On Information and Sufficiency.”</span> <em>Annals of Mathematical Statistics</em> 22 (1): 79–86.
+</div>
+<div id="ref-shannon1948mathematical" class="csl-entry">
+Shannon, Claude E. 1948. <span>“A Mathematical Theory of Communication.”</span> <em>Bell System Technical Journal</em> 27 (3): 379–423.
+</div>
+<div id="ref-siddiqi2017intelligent" class="csl-entry">
+Siddiqi, Naeem. 2017. <em>Intelligent Credit Scoring: Building and Implementing Better Credit Risk Scorecards</em>. 2nd ed. Wiley.
+</div>
+<div id="ref-sudjianto2025information" class="csl-entry">
+Sudjianto, Agus, and Denis Burakov. 2025. <span>“An Information-Theoretic Framework for Credit Risk Modeling: Unifying Industry Practice with Statistical Theory for Fair and Interpretable Scorecards.”</span> <em>arXiv Preprint arXiv:2509.09855</em>.
+</div>
+</div></section></div> ]]></description>
+  <category>Foundations &amp; Frontiers</category>
+  <category>Statistics</category>
+  <category>Information Theory</category>
+  <category>Credit Risk</category>
+  <guid>https://realworlddatascience.net/foundation-frontiers/posts/2026/08/18/hidden-statistics-credit-risk.html</guid>
+  <pubDate>Tue, 18 Aug 2026 00:00:00 GMT</pubDate>
+</item>
 <item>
   <title>Small Data, High Quality: a winning combination for the UK</title>
   <dc:creator>A. Rosemary Tate, Eugenie Hunsicker and Francis Osei</dc:creator>
@@ -2196,109 +2410,6 @@ Langehennig, Stefani. 2026. “<strong>Colorado’s AI Law Pause: What It Means 
   <guid>https://realworlddatascience.net/foundation-frontiers/posts/2026/01/29/beyond-quantification-delacroix-interview.html</guid>
   <pubDate>Thu, 29 Jan 2026 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/foundation-frontiers/posts/2026/01/29/images/thumb.png" medium="image" type="image/png" height="96" width="144"/>
-</item>
-<item>
-  <title>Why Data Quality Is the New Competitive Edge For Data Scientists</title>
-  <link>https://realworlddatascience.net/foundation-frontiers/posts/2026/01/27/data-qual-is-competitive-edge.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="discipline-of-data-science" class="level2">
-<h2 class="anchored" data-anchor-id="discipline-of-data-science">Discipline of Data Science</h2>
-<p>Data science is a relatively recent field compared to the disciplines that it consists of, namely statistics and computer science. New knowledge and disciplines often arise as combinations of existing fields and data science is no exception. Born into a world with increasingly large datasets, data science combined statistical methods with the tools of computer science to analyze large amounts of data.</p>
-<p>As a discipline, data science gained popularity in industry and academia in the early 2000s and in part due to an influential paper published in the Harvard Business Review <span class="citation" data-cites="davenport2012sexiest">(1)</span>. This paper carried the provocative title of “Data Scientist: The Sexist Job of the Twenty-first Century”. After its publication, universities developed data science programs, governments poured funding into Big Data initiatives and organizations built data science teams to tackle problems. Powerful machine learning algorithms such as neural nets, random forests and ensemble methods provided ways to develop complex models that could be used on these large datasets.</p>
-<p>As Hoerl noted in an earlier piece <span class="citation" data-cites="hoerl2025future">(2)</span>:</p>
-<blockquote class="blockquote">
-<p>“There was a hiring rush for data scientists, not just in technology companies, but in virtually all sectors of the economy. For example, GE hired a new Chief Digital Officer from Oracle, Bill Ruh, in 2011. Ruh opened a new Software Center (later renamed “GE Digital”) in San Ramon, California in 2012, and by 2016 had hired 1,400 data scientists there.”</p>
-</blockquote>
-</section>
-<section id="current-state-of-play-with-generative-ai" class="level2">
-<h2 class="anchored" data-anchor-id="current-state-of-play-with-generative-ai">Current State of Play with Generative AI</h2>
-<p>While data analyses based on text data such as NLP (natural language processing) have been around for a while, a new type of approach has quickly become widespread with the rapid rise of generative AI methods. These models, known as LLMs (large language models), have entered the everyday vernacular as all organizations grapple with how to use these tools. With the debut of ChatGPT in 2023, these LLMs have become increasingly sophisticated, trained on a wider variety of data sources and optimized for a variety of different scenarios.</p>
-<p>The accuracy of these models depends on the quality of the training data used. While LLMs are known to hallucinate or give inaccurate answers, they tend to perform better in situations where the training data is precise and exact, with less nuance than language often carries. As a result, LLMs can produce large amounts of computer code based on large amounts of training data based on accurate computer code. Some specialized LLMs (e.g.&nbsp;<a href="https://claude.ai/">Claude Code</a>) have been specifically designed to generate accurate code that can access, clean, combine, analyze and visualize data. While LLMs are not perfect in code generation, they can increase the efficiency of an experienced coder.</p>
-<p>As a result of these LLMs, less knowledge is required to analyze and work with large datasets. A user can provide a specific prompt on the business question or research objective, upload the relevant data and have an LLM provide a relevant data analysis, complete with the underlying code used to generate that analysis.</p>
-</section>
-<section id="the-new-data-scientist" class="level2">
-<h2 class="anchored" data-anchor-id="the-new-data-scientist">The “New” Data Scientist</h2>
-<p>As LLMs improve in their ability to quickly generate vast amounts of accurate code, what does that mean for a discipline which has prided itself on its data wrangling skills? As Davenport and Patil noted “data scientists’ most basic, universal skill is the ability to write code” <span class="citation" data-cites="davenport2012sexiest">(1)</span>. Data science has seen coding as a viable career path.</p>
-<p>When a skill becomes accessible to a wider variety of people and can be automated, how does one distinguish themselves in an organization? When coding can be done by AI tools, what happens to those who are known for their coding abilities? For a discipline to be recognized as a discipline, it must have some distinguishing characteristic that defines it as different from other disciplines. In addition, disciplines become more valuable and prominent as their contribution to society grows.</p>
-<p>So, what are the skills that data scientists have that can’t be done well by AI? While AI capabilities are rapidly increasing, we do believe there are things that may be beyond the reach of AI for the time being.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="https://realworlddatascience.net/foundation-frontiers/posts/2026/01/27/images/infographic.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
-</figure>
-</div>
-<p>We believe that the greatest factor limiting AI is data quality. There seems to be a growing consensus of the importance of data quality as noted in Davenport, Hoerl, and Redman <span class="citation" data-cites="davenport2025unstructured">(3)</span>, Davenport and Tiwari <span class="citation" data-cites="davenport2024generative">(4)</span>, and Redman <span class="citation" data-cites="redman2020source">(5)</span> — as well as <a href="https://realworlddatascience.net/foundation-frontiers/posts/2025/10/30/data-detectives.html">recent Real World Data Science pieces</a>. As the adage goes, “garbage in, garbage out”. With poor, inaccurate data used in training, the resulting AI output will also be poor and inaccurate. A related fear is that, as AI models start to use AI generated content as a data source, a recursive loop happens that degrades the quality of any AI output <span class="citation" data-cites="shumailov2024collapse">(6)</span>.</p>
-<p>Discussions of data quality are limited in books, university courses and training programs. When they do occur, they are restricted to the question of “are the data right?” and discussions of data cleaning. Data cleaning is often focused on eliminating outliers or invalid points. While there is often a reason to remove invalid points, those outliers can sometimes be the source of valuable insights.</p>
-<p>However, data quality is much more than data cleaning or checking to make sure the data are accurate. There is an element of contextual understanding and process knowledge that enables the data scientist to properly prepare the data for analysis. We are skeptical of AI’s ability to fully understand context and the nuances of assumptions that go into data analysis. In an earlier piece, Jensen provided some examples of the limitations of AI when it comes to proper data cleaning <span class="citation" data-cites="jensen2024cleaning">(7)</span>. For any set of data, subject matter knowledge of how the data were collected and what they represent is crucial to a proper analysis.</p>
-<p>This creates an opportunity for data scientists to become more valuable. By employing probing questions to better understand the context of the data, they will be in a better position to identify data quality issues and ways to improve the data quality, thus leading to better model output.</p>
-</section>
-<section id="conclusion" class="level2">
-<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
-<p>As coding becomes easier in an AI-enabled world - where anyone can code and analyze data - the skill set of a data scientist becomes less unique. Data scientists were once in high demand because they set themselves apart as coding wizards who could wrangle large datasets and extract insights. To remain successful and continue to deliver value, data scientists must now pivot their skillset. The real limiting factor in successful data science is data quality. A renewed focus on owning, improving and governing data quality will not only strengthen outcomes but also provide future job security and increase the value data scientists bring to organisations.</p>
-<p><em>Note that this article is based on the following paper and contains some of the same ideas: Hoerl, Roger W. 2025. <a href="https://www.tandfonline.com/doi/full/10.1080/08982112.2025.2556222">“The Future of Statistics in an AI Era.”</a> Quality Engineering, published September 10, 2025.</em></p>
-<p>You can find out more about the <em>Real World Data Science</em> stance on data quality from our article <a href="https://realworlddatascience.net/foundation-frontiers/posts/2025/10/30/data-detectives.html">‘Why We Should All Be Data Quality Detectives’</a>.</p>
-<div class="article-btn">
-<p><a href="../../../../../foundation-frontiers/index.html">Explore more data science ideas</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the authors:</dt>
-<dd>
-<a href="https://www.linkedin.com/in/roger-hoerl-6b6b3a5/">Roger Hoerl</a> is Brate-Peschel Professor of Statistics at Union College, after previously heading the Applied Statistics Laboratory at <a href="https://www.ge.com/news/reports/tag/ge%20global%20research">GE Global Research</a> for many years. He has been elected to the International Statistical Institute and the International Academy for Quality, recieved numerous statistic awards, and authored five books in the areas of statistics and business improvements.
-</dd>
-<dd>
-<a href="https://www.linkedin.com/in/willis-jensen-305bba6/">Willis Jensen</a> is data and analytics expert, currently Senior Manager of People Analytics and Business Intelligence at <a href="https://chghealthcare.com/">CHG Healthcare</a>. He is an Adjunct Professor of Statistics at Brigham Young University, <a href="https://willisjensen.substack.com/">writes on Substack</a> and is a member of the Real World Data Science <a href="https://realworlddatascience.net/the-pulse/editors-blog/posts/2022/10/18/meet-the-team.html">editorial board</a>.
-</dd>
-</dl>
-<div class="g-col-12 g-col-md-6">
-<p><strong>Copyright and licence</strong> : © 2026 Roger Hoerl and Willis Jensen<br>
-<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"> <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"> </a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<p><strong>How to cite</strong> :<br>
-Hoerl, Roger. Jensen, Willis. 2026. “<strong>Why Data Quality Is the New Competitive Edge for Data Scientists</strong>.” <em>Real World Data Science</em>, 2026. <a href="https://realworlddatascience.net/foundation-frontiers/tutorials/posts/2026/12/data-qual-is-competetive-edge.html">URL</a></p>
-</div>
-</div>
-</div>
-
-
-</div>
-
-</section>
-
-<div id="quarto-appendix" class="default"><section class="quarto-appendix-contents" id="quarto-bibliography"><h2 class="anchored quarto-appendix-heading">References</h2><div id="refs" class="references csl-bib-body">
-<div id="ref-davenport2012sexiest" class="csl-entry">
-<div class="csl-left-margin">1. </div><div class="csl-right-inline">Davenport TH, Patil DJ. Data scientist: The sexiest job of the 21st century. Harvard Business Review. 2012 Oct;70–6.</div>
-</div>
-<div id="ref-hoerl2025future" class="csl-entry">
-<div class="csl-left-margin">2. </div><div class="csl-right-inline">Hoerl RW. The future of statistics in an AI era. Quality Engineering. 2025. doi:<a href="https://doi.org/10.1080/08982112.2025.2556222">10.1080/08982112.2025.2556222</a></div>
-</div>
-<div id="ref-davenport2025unstructured" class="csl-entry">
-<div class="csl-left-margin">3. </div><div class="csl-right-inline">Davenport TH, Hoerl RW, Redman TC. To create value with AI, improve the quality of your unstructured data. Harvard Business Review [Internet]. 2025 May. Available from: <a href="https://hbr.org/2025/05/to-create-value-with-ai-improve-the-quality-of-your-unstructured-data">https://hbr.org/2025/05/to-create-value-with-ai-improve-the-quality-of-your-unstructured-data</a></div>
-</div>
-<div id="ref-davenport2024generative" class="csl-entry">
-<div class="csl-left-margin">4. </div><div class="csl-right-inline">Davenport TH, Tiwari P. Is your company’s data ready for generative AI? Harvard Business Review [Internet]. 2024 Mar. Available from: <a href="https://hbr.org/2024/03/is-your-companys-data-ready-for-generative-ai">https://hbr.org/2024/03/is-your-companys-data-ready-for-generative-ai</a></div>
-</div>
-<div id="ref-redman2020source" class="csl-entry">
-<div class="csl-left-margin">5. </div><div class="csl-right-inline">Redman TC. To improve data quality, start at the source. Harvard Business Review [Internet]. 2020 Feb. Available from: <a href="https://hbr.org/2020/02/to-improve-data-quality-start-at-the-source">https://hbr.org/2020/02/to-improve-data-quality-start-at-the-source</a></div>
-</div>
-<div id="ref-shumailov2024collapse" class="csl-entry">
-<div class="csl-left-margin">6. </div><div class="csl-right-inline">Shumailov I, Shumaylov Z, Zhao Y, Papernot N, Anderson R, Gal Y. AI models collapse when trained on recursively generated data. Nature. 2024;631(8022):755–9.</div>
-</div>
-<div id="ref-jensen2024cleaning" class="csl-entry">
-<div class="csl-left-margin">7. </div><div class="csl-right-inline">Jensen WA. Can data cleaning be automated? [Internet]. 2024. Available from: <a href="https://willisjensen.substack.com/p/can-data-cleaning-be-automated">https://willisjensen.substack.com/p/can-data-cleaning-be-automated</a></div>
-</div>
-</div></section></div> ]]></description>
-  <category>Data quality</category>
-  <guid>https://realworlddatascience.net/foundation-frontiers/posts/2026/01/27/data-qual-is-competitive-edge.html</guid>
-  <pubDate>Tue, 27 Jan 2026 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/foundation-frontiers/posts/2026/01/27/images/thumb.png" medium="image" type="image/png" height="96" width="144"/>
 </item>
 </channel>
 </rss>
