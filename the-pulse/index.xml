@@ -167,6 +167,91 @@ Redman, Hoerl and de Mowbray 2026. “<strong>Data Quality Under the Lens: Was t
   <media:content url="https://realworlddatascience.net/the-pulse/posts/2026/07/31/images/census.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
+  <title>Data Quality Under the Lens: Was the 2020 US Census “fit-for-apportionment”?</title>
+  <dc:creator>Tom Redman, Roger Hoerl and Hannah de Mowbray</dc:creator>
+  <link>https://realworlddatascience.net/the-pulse/posts/2026/08/28/DQUL_Aug.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><em>Data Quality Under the Lens is a new Real World Data Science column. Each edition explores real-world moments where data quality shaped outcomes, sometimes driving failure, sometimes preventing it. From near misses to hard lessons learned, we look at what happens when data is up to the task… or falls short.</em></p>
+<p><em>If you spot a real world problem and think data quality could lie at the heart of the story, <a href="(mailto:rwds@rss.org.uk)">send it in to the RWDS mailbox</a> and our Data Quality Detectives will analyse whether the Silent Drift, Proxy Trap, Spreadsheet Cascade, Governance Vacuum or Metric Mirage is responsible.</em></p>
+<section id="the-case-of-the-month" class="level2">
+<h2 class="anchored" data-anchor-id="the-case-of-the-month">The Case of the Month</h2>
+<p>In a press release dated March 10, 2022, Census Director Robert Santos stated: “Taking today’s findings as a whole, we believe the 2020 census data are fit for many uses in decision-making as well as for painting a vivid portrait of our nation’s people.” The “fit for many uses” clause leads to several questions: for what uses is the census fit? For what purposes is it not? And, perhaps most importantly, was it fit for apportionment of representatives for elections in the United States?</p>
+<p><a href="https://www.census.gov/topics/public-sector/congressional-apportionment/about.html">Apportionment is the critically important task of allocating congressional representatives to the fifty states.</a> For apportionment, with its high political consequences, we expect the census to:</p>
+<ol type="1">
+<li>Ensure that each state is assigned the right number of representatives; and</li>
+<li>Provide a measure of comfort that the results can be trusted.</li>
+</ol>
+<p>These criteria constitute a high bar. But the stakes are high, fully justifying the expectations.</p>
+<p>In 2022, <a href="https://tomredman.medium.com/is-the-2020-census-fit-for-apportionment-3467e54b4670">we performed an independent review</a> using data available on the Census Bureau website to address the question of fitness-for-apportionment. Our review raised serious concerns about the fitness of the 2020 census for apportionment. In particular, six states appeared to have been assigned the wrong numbers of representatives.</p>
+<p>While the events examined here relate to the 2020 US Census, the underlying issue is much broader. This is fundamentally a quality assurance (QA) case, concerning how decision-makers can know that data are fit for their most important intended use. Whether the setting is government, healthcare, finance, research or business, the same challenge applies: data may be useful for many purposes yet still fall short where the stakes are highest.</p>
+</section>
+<section id="what-actually-happened" class="level2">
+<h2 class="anchored" data-anchor-id="what-actually-happened">What Actually Happened?</h2>
+<p>We collected relevant data from census.gov, including apportionment data—the population count used for apportionment—and estimated miscount rates based on a Census-conducted Post Enumeration Survey (PES).</p>
+<p>While the apportionment state populations are counts, performed according to the US Constitution and Census regulations, the PES is a statistically based survey used to evaluate the accuracy of the apportionment count. One hopes that the resulting estimates of miscount rates are small.</p>
+<p>There were statistically significant miscounts in fourteen states, and even one should give pause. Fourteen is of enormous concern, especially when compared to zero statistically significant miscounts in 2010.</p>
+<p>Importantly, six states—Colorado, Minnesota, Rhode Island, Florida, Texas and Tennessee—receive different numbers of representatives when the estimated corrections are taken into account, i.e.&nbsp;when using the PES population instead of the apportionment population.</p>
+<p>There were twenty-one states with large miscounts, with ten states having large undercounts and eleven large overcounts.</p>
+<p><img src="https://realworlddatascience.net/the-pulse/posts/2026/08/28/images/table1.webp" class="img-fluid"></p>
+<p>Conducting a census is difficult (try simply counting your socks!) and the pandemic added enormous challenges. One should expect problems. Further, as we’ve already noted, the census is used for many purposes. But none of this means that the central issue for representative democracy can be overlooked.</p>
+<p>Had each state simply been over- or undercounted by a similar proportion, apportionment issues would likely have been minor. But the state-to-state variation is large, especially compared to the 2010 census. In 2010, estimated miscount rates were tightly clustered near zero, while for 2020 they were much more dispersed, which is especially clear looking at the below chart:</p>
+<p><img src="https://realworlddatascience.net/the-pulse/posts/2026/08/28/images/fig1.webp" class="img-fluid"></p>
+<p>Ultimately, the high state-to-state variation and high miscount rates led to the different numbers of representatives officially apportioned and those projected using PES estimated state populations.</p>
+</section>
+<section id="disaster-or-near-miss" class="level2">
+<h2 class="anchored" data-anchor-id="disaster-or-near-miss">Disaster or Near-Miss?</h2>
+<p>Quality assurance (QA) asks a deceptively simple question: did the overall effort provide the required quality? Our two fitness-for-apportionment criteria represent a high bar, but in our view the pandemic does not justify relaxing them.</p>
+<p>One cannot easily escape our main conclusion: the 2020 Census is not fit-for-apportionment. It appears to fail criterion one—assigning the correct number of representatives to each state—and it most certainly fails criterion two—providing confidence in the results.</p>
+<p>The case therefore raises an important question. What safeguards might have prevented or contained the issue before apportionment occurred?</p>
+</section>
+<section id="why-this-matters-now" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-matters-now">Why This Matters Now</h2>
+<p>Perhaps more than anyone, we appreciate the leadership, management and operational challenges associated with data quality. Interestingly, <a href="https://rss.onlinelibrary.wiley.com/doi/full/10.1111/1740-9713.01662">the UK also experienced serious problems</a> conducting its 2021 census, and so, frankly, we’re surprised this topic hasn’t generated far more discussion.</p>
+<p>The key issue raised by this case is embedded in the Census Director’s statement itself. Data may be “fit for many uses” and yet still not be fit for its most important purpose. That distinction matters in an era of growing reliance on analytics, AI and automated decision-making. The question is not whether data are generally useful. The question is whether they provide the required quality for the decision at hand.</p>
+<p>The relevance of the discussion surrounding the Census extends far beyond population counting. National statistics, resource allocation, and research on all kinds of topics all rely on census data for high-consequence decisions, and people expect confidence that the data are fit for their intended use.</p>
+</section>
+<section id="the-practitioner-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="the-practitioner-takeaways">The Practitioner Takeaways</h2>
+<p>Of course, those running the Census should do all they can to “get it right the first time.” This means clarifying the most important uses, setting quality standards, carefully defining key terms, defining counting processes, managing and controlling them well, and making improvements in response to unexpected new circumstances.</p>
+<p>The larger goal, however, is “getting it right” and that’s where QA comes in. A pertinent and timely analogy can be made to the introduction of video assistant referees (VAR). Over the last several years, football (or soccer, to Americans) has introduced VAR as a means to provide real-time QA for referees’ decisions. While purists may object that it disrupts the flow of the game, there is little question that it helps get more calls right! After all, even the best-trained and best-rated officiating crews make mistakes.</p>
+<p>The implication is clear: If it really matters, you must build an overall quality system that embraces both doing all you can to get it right the first time and effective QA.</p>
+</section>
+<section id="the-data-quality-pattern-the-leadership-vaccum" class="level2">
+<h2 class="anchored" data-anchor-id="the-data-quality-pattern-the-leadership-vaccum">The Data Quality Pattern: The Leadership Vaccum</h2>
+<p>The Leadership Vacuum occurs when the quality system is not up to snuff (that is, efforts to get it right the first time and/or effective QA are missing). In this case the Post Enumeration Survey showed that the first element failed. And the PES itself did not lead to correct apportionment. As we’ve described, the result is a gap between actual and required levels of quality. Exacerbating this, when responsibility for resolving such a gap is unclear, confidence in outcomes is sure to suffer.</p>
+<p>Despite the clear challenges that come with creating a census, especially in a pandemic, the bar for apportionment is necessarily a difficult one to clear. The stakes are high, fully justifying the expectations. The enduring lesson is that demanding requirements call for powerful, comprehensive quality programs.</p>
+<p>Note: This article has been adapted, expanded and updated alongside the authors from: <a href="https://tomredman.medium.com/is-the-2020-census-fit-for-apportionment-3467e54b4670">“Hoerl, R. and Redman, T.C. “Is the 2020 Census “Fit-for-apportionment”?</a> Medium, 24 August 2022. All figures are taken from that article.</p>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<div class="g-col-12 g-col-md-6">
+<p><strong>Copyright and licence</strong> : © 2026 Tom Redman, Roger Hoerl and Hannah de Mowbray <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"> <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"> </a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>How to cite</strong> :<br>
+Redman, Hoerl and de Mowbray 2026. “<strong>Data Quality Under the Lens: Was the 2020 US Census “fit-for-apportionment”?</strong>, 2026. <a href="https://realworlddatascience.net/the-pulse/posts/2026/07/31/DQUL_July.html">URL</a></p>
+</div>
+</div>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <category>AI</category>
+  <category>Governance</category>
+  <category>Policy</category>
+  <guid>https://realworlddatascience.net/the-pulse/posts/2026/08/28/DQUL_Aug.html</guid>
+  <pubDate>Fri, 31 Jul 2026 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/the-pulse/posts/2026/08/28/images/census.jpg" medium="image" type="image/jpeg"/>
+</item>
+<item>
   <title>RSS AI Task Force says: AI Regulation Needs Statistics</title>
   <dc:creator>Annie Flynn</dc:creator>
   <link>https://realworlddatascience.net/the-pulse/posts/2026/07/20/AI_Reg_Needs-Statistics.html</link>
@@ -1497,56 +1582,6 @@ Real World Data Science Editorial Board. 2025. “Call for Submissions” Real W
   <guid>https://realworlddatascience.net/the-pulse/posts/2024/08/01/RWDS-journal.html</guid>
   <pubDate>Thu, 01 Aug 2024 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/the-pulse/posts/2024/08/01/images/RSS-DS-AI-cover.jpg" medium="image" type="image/jpeg"/>
-</item>
-<item>
-  <title>Editor’s note: Not saying goodbye, just saying…</title>
-  <dc:creator>Brian Tarran</dc:creator>
-  <link>https://realworlddatascience.net/the-pulse/editors-blog/posts/2024/03/editors-note.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>It’s not easy to leave a brilliant group of people you’ve worked with for almost a decade, but in a month’s time I’ll be moving on from the Royal Statistical Society (RSS).</p>
-<p>When I joined RSS in June 2014 I was looking for new challenges. I wanted to find out more about the ways statistics and data are used to understand and solve problems and inform decisions in science, business and industry, public policy, health… I could go on! Working for the RSS certainly delivered on that front: as editor of <a href="https://significancemagazine.com/">Significance</a> for eight years and of Real World Data Science more recently, I have had many opportunities to learn.</p>
-<p>Pretty much every day of my working life for the past nine years, eight months or so involved speaking with expert statisticians and data scientists or reading about their work. When there were things I didn’t understand, they were always happy to explain. When I shared my ideas for how to make their articles clearer or more readable, they took the time to listen. Together, we worked to create accessible, engaging stories about statistics and data. There have been hundreds of these collaborations over the years – too many to namecheck individually – but I have enjoyed them all, and I’ve learned something from each of them.</p>
-<p>Before I head off to pursue a new set of challenges and learning opportunities, I want to say a big thank you to all the RSS staff and members, past and present, that I’ve been lucky to call my colleagues. Thank you also to the staff and members of the American Statistical Association who have been valued partners on Significance over the years and now RWDS too. It’s been a privilege to work with you all.</p>
-<p>The chance to launch RWDS has been a particular highlight of my time at RSS, and I am grateful to have had the support and input of The Alan Turing Institute and many of its wonderful staff and researchers on this project. I’m excited to see the site continue to grow and develop into a valuable resource for the data science community, and I look forward to reading an upcoming series of articles that will explore the statistical and data science perspectives on AI – stay tuned for more on this soon.</p>
-<p>Statistics and data will continue to be a big part of my life, so this isn’t “goodbye.” Instead, I’ll just say, let’s keep in touch – and thank you for reading!</p>
-<div class="article-btn">
-<p><a href="../../../../../the-pulse/editors-blog/index.html">Back to Editors’ blog</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>Copyright and licence</dt>
-<dd>
-© 2024 Royal Statistical Society
-</dd>
-</dl>
-<p><a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"><img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"></a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> International licence</a>. Thumbnail photo by <a href="https://unsplash.com/@peet818?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Pete Pedroza</a> on <a href="https://unsplash.com/photos/thank-you-text-VyC0YSFRDTU?utm_content=creditCopyText&amp;utm_medium=referral&amp;utm_source=unsplash">Unsplash</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<dl>
-<dt>How to cite</dt>
-<dd>
-Tarran, Brian. 2024. “Editor’s note: Not saying goodbye, just saying…” Real World Data Science, March 6, 2024. <a href="https://realworlddatascience.net/the-pulse/editors-blog/posts/2024/03/06/editors-note.html">URL</a>
-</dd>
-</dl>
-</div>
-</div>
-</div>
-
-
-
- ]]></description>
-  <category>People</category>
-  <category>Updates</category>
-  <guid>https://realworlddatascience.net/the-pulse/editors-blog/posts/2024/03/editors-note.html</guid>
-  <pubDate>Wed, 06 Mar 2024 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/the-pulse/editors-blog/posts/2024/03/images/thank-you.png" medium="image" type="image/png" height="105" width="144"/>
 </item>
 </channel>
 </rss>
