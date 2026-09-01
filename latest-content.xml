@@ -17,7 +17,94 @@
 <width>144</width>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Tue, 25 Aug 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Fri, 28 Aug 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Data Quality Under the Lens: Should clinical decisions be influenced by unknown public datasets?</title>
+  <dc:creator>Alexander Gibson</dc:creator>
+  <link>https://realworlddatascience.net/the-pulse/posts/2026/08/28/DQUL_Aug.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><em>Data Quality Under the Lens is a new Real World Data Science column. Each edition explores real-world moments where data quality shaped outcomes, sometimes driving failure, sometimes preventing it. From near misses to hard lessons learned, we look at what happens when data is up to the task… or falls short.</em></p>
+<p><em>If you spot a real world problem and think data quality could lie at the heart of the story, <a href="(mailto:rwds@rss.org.uk)">send it in to the RWDS mailbox</a> and our Data Quality Detectives will analyse whether the Silent Drift, Proxy Trap, Spreadsheet Cascade, Governance Vacuum or Metric Mirage is responsible.</em></p>
+<section id="the-case-of-the-month" class="level2">
+<h2 class="anchored" data-anchor-id="the-case-of-the-month">The Case of the Month</h2>
+<p>The unique thing about clinical prediction models is that they aim to directly improve patient care by providing clinicians with personalised information. Yet they can also be treated as public health tools when applied through policy or guidelines. There is no question that these tools should be developed, validated and implemented with rigorous evidence and appropriate standards. However, a recent study identified 125 published articles for clinical prediction models that were developed with unreliable and potentially fabricated data (1). Articles using two datasets for stroke and diabetes were cited nearly 1,800 times, including in 86 review articles and a medical device patent. Three of the articles had evidence they were potentially used on patients.</p>
+<p>We are seeing a boom in prediction model research due to interest in AI and the promise of personalised prediction, but AI also provides an easy way to generate data and papers. One place an individual may find data is on the website, self-proclaimed as the “world’s AI proving ground”, Kaggle, which hosts more than 700,000 datasets. Users can freely upload almost any data and receive community incentives such as followers, achievements, medals and rankings. These rewards may spur the uploading of synthetic or unreliable data.</p>
+<p>Data provenance, the who, what, when, where, why and how of data is now more important than ever. Trust in the source and quality of data is imperative for developing predictions that aim to directly influence induvial health and be applied to populations.</p>
+</section>
+<section id="what-actually-happened" class="level2">
+<h2 class="anchored" data-anchor-id="what-actually-happened">What Actually Happened?</h2>
+<p>The two Kaggle datasets mentioned here were meant to represent data collected from diabetes and stroke patients. Unfortunately, Kaggle does not require data provenance to be supplied with any dataset, and no information was declared for where these data came from. After investigating the two datasets and assessing them against the international TRIPOD+AI reporting guidelines, no information was found to authenticate either dataset. An important piece of information — whether these supposed patients had haemorrhagic or ischemic strokes and type I or type II diabetes — was not disclosed.</p>
+<p>Upon further inspection of the data, patterns appeared which were consistent with fabricated data. For example, the diabetes dataset had a perfect 100,000 patient observations and both HbA1c and blood glucose (important markers of diabetes) had 18 discrete values forming odd, organised patterns (Figure 1). The stroke datasets saw an unexpected and unexplained for shift in the blood glucose distribution at half the maximum patient ID. It also contained 5,110 unique patients, but 72,940 patient IDs were supplied in the dataset, indicating 67,830 patients (if real) were missing and unaccounted for (Figure 1).</p>
+<p><strong>Figure 1</strong></p>
+<p><img src="https://realworlddatascience.net/the-pulse/posts/2026/08/28/images/fig1.jpg" class="img-fluid"></p>
+<p>Figure 1. Plot A is from the diabetes dataset showing the association between the HbA1c and blood glucose values for 100,000 individuals. Plot .B is from the stroke dataset showing an unexplained change in the distribution of blood glucose values at half the maximum patient ID for 5,110 individuals. Figure adapted from (1)</p>
+<p>Issues with these data had been flagged on the Kaggle discussion pages but were dismissed by researchers who declared its use in research as evidence of authenticity:</p>
+<p><em>“These datasets are frequently referenced in machine-learning literature and educational resources for developing and evaluating predictive models. They contain structured health-related attributes commonly used in disease prediction research.”</em> (2)</p>
+</section>
+<section id="disaster-or-near-miss" class="level2">
+<h2 class="anchored" data-anchor-id="disaster-or-near-miss">Disaster or Near-Miss?</h2>
+<p>Three articles indicated they had used predictions on patients or were going to deploy the model in a local clinic, one article had even been referenced in a medical device patent. While it was not verified if patients were treated based on the predictions, it is nevertheless incredibly worrying. Further, 86 review articles cited one or more of these prediction model articles, indicating they are being passed off in the literature as legitimate. There is no place for medical treatments to be influenced by data that is not fit for purpose.</p>
+<p>Only published articles were examined and identification of these articles relied on the authors referencing the Kaggle webpage. More than 600 outputs were identified using these datasets which included books, theses, preprints and conference proceedings. Thus, what was examined is a minimum representation to the extent of this problem, identified from only two datasets. It is very unlikely this is an isolated event, and more datasets and articles are likely being developed or used on patients.</p>
+</section>
+<section id="why-this-matters-now" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-matters-now">Why This Matters Now</h2>
+<p>As we move into an era of prediction fuelled by AI, it is more important than ever that data is of sufficient quality. Patient and practitioner facing prediction tools are abundant and must produce predictions that can be trusted to be accurate and lead to improved outcomes. However, regulatory advancements are slow moving. Another recent study examining implementation of prediction models into guideline documents showed only 8 out of 84 guidelines mentioned guidance for prediction models and none of them were comprehensive (3). Not only is there a lack of guidance on implementation, but these tools may not perform as expected. An editorial prompting more oversight of these tools saw 81% performed worse on external data and 43% were recalled within the first 12 months (4). Additionally, from 1,357 FDA examined AI tools, only three examined patient outcomes (5).</p>
+</section>
+<section id="the-practitioner-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="the-practitioner-takeaways">The Practitioner Takeaways</h2>
+<p>The inundation of prediction models and unreliable data leaves us wondering what to trust. What will work? And which data is safe for use? Simply put, we can answer these questions by bringing this back to the fundamental underpinning of science and modern medicine: evidence.</p>
+<p>Predictions need to provide evidence that they will improve outcomes. Like drugs, predictions will vary in their efficacy across patients and populations, and we need to follow these tools over the course of their use. Ideally, cluster randomized trials (like drug trials) will provide us with evidence of efficacy. However, retrospective validation studies can be sufficient for implementation into practice, but these paper-based performance metrics are not typically replicated in the real world. We need more evidence both that they do not cause harm and that they do improve outcomes. If it sounds too good to be true, it may just be.</p>
+</section>
+<section id="the-data-quality-pattern-the-proxy-trap-or-the-governance-vacuum" class="level2">
+<h2 class="anchored" data-anchor-id="the-data-quality-pattern-the-proxy-trap-or-the-governance-vacuum">The Data Quality Pattern: The Proxy Trap or The Governance Vacuum?</h2>
+<p>Two defined issues emerged from these findings. There exists a Proxy Trap where credibility and authenticity was given to datasets because they were used in previous research and are extremely popular. Decision making for the use of data was offloaded to other individuals and assumed to be correct. Yet, no processes for the verification of data and its provenance could be shown leading to a Governance Vacuum, further allowing unreliable data to be treated as authentic. Not only did the repository not require data provenance, but the journals did not either. No individual or institution took sole responsibility for the quality of data. The repository relied on individuals to report data, the individuals relied on journals as a sign of reliability, and journals relied on individuals to be correct, yet none of them were.</p>
+<p>Six layers of humans in the research ecosystem failed. The repository, the uploading dataset users, the researchers, the peer-reviewers, the journal editors and review article authors did not require or check data provenance. Roughly 500 researchers, 250 peer-reviewers, 125 editorial decisions, not one of whom stopped to check the reliability or authenticity of the data. Such severe and potentially harmful outcomes could have just as easily been avoided by mandating simple reporting of who, what, when, where, why and how the data were collected. Trust in the source of data is more important than ever in an age where data creation is so easily met at our fingertips. Patients and practitioners deserve transparency to trust the systems they use.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ol type="1">
+<li><p>https://doi.org/10.1186/s12916-026-04981-y</p></li>
+<li><p>https://pubpeer.com/publications/64738FD54017B4FCDB292A6483FDD0</p></li>
+<li><p>https://ebm.bmj.com/content/early/2026/05/28/bmjebm-2025-114164</p></li>
+<li><p>10.1056/AIe2600807</p></li>
+<li><p>https://doi.org/10.1371/journal.pdig.0001597</p></li>
+</ol>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author:</dt>
+<dd>
+<a href="https://www.linkedin.com/in/alex-d-gibson/"><strong>Alexander Gibson</strong></a> is PhD student at the Queensland University of Technology with the <a href="https://www.aushsi.org.au/">Australian Centre for Health Services Innovations</a>. His PhD work focuses on examining statistical practices in clinical prediction models and good research practices being awarded a research training program scholarship. His PhD thesis is entitled “On examining poor statistical practices in published clinical prediction models”.
+</dd>
+</dl>
+<div class="g-col-12 g-col-md-6">
+<p><strong>Copyright and licence</strong> : © 2026 Alexander Gibson <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"> <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"> </a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>How to cite</strong> :<br>
+Alexander Gibson 2026. “<strong>Data Quality Under the Lens: Should clinical decisions be influenced by unknown public datasets?”</strong>, 2026. <a href="https://realworlddatascience.net/the-pulse/posts/2026/08/28/DQUL_Aug.html">URL</a></p>
+</div>
+</div>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <category>data quality</category>
+  <category>Governance</category>
+  <category>Policy</category>
+  <guid>https://realworlddatascience.net/the-pulse/posts/2026/08/28/DQUL_Aug.html</guid>
+  <pubDate>Fri, 28 Aug 2026 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/the-pulse/posts/2026/08/28/images/thumb.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>Conference Announcement and Call for Abstracts</title>
   <dc:creator>Editorial Board</dc:creator>
@@ -455,91 +542,6 @@ Redman, Hoerl and de Mowbray 2026. “<strong>Data Quality Under the Lens: Was t
   <guid>https://realworlddatascience.net/the-pulse/posts/2026/07/31/DQUL_July.html</guid>
   <pubDate>Fri, 31 Jul 2026 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/the-pulse/posts/2026/07/31/images/census.jpg" medium="image" type="image/jpeg"/>
-</item>
-<item>
-  <title>Data Quality Under the Lens: Was the 2020 US Census “fit-for-apportionment”?</title>
-  <dc:creator>Tom Redman, Roger Hoerl and Hannah de Mowbray</dc:creator>
-  <link>https://realworlddatascience.net/the-pulse/posts/2026/08/28/DQUL_Aug.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p><em>Data Quality Under the Lens is a new Real World Data Science column. Each edition explores real-world moments where data quality shaped outcomes, sometimes driving failure, sometimes preventing it. From near misses to hard lessons learned, we look at what happens when data is up to the task… or falls short.</em></p>
-<p><em>If you spot a real world problem and think data quality could lie at the heart of the story, <a href="(mailto:rwds@rss.org.uk)">send it in to the RWDS mailbox</a> and our Data Quality Detectives will analyse whether the Silent Drift, Proxy Trap, Spreadsheet Cascade, Governance Vacuum or Metric Mirage is responsible.</em></p>
-<section id="the-case-of-the-month" class="level2">
-<h2 class="anchored" data-anchor-id="the-case-of-the-month">The Case of the Month</h2>
-<p>In a press release dated March 10, 2022, Census Director Robert Santos stated: “Taking today’s findings as a whole, we believe the 2020 census data are fit for many uses in decision-making as well as for painting a vivid portrait of our nation’s people.” The “fit for many uses” clause leads to several questions: for what uses is the census fit? For what purposes is it not? And, perhaps most importantly, was it fit for apportionment of representatives for elections in the United States?</p>
-<p><a href="https://www.census.gov/topics/public-sector/congressional-apportionment/about.html">Apportionment is the critically important task of allocating congressional representatives to the fifty states.</a> For apportionment, with its high political consequences, we expect the census to:</p>
-<ol type="1">
-<li>Ensure that each state is assigned the right number of representatives; and</li>
-<li>Provide a measure of comfort that the results can be trusted.</li>
-</ol>
-<p>These criteria constitute a high bar. But the stakes are high, fully justifying the expectations.</p>
-<p>In 2022, <a href="https://tomredman.medium.com/is-the-2020-census-fit-for-apportionment-3467e54b4670">we performed an independent review</a> using data available on the Census Bureau website to address the question of fitness-for-apportionment. Our review raised serious concerns about the fitness of the 2020 census for apportionment. In particular, six states appeared to have been assigned the wrong numbers of representatives.</p>
-<p>While the events examined here relate to the 2020 US Census, the underlying issue is much broader. This is fundamentally a quality assurance (QA) case, concerning how decision-makers can know that data are fit for their most important intended use. Whether the setting is government, healthcare, finance, research or business, the same challenge applies: data may be useful for many purposes yet still fall short where the stakes are highest.</p>
-</section>
-<section id="what-actually-happened" class="level2">
-<h2 class="anchored" data-anchor-id="what-actually-happened">What Actually Happened?</h2>
-<p>We collected relevant data from census.gov, including apportionment data—the population count used for apportionment—and estimated miscount rates based on a Census-conducted Post Enumeration Survey (PES).</p>
-<p>While the apportionment state populations are counts, performed according to the US Constitution and Census regulations, the PES is a statistically based survey used to evaluate the accuracy of the apportionment count. One hopes that the resulting estimates of miscount rates are small.</p>
-<p>There were statistically significant miscounts in fourteen states, and even one should give pause. Fourteen is of enormous concern, especially when compared to zero statistically significant miscounts in 2010.</p>
-<p>Importantly, six states—Colorado, Minnesota, Rhode Island, Florida, Texas and Tennessee—receive different numbers of representatives when the estimated corrections are taken into account, i.e.&nbsp;when using the PES population instead of the apportionment population.</p>
-<p>There were twenty-one states with large miscounts, with ten states having large undercounts and eleven large overcounts.</p>
-<p><img src="https://realworlddatascience.net/the-pulse/posts/2026/08/28/images/table1.webp" class="img-fluid"></p>
-<p>Conducting a census is difficult (try simply counting your socks!) and the pandemic added enormous challenges. One should expect problems. Further, as we’ve already noted, the census is used for many purposes. But none of this means that the central issue for representative democracy can be overlooked.</p>
-<p>Had each state simply been over- or undercounted by a similar proportion, apportionment issues would likely have been minor. But the state-to-state variation is large, especially compared to the 2010 census. In 2010, estimated miscount rates were tightly clustered near zero, while for 2020 they were much more dispersed, which is especially clear looking at the below chart:</p>
-<p><img src="https://realworlddatascience.net/the-pulse/posts/2026/08/28/images/fig1.webp" class="img-fluid"></p>
-<p>Ultimately, the high state-to-state variation and high miscount rates led to the different numbers of representatives officially apportioned and those projected using PES estimated state populations.</p>
-</section>
-<section id="disaster-or-near-miss" class="level2">
-<h2 class="anchored" data-anchor-id="disaster-or-near-miss">Disaster or Near-Miss?</h2>
-<p>Quality assurance (QA) asks a deceptively simple question: did the overall effort provide the required quality? Our two fitness-for-apportionment criteria represent a high bar, but in our view the pandemic does not justify relaxing them.</p>
-<p>One cannot easily escape our main conclusion: the 2020 Census is not fit-for-apportionment. It appears to fail criterion one—assigning the correct number of representatives to each state—and it most certainly fails criterion two—providing confidence in the results.</p>
-<p>The case therefore raises an important question. What safeguards might have prevented or contained the issue before apportionment occurred?</p>
-</section>
-<section id="why-this-matters-now" class="level2">
-<h2 class="anchored" data-anchor-id="why-this-matters-now">Why This Matters Now</h2>
-<p>Perhaps more than anyone, we appreciate the leadership, management and operational challenges associated with data quality. Interestingly, <a href="https://rss.onlinelibrary.wiley.com/doi/full/10.1111/1740-9713.01662">the UK also experienced serious problems</a> conducting its 2021 census, and so, frankly, we’re surprised this topic hasn’t generated far more discussion.</p>
-<p>The key issue raised by this case is embedded in the Census Director’s statement itself. Data may be “fit for many uses” and yet still not be fit for its most important purpose. That distinction matters in an era of growing reliance on analytics, AI and automated decision-making. The question is not whether data are generally useful. The question is whether they provide the required quality for the decision at hand.</p>
-<p>The relevance of the discussion surrounding the Census extends far beyond population counting. National statistics, resource allocation, and research on all kinds of topics all rely on census data for high-consequence decisions, and people expect confidence that the data are fit for their intended use.</p>
-</section>
-<section id="the-practitioner-takeaways" class="level2">
-<h2 class="anchored" data-anchor-id="the-practitioner-takeaways">The Practitioner Takeaways</h2>
-<p>Of course, those running the Census should do all they can to “get it right the first time.” This means clarifying the most important uses, setting quality standards, carefully defining key terms, defining counting processes, managing and controlling them well, and making improvements in response to unexpected new circumstances.</p>
-<p>The larger goal, however, is “getting it right” and that’s where QA comes in. A pertinent and timely analogy can be made to the introduction of video assistant referees (VAR). Over the last several years, football (or soccer, to Americans) has introduced VAR as a means to provide real-time QA for referees’ decisions. While purists may object that it disrupts the flow of the game, there is little question that it helps get more calls right! After all, even the best-trained and best-rated officiating crews make mistakes.</p>
-<p>The implication is clear: If it really matters, you must build an overall quality system that embraces both doing all you can to get it right the first time and effective QA.</p>
-</section>
-<section id="the-data-quality-pattern-the-leadership-vaccum" class="level2">
-<h2 class="anchored" data-anchor-id="the-data-quality-pattern-the-leadership-vaccum">The Data Quality Pattern: The Leadership Vaccum</h2>
-<p>The Leadership Vacuum occurs when the quality system is not up to snuff (that is, efforts to get it right the first time and/or effective QA are missing). In this case the Post Enumeration Survey showed that the first element failed. And the PES itself did not lead to correct apportionment. As we’ve described, the result is a gap between actual and required levels of quality. Exacerbating this, when responsibility for resolving such a gap is unclear, confidence in outcomes is sure to suffer.</p>
-<p>Despite the clear challenges that come with creating a census, especially in a pandemic, the bar for apportionment is necessarily a difficult one to clear. The stakes are high, fully justifying the expectations. The enduring lesson is that demanding requirements call for powerful, comprehensive quality programs.</p>
-<p>Note: This article has been adapted, expanded and updated alongside the authors from: <a href="https://tomredman.medium.com/is-the-2020-census-fit-for-apportionment-3467e54b4670">“Hoerl, R. and Redman, T.C. “Is the 2020 Census “Fit-for-apportionment”?</a> Medium, 24 August 2022. All figures are taken from that article.</p>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<div class="g-col-12 g-col-md-6">
-<p><strong>Copyright and licence</strong> : © 2026 Tom Redman, Roger Hoerl and Hannah de Mowbray <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"> <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"> </a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<p><strong>How to cite</strong> :<br>
-Redman, Hoerl and de Mowbray 2026. “<strong>Data Quality Under the Lens: Was the 2020 US Census “fit-for-apportionment”?</strong>, 2026. <a href="https://realworlddatascience.net/the-pulse/posts/2026/07/31/DQUL_July.html">URL</a></p>
-</div>
-</div>
-</div>
-</div>
-
-
-</section>
-
- ]]></description>
-  <category>AI</category>
-  <category>Governance</category>
-  <category>Policy</category>
-  <guid>https://realworlddatascience.net/the-pulse/posts/2026/08/28/DQUL_Aug.html</guid>
-  <pubDate>Fri, 31 Jul 2026 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/the-pulse/posts/2026/08/28/images/census.jpg" medium="image" type="image/jpeg"/>
 </item>
 <item>
   <title>Linking Brain Injury to Cognitive Decline: A Multimodal, Explainable AI Approach within Trusted Research Environments</title>
