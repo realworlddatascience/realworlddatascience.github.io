@@ -1,0 +1,126 @@
+---
+title: "When the most likely answer is wrong"
+description: |
+  Scientific validity in the age of large language models 
+categories:
+  - Viewpoints
+  - AI
+author: Lee Clewley
+date: 2026-09-15
+date-format: long
+toc: true
+image: images/thumb.jpg
+---
+## The corpus 
+
+Much of what is published in biomedical research does not hold up. When other scientists repeat the experiments, the findings often fail to reappear. This is the reproducibility problem. Ironically, the field has measured its own unreliability with some care. The figures are stark. In 2012 scientists at Amgen set out to reproduce fifty-three landmark cancer studies. They confirmed six [1]. A team at Bayer reported much the same, reproducing about a quarter of sixty-seven projects examined [2]. A later effort to repeat high-profile cancer experiments found effects on repetition far smaller than first reported, and many vanished altogether [3]. Sometimes the problem is mundane. The studies are underpowered, too small to show what they claim, common across the life sciences [6, 7]. Two decades ago Ioannidis published under the rather blunt title: “Why most published research findings are false” [5]. The claim was provocative then. It has worn well. These are the biomedical data we put into our large language models.  
+
+One response might call this a garbage in, garbage out problem. This reaction is too simplistic. The corpus does not often look like garbage. It looks like good science, and a finding that failed to replicate can look exactly like one that is held. Nor does the model add the fault. It reproduces what it reads faithfully, and faithful reproduction of a flawed literature is the problem here. The trouble lies more in the balanced interpretation. 
+
+Before I go any further, it is worth having a short aside on the models themselves. A large language model learns from text in a simple way. It predicts what comes next, one token at a time. A token is either a short word or sometimes a fragment of a longer one, or a single mark of punctuation. At each step it assigns every possible next token a probability, given everything so far. That set of probabilities is the distribution. When it writes, it draws from the distribution. It has no separate sense of what is true. It has a finely tuned sense of what is likely, given what it has read. 
+
+To illustrate how this can be a problem, suppose the literature states that a certain gene is “linked to” a certain disease. The model learns the phrase. Suppose also that this comes from a single small study no one has yet reproduced. Nonetheless the result is restated across reviews, textbooks and the introductions of later papers, and can appear in the corpus many times over. The model counts appearances, not the scientific validity of a study. It weights each claim by how often that claim appears, not by how much independent evidence stands behind it, and not by whether that evidence has been peer reviewed. Repetition is not replication. The biomedical literature has long repeated claims that fail when the experiment is run again. This is the source of the problems I opened with, and the hardest to correct: the fault lies in the record itself, not in how we read it. 
+
+![](images/thumb.jpg)
+
+## Corpus-epistemic bias 
+
+The opening paper of the Royal Statistical Society’s new journal on data science and artificial intelligence makes a sensible request. A professional system built on a language model should say more about its uncertainty than a single confidence score [4]. Delacroix and colleagues divide that uncertainty into two kinds. 
+One is epistemic: the kind more or better data removes. A drug’s effect in children is unknown because the trial enrolled only adults. Run the trial in children and the question may feasibly be answered. 
+
+The other is hermeneutic, a matter of interpretation. No extra data settles it, because the question turns on judgement rather than fact. It takes two forms. One is fixed in time. A pathologist reads a borderline biopsy. A judge weighs an ambiguous clause. A teacher grades an essay. Careful experts differ today, and will differ tomorrow. The other is more temporal, such as ethics: the answer may change as human values evolve, over time and between communities. In both, the disagreement is real, and no quantity of data dissolves it. 
+
+Count the two hermeneutic forms apart, and there are three kinds in all: one that data closes, and two that data cannot. 
+
+I want to name a fourth. It belongs to a different category from the three above. Those are forms of not-knowing, and not-knowing can be narrowed: add evidence, the doubt shrinks. This one runs the other way. It does not show as doubt. It shows as confidence, and the confidence is misplaced. It is not a fourth uncertainty but a bias: I call it corpus-epistemic bias. 
+
+It is easy to mistake for the hermeneutic kind, the error that comes from how a result is read, so the difference is worth stating clearly. An interpretive question has no single right answer; the disagreement is the matter itself, and more evidence cannot settle what was never one fact. Corpus-epistemic bias is the reverse. A fact exists. The science holds it; the literature has mislaid it, or buried it under a claim that reads as settled and never replicated. Better evidence would recover it. The two faults even sit in different places. The interpretive fault is in the reading. This one is in the record. 
+
+It is not epistemic either, though that is its nearest cousin. Epistemic uncertainty shrinks as data grows. This is not ordinary epistemic uncertainty, since more of the same data does not help and may deepen the error.  
+
+Corpus-epistemic bias may widen as data grows, because the data or the scientific framework itself can be the source of the error. It can show as the opposite of epistemic uncertainty. A model is corpus-epistemically biased when it is well calibrated against its training data yet plainly wrong about the science. The mismatch is not between its prediction and fresh data from the same source. It is between the prediction and a reality the literature has misrepresented or misunderstood. So a system can be perfectly calibrated and reliably mistaken at once.  
+
+## From the literature to one answer 
+
+Corpus-epistemic bias can come in a number of variants: a literature that is wrong, reproduced with confidence; or not obviously wrong at all but divided. An example of the divided corpus is discussed below. 
+
+Honest scientists, working from good evidence, can reach conclusions that do not agree. One side may be mistaken. Or the disagreement may mark the edge of something new, both measurements sound and the theory that should reconcile them missing. (Most scientists quietly hope for the second. New science is a good day.) The clearest case I know comes from cosmology, where I worked before moving into drug discovery. It turns on a single number, the Hubble constant, which sets how fast the universe is expanding and, with it, the age of the universe. The number can be measured in several independent ways, and two of the best flatly disagree, by a margin far too large to be chance. The gap has stood for decades, and sharpened rather than softened as the measurements improved. What matters here is not the number but the conduct around it. The field does not paper over the disagreement. It states it, measures it, and argues in the open about which kind of problem it is. 
+
+The force of the example is its simplicity. The Hubble constant comprises two parameters, a distance and a speed. Each can be reached by several independent routes. Yet after nearly a century of effort the problem does not resolve. Biology offers nothing so clean. It works with small samples, with countless influences no one has measured, and with systematic errors no experiment fully shuts out. If cosmology cannot pin one simple quantity to a single value, it is no surprise a model trained on the far messier biomedical literature will do no better. 
+
+As we already discussed, a language model is trained to predict text. Given what comes before, it estimates how probable each possible next token is. Statisticians call this density estimation. The training is thorough, pressing the model to account for everything in the literature, the rare alongside the common. A literature that holds two values produces a model that holds both.
+
+The answering is where it goes wrong. To reply, the model must commit to tokens one at a time, and how freely they vary is set by a single dial, called temperature. Allow variation, and over many answers both camps appear, in the proportion the literature shows. Pin the dial down, as systems usually do, and the same most likely answer returns every time. Ask for a single value and you may get the more common of the two figures, with no sign the other exists. Tukey saw the shape of this sixty years ago: an exact answer to the wrong question can always be made to look precise [11]. 
+
+That is why one confident number here is not decisiveness. It is a mistake that sounds certain. When the field is split, the right reply says so. It gives both values, with the reason for each, even to a reader who asked for one.  
+
+A natural hope is that later tuning fixes the mismatch. The usual tool is reinforcement learning from human feedback. People rate the answers, and the model is adjusted to produce the kind they rate well. It rarely reaches deep enough. This stage shapes manner, not knowledge. It teaches the system to hedge, to refuse, to set its answers out neatly. It does not rebuild the dense interior that holds the biased prior.  
+
+## What to do 
+
+This is not a worry about some distant future. Asked a clinical question, a current model will take a fabricated detail and build on it with composure, a failure easy to provoke [8]. Confident medical invention is now documented across the large general-purpose models being adapted for medical use [9], and methods exist to measure how reliably such a system serves as a biomedical assistant [10]. The point is not that they are useless. It is that fluency and confidence are no guide to correctness, and in medicine the cost of mistaking one for the other falls on patients. 
+
+Well-trodden parts of the gene-disease map are well policed, argued over and corrected in the normal way. It becomes much harder with sparse data, where a single underpowered paper is the only thing that exists in an area. A model that scores well on average across the literature can fail badly there. The Society’s note “AI is Statistics” makes a version of this point, asking for testing under distribution shift, meaning tests on data unlike the training set [12]. In science the shift that matters is not mainly demographic. It is epistemic. How does a model behave where the evidence is thin, skewed or in conflict? 
+
+There are at least three things one can do here to help with all the uncertainties we have discussed. 
+
+First, keep a curated set of ground truth, held apart from the training data. A small, carefully judged collection of mechanistic and clinical facts, kept as a test set, is the scientific version of a double-entry ledger. Every claim a model makes in use can be checked against it, by sampling or in full. The ledger is not fixed. It grows with each replication, each failed reproduction, each registry update. It is slow, deliberate and unglamorous. It is also what separates credibility from nonsense. Building it is often work for statisticians and subject experts together, since deciding what counts as settled truth is itself a scientific and statistical question: what to include, how to weight it, how to treat evidence that conflicts. 
+
+Second, test under deliberate distribution shift. Calibrate on the dense parts of the literature. Test in the sparse, skewed and conflicted parts. Build evaluation sets where the published claim is known to be unreliable, and watch whether the model’s stated uncertainty rises as it should. Equal confidence on thick and thin evidence is not calibration. It is fluency. Here the hermeneutic and the corpus-epistemic meet. If a system cannot grow less sure as the evidence thins, no amount of careful interaction design will make it safe. 
+
+Third, carefully track provenance. Every substantive claim a model surfaces should trace back to the evidence beneath it, tagged with study design, sample size, replication status and date. Good science is about replication. It is the clear audit trail that lets a reader separate a claim resting on one 2008 mouse study from one resting on three independent human trials. In practice it means drawing answers from a provenance-aware knowledge graph, a store of facts that keeps each fact’s source attached, rather than generating ungrounded text. The tooling must refuse to let the source slip away in the final summary and needs to constantly be checking and matching. The work here is less about ideas than about care and good data engineering. Provenance is hard work to build and utterly ruinous to omit. 
+
+## Is it likely, or is it so?
+
+None of this calls for new mathematics, or anything particularly clever. It calls for a small change in what a scientific AI team takes its job to be. The statistical community has insisted, rightly, that these systems are statistical objects, to be built and judged as such. To an extent that is true. But fidelity to a biased literature is itself a failure. Beside statistical care must sit a scientific discipline: knowing when to doubt the literature, and refusing to let a confident sentence stand in for a checked one. Every experienced scientist has it as a reflex, what I have come to call the sweaty feeling, a faint unease that arrives before the reasons do and sends them back to the claim: who did the work, in what journal, repeated by whom, and does it make sense at all? A model has none of it. It returns the most likely sentence and reports no discomfort, because a statistical object has none to feel, and because repetition, which should raise a scientist's guard, is the very thing it counts as evidence. Feynman called the alternative cargo cult science, work that imitates the form of enquiry but lacks the integrity that makes results hold up [13]. A model that returns the most likely answer and calls it true is cargo cult science at scale. 
+
+I think of a story from my time as an astrophysics researcher in Holland. My supervisor there had met the great Dutch astronomer, Jan Oort. Oort was proud that, after a long career and much scrutiny, about half his published papers had turned out to be right. That is not the failure it sounds. It is what good science looks like: a known rate of error, owned without embarrassment, corrected carefully over time. A model trained on a corpus inherits both halves. It cannot always tell the work that is true from the work that is not, and can return them in one voice, with equal confidence. The model has the literature. It lacks Oort’s humility, and the community’s means of checking. 
+The remedy is old, and not statistical alone. It is to keep pressing the question the literature cannot answer for us. Not is this likely, but is this so. 
+
+## References 
+1. Begley CG, Ellis LM. Raise standards for preclinical cancer research. Nature. 2012;483(7391):531–533. 
+2. Prinz F, Schlange T, Asadullah K. Believe it or not: how much can we rely on published data on potential drug targets? Nature Reviews Drug Discovery. 2011;10(9):712. 
+3. Errington TM, et al. Investigating the replicability of preclinical cancer biology. eLife. 2021;10:e71601. 
+4. Delacroix S, Robinson D, Bhatt U, et al. Beyond quantification: navigating uncertainty in professional AI systems. RSS: Data Science and Artificial Intelligence. 2025;1(1):udaf002. 
+5. Ioannidis JPA. Why most published research findings are false. PLoS Medicine. 2005;2(8):e124. 
+6. Button KS, Ioannidis JPA, Mokrysz C, et al. Power failure: why small sample size undermines the reliability of neuroscience. Nature Reviews Neuroscience. 2013;14(5):365–376. 
+7. Perrin S. Preclinical research: make mouse studies work. Nature. 2014;507(7493):423–425. 
+8. Omar M, et al. Multi-model assurance analysis showing large language models are highly vulnerable to adversarial hallucination attacks during clinical decision support. Communications Medicine. 2025;5(1):330. 
+9. Kim Y, et al. Medical hallucinations in foundation models and their impact on healthcare. arXiv preprint arXiv:2503.05777. 2025. 
+10. Bolton WJ, Poyiadzi R, Morrell ER, van Bergen Gonzalez Bueno G, Goetz L. RAmBLA: a framework for evaluating the reliability of LLMs as assistants in the biomedical domain. arXiv preprint arXiv:2403.14578. 2024. 
+Tukey JW. The future of data analysis. Annals of Mathematical Statistics. 1962;33(1):1–67. 
+11. Royal Statistical Society. AI is Statistics: why statistical thinking is vital for the effective, ethical and safe use of AI. 2026. 
+12. Feynman RP. Cargo cult science. Caltech commencement address. Engineering & Science. 1974;37(7):10–13. 
+
+
+::: {.article-btn}
+[Explore more data science ideas](/applied-insights/index.qmd)
+:::
+
+::: {.further-info}
+::: grid
+
+::: {.g-col-12 .g-col-md-12}
+About the author:
+: [Lee Clewley (PhD)](https://www.linkedin.com/in/lee-clewley-988bbb18/) is VP of Applied AI & Informatics at [Tangram Therapeutics](https://tangramtx.com/), where he led the design and deployment of LLibra, a multi-LLM, agentic system for early discovery. Formerly Head of Applied AI at [GSK](https://www.gsk.com/en-gb/), he is a member of the Real World Data Science [editorial board](https://realworlddatascience.net/the-pulse/editors-blog/posts/2022/10/18/meet-the-team.html).  
+
+
+::: {.g-col-12 .g-col-md-6}
+**Copyright and licence** : © 2026 Lee Clewley  
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">
+  <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1">
+  <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1">
+</a>
+This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0)
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.
+:::
+
+::: {.g-col-12 .g-col-md-6}
+**How to cite** :  
+Clewley, Lee. 2026. “**When the most likely answer is wrong**.” *Real World Data Science*, 2026. [URL](https://realworlddatascience.net/foundations-frontiers/posts/2026/12/when-the-most-likely-answer-is-wrong.html)
+:::
+
+:::
+:::
+
+
