@@ -17,7 +17,94 @@
 <width>144</width>
 </image>
 <generator>quarto-1.10.18</generator>
-<lastBuildDate>Tue, 15 Sep 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Tue, 29 Sep 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Data Quality Under the Lens: the DOD’s One-Legged Engineer Problem</title>
+  <dc:creator>Peter Aitken</dc:creator>
+  <link>https://realworlddatascience.net/the-pulse/posts/2026/09/29/DQUL_Sept.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><em>Data Quality Under the Lens is a new Real World Data Science column. Each edition explores real-world moments where data quality shaped outcomes, sometimes driving failure, sometimes preventing it. From near misses to hard lessons learned, we look at what happens when data is up to the task… or falls short.</em></p>
+<p><em>If you spot a real world problem and think data quality could lie at the heart of the story, <a href="(mailto:rwds@rss.org.uk)">send it in to the RWDS mailbox</a> and our Data Quality Detectives will analyse whether the Silent Drift, Proxy Trap, Spreadsheet Cascade, Governance Vacuum or Metric Mirage is responsible.</em></p>
+<section id="the-case-of-the-month" class="level2">
+<h2 class="anchored" data-anchor-id="the-case-of-the-month">The Case of the Month</h2>
+<p>By the early 1990s, the US Department of Defense (DoD) had a problem that will sound familiar to anyone who has worked with a large organisation’s legacy systems: it had too many systems doing essentially the same thing.</p>
+<p>The DoD had inherited a collection of systems developed independently by different parts of the organisation. As this was the early days of computing, groups based in different locations had created a multitude of good, homegrown IT systems that met local needs. These were built on a variety of technology stacks with many types of hardware and software with systems often “growing” organically.</p>
+<p>Early in my data management career, I was part of a team brought in to understand these systems and help the DoD determine how they could be consolidated. By this point, 37 systems were involved in paying DoD personnel. They all worked, but we needed to decide what should happen to enable the organisation to manage them as a whole.</p>
+<p>For example, a Pentagon manager might want to know how many employees worked at a particular location. This sounds like a straightforward question, but the answer depended on what each system meant by ‘employee’. A significant proportion of the DoD workforce had more than one job within the organisation. Different payroll systems handled these arrangements differently: one system might count people by counting paychecks, while another might treat the primary and secondary jobs differently. The resulting numbers could therefore be different without either system necessarily containing an obvious error, and the systems could be answering different questions while appearing to answer the same one.</p>
+<p>This became particularly important when the DoD needed to decide which of its existing systems should provide the basis for a more consolidated approach. The 37 systems had similar purposes and, when their processes were compared, they looked remarkably similar. Process models showed the same basic pattern: personnel information went in, it was processed, and pay was produced.</p>
+<p>Process analysis therefore did not provide a useful way of distinguishing between the systems. We needed to look somewhere else: at the data.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://realworlddatascience.net/the-pulse/posts/2026/09/29/images/thumbb.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</section>
+<section id="what-actually-happened" class="level2">
+<h2 class="anchored" data-anchor-id="what-actually-happened">What Actually Happened?</h2>
+<p>Our team was asked to reverse-engineer selected legacy systems. Rather than starting with the documentation describing what a system was supposed to do, we examined the systems themselves to recover the business rules, requirements and data structures embedded within them. This revealed something that the process models had hidden: although the systems appeared to perform the same broad function, they did not necessarily represent the underlying business in the same way.</p>
+<p>The distinction became particularly clear when we tested the systems against specific requirements. One memorable example involved a hypothetical but deliberately highly specific employee: a one-legged engineer working in waist-deep water, underneath rotating helicopter blades, on overtime. The point of this unusual example was not that the DoD had large numbers of employees fitting that description. It was that a requirement this specific could expose differences between systems. If a system’s data structures could represent the necessary combination of circumstances, that provided evidence that it could support the requirement. If they could not, the system could be ruled out.</p>
+<p>This gave the DoD a way of making a decision based on evidence about the systems rather than on competing claims about which system was best. It also helped address the organisational politics surrounding the consolidation. Each system had people and resources associated with it, and there were understandable concerns about what would happen if a particular system was replaced. A transparent comparison based on agreed requirements provided a more objective basis for deciding which system could meet the organisation’s needs.</p>
+</section>
+<section id="disaster-or-near-miss" class="level2">
+<h2 class="anchored" data-anchor-id="disaster-or-near-miss">Disaster or Near-Miss?</h2>
+<p>The fact that the DoD could not always answer basic questions about its workforce consistently shows that the fragmented systems were already causing real problems. However, the greater risk arose when it needed to choose a system to take forward. Selecting one based on popularity, existing use or apparently similar processes could have embedded its limitations into an enterprise-wide system.</p>
+<p>By reverse-engineering the data models, we were able to identify differences that the process analysis had missed and test the systems against the DoD’s actual requirements. This meant the consolidation decision could be based on evidence rather than assumption and the underlying weaknesses were exposed before they were carried into the next generation of systems.</p>
+</section>
+<section id="why-this-matters-now" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-matters-now">Why This Matters Now</h2>
+<p>Technology has advanced, but this problem hasn’t disappeared. In June 2026, the US Office of Personnel Management <a href="https://finance.yahoo.com/technology/ai/articles/oracle-orcl-lands-395-8-071231438.html?guccounter=1&amp;guce_referrer=aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS8&amp;guce_referrer_sig=AQAAAKUM8F0uD-HSBCp7j1h9xeg9eNBA9rDfDGkXCYW1eEAm29AvFR11kL3speAF2aS79Phk9EqLzdcpuvX0Jhg9o55TSAWHez3zuLWQ4s65rn-kIyR6mpjhf-uqIb25SPRjftECCUveUX0q8Xe-j5cAwwlZlx7JrKf2wIRuv71VfD1G">announced a $395 million contract with Oracle to modernise federal human-resources systems</a>. The programme aims to consolidate more than 100 separate human-resources management systems across the US federal government into a single platform. The stated case for consolidation includes duplicated systems and functions, inconsistent application of policies and the cost of maintaining a fragmented HR environment.</p>
+<p>The scale is very different from the DoD example of the early 1990s, but the underlying question remains relevant: what knowledge about the organisation is embedded in the systems being replaced?</p>
+<p>Replacing many systems with one does not automatically create better data. A new system still needs to represent the concepts, rules and exceptions that matter to the organisation. If those things are poorly understood during the transition, consolidation can simply move existing problems into a new system. The DoD experience suggests that understanding legacy data should be part of the modernisation process, rather than something left until after a new system has been selected.</p>
+</section>
+<section id="the-data-quality-pattern" class="level2">
+<h2 class="anchored" data-anchor-id="the-data-quality-pattern">The Data Quality Pattern</h2>
+<p>This case illustrates a classic Governance Vacuum: systems were developed to meet local needs, but there was insufficient enterprise-level agreement about how the organisation’s data should be defined and represented.</p>
+</section>
+<section id="the-practitioner-takeaways" class="level2">
+<h2 class="anchored" data-anchor-id="the-practitioner-takeaways">The Practitioner Takeaways</h2>
+<p>We can take a lot from this case!</p>
+<p>Define the question before counting the data. A seemingly simple question such as “How many employees do we have?” may have more than one valid interpretation. Agreeing what is being counted is a prerequisite for producing a useful number.</p>
+<p>Don’t assume that systems doing the same job represent the same things. Similar processes do not necessarily mean compatible data. Look at the definitions, relationships and business rules embedded in the data.</p>
+<p>Understand legacy systems before replacing them. Old systems may contain years of accumulated organisational knowledge, including requirements and exceptions that are not documented elsewhere. Reverse engineering can help uncover this knowledge before it is lost.</p>
+<p>A single system is not automatically a single source of truth. Consolidation can reduce duplication, but data quality still depends on whether the new system represents the organisation consistently and appropriately.</p>
+<p>Data models can be valuable evidence when organisations are making decisions about systems. Looking at the data structures helped reveal differences that were not apparent from looking at the processes alone.</p>
+<p>The one-legged engineer is more than an entertaining anecdote. The example worked because it forced the team to ask a precise question about what the system needed to be able to represent. Sometimes an unusually specific requirement is exactly what reveals a hidden difference between systems.</p>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author:</dt>
+<dd>
+<a href="https://www.anythingawesome.com/personal/biosketch-copy"><strong>Peter Aitken, PHD</strong></a> is an acknowledged Data Management authority, an Associate Professor at <a href="https://vcu.edu/">Virginia Commonwealth University</a>, President of <a href="https://dama.org/">DAMA International</a>, and has founded several companies that have helped more than 200 organizations leverage data–specific savings have been measured at more than $1.5B USD. His latest is <a href="https://www.anythingawesome.com/">Anything Awesome LLC</a>.
+</dd>
+</dl>
+<div class="g-col-12 g-col-md-6">
+<p><strong>Copyright and licence</strong> : © 2026 Peter Aitken <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"> <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"> </a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>How to cite</strong> :<br>
+Peter Aitken 2026. “<strong>Data Quality Under the Lens: the DOD’s One-Legged Engineer Problem”</strong>, 2026. <a href="https://realworlddatascience.net/the-pulse/posts/2026/09/29/DQUL_Sept.html">URL</a></p>
+</div>
+</div>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <category>data quality</category>
+  <category>Governance</category>
+  <category>Policy</category>
+  <guid>https://realworlddatascience.net/the-pulse/posts/2026/09/29/DQUL_Sept.html</guid>
+  <pubDate>Tue, 29 Sep 2026 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/the-pulse/posts/2026/09/29/images/thumbb.jpg" medium="image" type="image/jpeg"/>
+</item>
 <item>
   <title>When the most likely answer is wrong</title>
   <dc:creator>Lee Clewley</dc:creator>
@@ -2301,88 +2388,6 @@ Hall, Jennifer. 2026. “<strong>Why Great Models Still Fail</strong>.” <em>Re
   <guid>https://realworlddatascience.net/foundation-frontiers/posts/2026/02/25/why_great_models_still_fail.html</guid>
   <pubDate>Wed, 25 Feb 2026 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/foundation-frontiers/posts/2026/02/25/images/thumb.png" medium="image" type="image/png" height="96" width="144"/>
-</item>
-<item>
-  <title>RWDS Big Questions: How do we balance innovation and regulation in the world of AI?</title>
-  <dc:creator>Annie Flynn</dc:creator>
-  <link>https://realworlddatascience.net/the-pulse/posts/2026/02/18/rwds_big_questions_ai_regulation.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>AI development is accelerating, while regulation moves more deliberately. That tension creates a core challenge: how do we maintain momentum without breaking the things that matter? The aim isn’t to slow innovation unnecessarily, but to ensure progress happens at a pace that protects individuals and society. Responsible actors should not be disadvantaged — yet safeguards are essential to maintain trust.</p>
-<p>For the latest video in our RWDS Big Questions series, our panel explores this delicate balance. From risk-based frameworks and transparency to global inequality in AI development, the conversation surfaces the tensions, trade-offs and practical realities facing policymakers, technologists and data scientists alike.</p>
-<section id="watch-the-discussion" class="level2">
-<h2 class="anchored" data-anchor-id="watch-the-discussion">Watch the discussion</h2>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/L69nxuy9caI" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-</section>
-<section id="takeaways-at-a-glance" class="level2">
-<h2 class="anchored" data-anchor-id="takeaways-at-a-glance">Takeaways at a glance</h2>
-<ul>
-<li><strong>Innovation and regulation are not opposites</strong> – both are essential, but difficult to balance.</li>
-<li><strong>Responsible progress requires proportionality</strong> – not all AI applications carry the same level of risk.</li>
-<li><strong>Transparency enables better governance</strong> – open dialogue between developers and regulators is key.</li>
-<li><strong>Risk-based frameworks provide structure</strong> – distinguishing low-, high-, and unacceptable-risk uses helps focus oversight.</li>
-<li><strong>Global disparities complicate regulation</strong> – some regions are regulating advanced AI systems, while others are still building foundational capacity.</li>
-<li><strong>Innovation needs protected space</strong> – experimentation, iteration, and even failure are critical before formal standardisation.</li>
-</ul>
-</section>
-<section id="key-themes-and-analysis" class="level2">
-<h2 class="anchored" data-anchor-id="key-themes-and-analysis">Key themes and analysis</h2>
-<p><strong>Proportional regulation through risk</strong></p>
-<p>Not all AI systems pose the same level of harm. A risk-based approach — distinguishing low-, high-, and unacceptable-risk uses — offers a practical middle ground. It avoids blanket restrictions while ensuring stronger oversight where impact is greatest. The debate becomes less about whether to regulate, and more about how proportionate that regulation should be.</p>
-<p><strong>Transparency as common ground</strong></p>
-<p>Openness can bridge the gap between technologists and regulators. Clear communication about capabilities, limitations and risks enables more informed policy decisions. When innovation happens transparently and in dialogue with regulators, governance can evolve alongside technology rather than lagging behind it.</p>
-<p><strong>The global unevenness of AI governance</strong></p>
-<p>AI regulation is developing unevenly across regions. While parts of the West are formalising frameworks, many countries are still building foundational AI capacity. This raises difficult questions about sequencing: should regulation lead innovation, or follow it? A one-size-fits-all model may not reflect global realities.</p>
-<p><strong>Protecting space to experiment</strong></p>
-<p>Innovation requires room to test, iterate and occasionally fail. Early experimentation should not be overburdened with rigid controls — but successful, scalable systems must eventually transition into more standardised and regulated environments. The challenge is designing pathways that support both creativity and accountability.</p>
-</section>
-<section id="looking-ahead" class="level2">
-<h2 class="anchored" data-anchor-id="looking-ahead">Looking ahead</h2>
-<p>As AI continues to evolve, the balance between innovation and regulation will remain dynamic — and contested. This conversation opens up important questions, and we would love to hear our readers’ thoughts about how we move some of the principles mentioned in the video into practice.</p>
-<ul>
-<li>How do we facilitate transparent channels of communication between those developing AI and those designing the regulatory frameworks that will govern it?</li>
-<li>What should determine whether an AI system is low, high, or unacceptable risk?</li>
-<li>How do we define a “safe speed” for AI development — and who gets to decide?</li>
-</ul>
-<p>We are actively seeking submissions on these topics so, if you would like to be part of the conversation, <a href="mailto:rwds@rss.org.uk"><strong>get in touch</strong></a>.</p>
-<div class="article-btn">
-<p><a href="https://realworlddatascience.net/the-pulse/posts/2026/01/21/rwds-big-questions-challenges-today.html">Explore more videos in the series</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the author:</dt>
-<dd>
-<a href="https://www.linkedin.com/in/annieroseflynn/">Annie Flynn</a> is Head of Content at the <a href="rss.org.uk">Royal Statistical Society</a>.
-</dd>
-</dl>
-</div>
-<div class="g-col-12 g-col-md-6">
-<p><strong>Copyright and licence</strong> : © 2026 Annie Flynn<br>
-<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"> <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"> </a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<p><strong>How to cite</strong> :<br>
-Flynn, Annie 2026. “<strong>RWDS Big Questions: What are the Key Challenges Facing Data Scientists Today?</strong>” <em>Real World Data Science</em>, 2026. <a href="https://realworlddatascience.net/the-pulse/posts/2026/01/rwds-big-questions-challenges-today.html">URL</a></p>
-</div>
-</div>
-</div>
-
-
-</section>
-
- ]]></description>
-  <category>AI</category>
-  <category>Governance</category>
-  <category>Policy</category>
-  <guid>https://realworlddatascience.net/the-pulse/posts/2026/02/18/rwds_big_questions_ai_regulation.html</guid>
-  <pubDate>Wed, 18 Feb 2026 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/the-pulse/posts/2026/02/18/images/BQthumb.jpg" medium="image" type="image/jpeg"/>
 </item>
 </channel>
 </rss>
