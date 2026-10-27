@@ -161,108 +161,6 @@ Flynn, Annie 2026. “<strong>David McCandless on the power and responsibility o
 <item>
   <title>When the most likely answer is wrong</title>
   <dc:creator>Lee Clewley</dc:creator>
-  <link>https://realworlddatascience.net/foundation-frontiers/posts/2026/09/15/when-the-most-likely-answer-is-wrong.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<section id="the-corpus" class="level2">
-<h2 class="anchored" data-anchor-id="the-corpus">The corpus</h2>
-<p>Much of what is published in biomedical research does not hold up. When other scientists repeat the experiments, the findings often fail to reappear. This is the reproducibility problem. Ironically, the field has measured its own unreliability with some care. The figures are stark. In 2012 scientists at Amgen set out to reproduce fifty-three landmark cancer studies. They confirmed six [1]. A team at Bayer reported much the same, reproducing about a quarter of sixty-seven projects examined [2]. A later effort to repeat high-profile cancer experiments found effects on repetition far smaller than first reported, and many vanished altogether [3]. Sometimes the problem is mundane. The studies are underpowered, too small to show what they claim, common across the life sciences [6, 7]. Two decades ago Ioannidis published under the rather blunt title: “Why most published research findings are false” [5]. The claim was provocative then. It has worn well. These are the biomedical data we put into our large language models.</p>
-<p>One response might call this a garbage in, garbage out problem. This reaction is too simplistic. The corpus does not often look like garbage. It looks like good science, and a finding that failed to replicate can look exactly like one that is held. Nor does the model add the fault. It reproduces what it reads faithfully, and faithful reproduction of a flawed literature is the problem here. The trouble lies more in the balanced interpretation.</p>
-<p>Before I go any further, it is worth having a short aside on the models themselves. A large language model learns from text in a simple way. It predicts what comes next, one token at a time. A token is either a short word or sometimes a fragment of a longer one, or a single mark of punctuation. At each step it assigns every possible next token a probability, given everything so far. That set of probabilities is the distribution. When it writes, it draws from the distribution. It has no separate sense of what is true. It has a finely tuned sense of what is likely, given what it has read.</p>
-<p>To illustrate how this can be a problem, suppose the literature states that a certain gene is “linked to” a certain disease. The model learns the phrase. Suppose also that this comes from a single small study no one has yet reproduced. Nonetheless the result is restated across reviews, textbooks and the introductions of later papers, and can appear in the corpus many times over. The model counts appearances, not the scientific validity of a study. It weights each claim by how often that claim appears, not by how much independent evidence stands behind it, and not by whether that evidence has been peer reviewed. Repetition is not replication. The biomedical literature has long repeated claims that fail when the experiment is run again. This is the source of the problems I opened with, and the hardest to correct: the fault lies in the record itself, not in how we read it.</p>
-<p><img src="https://realworlddatascience.net/foundation-frontiers/posts/2026/09/15/images/thumb.jpg" class="img-fluid"></p>
-</section>
-<section id="corpus-epistemic-bias" class="level2">
-<h2 class="anchored" data-anchor-id="corpus-epistemic-bias">Corpus-epistemic bias</h2>
-<p>The opening paper of the Royal Statistical Society’s new journal on data science and artificial intelligence makes a sensible request. A professional system built on a language model should say more about its uncertainty than a single confidence score [4]. Delacroix and colleagues divide that uncertainty into two kinds. One is epistemic: the kind more or better data removes. A drug’s effect in children is unknown because the trial enrolled only adults. Run the trial in children and the question may feasibly be answered.</p>
-<p>The other is hermeneutic, a matter of interpretation. No extra data settles it, because the question turns on judgement rather than fact. It takes two forms. One is fixed in time. A pathologist reads a borderline biopsy. A judge weighs an ambiguous clause. A teacher grades an essay. Careful experts differ today, and will differ tomorrow. The other is more temporal, such as ethics: the answer may change as human values evolve, over time and between communities. In both, the disagreement is real, and no quantity of data dissolves it.</p>
-<p>Count the two hermeneutic forms apart, and there are three kinds in all: one that data closes, and two that data cannot.</p>
-<p>I want to name a fourth. It belongs to a different category from the three above. Those are forms of not-knowing, and not-knowing can be narrowed: add evidence, the doubt shrinks. This one runs the other way. It does not show as doubt. It shows as confidence, and the confidence is misplaced. It is not a fourth uncertainty but a bias: I call it corpus-epistemic bias.</p>
-<p>It is easy to mistake for the hermeneutic kind, the error that comes from how a result is read, so the difference is worth stating clearly. An interpretive question has no single right answer; the disagreement is the matter itself, and more evidence cannot settle what was never one fact. Corpus-epistemic bias is the reverse. A fact exists. The science holds it; the literature has mislaid it, or buried it under a claim that reads as settled and never replicated. Better evidence would recover it. The two faults even sit in different places. The interpretive fault is in the reading. This one is in the record.</p>
-<p>It is not epistemic either, though that is its nearest cousin. Epistemic uncertainty shrinks as data grows. This is not ordinary epistemic uncertainty, since more of the same data does not help and may deepen the error.</p>
-<p>Corpus-epistemic bias may widen as data grows, because the data or the scientific framework itself can be the source of the error. It can show as the opposite of epistemic uncertainty. A model is corpus-epistemically biased when it is well calibrated against its training data yet plainly wrong about the science. The mismatch is not between its prediction and fresh data from the same source. It is between the prediction and a reality the literature has misrepresented or misunderstood. So a system can be perfectly calibrated and reliably mistaken at once.</p>
-</section>
-<section id="from-the-literature-to-one-answer" class="level2">
-<h2 class="anchored" data-anchor-id="from-the-literature-to-one-answer">From the literature to one answer</h2>
-<p>Corpus-epistemic bias can come in a number of variants: a literature that is wrong, reproduced with confidence; or not obviously wrong at all but divided. An example of the divided corpus is discussed below.</p>
-<p>Honest scientists, working from good evidence, can reach conclusions that do not agree. One side may be mistaken. Or the disagreement may mark the edge of something new, both measurements sound and the theory that should reconcile them missing. (Most scientists quietly hope for the second. New science is a good day.) The clearest case I know comes from cosmology, where I worked before moving into drug discovery. It turns on a single number, the Hubble constant, which sets how fast the universe is expanding and, with it, the age of the universe. The number can be measured in several independent ways, and two of the best flatly disagree, by a margin far too large to be chance. The gap has stood for decades, and sharpened rather than softened as the measurements improved. What matters here is not the number but the conduct around it. The field does not paper over the disagreement. It states it, measures it, and argues in the open about which kind of problem it is.</p>
-<p>The force of the example is its simplicity. The Hubble constant comprises two parameters, a distance and a speed. Each can be reached by several independent routes. Yet after nearly a century of effort the problem does not resolve. Biology offers nothing so clean. It works with small samples, with countless influences no one has measured, and with systematic errors no experiment fully shuts out. If cosmology cannot pin one simple quantity to a single value, it is no surprise a model trained on the far messier biomedical literature will do no better.</p>
-<p>As we already discussed, a language model is trained to predict text. Given what comes before, it estimates how probable each possible next token is. Statisticians call this density estimation. The training is thorough, pressing the model to account for everything in the literature, the rare alongside the common. A literature that holds two values produces a model that holds both.</p>
-<p>The answering is where it goes wrong. To reply, the model must commit to tokens one at a time, and how freely they vary is set by a single dial, called temperature. Allow variation, and over many answers both camps appear, in the proportion the literature shows. Pin the dial down, as systems usually do, and the same most likely answer returns every time. Ask for a single value and you may get the more common of the two figures, with no sign the other exists. Tukey saw the shape of this sixty years ago: an exact answer to the wrong question can always be made to look precise [11].</p>
-<p>That is why one confident number here is not decisiveness. It is a mistake that sounds certain. When the field is split, the right reply says so. It gives both values, with the reason for each, even to a reader who asked for one.</p>
-<p>A natural hope is that later tuning fixes the mismatch. The usual tool is reinforcement learning from human feedback. People rate the answers, and the model is adjusted to produce the kind they rate well. It rarely reaches deep enough. This stage shapes manner, not knowledge. It teaches the system to hedge, to refuse, to set its answers out neatly. It does not rebuild the dense interior that holds the biased prior.</p>
-</section>
-<section id="what-to-do" class="level2">
-<h2 class="anchored" data-anchor-id="what-to-do">What to do</h2>
-<p>This is not a worry about some distant future. Asked a clinical question, a current model will take a fabricated detail and build on it with composure, a failure easy to provoke [8]. Confident medical invention is now documented across the large general-purpose models being adapted for medical use [9], and methods exist to measure how reliably such a system serves as a biomedical assistant [10]. The point is not that they are useless. It is that fluency and confidence are no guide to correctness, and in medicine the cost of mistaking one for the other falls on patients.</p>
-<p>Well-trodden parts of the gene-disease map are well policed, argued over and corrected in the normal way. It becomes much harder with sparse data, where a single underpowered paper is the only thing that exists in an area. A model that scores well on average across the literature can fail badly there. The Society’s note “AI is Statistics” makes a version of this point, asking for testing under distribution shift, meaning tests on data unlike the training set [12]. In science the shift that matters is not mainly demographic. It is epistemic. How does a model behave where the evidence is thin, skewed or in conflict?</p>
-<p>There are at least three things one can do here to help with all the uncertainties we have discussed.</p>
-<p>First, keep a curated set of ground truth, held apart from the training data. A small, carefully judged collection of mechanistic and clinical facts, kept as a test set, is the scientific version of a double-entry ledger. Every claim a model makes in use can be checked against it, by sampling or in full. The ledger is not fixed. It grows with each replication, each failed reproduction, each registry update. It is slow, deliberate and unglamorous. It is also what separates credibility from nonsense. Building it is often work for statisticians and subject experts together, since deciding what counts as settled truth is itself a scientific and statistical question: what to include, how to weight it, how to treat evidence that conflicts.</p>
-<p>Second, test under deliberate distribution shift. Calibrate on the dense parts of the literature. Test in the sparse, skewed and conflicted parts. Build evaluation sets where the published claim is known to be unreliable, and watch whether the model’s stated uncertainty rises as it should. Equal confidence on thick and thin evidence is not calibration. It is fluency. Here the hermeneutic and the corpus-epistemic meet. If a system cannot grow less sure as the evidence thins, no amount of careful interaction design will make it safe.</p>
-<p>Third, carefully track provenance. Every substantive claim a model surfaces should trace back to the evidence beneath it, tagged with study design, sample size, replication status and date. Good science is about replication. It is the clear audit trail that lets a reader separate a claim resting on one 2008 mouse study from one resting on three independent human trials. In practice it means drawing answers from a provenance-aware knowledge graph, a store of facts that keeps each fact’s source attached, rather than generating ungrounded text. The tooling must refuse to let the source slip away in the final summary and needs to constantly be checking and matching. The work here is less about ideas than about care and good data engineering. Provenance is hard work to build and utterly ruinous to omit.</p>
-</section>
-<section id="is-it-likely-or-is-it-so" class="level2">
-<h2 class="anchored" data-anchor-id="is-it-likely-or-is-it-so">Is it likely, or is it so?</h2>
-<p>None of this calls for new mathematics, or anything particularly clever. It calls for a small change in what a scientific AI team takes its job to be. The statistical community has insisted, rightly, that these systems are statistical objects, to be built and judged as such. To an extent that is true. But fidelity to a biased literature is itself a failure. Beside statistical care must sit a scientific discipline: knowing when to doubt the literature, and refusing to let a confident sentence stand in for a checked one. Every experienced scientist has it as a reflex, what I have come to call the sweaty feeling, a faint unease that arrives before the reasons do and sends them back to the claim: who did the work, in what journal, repeated by whom, and does it make sense at all? A model has none of it. It returns the most likely sentence and reports no discomfort, because a statistical object has none to feel, and because repetition, which should raise a scientist’s guard, is the very thing it counts as evidence. Feynman called the alternative cargo cult science, work that imitates the form of enquiry but lacks the integrity that makes results hold up [13]. A model that returns the most likely answer and calls it true is cargo cult science at scale.</p>
-<p>I think of a story from my time as an astrophysics researcher in Holland. My supervisor there had met the great Dutch astronomer, Jan Oort. Oort was proud that, after a long career and much scrutiny, about half his published papers had turned out to be right. That is not the failure it sounds. It is what good science looks like: a known rate of error, owned without embarrassment, corrected carefully over time. A model trained on a corpus inherits both halves. It cannot always tell the work that is true from the work that is not, and can return them in one voice, with equal confidence. The model has the literature. It lacks Oort’s humility, and the community’s means of checking. The remedy is old, and not statistical alone. It is to keep pressing the question the literature cannot answer for us. Not is this likely, but is this so.</p>
-</section>
-<section id="references" class="level2">
-<h2 class="anchored" data-anchor-id="references">References</h2>
-<ol type="1">
-<li>Begley CG, Ellis LM. Raise standards for preclinical cancer research. Nature. 2012;483(7391):531–533.</li>
-<li>Prinz F, Schlange T, Asadullah K. Believe it or not: how much can we rely on published data on potential drug targets? Nature Reviews Drug Discovery. 2011;10(9):712.</li>
-<li>Errington TM, et al.&nbsp;Investigating the replicability of preclinical cancer biology. eLife. 2021;10:e71601.</li>
-<li>Delacroix S, Robinson D, Bhatt U, et al.&nbsp;Beyond quantification: navigating uncertainty in professional AI systems. RSS: Data Science and Artificial Intelligence. 2025;1(1):udaf002.</li>
-<li>Ioannidis JPA. Why most published research findings are false. PLoS Medicine. 2005;2(8):e124.</li>
-<li>Button KS, Ioannidis JPA, Mokrysz C, et al.&nbsp;Power failure: why small sample size undermines the reliability of neuroscience. Nature Reviews Neuroscience. 2013;14(5):365–376.</li>
-<li>Perrin S. Preclinical research: make mouse studies work. Nature. 2014;507(7493):423–425.</li>
-<li>Omar M, et al.&nbsp;Multi-model assurance analysis showing large language models are highly vulnerable to adversarial hallucination attacks during clinical decision support. Communications Medicine. 2025;5(1):330.</li>
-<li>Kim Y, et al.&nbsp;Medical hallucinations in foundation models and their impact on healthcare. arXiv preprint arXiv:2503.05777. 2025.</li>
-<li>Bolton WJ, Poyiadzi R, Morrell ER, van Bergen Gonzalez Bueno G, Goetz L. RAmBLA: a framework for evaluating the reliability of LLMs as assistants in the biomedical domain. arXiv preprint arXiv:2403.14578. 2024. Tukey JW. The future of data analysis. Annals of Mathematical Statistics. 1962;33(1):1–67.</li>
-<li>Royal Statistical Society. AI is Statistics: why statistical thinking is vital for the effective, ethical and safe use of AI. 2026.</li>
-<li>Feynman RP. Cargo cult science. Caltech commencement address. Engineering &amp; Science. 1974;37(7):10–13.</li>
-</ol>
-<div class="article-btn">
-<p><a href="../../../../../applied-insights/index.html">Explore more data science ideas</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-<dl>
-<dt>About the author:</dt>
-<dd>
-<a href="https://www.linkedin.com/in/lee-clewley-988bbb18/">Lee Clewley (PhD)</a> is now Head of Data and AI at LGC, formally VP of Applied AI &amp; Informatics at <a href="https://tangramtx.com/">Tangram Therapeutics</a>, where he led the design and deployment of LLibra, a multi-LLM, agentic system for early discovery. Formerly Head of Applied AI at <a href="https://www.gsk.com/en-gb/">GSK</a>, he is a member of the Real World Data Science <a href="https://realworlddatascience.net/the-pulse/editors-blog/posts/2022/10/18/meet-the-team.html">editorial board</a>.
-</dd>
-</dl>
-<div class="g-col-12 g-col-md-6">
-<p><strong>Copyright and licence</strong> : © 2026 Lee Clewley<br>
-<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"> <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"> </a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.</p>
-</div>
-<div class="g-col-12 g-col-md-6">
-<p><strong>How to cite</strong> :<br>
-Clewley, Lee. 2026. “<strong>When the most likely answer is wrong</strong>.” <em>Real World Data Science</em>, 2026. <a href="https://realworlddatascience.net/foundations-frontiers/posts/2026/12/when-the-most-likely-answer-is-wrong.html">URL</a></p>
-</div>
-</div>
-</div>
-
-
-</div>
-</section>
-
- ]]></description>
-  <category>Viewpoints</category>
-  <category>AI</category>
-  <guid>https://realworlddatascience.net/foundation-frontiers/posts/2026/09/15/when-the-most-likely-answer-is-wrong.html</guid>
-  <pubDate>Tue, 29 Sep 2026 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/foundation-frontiers/posts/2026/09/15/images/thumb.jpg" medium="image" type="image/jpeg"/>
-</item>
-<item>
-  <title>When the most likely answer is wrong</title>
-  <dc:creator>Lee Clewley</dc:creator>
   <link>https://realworlddatascience.net/foundation-frontiers/posts/2026/09/29/when-the-most-likely-answer-is-wrong.html</link>
   <description><![CDATA[ 
 
@@ -2292,6 +2190,117 @@ Real World Data Science Editorial Board. 2025. “Call for Submissions” Real W
   <guid>https://realworlddatascience.net/foundation-frontiers/posts/2026/04/02/neil-lawrence-interview.html</guid>
   <pubDate>Fri, 10 Apr 2026 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/foundation-frontiers/posts/2026/04/02/images/thumb1.png" medium="image" type="image/png" height="96" width="144"/>
+</item>
+<item>
+  <title>RWDS Big Questions: How do we highlight the role of statistics in AI?</title>
+  <dc:creator>Annie Flynn</dc:creator>
+  <link>https://realworlddatascience.net/the-pulse/posts/2026/03/10/rwds_big_questions_ai_statistics.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p>Artificial intelligence may be today’s headline act, but behind many of its most powerful systems lies something older, deeper, and quietly essential: statistics. This week, the RSS released <a href="https://rss.org.uk/RSS/media/File-library/Policy/2026/AI-is-Statistics-FINAL.pdf">a landmark position paper titled <em>AI is Statistics</em></a>. Introducing the paper, Donna Philips, Chair of the Society’s AI Task Force which led its development, argues: <a href="https://rss.org.uk/news-publication/news-publications/2026/general-news/ai-is-statistical-that-matters/">“AI systems are built on statistical pattern recognition. They need to be developed, evaluated and governed with rigorous statistical precision.”</a></p>
+<p>That this is not widely understood is problematic for many reasons. If AI is seen as magic rather than applied statistics, it becomes easier to believe it is objective, infallible, or autonomous—when in reality it is probabilistic and assumption-driven. Organisations may prioritise tools and branding over rigorous data collection, experimental design, and evaluation. Without a statistical lens, questions like “How certain are we?”, “Compared to what?”, and “Under what conditions?” are less likely to be asked. And, ultimately, the demand for “AI talent” may overlook the statistical expertise required to build reliable systems.</p>
+<p>In this latest episode of Real World Data Science Big Questions, our expert panel tackles a deceptively simple question: How can we better highlight the role of statistics in AI? Watch below, and read on for some key takeaways and analysis.</p>
+<section id="watch-the-discussion" class="level2">
+<h2 class="anchored" data-anchor-id="watch-the-discussion">Watch the discussion</h2>
+<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/nrpglKlimXA" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
+</section>
+<section id="takeaways-at-a-glance" class="level2">
+<h2 class="anchored" data-anchor-id="takeaways-at-a-glance">Takeaways at a glance</h2>
+<ul>
+<li><strong>AI is built on statistical thinking</strong> – even when it’s not labelled that way.</li>
+<li><strong>Job titles change; core skills don’t.</strong></li>
+<li><strong>Statistics sometimes undersells itself</strong> by focusing on mechanics over impact.</li>
+<li><strong>Communication and visualisation are central,</strong> not peripheral, to modern statistical work.</li>
+<li><strong>Kindness, collaboration, and trust</strong> are professional assets.</li>
+<li><strong>The future belongs to skill-based identities, not title-based ones.</strong></li>
+</ul>
+</section>
+<section id="key-themes-and-analysis" class="level2">
+<h2 class="anchored" data-anchor-id="key-themes-and-analysis">Key themes and analysis</h2>
+<p><strong>The “rebranding” meme</strong></p>
+<p>The panel opens with a familiar joke: take statistics, put a new frame around it, call it machine learning or AI, and suddenly everyone pays attention. It’s humorous—but revealing.</p>
+<p>Many roles advertised today as “AI” or “data science” positions are deeply statistical at heart. They involve modelling uncertainty, validating assumptions, managing bias, evaluating performance, and interpreting results. In other words: core statistical competencies.</p>
+<p>Rather than resisting this relabelling, the panel suggests recognising it as part of the natural evolution of fields. The key question becomes not “What should we call ourselves?” but “What value are we delivering?”</p>
+<p><strong>Identity versus skills</strong></p>
+<p>One of the strongest messages from the discussion is this: don’t over-identify with a job title.</p>
+<p>“Statistician,” “data scientist,” “AI specialist” are all potentially transient labels, whereas the skills underpinning them remain the same:</p>
+<ul>
+<li>Framing problems carefully</li>
+<li>Questioning assumptions (“Are you sure? Are you sure-sure-sure?”)</li>
+<li>Quantifying uncertainty</li>
+<li>Designing analyses that are robust and defensible</li>
+</ul>
+<p>The panel suggests that the healthiest professional stance is to focus less on identity and more on what you can do and what you care about.</p>
+<p><strong>The communication gap: loving the sausage-making</strong></p>
+<p>Statisticians, the panel observes, sometimes make things harder than they need to be—at least in how they explain their work.</p>
+<p>“We’re too interested in the mechanics,” one panellist notes. “Nobody cares how you made the sausage.”</p>
+<p>This doesn’t mean rigour is unimportant. It means that impact must lead the narrative. Instead of focusing first on models, methods, and diagnostics, statisticians might begin with:</p>
+<ul>
+<li>What problem was solved?</li>
+<li>How did this make life easier, safer, or better?</li>
+<li>What decision did this enable?</li>
+</ul>
+<p>AI has been marketed effectively because it is framed in terms of transformation and possibility. Statistics can claim that space too, without sacrificing integrity.</p>
+<p><strong>Visualisation and bringing data to life</strong></p>
+<p>Visualisation is a key bridge between statistical thinking and real-world impact. Good visualisation:</p>
+<ul>
+<li>Makes uncertainty legible</li>
+<li>Builds trust</li>
+<li>Enables decision-making</li>
+<li>Tells stories grounded in evidence</li>
+</ul>
+<p>In a world flooded with dashboards and generative outputs, the ability to present data clearly and responsibly is not a soft skill. It is core infrastructure.</p>
+<p><strong>Trust, collaboration, and professional culture</strong></p>
+<p>People want to work with statisticians they trust, which flows not only from technical competence but from clarity, openness, and collaboration.</p>
+<p>As AI systems become more powerful—and more controversial—the professionals who can explain, contextualise, and responsibly deploy them will be in</p>
+</section>
+<section id="from-background-discipline-to-visible-foundation" class="level2">
+<h2 class="anchored" data-anchor-id="from-background-discipline-to-visible-foundation">From background discipline to visible foundation</h2>
+<p>If AI continues to evolve—as it surely will—so too will the labels attached to those who work in it. But uncertainty, inference, modelling, and critical thinking aren’t going anywhere.</p>
+<p>We would love to receive contributions to the site that tackle this issue.</p>
+<p>Is statistics undervalued in the AI conversation, or quietly thriving?</p>
+<p>Where, in your experience, does statistical thinking most visibly shape AI work?</p>
+<p>And where is it least acknowledged?</p>
+<p>Have you seen statistical work rebranded as AI in your organisation?</p>
+<p>We are actively seeking submissions on these topics so, if you would like to be part of the conversation, <a href="mailto:rwds@rss.org.uk"><strong>get in touch</strong></a>.</p>
+<div class="article-btn">
+<p><a href="https://realworlddatascience.net/the-pulse/posts/2026/01/21/rwds-big-questions-challenges-today.html">Explore more videos in the series</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author:</dt>
+<dd>
+<a href="https://www.linkedin.com/in/annieroseflynn/">Annie Flynn</a> is Head of Content at the <a href="rss.org.uk">Royal Statistical Society</a>.
+</dd>
+</dl>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>Copyright and licence</strong> : © 2026 Annie Flynn<br>
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"> <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"> </a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>How to cite</strong> :<br>
+Flynn, Annie 2026. “<strong>RWDS Big Questions: What are the Key Challenges Facing Data Scientists Today?</strong>” <em>Real World Data Science</em>, 2026. <a href="https://realworlddatascience.net/the-pulse/posts/2026/01/rwds-big-questions-challenges-today.html">URL</a></p>
+</div>
+</div>
+</div>
+
+
+</section>
+
+ ]]></description>
+  <category>AI</category>
+  <category>Governance</category>
+  <category>Policy</category>
+  <guid>https://realworlddatascience.net/the-pulse/posts/2026/03/10/rwds_big_questions_ai_statistics.html</guid>
+  <pubDate>Tue, 10 Mar 2026 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/the-pulse/posts/2026/03/10/images/hjnm.jpg" medium="image" type="image/jpeg"/>
 </item>
 </channel>
 </rss>
