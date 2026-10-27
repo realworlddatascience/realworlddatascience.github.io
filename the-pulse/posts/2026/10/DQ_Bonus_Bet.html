@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.19">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Ville Satopaa">
+<meta name="dcterms.date" content="2026-10-27">
+<meta name="description" content="Would you bet your annual bonus on the quality of your organisation’s data? This month’s column explores a real dataset revealing how many corporate executives would.">
+
+<title>Data Quality Under the Lens: Can Executives Take the Bonus Bet – Real World Data Science</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../">
+<link href="../../../../images/rwds-favicon.png" rel="icon" type="image/png">
+<script src="../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../site_libs/bootstrap/bootstrap-30b39e7166581a700e4321e777cfd6af.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
+</script>
+<!-- Thank you to Ben Ruijl for the progress bar code!
+Ben is on GitHub here: https://github.com/benruijl
+And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
+
+<meta property="og:title" content="Data Quality Under the Lens: Can Executives Take the Bonus Bet – Real World Data Science">
+<meta property="og:description" content="Would you bet your annual bonus on the quality of your organisation’s data? This month’s column explores a real dataset revealing how many corporate executives would.">
+<meta property="og:image" content="https://realworlddatascience.net/the-pulse/posts/2026/10/images/thumb.jpg">
+<meta property="og:site_name" content="Real World Data Science">
+<meta name="twitter:title" content="Data Quality Under the Lens: Can Executives Take the Bonus Bet – Real World Data Science">
+<meta name="twitter:description" content="Would you bet your annual bonus on the quality of your organisation’s data? This month’s column explores a real dataset revealing how many corporate executives would.">
+<meta name="twitter:image" content="https://realworlddatascience.net/the-pulse/posts/2026/10/images/thumb.jpg">
+<meta name="twitter:site" content="@rwdatasci">
+<meta name="twitter:card" content="summary_large_image">
+</head><body class="nav-fixed quarto-light"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
+
+<script id="progressbar" type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const bar = document.querySelector('#progress-bar');
+    const post = document.querySelector('#quarto-content');
+    const html = document.documentElement;
+    
+    const height = post.scrollHeight + post.offsetTop;
+    
+    window.addEventListener('scroll', () => {
+        bar.style.width = (html.scrollTop / (height- html.clientHeight)) * 100 + '%';
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="../../../../rwds.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo light-content">
+    <img src="../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo dark-content">
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Search"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../the-pulse/index.html"> 
+<span class="menu-text">The Pulse</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../applied-insights/index.html"> 
+<span class="menu-text">Applied Insights</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../foundation-frontiers/index.html"> 
+<span class="menu-text">Foundations &amp; Frontiers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../people-paths/index.html"> 
+<span class="menu-text">People &amp; Paths</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About RWDS</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
+        <li>
+    <a class="dropdown-item" href="../../../../about-rwds.html">
+ <span class="dropdown-text">Who we are</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../contributor-docs/call-for-contributions.html">
+ <span class="dropdown-text">How to contribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../CODE_OF_CONDUCT.html">
+ <span class="dropdown-text">Code of conduct</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../contact.html">
+ <span class="dropdown-text">Contact us</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Data Quality Under the Lens: Can Executives Take the Bonus Bet</h1>
+                  <div>
+        <div class="description">
+          <p>Would you bet your annual bonus on the quality of your organisation’s data? This month’s column explores a real dataset revealing how many corporate executives would.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">AI</div>
+                <div class="quarto-category">Governance</div>
+                <div class="quarto-category">Policy</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Ville Satopaa </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">October 27, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#the-case-of-the-month" id="toc-the-case-of-the-month" class="nav-link active" data-scroll-target="#the-case-of-the-month">The Case of the Month</a></li>
+  <li><a href="#what-actually-happened" id="toc-what-actually-happened" class="nav-link" data-scroll-target="#what-actually-happened">What Actually Happened?</a></li>
+  <li><a href="#disaster-or-near-miss" id="toc-disaster-or-near-miss" class="nav-link" data-scroll-target="#disaster-or-near-miss">Disaster or Near-Miss?</a></li>
+  <li><a href="#why-this-matters-now" id="toc-why-this-matters-now" class="nav-link" data-scroll-target="#why-this-matters-now">Why This Matters Now</a></li>
+  <li><a href="#the-practitioner-takeaway-stop-staring-at-the-whole-mountain" id="toc-the-practitioner-takeaway-stop-staring-at-the-whole-mountain" class="nav-link" data-scroll-target="#the-practitioner-takeaway-stop-staring-at-the-whole-mountain">The Practitioner Takeaway: stop staring at the whole mountain!</a></li>
+  <li><a href="#the-data-quality-pattern" id="toc-the-data-quality-pattern" class="nav-link" data-scroll-target="#the-data-quality-pattern">The Data Quality Pattern</a></li>
+  <li><a href="#a-leader-leaving-in-three-years-need-not-wait-seven-years-to-show-progress" id="toc-a-leader-leaving-in-three-years-need-not-wait-seven-years-to-show-progress" class="nav-link" data-scroll-target="#a-leader-leaving-in-three-years-need-not-wait-seven-years-to-show-progress">A leader leaving in three years need not wait seven years to show progress</a></li>
+  <li><a href="#sources-for-the-column" id="toc-sources-for-the-column" class="nav-link" data-scroll-target="#sources-for-the-column">Sources for the Column</a></li>
+  <li><a href="#appendix-1-survey-summary" id="toc-appendix-1-survey-summary" class="nav-link" data-scroll-target="#appendix-1-survey-summary">Appendix 1: Survey summary</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/the-pulse/posts/2026/10/DQ_Bonus_Bet.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content">
+
+
+
+
+
+<p><em>Data Quality Under the Lens is a new Real World Data Science column. Each edition explores real-world moments where data quality shaped outcomes, sometimes driving failure, sometimes preventing it. From near misses to hard lessons learned, we look at what happens when data is up to the task… or falls short.</em></p>
+<p><em>If you spot a real world problem and think data quality could lie at the heart of the story, <a href="(mailto:rwds@rss.org.uk)">send it in to the RWDS mailbox</a> and our Data Quality Detectives will analyse whether the Silent Drift, Proxy Trap, Spreadsheet Cascade, Governance Vacuum or Metric Mirage is responsible.</em></p>
+<section id="the-case-of-the-month" class="level2">
+<h2 class="anchored" data-anchor-id="the-case-of-the-month">The Case of the Month</h2>
+<p>If you ask a roomful of executives whether they would bet their entire annual bonus on the accuracy and completeness of the data feeding their organisation’s most important decisions, the initial reaction is usually laughter. It is the sort of laughter you might hear if you asked someone to renovate an entire house while continuing to live in it. My interpretation of that reaction is that they recognise why the work matters, but they also recognise the disruption, expense, and effort involved.</p>
+<p>I know because across 24 cohorts in 2026, I collected 1,068 anonymous responses to this question. Only 38, or 3.6%, said they would bet confidently. Almost two-thirds selected refusal or said they would quit before taking the bet. Another 15.5% did not know how good their data were. (These answers describe confidence; they do not establish the actual quality of any organisation’s data.)</p>
+<p><em>Table 1: responses to the question: “If you had to bet your entire bonus on the accuracy and completeness of the data feeding your organisation’s most important decision… what would you do?”. See appendix 1 for survey summary.</em></p>
+<p><img src="images/table1.png" class="img-fluid"></p>
+<p>My interpretation of the reaction is that leaders can appreciate the importance of trustworthy data while feeling overwhelmed by the work needed to secure it. While my survey does not measure their motives, it provides a starting point for a dilemma I encounter both in teaching and in my conversations with data quality practitioner - and author of <a href="https://realworlddatascience.net/the-pulse/posts/2026/07/31/DQUL_July.html">an earlier DQUL column</a> - Tom Redman: leaders want better decisions and returns from AI, yet they hesitate to sponsor the changes on which those ambitions depend.</p>
+<p>If the task looks like a mountain, how can we help them take the first step?</p>
+</section>
+<section id="what-actually-happened" class="level2">
+<h2 class="anchored" data-anchor-id="what-actually-happened">What Actually Happened?</h2>
+<p><strong>The Data</strong> The data I was asking them about feed consequential business decisions. Their required accuracy and completeness depend on the particular use. An organisation therefore needs to identify which data matter for a decision and establish what level of data quality that decision requires.</p>
+<p><strong>The Fault Line</strong> Improvement can require changes across technology, business processes, responsibilities, and culture. One pension company I recently spoke with began a data quality overhaul after customers spotted discrepancies in their pension data. Five years into the effort, the company expects it to take a further two years for completion.</p>
+<p>The immediate task of the pension company was to correct existing data; AI creates another reason to improve how data are produced: reliable, up-to-date inputs support better outputs and, when used for training or updating models, further learning. To a leader expecting to leave in two or three years, either effort can look daunting.</p>
+<p><strong>The Blind Spot</strong> In discussing our work, Redman and I have defined a few recurring obstacles: the problem is often assigned to IT and is thus siloed, failing to produce organisational level improvements; there is a reluctance to acknowledge poor quality data; and there’s limited enthusiasm for work like this, competing as it does with more visible priorities. Leaders may hesitate to use political capital to change how several functions operate. Treating data as an IT responsibility can leave the business choices unresolved. Technology teams alone cannot define every user’s needs or change the behaviour of those producing the data.</p>
+<p><strong>The Amplifier</strong> Data move across functions and into reports, models, and automated processes. An error or missing field can affect several downstream uses. As AI consumes those data at greater scale, an unresolved problem can acquire wider consequences. Hesitation among leadership allows the underlying process to continue producing the same problems.</p>
+</section>
+<section id="disaster-or-near-miss" class="level2">
+<h2 class="anchored" data-anchor-id="disaster-or-near-miss">Disaster or Near-Miss?</h2>
+<p>Leaders who depend on data but have little confidence in them face a serious management failure, as they are unable to stand behind the foundation of their most important decisions. That is alarming even when no particular loss has been documented. Our survey reveals expressed doubt or uncertainty; it cannot establish the quality of the data themselves. The pension-company example shows how a concrete problem can force action: customers identified discrepancies, and the organisation began a lengthy effort to address them.</p>
+<p>AI creates an opportunity to act before a problem is exposed. The useful safeguard is to choose an important process, establish the necessary quality, and correct the causes of errors. Repairing existing records helps with today’s problem, while improving how new records are created prevents the target from moving as fresh errors arrive. A single success story, however, may remain isolated. In our discussions, Tom Redman describes how local improvements can fail to become an organisation-wide practice. His lesson is that success does not automatically secure support for the next project. Leaders need to make that next commitment explicitly.</p>
+<p>Visible sponsorship matters because the next improvement may require cooperation from another function, changes to established routines, or resources that a local team cannot secure. A senior sponsor can resolve competing priorities and protect the work. The first benefit gives that sponsor evidence to justify continuing.</p>
+</section>
+<section id="why-this-matters-now" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-matters-now">Why This Matters Now</h2>
+<p>AI gives leaders a reason to act. Many organisations want to redesign processes around AI and demonstrate a financial return, so where those applications depend on operational data, the reliability of their inputs becomes part of the business case. A data platform such as Databricks can be part of the technical infrastructure, but investment in a platform does not itself make a missing record appear or settle conflicting business definitions. The organisation must also improve the process that creates and maintains those data.</p>
+<p>The INSEAD webinar summarised in <a href="https://knowledge.insead.edu/operations/your-ai-only-good-your-data">“Your AI Is Only as Good as Your Data”</a> makes this practical. Kinda El Maarry described an improvement at HelloFresh when the people producing data understood the consequences for those using it. Redman’s advice was to find a problem and a person willing to solve it. Those are starting points that a leader can recognise and support.</p>
+<p>An AI initiative can provide that starting point. Select a valuable process, identify the data it needs, and improve their fitness for that use. This connects data quality to an outcome the organisation already wants, while making the first commitment manageable.</p>
+</section>
+<section id="the-practitioner-takeaway-stop-staring-at-the-whole-mountain" class="level2">
+<h2 class="anchored" data-anchor-id="the-practitioner-takeaway-stop-staring-at-the-whole-mountain">The Practitioner Takeaway: stop staring at the whole mountain!</h2>
+<p>Choose one important problem and someone willing to solve it.</p>
+<ol type="1">
+<li>Choose a process or decision where poor data already create costly work or obstruct a valuable AI application. Give a business owner responsibility for the outcome.</li>
+<li>Map the critical data and connect the people creating them with those using them. Agree what ‘accurate and complete’ mean for this use and measure the current gaps.</li>
+<li>Fix how the data are produced, as well as correcting existing records. Otherwise, new errors will keep coming.</li>
+<li>Measure the business benefit, such as less reconciliation, faster processing, or a more reliable decision. Recognise the people who delivered it.</li>
+<li>Use the evidence to justify and, where possible, fund the next project. Have an executive explicitly sponsor the next step, resolve obstacles across functions, and review progress.</li>
+</ol>
+<p>The programme may take years. Its benefits should begin along the way, with each improvement creating a stronger reason to continue.</p>
+</section>
+<section id="the-data-quality-pattern" class="level2">
+<h2 class="anchored" data-anchor-id="the-data-quality-pattern">The Data Quality Pattern</h2>
+<p>The underlying pattern here is what we, at Data Quality Under the Lens, call a <strong>Governance Vacuum</strong>, that is, a gap in ownership and authority. Responsibility for data-dependent decisions may be clear, while responsibility for making the underlying data fit for those decisions remains diffuse. Leaders may delegate the task without giving anyone the authority to change processes across functions. A single success story can then stall at the next organisational boundary. Closing this gap requires a business owner, cooperation between data producers and users, and a sponsor who protects the effort. Small projects make the work approachable; visible leadership commitment helps turn a sequence of projects into lasting organisational practice.</p>
+</section>
+<section id="a-leader-leaving-in-three-years-need-not-wait-seven-years-to-show-progress" class="level2">
+<h2 class="anchored" data-anchor-id="a-leader-leaving-in-three-years-need-not-wait-seven-years-to-show-progress">A leader leaving in three years need not wait seven years to show progress</h2>
+<p>One important process can become more reliable during that tenure, with a measurable benefit and people capable of repeating the work elsewhere. That creates an opportunity to leave both an early result and the foundations for continued improvement. My survey question should therefore lead to a second question: what could you change first to make my bet less frightening? The first step does not require a promise to fix everything. It requires a specific problem, an owner willing to act, and leadership prepared to help them succeed.</p>
+</section>
+<section id="sources-for-the-column" class="level2">
+<h2 class="anchored" data-anchor-id="sources-for-the-column">Sources for the Column</h2>
+<p>Survey: 1,068 anonymous submissions across 24 cohorts, 20 January–8 October 2026. Cohort-size quartiles use linear interpolation, which explains the fractional values.</p>
+<p>Published account: INSEAD Knowledge, <a href="https://knowledge.insead.edu/operations/your-ai-only-good-your-data">“Your AI Is Only as Good as Your Data”</a>, 8 September 2026.</p>
+<p>Tom Redman: personal interviews on leadership, political capital, IT responsibility, and the limits of local success. His observations are paraphrased without identifying organisations.</p>
+<p>The pension-company example comes from my recent conversation. The leadership explanation is my interpretation informed by teaching and practitioner discussions.</p>
+</section>
+<section id="appendix-1-survey-summary" class="level2">
+<h2 class="anchored" data-anchor-id="appendix-1-survey-summary">Appendix 1: Survey summary</h2>
+<p>Between 20 January and 8 October 2026, I collected 1,068 anonymous responses across 24 cohorts. These included company-specific executive sessions, open-enrolment programmes, and an alumni event with participants from many organisations. The number of distinct companies represented was not recorded. The number of responses per cohort ranged from 11 to 186, with a median of 32.5 and a mean of 44.5. The lower and upper quartiles were 18.75 and 41.25 responses, respectively.</p>
+<p>Only 38 respondents (3.6%) would bet confidently. Refusal or quitting accounted for 62.1%; another 166 respondents (15.5%) did not even know how good their data were. Together, refusal, quitting, and uncertainty accounted for 77.6% of responses and formed a majority in 20 of the 24 cohorts. Percentages are pooled across responses and may not sum to 100% because of rounding.</p>
+<p>These classroom polls measure expressed confidence, rather than independently verified data quality. They are a convenience sample, with no claim to represent all executives.</p>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author:</dt>
+<dd>
+<strong>Ville Satopaa</strong> is is an Associate Professor of Technology and Operations Management at <a href="https://www.insead.edu/">INSEAD</a>. Before joining INSEAD, Ville received his MA and Ph.D.&nbsp;degrees in Statistics from the Wharton School of the University of Pennsylvania. He also holds a BA in Mathematics and Computer Sciences from Williams College. His current research studies collective intelligence of humans and/or AI in forecasting and decision-making and his work has been published in <a href="https://www.tandfonline.com/journals/uasa20">Journal of the American Statistical Association</a>, <a href="https://projecteuclid.org/journals/annals-of-applied-statistics">Annals of Applied Statistics</a> and more.
+</dd>
+</dl>
+<div class="g-col-12 g-col-md-6">
+<p><strong>Copyright and licence</strong> : © 2026 Ville Satopaa<br>
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"> <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"> </a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>How to cite</strong> :<br>
+Satopaa, Ville 2026. “<strong>Data Quality Under the Lens: Can Executives Take the Bonus Bet</strong>” <em>Real World Data Science</em>, 2026. <a href="https://realworlddatascience.net/the-pulse/posts/2026/10/DQ_Bonus_Bet.qmd">URL</a></p>
+</div>
+</div>
+</div>
+
+
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/realworlddatascience\.net\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><a href="../../../../LICENCE.html">Copyright © 2025 Royal Statistical Society</a></p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/realworlddatascience">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience">
+<p><i class="ai  ai-zenodo ai-2xl"></i></p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/rwdatasci">
+      <i class="bi bi-twitter-x" role="img" aria-label="Twitter/X">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@rwdatasci">
+      <i class="bi bi-mastodon" role="img" aria-label="Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="../../../../feeds.html">
+      <i class="bi bi-rss" role="img" aria-label="RWDS rss">
+</i> 
+    </a>
+  </li>  
+</ul>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/the-pulse/posts/2026/10/DQ_Bonus_Bet.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p><a href="../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
