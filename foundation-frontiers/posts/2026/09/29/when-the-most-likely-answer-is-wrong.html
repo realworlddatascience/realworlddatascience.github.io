@@ -6,11 +6,11 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Peter Aiken">
+<meta name="author" content="Lee Clewley">
 <meta name="dcterms.date" content="2026-09-29">
-<meta name="description" content="This month, Data Management authority Peter Aiken recalls a historical case that shines a light on the data quality issues that can arise when legacy systems are updated or consolidated.">
+<meta name="description" content="Scientific validity in the age of large language models">
 
-<title>Data Quality Under the Lens: the DOD’s One-Legged Engineer Problem – Real World Data Science</title>
+<title>When the most likely answer is wrong – Real World Data Science</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -49,7 +49,7 @@ ul.task-list li input[type="checkbox"] {
 <link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-bf27225e3a48a9273f3daa8f8e829971.css" rel="stylesheet" id="quarto-text-highlighting-styles">
 <script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="../../../../../site_libs/bootstrap/bootstrap-30b39e7166581a700e4321e777cfd6af.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/bootstrap/bootstrap-b19d3d6ffee9a54e80bcbb8c85d0120c.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
 <link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
 <link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
 <script id="quarto-search-options" type="application/json">{
@@ -92,13 +92,13 @@ gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
 Ben is on GitHub here: https://github.com/benruijl
 And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
 
-<meta property="og:title" content="Data Quality Under the Lens: the DOD’s One-Legged Engineer Problem – Real World Data Science">
-<meta property="og:description" content="This month, Data Management authority Peter Aiken recalls a historical case that shines a light on the data quality issues that can arise when legacy systems are updated or consolidated.">
-<meta property="og:image" content="https://realworlddatascience.net/the-pulse/posts/2026/09/29/images/thumbb.jpg">
+<meta property="og:title" content="When the most likely answer is wrong – Real World Data Science">
+<meta property="og:description" content="Scientific validity in the age of large language models">
+<meta property="og:image" content="https://realworlddatascience.net/foundation-frontiers/posts/2026/09/29/images/thumb.jpg">
 <meta property="og:site_name" content="Real World Data Science">
-<meta name="twitter:title" content="Data Quality Under the Lens: the DOD’s One-Legged Engineer Problem – Real World Data Science">
-<meta name="twitter:description" content="This month, Data Management authority Peter Aiken recalls a historical case that shines a light on the data quality issues that can arise when legacy systems are updated or consolidated.">
-<meta name="twitter:image" content="https://realworlddatascience.net/the-pulse/posts/2026/09/29/images/thumbb.jpg">
+<meta name="twitter:title" content="When the most likely answer is wrong – Real World Data Science">
+<meta name="twitter:description" content="Scientific validity in the age of large language models">
+<meta name="twitter:image" content="https://realworlddatascience.net/foundation-frontiers/posts/2026/09/29/images/thumb.jpg">
 <meta name="twitter:site" content="@rwdatasci">
 <meta name="twitter:card" content="summary_large_image">
 </head><body class="nav-fixed quarto-light"><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
@@ -191,16 +191,15 @@ document.addEventListener("DOMContentLoaded", function() {
 <header id="title-block-header" class="quarto-title-block default page-columns page-full">
   <div class="quarto-title-banner page-columns page-full">
     <div class="quarto-title column-body">
-      <h1 class="title">Data Quality Under the Lens: the DOD’s One-Legged Engineer Problem</h1>
+      <h1 class="title">When the most likely answer is wrong</h1>
                   <div>
         <div class="description">
-          <p>This month, Data Management authority Peter Aiken recalls a historical case that shines a light on the data quality issues that can arise when legacy systems are updated or consolidated.</p>
+          <p>Scientific validity in the age of large language models</p>
         </div>
       </div>
                           <div class="quarto-categories">
-                <div class="quarto-category">data quality</div>
-                <div class="quarto-category">Governance</div>
-                <div class="quarto-category">Policy</div>
+                <div class="quarto-category">Viewpoints</div>
+                <div class="quarto-category">AI</div>
               </div>
                   </div>
   </div>
@@ -211,7 +210,7 @@ document.addEventListener("DOMContentLoaded", function() {
       <div>
       <div class="quarto-title-meta-heading">Author</div>
       <div class="quarto-title-meta-contents">
-               <p>Peter Aiken </p>
+               <p>Lee Clewley </p>
             </div>
     </div>
       
@@ -234,14 +233,14 @@ document.addEventListener("DOMContentLoaded", function() {
     <h2 id="toc-title">On this page</h2>
    
   <ul>
-  <li><a href="#the-case-of-the-month" id="toc-the-case-of-the-month" class="nav-link active" data-scroll-target="#the-case-of-the-month">The Case of the Month</a></li>
-  <li><a href="#what-actually-happened" id="toc-what-actually-happened" class="nav-link" data-scroll-target="#what-actually-happened">What Actually Happened?</a></li>
-  <li><a href="#disaster-or-near-miss" id="toc-disaster-or-near-miss" class="nav-link" data-scroll-target="#disaster-or-near-miss">Disaster or Near-Miss?</a></li>
-  <li><a href="#why-this-matters-now" id="toc-why-this-matters-now" class="nav-link" data-scroll-target="#why-this-matters-now">Why This Matters Now</a></li>
-  <li><a href="#the-data-quality-pattern" id="toc-the-data-quality-pattern" class="nav-link" data-scroll-target="#the-data-quality-pattern">The Data Quality Pattern</a></li>
-  <li><a href="#the-practitioner-takeaways" id="toc-the-practitioner-takeaways" class="nav-link" data-scroll-target="#the-practitioner-takeaways">The Practitioner Takeaways</a></li>
+  <li><a href="#the-corpus" id="toc-the-corpus" class="nav-link active" data-scroll-target="#the-corpus">The corpus</a></li>
+  <li><a href="#corpus-epistemic-bias" id="toc-corpus-epistemic-bias" class="nav-link" data-scroll-target="#corpus-epistemic-bias">Corpus-epistemic bias</a></li>
+  <li><a href="#from-the-literature-to-one-answer" id="toc-from-the-literature-to-one-answer" class="nav-link" data-scroll-target="#from-the-literature-to-one-answer">From the literature to one answer</a></li>
+  <li><a href="#what-to-do" id="toc-what-to-do" class="nav-link" data-scroll-target="#what-to-do">What to do</a></li>
+  <li><a href="#is-it-likely-or-is-it-so" id="toc-is-it-likely-or-is-it-so" class="nav-link" data-scroll-target="#is-it-likely-or-is-it-so">Is it likely, or is it so?</a></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references">References</a></li>
   </ul>
-<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/the-pulse/posts/2026/09/29/DQUL_Sept.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/foundation-frontiers/posts/2026/09/29/when-the-most-likely-answer-is-wrong.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
     </div>
 <!-- main -->
 <main class="content quarto-banner-title-block" id="quarto-document-content">
@@ -250,78 +249,89 @@ document.addEventListener("DOMContentLoaded", function() {
 
 
 
-<p><em>Data Quality Under the Lens is a new Real World Data Science column. Each edition explores real-world moments where data quality shaped outcomes, sometimes driving failure, sometimes preventing it. From near misses to hard lessons learned, we look at what happens when data is up to the task… or falls short.</em></p>
-<p><em>If you spot a real world problem and think data quality could lie at the heart of the story, <a href="(mailto:rwds@rss.org.uk)">send it in to the RWDS mailbox</a> and our Data Quality Detectives will analyse whether the Silent Drift, Proxy Trap, Spreadsheet Cascade, Governance Vacuum or Metric Mirage is responsible.</em></p>
-<section id="the-case-of-the-month" class="level2">
-<h2 class="anchored" data-anchor-id="the-case-of-the-month">The Case of the Month</h2>
-<p>By the early 1990s, the US Department of Defense (DoD) had a problem that will sound familiar to anyone who has worked with a large organisation’s legacy systems: it had too many systems doing essentially the same thing.</p>
-<p>The DoD had inherited a collection of systems developed independently by different parts of the organisation. As this was the early days of computing, groups based in different locations had created a multitude of good, homegrown IT systems that met local needs. These were built on a variety of technology stacks with many types of hardware and software with systems often “growing” organically.</p>
-<p>Early in my data management career, I was part of a team brought in to understand these systems and help the DoD determine how they could be consolidated. By this point, 37 systems were involved in paying DoD personnel. They all worked, but we needed to decide what should happen to enable the organisation to manage them as a whole.</p>
-<p>For example, a Pentagon manager might want to know how many employees worked at a particular location. This sounds like a straightforward question, but the answer depended on what each system meant by ‘employee’. A significant proportion of the DoD workforce had more than one job within the organisation. Different payroll systems handled these arrangements differently: one system might count people by counting paychecks, while another might treat the primary and secondary jobs differently. The resulting numbers could therefore be different without either system necessarily containing an obvious error, and the systems could be answering different questions while appearing to answer the same one.</p>
-<p>This became particularly important when the DoD needed to decide which of its existing systems should provide the basis for a more consolidated approach. The 37 systems had similar purposes and, when their processes were compared, they looked remarkably similar. Process models showed the same basic pattern: personnel information went in, it was processed, and pay was produced.</p>
-<p>Process analysis therefore did not provide a useful way of distinguishing between the systems. We needed to look somewhere else: at the data.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/thumbb.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
-</figure>
+<section id="the-corpus" class="level2">
+<h2 class="anchored" data-anchor-id="the-corpus">The corpus</h2>
+<p>Much of what is published in biomedical research does not hold up. When other scientists repeat the experiments, the findings often fail to reappear. This is the reproducibility problem. Ironically, the field has measured its own unreliability with some care. The figures are stark. In 2012 scientists at Amgen set out to reproduce fifty-three landmark cancer studies. They confirmed six [1]. A team at Bayer reported much the same, reproducing about a quarter of sixty-seven projects examined [2]. A later effort to repeat high-profile cancer experiments found effects on repetition far smaller than first reported, and many vanished altogether [3]. Sometimes the problem is mundane. The studies are underpowered, too small to show what they claim, common across the life sciences [6, 7]. Two decades ago Ioannidis published under the rather blunt title: “Why most published research findings are false” [5]. The claim was provocative then. It has worn well. These are the biomedical data we put into our large language models.</p>
+<p>One response might call this a garbage in, garbage out problem. This reaction is too simplistic. The corpus does not often look like garbage. It looks like good science, and a finding that failed to replicate can look exactly like one that is held. Nor does the model add the fault. It reproduces what it reads faithfully, and faithful reproduction of a flawed literature is the problem here. The trouble lies more in the balanced interpretation.</p>
+<p>Before I go any further, it is worth having a short aside on the models themselves. A large language model learns from text in a simple way. It predicts what comes next, one token at a time. A token is either a short word or sometimes a fragment of a longer one, or a single mark of punctuation. At each step it assigns every possible next token a probability, given everything so far. That set of probabilities is the distribution. When it writes, it draws from the distribution. It has no separate sense of what is true. It has a finely tuned sense of what is likely, given what it has read.</p>
+<p>To illustrate how this can be a problem, suppose the literature states that a certain gene is “linked to” a certain disease. The model learns the phrase. Suppose also that this comes from a single small study no one has yet reproduced. Nonetheless the result is restated across reviews, textbooks and the introductions of later papers, and can appear in the corpus many times over. The model counts appearances, not the scientific validity of a study. It weights each claim by how often that claim appears, not by how much independent evidence stands behind it, and not by whether that evidence has been peer reviewed. Repetition is not replication. The biomedical literature has long repeated claims that fail when the experiment is run again. This is the source of the problems I opened with, and the hardest to correct: the fault lies in the record itself, not in how we read it.</p>
+<p><img src="images/thumb.jpg" class="img-fluid"></p>
+</section>
+<section id="corpus-epistemic-bias" class="level2">
+<h2 class="anchored" data-anchor-id="corpus-epistemic-bias">Corpus-epistemic bias</h2>
+<p>The opening paper of the Royal Statistical Society’s new journal on data science and artificial intelligence makes a sensible request. A professional system built on a language model should say more about its uncertainty than a single confidence score [4]. Delacroix and colleagues divide that uncertainty into two kinds. One is epistemic: the kind more or better data removes. A drug’s effect in children is unknown because the trial enrolled only adults. Run the trial in children and the question may feasibly be answered.</p>
+<p>The other is hermeneutic, a matter of interpretation. No extra data settles it, because the question turns on judgement rather than fact. It takes two forms. One is fixed in time. A pathologist reads a borderline biopsy. A judge weighs an ambiguous clause. A teacher grades an essay. Careful experts differ today, and will differ tomorrow. The other is more temporal, such as ethics: the answer may change as human values evolve, over time and between communities. In both, the disagreement is real, and no quantity of data dissolves it.</p>
+<p>Count the two hermeneutic forms apart, and there are three kinds in all: one that data closes, and two that data cannot.</p>
+<p>I want to name a fourth. It belongs to a different category from the three above. Those are forms of not-knowing, and not-knowing can be narrowed: add evidence, the doubt shrinks. This one runs the other way. It does not show as doubt. It shows as confidence, and the confidence is misplaced. It is not a fourth uncertainty but a bias: I call it corpus-epistemic bias.</p>
+<p>It is easy to mistake for the hermeneutic kind, the error that comes from how a result is read, so the difference is worth stating clearly. An interpretive question has no single right answer; the disagreement is the matter itself, and more evidence cannot settle what was never one fact. Corpus-epistemic bias is the reverse. A fact exists. The science holds it; the literature has mislaid it, or buried it under a claim that reads as settled and never replicated. Better evidence would recover it. The two faults even sit in different places. The interpretive fault is in the reading. This one is in the record.</p>
+<p>It is not epistemic either, though that is its nearest cousin. Epistemic uncertainty shrinks as data grows. This is not ordinary epistemic uncertainty, since more of the same data does not help and may deepen the error.</p>
+<p>Corpus-epistemic bias may widen as data grows, because the data or the scientific framework itself can be the source of the error. It can show as the opposite of epistemic uncertainty. A model is corpus-epistemically biased when it is well calibrated against its training data yet plainly wrong about the science. The mismatch is not between its prediction and fresh data from the same source. It is between the prediction and a reality the literature has misrepresented or misunderstood. So a system can be perfectly calibrated and reliably mistaken at once.</p>
+</section>
+<section id="from-the-literature-to-one-answer" class="level2">
+<h2 class="anchored" data-anchor-id="from-the-literature-to-one-answer">From the literature to one answer</h2>
+<p>Corpus-epistemic bias can come in a number of variants: a literature that is wrong, reproduced with confidence; or not obviously wrong at all but divided. An example of the divided corpus is discussed below.</p>
+<p>Honest scientists, working from good evidence, can reach conclusions that do not agree. One side may be mistaken. Or the disagreement may mark the edge of something new, both measurements sound and the theory that should reconcile them missing. (Most scientists quietly hope for the second. New science is a good day.) The clearest case I know comes from cosmology, where I worked before moving into drug discovery. It turns on a single number, the Hubble constant, which sets how fast the universe is expanding and, with it, the age of the universe. The number can be measured in several independent ways, and two of the best flatly disagree, by a margin far too large to be chance. The gap has stood for decades, and sharpened rather than softened as the measurements improved. What matters here is not the number but the conduct around it. The field does not paper over the disagreement. It states it, measures it, and argues in the open about which kind of problem it is.</p>
+<p>The force of the example is its simplicity. The Hubble constant comprises two parameters, a distance and a speed. Each can be reached by several independent routes. Yet after nearly a century of effort the problem does not resolve. Biology offers nothing so clean. It works with small samples, with countless influences no one has measured, and with systematic errors no experiment fully shuts out. If cosmology cannot pin one simple quantity to a single value, it is no surprise a model trained on the far messier biomedical literature will do no better.</p>
+<p>As we already discussed, a language model is trained to predict text. Given what comes before, it estimates how probable each possible next token is. Statisticians call this density estimation. The training is thorough, pressing the model to account for everything in the literature, the rare alongside the common. A literature that holds two values produces a model that holds both.</p>
+<p>The answering is where it goes wrong. To reply, the model must commit to tokens one at a time, and how freely they vary is set by a single dial, called temperature. Allow variation, and over many answers both camps appear, in the proportion the literature shows. Pin the dial down, as systems usually do, and the same most likely answer returns every time. Ask for a single value and you may get the more common of the two figures, with no sign the other exists. Tukey saw the shape of this sixty years ago: an exact answer to the wrong question can always be made to look precise [11].</p>
+<p>That is why one confident number here is not decisiveness. It is a mistake that sounds certain. When the field is split, the right reply says so. It gives both values, with the reason for each, even to a reader who asked for one.</p>
+<p>A natural hope is that later tuning fixes the mismatch. The usual tool is reinforcement learning from human feedback. People rate the answers, and the model is adjusted to produce the kind they rate well. It rarely reaches deep enough. This stage shapes manner, not knowledge. It teaches the system to hedge, to refuse, to set its answers out neatly. It does not rebuild the dense interior that holds the biased prior.</p>
+</section>
+<section id="what-to-do" class="level2">
+<h2 class="anchored" data-anchor-id="what-to-do">What to do</h2>
+<p>This is not a worry about some distant future. Asked a clinical question, a current model will take a fabricated detail and build on it with composure, a failure easy to provoke [8]. Confident medical invention is now documented across the large general-purpose models being adapted for medical use [9], and methods exist to measure how reliably such a system serves as a biomedical assistant [10]. The point is not that they are useless. It is that fluency and confidence are no guide to correctness, and in medicine the cost of mistaking one for the other falls on patients.</p>
+<p>Well-trodden parts of the gene-disease map are well policed, argued over and corrected in the normal way. It becomes much harder with sparse data, where a single underpowered paper is the only thing that exists in an area. A model that scores well on average across the literature can fail badly there. The Society’s note “AI is Statistics” makes a version of this point, asking for testing under distribution shift, meaning tests on data unlike the training set [12]. In science the shift that matters is not mainly demographic. It is epistemic. How does a model behave where the evidence is thin, skewed or in conflict?</p>
+<p>There are at least three things one can do here to help with all the uncertainties we have discussed.</p>
+<p>First, keep a curated set of ground truth, held apart from the training data. A small, carefully judged collection of mechanistic and clinical facts, kept as a test set, is the scientific version of a double-entry ledger. Every claim a model makes in use can be checked against it, by sampling or in full. The ledger is not fixed. It grows with each replication, each failed reproduction, each registry update. It is slow, deliberate and unglamorous. It is also what separates credibility from nonsense. Building it is often work for statisticians and subject experts together, since deciding what counts as settled truth is itself a scientific and statistical question: what to include, how to weight it, how to treat evidence that conflicts.</p>
+<p>Second, test under deliberate distribution shift. Calibrate on the dense parts of the literature. Test in the sparse, skewed and conflicted parts. Build evaluation sets where the published claim is known to be unreliable, and watch whether the model’s stated uncertainty rises as it should. Equal confidence on thick and thin evidence is not calibration. It is fluency. Here the hermeneutic and the corpus-epistemic meet. If a system cannot grow less sure as the evidence thins, no amount of careful interaction design will make it safe.</p>
+<p>Third, carefully track provenance. Every substantive claim a model surfaces should trace back to the evidence beneath it, tagged with study design, sample size, replication status and date. Good science is about replication. It is the clear audit trail that lets a reader separate a claim resting on one 2008 mouse study from one resting on three independent human trials. In practice it means drawing answers from a provenance-aware knowledge graph, a store of facts that keeps each fact’s source attached, rather than generating ungrounded text. The tooling must refuse to let the source slip away in the final summary and needs to constantly be checking and matching. The work here is less about ideas than about care and good data engineering. Provenance is hard work to build and utterly ruinous to omit.</p>
+</section>
+<section id="is-it-likely-or-is-it-so" class="level2">
+<h2 class="anchored" data-anchor-id="is-it-likely-or-is-it-so">Is it likely, or is it so?</h2>
+<p>None of this calls for new mathematics, or anything particularly clever. It calls for a small change in what a scientific AI team takes its job to be. The statistical community has insisted, rightly, that these systems are statistical objects, to be built and judged as such. To an extent that is true. But fidelity to a biased literature is itself a failure. Beside statistical care must sit a scientific discipline: knowing when to doubt the literature, and refusing to let a confident sentence stand in for a checked one. Every experienced scientist has it as a reflex, what I have come to call the sweaty feeling, a faint unease that arrives before the reasons do and sends them back to the claim: who did the work, in what journal, repeated by whom, and does it make sense at all? A model has none of it. It returns the most likely sentence and reports no discomfort, because a statistical object has none to feel, and because repetition, which should raise a scientist’s guard, is the very thing it counts as evidence. Feynman called the alternative cargo cult science, work that imitates the form of enquiry but lacks the integrity that makes results hold up [13]. A model that returns the most likely answer and calls it true is cargo cult science at scale.</p>
+<p>I think of a story from my time as an astrophysics researcher in Holland. My supervisor there had met the great Dutch astronomer, Jan Oort. Oort was proud that, after a long career and much scrutiny, about half his published papers had turned out to be right. That is not the failure it sounds. It is what good science looks like: a known rate of error, owned without embarrassment, corrected carefully over time. A model trained on a corpus inherits both halves. It cannot always tell the work that is true from the work that is not, and can return them in one voice, with equal confidence. The model has the literature. It lacks Oort’s humility, and the community’s means of checking. The remedy is old, and not statistical alone. It is to keep pressing the question the literature cannot answer for us. Not is this likely, but is this so.</p>
+</section>
+<section id="references" class="level2">
+<h2 class="anchored" data-anchor-id="references">References</h2>
+<ol type="1">
+<li>Begley CG, Ellis LM. Raise standards for preclinical cancer research. Nature. 2012;483(7391):531–533.</li>
+<li>Prinz F, Schlange T, Asadullah K. Believe it or not: how much can we rely on published data on potential drug targets? Nature Reviews Drug Discovery. 2011;10(9):712.</li>
+<li>Errington TM, et al.&nbsp;Investigating the replicability of preclinical cancer biology. eLife. 2021;10:e71601.</li>
+<li>Delacroix S, Robinson D, Bhatt U, et al.&nbsp;Beyond quantification: navigating uncertainty in professional AI systems. RSS: Data Science and Artificial Intelligence. 2025;1(1):udaf002.</li>
+<li>Ioannidis JPA. Why most published research findings are false. PLoS Medicine. 2005;2(8):e124.</li>
+<li>Button KS, Ioannidis JPA, Mokrysz C, et al.&nbsp;Power failure: why small sample size undermines the reliability of neuroscience. Nature Reviews Neuroscience. 2013;14(5):365–376.</li>
+<li>Perrin S. Preclinical research: make mouse studies work. Nature. 2014;507(7493):423–425.</li>
+<li>Omar M, et al.&nbsp;Multi-model assurance analysis showing large language models are highly vulnerable to adversarial hallucination attacks during clinical decision support. Communications Medicine. 2025;5(1):330.</li>
+<li>Kim Y, et al.&nbsp;Medical hallucinations in foundation models and their impact on healthcare. arXiv preprint arXiv:2503.05777. 2025.</li>
+<li>Bolton WJ, Poyiadzi R, Morrell ER, van Bergen Gonzalez Bueno G, Goetz L. RAmBLA: a framework for evaluating the reliability of LLMs as assistants in the biomedical domain. arXiv preprint arXiv:2403.14578. 2024. Tukey JW. The future of data analysis. Annals of Mathematical Statistics. 1962;33(1):1–67.</li>
+<li>Royal Statistical Society. AI is Statistics: why statistical thinking is vital for the effective, ethical and safe use of AI. 2026.</li>
+<li>Feynman RP. Cargo cult science. Caltech commencement address. Engineering &amp; Science. 1974;37(7):10–13.</li>
+</ol>
+<div class="article-btn">
+<p><a href="../../../../../applied-insights/index.html">Explore more data science ideas</a></p>
 </div>
-</section>
-<section id="what-actually-happened" class="level2">
-<h2 class="anchored" data-anchor-id="what-actually-happened">What Actually Happened?</h2>
-<p>Our team was asked to reverse-engineer selected legacy systems. Rather than starting with the documentation describing what a system was supposed to do, we examined the systems themselves to recover the business rules, requirements and data structures embedded within them. This revealed something that the process models had hidden: although the systems appeared to perform the same broad function, they did not necessarily represent the underlying business in the same way.</p>
-<p>The distinction became particularly clear when we tested the systems against specific requirements. One memorable example involved a hypothetical but deliberately highly specific employee: a one-legged engineer working in waist-deep water, underneath rotating helicopter blades, on overtime. The point of this unusual example was not that the DoD had large numbers of employees fitting that description. It was that a requirement this specific could expose differences between systems. If a system’s data structures could represent the necessary combination of circumstances, that provided evidence that it could support the requirement. If they could not, the system could be ruled out.</p>
-<div class="quarto-figure quarto-figure-center">
-<figure class="figure">
-<p><img src="images/illu.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
-</figure>
-</div>
-<p>This gave the DoD a way of making a decision based on evidence about the systems rather than on competing claims about which system was best. It also helped address the organisational politics surrounding the consolidation. Each system had people and resources associated with it, and there were understandable concerns about what would happen if a particular system was replaced. A transparent comparison based on agreed requirements provided a more objective basis for deciding which system could meet the organisation’s needs.</p>
-</section>
-<section id="disaster-or-near-miss" class="level2">
-<h2 class="anchored" data-anchor-id="disaster-or-near-miss">Disaster or Near-Miss?</h2>
-<p>The fact that the DoD could not always answer basic questions about its workforce consistently shows that the fragmented systems were already causing real problems. However, the greater risk arose when it needed to choose a system to take forward. Selecting one based on popularity, existing use, or apparently similar processes could have embedded its limitations into an enterprise-wide system.</p>
-<p>By reverse-engineering the data models, we were able to identify differences that the process analysis had missed and test the systems against the DoD’s actual requirements. This meant the consolidation decision could be based on evidence rather than assumption and the underlying weaknesses were exposed before they were carried into the next generation of systems.</p>
-</section>
-<section id="why-this-matters-now" class="level2">
-<h2 class="anchored" data-anchor-id="why-this-matters-now">Why This Matters Now</h2>
-<p>Technology has advanced, but this problem hasn’t disappeared. In June 2026, the US Office of Personnel Management <a href="https://finance.yahoo.com/technology/ai/articles/oracle-orcl-lands-395-8-071231438.html?guccounter=1&amp;guce_referrer=aHR0cHM6Ly93d3cuZ29vZ2xlLmNvbS8&amp;guce_referrer_sig=AQAAAKUM8F0uD-HSBCp7j1h9xeg9eNBA9rDfDGkXCYW1eEAm29AvFR11kL3speAF2aS79Phk9EqLzdcpuvX0Jhg9o55TSAWHez3zuLWQ4s65rn-kIyR6mpjhf-uqIb25SPRjftECCUveUX0q8Xe-j5cAwwlZlx7JrKf2wIRuv71VfD1G">announced a $395 million contract with Oracle to modernise federal human-resources systems</a>. The programme aims to consolidate more than 100 separate human-resources management systems across the US federal government into a single platform. The stated case for consolidation includes duplicated systems and functions, inconsistent application of policies and the cost of maintaining a fragmented HR environment.</p>
-<p>The scale is very different from the DoD example of the early 1990s, but the underlying question remains relevant: what knowledge about the organisation is embedded in the systems being replaced?</p>
-<p>Replacing many systems with one does not automatically create better data. A new system still needs to represent the concepts, rules and exceptions that matter to the organisation. If those things are poorly understood during the transition, consolidation can simply move existing problems into a new system. The DoD experience suggests that understanding legacy data should be part of the modernisation process, rather than something left until after a new system has been selected.</p>
-</section>
-<section id="the-data-quality-pattern" class="level2">
-<h2 class="anchored" data-anchor-id="the-data-quality-pattern">The Data Quality Pattern</h2>
-<p>This case illustrates a classic Governance Vacuum: systems were developed to meet local needs, but there was insufficient enterprise-level agreement about how the organisation’s data should be defined and represented.</p>
-</section>
-<section id="the-practitioner-takeaways" class="level2">
-<h2 class="anchored" data-anchor-id="the-practitioner-takeaways">The Practitioner Takeaways</h2>
-<p>We can take a lot from this case!</p>
-<p>Define the question before counting the data. A seemingly simple question such as “How many employees do we have?” may have more than one valid interpretation. Agreeing what is being counted is a prerequisite for producing a useful number.</p>
-<p>Don’t assume that systems doing the same job represent the same things. Similar processes do not necessarily mean compatible data. Look at the definitions, relationships and business rules embedded in the data.</p>
-<p>Understand legacy systems before replacing them. Old systems may contain years of accumulated organisational knowledge, including requirements and exceptions that are not documented elsewhere. Reverse engineering can help uncover this knowledge before it is lost.</p>
-<p>A single system is not automatically a single source of truth. Consolidation can reduce duplication, but data quality still depends on whether the new system represents the organisation consistently and appropriately.</p>
-<p>Data models can be valuable evidence when organisations are making decisions about systems. Looking at the data structures helped reveal differences that were not apparent from looking at the processes alone.</p>
-<p>The one-legged engineer is more than an entertaining anecdote. The example worked because it forced the team to ask a precise question about what the system needed to be able to represent. Sometimes an unusually specific requirement is exactly what reveals a hidden difference between systems.</p>
 <div class="further-info">
 <div class="grid">
 <div class="g-col-12 g-col-md-12">
 <dl>
 <dt>About the author:</dt>
 <dd>
-<a href="https://www.anythingawesome.com/personal/biosketch-copy"><strong>Peter Aiken, PHD</strong></a> is an acknowledged Data Management authority, an Associate Professor at <a href="https://vcu.edu/">Virginia Commonwealth University</a>, President of <a href="https://dama.org/">DAMA International</a>, and has founded several companies that have helped more than 200 organizations leverage data–specific savings have been measured at more than $1.5B USD. His latest is <a href="https://www.anythingawesome.com/">Anything Awesome LLC</a>.
+<a href="https://www.linkedin.com/in/lee-clewley-988bbb18/">Lee Clewley (PhD)</a> is now Head of Data and AI at LGC, formally VP of Applied AI &amp; Informatics at <a href="https://tangramtx.com/">Tangram Therapeutics</a>, where he led the design and deployment of LLibra, a multi-LLM, agentic system for early discovery. Formerly Head of Applied AI at <a href="https://www.gsk.com/en-gb/">GSK</a>, he is a member of the Real World Data Science <a href="https://realworlddatascience.net/the-pulse/editors-blog/posts/2022/10/18/meet-the-team.html">editorial board</a>.
 </dd>
 </dl>
 <div class="g-col-12 g-col-md-6">
-<p><strong>Copyright and licence</strong> : © 2026 Peter Aiken <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"> <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"> </a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.</p>
+<p><strong>Copyright and licence</strong> : © 2026 Lee Clewley<br>
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"> <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"> </a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.</p>
 </div>
 <div class="g-col-12 g-col-md-6">
 <p><strong>How to cite</strong> :<br>
-Peter Aiken 2026. “<strong>Data Quality Under the Lens: the DOD’s One-Legged Engineer Problem”</strong>, 2026. <a href="https://realworlddatascience.net/the-pulse/posts/2026/09/29/DQUL_Sept.html">URL</a></p>
-</div>
+Clewley, Lee. 2026. “<strong>When the most likely answer is wrong</strong>.” <em>Real World Data Science</em>, 2026. <a href="https://realworlddatascience.net/foundations-frontiers/posts/2026/12/when-the-most-likely-answer-is-wrong.html">URL</a></p>
 </div>
 </div>
 </div>
 
 
+</div>
 </section>
 
 </main> <!-- /main -->
@@ -769,7 +779,7 @@ Peter Aiken 2026. “<strong>Data Quality Under the Lens: the DOD’s One-Legged
     </a>
   </li>  
 </ul>
-    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/the-pulse/posts/2026/09/29/DQUL_Sept.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/foundation-frontiers/posts/2026/09/29/when-the-most-likely-answer-is-wrong.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
     <div class="nav-footer-right">
 <p><a href="../../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
 </div>
