@@ -17,7 +17,131 @@
 <width>144</width>
 </image>
 <generator>quarto-1.11.9</generator>
-<lastBuildDate>Thu, 05 Nov 2026 00:00:00 GMT</lastBuildDate>
+<lastBuildDate>Thu, 19 Nov 2026 00:00:00 GMT</lastBuildDate>
+<item>
+  <title>Data Quality Under the Lens: Who Checks the Watchman? The Mirage of AI Benchmark Scores ?</title>
+  <dc:creator>Francis Osei</dc:creator>
+  <link>https://realworlddatascience.net/the-pulse/posts/2026/11/19/Who_Checks_Watchman.html</link>
+  <description><![CDATA[ 
+
+
+
+
+
+<p><em>Data Quality Under the Lens is a new Real World Data Science column. Each edition explores real-world moments where data quality shaped outcomes, sometimes driving failure, sometimes preventing it. From near misses to hard lessons learned, we look at what happens when data is up to the task… or falls short.</em></p>
+<p><em>If you spot a real world problem and think data quality could lie at the heart of the story, <a href="(mailto:rwds@rss.org.uk)">send it in to the RWDS mailbox</a> and our Data Quality Detectives will analyse whether the Silent Drift, Proxy Trap, Spreadsheet Cascade, Governance Vacuum or Metric Mirage is responsible.</em></p>
+<section id="the-case-of-the-month" class="level2">
+<h2 class="anchored" data-anchor-id="the-case-of-the-month">The Case of the Month</h2>
+<p>In 1929 the statistician Sir Josiah Stamp passed on a warning about official figures, taken from an example in India: “The Government are very keen on amassing statistics. They collect them, add them, raise them to the nth power, take the cube root and prepare wonderful diagrams. But you must never forget that every one of these figures comes in the first instance from the chowky dar [village watchman], who just puts down what he damn pleases.”</p>
+<p>Almost a century later, AI has its own wonderful diagrams: benchmark leaderboards. Think of a benchmark as an exam that several AI models take so we can see which performs best. Every model is scored on the same inputs against the same ground-truth labels. Developers, buyers and analysts rely on the test scores (arranged as a leaderboard) to choose between models, yet few ever look at the ground-truth labels on which individual scores depend.</p>
+<p>SWE-bench Verified was one of the most widely quoted benchmarks in the field of software development. Each of its 500 test items gave an AI system a real software bug and asked it to fix the code. The associated ground truth label (just ‘label’ from here) was a set of automated tests taken from the original developer’s own fix. What this meant was that a single person’s solution was encoded as the correct answer to the problem, regardless of whether other correct solutions were possible. Engineers had screened the items, the set was sold as human-validated, and by early 2026 top scores had passed 80%.</p>
+<p>Then OpenAI, which helped build SWE-bench Verified, audited the items its models struggled to solve consistently. Of the 500 tests, at least 82 items (one in six of the test set), had labels that could mark a correct fix as wrong. Worse, the test data had leaked, meaning that every leading model had access to some of the answers during training. Label error and test-set leakage are two of the oldest problems in working with data, and here, they sat inside one of AI’s most trusted measures.</p>
+<p>Nobody found these issues through routine checks. OpenAI only looked because its models were failing. Eight months later, scores are still being published, and the test set is still downloaded more than 100,000 times a month with no warning attached.</p>
+<p>The figures still came from the watchman. We had just stopped asking who he was.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://realworlddatascience.net/the-pulse/posts/2026/11/19/images/thumb.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</section>
+<section id="what-actually-happened" class="level2">
+<h2 class="anchored" data-anchor-id="what-actually-happened">What Actually Happened?</h2>
+<p><strong>The Data</strong> The test set grew out of an earlier collection, SWE-bench, released by university researchers in 2023 and built from GitHub. When a user spots a problem in a project there, they file an issue, a short written report of what is going wrong. A developer then proposes a fix as a pull request, a bundle of code changes that the project’s maintainers review and accept. Pairing each resolved issue with its accepted pull request gave the researchers 2,294 records from 12 popular projects, all written in the Python programming language.</p>
+<p>Every record has the same shape. The input is the project’s code as it stood before the fix, together with the text of the issue. The output is a patch, a set of edits to that code. Marking is automatic: the patch is run against tests that the system being evaluated never sees. One group checks that the reported problem has gone. A second group, the regression tests, checks that nothing that worked before has now broken. An item counts as solved only if both groups pass, and the score is the share of items solved.</p>
+<p>The original collection was noisy. Some issues were too vague to say what was wanted, some tests failed for reasons unrelated to the code, and some would accept only a very particular fix. To produce the Verified version, OpenAI and the SWE-bench authors asked professional software engineers to review 1,699 records. Three reviewers judged each one independently, and any record flagged as unclear or unfair was dropped.</p>
+<p>The aim was a clean, realistic measure of everyday software work: read a problem report, find your way around unfamiliar code, make the change and leave everything else working.</p>
+<p><strong>The Fault Line</strong> OpenAI’s audit found two ways the tests went wrong. In 35.5% of audited items they were too narrow: they checked how a fix was built rather than whether it worked. In one, the tests called a helper function by a name the issue never mentioned, so a patch that fixed the problem failed simply because it didn’t use that exact name. In 18.8% they were too wide: they checked for things the issue never asked for. For example, in another test, the original fix had addressed three reported problems while the issue described only one, so systems that fixed what they were shown (and not two further invisible problems) still failed.</p>
+<p>It is like an exam whose marking scheme accepts only the examiner’s own working. A student can reach the right answer and still lose marks, and the grade no longer specifies whether or not the final answer was correct. Statisticians know this as an imperfect reference standard: the answer key’s mistakes are charged to whoever is being tested.</p>
+<p>Leakage made it worse. Narrow tests reward reproducing the original fix exactly, so they were easiest to pass for systems that had already met that fix during training.</p>
+<p><strong>The Blind Spot</strong> The cleaning that produced SWE-bench Verified was a one-off review made before the benchmark came into use. Reviewers could judge whether a test looked reasonable, but they could not foresee every valid fix that more capable systems would later produce. The initial review also did not establish how the benchmark would be reassessed once scores started coming in.</p>
+<p>How the audit was designed matters for reading its results. The 138 items OpenAI examined were ones its o3 model did not solve consistently across 64 attempts, which is where faulty tests were most likely to surface. Within that sample, 59.4% were faulty. Items that models solved reliably fell outside this review, so one in six is a documented minimum, not an estimate of the error rate across the whole benchmark.</p>
+<p>Two different faults were at work. Defective tests reject valid work. Training contamination rewards prior exposure and can hide defective tests altogether: OpenAI reported that GPT‑5.2 solved 31 items its reviewers had judged almost impossible. Neither fault is random noise. Both bias the score systematically, whatever its level. And because the items came from public code, the exposure grew with each new generation of systems trained on more of the internet. A rising score could reflect better systems, more prior exposure, or both, and the number alone cannot say which.</p>
+<p>R. A. Fisher put it bluntly in 1938: “To consult the statistician after an experiment is finished is often merely to ask him to conduct a post mortem examination. He can perhaps say what the experiment died of.” OpenAI’s audit came 18 months after the benchmark launched. It could say what had gone wrong, but only after the scores had been published.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://realworlddatascience.net/the-pulse/posts/2026/11/19/images/swe-bench.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+<p><strong>The Amplifier</strong> SWE-bench Verified scores were easy to compare and easy to publish, which helped the benchmark become a familiar reference point in AI development. OpenAI used it when introducing GPT-4.1, reporting 54.6%. When Google announced Gemini 2.5 Pro at 63.8%, it called the benchmark the “industry standard for agentic code evals”, meaning tests in which an AI system works through a coding task on its own. Google later launched Gemini 3 Flash at 78%.</p>
+<p>Scores kept appearing after OpenAI’s audit. In April 2026 Anthropic reported 87.6% for Claude Opus 4.7, next to its result on a newer and harder test, and Moonshot AI reported 80.2% for Kimi K2.6. Comparison websites still rank models on Verified, mostly using figures the developers supplied themselves.</p>
+<p>None of these higher scores appear on the official SWE-bench leaderboard. It has not added a Verified result since February 2026, and its top score is 79.2%. There is also a simple arithmetic problem. The audit found at least 82 of the 500 tasks to be faulty, which leaves at most 418 sound ones. Solving all of those gives a score of about 84%, so anything higher must include passes on faulty tasks, and those are hard to pass without having seen the answer.</p>
+</section>
+<section id="disaster-or-near-miss" class="level2">
+<h2 class="anchored" data-anchor-id="disaster-or-near-miss">Disaster or Near-Miss?</h2>
+<p>Benchmark scores don’t stay in research papers. They find their way into procurement requirements, influence purchase decisions and give developers targets to optimise against, even when those scores tell us little about how a system will perform on real code. When scores start influencing contracts and budgets, their shortcomings can have real consequences.</p>
+<p>There’s no clear evidence that SWE-bench Verified led to a specific bad decision. But a faulty measure can still become part of how models are chosen and money is spent, long before anyone understands its limits.</p>
+<p>OpenAI deserves credit for publishing its audit rather than quietly moving on. But its answer was to point everyone to a replacement, SWE-bench Pro. Less than five months later, in July 2026, it audited that too, estimated that around 30% of its tasks were broken, and withdrew the recommendation. Some faults were familiar: tests too strict to accept valid fixes, and task descriptions that left out what the tests required. One cut the other way: tests too weak to catch incomplete fixes. OpenAI traced the problems to the same root, tests written to check one specific change rather than to define what a correct answer looks like.</p>
+<p>Switching benchmarks didn’t fix the problem, because the problem was in how the data was made. So far this is a near-miss; but it isn’t over yet.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="https://realworlddatascience.net/the-pulse/posts/2026/11/19/images/swe-bench-pro.png" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</section>
+<section id="why-this-matters-now" class="level2">
+<h2 class="anchored" data-anchor-id="why-this-matters-now">Why This Matters Now</h2>
+<p>Most of what we hear about AI progress arrives as a test score. From buyers to regulators, the people who rely on those scores rarely see the data behind them. They are trusting labels they can’t check and a test set whose history they don’t know.</p>
+<p>That makes this more than one benchmark’s problem. AI systems are now trained on so much of the public internet that any test built from public material may already have been seen. And more and more AI output is marked automatically, by tests or by other AI systems, so the answer key decides what a score really means.</p>
+<p>If AI is going to be judged by numbers, the data behind those numbers needs the same care as any other dataset: checked labels, a clear record of where it came from, tests for leakage, and an honest note of when it stopped being fit for purpose.</p>
+</section>
+<section id="the-practitioner-takeaway-stop-staring-at-the-whole-mountain" class="level2">
+<h2 class="anchored" data-anchor-id="the-practitioner-takeaway-stop-staring-at-the-whole-mountain">The Practitioner Takeaway: stop staring at the whole mountain!</h2>
+<p>Before accepting a benchmark score, ask what sits behind it.</p>
+<ol type="1">
+<li>Find out how answers are marked. If correctness is judged against one reference answer, or against tests built from it, ask whether a different but correct answer would pass. Have someone check a sample by hand.</li>
+<li>Look at the passes as well as the failures. While faulty labels tend to show up among the items that the system fails, leakage shows up as easy passes on items that should be hard. Review a sample of both, and remember that an error rate found only among failures is a minimum, not an estimate for the whole test.</li>
+<li>Ask whether the test could have been seen. If the questions or answers were public before a system was trained, treat a high score with caution until someone has checked for contamination.</li>
+<li>Compare the score with the quality of the answer key. When a score climbs past the share of items with sound labels, it needs explaining before it is celebrated.</li>
+<li>Keep checking. A test set that was sound when it was built can stop being fit for purpose as the systems it measures change. When that happens, go back to the comparisons and decisions that relied on it.</li>
+</ol>
+<p>The useful question is not “What did the model score?” but “What evidence does that score actually give us?”</p>
+</section>
+<section id="the-data-quality-pattern" class="level2">
+<h2 class="anchored" data-anchor-id="the-data-quality-pattern">The Data Quality Pattern</h2>
+<p>A metric can look precise without being trustworthy.</p>
+<p>The Metric Mirage appears when a score, rate or ranking is treated as a direct measure of performance even though the data behind it is narrower, noisier or less reliable than the number suggests. A score given to one decimal place feels objective. It is easy to compare and hard to question, and the headline figure travels further than the caveats.</p>
+<p>John Tukey <a href="https://projecteuclid.org/journals/annals-of-mathematical-statistics/volume-33/issue-1/The-Future-of-Data-Analysis/10.1214/aoms/1177704711.full">described the trap in 1962</a>: “Far better an approximate answer to the right question, which is often vague, than an exact answer to the wrong question, which can always be made precise.” SWE-bench Verified gave exact answers, but to a narrower question than it seemed to. That question wasn’t “can this system fix software?” but “does its patch pass one developer’s tests, on items it may already have seen?”</p>
+<p>Whenever a metric carries more confidence than the data behind it can support, the mirage has already formed.</p>
+</section>
+<section id="none-of-this-means-we-should-stop-using-benchmarks." class="level2">
+<h2 class="anchored" data-anchor-id="none-of-this-means-we-should-stop-using-benchmarks.">None of this means we should stop using benchmarks.</h2>
+<p>None of this means we should stop using benchmarks. We should just treat them as what they are: datasets, with all the problems datasets can have.</p>
+<p>As AI moves into health, finance and public services, the numbers used to justify it will carry more weight. Building, maintaining and rechecking the data behind those numbers is part of the job, not an afterthought.</p>
+<p>Stamp’s watchman wrote down whatever he pleased, and the wonderful diagrams were built on top. Benchmarks have their own watchmen: the developers whose fixes became the answer key, and the reviewers who passed it. Most of them did careful work. But someone still has to check, and keep checking long after a test set has become familiar.</p>
+<p>Who checks the watchman? Anyone who reports the score.</p>
+<p>Good data quality means looking beyond the data itself to question whether the measures we use to assess it are reliable.</p>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author:</dt>
+<dd>
+<a href="https://www.linkedin.com/in/francis-osei-b2b02116a/"><strong>Francis Osei</strong></a> is the Lead Clinical AI Scientist and Researcher at Bayezian Limited, where he designs and builds intelligent systems to support clinical trial automation, regulatory compliance, and the safe, transparent use of AI in healthcare. His work brings together data science, statistical modelling, and real-world clinical insight to help organisations adopt AI they can understand, trust, and act on.
+</dd>
+</dl>
+<div class="g-col-12 g-col-md-6">
+<p><strong>Copyright and licence</strong> : © 2026 Francis Osei<br>
+<a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"> <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"> </a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>How to cite</strong> :<br>
+Osei, Francis 2026. “<strong>Data Quality Under the Lens: Who Checks the Watchman?</strong>” <em>Real World Data Science</em>, 2026. <a href="https://realworlddatascience.net/the-pulse/posts/2026/11/19/Who_Checks_Watchman.qmd">URL</a></p>
+</div>
+</div>
+</div>
+
+
+</div>
+</section>
+
+ ]]></description>
+  <category>AI</category>
+  <category>Governance</category>
+  <category>Policy</category>
+  <guid>https://realworlddatascience.net/the-pulse/posts/2026/11/19/Who_Checks_Watchman.html</guid>
+  <pubDate>Thu, 19 Nov 2026 00:00:00 GMT</pubDate>
+  <media:content url="https://realworlddatascience.net/the-pulse/posts/2026/11/19/images/thumb.jpg" medium="image" type="image/jpeg" height="104" width="144"/>
+</item>
 <item>
   <title>Life Below the Surface: What Freshwater Macroinvertebrates Tell Us About England’s River Health</title>
   <link>https://realworlddatascience.net/applied-insights/case-studies/posts/2026/11/05/life-below-the-surface.html</link>
@@ -378,11 +502,11 @@ Figure&nbsp;6: National, site–marginal seasonal trends from the cNorm model ac
 </dd>
 </dl>
 <div class="g-col-12 g-col-md-6">
-<p><strong>Copyright and licence</strong> : © 2026 Ridhima Gupta and Tilak Heble <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/11/05/data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDEzLjAuMiwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMTQ5NDgpICAtLT4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjAvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvVFIvMjAwMS9SRUMtU1ZHLTIwMDEwOTA0L0RURC9zdmcxMC5kdGQiPgo8c3ZnIHZlcnNpb249IjEuMCIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHdpZHRoPSI2NHB4IiBoZWlnaHQ9IjY0cHgiIHZpZXdCb3g9IjUuNSAtMy41IDY0IDY0IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDUuNSAtMy41IDY0IDY0IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8Y2lyY2xlIGZpbGw9IiNGRkZGRkYiIGN4PSIzNy43ODUiIGN5PSIyOC41MDEiIHI9IjI4LjgzNiIvPgoJPHBhdGggZD0iTTM3LjQ0MS0zLjVjOC45NTEsMCwxNi41NzIsMy4xMjUsMjIuODU3LDkuMzcyYzMuMDA4LDMuMDA5LDUuMjk1LDYuNDQ4LDYuODU3LDEwLjMxNAoJCWMxLjU2MSwzLjg2NywyLjM0NCw3Ljk3MSwyLjM0NCwxMi4zMTRjMCw0LjM4MS0wLjc3Myw4LjQ4Ni0yLjMxNCwxMi4zMTNjLTEuNTQzLDMuODI4LTMuODIsNy4yMS02LjgyOCwxMC4xNDMKCQljLTMuMTIzLDMuMDg1LTYuNjY2LDUuNDQ4LTEwLjYyOSw3LjA4NmMtMy45NjEsMS42MzgtOC4wNTcsMi40NTctMTIuMjg1LDIuNDU3cy04LjI3Ni0wLjgwOC0xMi4xNDMtMi40MjkKCQljLTMuODY2LTEuNjE4LTcuMzMzLTMuOTYxLTEwLjQtNy4wMjdjLTMuMDY3LTMuMDY2LTUuNC02LjUyNC03LTEwLjM3MlM1LjUsMzIuNzY3LDUuNSwyOC41YzAtNC4yMjksMC44MDktOC4yOTUsMi40MjgtMTIuMgoJCWMxLjYxOS0zLjkwNSwzLjk3Mi03LjQsNy4wNTctMTAuNDg2QzIxLjA4LTAuMzk0LDI4LjU2NS0zLjUsMzcuNDQxLTMuNXogTTM3LjU1NywyLjI3MmMtNy4zMTQsMC0xMy40NjcsMi41NTMtMTguNDU4LDcuNjU3CgkJYy0yLjUxNSwyLjU1My00LjQ0OCw1LjQxOS01LjgsOC42Yy0xLjM1NCwzLjE4MS0yLjAyOSw2LjUwNS0yLjAyOSw5Ljk3MmMwLDMuNDI5LDAuNjc1LDYuNzM0LDIuMDI5LDkuOTEzCgkJYzEuMzUzLDMuMTgzLDMuMjg1LDYuMDIxLDUuOCw4LjUxNmMyLjUxNCwyLjQ5Niw1LjM1MSw0LjM5OSw4LjUxNSw1LjcxNWMzLjE2MSwxLjMxNCw2LjQ3NiwxLjk3MSw5Ljk0MywxLjk3MQoJCWMzLjQyOCwwLDYuNzUtMC42NjUsOS45NzMtMS45OTljMy4yMTktMS4zMzUsNi4xMjEtMy4yNTcsOC43MTMtNS43NzFjNC45OS00Ljg3Niw3LjQ4NC0xMC45OSw3LjQ4NC0xOC4zNDQKCQljMC0zLjU0My0wLjY0OC02Ljg5NS0xLjk0My0xMC4wNTdjLTEuMjkzLTMuMTYyLTMuMTgtNS45OC01LjY1NC04LjQ1OEM1MC45ODQsNC44NDQsNDQuNzk1LDIuMjcyLDM3LjU1NywyLjI3MnogTTM3LjE1NiwyMy4xODcKCQlsLTQuMjg3LDIuMjI5Yy0wLjQ1OC0wLjk1MS0xLjAxOS0xLjYxOS0xLjY4NS0yYy0wLjY2Ny0wLjM4LTEuMjg2LTAuNTcxLTEuODU4LTAuNTcxYy0yLjg1NiwwLTQuMjg2LDEuODg1LTQuMjg2LDUuNjU3CgkJYzAsMS43MTQsMC4zNjIsMy4wODQsMS4wODUsNC4xMTNjMC43MjQsMS4wMjksMS43OTEsMS41NDQsMy4yMDEsMS41NDRjMS44NjcsMCwzLjE4MS0wLjkxNSwzLjk0NC0yLjc0M2wzLjk0MiwyCgkJYy0wLjgzOCwxLjU2My0yLDIuNzkxLTMuNDg2LDMuNjg2Yy0xLjQ4NCwwLjg5Ni0zLjEyMywxLjM0My00LjkxNCwxLjM0M2MtMi44NTcsMC01LjE2My0wLjg3NS02LjkxNS0yLjYyOQoJCWMtMS43NTItMS43NTItMi42MjgtNC4xOS0yLjYyOC03LjMxM2MwLTMuMDQ4LDAuODg2LTUuNDY2LDIuNjU3LTcuMjU3YzEuNzcxLTEuNzksNC4wMDktMi42ODYsNi43MTUtMi42ODYKCQlDMzIuNjA0LDE4LjU1OCwzNS40NDEsMjAuMTAxLDM3LjE1NiwyMy4xODd6IE01NS42MTMsMjMuMTg3bC00LjIyOSwyLjIyOWMtMC40NTctMC45NTEtMS4wMi0xLjYxOS0xLjY4Ni0yCgkJYy0wLjY2OC0wLjM4LTEuMzA3LTAuNTcxLTEuOTE0LTAuNTcxYy0yLjg1NywwLTQuMjg3LDEuODg1LTQuMjg3LDUuNjU3YzAsMS43MTQsMC4zNjMsMy4wODQsMS4wODYsNC4xMTMKCQljMC43MjMsMS4wMjksMS43ODksMS41NDQsMy4yMDEsMS41NDRjMS44NjUsMCwzLjE4LTAuOTE1LDMuOTQxLTIuNzQzbDQsMmMtMC44NzUsMS41NjMtMi4wNTcsMi43OTEtMy41NDEsMy42ODYKCQljLTEuNDg2LDAuODk2LTMuMTA1LDEuMzQzLTQuODU3LDEuMzQzYy0yLjg5NiwwLTUuMjA5LTAuODc1LTYuOTQxLTIuNjI5Yy0xLjczNi0xLjc1Mi0yLjYwMi00LjE5LTIuNjAyLTcuMzEzCgkJYzAtMy4wNDgsMC44ODUtNS40NjYsMi42NTgtNy4yNTdjMS43Ny0xLjc5LDQuMDA4LTIuNjg2LDYuNzEzLTIuNjg2QzUxLjExNywxOC41NTgsNTMuOTM4LDIwLjEwMSw1NS42MTMsMjMuMTg3eiIvPgo8L2c+Cjwvc3ZnPgo="> <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/11/05/data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDEzLjAuMiwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMTQ5NDgpICAtLT4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjAvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvVFIvMjAwMS9SRUMtU1ZHLTIwMDEwOTA0L0RURC9zdmcxMC5kdGQiPgo8c3ZnIHZlcnNpb249IjEuMCIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHdpZHRoPSI2NHB4IiBoZWlnaHQ9IjY0cHgiIHZpZXdCb3g9IjUuNSAtMy41IDY0IDY0IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDUuNSAtMy41IDY0IDY0IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8Y2lyY2xlIGZpbGw9IiNGRkZGRkYiIGN4PSIzNy42MzciIGN5PSIyOC44MDYiIHI9IjI4LjI3NiIvPgoJPGc+CgkJPHBhdGggZD0iTTM3LjQ0My0zLjVjOC45ODgsMCwxNi41NywzLjA4NSwyMi43NDIsOS4yNTdDNjYuMzkzLDExLjk2Nyw2OS41LDE5LjU0OCw2OS41LDI4LjVjMCw4Ljk5MS0zLjA0OSwxNi40NzYtOS4xNDUsMjIuNDU2CgkJCUM1My44NzksNTcuMzE5LDQ2LjI0Miw2MC41LDM3LjQ0Myw2MC41Yy04LjY0OSwwLTE2LjE1My0zLjE0NC0yMi41MTQtOS40M0M4LjY0NCw0NC43ODQsNS41LDM3LjI2Miw1LjUsMjguNQoJCQljMC04Ljc2MSwzLjE0NC0xNi4zNDIsOS40MjktMjIuNzQyQzIxLjEwMS0wLjQxNSwyOC42MDQtMy41LDM3LjQ0My0zLjV6IE0zNy41NTcsMi4yNzJjLTcuMjc2LDAtMTMuNDI4LDIuNTUzLTE4LjQ1Nyw3LjY1NwoJCQljLTUuMjIsNS4zMzQtNy44MjksMTEuNTI1LTcuODI5LDE4LjU3MmMwLDcuMDg2LDIuNTksMTMuMjIsNy43NywxOC4zOThjNS4xODEsNS4xODIsMTEuMzUyLDcuNzcxLDE4LjUxNCw3Ljc3MQoJCQljNy4xMjMsMCwxMy4zMzQtMi42MDcsMTguNjI5LTcuODI4YzUuMDI5LTQuODM4LDcuNTQzLTEwLjk1Miw3LjU0My0xOC4zNDNjMC03LjI3Ni0yLjU1My0xMy40NjUtNy42NTYtMTguNTcxCgkJCUM1MC45NjcsNC44MjQsNDQuNzk1LDIuMjcyLDM3LjU1NywyLjI3MnogTTQ2LjEyOSwyMC41NTd2MTMuMDg1aC0zLjY1NnYxNS41NDJoLTkuOTQ0VjMzLjY0M2gtMy42NTZWMjAuNTU3CgkJCWMwLTAuNTcyLDAuMi0xLjA1NywwLjU5OS0xLjQ1N2MwLjQwMS0wLjM5OSwwLjg4Ny0wLjYsMS40NTctMC42aDEzLjE0NGMwLjUzMywwLDEuMDEsMC4yLDEuNDI4LDAuNgoJCQlDNDUuOTE4LDE5LjUsNDYuMTI5LDE5Ljk4Niw0Ni4xMjksMjAuNTU3eiBNMzMuMDQyLDEyLjMyOWMwLTMuMDA4LDEuNDg1LTQuNTE0LDQuNDU4LTQuNTE0czQuNDU3LDEuNTA0LDQuNDU3LDQuNTE0CgkJCWMwLDIuOTcxLTEuNDg2LDQuNDU3LTQuNDU3LDQuNDU3UzMzLjA0MiwxNS4zLDMzLjA0MiwxMi4zMjl6Ii8+Cgk8L2c+CjwvZz4KPC9zdmc+Cg=="> </a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.</p>
+<p><strong>Copyright and licence</strong> : © 2026 Tilak Heble and Ridhima Gupta <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/11/05/data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDEzLjAuMiwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMTQ5NDgpICAtLT4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjAvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvVFIvMjAwMS9SRUMtU1ZHLTIwMDEwOTA0L0RURC9zdmcxMC5kdGQiPgo8c3ZnIHZlcnNpb249IjEuMCIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHdpZHRoPSI2NHB4IiBoZWlnaHQ9IjY0cHgiIHZpZXdCb3g9IjUuNSAtMy41IDY0IDY0IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDUuNSAtMy41IDY0IDY0IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8Y2lyY2xlIGZpbGw9IiNGRkZGRkYiIGN4PSIzNy43ODUiIGN5PSIyOC41MDEiIHI9IjI4LjgzNiIvPgoJPHBhdGggZD0iTTM3LjQ0MS0zLjVjOC45NTEsMCwxNi41NzIsMy4xMjUsMjIuODU3LDkuMzcyYzMuMDA4LDMuMDA5LDUuMjk1LDYuNDQ4LDYuODU3LDEwLjMxNAoJCWMxLjU2MSwzLjg2NywyLjM0NCw3Ljk3MSwyLjM0NCwxMi4zMTRjMCw0LjM4MS0wLjc3Myw4LjQ4Ni0yLjMxNCwxMi4zMTNjLTEuNTQzLDMuODI4LTMuODIsNy4yMS02LjgyOCwxMC4xNDMKCQljLTMuMTIzLDMuMDg1LTYuNjY2LDUuNDQ4LTEwLjYyOSw3LjA4NmMtMy45NjEsMS42MzgtOC4wNTcsMi40NTctMTIuMjg1LDIuNDU3cy04LjI3Ni0wLjgwOC0xMi4xNDMtMi40MjkKCQljLTMuODY2LTEuNjE4LTcuMzMzLTMuOTYxLTEwLjQtNy4wMjdjLTMuMDY3LTMuMDY2LTUuNC02LjUyNC03LTEwLjM3MlM1LjUsMzIuNzY3LDUuNSwyOC41YzAtNC4yMjksMC44MDktOC4yOTUsMi40MjgtMTIuMgoJCWMxLjYxOS0zLjkwNSwzLjk3Mi03LjQsNy4wNTctMTAuNDg2QzIxLjA4LTAuMzk0LDI4LjU2NS0zLjUsMzcuNDQxLTMuNXogTTM3LjU1NywyLjI3MmMtNy4zMTQsMC0xMy40NjcsMi41NTMtMTguNDU4LDcuNjU3CgkJYy0yLjUxNSwyLjU1My00LjQ0OCw1LjQxOS01LjgsOC42Yy0xLjM1NCwzLjE4MS0yLjAyOSw2LjUwNS0yLjAyOSw5Ljk3MmMwLDMuNDI5LDAuNjc1LDYuNzM0LDIuMDI5LDkuOTEzCgkJYzEuMzUzLDMuMTgzLDMuMjg1LDYuMDIxLDUuOCw4LjUxNmMyLjUxNCwyLjQ5Niw1LjM1MSw0LjM5OSw4LjUxNSw1LjcxNWMzLjE2MSwxLjMxNCw2LjQ3NiwxLjk3MSw5Ljk0MywxLjk3MQoJCWMzLjQyOCwwLDYuNzUtMC42NjUsOS45NzMtMS45OTljMy4yMTktMS4zMzUsNi4xMjEtMy4yNTcsOC43MTMtNS43NzFjNC45OS00Ljg3Niw3LjQ4NC0xMC45OSw3LjQ4NC0xOC4zNDQKCQljMC0zLjU0My0wLjY0OC02Ljg5NS0xLjk0My0xMC4wNTdjLTEuMjkzLTMuMTYyLTMuMTgtNS45OC01LjY1NC04LjQ1OEM1MC45ODQsNC44NDQsNDQuNzk1LDIuMjcyLDM3LjU1NywyLjI3MnogTTM3LjE1NiwyMy4xODcKCQlsLTQuMjg3LDIuMjI5Yy0wLjQ1OC0wLjk1MS0xLjAxOS0xLjYxOS0xLjY4NS0yYy0wLjY2Ny0wLjM4LTEuMjg2LTAuNTcxLTEuODU4LTAuNTcxYy0yLjg1NiwwLTQuMjg2LDEuODg1LTQuMjg2LDUuNjU3CgkJYzAsMS43MTQsMC4zNjIsMy4wODQsMS4wODUsNC4xMTNjMC43MjQsMS4wMjksMS43OTEsMS41NDQsMy4yMDEsMS41NDRjMS44NjcsMCwzLjE4MS0wLjkxNSwzLjk0NC0yLjc0M2wzLjk0MiwyCgkJYy0wLjgzOCwxLjU2My0yLDIuNzkxLTMuNDg2LDMuNjg2Yy0xLjQ4NCwwLjg5Ni0zLjEyMywxLjM0My00LjkxNCwxLjM0M2MtMi44NTcsMC01LjE2My0wLjg3NS02LjkxNS0yLjYyOQoJCWMtMS43NTItMS43NTItMi42MjgtNC4xOS0yLjYyOC03LjMxM2MwLTMuMDQ4LDAuODg2LTUuNDY2LDIuNjU3LTcuMjU3YzEuNzcxLTEuNzksNC4wMDktMi42ODYsNi43MTUtMi42ODYKCQlDMzIuNjA0LDE4LjU1OCwzNS40NDEsMjAuMTAxLDM3LjE1NiwyMy4xODd6IE01NS42MTMsMjMuMTg3bC00LjIyOSwyLjIyOWMtMC40NTctMC45NTEtMS4wMi0xLjYxOS0xLjY4Ni0yCgkJYy0wLjY2OC0wLjM4LTEuMzA3LTAuNTcxLTEuOTE0LTAuNTcxYy0yLjg1NywwLTQuMjg3LDEuODg1LTQuMjg3LDUuNjU3YzAsMS43MTQsMC4zNjMsMy4wODQsMS4wODYsNC4xMTMKCQljMC43MjMsMS4wMjksMS43ODksMS41NDQsMy4yMDEsMS41NDRjMS44NjUsMCwzLjE4LTAuOTE1LDMuOTQxLTIuNzQzbDQsMmMtMC44NzUsMS41NjMtMi4wNTcsMi43OTEtMy41NDEsMy42ODYKCQljLTEuNDg2LDAuODk2LTMuMTA1LDEuMzQzLTQuODU3LDEuMzQzYy0yLjg5NiwwLTUuMjA5LTAuODc1LTYuOTQxLTIuNjI5Yy0xLjczNi0xLjc1Mi0yLjYwMi00LjE5LTIuNjAyLTcuMzEzCgkJYzAtMy4wNDgsMC44ODUtNS40NjYsMi42NTgtNy4yNTdjMS43Ny0xLjc5LDQuMDA4LTIuNjg2LDYuNzEzLTIuNjg2QzUxLjExNywxOC41NTgsNTMuOTM4LDIwLjEwMSw1NS42MTMsMjMuMTg3eiIvPgo8L2c+Cjwvc3ZnPgo="> <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/11/05/data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPCEtLSBHZW5lcmF0b3I6IEFkb2JlIElsbHVzdHJhdG9yIDEzLjAuMiwgU1ZHIEV4cG9ydCBQbHVnLUluIC4gU1ZHIFZlcnNpb246IDYuMDAgQnVpbGQgMTQ5NDgpICAtLT4KPCFET0NUWVBFIHN2ZyBQVUJMSUMgIi0vL1czQy8vRFREIFNWRyAxLjAvL0VOIiAiaHR0cDovL3d3dy53My5vcmcvVFIvMjAwMS9SRUMtU1ZHLTIwMDEwOTA0L0RURC9zdmcxMC5kdGQiPgo8c3ZnIHZlcnNpb249IjEuMCIgaWQ9IkxheWVyXzEiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgeG1sbnM6eGxpbms9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkveGxpbmsiIHg9IjBweCIgeT0iMHB4IgoJIHdpZHRoPSI2NHB4IiBoZWlnaHQ9IjY0cHgiIHZpZXdCb3g9IjUuNSAtMy41IDY0IDY0IiBlbmFibGUtYmFja2dyb3VuZD0ibmV3IDUuNSAtMy41IDY0IDY0IiB4bWw6c3BhY2U9InByZXNlcnZlIj4KPGc+Cgk8Y2lyY2xlIGZpbGw9IiNGRkZGRkYiIGN4PSIzNy42MzciIGN5PSIyOC44MDYiIHI9IjI4LjI3NiIvPgoJPGc+CgkJPHBhdGggZD0iTTM3LjQ0My0zLjVjOC45ODgsMCwxNi41NywzLjA4NSwyMi43NDIsOS4yNTdDNjYuMzkzLDExLjk2Nyw2OS41LDE5LjU0OCw2OS41LDI4LjVjMCw4Ljk5MS0zLjA0OSwxNi40NzYtOS4xNDUsMjIuNDU2CgkJCUM1My44NzksNTcuMzE5LDQ2LjI0Miw2MC41LDM3LjQ0Myw2MC41Yy04LjY0OSwwLTE2LjE1My0zLjE0NC0yMi41MTQtOS40M0M4LjY0NCw0NC43ODQsNS41LDM3LjI2Miw1LjUsMjguNQoJCQljMC04Ljc2MSwzLjE0NC0xNi4zNDIsOS40MjktMjIuNzQyQzIxLjEwMS0wLjQxNSwyOC42MDQtMy41LDM3LjQ0My0zLjV6IE0zNy41NTcsMi4yNzJjLTcuMjc2LDAtMTMuNDI4LDIuNTUzLTE4LjQ1Nyw3LjY1NwoJCQljLTUuMjIsNS4zMzQtNy44MjksMTEuNTI1LTcuODI5LDE4LjU3MmMwLDcuMDg2LDIuNTksMTMuMjIsNy43NywxOC4zOThjNS4xODEsNS4xODIsMTEuMzUyLDcuNzcxLDE4LjUxNCw3Ljc3MQoJCQljNy4xMjMsMCwxMy4zMzQtMi42MDcsMTguNjI5LTcuODI4YzUuMDI5LTQuODM4LDcuNTQzLTEwLjk1Miw3LjU0My0xOC4zNDNjMC03LjI3Ni0yLjU1My0xMy40NjUtNy42NTYtMTguNTcxCgkJCUM1MC45NjcsNC44MjQsNDQuNzk1LDIuMjcyLDM3LjU1NywyLjI3MnogTTQ2LjEyOSwyMC41NTd2MTMuMDg1aC0zLjY1NnYxNS41NDJoLTkuOTQ0VjMzLjY0M2gtMy42NTZWMjAuNTU3CgkJCWMwLTAuNTcyLDAuMi0xLjA1NywwLjU5OS0xLjQ1N2MwLjQwMS0wLjM5OSwwLjg4Ny0wLjYsMS40NTctMC42aDEzLjE0NGMwLjUzMywwLDEuMDEsMC4yLDEuNDI4LDAuNgoJCQlDNDUuOTE4LDE5LjUsNDYuMTI5LDE5Ljk4Niw0Ni4xMjksMjAuNTU3eiBNMzMuMDQyLDEyLjMyOWMwLTMuMDA4LDEuNDg1LTQuNTE0LDQuNDU4LTQuNTE0czQuNDU3LDEuNTA0LDQuNDU3LDQuNTE0CgkJCWMwLDIuOTcxLTEuNDg2LDQuNDU3LTQuNDU3LDQuNDU3UzMzLjA0MiwxNS4zLDMzLjA0MiwxMi4zMjl6Ii8+Cgk8L2c+CjwvZz4KPC9zdmc+Cg=="> </a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.</p>
 </div>
 <div class="g-col-12 g-col-md-6">
 <p><strong>How to cite</strong> :<br>
-Gupta, Ridhima, Heble, Tilak 2026. “<strong>Life Below the Surface: What Freshwater Macroinvertebrates Tell Us About England’s River Health</strong>.” <em>Real World Data Science</em>, 2026. <a href="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/11/05/life-below-the-surface.html">URL</a></p>
+Heble, Tilak and Gupta, Ridhima 2026. “<strong>Life Below the Surface: What Freshwater Macroinvertebrates Tell Us About England’s River Health</strong>.” <em>Real World Data Science</em>, 2026. <a href="https://realworlddatascience.net/applied-insights/case-studies/posts/2026/11/05/life-below-the-surface.html">URL</a></p>
 </div>
 </div>
 </div>
@@ -2494,81 +2618,6 @@ Real World Data Science Editorial Board. 2025. “Call for Submissions” Real W
   <guid>https://realworlddatascience.net/the-pulse/editors-blog/posts/2026/04/15/AI-is-stats-CFS.html</guid>
   <pubDate>Wed, 15 Apr 2026 00:00:00 GMT</pubDate>
   <media:content url="https://realworlddatascience.net/the-pulse/editors-blog/posts/2025/07/08/Images/open.jpg" medium="image" type="image/jpeg" height="108" width="144"/>
-</item>
-<item>
-  <title>Inside ‘RSS: Data Science and Artificial Intelligence’ with Neil Lawrence</title>
-  <dc:creator>Annie Flynn</dc:creator>
-  <link>https://realworlddatascience.net/foundation-frontiers/posts/2026/04/02/neil-lawrence-interview.html</link>
-  <description><![CDATA[ 
-
-
-
-
-
-<p>Real World Data Science recently had the opportunity to sit down with <a href="https://www.cst.cam.ac.uk/people/ndl21">Professor Neil Lawrence</a>, Editor-in-Chief of the Royal Statistical Society’s new journal, <a href="https://academic.oup.com/rssdat">RSS: Data Science and Artificial Intelligence</a>. Neil, who is the DeepMind Professor of Machine Learning at the University of Cambridge, a Senior AI Fellow at the <a href="https://www.turing.ac.uk/">Alan Turing Institute</a>, and a Visiting Professor at the University of Sheffield, is a leading voice in machine learning and AI. He has previous experience as Director of Machine Learning at Amazon and research interests spanning probabilistic models and real-world applications in health and developing economies. He is also passionate about public engagement—he co-hosts the <a href="https://www.thetalkingmachines.com/">Talking Machines</a> podcast and is the author of <a href="https://www.penguin.co.uk/books/455130/the-atomic-human-by-lawrence-neil-d/9781802062106">The Atomic Human</a>.</p>
-<p>We recently published a <a href="https://realworlddatascience.net/foundation-frontiers/datasciencebites/posts/2025/11/21/uncertainty.html">Data Science Bite</a> breaking down <a href="https://realworlddatascience.net/foundation-frontiers/posts/2026/01/29/beyond-quantification-delacroix-interview.html">the first position paper</a> of the newly launched journal, and had the opportunity to speak to its lead author <a href="https://realworlddatascience.net/foundation-frontiers/posts/2026/01/29/beyond-quantification-delacroix-interview.html">Professor Sylvie Delacroix</a> about its themes: how AI can better support human judgment, why it is crucial to recognise forms of uncertainty that can’t be reduced to numbers, and how participatory design can make AI a true partner, rather than a replacement, for professionals.</p>
-<p>In this conversation, Neil discusses the paper and how it aligns with the journal’s vision, plus the importance of bridging machine learning and related fields to keep the human element at the heart of AI systems.</p>
-<p>Watch the full interview below and scroll down for key takeaways and some analysis.</p>
-<hr>
-<section id="interview" class="level2">
-<h2 class="anchored" data-anchor-id="interview">Interview</h2>
-<div class="quarto-video ratio ratio-16x9"><iframe data-external="1" src="https://www.youtube.com/embed/VV_FnGQXWlM" title="" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen=""></iframe></div>
-<hr>
-</section>
-<section id="key-takeaways-at-a-glance" class="level2">
-<h2 class="anchored" data-anchor-id="key-takeaways-at-a-glance">Key Takeaways at a Glance</h2>
-<section id="the-journal-aims-to-convene-not-conclude" class="level3">
-<h3 class="anchored" data-anchor-id="the-journal-aims-to-convene-not-conclude">1. The journal aims to convene, not conclude</h3>
-<p>The first paper is intentionally a position paper: an invitation to discussion rather than a definitive answer. Lawrence emphasises that solutions to these challenges are distributed across the community. Progress depends on creating spaces—like the RSS journal—for thoughtful, cross-disciplinary exchange grounded in real-world practice.</p>
-</section>
-<section id="data-scientists-must-reassess-habits-not-just-adopt-new-tools" class="level3">
-<h3 class="anchored" data-anchor-id="data-scientists-must-reassess-habits-not-just-adopt-new-tools">2. Data scientists must reassess habits, not just adopt new tools</h3>
-<p>While AI can dramatically increase technical efficiency, Lawrence warns against using that efficiency to simply “do more of the same.” Instead, practitioners should reinvest time in understanding the broader human, societal, and institutional implications of their work.</p>
-</section>
-<section id="overconfidence-and-lack-of-accountability-in-ai-systems-pose-real-risks" class="level3">
-<h3 class="anchored" data-anchor-id="overconfidence-and-lack-of-accountability-in-ai-systems-pose-real-risks">3. Overconfidence and lack of accountability in AI systems pose real risks</h3>
-<p>As the journal’s position paper highlights, AI systems, unlike human stakeholders, do not carry social or reputational stakes. This can lead to overconfident outputs without accountability—particularly dangerous in high-stakes domains like healthcare, law, and education. Without better interfaces for uncertainty, professionals risk being distanced from the information they need to make sound judgments.</p>
-</section>
-<section id="conversational-uncertainty-is-now-central-to-real-world-ai-use" class="level3">
-<h3 class="anchored" data-anchor-id="conversational-uncertainty-is-now-central-to-real-world-ai-use">4. “Conversational uncertainty” is now central to real-world AI use</h3>
-<p>In many professional settings, decisions are not made through formal statistical outputs alone, but through dialogue—between clinicians, experts, or increasingly, humans and machines. Understanding how uncertainty is communicated and interpreted in these conversational settings is critical, especially as large language models become more influential.</p>
-</section>
-<section id="bridging-qualitative-and-quantitative-thinking-is-essential" class="level3">
-<h3 class="anchored" data-anchor-id="bridging-qualitative-and-quantitative-thinking-is-essential">5. Bridging qualitative and quantitative thinking is essential</h3>
-<p>A recurring theme is the need to close the long-standing divide between quantitative methods and qualitative insight. Many real-world decisions are inherently qualitative, yet current AI systems—and much of data science—are optimised for quantification. Failing to integrate these perspectives risks repeating past mistakes where “the numbers” were treated as unquestionable truth.</p>
-</section>
-<section id="participatory-approaches-lead-to-better-long-term-decisions" class="level3">
-<h3 class="anchored" data-anchor-id="participatory-approaches-lead-to-better-long-term-decisions">6. Participatory approaches lead to better long-term decisions</h3>
-<p>Although slower upfront, participatory and deliberative processes—bringing together diverse expertise and perspectives—can prevent costly mistakes and misaligned systems. In the long run, they are more effective than purely efficiency-driven approaches.</p>
-</section>
-</section>
-<section id="join-the-conversation" class="level2">
-<h2 class="anchored" data-anchor-id="join-the-conversation">Join the conversation</h2>
-<p>This conversation touches on a theme we often explore here at Real World Data Science: the idea that the future of data science and AI will not be defined by technical capability alone, but by how well we integrate human judgment, context, and responsibility into our systems. The position paper—and RSS: Data Science and AI more broadly—is an open invitation to engage with these questions. Whether through research, case studies, or reflections from practice, there is a clear call for contributions that connect technical work with real-world impact.</p>
-<p>As Neil suggests, the answers are unlikely to come from any single discipline or organisation. They will emerge from a broader conversation across the data science community.</p>
-<p>Now is the time to be part of that conversation: answer RSS: Data Science and AI’s <a href="https://realworlddatascience.net/foundation-frontiers/posts/2026/01/29/beyond-quantification-delacroix-interview.html">call for submissions</a>.</p>
-<div class="article-btn">
-<p><a href="../../../../../foundation-frontiers/index.html">Explore more data science ideas</a></p>
-</div>
-<div class="further-info">
-<div class="grid">
-<div class="g-col-12 g-col-md-12">
-
-</div>
-</div>
-
-
-</div>
-</section>
-
- ]]></description>
-  <category>Interviews</category>
-  <category>AI</category>
-  <category>Ethics</category>
-  <category>Uncertainty</category>
-  <guid>https://realworlddatascience.net/foundation-frontiers/posts/2026/04/02/neil-lawrence-interview.html</guid>
-  <pubDate>Fri, 10 Apr 2026 00:00:00 GMT</pubDate>
-  <media:content url="https://realworlddatascience.net/foundation-frontiers/posts/2026/04/02/images/thumb1.png" medium="image" type="image/png" height="96" width="144"/>
 </item>
 </channel>
 </rss>
