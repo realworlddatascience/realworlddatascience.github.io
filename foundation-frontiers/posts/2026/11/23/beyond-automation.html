@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.11.9">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+<meta name="author" content="Satrajit Mukherjee">
+<meta name="dcterms.date" content="2026-11-23">
+<meta name="description" content="How can organisations use agentic AI without losing accountability? We explore human-in-the-loop architectures that combine AI efficiency with transparency, governance and human judgement.">
+
+<title>Beyond Automation: Designing Agentic AI Systems for Human-in-the-Loop Decision-Making – Real World Data Science</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../../../">
+<link href="../../../../../images/rwds-favicon.png" rel="icon" type="image/png">
+<script src="../../../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/scrollable-regions/scrollable-regions.js" type="module"></script>
+<script src="../../../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-html/quarto-syntax-highlighting-63b5708e65d6cd79cd7618c58d0c21e7.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../../../site_libs/bootstrap/bootstrap-1415f5c1d90c41793fc39cbd2bdf7613.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/all.css" rel="stylesheet">
+<link href="../../../../../site_libs/quarto-contrib/academicons-1.9.2/size.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No results",
+    "search-matching-documents-text": "matching documents",
+    "search-copy-link-title": "Copy link to search",
+    "search-hide-matches-text": "Hide additional matches",
+    "search-more-match-text": "more match in this document",
+    "search-more-matches-text": "more matches in this document",
+    "search-clear-button-title": "Clear",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancel",
+    "search-submit-button-title": "Submit",
+    "search-label": "Search"
+  }
+}</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-1TTWB7YTR6"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-1TTWB7YTR6', { 'anonymize_ip': true});
+</script>
+<!-- Thank you to Ben Ruijl for the progress bar code!
+Ben is on GitHub here: https://github.com/benruijl
+And you can see the original code here: https://github.com/quarto-dev/quarto-cli/discussions/3842#discussioncomment-4591721 -->
+
+<meta property="og:title" content="Beyond Automation: Designing Agentic AI Systems for Human-in-the-Loop Decision-Making – Real World Data Science">
+<meta property="og:description" content="How can organisations use agentic AI without losing accountability? We explore human-in-the-loop architectures that combine AI efficiency with transparency, governance and human judgement.">
+<meta property="og:image" content="https://realworlddatascience.net/foundation-frontiers/posts/2026/11/23/images/thumb95.png">
+<meta property="og:site_name" content="Real World Data Science">
+<meta name="twitter:title" content="Beyond Automation: Designing Agentic AI Systems for Human-in-the-Loop Decision-Making – Real World Data Science">
+<meta name="twitter:description" content="How can organisations use agentic AI without losing accountability? We explore human-in-the-loop architectures that combine AI efficiency with transparency, governance and human judgement.">
+<meta name="twitter:image" content="https://realworlddatascience.net/foundation-frontiers/posts/2026/11/23/images/thumb95.png">
+<meta name="twitter:site" content="@rwdatasci">
+<meta name="twitter:card" content="summary_large_image">
+</head><body class="nav-fixed quarto-light"><a id="quarto-skip-link" class="visually-hidden-focusable" href="#quarto-document-content">Skip to main content</a><div id="progress-bar" style="width: 0%; height:4px; background-color: #939bc9;; position: fixed; top: 0px; z-index: 2000;"></div>
+
+<script id="progressbar" type="text/javascript">
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const bar = document.querySelector('#progress-bar');
+    const post = document.querySelector('#quarto-content');
+    const html = document.documentElement;
+    
+    const height = post.scrollHeight + post.offsetTop;
+    
+    window.addEventListener('scroll', () => {
+        bar.style.width = (html.scrollTop / (height- html.clientHeight)) * 100 + '%';
+    });
+});
+</script>
+
+
+<link rel="stylesheet" href="../../../../../rwds.css">
+
+
+
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top quarto-banner">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark" aria-label="Site">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a href="../../../../../index.html" class="navbar-brand navbar-brand-logo">
+    <img src="../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo light-content">
+    <img src="../../../../../images/rwds-logo-150px.png" alt="Real World Data Science brand" class="navbar-logo dark-content">
+    </a>
+  </div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../the-pulse/index.html"> 
+<span class="menu-text">The Pulse</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../applied-insights/index.html"> 
+<span class="menu-text">Applied Insights</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../foundation-frontiers/index.html"> 
+<span class="menu-text">Foundations &amp; Frontiers</span></a>
+  </li>  
+  <li class="nav-item">
+    <a class="nav-link" href="../../../../../people-paths/index.html"> 
+<span class="menu-text">People &amp; Paths</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-about-rwds" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">About RWDS</span>
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="nav-menu-about-rwds">    
+        <li>
+    <a class="dropdown-item" href="../../../../../about-rwds.html">
+ <span class="dropdown-text">Who we are</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../contributor-docs/call-for-contributions.html">
+ <span class="dropdown-text">How to contribute</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../CODE_OF_CONDUCT.html">
+ <span class="dropdown-text">Code of conduct</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../../../contact.html">
+ <span class="dropdown-text">Contact us</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+            <div id="quarto-search" class="" title="Search"></div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<header id="title-block-header" class="quarto-title-block default page-columns page-full">
+  <div class="quarto-title-banner page-columns page-full">
+    <div class="quarto-title column-body">
+      <h1 class="title">Beyond Automation: Designing Agentic AI Systems for Human-in-the-Loop Decision-Making</h1>
+                  <div>
+        <div class="description">
+          <p>How can organisations use agentic AI without losing accountability? We explore human-in-the-loop architectures that combine AI efficiency with transparency, governance and human judgement.</p>
+        </div>
+      </div>
+                          <div class="quarto-categories">
+                <div class="quarto-category">Viewpoints</div>
+                <div class="quarto-category">AI</div>
+              </div>
+                  </div>
+  </div>
+    
+  
+  <div class="quarto-title-meta">
+
+      <div>
+      <div class="quarto-title-meta-heading">Author</div>
+      <div class="quarto-title-meta-contents">
+               <p>Satrajit Mukherjee </p>
+            </div>
+    </div>
+      
+      <div>
+      <div class="quarto-title-meta-heading">Published</div>
+      <div class="quarto-title-meta-contents">
+        <p class="date">November 23, 2026</p>
+      </div>
+    </div>
+    
+      
+    </div>
+    
+  
+  </header><div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" aria-labelledby="toc-title" class="toc-active">
+    <h2 id="toc-title">On this page</h2>
+   
+  <ul>
+  <li><a href="#designing-modular-agent-architectures" id="toc-designing-modular-agent-architectures" class="nav-link active" data-scroll-target="#designing-modular-agent-architectures">Designing Modular Agent Architectures</a></li>
+  <li><a href="#managing-hallucinations-and-ensuring-reliability" id="toc-managing-hallucinations-and-ensuring-reliability" class="nav-link" data-scroll-target="#managing-hallucinations-and-ensuring-reliability">Managing Hallucinations and Ensuring Reliability</a></li>
+  <li><a href="#from-design-to-delivery" id="toc-from-design-to-delivery" class="nav-link" data-scroll-target="#from-design-to-delivery">From Design to Delivery</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion">Conclusion</a></li>
+  </ul>
+<div class="toc-actions"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/foundation-frontiers/posts/2026/11/23/beyond-automation.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></nav>
+    </div>
+<!-- main -->
+<main class="content quarto-banner-title-block" id="quarto-document-content" tabindex="-1">
+
+
+
+
+
+<p>Many organisations are exploring agentic AI systems to automate complex workflows, particularly in environments where large volumes of data must be processed under time pressure. These systems can coordinate multiple steps and use software tools to accomplish defined tasks. While the challenges vary across organisations, a common constraint is not a lack of expertise but the accumulation of friction arising from manual data extraction, repetitive checks, fragmented decision processes, and difficulties scaling expert judgement. These factors can create bottlenecks even where skilled analysts are available, leading to slow outputs, inconsistent assessments, and limited capacity.</p>
+<p>Fully autonomous systems appear to offer a solution, but they introduce a different set of risks. When decision-making is fully delegated to AI systems, accountability and recourse can become unclear, particularly when decisions affect individuals or organisations. Models may also behave unpredictably when faced with cases that differ from those encountered during development. While automated systems can be highly consistent, they may also reproduce errors consistently and at scale. In regulated environments, these risks create tension between efficiency and accountability. A more practical path is to design systems where AI supports human decisions rather than replaces them. This requires a shift in thinking from automation to augmentation.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image1.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+<p>A useful principle is to treat agentic AI as a structured decision support system rather than an autonomous actor. In this human-in-the-loop approach, agents prepare evidence while people retain responsibility for reviewing or approving decisions where human judgement is required. The goal is not to involve humans in every processing step, but to position them where their judgement adds value, supported by better evidence and less cognitive burden. This reframing avoids the false dichotomy between manual processes and fully automated systems.</p>
+<p>In practice, this requires explicit criteria for determining when human judgement is required. Cases may be escalated based on factors such as uncertainty indicators, conflicting evidence, incomplete data, novel case characteristics, or the potential impact of an incorrect decision. Routine cases with strong supporting evidence may proceed with limited intervention, while uncertain or high-risk cases are routed for human review. Designing these escalation pathways is an essential part of any human-in-the-loop architecture.</p>
+<p>Human oversight should not be assumed to provide perfect assurance. Human reviewers may disagree with one another, overlook important evidence, or become overly reliant on automated recommendations. As confidence in a system grows, there is a risk that reviewers may rely more heavily on its recommendations and examine them less critically. To mitigate this risk, review interfaces should expose supporting evidence, decision rationale, and appropriately validated indicators of uncertainty rather than presenting recommendations as unquestionable outputs. Such indicators require evaluation, as confidence estimates generated by language models do not necessarily correspond to their actual accuracy. Calibration refers to how closely a stated confidence level matches observed accuracy; for example, assessments assigned 80% confidence should be correct approximately 80% of the time. Where confidence estimates inform escalation to human review, their reliability and the associated escalation thresholds should be tested against validated cases. Periodic audits and monitoring of reviewer agreement and override rates can help identify declining levels of scrutiny over time.</p>
+<section id="designing-modular-agent-architectures" class="level2">
+<h2 class="anchored" data-anchor-id="designing-modular-agent-architectures">Designing Modular Agent Architectures</h2>
+<p>The architecture that emerges from this approach is modular and task oriented. Instead of relying on a single, monolithic model, responsibilities are distributed across specialised agents. One agent may focus on document extraction, another on eligibility checks, another on scoring or classification, and another on report generation. Each agent operates within a clearly defined scope, producing outputs that feed into the next stage. Separating responsibilities across clearly defined components can make the system easier to understand, maintain, and govern. However, decomposition introduces additional orchestration overhead, latency, cost, and potential failure points. The decision to separate functions across multiple agents should therefore be driven by operational and governance requirements rather than assumed to improve reliability by itself.</p>
+<p>A critical design choice in such systems is the use of structured data throughout the pipeline. Rather than passing unstructured text between components, agents exchange structured information, often using JSON, a standard text format that organises data into labelled fields that software can process consistently. This ensures consistency across stages, reduces ambiguity, and enables downstream processes to operate deterministically. It also allows outputs to be stored, versioned, and audited, which is essential in environments where traceability is required.</p>
+<p>Structured outputs also change how AI is used within the system. Instead of relying solely on free-form text outputs, agentic systems often transform model outputs into structured representations that follow predefined schemas, which specify the information required and the format in which it must be provided. In some cases, models may generate intermediate reasoning or explanations before relevant information is extracted, validated, and converted into structured formats. Structuring the information exchanged between components should therefore be distinguished from constraining how models generate their responses. The critical requirement is that artefacts passed between system components remain structured, interpretable, and verifiable. The result is not creative generation, but controlled transformation of inputs into usable artefacts. In production environments, reliability often depends as much on appropriate constraint and validation as on model flexibility.</p>
+<p>This becomes clearer when following how a single case moves through the system. An incoming application, for example, may begin as a collection of documents. A document extraction agent converts these into structured fields. An eligibility agent applies deterministic business rules wherever possible, reserving model-based reasoning for cases involving ambiguity, incomplete information, or judgement-based interpretation. Because uncertainty is concentrated in these cases, additional safeguards such as confidence assessment, validation checks, or human review may be required before decisions progress through the workflow. A scoring agent produces a consistent assessment based on predefined criteria. Finally, a reporting agent translates structured outputs into a controlled narrative for human review. At each stage, the workflow is traceable and auditable, with deterministic components remaining fully reproducible and model-based components operating within defined governance and validation constraints. In practice, this pattern is increasingly relevant in domains such as case management, fraud assessment, and eligibility determination</p>
+<div id="fig-counting" class="quarto-float quarto-figure quarto-figure-center anchored" alt="A modular system in which specialised AI agents prepare structured evidence, validation checkpoints reduce the risk of error propagation, a central source of truth grounds decisions, continuous evaluation monitors performance, and humans retain final decision-making authority">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-counting-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="images/fig1.jpg" class="img-fluid figure-img" alt="A modular system in which specialised AI agents prepare structured evidence, validation checkpoints reduce the risk of error propagation, a central source of truth grounds decisions, continuous evaluation monitors performance, and humans retain final decision-making authority">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-counting-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Human-in-the-loop agentic AI architecture. A modular system in which specialised AI agents prepare structured evidence, validation checkpoints reduce the risk of error propagation, a central source of truth grounds decisions, continuous evaluation monitors performance, and humans retain final decision-making authority.
+</figcaption>
+</figure>
+</div>
+<p>Figure 1 illustrates a modular, human-in-the-loop decision-support architecture, combining specialised agents, validation checkpoints, governance, and human oversight. It represents a reference implementation rather than a fixed design and can be adapted to domain-specific requirements.</p>
+<p>In mature implementations, the architecture should also incorporate feedback mechanisms through which audited outcomes, reviewer corrections, and operational performance metrics contribute to continuous improvement. This feedback may inform rule updates, retraining activities, prompt revisions, or changes to escalation thresholds, ensuring that the system evolves alongside operational requirements.</p>
+<p>User interaction with such systems should also be designed deliberately. Conversational interfaces can provide a natural way for users to interact with outputs, query results, and request summaries, while low-code tools allow workflows and configurations to be developed with limited conventional programming. Both can sit on top of a robust backend where critical business logic is implemented in code. This creates a hybrid approach that combines accessible user interaction and configuration with the correctness, auditability, and performance of conventional software development. The boundary between these approaches should be defined by risk rather than convenience.</p>
+<p>A common failure mode is assuming that poor AI outcomes can be solved through increasingly complex prompting. In many cases, the underlying limitation is architectural rather than linguistic. When tools designed for ad hoc interaction are used for repeatable analytical workflows, adding more instructions often increases complexity without improving reliability. Addressing such issues requires reframing the problem from prompting to system design, ensuring that the chosen architecture aligns with the requirements for consistency, reproducibility, and governance.</p>
+<p>Designing agentic systems therefore involves making deliberate trade-offs. One such trade-off is between flexibility and control. Systems built around free-form inputs and outputs may be easier to prototype, but they become difficult to govern at scale. Constraining inputs and outputs can improve reliability but requires more upfront design. Similarly, the choice between workflows that respond to events as they occur and those that follow a predefined sequence of stages should reflect the complexity of the problem rather than default to the most feature-rich solution.</p>
+<p>Governance must be built into the system from the start. Each agent should produce outputs that can be traced back to their original inputs, with records showing where information came from, how it was transformed, and which version of the system produced it. Decision components should be reproducible given the same inputs, while model-based components should be subject to appropriate controls for variability, traceability and validation. This does not require removing AI from the system, but it does require placing it in roles where its behaviour can be observed and controlled. Auditability is not an afterthought; it is a design requirement. However, designing for auditability alone is not sufficient. Systems must also be robust to error, particularly in how models behave and interact.</p>
+</section>
+<section id="managing-hallucinations-and-ensuring-reliability" class="level2">
+<h2 class="anchored" data-anchor-id="managing-hallucinations-and-ensuring-reliability">Managing Hallucinations and Ensuring Reliability</h2>
+<p>A key challenge in agentic AI systems is managing hallucinations, where models generate plausible but incorrect information, and preventing such errors from propagating across agents. While structuring outputs and constraining models can reduce variability, these measures do not eliminate incorrect reasoning or fabricated information. Reliability must therefore be designed into the system rather than assumed from the models themselves.</p>
+<p>One important principle is that agents should not operate as independent sources of truth. Instead, they should rely on grounded data and explicit validation steps. For example, extracted information can be checked to ensure that required fields are present and contain the expected types of data, eligibility decisions can be cross-checked against predefined business rules, and downstream agents should only consume inputs that have passed appropriate validation checks. This introduces deliberate checkpoints into the workflow, increasing the likelihood that errors are detected early rather than amplified.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image3.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+<p>A related question is whether agents should check their own work. While agents may check their own outputs for contradictions or inconsistencies, these checks alone are rarely sufficient to establish reliability. Independent validation layers provide stronger assurance because they do not rely on the same reasoning process that generated the output. Implementing such validation effectively can, however, require additional expertise, infrastructure, and governance controls. In practice, a combination of model-based checks, deterministic rules, and human oversight often provides the most robust approach.</p>
+<p>To prevent the “daisy chain” effect, where incorrect outputs are passed from one agent to another and become increasingly embedded in the workflow, systems should separate generation from validation. An agent may propose an output, but a separate validation layer such as rule-based, model-assisted, or human-led confirms whether it is acceptable before it is passed forward. This can reduce the risk of compounding errors across the pipeline.</p>
+<p>A central source of truth is also critical. Wherever possible, agents should reference authoritative data stores rather than relying on generated content. This helps ground outputs in verifiable information and reduces dependence on implicit model knowledge. In practice, this often involves combining structured datasets, business rules, reference data, and standardised categories or terminology with model-based reasoning.</p>
+<p>Monitoring and evaluation must operate continuously rather than relying on user feedback alone. This requires a systematic testing framework, often called an evaluation harness, that regularly compares system outputs against previously validated cases and monitors performance over time. Evaluation should assess whether outputs follow required formats and business rules, how often the system produces correct assessments, and whether important cases are being missed or incorrectly flagged. Where confidence estimates are used, they should also be tested to determine whether they reflect actual accuracy. Monitoring should identify changes in performance over time, including differences across relevant groups of cases that may be hidden by overall averages. Changes to prompts, information retrieval processes, business rules, or underlying models should be tested against established cases before deployment to identify unintended reductions in performance. These tests should be complemented by monitoring on representative operational cases, rather than relying solely on fixed benchmark datasets. Without such mechanisms, systems risk gradual degradation even when they appear to perform well initially.</p>
+<p>Taken together, these approaches shift the design philosophy from trusting model outputs to verifying them. Reliability emerges not from any single component, but from the interaction between structured data, validation layers, authoritative data sources, and continuous monitoring.</p>
+</section>
+<section id="from-design-to-delivery" class="level2">
+<h2 class="anchored" data-anchor-id="from-design-to-delivery">From Design to Delivery</h2>
+<p>Another important aspect is organisational enablement. By separating configuration from core logic, it becomes possible for non-technical users, such as business analysts, to adjust thresholds, rules, or templates without modifying code. This reduces dependency on engineers for routine changes and supports more responsive workflows. At the same time, critical components remain governed by engineering standards, ensuring consistency and reliability.</p>
+<p>From a delivery perspective, adopting an incremental approach is often more effective than attempting to build a complete system upfront. Starting with a minimal viable set of agents – for example, document extraction, eligibility checks, and reporting – allows the value of the approach to be demonstrated early. Additional capabilities, such as scoring, monitoring, and integration with other systems, can then be layered on as the design matures. Success should ultimately be measured in operational terms: reduced processing time, improved consistency, increased transparency, and greater confidence in decision-making.</p>
+<p>The broader implication is that agentic AI is not primarily about autonomy, but about orchestration. The value comes from coordinating specialised components into a coherent system that supports human decision-making. This requires thinking in terms of pipelines, interfaces, governance structures, and evaluation mechanisms rather than focusing solely on individual models.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="images/image2.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:80.0%"></p>
+</figure>
+</div>
+</section>
+<section id="conclusion" class="level2">
+<h2 class="anchored" data-anchor-id="conclusion">Conclusion</h2>
+<p>Ultimately, the goal is not to maximise autonomy but to improve decision-making. By combining structured data, validation mechanisms, governance controls, clearly defined and tested escalation criteria, and appropriately scoped AI agents, organisations can reduce friction in complex workflows without sacrificing accountability or control. Human judgement remains central, supported by consistent, transparent, and reproducible evidence.</p>
+<p>The most effective agentic systems will not replace human decision-makers but augment them, enabling better decisions with less effort, greater consistency, and stronger evidence. In regulated environments, this balance between efficiency and accountability is essential. Success therefore depends less on the capabilities of any individual model and more on the design of the system within which it operates. As agentic AI matures, the system, rather than the model, becomes the primary unit of design</p>
+<div class="article-btn">
+<p><a href="../../../../../applied-insights/index.html">Explore more data science ideas</a></p>
+</div>
+<div class="further-info">
+<div class="grid">
+<div class="g-col-12 g-col-md-12">
+<dl>
+<dt>About the author:</dt>
+<dd>
+<a href="uk.linkedin.com/in/satrajit-mukherjee-phd-cstat-advdsp-a2a50726">Satrajit Mukherjee, PhD</a>, is a Chartered Statistician and an Advanced Data Science Professional with experience across government statistics, telecommunications and financial services. His expertise spans statistical modelling, machine learning, cloud technologies, software engineering and analytical governance. His work focuses on developing reliable, scalable and auditable analytical systems, with particular interests in responsible AI, agentic systems and evidence-based human decision-making.
+</dd>
+</dl>
+<div class="g-col-12 g-col-md-6">
+<p><strong>Copyright and licence</strong> : © 2026 Satrajit Mukherjee <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;"> <img style="height:22px!important;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/cc.svg?ref=chooser-v1"> <img style="height:22px!important;margin-left:3px;vertical-align:text-bottom;" src="https://mirrors.creativecommons.org/presskit/icons/by.svg?ref=chooser-v1"> </a> This article is licensed under a Creative Commons Attribution 4.0 (CC BY 4.0) <a href="http://creativecommons.org/licenses/by/4.0/?ref=chooser-v1" target="_blank" rel="license noopener noreferrer" style="display:inline-block;">International licence</a>.</p>
+</div>
+<div class="g-col-12 g-col-md-6">
+<p><strong>How to cite</strong> :<br>
+Mukherjee, Satrajit. 2026. “<strong>Beyond Automation: Designing Agentic AI Systems for Human-in-the-Loop Decision-Making</strong>.” <em>Real World Data Science</em>, 2026. <a href="https://realworlddatascience.net/applied-insights/tutorials/posts/2026/12/why-95-percent-of-ai-projects-fail.html">URL</a></p>
+</div>
+</div>
+</div>
+
+
+</div>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copied!");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copied!");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp("https:\/\/realworlddatascience\.net\/");
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+      window.quartoDecorateExternalLinks = function (root) {
+     var links = (root || window.document).querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+          if (!link.classList.contains('no-external-icon')) {
+          }
+        }
+      }
+      };
+      window.quartoDecorateExternalLinks(window.document);
+    // Esc closes the popup (WCAG 1.4.13) and focus leaving both trigger and
+    // popup closes it (WCAG 2.4.11); tippy handles neither for interactive popups.
+    const hideOnEscAndFocusOut = {
+      name: 'hideOnEscAndFocusOut',
+      defaultValue: true,
+      fn(instance) {
+        const dismiss = () => {
+          // A show scheduled by the trigger delay would otherwise reopen it
+          instance.clearDelayTimeouts();
+          instance.hide();
+        };
+        const onKeyDown = (event) => {
+          if (event.key !== 'Escape') {
+            return;
+          }
+          // Keep Esc from also reaching page handlers (e.g. reveal.js overview),
+          // except an open reveal.js slide menu, which Esc should close too.
+          // The menu handles keys only when its keyboard option is on.
+          const menuHandlesEsc = window.Reveal?.getPlugin?.('menu')?.isOpen() &&
+            window.Reveal.getConfig().menu?.keyboard !== false;
+          if (!menuHandlesEsc) {
+            event.stopPropagation();
+          }
+          if (instance.popper.contains(window.document.activeElement)) {
+            // Disabled while refocusing so the focus trigger does not reopen it
+            instance.disable();
+            instance.reference.focus();
+            instance.enable();
+          }
+          dismiss();
+        };
+        const onFocusOut = (event) => {
+          const target = event.relatedTarget;
+          if (target && !instance.reference.contains(target) &&
+              !instance.popper.contains(target)) {
+            dismiss();
+          }
+        };
+        // On the trigger too: a click trigger (code-annotations: select) has no
+        // blur handling. Attached for the instance's lifetime so leaving the
+        // trigger also cancels a show still pending on the trigger delay.
+        instance.reference.addEventListener('focusout', onFocusOut);
+        return {
+          onShow() {
+            window.document.addEventListener('keydown', onKeyDown, true);
+            instance.popper.addEventListener('focusout', onFocusOut);
+          },
+          onHide() {
+            window.document.removeEventListener('keydown', onKeyDown, true);
+            instance.popper.removeEventListener('focusout', onFocusOut);
+          },
+          onDestroy() {
+            instance.reference.removeEventListener('focusout', onFocusOut);
+          },
+        };
+      },
+    };
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+        plugins: [hideOnEscAndFocusOut],
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          // Each band is positioned against its own containing block, which is
+          // not the offsetParent of the lines, so place it from client rects.
+          const placeBand = (band, firstEl, lastEl, codeBlock) => {
+            const container = band.offsetParent;
+            if (container === null) {
+              return;
+            }
+            const containerRect = container.getBoundingClientRect();
+            // Reveal.js scales slides with a transform, so convert client
+            // pixels back to the CSS pixels of the container.
+            const scale = containerRect.height / container.offsetHeight || 1;
+            const firstRect = firstEl.getBoundingClientRect();
+            const lastRect = lastEl.getBoundingClientRect();
+            const top = (firstRect.top - containerRect.top) / scale - container.clientTop + container.scrollTop;
+            const height = (lastRect.bottom - firstRect.top) / scale;
+            band.style.top = top - 2 + "px";
+            band.style.height = height + 4 + "px";
+            if (codeBlock) {
+              // Without the copy button wrapper, the containing block is wider
+              // than the code block, so span the code block explicitly.
+              const blockRect = codeBlock.getBoundingClientRect();
+              band.style.left = (blockRect.left - containerRect.left) / scale - container.clientLeft + container.scrollLeft + "px";
+              band.style.width = blockRect.width / scale + "px";
+            }
+          };
+          if (lineIds.length > 0) {
+            const el = window.document.getElementById(lineIds[0]);
+            const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+            const parent = el.parentElement.parentElement;
+            // cook up a div (if necessary) and position it
+            let div = window.document.getElementById("code-annotation-line-highlight");
+            if (div === null) {
+              div = window.document.createElement("div");
+              div.setAttribute("id", "code-annotation-line-highlight");
+              div.style.position = 'absolute';
+              parent.appendChild(div);
+            }
+            placeBand(div, el, lastEl, parent.closest("div.sourceCode") || parent);
+            let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+            if (gutterDiv === null) {
+              gutterDiv = window.document.createElement("div");
+              gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+              gutterDiv.style.position = 'absolute';
+              const codeCell = window.document.getElementById(targetCell);
+              const gutter = codeCell.querySelector('.code-annotation-gutter');
+              gutter.appendChild(gutterDiv);
+            }
+            placeBand(gutterDiv, el, lastEl);
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+  <script type="application/javascript">
+  window.quartoScrollableRegionsLabels = {"code":"Scrollable code","output":"Scrollable output"};
+  </script>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+<p><a href="../../../../../LICENCE.html">Copyright © 2025 Royal Statistical Society</a></p>
+</div>   
+    <div class="nav-footer-center">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://github.com/realworlddatascience">
+      <i class="bi bi-github" role="img" aria-label="GitHub">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item">
+    <a class="nav-link" href="https://zenodo.org/communities/realworlddatascience">
+<p><i class="ai  ai-zenodo ai-2xl"></i></p>
+</a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://www.linkedin.com/showcase/rss-real-world-data-science">
+      <i class="bi bi-linkedin" role="img" aria-label="LinkedIn">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://twitter.com/rwdatasci">
+      <i class="bi bi-twitter-x" role="img" aria-label="Twitter/X">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="https://fosstodon.org/@rwdatasci">
+      <i class="bi bi-mastodon" role="img" aria-label="Mastodon">
+</i> 
+    </a>
+  </li>  
+    <li class="nav-item compact">
+    <a class="nav-link" href="../../../../../feeds.html">
+      <i class="bi bi-rss" role="img" aria-label="RWDS rss">
+</i> 
+    </a>
+  </li>  
+</ul>
+    <div class="toc-actions d-sm-block d-md-none"><ul><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/edit/main/foundation-frontiers/posts/2026/11/23/beyond-automation.qmd" class="toc-action"><i class="bi bi-github"></i>Edit this page</a></li><li><a href="https://github.com/realworlddatascience/realworlddatascience.github.io/issues/new" class="toc-action"><i class="bi empty"></i>Report an issue</a></li></ul></div></div>
+    <div class="nav-footer-right">
+<p><a href="../../../../../ts-and-cs.html">Terms &amp; Conditions</a></p>
+</div>
+  </div>
+</footer>
+
+
+
+
+</body></html>
